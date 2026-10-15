@@ -1,0 +1,13 @@
+{
+  "repository": "Parsa-Emami/Miragemesh",
+  "reviewed_commit": "021556a23a2d091f613167215636a50971ce302e",
+  "existing_file_count": 78,
+  "existing_runtime": "architecture scaffold only",
+  "protected_files_sha256": {
+    ".env.example": "0a0da8cd679090e648984c1e44e0dc804934137bb572dd01a835b69adf0632eb"
+  },
+  "skipped_input_archival_config_paths": [
+    "legacy/v7/.env.example"
+  ],
+  "preservation": "All existing protected files remain at their original paths with identical bytes. Supplied archival env duplicates were omitted to avoid creating extra config files."
+}

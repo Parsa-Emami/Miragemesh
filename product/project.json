@@ -1,0 +1,101 @@
+{
+  "folder": "07-miragemesh",
+  "name": "MirageMesh",
+  "rank": 8,
+  "score": 6.5,
+  "verdict": "برای شبکهٔ شخصی ارزش دارد؛ sensor خصوصی و demo عمومی را جدا نگه دار.",
+  "user": "اپراتور lab و مدیر شبکهٔ کوچک",
+  "pain": "honeypot کامل نصب و نگهداری سنگین دارد و sensor آفلاین رویدادها را از دست می‌دهد",
+  "value": "sensor کم‌مصرف با مشاهدهٔ وضعیت و replay امن",
+  "wedge": "یک decoy محدود و no-egress، صف آفلاین و alert قابل‌توضیح",
+  "alternatives": "T-Pot و Cowrie",
+  "source_ids": [
+    "tpot"
+  ],
+  "mvp": [
+    "یک sensor مجاز و یک HTTP decoy ساده",
+    "کنترل‌پنل خصوصی و هویت mTLS",
+    "desired/applied state امضاشده",
+    "رویداد offline spool، dedup و triage"
+  ],
+  "later": [
+    "ده‌ها protocol decoy",
+    "fleet جهانی",
+    "دریافت خودکار malware",
+    "public decoy hosting چند مشتری"
+  ],
+  "stack": [
+    "Go sensor and collector",
+    "rootless Podman optional decoy adapter",
+    "SQLite metadata/spool",
+    "Segmented JSONL events"
+  ],
+  "mode": "private-web",
+  "stores": {
+    "SQLite collector": "sensor identities, desired state, incident labels, dedup checkpoints",
+    "SQLite sensor": "durable bounded offline spool and applied version",
+    "JSONL segments": "append-only event bytes with rotation; indexes rebuildable"
+  },
+  "removed": [
+    "Laravel",
+    "PostgreSQL",
+    "Valkey",
+    "S3",
+    "mandatory separate OpenBao service for MVP PKI"
+  ],
+  "limits": {
+    "sensors": 5,
+    "events_per_second": 20,
+    "spool_max_mib": 100,
+    "event_retention_days": 7,
+    "payload_max_kib": 8
+  },
+  "hardware": "collector هدف 2 vCPU / 2 GiB RAM / 20 GiB SSD؛ sensor روی host مجزا یا segment ایزوله آزمون شود.",
+  "weeks": "8–12 هفته",
+  "risks": [
+    "decoy مجاز به تماس خارجی یا دانلود payload نیست",
+    "گرفتن password/payload واقعی ریسک حریم خصوصی دارد؛ پیش‌فرض metadata محدود",
+    "PKI و update rollback می‌تواند control plane را دور بزند"
+  ],
+  "uat": [
+    "sensor معتبر enroll شود؛ token replay و certificate نامعتبر رد شوند",
+    "قطع شبکه و پرشدن spool رفتار مشخص دهد؛ reconnect داده را dedup کند",
+    "decoy به Internet و شبکهٔ داخلی عملیاتی دسترسی نداشته باشد"
+  ],
+  "domain": {
+    "primary": "sensor-event",
+    "fields": {
+      "sensor_id": "id",
+      "event_id": "id",
+      "sequence": "int",
+      "observed_at": "timestamp",
+      "kind": "text",
+      "metadata": "object"
+    },
+    "invariants": [
+      "No egress by default",
+      "Signed desired state and monotonic apply",
+      "Replay-safe bounded spool with explicit loss accounting"
+    ]
+  },
+  "version": "0.0.0",
+  "status": "WEB_FOUNDATION",
+  "source_implemented": true,
+  "market_validation": "UNVALIDATED",
+  "assumption": "Browser application first; optional CLI/worker remains an engine adapter. Web foundation does not satisfy domain release gates.",
+  "engine_implemented": false,
+  "previous_engine_mode": "embedded-private",
+  "web_application": {
+    "status": "foundation_implemented",
+    "deployment_profile": "private-web",
+    "frontend": "React + TypeScript + Vite",
+    "web_runtime": "Node.js static shell; no engine proxy",
+    "default_engine_enabled": false,
+    "preview_storage": "tab memory only",
+    "offline_supported": false,
+    "engine_status": "planned",
+    "source": "apps/web/src/main.tsx",
+    "existing_backend": null
+  },
+  "web_version": "0.0.1"
+}

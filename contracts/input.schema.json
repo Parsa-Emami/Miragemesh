@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:parsa:miragemesh:input:0",
+  "title": "sensor-event planning draft",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "sensor_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "kind": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "sensor_id",
+    "event_id",
+    "sequence",
+    "observed_at",
+    "kind",
+    "metadata"
+  ]
+}
