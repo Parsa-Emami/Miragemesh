@@ -1,0 +1,16 @@
+{
+  "project": "MirageMesh",
+  "envelope": "CloudEvents-compatible 1.0 profile",
+  "delivery": "at-least-once",
+  "ordering": "not globally guaranteed; per-aggregate sequencing when documented",
+  "deduplication": "required by event id",
+  "types": [
+    "sensor.enrolled.v1",
+    "sensor.heartbeat.v1",
+    "desired_state.published.v1",
+    "applied_state.reported.v1",
+    "decoy.interaction_observed.v1",
+    "incident.correlated.v1",
+    "sensor.spool_pressure.v1"
+  ]
+}

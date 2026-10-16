@@ -1,0 +1,169 @@
+asyncapi: 3.1.0
+id: urn:parsa-security:miragemesh:events:v1
+info:
+  title: MirageMesh Events
+  version: 1.0.0
+  description: Canonical application event contract. Delivery is at-least-once; consumers must be idempotent and deduplicate by event id.
+defaultContentType: application/json
+channels:
+  event_sensor_enrolled_v1:
+    address: sensor.enrolled.v1
+    messages:
+      SensorEnrolledV1Message:
+        $ref: '#/components/messages/SensorEnrolledV1Message'
+  event_sensor_heartbeat_v1:
+    address: sensor.heartbeat.v1
+    messages:
+      SensorHeartbeatV1Message:
+        $ref: '#/components/messages/SensorHeartbeatV1Message'
+  event_desired_state_published_v1:
+    address: desired_state.published.v1
+    messages:
+      DesiredStatePublishedV1Message:
+        $ref: '#/components/messages/DesiredStatePublishedV1Message'
+  event_applied_state_reported_v1:
+    address: applied_state.reported.v1
+    messages:
+      AppliedStateReportedV1Message:
+        $ref: '#/components/messages/AppliedStateReportedV1Message'
+  event_decoy_interaction_observed_v1:
+    address: decoy.interaction_observed.v1
+    messages:
+      DecoyInteractionObservedV1Message:
+        $ref: '#/components/messages/DecoyInteractionObservedV1Message'
+  event_incident_correlated_v1:
+    address: incident.correlated.v1
+    messages:
+      IncidentCorrelatedV1Message:
+        $ref: '#/components/messages/IncidentCorrelatedV1Message'
+  event_sensor_spool_pressure_v1:
+    address: sensor.spool_pressure.v1
+    messages:
+      SensorSpoolPressureV1Message:
+        $ref: '#/components/messages/SensorSpoolPressureV1Message'
+operations:
+  send_sensor_enrolled_v1:
+    action: send
+    channel:
+      $ref: '#/channels/event_sensor_enrolled_v1'
+    messages:
+    - $ref: '#/channels/event_sensor_enrolled_v1/messages/SensorEnrolledV1Message'
+  send_sensor_heartbeat_v1:
+    action: send
+    channel:
+      $ref: '#/channels/event_sensor_heartbeat_v1'
+    messages:
+    - $ref: '#/channels/event_sensor_heartbeat_v1/messages/SensorHeartbeatV1Message'
+  send_desired_state_published_v1:
+    action: send
+    channel:
+      $ref: '#/channels/event_desired_state_published_v1'
+    messages:
+    - $ref: '#/channels/event_desired_state_published_v1/messages/DesiredStatePublishedV1Message'
+  send_applied_state_reported_v1:
+    action: send
+    channel:
+      $ref: '#/channels/event_applied_state_reported_v1'
+    messages:
+    - $ref: '#/channels/event_applied_state_reported_v1/messages/AppliedStateReportedV1Message'
+  send_decoy_interaction_observed_v1:
+    action: send
+    channel:
+      $ref: '#/channels/event_decoy_interaction_observed_v1'
+    messages:
+    - $ref: '#/channels/event_decoy_interaction_observed_v1/messages/DecoyInteractionObservedV1Message'
+  send_incident_correlated_v1:
+    action: send
+    channel:
+      $ref: '#/channels/event_incident_correlated_v1'
+    messages:
+    - $ref: '#/channels/event_incident_correlated_v1/messages/IncidentCorrelatedV1Message'
+  send_sensor_spool_pressure_v1:
+    action: send
+    channel:
+      $ref: '#/channels/event_sensor_spool_pressure_v1'
+    messages:
+    - $ref: '#/channels/event_sensor_spool_pressure_v1/messages/SensorSpoolPressureV1Message'
+components:
+  messages:
+    SensorEnrolledV1Message:
+      name: sensor.enrolled.v1
+      title: sensor.enrolled.v1
+      payload:
+        $ref: '#/components/schemas/EventEnvelope'
+    SensorHeartbeatV1Message:
+      name: sensor.heartbeat.v1
+      title: sensor.heartbeat.v1
+      payload:
+        $ref: '#/components/schemas/EventEnvelope'
+    DesiredStatePublishedV1Message:
+      name: desired_state.published.v1
+      title: desired_state.published.v1
+      payload:
+        $ref: '#/components/schemas/EventEnvelope'
+    AppliedStateReportedV1Message:
+      name: applied_state.reported.v1
+      title: applied_state.reported.v1
+      payload:
+        $ref: '#/components/schemas/EventEnvelope'
+    DecoyInteractionObservedV1Message:
+      name: decoy.interaction_observed.v1
+      title: decoy.interaction_observed.v1
+      payload:
+        $ref: '#/components/schemas/EventEnvelope'
+    IncidentCorrelatedV1Message:
+      name: incident.correlated.v1
+      title: incident.correlated.v1
+      payload:
+        $ref: '#/components/schemas/EventEnvelope'
+    SensorSpoolPressureV1Message:
+      name: sensor.spool_pressure.v1
+      title: sensor.spool_pressure.v1
+      payload:
+        $ref: '#/components/schemas/EventEnvelope'
+  schemas:
+    EventEnvelope:
+      type: object
+      additionalProperties: false
+      required:
+      - specversion
+      - id
+      - source
+      - type
+      - time
+      - subject
+      - data
+      properties:
+        specversion:
+          type: string
+          const: '1.0'
+        id:
+          type: string
+          minLength: 16
+        source:
+          type: string
+          minLength: 1
+        type:
+          type: string
+          enum:
+          - sensor.enrolled.v1
+          - sensor.heartbeat.v1
+          - desired_state.published.v1
+          - applied_state.reported.v1
+          - decoy.interaction_observed.v1
+          - incident.correlated.v1
+          - sensor.spool_pressure.v1
+        time:
+          type: string
+          format: date-time
+        subject:
+          type: string
+        traceparent:
+          type:
+          - string
+          - 'null'
+        datacontenttype:
+          type: string
+          const: application/json
+        data:
+          type: object

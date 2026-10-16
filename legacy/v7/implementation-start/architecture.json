@@ -1,0 +1,30 @@
+{
+  "project": "MirageMesh",
+  "version": "v1-reference",
+  "risk": "HIGH",
+  "runtime": [
+    "Laravel 13 control plane",
+    "Go sensor",
+    "rootless Podman OCI decoys",
+    "OpenBao PKI/signing provider",
+    "PostgreSQL 18",
+    "Valkey",
+    "ObjectStore",
+    "OpenTelemetry"
+  ],
+  "final_decisions": [
+    "v1 sensors use one-time enrollment then short-lived mTLS certificates from SensorIdentityProvider; OpenBao PKI is the production reference. SPIFFE/SPIRE is an optional environment adapter.",
+    "Decoys are low-interaction defensive services only. Active exploitation, hack-back, credential replay into real systems and outbound attack behavior are prohibited invariants.",
+    "OCI decoys run rootless with default-deny egress, dropped capabilities, no host PID/network namespace and explicit resource limits.",
+    "DesiredState revisions are monotonic, hash-addressed and server-signed. Sensor reports AppliedState with revision/hash/status.",
+    "Binary/plugin automatic update uses TUF update metadata and atomic last-known-good rollback; configuration distribution is separate from binary update trust.",
+    "Event identity is sensor_id + boot_id + monotonic_seq plus UUID; server deduplicates while retaining observed_at and received_at for skew analysis.",
+    "Offline spool is bounded, encrypted-at-rest when platform support exists, and uses explicit oldest/priority drop policy with loss counters."
+  ],
+  "data_ownership": {
+    "PostgreSQL": "fleet/desired state/incidents/authoritative metadata",
+    "Sensor spool": "bounded temporary event buffer",
+    "ObjectStore": "plugin/update artifacts and exported incident evidence",
+    "OCI runtime": "ephemeral decoy state"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "project": "MirageMesh",
+  "failures": [
+    "expired cert",
+    "offline spool full",
+    "duplicate/reordered event",
+    "bad config signature",
+    "plugin crash",
+    "egress attempt",
+    "clock skew",
+    "rollback update"
+  ],
+  "required_result": [
+    "invariants preserved",
+    "observable failure",
+    "bounded retries",
+    "recovery/reconciliation succeeds"
+  ]
+}
