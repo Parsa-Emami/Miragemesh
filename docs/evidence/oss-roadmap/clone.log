@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 test:clone
+> node scripts/clone-smoke.mjs
+
+{"passed":true,"stagedTree":"7a5f8db40212736641aaa57554f840b547e8b63e","proof":"real git clone -> npm run setup -> web startup","coreReady":false}

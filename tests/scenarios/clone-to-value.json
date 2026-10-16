@@ -1,0 +1,36 @@
+{
+  "project": "MirageMesh",
+  "status": "planned acceptance contract; not executed domain proof",
+  "input": "repository-authored synthetic licensed fixtures",
+  "steps": [
+    "Enroll sensor",
+    "apply signed config",
+    "isolated decoy event",
+    "disconnect",
+    "spool",
+    "reconnect with duplicate ACK test",
+    "triage and retention gap check."
+  ],
+  "expected_invariants": [
+    "No egress by default",
+    "Signed desired state and monotonic apply",
+    "Replay-safe bounded spool with explicit loss accounting"
+  ],
+  "negative_uat": [
+    "sensor معتبر enroll شود؛ token replay و certificate نامعتبر رد شوند",
+    "قطع شبکه و پرشدن spool رفتار مشخص دهد؛ reconnect داده را dedup کند",
+    "decoy به Internet و شبکهٔ داخلی عملیاتی دسترسی نداشته باشد"
+  ],
+  "clean_host_commands": [
+    "git clone https://github.com/Parsa-Emami/Miragemesh.git",
+    "cd Miragemesh",
+    "npm run setup",
+    "npm start"
+  ],
+  "requires_at_C30": [
+    "real engine and required local providers",
+    "the entire workflow",
+    "restart and restore",
+    "no paid/cloud account or sibling clone"
+  ]
+}

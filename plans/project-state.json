@@ -1,0 +1,15 @@
+{
+  "project": "MirageMesh",
+  "reviewed_commit": "e9c038074be43a148ac8d8204c9fd3daef702e12",
+  "readiness": "WEB_FOUNDATION",
+  "core_ready": false,
+  "implemented": [
+    "responsive web shell",
+    "roadmap browser",
+    "local bounded JSON structure preview"
+  ],
+  "engine": "not implemented",
+  "next_task": "C01",
+  "next_command": "npm run plan -- next",
+  "full_product_endpoint": "C30 locally usable; C40 full published OSS v1"
+}
