@@ -1,0 +1,973 @@
+# Local agent skills: evaluation and inventory
+
+## Scope and discovery
+
+Inventoried Skill entrypoints under `~/.codex`, `~/.agents`, `~/.claude`, `~/.cursor`, `~/.config/opencode`, `~/.grok`, `~/.kiro`, `~/.openclaw`, `~/.zcode`, and the installed `i-have-adhd` source copy. The scan found **1602 SKILL.md files** and **891 distinct frontmatter skill names**; there were **1056 distinct SKILL.md content hashes**. This scan includes versioned plugin caches and marketplace copies, so file-copy count is larger than runtime-active skill count.
+
+| Source root | SKILL.md files |
+|---|---:|
+| Codex and plugin cache | 1195 |
+| Agent user skills | 80 |
+| Claude and plugins | 202 |
+| Cursor and plugins | 73 |
+| OpenCode | 4 |
+| Grok | 0 |
+| Kiro extensions | 11 |
+| OpenClaw | 0 |
+| Zcode plugins | 35 |
+| i-have-adhd plugin source copy | 2 |
+
+The current Codex-visible roots (`~/.codex/skills`, `~/.agents/skills`, and its plugin cache) contain 239 manifest copies across 225 distinct names. Other tool caches are included in the complete inventory below; repeated versions are deduplicated by frontmatter name for ranking.
+
+The 13 selected candidates received detailed text, support-file, relative-reference, dependency and license review. The rest were screened by installed name, description, location, version/cache duplication, and whether their declared workflow matched MirageMesh’s stack and roadmap. The complete discovered skill-name inventory is at the end.
+
+## Ranking by project area
+
+| Area | Rank / selection | Decision | Rationale |
+|---|---|---|---|
+| Context engineering and token use | 1. `context-engineering`; 2. `source-driven-development` | Selected | Progressive context and source-first grounding fit the large roadmap and source-bound evidence rules. `using-agent-skills` was rejected because broad startup loading conflicts with progressive disclosure. |
+| Planning and architecture | 1. Selected roadmap card; 2. `api-and-interface-design` | API skill selected | `plans/commits/Cxx.md`, ADR-0003 and contracts already define planning and architecture. `planning-and-task-breakdown` points to an uninstalled shared Definition of Done file and duplicates the roadmap task ledger. |
+| Frontend and UI/UX | 1. `frontend-design`; 2. `frontend-ui-engineering`; 3. `web-design-guidelines` | `frontend-design` selected | It is brief-grounded, self-contained and includes accessibility/responsive design guidance. `frontend-ui-engineering` has a missing shared checklist; `web-design-guidelines` fetches mutable remote instructions each time. |
+| Backend and API design | 1. `api-and-interface-design`; 2. `source-driven-development` | Selected | Stable contracts matter for the planned engine and web boundary; implementation decisions need official sources. |
+| Database design and optimization | No local skill selected | Rejected | Supabase/Postgres skills target an unselected provider; database schemas and migrations are protected. Follow ADR-0003 and the selected C task. |
+| DevOps, containers and CI/CD | No local skill selected | Rejected | `ci-cd-and-automation` gives generic deployment examples with Node 22 and hosted-service assumptions; `.github/workflows/*`, `docs/engineering/*` and plan cards are more precise. |
+| Testing and debugging | 1. `test-driven-development`; 2. `systematic-debugging`; 3. `verification-before-completion` | Selected | Complete copies with bundled references/examples and fresh-evidence checks. |
+| Code quality and maintainability | 1. `ponytail-review`; 2. `code-simplification`; 3. `ponytail` | Selected | Complementary: source-aware review, scoped behavior-preserving cleanup, and smallest complete changes. |
+| Git and collaboration | 1. `git-workflow-and-versioning` | Selected | Supports reviewable changes; AGENTS still forbids inferred commit, push or publication. |
+| Documentation and technical writing | 1. `documentation-and-adrs`; 2. `no-ai-slop` | Selected | Records architecture intent and edits prose without inventing facts. |
+| Security | 1. Project ADR/task constraints; 2. `ponytail-review` | No dedicated skill selected | `security-best-practices` has an unresolved shared checklist reference; other audit/pentest choices require separate scanner/tools or service-specific workflows. Security changes remain governed by ADR-0003, task cards and official framework docs. |
+| Performance | 1. `ponytail-review`; 2. project C28 measurements | No dedicated skill | `performance-optimization` points to a missing shared checklist; Vercel React guidance includes Next-only material. Use measured evidence and C28 acceptance. |
+| Hallucination prevention and evidence | 1. `source-driven-development`; 2. `verification-before-completion`; 3. `context-engineering` | Selected | These directly support source-bound capability claims and fresh verification. |
+| AI-slop prevention | 1. `no-ai-slop`; 2. `frontend-design` | Selected | One handles prose, the other avoids templated visual design; both preserve the actual brief. |
+| Overengineering prevention | 1. `ponytail`; 2. `code-simplification`; 3. `ponytail-review` | Selected | Complementary implementation, refactoring and review guidance. |
+| Other specialist areas | None | Rejected | Analytics, design platforms, cloud providers, native mobile, ML training, document artifacts, marketing and pet management are outside the current source and roadmap. |
+
+## Selected copies
+
+| Skill | Original source | Local copy | License | Why |
+|---|---|---|---|
+| `context-engineering` | `~/.agents/skills/context-engineering` | `.agents/skills/context-engineering/` | Addy Osmani agent-skills; MIT | Progressive context loading and durable handoff guidance. |
+| `source-driven-development` | `~/.agents/skills/source-driven-development` | `.agents/skills/source-driven-development/` | Addy Osmani agent-skills; MIT | Official-source grounding and limits on unsupported claims. |
+| `api-and-interface-design` | `~/.agents/skills/api-and-interface-design` | `.agents/skills/api-and-interface-design/` | Addy Osmani agent-skills; MIT | Contracts for planned API, engine and web boundaries. |
+| `test-driven-development` | `~/.codex/plugins/cache/openai-curated-remote/superpowers/6.4.2/skills/test-driven-development` | `.agents/skills/test-driven-development/` | Superpowers 6.4.2; MIT | Behavior-first regressions; included bundled test-writing reference. |
+| `systematic-debugging` | `~/.codex/plugins/cache/openai-curated-remote/superpowers/6.4.2/skills/systematic-debugging` | `.agents/skills/systematic-debugging/` | Superpowers 6.4.2; MIT | Root-cause process for difficult failures; included supporting examples. |
+| `verification-before-completion` | `~/.codex/plugins/cache/openai-curated-remote/superpowers/6.4.2/skills/verification-before-completion` | `.agents/skills/verification-before-completion/` | Superpowers 6.4.2; MIT | Fresh evidence before completion claims. |
+| `code-simplification` | `~/.agents/skills/code-simplification` | `.agents/skills/code-simplification/` | Addy Osmani agent-skills; MIT | Scoped, behavior-preserving cleanup. |
+| `documentation-and-adrs` | `~/.agents/skills/documentation-and-adrs` | `.agents/skills/documentation-and-adrs/` | Addy Osmani agent-skills; MIT | Project decisions, contracts and engineering docs. |
+| `git-workflow-and-versioning` | `~/.agents/skills/git-workflow-and-versioning` | `.agents/skills/git-workflow-and-versioning/` | Addy Osmani agent-skills; MIT | Small reviewable changes and release discipline. |
+| `no-ai-slop` | `~/.codex/plugins/cache/openai-curated-remote/no-ai-slop/1.0.6/skills/no-ai-slop` | `.agents/skills/no-ai-slop/` | No AI Slop 1.0.6; MIT | Prose editing and detection; `eval.md` included. |
+| `ponytail` | `~/.codex/plugins/cache/ponytail/ponytail/5.3.2/skills/ponytail` | `.agents/skills/ponytail/` | Ponytail 5.3.2; MIT | Smallest complete implementation and anti-overengineering. |
+| `ponytail-review` | `~/.codex/plugins/cache/ponytail/ponytail/5.3.2/skills/ponytail-review` | `.agents/skills/ponytail-review/` | Ponytail 5.3.2; MIT | Source-aware review of correctness, safety, performance and tests. |
+| `frontend-design` | `~/.codex/skills/frontend-design` | `.agents/skills/frontend-design/` | OpenAI skill; Apache-2.0 | Distinctive UI direction grounded in product brief; full LICENSE.txt included. |
+
+License texts are retained in the upstream skill folder or `.agents/skill-licenses/`. Skill trees were copied byte-for-byte and no runtime package dependencies were added. `source-driven-development` may consult official online documentation when available; it does not require a particular installed service.
+
+## Rejected competing candidates
+
+- `planning-and-task-breakdown`: its shared Definition of Done file is absent in the installed copy, and its default task ledger duplicates the Cxx roadmap.
+- `debugging-and-error-recovery`: overlaps `systematic-debugging`; the latter includes a fuller root-cause workflow and its supporting files.
+- `frontend-ui-engineering`: missing shared accessibility checklist.
+- `web-design-guidelines`: requires a live remote rule fetch, so its rules are not pinned or self-contained.
+- `vercel-react-best-practices`: mixes React and Next.js guidance, including server rules irrelevant to the current Vite app, and adds 75 files.
+- `performance-optimization`: missing shared performance checklist; C28 is the repository measurement path.
+- `security-best-practices`: Apache-2.0 is present, but the installed skill refers to a missing shared `security-checklist.md`; copying it would preserve a broken dependency.
+- `ci-cd-and-automation`: stale Node 22 and hosted-deployment assumptions conflict with the pinned Node 24.19.0 local profile.
+- Supabase skills: no Supabase runtime is selected and protected database changes are out of scope.
+- Strix, GitHub, Figma, 21st.dev, Vercel, Hugging Face, Google, OpenAI product, template, analytics, native/mobile, animation, marketing and pet skills: specialized service, tool or stack not present in this task/current local core.
+- Other process skills (`using-agent-skills`, broad brainstorming/parallel delegation/worktree/branch-finishing and extra review variants): redundant or too prescriptive where project instructions and exact cards already define the workflow.
+
+## Complete discovered skill-name inventory
+
+Each distinct frontmatter name appears once, even if found in several agents, plugin caches or versions. All unselected entries were rejected for no current task/stack fit, a stronger project-native source of truth, duplicate versions, missing references, or required service-specific tooling as detailed above.
+
+- `21st-ai` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `21st-cli-use` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `21st-design-sync` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `21st-registry` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `21st-ui-build` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `21st-ui-explore` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `21st-ui-review` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `21st-video` — not selected; found in: Codex and plugin cache.
+- `Presentations` — not selected; found in: Codex and plugin cache.
+- `Spreadsheets` — not selected; found in: Codex and plugin cache.
+- `Zotero` — not selected; found in: Codex and plugin cache.
+- `ab-testing` — not selected; found in: Claude and plugins.
+- `access` — not selected; found in: Claude and plugins.
+- `accessibility-and-inclusive-visualization` — not selected; found in: Codex and plugin cache.
+- `ad-creative` — not selected; found in: Claude and plugins.
+- `add-ai-provider` — not selected; found in: Kiro extensions.
+- `add-command` — not selected; found in: Kiro extensions.
+- `add-icon` — not selected; found in: Kiro extensions.
+- `add-test` — not selected; found in: Kiro extensions.
+- `add-webview` — not selected; found in: Kiro extensions.
+- `adobe-batch-edit-photos` — not selected; found in: Codex and plugin cache.
+- `adobe-create-mockups` — not selected; found in: Codex and plugin cache.
+- `adobe-create-social-variations` — not selected; found in: Codex and plugin cache.
+- `adobe-design-from-template` — not selected; found in: Codex and plugin cache.
+- `adobe-edit-quick-cut` — not selected; found in: Codex and plugin cache.
+- `adobe-retouch-portraits` — not selected; found in: Codex and plugin cache.
+- `ads` — not selected; found in: Claude and plugins.
+- `agent-browser` — not selected; found in: Codex and plugin cache, Cursor and plugins.
+- `agent-browser-verify` — not selected; found in: Codex and plugin cache.
+- `agent-development` — not selected; found in: Claude and plugins.
+- `agent-native-architecture` — not selected; found in: Cursor and plugins.
+- `agents` — not selected; found in: Codex and plugin cache.
+- `agents-sdk` — not selected; found in: Codex and plugin cache.
+- `ai-elements` — not selected; found in: Codex and plugin cache.
+- `ai-gateway` — not selected; found in: Codex and plugin cache.
+- `ai-generation-persistence` — not selected; found in: Codex and plugin cache.
+- `ai-sdk` — not selected; found in: Codex and plugin cache.
+- `ai-seo` — not selected; found in: Claude and plugins.
+- `aiq-deploy` — not selected; found in: Codex and plugin cache.
+- `aiq-research` — not selected; found in: Codex and plugin cache.
+- `airtable-cli` — not selected; found in: Codex and plugin cache.
+- `airtable-filters` — not selected; found in: Codex and plugin cache.
+- `airtable-overview` — not selected; found in: Codex and plugin cache.
+- `alpha` — not selected; found in: Codex and plugin cache.
+- `alphafold-skill` — not selected; found in: Codex and plugin cache.
+- `analytics` — not selected; found in: Claude and plugins.
+- `analyze` — not selected; found in: Kiro extensions.
+- `analyze-data-quality` — not selected; found in: Codex and plugin cache.
+- `andrew-kane-gem-writer` — not selected; found in: Cursor and plugins.
+- `android-dev` — not selected; found in: Zcode plugins.
+- `android-emulator-qa` — not selected; found in: Codex and plugin cache.
+- `android-performance` — not selected; found in: Codex and plugin cache.
+- `animate` — not selected; found in: Agent user skills.
+- `animate-expo` — not selected; found in: Agent user skills.
+- `animation-vocabulary` — not selected; found in: Agent user skills.
+- `apex` — not selected; found in: Agent user skills.
+- `api-and-interface-design` — selected; found in: Agent user skills.
+- `api-security-testing` — not selected; found in: Agent user skills.
+- `appkit-interop` — not selected; found in: Codex and plugin cache.
+- `apple-design` — not selected; found in: Agent user skills.
+- `application-security-testing` — not selected; found in: Agent user skills.
+- `artifact-template-analytics-dashboard` — not selected; found in: Codex and plugin cache.
+- `artifact-template-business-review` — not selected; found in: Codex and plugin cache.
+- `artifact-template-design-report` — not selected; found in: Codex and plugin cache.
+- `artifact-template-experiment-analysis` — not selected; found in: Codex and plugin cache.
+- `artifact-template-financial-budget` — not selected; found in: Codex and plugin cache.
+- `artifact-template-investment-committee-memo` — not selected; found in: Codex and plugin cache.
+- `artifact-template-legal-memorandum` — not selected; found in: Codex and plugin cache.
+- `artifact-template-market-trends-report` — not selected; found in: Codex and plugin cache.
+- `artifact-template-minimal-letterhead` — not selected; found in: Codex and plugin cache.
+- `artifact-template-operating-calendar` — not selected; found in: Codex and plugin cache.
+- `artifact-template-operating-review` — not selected; found in: Codex and plugin cache.
+- `artifact-template-project-kickoff` — not selected; found in: Codex and plugin cache.
+- `artifact-template-project-tracker` — not selected; found in: Codex and plugin cache.
+- `artifact-template-sales-pipeline` — not selected; found in: Codex and plugin cache.
+- `artifact-template-simple-dark-mode` — not selected; found in: Codex and plugin cache.
+- `artifact-template-simple-light-mode` — not selected; found in: Codex and plugin cache.
+- `artifact-template-strategy-memorandum` — not selected; found in: Codex and plugin cache.
+- `artifact-template-system-design` — not selected; found in: Codex and plugin cache.
+- `artifact-template-team-alignment` — not selected; found in: Codex and plugin cache.
+- `artifact-template-three-statement-forecast` — not selected; found in: Codex and plugin cache.
+- `ask-sonner` — not selected; found in: Agent user skills.
+- `aso` — not selected; found in: Claude and plugins.
+- `assess-patch-risk` — not selected; found in: Codex and plugin cache.
+- `attack-path-analysis` — not selected; found in: Codex and plugin cache.
+- `audit` — not selected; found in: Codex and plugin cache.
+- `audit-commits` — not selected; found in: Kiro extensions.
+- `auth` — not selected; found in: Codex and plugin cache.
+- `automate` — not selected; found in: Cursor and plugins.
+- `autopilot` — not selected; found in: Cursor and plugins.
+- `banner-design` — not selected; found in: Agent user skills, Claude and plugins, Cursor and plugins.
+- `batch-draft-writer` — not selected; found in: Codex and plugin cache.
+- `beta` — not selected; found in: Codex and plugin cache.
+- `bgee-skill` — not selected; found in: Codex and plugin cache.
+- `bindingdb-skill` — not selected; found in: Codex and plugin cache.
+- `biobankjapan-phewas-skill` — not selected; found in: Codex and plugin cache.
+- `biorxiv-skill` — not selected; found in: Codex and plugin cache.
+- `biostudies-arrayexpress-skill` — not selected; found in: Codex and plugin cache.
+- `boltz-check-status` — not selected; found in: Codex and plugin cache.
+- `boltz-cli-setup` — not selected; found in: Codex and plugin cache.
+- `boltz-protein-design` — not selected; found in: Codex and plugin cache.
+- `boltz-protein-screen` — not selected; found in: Codex and plugin cache.
+- `boltz-small-molecule-adme` — not selected; found in: Codex and plugin cache.
+- `boltz-small-molecule-design` — not selected; found in: Codex and plugin cache.
+- `boltz-small-molecule-screen` — not selected; found in: Codex and plugin cache.
+- `boltz-structure-and-binding` — not selected; found in: Codex and plugin cache.
+- `bootstrap` — not selected; found in: Codex and plugin cache.
+- `brainstorming` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `brand` — not selected; found in: Agent user skills, Claude and plugins, Cursor and plugins.
+- `browser-testing-with-devtools` — not selected; found in: Agent user skills.
+- `build-chatgpt-app` — not selected; found in: Codex and plugin cache.
+- `build-dashboard` — not selected; found in: Codex and plugin cache.
+- `build-mcp-app` — not selected; found in: Claude and plugins.
+- `build-mcp-server` — not selected; found in: Claude and plugins.
+- `build-mcpb` — not selected; found in: Claude and plugins.
+- `build-model` — not selected; found in: Codex and plugin cache.
+- `build-report` — not selected; found in: Codex and plugin cache.
+- `build-run-debug` — not selected; found in: Codex and plugin cache.
+- `build-zoom-bot` — not selected; found in: Codex and plugin cache.
+- `build-zoom-contact-center-app` — not selected; found in: Codex and plugin cache.
+- `build-zoom-meeting-app` — not selected; found in: Codex and plugin cache.
+- `build-zoom-meeting-sdk-app` — not selected; found in: Codex and plugin cache.
+- `build-zoom-phone-integration` — not selected; found in: Codex and plugin cache.
+- `build-zoom-rest-api-app` — not selected; found in: Codex and plugin cache.
+- `build-zoom-team-chat-app` — not selected; found in: Codex and plugin cache.
+- `build-zoom-video-sdk-app` — not selected; found in: Codex and plugin cache.
+- `build-zoom-virtual-agent` — not selected; found in: Codex and plugin cache.
+- `building-ai-agent-on-cloudflare` — not selected; found in: Codex and plugin cache.
+- `building-mcp-server-on-cloudflare` — not selected; found in: Codex and plugin cache.
+- `building-native-ui` — not selected; found in: Codex and plugin cache.
+- `bull-bear` — not selected; found in: Codex and plugin cache.
+- `canva-brand-check` — not selected; found in: Codex and plugin cache.
+- `canva-branded-presentation` — not selected; found in: Codex and plugin cache.
+- `canva-bulk-create` — not selected; found in: Codex and plugin cache.
+- `canva-design-feedback` — not selected; found in: Codex and plugin cache.
+- `canva-edit-design` — not selected; found in: Codex and plugin cache.
+- `canva-implement-feedback` — not selected; found in: Codex and plugin cache.
+- `canva-resize-for-all-social-media` — not selected; found in: Codex and plugin cache.
+- `canva-resize-for-social-media` — not selected; found in: Codex and plugin cache.
+- `canva-translate-design` — not selected; found in: Codex and plugin cache.
+- `canvas` — not selected; found in: Cursor and plugins.
+- `canvas2d-data-visualization` — not selected; found in: Codex and plugin cache.
+- `capital-allocation` — not selected; found in: Codex and plugin cache.
+- `cardputer-buddy` — not selected; found in: Claude and plugins.
+- `catalyst-calendar` — not selected; found in: Codex and plugin cache.
+- `cbioportal-skill` — not selected; found in: Codex and plugin cache.
+- `cdn-caching` — not selected; found in: Codex and plugin cache.
+- `cellxgene-skill` — not selected; found in: Codex and plugin cache.
+- `chat-sdk` — not selected; found in: Codex and plugin cache.
+- `chatgpt-app-submission` — not selected; found in: Codex and plugin cache.
+- `chebi-skill` — not selected; found in: Codex and plugin cache.
+- `chembl-skill` — not selected; found in: Codex and plugin cache.
+- `choose-zoom-approach` — not selected; found in: Codex and plugin cache.
+- `chunk` — not selected; found in: Codex and plugin cache.
+- `churn-prevention` — not selected; found in: Claude and plugins.
+- `ci-cd-and-automation` — not selected; found in: Agent user skills.
+- `ci-security-scanning-with-strix` — not selected; found in: Agent user skills.
+- `circleci-builds` — not selected; found in: Codex and plugin cache.
+- `circleci-cli` — not selected; found in: Codex and plugin cache.
+- `circleci-config` — not selected; found in: Codex and plugin cache.
+- `civic-skill` — not selected; found in: Codex and plugin cache.
+- `claude-automation-recommender` — not selected; found in: Claude and plugins.
+- `claude-md-improver` — not selected; found in: Claude and plugins.
+- `claude-security` — not selected; found in: Claude and plugins.
+- `clean-up-dropbox-content` — not selected; found in: Codex and plugin cache.
+- `clinicaltrials-skill` — not selected; found in: Codex and plugin cache.
+- `clinvar-variation-skill` — not selected; found in: Codex and plugin cache.
+- `cloudflare` — not selected; found in: Codex and plugin cache.
+- `cms` — not selected; found in: Codex and plugin cache.
+- `co-marketing` — not selected; found in: Claude and plugins.
+- `code-review` — not selected; found in: Codex and plugin cache.
+- `code-review-and-quality` — not selected; found in: Agent user skills.
+- `code-simplification` — selected; found in: Agent user skills.
+- `codespace` — not selected; found in: Zcode plugins.
+- `codex-expo-run-actions` — not selected; found in: Codex and plugin cache.
+- `cold-email` — not selected; found in: Claude and plugins.
+- `collect-files-with-request` — not selected; found in: Codex and plugin cache.
+- `command-development` — not selected; found in: Claude and plugins.
+- `commit` — not selected; found in: Kiro extensions, Zcode plugins.
+- `community-marketing` — not selected; found in: Claude and plugins.
+- `comp-sheet` — not selected; found in: Codex and plugin cache.
+- `company-tearsheet` — not selected; found in: Codex and plugin cache.
+- `competitor-profiling` — not selected; found in: Claude and plugins.
+- `competitors` — not selected; found in: Claude and plugins.
+- `compound-docs` — not selected; found in: Cursor and plugins.
+- `comps` — not selected; found in: Codex and plugin cache.
+- `comps-valuation` — not selected; found in: Codex and plugin cache.
+- `computer-use` — not selected; found in: Zcode plugins.
+- `configure` — not selected; found in: Claude and plugins.
+- `connect-chatcut-desktop` — not selected; found in: Codex and plugin cache.
+- `connect-recommend` — not selected; found in: Codex and plugin cache.
+- `constraint-driven-development` — not selected; found in: Agent user skills.
+- `content-strategy` — not selected; found in: Claude and plugins.
+- `context-engineering` — selected; found in: Agent user skills.
+- `context7-cli` — not selected; found in: Codex and plugin cache.
+- `context7-docs` — not selected; found in: Codex and plugin cache.
+- `context7-mcp` — not selected; found in: Codex and plugin cache, Cursor and plugins.
+- `control-browser` — not selected; found in: Zcode plugins.
+- `control-chrome` — not selected; found in: Codex and plugin cache.
+- `control-in-app-browser` — not selected; found in: Codex and plugin cache.
+- `conversation-intelligence` — not selected; found in: Codex and plugin cache.
+- `convert-to-doc` — not selected; found in: Codex and plugin cache.
+- `convert-to-slides` — not selected; found in: Codex and plugin cache.
+- `copy-editing` — not selected; found in: Claude and plugins.
+- `copywriting` — not selected; found in: Claude and plugins.
+- `create-agent-skills` — not selected; found in: Cursor and plugins.
+- `create-data-context` — not selected; found in: Codex and plugin cache.
+- `create-hook` — not selected; found in: Cursor and plugins.
+- `create-issue` — not selected; found in: Kiro extensions.
+- `create-pet` — not selected; found in: Codex and plugin cache.
+- `create-rule` — not selected; found in: Cursor and plugins.
+- `create-skill` — not selected; found in: Cursor and plugins.
+- `create-subagent` — not selected; found in: Cursor and plugins.
+- `cro` — not selected; found in: Claude and plugins.
+- `cron-jobs` — not selected; found in: Codex and plugin cache.
+- `cuopt-user-rules` — not selected; found in: Codex and plugin cache.
+- `customer-research` — not selected; found in: Claude and plugins.
+- `d3-data-visualization` — not selected; found in: Codex and plugin cache.
+- `dashboard-expert` — not selected; found in: Codex and plugin cache.
+- `dashboards-and-real-time-visualization` — not selected; found in: Codex and plugin cache.
+- `data-visualization` — not selected; found in: Codex and plugin cache.
+- `dcf` — not selected; found in: Codex and plugin cache.
+- `dcf-model-builder` — not selected; found in: Codex and plugin cache.
+- `deal-tracker` — not selected; found in: Codex and plugin cache.
+- `debug-zoom` — not selected; found in: Codex and plugin cache.
+- `debug-zoom-integration` — not selected; found in: Codex and plugin cache.
+- `debugging-and-error-recovery` — not selected; found in: Agent user skills.
+- `deck-report-qc` — not selected; found in: Codex and plugin cache.
+- `deep-security-scan` — not selected; found in: Codex and plugin cache.
+- `define-security-policy` — not selected; found in: Codex and plugin cache.
+- `deploy-to-vercel` — not selected; found in: Agent user skills.
+- `deployments-cicd` — not selected; found in: Codex and plugin cache.
+- `deprecation-and-migration` — not selected; found in: Agent user skills.
+- `design` — not selected; found in: Agent user skills, Claude and plugins, Cursor and plugins.
+- `design-kpis` — not selected; found in: Codex and plugin cache.
+- `design-qa` — not selected; found in: Codex and plugin cache.
+- `design-system` — not selected; found in: Agent user skills, Claude and plugins, Cursor and plugins.
+- `devday-guide` — not selected; found in: Codex and plugin cache.
+- `dhh-rails-style` — not selected; found in: Cursor and plugins.
+- `diagnosing-commands` — not selected; found in: Zcode plugins.
+- `diagnosing-hooks` — not selected; found in: Zcode plugins.
+- `diagnosing-mcp` — not selected; found in: Zcode plugins.
+- `diagnosing-plugins` — not selected; found in: Zcode plugins.
+- `diagnosing-skills` — not selected; found in: Zcode plugins.
+- `diagnosing-superpowers` — not selected; found in: Codex and plugin cache, Claude and plugins.
+- `directory-submissions` — not selected; found in: Claude and plugins.
+- `dispatching-parallel-agents` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `document-review` — not selected; found in: Cursor and plugins.
+- `documentation-and-adrs` — selected; found in: Agent user skills.
+- `documents` — not selected; found in: Codex and plugin cache.
+- `docx` — not selected; found in: Zcode plugins.
+- `doubt-driven-development` — not selected; found in: Agent user skills.
+- `dspy-ruby` — not selected; found in: Cursor and plugins.
+- `durable-objects` — not selected; found in: Codex and plugin cache.
+- `dynamo-interconnect-check` — not selected; found in: Codex and plugin cache.
+- `dynamo-router-starter` — not selected; found in: Codex and plugin cache.
+- `earnings-deep-dive` — not selected; found in: Codex and plugin cache.
+- `earnings-flash` — not selected; found in: Codex and plugin cache.
+- `earnings-prep` — not selected; found in: Codex and plugin cache.
+- `earnings-preview` — not selected; found in: Codex and plugin cache.
+- `earnings-review` — not selected; found in: Codex and plugin cache.
+- `economic-impact-report` — not selected; found in: Codex and plugin cache.
+- `efo-ontology-skill` — not selected; found in: Codex and plugin cache.
+- `email` — not selected; found in: Codex and plugin cache.
+- `emails` — not selected; found in: Claude and plugins.
+- `emil-design-eng` — not selected; found in: Agent user skills.
+- `encode-skill` — not selected; found in: Codex and plugin cache.
+- `ensembl-skill` — not selected; found in: Codex and plugin cache.
+- `env-setup` — not selected; found in: Zcode plugins.
+- `env-vars` — not selected; found in: Codex and plugin cache.
+- `eod-wrapup` — not selected; found in: Codex and plugin cache.
+- `epigraphdb-skill` — not selected; found in: Codex and plugin cache.
+- `eqtl-catalogue-skill` — not selected; found in: Codex and plugin cache.
+- `equity-model-update` — not selected; found in: Codex and plugin cache.
+- `eva-skill` — not selected; found in: Codex and plugin cache.
+- `evaluate-plugin` — not selected; found in: Codex and plugin cache.
+- `evaluate-skill` — not selected; found in: Codex and plugin cache.
+- `eve` — not selected; found in: Codex and plugin cache.
+- `event-driven-analyzer` — not selected; found in: Codex and plugin cache.
+- `every-style-editor` — not selected; found in: Cursor and plugins.
+- `example-command` — not selected; found in: Claude and plugins.
+- `example-skill` — not selected; found in: Claude and plugins.
+- `excel-live-control` — not selected; found in: Codex and plugin cache.
+- `executing-plans` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `expo-api-routes` — not selected; found in: Codex and plugin cache.
+- `expo-cicd-workflows` — not selected; found in: Codex and plugin cache.
+- `expo-deployment` — not selected; found in: Codex and plugin cache.
+- `expo-dev-client` — not selected; found in: Codex and plugin cache.
+- `expo-module` — not selected; found in: Codex and plugin cache.
+- `expo-tailwind-setup` — not selected; found in: Codex and plugin cache.
+- `expo-ui-jetpack-compose` — not selected; found in: Codex and plugin cache.
+- `expo-ui-swift-ui` — not selected; found in: Codex and plugin cache.
+- `fa-jobs-to-be-done` — not selected; found in: Codex and plugin cache.
+- `faceless-channel` — not selected; found in: Codex and plugin cache.
+- `figma-code-connect` — not selected; found in: Codex and plugin cache.
+- `figma-code-workflows` — not selected; found in: Codex and plugin cache.
+- `figma-create-new-file` — not selected; found in: Codex and plugin cache.
+- `figma-design-to-code` — not selected; found in: Codex and plugin cache.
+- `figma-generate-design` — not selected; found in: Codex and plugin cache.
+- `figma-generate-diagram` — not selected; found in: Codex and plugin cache.
+- `figma-generate-library` — not selected; found in: Codex and plugin cache.
+- `figma-generative-plugins` — not selected; found in: Codex and plugin cache.
+- `figma-implement-motion` — not selected; found in: Codex and plugin cache.
+- `figma-shaders` — not selected; found in: Codex and plugin cache.
+- `figma-spec` — not selected; found in: Codex and plugin cache.
+- `figma-swiftui` — not selected; found in: Codex and plugin cache.
+- `figma-use` — not selected; found in: Codex and plugin cache.
+- `figma-use-figjam` — not selected; found in: Codex and plugin cache.
+- `figma-use-motion` — not selected; found in: Codex and plugin cache.
+- `figma-use-slides` — not selected; found in: Codex and plugin cache.
+- `file-todos` — not selected; found in: Cursor and plugins.
+- `financials-normalizer` — not selected; found in: Codex and plugin cache.
+- `find-animation-opportunities` — not selected; found in: Agent user skills.
+- `find-docs` — not selected; found in: Codex and plugin cache.
+- `find-dropbox-content` — not selected; found in: Codex and plugin cache.
+- `find-security-vulnerabilities-in-code` — not selected; found in: Agent user skills.
+- `find-skills` — not selected; found in: Agent user skills.
+- `finding-discovery` — not selected; found in: Codex and plugin cache.
+- `finishing-a-development-branch` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `finngen-phewas-skill` — not selected; found in: Codex and plugin cache.
+- `fix-finding` — not selected; found in: Codex and plugin cache.
+- `fix-security-vulnerabilities-with-strix` — not selected; found in: Agent user skills.
+- `free-tools` — not selected; found in: Claude and plugins.
+- `frontend-app-builder` — not selected; found in: Codex and plugin cache.
+- `frontend-design` — selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `frontend-testing-debugging` — not selected; found in: Codex and plugin cache.
+- `frontend-ui-engineering` — not selected; found in: Agent user skills.
+- `fund-comparison` — not selected; found in: Codex and plugin cache.
+- `fund-screener` — not selected; found in: Codex and plugin cache.
+- `fund-summarizer` — not selected; found in: Codex and plugin cache.
+- `game-playtest` — not selected; found in: Codex and plugin cache.
+- `game-studio` — not selected; found in: Codex and plugin cache.
+- `game-ui-frontend` — not selected; found in: Codex and plugin cache.
+- `gantt-chart-visualization` — not selected; found in: Codex and plugin cache.
+- `gather-business-context` — not selected; found in: Codex and plugin cache.
+- `geist` — not selected; found in: Codex and plugin cache.
+- `geistdocs` — not selected; found in: Codex and plugin cache.
+- `gemini-imagegen` — not selected; found in: Cursor and plugins.
+- `genebass-gene-burden-skill` — not selected; found in: Codex and plugin cache.
+- `geospatial-and-cartographic-visualization` — not selected; found in: Codex and plugin cache.
+- `get-context` — not selected; found in: Codex and plugin cache.
+- `gh-address-comments` — not selected; found in: Codex and plugin cache, OpenCode.
+- `gh-fix-ci` — not selected; found in: Codex and plugin cache, OpenCode.
+- `gist` — not selected; found in: Zcode plugins.
+- `git-workflow-and-versioning` — selected; found in: Agent user skills.
+- `git-worktree` — not selected; found in: Cursor and plugins.
+- `gmail` — not selected; found in: Codex and plugin cache.
+- `gmail-inbox-triage` — not selected; found in: Codex and plugin cache.
+- `gnomad-graphql-skill` — not selected; found in: Codex and plugin cache.
+- `goal` — not selected; found in: Cursor and plugins.
+- `google-docs` — not selected; found in: Codex and plugin cache.
+- `google-drive` — not selected; found in: Codex and plugin cache.
+- `google-drive-comments` — not selected; found in: Codex and plugin cache.
+- `google-sheets` — not selected; found in: Codex and plugin cache.
+- `google-slides` — not selected; found in: Codex and plugin cache.
+- `gpt-taste` — not selected; found in: Agent user skills.
+- `grammar-of-graphics-and-declarative-visualization` — not selected; found in: Codex and plugin cache.
+- `graphify` — not selected; found in: Codex and plugin cache, OpenCode.
+- `grill-me` — not selected; found in: Agent user skills.
+- `gsap` — not selected; found in: Codex and plugin cache.
+- `gsap-core` — not selected; found in: Agent user skills.
+- `gsap-frameworks` — not selected; found in: Agent user skills.
+- `gsap-performance` — not selected; found in: Agent user skills.
+- `gsap-plugins` — not selected; found in: Agent user skills.
+- `gsap-react` — not selected; found in: Agent user skills.
+- `gsap-scrolltrigger` — not selected; found in: Agent user skills.
+- `gsap-timeline` — not selected; found in: Agent user skills.
+- `gsap-utils` — not selected; found in: Agent user skills.
+- `gtex-eqtl-skill` — not selected; found in: Codex and plugin cache.
+- `guidance-tracker` — not selected; found in: Codex and plugin cache.
+- `gwas-catalog-skill` — not selected; found in: Codex and plugin cache.
+- `heygen-avatar` — not selected; found in: Codex and plugin cache.
+- `heygen-video` — not selected; found in: Codex and plugin cache.
+- `hf-cli` — not selected; found in: Codex and plugin cache.
+- `hmdb-skill` — not selected; found in: Codex and plugin cache.
+- `hook-development` — not selected; found in: Claude and plugins.
+- `huggingface-community-evals` — not selected; found in: Codex and plugin cache.
+- `huggingface-datasets` — not selected; found in: Codex and plugin cache.
+- `huggingface-gradio` — not selected; found in: Codex and plugin cache.
+- `huggingface-jobs` — not selected; found in: Codex and plugin cache.
+- `huggingface-llm-trainer` — not selected; found in: Codex and plugin cache.
+- `huggingface-paper-publisher` — not selected; found in: Codex and plugin cache.
+- `huggingface-papers` — not selected; found in: Codex and plugin cache.
+- `huggingface-trackio` — not selected; found in: Codex and plugin cache.
+- `huggingface-vision-trainer` — not selected; found in: Codex and plugin cache.
+- `human-protein-atlas-skill` — not selected; found in: Codex and plugin cache.
+- `hyperframes` — not selected; found in: Codex and plugin cache.
+- `hyperframes-cli` — not selected; found in: Codex and plugin cache.
+- `hyperframes-registry` — not selected; found in: Codex and plugin cache.
+- `i-have-adhd` — not selected; found in: Codex and plugin cache, Agent user skills, Claude and plugins, i-have-adhd plugin source copy.
+- `ib-deck` — not selected; found in: Codex and plugin cache.
+- `idea-generation` — not selected; found in: Codex and plugin cache.
+- `idea-refine` — not selected; found in: Agent user skills.
+- `ideate` — not selected; found in: Codex and plugin cache.
+- `image` — not selected; found in: Claude and plugins.
+- `image-to-code` — not selected; found in: Codex and plugin cache.
+- `imagegen` — not selected; found in: Codex and plugin cache.
+- `impeccable` — not selected; found in: Codex and plugin cache, Agent user skills.
+- `improve` — not selected; found in: Agent user skills.
+- `improve-animations` — not selected; found in: Agent user skills.
+- `improve-skill` — not selected; found in: Codex and plugin cache.
+- `incremental-implementation` — not selected; found in: Agent user skills.
+- `index` — not selected; found in: Codex and plugin cache.
+- `industry` — not selected; found in: Codex and plugin cache.
+- `inflection` — not selected; found in: Codex and plugin cache.
+- `initiate` — not selected; found in: Codex and plugin cache.
+- `initiating-coverage` — not selected; found in: Codex and plugin cache.
+- `inspect-dropbox-file` — not selected; found in: Codex and plugin cache.
+- `intake` — not selected; found in: Codex and plugin cache.
+- `interview-me` — not selected; found in: Agent user skills.
+- `investigate` — not selected; found in: Kiro extensions.
+- `investigation-mode` — not selected; found in: Codex and plugin cache.
+- `ios-app-intents` — not selected; found in: Codex and plugin cache.
+- `ios-debugger-agent` — not selected; found in: Codex and plugin cache.
+- `ios-dev` — not selected; found in: Zcode plugins.
+- `ios-ettrace-performance` — not selected; found in: Codex and plugin cache.
+- `ios-memgraph-leaks` — not selected; found in: Codex and plugin cache.
+- `ios-simulator-browser` — not selected; found in: Codex and plugin cache.
+- `ipd-skill` — not selected; found in: Codex and plugin cache.
+- `issue` — not selected; found in: Zcode plugins.
+- `json-render` — not selected; found in: Codex and plugin cache.
+- `jupyter-notebooks` — not selected; found in: Codex and plugin cache.
+- `karpathy-guidelines` — not selected; found in: Claude and plugins.
+- `knowledge-update` — not selected; found in: Codex and plugin cache.
+- `kpi-reporting` — not selected; found in: Codex and plugin cache.
+- `latex-compile` — not selected; found in: Codex and plugin cache.
+- `latex-doctor` — not selected; found in: Codex and plugin cache.
+- `launch` — not selected; found in: Claude and plugins.
+- `lead-magnets` — not selected; found in: Claude and plugins.
+- `liquid-glass` — not selected; found in: Codex and plugin cache.
+- `locus-to-gene-mapper-skill` — not selected; found in: Codex and plugin cache.
+- `long-short-pitch` — not selected; found in: Codex and plugin cache.
+- `loop` — not selected; found in: Cursor and plugins.
+- `m5-onboard` — not selected; found in: Claude and plugins.
+- `magicpath` — not selected; found in: Codex and plugin cache.
+- `make-interfaces-feel-better` — not selected; found in: Agent user skills.
+- `managed-pentesting-with-strix` — not selected; found in: Agent user skills.
+- `market-sizing` — not selected; found in: Codex and plugin cache.
+- `marketing-ideas` — not selected; found in: Claude and plugins.
+- `marketing-plan` — not selected; found in: Claude and plugins.
+- `marketing-psychology` — not selected; found in: Claude and plugins.
+- `marketplace` — not selected; found in: Codex and plugin cache.
+- `math-olympiad` — not selected; found in: Claude and plugins.
+- `mcp-integration` — not selected; found in: Claude and plugins.
+- `meeting-prep` — not selected; found in: Codex and plugin cache.
+- `meeting-scheduler` — not selected; found in: Codex and plugin cache.
+- `memo-builder` — not selected; found in: Codex and plugin cache.
+- `metabolights-skill` — not selected; found in: Codex and plugin cache.
+- `metric-diagnostics` — not selected; found in: Codex and plugin cache.
+- `metric-pack-designer` — not selected; found in: Codex and plugin cache.
+- `mgnify-skill` — not selected; found in: Codex and plugin cache.
+- `micro` — not selected; found in: Codex and plugin cache.
+- `microfrontends` — not selected; found in: Codex and plugin cache.
+- `migrate-to-skills` — not selected; found in: Cursor and plugins.
+- `mimosa-security-scan` — not selected; found in: Zcode plugins.
+- `minimal-plugin-skill` — not selected; found in: Codex and plugin cache.
+- `minimal-skill` — not selected; found in: Codex and plugin cache.
+- `mixpanel-auth` — not selected; found in: Codex and plugin cache.
+- `mixpanel-headless-setup` — not selected; found in: Codex and plugin cache.
+- `mixpanelyst` — not selected; found in: Codex and plugin cache.
+- `mobile-native` — not selected; found in: Agent user skills.
+- `mobile-web-app` — not selected; found in: Codex and plugin cache, Claude and plugins.
+- `model-audit-tieout` — not selected; found in: Codex and plugin cache.
+- `morning-briefing` — not selected; found in: Codex and plugin cache.
+- `narrator` — not selected; found in: Codex and plugin cache.
+- `native-data-fetching` — not selected; found in: Codex and plugin cache.
+- `ncbi-blast-skill` — not selected; found in: Codex and plugin cache.
+- `ncbi-clinicaltables-skill` — not selected; found in: Codex and plugin cache.
+- `ncbi-datasets-skill` — not selected; found in: Codex and plugin cache.
+- `ncbi-entrez-skill` — not selected; found in: Codex and plugin cache.
+- `ncbi-pmc-skill` — not selected; found in: Codex and plugin cache.
+- `ncc` — not selected; found in: Codex and plugin cache.
+- `nemoclaw-user-get-started` — not selected; found in: Codex and plugin cache.
+- `new-repo` — not selected; found in: Cursor and plugins.
+- `next-cache-components` — not selected; found in: Codex and plugin cache.
+- `next-forge` — not selected; found in: Codex and plugin cache.
+- `next-upgrade` — not selected; found in: Codex and plugin cache.
+- `nextjs` — not selected; found in: Codex and plugin cache.
+- `ngs-amplicon-microbiome` — not selected; found in: Codex and plugin cache.
+- `ngs-analysis-router` — not selected; found in: Codex and plugin cache.
+- `ngs-atacseq-peaks-qc` — not selected; found in: Codex and plugin cache.
+- `ngs-bcl-to-fastq` — not selected; found in: Codex and plugin cache.
+- `ngs-bulk-rnaseq` — not selected; found in: Codex and plugin cache.
+- `ngs-bulk-rnaseq-counts-qc` — not selected; found in: Codex and plugin cache.
+- `ngs-bulk-rnaseq-differential-expression` — not selected; found in: Codex and plugin cache.
+- `ngs-chip-cutrun-peaks-qc` — not selected; found in: Codex and plugin cache.
+- `ngs-dna-germline-variants` — not selected; found in: Codex and plugin cache.
+- `ngs-dna-somatic-variants` — not selected; found in: Codex and plugin cache.
+- `ngs-dna-umi-panel-variants` — not selected; found in: Codex and plugin cache.
+- `ngs-dna-variant-calling` — not selected; found in: Codex and plugin cache.
+- `ngs-epigenomics-peaks` — not selected; found in: Codex and plugin cache.
+- `ngs-fastq-qc` — not selected; found in: Codex and plugin cache.
+- `ngs-runtime-env` — not selected; found in: Codex and plugin cache.
+- `ngs-scrna-seq` — not selected; found in: Codex and plugin cache.
+- `ngs-shotgun-metagenomics` — not selected; found in: Codex and plugin cache.
+- `no-ai-slop` — selected; found in: Codex and plugin cache.
+- `node-link-and-diagram-layout` — not selected; found in: Codex and plugin cache.
+- `notion-knowledge-capture` — not selected; found in: Codex and plugin cache.
+- `notion-meeting-intelligence` — not selected; found in: Codex and plugin cache.
+- `notion-research-documentation` — not selected; found in: Codex and plugin cache.
+- `notion-spec-to-implementation` — not selected; found in: Codex and plugin cache.
+- `nvidia-skill-finder` — not selected; found in: Codex and plugin cache.
+- `observability` — not selected; found in: Codex and plugin cache.
+- `observability-and-instrumentation` — not selected; found in: Agent user skills.
+- `omniverse-cad-to-simready` — not selected; found in: Codex and plugin cache.
+- `omniverse-realtime-viewer` — not selected; found in: Codex and plugin cache.
+- `omniverse-usd-performance-tuning` — not selected; found in: Codex and plugin cache.
+- `onboard` — not selected; found in: Cursor and plugins.
+- `onboarding` — not selected; found in: Claude and plugins.
+- `openai-ads-conversions-setup` — not selected; found in: Codex and plugin cache.
+- `openai-api-troubleshooting` — not selected; found in: Codex and plugin cache.
+- `openai-docs` — not selected; found in: Codex and plugin cache.
+- `openai-platform-api-key` — not selected; found in: Codex and plugin cache.
+- `opentargets-skill` — not selected; found in: Codex and plugin cache.
+- `orchestrating-swarms` — not selected; found in: Cursor and plugins.
+- `organize-dropbox-folder` — not selected; found in: Codex and plugin cache.
+- `origin` — not selected; found in: Cursor and plugins.
+- `owasp-top-10-testing` — not selected; found in: Agent user skills.
+- `packaging-notarization` — not selected; found in: Codex and plugin cache.
+- `payments` — not selected; found in: Codex and plugin cache.
+- `paywalls` — not selected; found in: Claude and plugins.
+- `pdf` — not selected; found in: Codex and plugin cache, Zcode plugins.
+- `penetration-testing-with-strix` — not selected; found in: Agent user skills.
+- `performance-optimization` — not selected; found in: Agent user skills.
+- `pets` — not selected; found in: Codex and plugin cache.
+- `pharmgkb-skill` — not selected; found in: Codex and plugin cache.
+- `phaser-2d-game` — not selected; found in: Codex and plugin cache.
+- `physical-ai-infrastructure-setup-and-resilient-scaling` — not selected; found in: Codex and plugin cache.
+- `physical-ai-neural-reconstruction` — not selected; found in: Codex and plugin cache.
+- `pick-ui-library` — not selected; found in: Agent user skills.
+- `plan-zoom-integration` — not selected; found in: Codex and plugin cache.
+- `plan-zoom-product` — not selected; found in: Codex and plugin cache.
+- `planning-and-task-breakdown` — not selected; found in: Agent user skills.
+- `playground` — not selected; found in: Claude and plugins.
+- `plugin-creator` — not selected; found in: Codex and plugin cache, Zcode plugins.
+- `plugin-eval` — not selected; found in: Codex and plugin cache.
+- `plugin-management` — not selected; found in: Codex and plugin cache.
+- `plugin-settings` — not selected; found in: Claude and plugins.
+- `plugin-structure` — not selected; found in: Claude and plugins.
+- `ponytail` — selected; found in: Codex and plugin cache, Claude and plugins.
+- `ponytail-audit` — not selected; found in: Codex and plugin cache, Claude and plugins.
+- `ponytail-debt` — not selected; found in: Codex and plugin cache, Claude and plugins.
+- `ponytail-gain` — not selected; found in: Codex and plugin cache, Claude and plugins.
+- `ponytail-help` — not selected; found in: Codex and plugin cache, Claude and plugins.
+- `ponytail-review` — selected; found in: Codex and plugin cache, Claude and plugins.
+- `popups` — not selected; found in: Claude and plugins.
+- `portfolio-risk-management` — not selected; found in: Codex and plugin cache.
+- `posthog` — not selected; found in: Codex and plugin cache.
+- `pptx` — not selected; found in: Zcode plugins.
+- `pr` — not selected; found in: Zcode plugins.
+- `precedent-transactions` — not selected; found in: Codex and plugin cache.
+- `pricing` — not selected; found in: Claude and plugins.
+- `pride-skill` — not selected; found in: Codex and plugin cache.
+- `probe-sdk` — not selected; found in: Codex and plugin cache.
+- `produce` — not selected; found in: Codex and plugin cache.
+- `product-business-analysis` — not selected; found in: Codex and plugin cache.
+- `product-marketing` — not selected; found in: Claude and plugins.
+- `programmatic-seo` — not selected; found in: Claude and plugins.
+- `project-artifact` — not selected; found in: Claude and plugins.
+- `propose-security-hardening` — not selected; found in: Codex and plugin cache.
+- `prospecting` — not selected; found in: Claude and plugins.
+- `proteomexchange-skill` — not selected; found in: Codex and plugin cache.
+- `prototype` — not selected; found in: Agent user skills.
+- `pubchem-pug-skill` — not selected; found in: Codex and plugin cache.
+- `public-equity-investing` — not selected; found in: Codex and plugin cache.
+- `public-relations` — not selected; found in: Claude and plugins.
+- `publish-artifact-to-sites` — not selected; found in: Codex and plugin cache.
+- `quickgo-skill` — not selected; found in: Codex and plugin cache.
+- `rclone` — not selected; found in: Cursor and plugins.
+- `rcsb-pdb-skill` — not selected; found in: Codex and plugin cache.
+- `react-and-nextjs-data-visualization` — not selected; found in: Codex and plugin cache.
+- `react-best-practices` — not selected; found in: Codex and plugin cache.
+- `react-three-fiber-game` — not selected; found in: Codex and plugin cache.
+- `reactome-skill` — not selected; found in: Codex and plugin cache.
+- `receipts` — not selected; found in: Claude and plugins.
+- `receiving-code-review` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `referrals` — not selected; found in: Claude and plugins.
+- `release` — not selected; found in: Zcode plugins.
+- `remotion-best-practices` — not selected; found in: Codex and plugin cache.
+- `remotion-captions` — not selected; found in: Codex and plugin cache.
+- `remotion-create` — not selected; found in: Codex and plugin cache.
+- `remotion-docs` — not selected; found in: Codex and plugin cache.
+- `remotion-interactivity` — not selected; found in: Codex and plugin cache.
+- `remotion-maps` — not selected; found in: Codex and plugin cache.
+- `remotion-markup` — not selected; found in: Codex and plugin cache.
+- `remotion-multimedia` — not selected; found in: Codex and plugin cache.
+- `remotion-render` — not selected; found in: Codex and plugin cache.
+- `remotion-saas` — not selected; found in: Codex and plugin cache.
+- `remotion-studio` — not selected; found in: Codex and plugin cache.
+- `remotion-upgrade` — not selected; found in: Codex and plugin cache.
+- `rename-chat` — not selected; found in: Cursor and plugins.
+- `render-debug` — not selected; found in: Codex and plugin cache.
+- `render-deploy` — not selected; found in: Codex and plugin cache.
+- `render-migrate-from-heroku` — not selected; found in: Codex and plugin cache.
+- `render-monitor` — not selected; found in: Codex and plugin cache.
+- `render-workflows` — not selected; found in: Codex and plugin cache.
+- `repo` — not selected; found in: Zcode plugins.
+- `report-to-google-doc` — not selected; found in: Codex and plugin cache.
+- `report-to-google-slides` — not selected; found in: Codex and plugin cache.
+- `report-to-pdf` — not selected; found in: Codex and plugin cache.
+- `reports-pdfs-and-slide-automation` — not selected; found in: Codex and plugin cache.
+- `requesting-code-review` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `research` — not selected; found in: Codex and plugin cache.
+- `research-note` — not selected; found in: Codex and plugin cache.
+- `research-router-skill` — not selected; found in: Codex and plugin cache.
+- `resolve_pr_parallel` — not selected; found in: Cursor and plugins.
+- `restore-legacy-sessions` — not selected; found in: Zcode plugins.
+- `review` — not selected; found in: Cursor and plugins, Kiro extensions.
+- `review-agent` — not selected; found in: Codex and plugin cache.
+- `review-animations` — not selected; found in: Agent user skills.
+- `review-bugbot` — not selected; found in: Cursor and plugins.
+- `review-security` — not selected; found in: Cursor and plugins.
+- `revops` — not selected; found in: Claude and plugins.
+- `rhea-skill` — not selected; found in: Codex and plugin cache.
+- `rivet-sdk` — not selected; found in: Codex and plugin cache.
+- `rnacentral-skill` — not selected; found in: Codex and plugin cache.
+- `routing-middleware` — not selected; found in: Codex and plugin cache.
+- `runtime-cache` — not selected; found in: Codex and plugin cache.
+- `sales-enablement` — not selected; found in: Claude and plugins.
+- `sandbox-sdk` — not selected; found in: Codex and plugin cache.
+- `satori` — not selected; found in: Codex and plugin cache.
+- `scenario-sensitivity-generator` — not selected; found in: Codex and plugin cache.
+- `schedule-refresh-jobs` — not selected; found in: Codex and plugin cache.
+- `schema` — not selected; found in: Claude and plugins.
+- `scribe` — not selected; found in: Codex and plugin cache.
+- `scrna-seq-qc` — not selected; found in: Codex and plugin cache.
+- `scrollytelling-and-parallax-data-visualization` — not selected; found in: Codex and plugin cache.
+- `sdk` — not selected; found in: Cursor and plugins.
+- `secret` — not selected; found in: Zcode plugins.
+- `security-and-hardening` — not selected; found in: Agent user skills.
+- `security-best-practices` — not selected; found in: Codex and plugin cache, OpenCode.
+- `security-diff-scan` — not selected; found in: Codex and plugin cache.
+- `security-scan` — not selected; found in: Codex and plugin cache.
+- `sentry` — not selected; found in: Codex and plugin cache.
+- `seo-audit` — not selected; found in: Claude and plugins.
+- `session-report` — not selected; found in: Claude and plugins.
+- `setup` — not selected; found in: Codex and plugin cache, Cursor and plugins, Zcode plugins.
+- `setup-zoom-oauth` — not selected; found in: Codex and plugin cache.
+- `setup-zoom-webhooks` — not selected; found in: Codex and plugin cache.
+- `setup-zoom-websockets` — not selected; found in: Codex and plugin cache.
+- `shadcn` — not selected; found in: Codex and plugin cache.
+- `share` — not selected; found in: Codex and plugin cache, Cursor and plugins.
+- `share-artifact-summary` — not selected; found in: Codex and plugin cache.
+- `share-dropbox-content` — not selected; found in: Codex and plugin cache.
+- `shell` — not selected; found in: Cursor and plugins.
+- `shipping-and-launch` — not selected; found in: Agent user skills.
+- `shopify-admin` — not selected; found in: Codex and plugin cache.
+- `shopify-app-store-review` — not selected; found in: Codex and plugin cache.
+- `shopify-custom-data` — not selected; found in: Codex and plugin cache.
+- `shopify-customer` — not selected; found in: Codex and plugin cache.
+- `shopify-dev` — not selected; found in: Codex and plugin cache.
+- `shopify-functions` — not selected; found in: Codex and plugin cache.
+- `shopify-hydrogen` — not selected; found in: Codex and plugin cache.
+- `shopify-liquid` — not selected; found in: Codex and plugin cache.
+- `shopify-onboarding-dev` — not selected; found in: Codex and plugin cache.
+- `shopify-onboarding-merchant` — not selected; found in: Codex and plugin cache.
+- `shopify-partner` — not selected; found in: Codex and plugin cache.
+- `shopify-payments-apps` — not selected; found in: Codex and plugin cache.
+- `shopify-polaris-admin-extensions` — not selected; found in: Codex and plugin cache.
+- `shopify-polaris-app-home` — not selected; found in: Codex and plugin cache.
+- `shopify-polaris-checkout-extensions` — not selected; found in: Codex and plugin cache.
+- `shopify-polaris-customer-account-extensions` — not selected; found in: Codex and plugin cache.
+- `shopify-pos-ui` — not selected; found in: Codex and plugin cache.
+- `shopify-storefront-graphql` — not selected; found in: Codex and plugin cache.
+- `shopify-use-shopify-cli` — not selected; found in: Codex and plugin cache.
+- `sign-in-with-vercel` — not selected; found in: Codex and plugin cache.
+- `signing-entitlements` — not selected; found in: Codex and plugin cache.
+- `signup` — not selected; found in: Claude and plugins.
+- `site-architecture` — not selected; found in: Claude and plugins.
+- `sites` — not selected; found in: Codex and plugin cache.
+- `skill-creator` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins, Zcode plugins.
+- `skill-development` — not selected; found in: Claude and plugins.
+- `skill-installer` — not selected; found in: Codex and plugin cache.
+- `slides` — not selected; found in: Agent user skills, Claude and plugins, Cursor and plugins.
+- `sms` — not selected; found in: Claude and plugins.
+- `social` — not selected; found in: Claude and plugins.
+- `source-driven-development` — selected; found in: Agent user skills.
+- `spec-driven-development` — not selected; found in: Agent user skills.
+- `split-to-prs` — not selected; found in: Cursor and plugins.
+- `sprite-pipeline` — not selected; found in: Codex and plugin cache.
+- `ssgoi-motion-analyzer` — not selected; found in: Codex and plugin cache, Claude and plugins.
+- `start` — not selected; found in: Codex and plugin cache.
+- `statistical-and-uncertainty-visualization` — not selected; found in: Codex and plugin cache.
+- `statusline` — not selected; found in: Cursor and plugins.
+- `string-skill` — not selected; found in: Codex and plugin cache.
+- `stripe-apps` — not selected; found in: Codex and plugin cache.
+- `stripe-best-practices` — not selected; found in: Codex and plugin cache.
+- `stripe-directory` — not selected; found in: Codex and plugin cache.
+- `stripe-docs` — not selected; found in: Codex and plugin cache.
+- `stripe-projects` — not selected; found in: Codex and plugin cache.
+- `subagent-driven-development` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `subtitles` — not selected; found in: Codex and plugin cache.
+- `supabase` — not selected; found in: Codex and plugin cache, Claude and plugins.
+- `supabase-postgres-best-practices` — not selected; found in: Codex and plugin cache, Claude and plugins.
+- `superhuman-mail` — not selected; found in: Codex and plugin cache.
+- `supply-chain` — not selected; found in: Codex and plugin cache.
+- `swiftpm-macos` — not selected; found in: Codex and plugin cache.
+- `swiftui-liquid-glass` — not selected; found in: Codex and plugin cache.
+- `swiftui-patterns` — not selected; found in: Codex and plugin cache.
+- `swiftui-performance-audit` — not selected; found in: Codex and plugin cache.
+- `swiftui-ui-patterns` — not selected; found in: Codex and plugin cache.
+- `swiftui-view-refactor` — not selected; found in: Codex and plugin cache.
+- `swr` — not selected; found in: Codex and plugin cache.
+- `systematic-debugging` — selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `tearsheet` — not selected; found in: Codex and plugin cache.
+- `telemetry` — not selected; found in: Codex and plugin cache.
+- `template-creator` — not selected; found in: Codex and plugin cache.
+- `temporal-cloud-setup` — not selected; found in: Codex and plugin cache.
+- `temporal-developer` — not selected; found in: Codex and plugin cache.
+- `temporal-ops` — not selected; found in: Codex and plugin cache.
+- `temporal-serverless` — not selected; found in: Codex and plugin cache.
+- `test-driven-development` — selected; found in: Codex and plugin cache, Agent user skills, Claude and plugins, Cursor and plugins.
+- `test-triage` — not selected; found in: Codex and plugin cache.
+- `testing-data-visualizations` — not selected; found in: Codex and plugin cache.
+- `texlive-runtime-installer` — not selected; found in: Codex and plugin cache.
+- `thermo-nuclear-code-quality-review` — not selected; found in: Agent user skills.
+- `thesis-tracker` — not selected; found in: Codex and plugin cache.
+- `threat-model` — not selected; found in: Codex and plugin cache.
+- `three-statement-model-builder` — not selected; found in: Codex and plugin cache.
+- `three-webgl-game` — not selected; found in: Codex and plugin cache.
+- `threejs-data-visualization` — not selected; found in: Codex and plugin cache.
+- `tpmi-phewas-skill` — not selected; found in: Codex and plugin cache.
+- `track-findings` — not selected; found in: Codex and plugin cache.
+- `transformers-js` — not selected; found in: Codex and plugin cache.
+- `triage-finding` — not selected; found in: Codex and plugin cache.
+- `turbopack` — not selected; found in: Codex and plugin cache.
+- `turborepo` — not selected; found in: Codex and plugin cache.
+- `twilio-account-setup` — not selected; found in: Codex and plugin cache.
+- `twilio-agent-augmentation-architect` — not selected; found in: Codex and plugin cache.
+- `twilio-agent-connect` — not selected; found in: Codex and plugin cache.
+- `twilio-ai-agent-architect` — not selected; found in: Codex and plugin cache.
+- `twilio-call-recordings` — not selected; found in: Codex and plugin cache.
+- `twilio-cli-reference` — not selected; found in: Codex and plugin cache.
+- `twilio-compliance-onboarding` — not selected; found in: Codex and plugin cache.
+- `twilio-compliance-traffic` — not selected; found in: Codex and plugin cache.
+- `twilio-conference-calls` — not selected; found in: Codex and plugin cache.
+- `twilio-content-template-builder` — not selected; found in: Codex and plugin cache.
+- `twilio-conversation-orchestrator` — not selected; found in: Codex and plugin cache.
+- `twilio-conversations-classic-api` — not selected; found in: Codex and plugin cache.
+- `twilio-customer-memory` — not selected; found in: Codex and plugin cache.
+- `twilio-customer-support-architect` — not selected; found in: Codex and plugin cache.
+- `twilio-debugging-observability` — not selected; found in: Codex and plugin cache.
+- `twilio-email-deliverability-advisor` — not selected; found in: Codex and plugin cache.
+- `twilio-email-send` — not selected; found in: Codex and plugin cache.
+- `twilio-enterprise-knowledge` — not selected; found in: Codex and plugin cache.
+- `twilio-iam-auth-setup` — not selected; found in: Codex and plugin cache.
+- `twilio-identity-verification-advisor` — not selected; found in: Codex and plugin cache.
+- `twilio-isv-sms-best-practices` — not selected; found in: Codex and plugin cache.
+- `twilio-lookup-phone-intelligence` — not selected; found in: Codex and plugin cache.
+- `twilio-marketing-promotions-advisor` — not selected; found in: Codex and plugin cache.
+- `twilio-messaging-channel-advisor` — not selected; found in: Codex and plugin cache.
+- `twilio-messaging-overview` — not selected; found in: Codex and plugin cache.
+- `twilio-messaging-services` — not selected; found in: Codex and plugin cache.
+- `twilio-messaging-webhooks` — not selected; found in: Codex and plugin cache.
+- `twilio-notifications-alerts-advisor` — not selected; found in: Codex and plugin cache.
+- `twilio-numbers-senders` — not selected; found in: Codex and plugin cache.
+- `twilio-organizations-setup` — not selected; found in: Codex and plugin cache.
+- `twilio-rcs-messaging` — not selected; found in: Codex and plugin cache.
+- `twilio-regulatory-compliance-bundles` — not selected; found in: Codex and plugin cache.
+- `twilio-reliability-patterns` — not selected; found in: Codex and plugin cache.
+- `twilio-security-api-auth` — not selected; found in: Codex and plugin cache.
+- `twilio-security-compliance-hipaa` — not selected; found in: Codex and plugin cache.
+- `twilio-security-hardening` — not selected; found in: Codex and plugin cache.
+- `twilio-send-message` — not selected; found in: Codex and plugin cache.
+- `twilio-sendgrid-account-setup` — not selected; found in: Codex and plugin cache.
+- `twilio-sendgrid-deliverability-advisor` — not selected; found in: Codex and plugin cache.
+- `twilio-sendgrid-email-send` — not selected; found in: Codex and plugin cache.
+- `twilio-sendgrid-email-settings` — not selected; found in: Codex and plugin cache.
+- `twilio-sendgrid-engagement-quality` — not selected; found in: Codex and plugin cache.
+- `twilio-sendgrid-inbound-parse` — not selected; found in: Codex and plugin cache.
+- `twilio-sendgrid-suppressions` — not selected; found in: Codex and plugin cache.
+- `twilio-sendgrid-webhooks` — not selected; found in: Codex and plugin cache.
+- `twilio-sms-send-message` — not selected; found in: Codex and plugin cache.
+- `twilio-taskrouter-routing` — not selected; found in: Codex and plugin cache.
+- `twilio-verify-send-otp` — not selected; found in: Codex and plugin cache.
+- `twilio-voice-conversation-relay` — not selected; found in: Codex and plugin cache.
+- `twilio-voice-outbound-calls` — not selected; found in: Codex and plugin cache.
+- `twilio-voice-twiml` — not selected; found in: Codex and plugin cache.
+- `twilio-webhook-architecture` — not selected; found in: Codex and plugin cache.
+- `twilio-whatsapp-manage-senders` — not selected; found in: Codex and plugin cache.
+- `twilio-whatsapp-send-message` — not selected; found in: Codex and plugin cache.
+- `typescript-data-visualization-engineering` — not selected; found in: Codex and plugin cache.
+- `ucp` — not selected; found in: Codex and plugin cache.
+- `ui-styling` — not selected; found in: Agent user skills, Claude and plugins, Cursor and plugins.
+- `ui-toolkit` — not selected; found in: Codex and plugin cache.
+- `ui-ux-pro-max` — not selected; found in: Agent user skills, Claude and plugins, Cursor and plugins.
+- `ukb-topmed-phewas-skill` — not selected; found in: Codex and plugin cache.
+- `uml-and-software-architecture-visualization` — not selected; found in: Codex and plugin cache.
+- `uniprot-skill` — not selected; found in: Codex and plugin cache.
+- `unit-economics` — not selected; found in: Codex and plugin cache.
+- `update-cli-config` — not selected; found in: Cursor and plugins.
+- `update-cursor-settings` — not selected; found in: Cursor and plugins.
+- `update-pet` — not selected; found in: Codex and plugin cache.
+- `upgrade-stripe` — not selected; found in: Codex and plugin cache.
+- `upgrading-expo` — not selected; found in: Codex and plugin cache.
+- `url-to-code` — not selected; found in: Codex and plugin cache.
+- `url2video` — not selected; found in: Zcode plugins.
+- `use-dom` — not selected; found in: Codex and plugin cache.
+- `user-context` — not selected; found in: Codex and plugin cache.
+- `using-agent-skills` — not selected; found in: Agent user skills.
+- `using-git-worktrees` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `using-superpowers` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `v0-dev` — not selected; found in: Codex and plugin cache.
+- `validate-data` — not selected; found in: Codex and plugin cache.
+- `validation` — not selected; found in: Codex and plugin cache.
+- `vercel-agent` — not selected; found in: Codex and plugin cache.
+- `vercel-api` — not selected; found in: Codex and plugin cache.
+- `vercel-cli` — not selected; found in: Codex and plugin cache.
+- `vercel-cli-with-tokens` — not selected; found in: Agent user skills.
+- `vercel-composition-patterns` — not selected; found in: Agent user skills.
+- `vercel-connect` — not selected; found in: Codex and plugin cache.
+- `vercel-firewall` — not selected; found in: Codex and plugin cache.
+- `vercel-flags` — not selected; found in: Codex and plugin cache.
+- `vercel-functions` — not selected; found in: Codex and plugin cache.
+- `vercel-optimize` — not selected; found in: Agent user skills.
+- `vercel-queues` — not selected; found in: Codex and plugin cache.
+- `vercel-react-best-practices` — not selected; found in: Agent user skills.
+- `vercel-react-native-skills` — not selected; found in: Agent user skills.
+- `vercel-react-view-transitions` — not selected; found in: Agent user skills.
+- `vercel-sandbox` — not selected; found in: Codex and plugin cache.
+- `vercel-services` — not selected; found in: Codex and plugin cache.
+- `vercel-storage` — not selected; found in: Codex and plugin cache.
+- `verification` — not selected; found in: Codex and plugin cache.
+- `verification-before-completion` — selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `verify` — not selected; found in: Codex and plugin cache, Claude and plugins.
+- `verify-fix` — not selected; found in: Codex and plugin cache.
+- `video` — not selected; found in: Claude and plugins.
+- `video2code` — not selected; found in: Zcode plugins.
+- `video2code-3d` — not selected; found in: Zcode plugins.
+- `video2fullstack` — not selected; found in: Zcode plugins.
+- `view-refactor` — not selected; found in: Codex and plugin cache.
+- `visualization-strategy-and-critique` — not selected; found in: Codex and plugin cache.
+- `visualize` — not selected; found in: Codex and plugin cache, Cursor and plugins.
+- `visualize-data` — not selected; found in: Codex and plugin cache.
+- `vulnerability-writeup` — not selected; found in: Codex and plugin cache.
+- `web-3d-asset-pipeline` — not selected; found in: Codex and plugin cache.
+- `web-app-penetration-testing` — not selected; found in: Agent user skills.
+- `web-design-guidelines` — not selected; found in: Agent user skills.
+- `web-game-foundations` — not selected; found in: Codex and plugin cache.
+- `web-gui-tester` — not selected; found in: Zcode plugins.
+- `web-perf` — not selected; found in: Codex and plugin cache.
+- `web-replicate` — not selected; found in: Zcode plugins.
+- `website-to-hyperframes` — not selected; found in: Codex and plugin cache.
+- `window-management` — not selected; found in: Codex and plugin cache.
+- `wix-app` — not selected; found in: Codex and plugin cache.
+- `wix-design-system` — not selected; found in: Codex and plugin cache.
+- `wix-headless` — not selected; found in: Codex and plugin cache.
+- `wix-manage` — not selected; found in: Codex and plugin cache.
+- `workers-best-practices` — not selected; found in: Codex and plugin cache.
+- `workflow` — not selected; found in: Codex and plugin cache.
+- `workflow-run` — not selected; found in: Zcode plugins.
+- `working-capital` — not selected; found in: Codex and plugin cache.
+- `wrangler` — not selected; found in: Codex and plugin cache.
+- `write-swift` — not selected; found in: Agent user skills.
+- `writing-guidelines` — not selected; found in: Agent user skills.
+- `writing-hookify-rules` — not selected; found in: Claude and plugins.
+- `writing-plans` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `writing-skills` — not selected; found in: Codex and plugin cache, Claude and plugins, Cursor and plugins.
+- `xlsx` — not selected; found in: Zcode plugins.
+- `zcode-configuration-guide` — not selected; found in: Zcode plugins.
+- `zoom-apps-sdk` — not selected; found in: Codex and plugin cache.
+- `zoom-cobrowse-sdk` — not selected; found in: Codex and plugin cache.
+- `zoom-contact-center-android` — not selected; found in: Codex and plugin cache.
+- `zoom-contact-center-ios` — not selected; found in: Codex and plugin cache.
+- `zoom-contact-center-web` — not selected; found in: Codex and plugin cache.
+- `zoom-general` — not selected; found in: Codex and plugin cache.
+- `zoom-meeting-sdk-android` — not selected; found in: Codex and plugin cache.
+- `zoom-meeting-sdk-electron` — not selected; found in: Codex and plugin cache.
+- `zoom-meeting-sdk-ios` — not selected; found in: Codex and plugin cache.
+- `zoom-meeting-sdk-linux` — not selected; found in: Codex and plugin cache.
+- `zoom-meeting-sdk-macos` — not selected; found in: Codex and plugin cache.
+- `zoom-meeting-sdk-react-native` — not selected; found in: Codex and plugin cache.
+- `zoom-meeting-sdk-unreal` — not selected; found in: Codex and plugin cache.
+- `zoom-meeting-sdk-web` — not selected; found in: Codex and plugin cache.
+- `zoom-meeting-sdk-web-client-view` — not selected; found in: Codex and plugin cache.
+- `zoom-meeting-sdk-web-component-view` — not selected; found in: Codex and plugin cache.
+- `zoom-meeting-sdk-windows` — not selected; found in: Codex and plugin cache.
+- `zoom-oauth` — not selected; found in: Codex and plugin cache.
+- `zoom-rtms` — not selected; found in: Codex and plugin cache.
+- `zoom-video-sdk-android` — not selected; found in: Codex and plugin cache.
+- `zoom-video-sdk-flutter` — not selected; found in: Codex and plugin cache.
+- `zoom-video-sdk-ios` — not selected; found in: Codex and plugin cache.
+- `zoom-video-sdk-linux` — not selected; found in: Codex and plugin cache.
+- `zoom-video-sdk-macos` — not selected; found in: Codex and plugin cache.
+- `zoom-video-sdk-react-native` — not selected; found in: Codex and plugin cache.
+- `zoom-video-sdk-unity` — not selected; found in: Codex and plugin cache.
+- `zoom-video-sdk-web` — not selected; found in: Codex and plugin cache.
+- `zoom-video-sdk-windows` — not selected; found in: Codex and plugin cache.
+- `zoom-virtual-agent-android` — not selected; found in: Codex and plugin cache.
+- `zoom-virtual-agent-ios` — not selected; found in: Codex and plugin cache.
+- `zoom-virtual-agent-web` — not selected; found in: Codex and plugin cache.
