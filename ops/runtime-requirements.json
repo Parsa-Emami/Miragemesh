@@ -17,15 +17,25 @@
     "event_retention_days": 7,
     "payload_max_kib": 8
   },
-  "current_shell_requires": ["Git", "Node 24.19.0", "npm CLI 11.9.0 invoked separately from the Node-bundled npm"],
+  "current_shell_requires": [
+    "Git",
+    "Node 24.19.0",
+    "npm CLI 11.9.0 invoked separately from the Node-bundled npm",
+    "installed Go 1.21+ (setup selects Go 1.27.2)",
+    "rootless Podman 4.9.3"
+  ],
   "full_engine_platform_target": "Linux x86_64 (amd64); reference provider package is Ubuntu 24.04 LTS; other platforms need separately verified pins",
   "toolchain": {
     "node": "24.19.0",
     "npm_cli": "11.9.0",
     "go": "1.27.2",
-    "podman": {"version": "4.9.3", "package": "4.9.3+ds1-1ubuntu0.2", "profile": "full workflow; rootless isolated decoys"}
+    "podman": {
+      "version": "4.9.3",
+      "package": "4.9.3+ds1-1ubuntu0.2",
+      "profile": "full workflow; rootless isolated decoys"
+    }
   },
   "paid_or_cloud_account_required": false,
   "owned_domain_required": false,
-  "versions": "Exact pins and official artifact metadata are recorded in docs/engineering/toolchain-lock.json; no engine execution is verified by C02."
+  "versions": "Exact pins and official artifact metadata are recorded in docs/engineering/toolchain-lock.json; C03 runs lifecycle/health only, with domain features still pending."
 }

@@ -11,18 +11,25 @@ concurrency:
   cancel-in-progress: true
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
+          fetch-depth: 0
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
         with:
           node-version-file: .nvmrc
           cache: npm
       - run: npx --yes --package=npm@11.9.0 --call 'npm ci --ignore-scripts'
       - run: npx --yes --package=npm@11.9.0 --call 'npm run validate:plan'
+      - name: Prepare the locked local runtime prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --allow-downgrades --no-install-recommends podman=4.9.3+ds1-1ubuntu0.2
+          GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go version
+          podman info --format '{{.Host.Security.Rootless}}'
       - run: npx --yes --package=npm@11.9.0 --call 'npm run build'
       - run: npx --yes --package=npm@11.9.0 --call 'npm test'
       - run: ./node_modules/.bin/playwright install --with-deps chromium

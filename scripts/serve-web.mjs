@@ -2,11 +2,29 @@ import http from 'node:http';
 import { readFile, realpath, stat } from 'node:fs/promises';
 import { resolve, relative, extname, isAbsolute } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { validateRuntimeConfig } from '../apps/web/src/lib/runtime-config.mjs';
+import { validateRuntimeConfig, validateHealth } from '../apps/web/src/lib/runtime-config.mjs';
 
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
 const csp = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'";
-export function createWebServer({ root, config, projectId }) {
+
+export function readEngineHealth(address, signal) {
+  if (!/^127\.0\.0\.1:[1-9]\d{0,4}$/.test(address) || Number(address.split(':')[1]) > 65535) return Promise.reject(new Error('Invalid loopback engine address.'));
+  return new Promise((accept, reject) => {
+    const request = http.get(`http://${address}/healthz`, { agent: false, signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(2000)]) : AbortSignal.timeout(2000) }, response => {
+      if (response.statusCode !== 200) { response.destroy(); reject(new Error('Engine unavailable.')); return; }
+      let body = '';
+      response.on('data', chunk => {
+        body += chunk.toString('utf8');
+        if (Buffer.byteLength(body) > 4096) response.destroy(new Error('Engine health exceeds limit.'));
+      });
+      response.on('error', reject);
+      response.on('end', () => { try { accept(validateHealth(JSON.parse(body))); } catch (error) { reject(error); } });
+    });
+    request.on('error', reject);
+  });
+}
+
+export function createWebServer({ root, config, projectId, engineAddress }) {
   const valid = validateRuntimeConfig(config, projectId);
   const publicRoot = resolve(root);
   const within = path => { const diff = relative(publicRoot, path); return diff !== '..' && !diff.startsWith('../') && !isAbsolute(diff); };
@@ -31,6 +49,11 @@ export function createWebServer({ root, config, projectId }) {
     if (path === '/readyz') {
       try { await stat(resolve(publicRoot, 'index.html')); send(200, '{"status":"ready","scope":"web-shell","engineReady":false}'); }
       catch { send(503, '{"status":"not_ready","scope":"web-shell"}'); }
+      return;
+    }
+    if (path === '/api/engine/health' && engineAddress) {
+      try { send(200, JSON.stringify(await readEngineHealth(engineAddress))); }
+      catch { send(503, '{"error":"engine_unavailable"}'); }
       return;
     }
     if (path === '/api' || path.startsWith('/api/')) { send(503, '{"error":"engine_not_integrated"}'); return; }

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "provenance": "Repository-authored synthetic C03 runtime fixture; no real sensor traffic.",
+  "license": "Apache-2.0",
+  "health": {
+    "status": "ok",
+    "scope": "engine-runtime",
+    "version": "0.0.1",
+    "toolchain": "go1.27.2",
+    "coreReady": false
+  },
+  "sensor_event": {
+    "sensor_id": "sensor-01",
+    "event_id": "event-01",
+    "sequence": 1,
+    "observed_at": "2026-10-19T00:00:00Z",
+    "kind": "decoy.interaction_observed.v1",
+    "metadata": {
+      "synthetic": true
+    }
+  },
+  "event_processing": "unavailable in C03"
+}

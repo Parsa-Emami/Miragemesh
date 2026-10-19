@@ -1,0 +1,27 @@
+344676 +++ exited with 0 +++
+344684 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=344681, si_uid=1000} ---
+344669 connect(22, {sa_family=AF_INET, sin_port=htons(40803), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+344669 connect(26, {sa_family=AF_INET, sin_port=htons(40803), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+344669 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=344658, si_uid=1000} ---
+344681 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=344669, si_uid=1000} ---
+344689 +++ exited with 0 +++
+344688 +++ exited with 0 +++
+344686 +++ exited with 0 +++
+344687 +++ exited with 0 +++
+344685 +++ exited with 0 +++
+344684 +++ exited with 0 +++
+344683 +++ exited with 0 +++
+344682 +++ exited with 0 +++
+344681 +++ exited with 0 +++
+344669 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=344681, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+344674 +++ exited with 0 +++
+344673 +++ exited with 0 +++
+344672 +++ exited with 0 +++
+344671 +++ exited with 0 +++
+344670 +++ exited with 0 +++
+344680 +++ exited with 0 +++
+344677 +++ exited with 0 +++
+344678 +++ exited with 0 +++
+344679 +++ exited with 0 +++
+344675 +++ exited with 0 +++
+344669 +++ exited with 0 +++

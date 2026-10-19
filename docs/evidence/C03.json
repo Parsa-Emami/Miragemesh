@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "project": "MirageMesh",
+  "task": "C03",
+  "date": "2026-10-19",
+  "commit_id": "C03",
+  "passed": true,
+  "planning_template": false,
+  "base_commit": "f11f2d3f1ae2940d74a0e61b314b7a20acb1704c",
+  "git_commit_created": false,
+  "scope": "Actual local Go runtime lifecycle/health, supervised web startup/shutdown and bounded same-origin health integration; no domain feature readiness",
+  "source_identity": "sha256:1ce568d86983ba61d40202d23aea45bd25603b2912c2bae9fd6b5f1b1d369c97",
+  "source_identity_method": "SHA-256 over sorted C03-owned source/config/docs/generated-output/fixture paths, each UTF-8 path + NUL + raw SHA-256 of file bytes. Excludes docs/evidence/, plans/progress.json and docs/agents/SESSION_HANDOFF.json to avoid self-reference.",
+  "source_paths": [
+    ".github/workflows/web.yml",
+    "README.md",
+    "START_HERE.md",
+    "apps/web/src/generated/project.json",
+    "apps/web/src/lib/runtime-config.mjs",
+    "apps/web/src/main.tsx",
+    "cmd/miragemesh/main.go",
+    "cmd/miragemesh/main_test.go",
+    "docs/ROADMAP_FA.md",
+    "docs/engineering/BOOTSTRAP_EVIDENCE.md",
+    "docs/engineering/CLONE_TO_RUN.md",
+    "docs/engineering/ENGINE_LAUNCH.md",
+    "docs/engineering/WEB_RUNBOOK.md",
+    "go.mod",
+    "ops/runtime-requirements.json",
+    "package.json",
+    "plans/project-state.json",
+    "product/project.json",
+    "scripts/build-engine.mjs",
+    "scripts/clone-smoke.mjs",
+    "scripts/oss-bootstrap.mjs",
+    "scripts/serve-web.mjs",
+    "scripts/start-local.mjs",
+    "tests/browser/workspace.spec.ts",
+    "tests/fixtures/miragemesh/C03/expected-output.json",
+    "tests/fixtures/miragemesh/C03/invalid.json",
+    "tests/fixtures/miragemesh/C03/positive.json",
+    "tests/web/local-launch.test.mjs",
+    "tests/web/oss-tooling.test.mjs"
+  ],
+  "environment": {
+    "os": "Linux x86_64",
+    "node": "v24.19.0",
+    "npm_cli": "11.9.0",
+    "go": "go1.27.2 linux/amd64",
+    "podman": "4.9.3; Ubuntu package 4.9.3+ds1-1ubuntu0.2",
+    "podman_rootless": true,
+    "hardware_measurement": "C28 target not measured"
+  },
+  "fixture_hashes_sha256": {
+    "tests/fixtures/miragemesh/C03/expected-output.json": "57fe284c127971c703ac2e40f987a7d9e4f51499c961a25c301a797d39c37f19",
+    "tests/fixtures/miragemesh/C03/invalid.json": "99c970842df4ae91df4e29c83d8d1e1bc44c465b762485173c21e88e069dd079",
+    "tests/fixtures/miragemesh/C03/positive.json": "e8f4d7818cb2f45033ebedb658f867d4aceeb530afdff023a3fafe73c8eeaa94"
+  },
+  "fixture_provenance_license": "Repository-authored synthetic C03 fixtures, Apache-2.0. Sample sensor event is not ingested or processed.",
+  "dependencies": "Go standard library only (BSD-3-Clause); no added third-party modules or npm dependencies; package-lock.json unchanged; no go.sum generated.",
+  "commands": [
+    {
+      "command": "bash -c \"node --version && npx --yes --package=npm@11.9.0 --call 'npm --version' && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go version && podman --version && dpkg-query -W podman && podman info --format '{{.Host.Security.Rootless}}' && uname -sm && git rev-parse HEAD && sha256sum package-lock.json\"",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C03/identities.log",
+      "elapsed_seconds": 2.44
+    },
+    {
+      "command": "npx --yes --package=npm@11.9.0 --call \"npm run setup\"",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C03/setup.log",
+      "elapsed_seconds": 4.01
+    },
+    {
+      "command": "npx --yes --package=npm@11.9.0 --call \"npm run check\"",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C03/check.log",
+      "elapsed_seconds": 15.36
+    },
+    {
+      "command": "bash -c \"GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go test -race ./... && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go vet ./... && test -z \\\"$(GOTOOLCHAIN=go1.27.2 gofmt -l cmd/miragemesh)\\\"\"",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C03/go.log",
+      "elapsed_seconds": 2.0
+    },
+    {
+      "command": "npx --yes --package=npm@11.9.0 --call \"npm run test:browser\"",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C03/browser.log",
+      "elapsed_seconds": 2.56
+    },
+    {
+      "command": "npx --yes --package=npm@11.9.0 --call \"npm run doctor && npm run setup -- --check\"",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C03/doctor.log",
+      "elapsed_seconds": 2.17
+    },
+    {
+      "command": "bash -c \"python3 scripts/plan.py validate && python3 scripts/validate_repo.py && python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v && node scripts/verify-resources.mjs && git diff --check\"",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C03/contracts.log",
+      "elapsed_seconds": 0.59
+    },
+    {
+      "command": "node docs/evidence/C03/network-check.mjs",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C03/network.log",
+      "elapsed_seconds": 0.26
+    },
+    {
+      "command": "npx --yes --package=npm@11.9.0 --call \"npm run package:web\"",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C03/package.log",
+      "elapsed_seconds": 1.18
+    },
+    {
+      "command": "sha256sum -c SHA256SUMS.txt (in dist/release); Node createWebServer from packaged sources, verify assets and disabled engine route",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C03/package-smoke.log"
+    },
+    {
+      "command": "GIT_INDEX_FILE=<temporary candidate index> npx --yes --package=npm@11.9.0 --call \"npm run test:clone\"",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C03/clone.log",
+      "candidate_tree": "e8e97ddcad890bf23afe260ae717053d3b014648",
+      "elapsed_seconds": 4.52
+    }
+  ],
+  "results": {
+    "node_tests": 24,
+    "go_tests": 2,
+    "go_race_and_vet": "passed",
+    "typescript": "passed",
+    "build": "passed",
+    "browser_tests": 3,
+    "engineering_tests": 6,
+    "real_setup_rootless_provider_probe": "passed",
+    "clone_and_exact_candidate_source_integrity": "passed; alternate index, temporary unreferenced snapshot with preserved ancestry; user index/branch unchanged",
+    "observed_runtime_network": "strace startup/health: two loopback connects; no external connect observed",
+    "remote_github_actions": "not run"
+  },
+  "security_review": "No shell/payload execution or domain admission; loopback-owned destination, bounded startup/health, redirects and malformed/oversized/unsafe destinations rejected, config flag remains disabled, child ownership and shutdown tested. No database schema/migration/.env/Dockerfile changes.",
+  "observed_limitations": [
+    "Runtime health/version only; coreReady and engineEnabled remain false. C04 onward and C17 are not implemented.",
+    "Remote GitHub Actions, runner image preparation/apt installation and hosted-runner rootless behavior were not run; equivalent test commands ran locally.",
+    "JavaScript lint script is absent; Go vet and gofmt checks ran.",
+    "The real working tree is intentionally uncommitted; strict source verification ran in an isolated exact candidate snapshot. Temporary snapshot Git objects do not update user branches.",
+    "No clean-host complete domain workflow, provider isolation, durable state, authentication or C28 hardware claim.",
+    "Expected negative compile fixture emits an intentional compiler diagnostic; Playwright emits existing NO_COLOR/FORCE_COLOR warnings."
+  ],
+  "core_ready": false,
+  "next_task": "C04",
+  "candidate_snapshot": {
+    "commit": "db228f7224f9f4b9995b8cdf06da30a379a1206c",
+    "git_tree": "e8e97ddcad890bf23afe260ae717053d3b014648",
+    "all_final_owned_source_paths_match": true,
+    "scope": "temporary unreferenced candidate; no user branch/index change; evidence logs and handoff metadata may be finalized afterward"
+  },
+  "artifact_hashes_sha256": {
+    "docs/evidence/C03/browser.log": "3f160b223f4d06a86deaeccb8336d7bb74200eb38c75161b6849247d4413f476",
+    "docs/evidence/C03/changed-files.txt": "0219e5cf5cfd44f7da1d6d43582ae632d4fa68ecd6083e45f7794427571a17b6",
+    "docs/evidence/C03/check.log": "e08445497bb38d01a8a5e14604530890688f42e6d83b775504c5ba04452bb04c",
+    "docs/evidence/C03/clone.log": "dc081d51fb90e22c6e42c5f448a2610fa3cbcbcce3c129d3286044db36f53f92",
+    "docs/evidence/C03/contracts.log": "b5965c9053092848f05d08c474a1abe6a5d6d55d92477dada7565f1a71455f55",
+    "docs/evidence/C03/doctor.log": "db8ebe627cf87489fb9a40485e28de4bc4128617e7d52a31a94ad0d5d71cd4f0",
+    "docs/evidence/C03/go.log": "0e2ead86338499049792977462c57e81e1e115aeb5f0b382c8beb73b58409df3",
+    "docs/evidence/C03/identities.log": "78e338c1c67ec8b2508aab1665eabef1a9463e93e1686008af58ef35f908ff25",
+    "docs/evidence/C03/network-check.mjs": "c323aaffcf998fc1745f41c00ff9fc622c847f15ceb485c1672714bfcb822302",
+    "docs/evidence/C03/network.log": "cc011e9f6588edd005b531bf6d8a690d47895a9876daffd80c66ba7e45762d34",
+    "docs/evidence/C03/network.trace": "7ef3a23cd803a87c05098cd9737ab0ae28089e760657e0bb6a34b1feffb7fb91",
+    "docs/evidence/C03/package-smoke.log": "7b306e8a0e94be1b2a634960d501933da1401435b161e6a3906e24b9565b998b",
+    "docs/evidence/C03/package.log": "08622119b0ee127bf0fd56ade76787c97c74143ad01abe795c6449115355aa0b",
+    "docs/evidence/C03/setup.log": "98c32e0f9ce01cd06989be8c0879be87fba9c2f995c77f1f7221141cab8318bb"
+  }
+}

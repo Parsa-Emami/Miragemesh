@@ -11,6 +11,29 @@ test('setup validates toolchain/options and stops at the first failed install', 
   assert.equal(setup(['--check'], () => { throw new Error('must not execute'); }).executed, false);
   if (prior === undefined) delete process.env.npm_execpath; else process.env.npm_execpath = prior;
 });
+test('setup rejects missing tools, wrong pins and a non-rootless provider before building', () => {
+  const prior = process.env.npm_execpath; process.env.npm_execpath ??= 'test-npm';
+  try {
+    for (const broken of ['go', 'podman-version', 'podman-rootless']) {
+      let build = false;
+      const run = (command, args) => {
+        if (command === 'go') return { status: broken === 'go' ? 127 : 0, stdout: 'go version go1.27.2 linux/amd64\n' };
+        if (command === 'podman') return { status: 0, stdout: args[0] === '--version' ? (broken === 'podman-version' ? 'podman version 1.0.0' : 'podman version 4.9.3') : (broken === 'podman-rootless' ? 'false' : 'true') };
+        build = true; return { status: 0 };
+      };
+      assert.throws(() => setup([], run), /Go|Podman/);
+      assert.equal(build, false);
+    }
+    let calls = 0;
+    assert.throws(() => setup([], command => {
+      calls++;
+      if (command === 'go') return { status: 0, stdout: 'go version go1.27.2 linux/amd64' };
+      if (command === 'podman') return { status: 0, stdout: calls === 2 ? 'podman version 4.9.3' : 'true' };
+      return { status: 1 };
+    }), /failed/);
+    assert.equal(calls, 4, 'failed installation must prevent build');
+  } finally { if (prior === undefined) delete process.env.npm_execpath; else process.env.npm_execpath = prior; }
+});
 test('roadmap rejects absent resources, escaping paths and unproved completion', async () => {
   const read = async path => JSON.parse(await readFile(new URL('../../' + path, import.meta.url), 'utf8'));
   const values = await Promise.all(['plans/roadmap.json', 'plans/progress.json', 'plans/requirements.json', 'plans/release-gates.json'].map(read));

@@ -5,11 +5,11 @@
 [CI source integrity and dependency updates](docs/engineering/CI_SOURCE_INTEGRITY.md)
 
 
-Open-source local-first web application under [Apache-2.0](LICENSE). **Current implementation: web foundation; complete domain workflow pending.**
+Open-source local-first web application under [Apache-2.0](LICENSE). **Current implementation: web workspace and supervised Go runtime; complete domain workflow pending.**
 
 ## Clone and run the current workspace
 
-Prerequisites: Git and Node 24.19+ within Node 24 (npm included).
+Prerequisites: Linux amd64, Git, Node 24.19.0, npm CLI 11.9.0, installed Go (1.21+ for toolchain selection) and rootless Podman 4.9.3. Setup selects Go 1.27.2; use the pinned npm CLI shown in the clone guide.
 
 ```sh
 git clone https://github.com/Parsa-Emami/Miragemesh.git
@@ -18,7 +18,7 @@ npm run setup
 npm start
 ```
 
-Open http://127.0.0.1:4173. Current features are a roadmap browser and local bounded JSON structure preview. No Python, database, paid/cloud account, public domain or sibling clone is needed for this shell. It does not run the domain engine. [Clone guide](docs/engineering/CLONE_TO_RUN.md).
+Open http://127.0.0.1:4173. Current features are a roadmap browser and local bounded JSON structure preview. No Python, database, paid/cloud account, public domain or sibling clone is needed for this shell. The local Go runtime exposes health/version only; domain processing remains unavailable. [Clone guide](docs/engineering/CLONE_TO_RUN.md).
 
 ## Full product endpoint
 

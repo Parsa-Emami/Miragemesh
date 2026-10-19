@@ -1,6 +1,8 @@
 # Continue MirageMesh
 
-Current: web foundation; full domain workflow pending.
+Current: web foundation and supervised Go loopback runtime; full domain workflow pending.
+
+Use Linux amd64, Node 24.19.0, npm CLI 11.9.0, installed Go and rootless Podman 4.9.3. Setup selects Go 1.27.2 through the official Go toolchain mechanism.
 
 ```sh
 npm run setup

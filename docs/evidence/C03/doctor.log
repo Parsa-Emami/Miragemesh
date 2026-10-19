@@ -1,0 +1,50 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 doctor
+> node scripts/oss-bootstrap.mjs doctor
+
+{
+  "nodeSupported": true,
+  "webAssetsBuilt": true,
+  "tools": {
+    "go": "go version go1.27.2 linux/amd64",
+    "podman": "podman version 4.9.3",
+    "rootless": true
+  },
+  "runtime": {
+    "coreReady": false,
+    "scope": "engine-runtime",
+    "status": "ok",
+    "toolchain": "go1.27.2",
+    "version": "0.0.1"
+  },
+  "readiness": "WEB_FOUNDATION",
+  "engineReady": false,
+  "start": "npm start",
+  "next": "npm run plan -- next"
+}
+
+> @parsa-emami/miragemesh-web@0.0.1 setup
+> node scripts/oss-bootstrap.mjs setup --check
+
+{
+  "executed": false,
+  "prerequisites": [
+    "Go 1.27.2",
+    "rootless Podman 4.9.3"
+  ],
+  "steps": [
+    [
+      "ci",
+      "--ignore-scripts",
+      "--no-fund"
+    ],
+    [
+      "run",
+      "build"
+    ]
+  ],
+  "capability": "local-runtime",
+  "engineReady": false,
+  "start": "npm start",
+  "note": "Full product usability requires the C30 workflow; complete OSS v1 requires C40."
+}

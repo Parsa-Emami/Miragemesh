@@ -89,11 +89,11 @@
     "status": "foundation_implemented",
     "deployment_profile": "private-web",
     "frontend": "React + TypeScript + Vite",
-    "web_runtime": "Node.js static shell; no engine proxy",
+    "web_runtime": "Node web server supervising Go loopback health runtime",
     "default_engine_enabled": false,
     "preview_storage": "tab memory only",
     "offline_supported": false,
-    "engine_status": "planned",
+    "engine_status": "runtime health only; domain processing unavailable",
     "source": "apps/web/src/main.tsx",
     "existing_backend": null
   },
@@ -109,5 +109,6 @@
     "complete_v1_at": "C40",
     "core_ready": false,
     "architecture": "docs/architecture/ADR-0003-open-source-local-first.md"
-  }
+  },
+  "engine_runtime_implemented": true
 }

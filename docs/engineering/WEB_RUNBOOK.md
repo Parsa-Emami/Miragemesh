@@ -2,7 +2,7 @@
 
 ## Local checkout
 
-Use Node 24.19.0. This Node archive bundles npm 11.17.0; invoke the separately pinned npm CLI 11.9.0 for project commands:
+Use Linux amd64, installed Go and rootless Podman 4.9.3 alongside Node 24.19.0. Setup selects Go 1.27.2; see ENGINE_LAUNCH.md. This Node archive bundles npm 11.17.0; invoke the separately pinned npm CLI 11.9.0 for project commands:
 
 ```sh
 npx --yes --package=npm@11.9.0 --call 'npm ci --ignore-scripts'
@@ -14,7 +14,7 @@ npx --yes --package=npm@11.9.0 --call 'npm run dev'
 
 Browser checks may use an operator-provided Chromium executable through the `WEB_TEST_CHROMIUM` process variable. CI uses the Playwright-managed browser. This test override never changes application configuration.
 
-Development URL: http://127.0.0.1:5173. To run the built shell separately:
+Development URL: http://127.0.0.1:5173. To run the built web and supervised Go runtime:
 
 ```sh
 npx --yes --package=npm@11.9.0 --call 'npm run build'
@@ -25,9 +25,9 @@ Built URL: http://127.0.0.1:4307. Browser routing uses hashes and hosting at the
 
 ## What is runnable
 
-The responsive React workspace, forty-step product roadmap, local bounded JSON structure preview, Node static server and its health endpoints are implemented. Preview uses tab memory, does not persist files and does not send them to the server. Reload clears the preview. This is not a domain import or a security assessment. The PWA manifest supplies install metadata; there is no service worker or offline claim. Cache rules retain only fingerprinted static assets; HTML and runtime configuration are no-store.
+The responsive React workspace, forty-step product roadmap, local bounded JSON structure preview, Node web server and supervised Go runtime health are implemented. Preview uses tab memory, does not persist files and does not send them to the server. Reload clears the preview. This is not a domain import or a security assessment. The PWA manifest supplies install metadata; there is no service worker or offline claim. Cache rules retain only fingerprinted static assets; HTML and runtime configuration are no-store.
 
-`GET /healthz` covers the web process; `GET /readyz` covers web assets and valid startup configuration. Neither proves engine/provider/database health. `/api` and all `/api/` routes return 503 while the engine is unavailable. No upload endpoint or authentication service is created. Engine admission cannot be enabled by a public config flag.
+`GET /healthz` covers the web process; `GET /readyz` covers web assets and valid startup configuration. Neither proves engine/provider/database health. `GET /api/engine/health` is the only integrated runtime route: it reads a bounded, validated response from the owned loopback engine with a two-second deadline. All domain API routes remain 503. The public engineEnabled flag remains false; health does not admit work. No upload endpoint or authentication service is created. Engine admission cannot be enabled by a public config flag.
 
 ## Build an artifact
 
@@ -44,7 +44,7 @@ Package after build. `release.json` records the source commit and whether the wo
 
 Prerequisites: operator-owned domain/DNS, valid TLS certificate/key, installed Node 24.19.0, Nginx, systemd, and an unprivileged `miragemesh-web` account. Reserve port 4307 for this project. Keep certificates outside the artifact and never commit a private key. Install releases under `/srv/miragemesh/releases/<source-commit>` and point `/srv/miragemesh/current` to the selected verified release. Ensure the service user has read/execute access to artifact directories. Match the actual Node binary path in the service file.
 
-Use `ops/web/service.systemd` and render `ops/web/nginx.conf.template` with the real owned domain, TLS paths and reviewed operator network ranges. The proxy initially denies external traffic. Keep the deny-all default until private admission is configured and tested; do not treat an IP range as per-user authentication. Runtime APIs remain blocked until W06/W07. Validate the rendered Nginx configuration with `nginx -t` before reload. Install the service under `/etc/systemd/system/miragemesh-web.service`, then run:
+Use `ops/web/service.systemd` and render `ops/web/nginx.conf.template` with the real owned domain, TLS paths and reviewed operator network ranges. The proxy initially denies external traffic. Keep the deny-all default until private admission is configured and tested; do not treat an IP range as per-user authentication. This web-only artifact has no Go runtime and no engine proxy destination; runtime APIs remain unavailable. Validate the rendered Nginx configuration with `nginx -t` before reload. Install the service under `/etc/systemd/system/miragemesh-web.service`, then run:
 
 ```sh
 sudo systemctl daemon-reload
@@ -62,10 +62,10 @@ Build/test/package from a clean source commit; verify SHA256SUMS before switchin
 
 ## Engine integration and operations still required
 
-Profile: `private-web`. Retained engine choices: Go sensor and collector, rootless Podman optional decoy adapter, SQLite metadata/spool, Segmented JSONL events. Implement the first vertical slice in IMPLEMENTATION_BLUEPRINT.md and W06, then authenticated negative tests in W07. Route only explicitly supported endpoints through a same-origin authenticated service. Keep secrets exclusively on the server/provider. Add real engine readiness, bounded jobs, cancellation, redacted audit, operational metrics, alerts and retention/restore proof alongside the domain implementation. Public marketing/static demonstrations must use synthetic data; they cannot admit arbitrary runtime work.
+Profile: `private-web`. Retained engine choices: Go sensor and collector, rootless Podman optional decoy adapter, SQLite metadata/spool, Segmented JSONL events. C03 provides only process lifecycle and health. Follow the dependency-ready C cards for typed contracts, compatible ADR-0003 file storage, identity and domain features; provider isolation and domain authorization remain unverified. Route only explicitly supported endpoints through a same-origin authenticated service. Keep secrets exclusively on the server/provider. Add real engine readiness, bounded jobs, cancellation, redacted audit, operational metrics, alerts and retention/restore proof alongside the domain implementation. Public marketing/static demonstrations must use synthetic data; they cannot admit arbitrary runtime work.
 
 For KeyHelix, no plaintext secrets may enter browser file preview; import only synthetic nonsecret metadata. For RiftRange/MirageMesh, orchestration/sensors stay on isolated private hosts. Existing RiskWeft Laravel source is preserved and has not been connected to this shell or certified by web tests.
 
 ## Reproduce source evidence
 
-Run `python3 scripts/source_identity.py --check` against the committed checkout. The digest covers tracked and deliverable untracked files, excluding only the self-referential evidence JSON and SHA256SUMS.txt. Build/test output directories are ignored. Verification evidence records web-only checks and the exact tested runtime; it does not certify the domain engine.
+For historical web proof, use its recorded source revision. `python3 scripts/verify_ci_source.py` verifies historical records plus an exact committed checkout; it intentionally rejects uncommitted source. The digest covers tracked and deliverable untracked files, excluding only the self-referential evidence JSON and SHA256SUMS.txt. Build/test output directories are ignored. C03 evidence is in docs/evidence/C03.json with its explicit checksum method; lifecycle/health proof does not certify the domain workflow.

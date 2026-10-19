@@ -7,23 +7,29 @@
     {
       "id": "C01",
       "status": "verified",
-      "evidence": ["docs/evidence/C01.json"],
+      "evidence": [
+        "docs/evidence/C01.json"
+      ],
       "source_identity": "sha256:8077fe323f118c5d62844f3c1d4c744a4e2c4723862c34d14976868b5d7d7ba4",
       "notes": "C01 specification and metadata validator verified locally; this does not certify workflow engine execution."
     },
     {
       "id": "C02",
       "status": "verified",
-      "evidence": ["docs/evidence/C02.json"],
+      "evidence": [
+        "docs/evidence/C02.json"
+      ],
       "source_identity": "sha256:f1b591aa235bdd11925e3602dc2530118ff7ee3a55d3f4294a84cd8f6e58c485",
       "notes": "Toolchain/resource pins and metadata validator verified locally; this does not certify engine execution."
     },
     {
       "id": "C03",
-      "status": "in_progress",
-      "evidence": [],
-      "source_identity": null,
-      "notes": "Web foundation implemented in W01-W05. Remaining domain/runtime acceptance and earlier prerequisite evidence still pending."
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C03.json"
+      ],
+      "source_identity": "sha256:1ce568d86983ba61d40202d23aea45bd25603b2912c2bae9fd6b5f1b1d369c97",
+      "notes": "Verified local supervised Go runtime lifecycle/health and web integration only; domain contracts/storage/workflow remain pending. No remote Actions or release certified."
     },
     {
       "id": "C04",
