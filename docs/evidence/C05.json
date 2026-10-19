@@ -1,0 +1,269 @@
+{
+  "commit_id": "C05",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "date": "2026-10-19",
+  "base_commit": "9e508467f75b11b56b1f27827e83ee837aae8865",
+  "scope": "Internal single-host local file storage of validated C04 bytes with atomic manifest/idempotency publication, tested recovery and bounded state. No HTTP/browser writes, authentication, ingestion, spool or full-product readiness.",
+  "owner_scope_resolution": "Owner selected storage only. Generic C05 identity/header/browser requirements remain with their owning future cards and are not certified by mock authority.",
+  "source_identity": "sha256:38e6e45527928c4dd49ae48e79146a5ec23468dae6fbcd001c286b4255cda203",
+  "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes); evidence/progress/handoff excluded to avoid recursion. Historical C01-C04 evidence unchanged.",
+  "source_paths": [
+    ".github/workflows/contracts.yml",
+    ".github/workflows/plan.yml",
+    ".github/workflows/web.yml",
+    ".nvmrc",
+    "apps/web/src/generated/project.json",
+    "contracts/input.schema.json",
+    "contracts/result.schema.json",
+    "docs/ROADMAP_FA.md",
+    "docs/architecture/ADR-0003-open-source-local-first.md",
+    "docs/architecture/STORAGE_PROOF.md",
+    "docs/engineering/toolchain-lock.json",
+    "go.mod",
+    "internal/contracts/event.go",
+    "internal/contracts/event_test.go",
+    "internal/storage/adapter.go",
+    "internal/storage/recovery_test.go",
+    "package-lock.json",
+    "package.json",
+    "plans/project-state.json",
+    "scripts/build-engine.mjs",
+    "scripts/clone-smoke.mjs",
+    "scripts/oss-bootstrap.mjs",
+    "scripts/roadmap.mjs",
+    "scripts/verify_ci_source.py",
+    "tests/fixtures/miragemesh/C05/expected-output.json",
+    "tests/fixtures/miragemesh/C05/invalid.json",
+    "tests/fixtures/miragemesh/C05/positive.json",
+    "tests/storage_test.go"
+  ],
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "go": "1.27.2",
+    "podman": "4.9.3; rootless probe passed; storage requires no container/provider",
+    "os": "Linux x86_64",
+    "filesystem": "ext4 mounted at /; local tested filesystem",
+    "hardware_measurement": "C28 product target not measured"
+  },
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "node --version && npx --yes --package=npm@11.9.0 --call 'npm --version' && go version && podman --version && podman info --format '{{.Host.Security.Rootless}}' && uname -sm && findmnt -no FSTYPE,TARGET -T . && git rev-parse HEAD && sha256sum package-lock.json"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/tools.log",
+      "elapsed_seconds": 1.91,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "go test -race -count=1 -v ./... && go vet ./... && python3 -c \"import subprocess; assert not subprocess.check_output(['gofmt','-l','internal/storage','tests/storage_test.go']).strip()\""
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/go.log",
+      "elapsed_seconds": 3.54,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/check.log",
+      "elapsed_seconds": 15.03,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run test:browser"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/browser.log",
+      "elapsed_seconds": 2.78,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "npx --yes --package=npm@11.9.0 --call 'npm run package:web' && cd dist/release && sha256sum --check SHA256SUMS.txt"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/package.log",
+      "elapsed_seconds": 1.0,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "python3 scripts/validate_repo.py && python3 scripts/plan.py validate && python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v && node scripts/verify-resources.mjs && git diff --check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/metadata.log",
+      "elapsed_seconds": 0.59,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "go test -c -o /tmp/miragemesh-c05-storage-tests ./tests && cd tests && strace -f -e trace=network -o ../docs/evidence/C05/network.trace /tmp/miragemesh-c05-storage-tests -test.run='^TestStorage(ExactBytesReplayAndReopen|OpaqueIDsAndHostileMetadataRemainInert)$' && ! rg 'AF_INET' ../docs/evidence/C05/network.trace"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/network.log",
+      "elapsed_seconds": 0.2,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "command": "GIT_INDEX_FILE=<isolated candidate index> npm run test:clone; real transport clone of same snapshot; go test -race -count=1 ./...; go vet ./...",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/clone.log",
+      "candidate_commit": "b813c57dae118d4df80612a7ba553961806ad6c0",
+      "candidate_tree": "ba6c394405cf9ca50cb6dbeec09a901f7171f58e",
+      "elapsed_seconds": 8.13,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      },
+      "user_index_changed": false,
+      "branch_or_remote_refs_changed": false,
+      "verification_argv": [
+        [
+          "npx",
+          "--yes",
+          "--package=npm@11.9.0",
+          "--call",
+          "npm run test:clone"
+        ],
+        [
+          "go",
+          "test",
+          "-race",
+          "-count=1",
+          "./..."
+        ],
+        [
+          "go",
+          "vet",
+          "./..."
+        ]
+      ],
+      "verification_exit_codes": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "fixture_hashes_sha256": {
+    "tests/fixtures/miragemesh/C05/expected-output.json": "fdea61065303093041ca48253f9229d33afe1fc1b03c7dc817decd524414d6f7",
+    "tests/fixtures/miragemesh/C05/invalid.json": "0d84c081f6f63cfc1e753b8ff5785074ed6e0745855f24d2c1fc7716714b43ab",
+    "tests/fixtures/miragemesh/C05/positive.json": "b0d5a4767079e0b1d732803432ea2a8a517d8a7d185cdddfb6f7f9ae9f62803a"
+  },
+  "fixture_provenance_license": "Repository-authored synthetic C05 fixture manifests under Apache-2.0. Exact C04 input copied as licensed synthetic data; no live sensor traffic.",
+  "results": {
+    "single_writer": "same-process and cross-process lock rejection; concurrent calls serialize",
+    "durability_protocol": "staged exact-byte readback, file sync, immutable object publication, directory sync, atomic manifest replacement and final directory sync before receipt",
+    "recovery": "actual SIGKILL at five boundaries with real child processes; prior/new complete visibility, lock release and replay after lost ACK",
+    "filesystem_failures": "nine write/short-write/sync/rename failure cases, including injected ENOSPC and final publication-sync unknown outcome",
+    "quotas": "operation count, logical input bytes and manifest-byte quotas; replay still succeeds when full",
+    "integrity": "canonical versioned manifest; unique operations/contiguous generations; size/digest/C04 references; corrupt/missing/unknown/unsafe files fail closed",
+    "privacy": "opaque IDs and hostile metadata remain inert; errors omit input/path/raw OS diagnostics",
+    "go_race_vet_format": "passed",
+    "node_tests": 31,
+    "browser_tests": 3,
+    "engineering_source_integrity_tests": 6,
+    "typecheck_build": "passed",
+    "package": "web-only dirty package plus checksum verification passed; not engine distribution",
+    "clone": "actual clone/setup/C04 validation/runtime health plus separate actual transport clone of identical snapshot running all Go race tests and vet",
+    "network": "strace of two actual public storage test paths observed no AF_INET calls; not a network sandbox or decoy-isolation proof",
+    "remote_actions": "not run"
+  },
+  "candidate_snapshot": {
+    "commit": "b813c57dae118d4df80612a7ba553961806ad6c0",
+    "git_tree": "ba6c394405cf9ca50cb6dbeec09a901f7171f58e",
+    "all_final_source_paths_match": true,
+    "scope": "unreferenced temporary snapshot for verification; user index/branch/remote refs unchanged; evidence/handoff can be finalized after verification"
+  },
+  "development_findings": [
+    "Initial public API tests failed against the missing/storage-error implementation; implemented real filesystem behavior.",
+    "A regression first reproduced acceptance/deletion of oversized staging; fixed to preserve suspicious bytes and return recovery error.",
+    "Initial standalone trace command used repository cwd rather than tests/; corrected harness cwd without changing production behavior."
+  ],
+  "observed_limitations": [
+    "ENOSPC is injected at filesystem calls, not a physically full disk. SIGKILL is not sudden power loss or hardware-flush certification.",
+    "Single-host cooperating writer; Linux/ext4 measured only. flock is advisory; same-UID/root and mount manipulation are trusted/outside this boundary.",
+    "Synchronous filesystem calls are not forcibly interruptible; contexts are checked around I/O and prior to publication.",
+    "Any staging-time failure poisons the handle until Close/Open. Failure after publication is an unknown outcome resolved by reopen/replay.",
+    "JavaScript lint is not configured. No remote GitHub Actions/runner apt installation, C28 capacity, authenticated ingest or complete restore/C30 workflow proved.",
+    "Strict whole-checkout source integrity passed only for the isolated clean candidate; current workspace remains uncommitted.",
+    "No C06 runtime workflow added and no protected database schema/migration/.env/Dockerfile modified."
+  ],
+  "dependencies_added": [],
+  "protected_paths_changed": [],
+  "core_ready": false,
+  "next_task": "C06",
+  "git_delivery": {
+    "commit_authorized": false,
+    "push_authorized": false,
+    "delivery_commit_created": false
+  },
+  "log_normalization": "Only trailing blank lines normalized; command output content retained.",
+  "artifact_hashes_sha256": {
+    "docs/evidence/C05/browser.log": "9521645ba588f92aefcce7058761ef56f43efe92e103e8b8cfd99b38b9bd6c6c",
+    "docs/evidence/C05/changed-files.txt": "65d726df4d0fc1630099ea423da259c03e03cc14d7251a63b0a971de67c4a273",
+    "docs/evidence/C05/check.log": "23ec1af221692b6e203321553448efa46fb427d684fc0fe8cd1fb32b374f25c5",
+    "docs/evidence/C05/clone.log": "537321588662f90134b1418ad8a7f859efe4cdc1c55cbe19faf6681d91130ae4",
+    "docs/evidence/C05/go.log": "39ca00b7f274f28c3299f9d066ee2b4f1d5595cc883000147c67471562d7e562",
+    "docs/evidence/C05/metadata.log": "c75399265784d2b12d09509ab0610f64f1526bc80c52695fc58844259ad010d4",
+    "docs/evidence/C05/network.log": "c26de83abdc9496cd1301470918ec39ecca1cf389ef0ae1c6504da1800d1c431",
+    "docs/evidence/C05/network.trace": "a5ecddfffd19beaa6b581c24deaba4695d29be90eabffbb3029cc07cacc71bbd",
+    "docs/evidence/C05/package.log": "ba01d05f3905231ab93c1f1936b63cc9725bcd559097df6e3211fe6d78c4f40d",
+    "docs/evidence/C05/tools.log": "e5eaf148b28e780a1c83bcc6d2bc112fcf2665b6eee6777605c4265a0472cffa"
+  }
+}

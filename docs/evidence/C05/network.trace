@@ -1,0 +1,10 @@
+447505 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=447505, si_uid=1000} ---
+447505 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=447505, si_uid=1000} ---
+447505 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=447505, si_uid=1000} ---
+447505 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=447505, si_uid=1000} ---
+447509 +++ exited with 0 +++
+447506 +++ exited with 0 +++
+447508 +++ exited with 0 +++
+447507 +++ exited with 0 +++
+447510 +++ exited with 0 +++
+447505 +++ exited with 0 +++

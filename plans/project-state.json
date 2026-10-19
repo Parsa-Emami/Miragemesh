@@ -1,6 +1,6 @@
 {
   "project": "MirageMesh",
-  "reviewed_commit": "70f4c219f3444d1a4c755e5eb9592558fa892049",
+  "reviewed_commit": "9e508467f75b11b56b1f27827e83ee837aae8865",
   "readiness": "WEB_FOUNDATION",
   "core_ready": false,
   "implemented": [
@@ -8,10 +8,11 @@
     "roadmap browser",
     "local bounded JSON structure preview",
     "supervised loopback Go runtime with real health/version and shutdown",
-    "local stateless v1 HTTP-event contract validation with typed results"
+    "local stateless v1 HTTP-event contract validation with typed results",
+    "internal bounded single-writer local storage adapter with atomic manifest publication and reopen/replay recovery"
   ],
   "engine": "Go runtime lifecycle/health and local event validation implemented; ingestion and domain workflow pending",
-  "next_task": "C05",
+  "next_task": "C06",
   "next_command": "npm run plan -- next",
   "full_product_endpoint": "C30 locally usable; C40 full published OSS v1"
 }

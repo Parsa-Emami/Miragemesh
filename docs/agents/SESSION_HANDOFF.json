@@ -1,76 +1,202 @@
 {
   "project": "MirageMesh",
   "date": "2026-10-19",
-  "base_commit": "70f4c219f3444d1a4c755e5eb9592558fa892049",
-  "scope": "Typed local stateless HTTP-event v1 schema/Go validation and CLI, including actual rejection, exact bytes/numbers, resource bounds and cancellation. No sensor trust, collector acceptance, persistence or full workflow certified.",
+  "base_commit": "9e508467f75b11b56b1f27827e83ee837aae8865",
+  "scope": "Internal single-host local file storage of validated C04 bytes with atomic manifest/idempotency publication, tested recovery and bounded state. No HTTP/browser writes, authentication, ingestion, spool or full-product readiness.",
   "core_tasks_verified": [
     "C01 specification only",
     "C02 resource lock only",
-    "C03 runtime lifecycle/health only",
-    "C04 local stateless event contract validation only"
+    "C03 runtime health/lifecycle only",
+    "C04 local stateless validation only",
+    "C05 internal bounded local storage/recovery only"
   ],
   "changed_paths": [
-    "README.md",
-    "THIRD_PARTY_NOTICES.md",
     "apps/web/src/generated/project.json",
-    "cmd/miragemesh/main.go",
-    "contracts/README.md",
-    "contracts/input.schema.json",
-    "contracts/result.schema.json",
     "docs/ROADMAP_FA.md",
     "docs/agents/SESSION_HANDOFF.json",
-    "docs/engineering/CLONE_TO_RUN.md",
-    "docs/engineering/ENGINE_LAUNCH.md",
-    "docs/engineering/toolchain-lock.json",
-    "docs/evidence/C04.json",
-    "docs/evidence/C04/browser.log",
-    "docs/evidence/C04/changed-files.txt",
-    "docs/evidence/C04/check.log",
-    "docs/evidence/C04/clone.log",
-    "docs/evidence/C04/fuzz.log",
-    "docs/evidence/C04/go.log",
-    "docs/evidence/C04/metadata.log",
-    "docs/evidence/C04/network.log",
-    "docs/evidence/C04/package.log",
-    "docs/evidence/C04/setup.log",
-    "docs/evidence/C04/tools.log",
-    "docs/evidence/C04/validation.trace",
-    "internal/contracts/event.go",
-    "internal/contracts/event_test.go",
-    "package-lock.json",
-    "package.json",
+    "docs/architecture/STORAGE_PROOF.md",
+    "docs/evidence/C05.json",
+    "docs/evidence/C05/browser.log",
+    "docs/evidence/C05/changed-files.txt",
+    "docs/evidence/C05/check.log",
+    "docs/evidence/C05/clone.log",
+    "docs/evidence/C05/go.log",
+    "docs/evidence/C05/metadata.log",
+    "docs/evidence/C05/network.log",
+    "docs/evidence/C05/network.trace",
+    "docs/evidence/C05/package.log",
+    "docs/evidence/C05/tools.log",
+    "internal/storage/adapter.go",
+    "internal/storage/recovery_test.go",
     "plans/progress.json",
     "plans/project-state.json",
-    "product/project.json",
-    "scripts/clone-smoke.mjs",
-    "tests/contracts/domain-contracts.test.mjs",
-    "tests/fixtures/miragemesh/C04/expected-output.json",
-    "tests/fixtures/miragemesh/C04/invalid.json",
-    "tests/fixtures/miragemesh/C04/positive.json",
-    "tests/fixtures/miragemesh/C04/valid-event.txt"
+    "tests/fixtures/miragemesh/C05/expected-output.json",
+    "tests/fixtures/miragemesh/C05/invalid.json",
+    "tests/fixtures/miragemesh/C05/positive.json",
+    "tests/storage_test.go"
   ],
-  "final_source_identity": "sha256:bf2b00b261595d100bfb5a86b30bba7e6eee26edc202b153473c0ecefe44e3ce",
+  "final_source_identity": "sha256:38e6e45527928c4dd49ae48e79146a5ec23468dae6fbcd001c286b4255cda203",
   "commands": [
-    "bash -c \"node --version && npx --yes --package=npm@11.9.0 --call 'npm --version' && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go version && podman --version && dpkg-query -W podman && podman info --format '{{.Host.Security.Rootless}}' && uname -sm && git rev-parse HEAD && sha256sum package-lock.json && npm ls ajv ajv-formats\"",
-    "npx --yes --package=npm@11.9.0 --call \"npm run setup\"",
-    "npx --yes --package=npm@11.9.0 --call \"npm run check\"",
-    "bash -c \"GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go test -race -count=1 ./... && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go vet ./... && test -z \\\"$(GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' gofmt -l internal/contracts cmd/miragemesh)\\\"\"",
-    "bash -c \"GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go test ./internal/contracts -fuzz=FuzzDecodeEvent -fuzztime=3s -parallel=2\"",
-    "bash -c \"python3 scripts/validate_repo.py && python3 scripts/plan.py validate && python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v && node scripts/verify-resources.mjs && git diff --check\"",
-    "npx --yes --package=npm@11.9.0 --call \"npm run test:browser\"",
-    "bash -c \"strace -f -e trace=connect -o docs/evidence/C04/validation.trace dist/engine/miragemesh --validate-event < tests/fixtures/miragemesh/C04/valid-event.txt && ! rg 'AF_INET' docs/evidence/C04/validation.trace\"",
-    "npx --yes --package=npm@11.9.0 --call \"npm run package:web\"",
-    "GIT_INDEX_FILE=<temporary candidate index> npx --yes --package=npm@11.9.0 --call \"npm run test:clone\""
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "node --version && npx --yes --package=npm@11.9.0 --call 'npm --version' && go version && podman --version && podman info --format '{{.Host.Security.Rootless}}' && uname -sm && findmnt -no FSTYPE,TARGET -T . && git rev-parse HEAD && sha256sum package-lock.json"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/tools.log",
+      "elapsed_seconds": 1.91,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "go test -race -count=1 -v ./... && go vet ./... && python3 -c \"import subprocess; assert not subprocess.check_output(['gofmt','-l','internal/storage','tests/storage_test.go']).strip()\""
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/go.log",
+      "elapsed_seconds": 3.54,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/check.log",
+      "elapsed_seconds": 15.03,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run test:browser"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/browser.log",
+      "elapsed_seconds": 2.78,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "npx --yes --package=npm@11.9.0 --call 'npm run package:web' && cd dist/release && sha256sum --check SHA256SUMS.txt"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/package.log",
+      "elapsed_seconds": 1.0,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "python3 scripts/validate_repo.py && python3 scripts/plan.py validate && python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v && node scripts/verify-resources.mjs && git diff --check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/metadata.log",
+      "elapsed_seconds": 0.59,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "go test -c -o /tmp/miragemesh-c05-storage-tests ./tests && cd tests && strace -f -e trace=network -o ../docs/evidence/C05/network.trace /tmp/miragemesh-c05-storage-tests -test.run='^TestStorage(ExactBytesReplayAndReopen|OpaqueIDsAndHostileMetadataRemainInert)$' && ! rg 'AF_INET' ../docs/evidence/C05/network.trace"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/network.log",
+      "elapsed_seconds": 0.2,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      }
+    },
+    {
+      "command": "GIT_INDEX_FILE=<isolated candidate index> npm run test:clone; real transport clone of same snapshot; go test -race -count=1 ./...; go vet ./...",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C05/clone.log",
+      "candidate_commit": "b813c57dae118d4df80612a7ba553961806ad6c0",
+      "candidate_tree": "ba6c394405cf9ca50cb6dbeec09a901f7171f58e",
+      "elapsed_seconds": 8.13,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct"
+      },
+      "user_index_changed": false,
+      "branch_or_remote_refs_changed": false,
+      "verification_argv": [
+        [
+          "npx",
+          "--yes",
+          "--package=npm@11.9.0",
+          "--call",
+          "npm run test:clone"
+        ],
+        [
+          "go",
+          "test",
+          "-race",
+          "-count=1",
+          "./..."
+        ],
+        [
+          "go",
+          "vet",
+          "./..."
+        ]
+      ],
+      "verification_exit_codes": [
+        0,
+        0,
+        0
+      ]
+    }
   ],
-  "validation_results": "docs/evidence/C04.json",
+  "validation_results": "docs/evidence/C05.json",
   "protected_paths_changed": [],
   "current_core_ready": false,
-  "next_task": "C05",
+  "next_task": "C06",
   "next_command": "npm run plan -- next",
-  "continuation": "C05 recoverable local writes is next. Reuse internal/contracts.DecodeEvent and typed Event; do not add a second event shape or widen v1 metadata implicitly. C04 validates only structure and does not accept/authenticate/persist events. C07 allocates identities/sequences; C12 owns capture/redaction. Historical C01-C03 evidence remains bound to its original source. The user authorized one local C04 commit with the requested subject. Push is not authorized; temporary candidate objects exist only for clone testing.",
+  "continuation": "C06 engine tests/CI is next. Reuse C04 contracts and C05 storage; do not add another event/operation shape or infer public write admission. C07 owns identity/sequence allocation; C08/C09 enrollment/mTLS; later spool and collector cards own their semantics. C05 needs explicit finite Limits and a private directory. Resolve unknown outcomes by Close/Open and retry identical operation ID/bytes. Preserve historical evidence at its original source. The user authorized one local C05 commit with the requested subject. Push remains unauthorized.",
   "git_delivery": {
     "commit_authorized": true,
     "push_authorized": false,
-    "requested_subject": "feat(contracts): define typed versioned domain inputs and results"
+    "requested_subject": "feat(storage): prove recoverable local authoritative writes"
   }
 }

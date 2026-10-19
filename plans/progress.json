@@ -42,10 +42,12 @@
     },
     {
       "id": "C05",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C05.json"
+      ],
+      "source_identity": "sha256:38e6e45527928c4dd49ae48e79146a5ec23468dae6fbcd001c286b4255cda203",
+      "notes": "Verified internal bounded single-writer file adapter, atomic manifest/idempotency state, exact C04 bytes, replay, SIGKILL and injected filesystem failure recovery on local ext4. No API/auth/ingestion/spool/product-readiness claim."
     },
     {
       "id": "C06",

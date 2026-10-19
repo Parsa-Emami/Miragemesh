@@ -1,0 +1,11 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 test:clone
+> node scripts/clone-smoke.mjs
+
+{"schema_version": 1, "passed": true, "scope": "Source integrity only; runtime results belong to this commit's CI jobs", "commit": "b813c57dae118d4df80612a7ba553961806ad6c0", "git_tree": "ba6c394405cf9ca50cb6dbeec09a901f7171f58e", "current_source_identity": "sha256:3fb7bd6d9fba94db7748f1c26ebcd3a648f794a58fe59bea8007c5a8352d9795", "historical_manifest": {"commit": "09ea1d6f0216e4d2a567e7db256c062094ca3764", "verified_files": 291}, "historical_evidence": {"commit": "7e839b9591db5f5856a77a148aaf4d88b21ba547", "source_identity": "sha256:70cabd1f8cb58f9f1e05da9864196ba98e947dfab6c3eafe91ba4fc0aa021176"}, "runtime_tests_certified": false, "core_tasks_certified": []}
+{"passed":true,"stagedTree":"ba6c394405cf9ca50cb6dbeec09a901f7171f58e","proof":"real git clone -> npm run setup -> local event validation -> unified web and Go runtime startup","coreReady":false}
+
+ok  	github.com/Parsa-Emami/Miragemesh/cmd/miragemesh	1.021s
+ok  	github.com/Parsa-Emami/Miragemesh/internal/contracts	1.025s
+ok  	github.com/Parsa-Emami/Miragemesh/internal/storage	2.662s
+ok  	github.com/Parsa-Emami/Miragemesh/tests	2.213s

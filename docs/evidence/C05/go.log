@@ -1,0 +1,204 @@
+=== RUN   TestLifecycle
+--- PASS: TestLifecycle (0.00s)
+=== RUN   TestRejectsUnsafeAndOccupiedAddresses
+--- PASS: TestRejectsUnsafeAndOccupiedAddresses (0.00s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/cmd/miragemesh	1.016s
+=== RUN   TestValidAndIncompatibleFixtures
+=== RUN   TestValidAndIncompatibleFixtures/v0
+=== RUN   TestValidAndIncompatibleFixtures/future-version
+=== RUN   TestValidAndIncompatibleFixtures/missing-version
+=== RUN   TestValidAndIncompatibleFixtures/missing-sensor_id
+=== RUN   TestValidAndIncompatibleFixtures/missing-event_id
+=== RUN   TestValidAndIncompatibleFixtures/missing-sequence
+=== RUN   TestValidAndIncompatibleFixtures/missing-observed_at
+=== RUN   TestValidAndIncompatibleFixtures/missing-kind
+=== RUN   TestValidAndIncompatibleFixtures/missing-metadata
+=== RUN   TestValidAndIncompatibleFixtures/invalid-sensor_id-9
+=== RUN   TestValidAndIncompatibleFixtures/invalid-sensor_id-10
+=== RUN   TestValidAndIncompatibleFixtures/invalid-event_id-11
+=== RUN   TestValidAndIncompatibleFixtures/invalid-event_id-12
+=== RUN   TestValidAndIncompatibleFixtures/invalid-sequence-13
+=== RUN   TestValidAndIncompatibleFixtures/invalid-sequence-14
+=== RUN   TestValidAndIncompatibleFixtures/invalid-sequence-15
+=== RUN   TestValidAndIncompatibleFixtures/invalid-sequence-16
+=== RUN   TestValidAndIncompatibleFixtures/invalid-sequence-17
+=== RUN   TestValidAndIncompatibleFixtures/invalid-sequence-18
+=== RUN   TestValidAndIncompatibleFixtures/invalid-observed_at-19
+=== RUN   TestValidAndIncompatibleFixtures/invalid-observed_at-20
+=== RUN   TestValidAndIncompatibleFixtures/invalid-observed_at-21
+=== RUN   TestValidAndIncompatibleFixtures/invalid-observed_at-22
+=== RUN   TestValidAndIncompatibleFixtures/invalid-kind-23
+=== RUN   TestValidAndIncompatibleFixtures/invalid-metadata-24
+=== RUN   TestValidAndIncompatibleFixtures/invalid-metadata-25
+=== RUN   TestValidAndIncompatibleFixtures/invalid-metadata-26
+=== RUN   TestValidAndIncompatibleFixtures/invalid-metadata-27
+=== RUN   TestValidAndIncompatibleFixtures/invalid-metadata-28
+=== RUN   TestValidAndIncompatibleFixtures/invalid-metadata-29
+=== RUN   TestValidAndIncompatibleFixtures/invalid-metadata-30
+=== RUN   TestValidAndIncompatibleFixtures/unknown-field
+=== RUN   TestValidAndIncompatibleFixtures/wrong-case
+=== RUN   TestValidAndIncompatibleFixtures/malformed
+=== RUN   TestValidAndIncompatibleFixtures/trailing
+=== RUN   TestValidAndIncompatibleFixtures/duplicate
+=== RUN   TestValidAndIncompatibleFixtures/duplicate-metadata
+=== RUN   TestValidAndIncompatibleFixtures/escaped-duplicate
+=== RUN   TestValidAndIncompatibleFixtures/null-root
+=== RUN   TestValidAndIncompatibleFixtures/array-root
+=== RUN   TestValidAndIncompatibleFixtures/unpaired-high
+=== RUN   TestValidAndIncompatibleFixtures/unpaired-low
+--- PASS: TestValidAndIncompatibleFixtures (0.01s)
+    --- PASS: TestValidAndIncompatibleFixtures/v0 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/future-version (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/missing-version (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/missing-sensor_id (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/missing-event_id (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/missing-sequence (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/missing-observed_at (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/missing-kind (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/missing-metadata (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-sensor_id-9 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-sensor_id-10 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-event_id-11 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-event_id-12 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-sequence-13 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-sequence-14 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-sequence-15 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-sequence-16 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-sequence-17 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-sequence-18 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-observed_at-19 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-observed_at-20 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-observed_at-21 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-observed_at-22 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-kind-23 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-metadata-24 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-metadata-25 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-metadata-26 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-metadata-27 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-metadata-28 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-metadata-29 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/invalid-metadata-30 (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/unknown-field (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/wrong-case (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/malformed (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/trailing (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/duplicate (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/duplicate-metadata (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/escaped-duplicate (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/null-root (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/array-root (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/unpaired-high (0.00s)
+    --- PASS: TestValidAndIncompatibleFixtures/unpaired-low (0.00s)
+=== RUN   TestReadFailureCancellationAndDeadline
+--- PASS: TestReadFailureCancellationAndDeadline (0.00s)
+=== RUN   TestExactNumbersAndBounds
+--- PASS: TestExactNumbersAndBounds (0.00s)
+=== RUN   FuzzDecodeEvent
+=== RUN   FuzzDecodeEvent/seed#0
+=== RUN   FuzzDecodeEvent/seed#1
+=== RUN   FuzzDecodeEvent/seed#2
+--- PASS: FuzzDecodeEvent (0.00s)
+    --- PASS: FuzzDecodeEvent/seed#0 (0.00s)
+    --- PASS: FuzzDecodeEvent/seed#1 (0.00s)
+    --- PASS: FuzzDecodeEvent/seed#2 (0.00s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/internal/contracts	1.023s
+=== RUN   TestStorageSyscallFailuresPreserveRecoverableState
+=== RUN   TestStorageSyscallFailuresPreserveRecoverableState/write
+=== RUN   TestStorageSyscallFailuresPreserveRecoverableState/short-write
+=== RUN   TestStorageSyscallFailuresPreserveRecoverableState/stage-sync
+=== RUN   TestStorageSyscallFailuresPreserveRecoverableState/object-rename
+=== RUN   TestStorageSyscallFailuresPreserveRecoverableState/object-directory-sync
+=== RUN   TestStorageSyscallFailuresPreserveRecoverableState/manifest-write
+=== RUN   TestStorageSyscallFailuresPreserveRecoverableState/manifest-sync
+=== RUN   TestStorageSyscallFailuresPreserveRecoverableState/manifest-rename
+=== RUN   TestStorageSyscallFailuresPreserveRecoverableState/manifest-directory-sync
+--- PASS: TestStorageSyscallFailuresPreserveRecoverableState (1.27s)
+    --- PASS: TestStorageSyscallFailuresPreserveRecoverableState/write (0.12s)
+    --- PASS: TestStorageSyscallFailuresPreserveRecoverableState/short-write (0.14s)
+    --- PASS: TestStorageSyscallFailuresPreserveRecoverableState/stage-sync (0.12s)
+    --- PASS: TestStorageSyscallFailuresPreserveRecoverableState/object-rename (0.14s)
+    --- PASS: TestStorageSyscallFailuresPreserveRecoverableState/object-directory-sync (0.14s)
+    --- PASS: TestStorageSyscallFailuresPreserveRecoverableState/manifest-write (0.15s)
+    --- PASS: TestStorageSyscallFailuresPreserveRecoverableState/manifest-sync (0.16s)
+    --- PASS: TestStorageSyscallFailuresPreserveRecoverableState/manifest-rename (0.16s)
+    --- PASS: TestStorageSyscallFailuresPreserveRecoverableState/manifest-directory-sync (0.13s)
+=== RUN   TestStorageCancellationAroundPublication
+=== RUN   TestStorageCancellationAroundPublication/false
+=== RUN   TestStorageCancellationAroundPublication/true
+--- PASS: TestStorageCancellationAroundPublication (0.17s)
+    --- PASS: TestStorageCancellationAroundPublication/false (0.07s)
+    --- PASS: TestStorageCancellationAroundPublication/true (0.10s)
+=== RUN   TestStorageProcessHelper
+--- PASS: TestStorageProcessHelper (0.00s)
+=== RUN   TestStorageSIGKILLAtPublicationBoundaries
+=== RUN   TestStorageSIGKILLAtPublicationBoundaries/staged
+=== RUN   TestStorageSIGKILLAtPublicationBoundaries/object
+=== RUN   TestStorageSIGKILLAtPublicationBoundaries/before-manifest
+=== RUN   TestStorageSIGKILLAtPublicationBoundaries/manifest
+=== RUN   TestStorageSIGKILLAtPublicationBoundaries/before-ack
+--- PASS: TestStorageSIGKILLAtPublicationBoundaries (0.45s)
+    --- PASS: TestStorageSIGKILLAtPublicationBoundaries/staged (0.09s)
+    --- PASS: TestStorageSIGKILLAtPublicationBoundaries/object (0.09s)
+    --- PASS: TestStorageSIGKILLAtPublicationBoundaries/before-manifest (0.10s)
+    --- PASS: TestStorageSIGKILLAtPublicationBoundaries/manifest (0.08s)
+    --- PASS: TestStorageSIGKILLAtPublicationBoundaries/before-ack (0.09s)
+=== RUN   TestStorageRecognizedOrphansAndMissingManifest
+--- PASS: TestStorageRecognizedOrphansAndMissingManifest (0.02s)
+=== RUN   TestStorageOversizedStagingIsPreserved
+--- PASS: TestStorageOversizedStagingIsPreserved (0.02s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/internal/storage	2.941s
+=== RUN   TestStorageExactBytesReplayAndReopen
+--- PASS: TestStorageExactBytesReplayAndReopen (0.08s)
+=== RUN   TestStorageQuotasValidationAndCancellation
+=== RUN   TestStorageQuotasValidationAndCancellation/records
+=== RUN   TestStorageQuotasValidationAndCancellation/bytes
+=== RUN   TestStorageQuotasValidationAndCancellation/manifest
+--- PASS: TestStorageQuotasValidationAndCancellation (0.29s)
+    --- PASS: TestStorageQuotasValidationAndCancellation/records (0.08s)
+    --- PASS: TestStorageQuotasValidationAndCancellation/bytes (0.08s)
+    --- PASS: TestStorageQuotasValidationAndCancellation/manifest (0.08s)
+=== RUN   TestStorageConcurrentCallsDoNotDuplicate
+--- PASS: TestStorageConcurrentCallsDoNotDuplicate (0.08s)
+=== RUN   TestStorageRejectsUnsafeDirectoriesAndLimits
+--- PASS: TestStorageRejectsUnsafeDirectoriesAndLimits (0.00s)
+=== RUN   TestStorageRejectsCorruptionAndPreservesUnknownFiles
+=== RUN   TestStorageRejectsCorruptionAndPreservesUnknownFiles/bad-json
+=== RUN   TestStorageRejectsCorruptionAndPreservesUnknownFiles/version
+=== RUN   TestStorageRejectsCorruptionAndPreservesUnknownFiles/duplicate
+=== RUN   TestStorageRejectsCorruptionAndPreservesUnknownFiles/missing
+=== RUN   TestStorageRejectsCorruptionAndPreservesUnknownFiles/digest
+=== RUN   TestStorageRejectsCorruptionAndPreservesUnknownFiles/symlink
+=== RUN   TestStorageRejectsCorruptionAndPreservesUnknownFiles/hardlink
+=== RUN   TestStorageRejectsCorruptionAndPreservesUnknownFiles/mode
+=== RUN   TestStorageRejectsCorruptionAndPreservesUnknownFiles/unknown
+=== RUN   TestStorageRejectsCorruptionAndPreservesUnknownFiles/fifo
+--- PASS: TestStorageRejectsCorruptionAndPreservesUnknownFiles (0.77s)
+    --- PASS: TestStorageRejectsCorruptionAndPreservesUnknownFiles/bad-json (0.08s)
+    --- PASS: TestStorageRejectsCorruptionAndPreservesUnknownFiles/version (0.08s)
+    --- PASS: TestStorageRejectsCorruptionAndPreservesUnknownFiles/duplicate (0.08s)
+    --- PASS: TestStorageRejectsCorruptionAndPreservesUnknownFiles/missing (0.07s)
+    --- PASS: TestStorageRejectsCorruptionAndPreservesUnknownFiles/digest (0.08s)
+    --- PASS: TestStorageRejectsCorruptionAndPreservesUnknownFiles/symlink (0.08s)
+    --- PASS: TestStorageRejectsCorruptionAndPreservesUnknownFiles/hardlink (0.08s)
+    --- PASS: TestStorageRejectsCorruptionAndPreservesUnknownFiles/mode (0.08s)
+    --- PASS: TestStorageRejectsCorruptionAndPreservesUnknownFiles/unknown (0.07s)
+    --- PASS: TestStorageRejectsCorruptionAndPreservesUnknownFiles/fifo (0.08s)
+=== RUN   TestStorageCompatibilityFixtures
+=== RUN   TestStorageCompatibilityFixtures/missing-operation
+=== RUN   TestStorageCompatibilityFixtures/oversized-operation
+=== RUN   TestStorageCompatibilityFixtures/legacy-event
+=== RUN   TestStorageCompatibilityFixtures/duplicate-key
+=== RUN   TestStorageCompatibilityFixtures/oversized-input
+--- PASS: TestStorageCompatibilityFixtures (0.11s)
+    --- PASS: TestStorageCompatibilityFixtures/missing-operation (0.00s)
+    --- PASS: TestStorageCompatibilityFixtures/oversized-operation (0.00s)
+    --- PASS: TestStorageCompatibilityFixtures/legacy-event (0.00s)
+    --- PASS: TestStorageCompatibilityFixtures/duplicate-key (0.00s)
+    --- PASS: TestStorageCompatibilityFixtures/oversized-input (0.00s)
+=== RUN   TestStorageOpaqueIDsAndHostileMetadataRemainInert
+--- PASS: TestStorageOpaqueIDsAndHostileMetadataRemainInert (0.08s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/tests	2.438s

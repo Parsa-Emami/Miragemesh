@@ -1,0 +1,24 @@
+{
+  "fixture_version": 1,
+  "provenance": "Repository-authored synthetic C05 local storage fixtures; no real sensor data.",
+  "license": "Apache-2.0",
+  "receipts": [
+    {
+      "operation_id": "op-01",
+      "input_digest": "a391f2daf6fd4283c0e78a795476413fbd525cae0f3b4ec81a83f81c4f9c0444",
+      "generation": 1
+    },
+    {
+      "operation_id": "op-02",
+      "input_digest": "a391f2daf6fd4283c0e78a795476413fbd525cae0f3b4ec81a83f81c4f9c0444",
+      "generation": 2
+    }
+  ],
+  "interrupted_visibility": {
+    "staged": false,
+    "object": false,
+    "before-manifest": false,
+    "manifest": true,
+    "before-ack": true
+  }
+}

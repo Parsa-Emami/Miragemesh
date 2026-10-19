@@ -1,0 +1,16 @@
+{
+  "fixture_version": 1,
+  "provenance": "Repository-authored synthetic C05 local storage fixtures; no real sensor data.",
+  "license": "Apache-2.0",
+  "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}\n",
+  "limits": {
+    "max_operations": 16,
+    "max_bytes": 131072,
+    "max_manifest_bytes": 65536
+  },
+  "receipt": {
+    "operation_id": "op-01",
+    "input_digest": "a391f2daf6fd4283c0e78a795476413fbd525cae0f3b4ec81a83f81c4f9c0444",
+    "generation": 1
+  }
+}
