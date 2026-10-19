@@ -21,14 +21,14 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
-      - run: npm ci --ignore-scripts
-      - run: npm run validate:plan
-      - run: npm run build
-      - run: npm test
-      - run: npx --no-install playwright install --with-deps chromium
-      - run: npm run test:browser
-      - run: npm run test:clone
-      - run: npm run package:web
+      - run: npx --yes --package=npm@11.9.0 --call 'npm ci --ignore-scripts'
+      - run: npx --yes --package=npm@11.9.0 --call 'npm run validate:plan'
+      - run: npx --yes --package=npm@11.9.0 --call 'npm run build'
+      - run: npx --yes --package=npm@11.9.0 --call 'npm test'
+      - run: ./node_modules/.bin/playwright install --with-deps chromium
+      - run: npx --yes --package=npm@11.9.0 --call 'npm run test:browser'
+      - run: npx --yes --package=npm@11.9.0 --call 'npm run test:clone'
+      - run: npx --yes --package=npm@11.9.0 --call 'npm run package:web'
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: web-${{ github.sha }}

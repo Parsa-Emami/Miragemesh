@@ -17,12 +17,15 @@
     "event_retention_days": 7,
     "payload_max_kib": 8
   },
-  "current_shell_requires": [
-    "Git",
-    "Node 24.19+ within Node 24 (npm included)"
-  ],
-  "full_engine_platform_target": "Linux x86_64; other platforms need their own installed evidence",
+  "current_shell_requires": ["Git", "Node 24.19.0", "npm CLI 11.9.0 invoked separately from the Node-bundled npm"],
+  "full_engine_platform_target": "Linux x86_64 (amd64); reference provider package is Ubuntu 24.04 LTS; other platforms need separately verified pins",
+  "toolchain": {
+    "node": "24.19.0",
+    "npm_cli": "11.9.0",
+    "go": "1.27.2",
+    "podman": {"version": "4.9.3", "package": "4.9.3+ds1-1ubuntu0.2", "profile": "full workflow; rootless isolated decoys"}
+  },
   "paid_or_cloud_account_required": false,
   "owned_domain_required": false,
-  "versions": "Web versions are locked now; resolve exact engine/provider pins from official sources at C02."
+  "versions": "Exact pins and official artifact metadata are recorded in docs/engineering/toolchain-lock.json; no engine execution is verified by C02."
 }

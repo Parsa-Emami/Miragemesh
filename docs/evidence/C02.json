@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "project": "MirageMesh",
+  "task": "C02",
+  "date": "2026-10-19",
+  "passed": true,
+  "planning_template": false,
+  "scope": "Exact open-source toolchain/resource pins, source-build routes and metadata/fixture validation; no domain engine execution certified",
+  "commit_id": "C02",
+  "base_commit": "f7d4c8ab1de534db67f73786a30524040094bc53",
+  "git_commit_created": false,
+  "source_identity": "sha256:f1b591aa235bdd11925e3602dc2530118ff7ee3a55d3f4294a84cd8f6e58c485",
+  "source_identity_method": "SHA-256 over sorted C02-owned source/config/docs/generated-output/fixture path bytes, NUL separators and each file SHA-256; excludes progress, evidence and handoff metadata to avoid recursive self-reference",
+  "environment": {
+    "os": "Linux x86_64, Ubuntu 24.04 reference provider environment",
+    "node": "v24.19.0",
+    "npm_cli": "11.9.0 (separately invoked; Node archive bundles npm 11.17.0)",
+    "go": "go version go1.27.2 linux/amd64",
+    "podman": "podman version 4.9.3; Ubuntu package 4.9.3+ds1-1ubuntu0.2",
+    "podman_rootless": true,
+    "hardware_measurement": "Not measured; C28 owns validation of the planning target."
+  },
+  "resources": [
+    {
+      "id": "node-runtime",
+      "version": "24.19.0",
+      "license": "MIT",
+      "artifact_sha256": "14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647",
+      "official_source": "https://nodejs.org/dist/v24.19.0/node-v24.19.0-linux-x64.tar.xz",
+      "integrity_reference": "https://nodejs.org/dist/v24.19.0/SHASUMS256.txt"
+    },
+    {
+      "id": "npm-cli",
+      "version": "11.9.0",
+      "license": "Artistic-2.0",
+      "artifact_integrity": "sha512-BBZoU926FCypj4b7V7ElinxsWcy4Kss88UG3ejFYmKyq7Uc5XnT34Me2nEhgCOaL5qY4HvGu5aI92C4OYd7NaA==",
+      "official_source": "https://registry.npmjs.org/npm/-/npm-11.9.0.tgz"
+    },
+    {
+      "id": "go-toolchain",
+      "version": "1.27.2",
+      "license": "BSD-3-Clause",
+      "official_release_archive_sha256": "ecbadb99091a3f46e31f5f934b068b1864eafa7995211b39eaddf76996045fe5",
+      "module_checksum": "h1:N6Xv/1OLzI0jVVkUwkrxHRZc/GCTARUo6idcngKwlDE=",
+      "checksum_reference": "https://sum.golang.org/lookup/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64",
+      "note": "The official go.dev archive URL returned 404 in this environment; the locked toolchain module was fetched through proxy.golang.org and verified against sum.golang.org."
+    },
+    {
+      "id": "podman-provider",
+      "version": "4.9.3+ds1-1ubuntu0.2",
+      "license": "Apache-2.0 for upstream main project; Ubuntu package may include files under other licenses",
+      "artifact_sha256": "e5c1c37e387ed14c352a744a75fbb79fb2f82573ca7bf36886e3b7333fc9ef1a",
+      "official_source": "https://archive.ubuntu.com/ubuntu/pool/universe/libp/libpod/podman_4.9.3+ds1-1ubuntu0.2_amd64.deb"
+    }
+  ],
+  "web_lockfile_sha256": "a3a79c430af7626f20fa8615e81e2c1c9ddee4ef07b45611e01e1a8a15b6c40c",
+  "fixture_hashes_sha256": {
+    "tests/fixtures/miragemesh/C02/expected-output.json": "a1c8493d7edc7ce45a0868ed71915683eb85f040dabc5d843c26a5a693f45714",
+    "tests/fixtures/miragemesh/C02/invalid.json": "18940f074bc6820e43f5f3c5eb3429ae8d85a8abb059c9b6d6c6d0a3397d1f7e",
+    "tests/fixtures/miragemesh/C02/positive.json": "39fbe47717e0ee5df53c18ac5841d165aa54a977bf72afa06c8a80fc8a3fcfbc"
+  },
+  "fixture_provenance_license": "C02 fixtures are repository-authored synthetic examples with Apache-2.0 metadata; no user data, secrets or downloaded upstream datasets.",
+  "commands": [
+    { "command": "npm run plan -- next", "exit_code": 0, "result": "C02 selected as planned next task; C01 dependency verified." },
+    { "command": "npm run validate:plan", "exit_code": 0, "result": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred." },
+    { "command": "node --test tests/web/resource-contract.test.mjs", "exit_code": 0, "result": "3 validator tests passed, including unsupported manifest version, floating/missing resources, integrity mismatch, required tool unavailable, unsafe fixture, missing fixture provenance and checksum mismatch." },
+    { "command": "node scripts/verify-resources.mjs", "exit_code": 0, "result": "Resource metadata, recorded probes, and fixture digests are valid; this does not verify engine execution." },
+    { "command": "npm ci --ignore-scripts --no-audit --no-fund (npm CLI 11.9.0)", "exit_code": 0, "result": "Added 28 packages; committed package-lock.json unchanged." },
+    { "command": "node --version", "exit_code": 0, "result": "v24.19.0" },
+    { "command": "npx --yes --package=npm@11.9.0 --call 'npm --version'", "exit_code": 0, "result": "11.9.0" },
+    { "command": "GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' GOTOOLCHAIN=go1.27.2 go version", "exit_code": 0, "result": "go version go1.27.2 linux/amd64" },
+    { "command": "podman --version && dpkg-query -W -f='${Version}\\n' podman && podman info --format '{{.Host.Security.Rootless}}'", "exit_code": 0, "result": "podman version 4.9.3; 4.9.3+ds1-1ubuntu0.2; true" },
+    { "command": "npm test (npm CLI 11.9.0)", "exit_code": 0, "result": "13 Node tests passed." },
+    { "command": "npm run typecheck (npm CLI 11.9.0)", "exit_code": 0, "result": "TypeScript check completed." },
+    { "command": "npm run build (npm CLI 11.9.0)", "exit_code": 0, "result": "Vite production build completed." },
+    { "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v", "exit_code": 0, "result": "6 engineering CI source regression tests passed." },
+    { "command": "python3 scripts/validate_repo.py", "exit_code": 0, "result": "Validated 90 JSON files and repository contract invariants." },
+    { "command": "python3 scripts/plan.py validate", "exit_code": 0, "result": "40 planning intents, coverage and progress checked; no application runtime tests performed." },
+    { "command": "./node_modules/.bin/playwright install chromium", "exit_code": 0, "result": "Playwright Chromium install check completed." },
+    { "command": "npm run test:browser -- --config=.playwright.c02.config.mjs (isolated port 4187)", "exit_code": 0, "result": "2 browser tests passed; default port 4173 was already occupied, so this run used a temporary isolated config which was removed." },
+    { "command": "npm run test:clone (npm CLI 11.9.0)", "exit_code": 0, "result": "Real git clone -> npm setup -> web startup passed; coreReady=false." },
+    { "command": "npm run package:web (npm CLI 11.9.0)", "exit_code": 0, "result": "Packaged web-only release; source dirty=true; engineReady=false." },
+    { "command": "git diff --check", "exit_code": 0, "result": "No whitespace errors." }
+  ],
+  "results": {
+    "resource_lock_validator": "passed",
+    "positive_and_negative_metadata_tests": "passed",
+    "rootless_podman_probe": "passed in current environment",
+    "engine_execution": "not implemented and not tested",
+    "remote_github_actions": "not run"
+  },
+  "observed_limitations": [
+    "Go's official release archive URL returned 404; the pinned official toolchain module was retrieved from proxy.golang.org and its checksum matched the official Go checksum database.",
+    "The stock Playwright browser command could not use port 4173 because another local process already owned it; the same two tests passed on isolated port 4187.",
+    "GitHub Actions were not run remotely. The browser, clone and package commands and engineering source tests were run locally.",
+    "No lint script is defined in package.json; no lint command was available.",
+    "C02 locks resources and validates metadata only; no domain engine behavior or C28 hardware target is certified."
+  ],
+  "core_ready": false
+}

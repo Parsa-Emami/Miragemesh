@@ -13,10 +13,10 @@
     },
     {
       "id": "C02",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": ["docs/evidence/C02.json"],
+      "source_identity": "sha256:f1b591aa235bdd11925e3602dc2530118ff7ee3a55d3f4294a84cd8f6e58c485",
+      "notes": "Toolchain/resource pins and metadata validator verified locally; this does not certify engine execution."
     },
     {
       "id": "C03",

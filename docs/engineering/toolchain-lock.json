@@ -1,28 +1,109 @@
 {
-  "verified_on": "2026-10-15",
-  "scope": "web foundation only",
-  "runtime": {
-    "node": "24.19.0",
-    "npm": "11.9.0"
+  "schema_version": 1,
+  "project": "MirageMesh",
+  "verified_on": "2026-10-19",
+  "profile": { "os": "linux", "architecture": "amd64", "reference_distribution": "Ubuntu 24.04 LTS (Noble)" },
+  "web_lockfile": {
+    "path": "package-lock.json",
+    "sha256": "a3a79c430af7626f20fa8615e81e2c1c9ddee4ef07b45611e01e1a8a15b6c40c",
+    "dependencies": {
+      "react": "19.3.1",
+      "react-dom": "19.3.1",
+      "vite": "8.3.4",
+      "typescript": "7.0.2",
+      "@types/react": "19.3.0",
+      "@types/react-dom": "19.3.0",
+      "@playwright/test": "1.64.1"
+    },
+    "registry": "https://registry.npmjs.org/"
   },
-  "dependencies": {
-    "react": "19.3.1",
-    "react-dom": "19.3.1"
-  },
-  "devDependencies": {
-    "vite": "8.3.4",
-    "typescript": "7.0.2",
-    "@types/react": "19.3.0",
-    "@types/react-dom": "19.3.0",
-    "@playwright/test": "1.64.1"
-  },
-  "registry_source": "https://registry.npmjs.org/",
-  "official_sources": [
-    "https://nodejs.org/api/http.html",
-    "https://vite.dev/guide/",
-    "https://react.dev/",
-    "https://playwright.dev/docs/intro"
+  "resources": [
+    {
+      "id": "node-runtime",
+      "required": true,
+      "version": "24.19.0",
+      "platform": "linux/amd64",
+      "artifact_url": "https://nodejs.org/dist/v24.19.0/node-v24.19.0-linux-x64.tar.xz",
+      "integrity": {
+        "algorithm": "sha256",
+        "expected": "14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647",
+        "observed": "14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647"
+      },
+      "source_url": "https://github.com/nodejs/node/tree/v24.19.0",
+      "license": "MIT",
+      "license_url": "https://github.com/nodejs/node/blob/v24.19.0/LICENSE",
+      "source_build": "Use the official v24.19.0 source tag and the documented Unix build prerequisites and ./configure && make steps; inspect deps/* license notices when redistributing a built runtime.",
+      "probe": { "command": "node --version", "exit_code": 0, "version": "v24.19.0" }
+    },
+    {
+      "id": "npm-cli",
+      "required": true,
+      "version": "11.9.0",
+      "runtime": "Node 24.19.0; CLI is invoked separately because that Node archive bundles npm 11.17.0",
+      "artifact_url": "https://registry.npmjs.org/npm/-/npm-11.9.0.tgz",
+      "integrity": {
+        "algorithm": "sha512",
+        "expected": "sha512-BBZoU926FCypj4b7V7ElinxsWcy4Kss88UG3ejFYmKyq7Uc5XnT34Me2nEhgCOaL5qY4HvGu5aI92C4OYd7NaA==",
+        "observed": "sha512-BBZoU926FCypj4b7V7ElinxsWcy4Kss88UG3ejFYmKyq7Uc5XnT34Me2nEhgCOaL5qY4HvGu5aI92C4OYd7NaA=="
+      },
+      "source_url": "https://github.com/npm/cli/tree/v11.9.0",
+      "license": "Artistic-2.0",
+      "license_url": "https://github.com/npm/cli/blob/v11.9.0/LICENSE",
+      "source_build": "Check out the npm/cli v11.9.0 tag, install its locked dependencies with the existing pinned Node/npm runtime (`npm ci --ignore-scripts`), then run `node bin/npm-cli.js --version`; npm is JavaScript and has no compilation step.",
+      "probe": { "command": "npx --yes --package=npm@11.9.0 --call 'npm --version'", "exit_code": 0, "version": "11.9.0" }
+    },
+    {
+      "id": "go-toolchain",
+      "required": true,
+      "version": "1.27.2",
+      "platform": "linux/amd64",
+      "artifact_url": "https://proxy.golang.org/golang.org/toolchain/@v/v0.0.1-go1.27.2.linux-amd64.zip",
+      "integrity": {
+        "algorithm": "go-module-h1",
+        "expected": "h1:N6Xv/1OLzI0jVVkUwkrxHRZc/GCTARUo6idcngKwlDE=",
+        "observed": "h1:N6Xv/1OLzI0jVVkUwkrxHRZc/GCTARUo6idcngKwlDE=",
+        "verification_source": "https://sum.golang.org/lookup/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64"
+      },
+      "official_release_archive": {
+        "url": "https://go.dev/dl/go1.27.2.linux-amd64.tar.gz",
+        "sha256": "ecbadb99091a3f46e31f5f934b068b1864eafa7995211b39eaddf76996045fe5"
+      },
+      "source_url": "https://go.googlesource.com/go/+/refs/tags/go1.27.2",
+      "license": "BSD-3-Clause",
+      "license_url": "https://go.dev/LICENSE",
+      "source_build": "Bootstrap with Go 1.26.2 linux/amd64 (official archive SHA-256 990e6b4bbba816dc3ee129eaeaf4b42f17c2800b88a2166c265ac1a200262282), check out the go1.27.2 source tag and run src/make.bash with GOROOT_BOOTSTRAP set to that toolchain.",
+      "probe": { "command": "GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct GOTOOLCHAIN=go1.27.2 go version", "exit_code": 0, "version": "go version go1.27.2 linux/amd64" }
+    },
+    {
+      "id": "podman-provider",
+      "required": true,
+      "version": "4.9.3",
+      "package_version": "4.9.3+ds1-1ubuntu0.2",
+      "platform": "Ubuntu 24.04 LTS, amd64",
+      "artifact_url": "https://archive.ubuntu.com/ubuntu/pool/universe/libp/libpod/podman_4.9.3+ds1-1ubuntu0.2_amd64.deb",
+      "integrity": {
+        "algorithm": "sha256",
+        "expected": "e5c1c37e387ed14c352a744a75fbb79fb2f82573ca7bf36886e3b7333fc9ef1a",
+        "observed": "e5c1c37e387ed14c352a744a75fbb79fb2f82573ca7bf36886e3b7333fc9ef1a"
+      },
+      "source_url": "https://launchpad.net/ubuntu/+source/libpod/4.9.3+ds1-1ubuntu0.2",
+      "license": "Apache-2.0",
+      "license_url": "https://github.com/containers/podman/blob/v4.9.3/LICENSE",
+      "source_build": "Fetch the matching Ubuntu libpod source package, install its declared build dependencies, then run dpkg-buildpackage -b -uc -us. This builds the distro-patched provider package.",
+      "probe": { "command": "podman --version and dpkg-query -W podman", "exit_code": 0, "version": "4.9.3+ds1-1ubuntu0.2" }
+    }
   ],
-  "lockfile": "package-lock.json",
-  "engine_toolchain": "pending project-specific C02 evidence"
+  "not_applicable": [
+    { "id": "oci-image", "reason": "C12/C13 select and isolate the first decoy image; no image is selected or required by the C02 toolchain check." },
+    { "id": "grammar", "reason": "No external protocol grammar is selected in current source or the C01 reference contract." },
+    { "id": "rule", "reason": "No third-party rule bundle is selected in current source or the C01 reference contract." }
+  ],
+  "fixtures": [
+    { "path": "tests/fixtures/miragemesh/C01/positive.json", "sha256": "b91f21e1a45f24f2c43af88b9ffca84c3f42338de02b22ed1fdee6c7b3d79bba" },
+    { "path": "tests/fixtures/miragemesh/C01/invalid.json", "sha256": "33eefcf744547e4b9fd2530caef29f0763adfb609d2bc0183b00992636d30876" },
+    { "path": "tests/fixtures/miragemesh/C01/expected-output.json", "sha256": "6563cfe200ae660f1608419cd25ec9caa4224831c66898dd0a691e3cbd36056b" },
+    { "path": "tests/fixtures/miragemesh/C02/positive.json", "sha256": "39fbe47717e0ee5df53c18ac5841d165aa54a977bf72afa06c8a80fc8a3fcfbc" },
+    { "path": "tests/fixtures/miragemesh/C02/invalid.json", "sha256": "18940f074bc6820e43f5f3c5eb3429ae8d85a8abb059c9b6d6c6d0a3397d1f7e" },
+    { "path": "tests/fixtures/miragemesh/C02/expected-output.json", "sha256": "a1c8493d7edc7ce45a0868ed71915683eb85f040dabc5d843c26a5a693f45714" }
+  ]
 }

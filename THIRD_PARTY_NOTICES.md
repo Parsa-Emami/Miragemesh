@@ -1,6 +1,6 @@
 # Third-party inventory
 
-Updated 2026-10-16. These current web facts come from the committed npm lockfile. Complete distributed notices/license texts and SBOM are C31 work; this index is not compliance certification.
+Updated 2026-10-19. Web package facts come from the committed npm lockfile. Toolchain artifact pins and source/license references are in `docs/engineering/toolchain-lock.json`. Complete distributed notices/license texts and SBOM are C31 work; this index is not compliance certification.
 
 | Resource | Version | Declared license |
 |---|---|---|
@@ -77,7 +77,11 @@ Updated 2026-10-16. These current web facts come from the committed npm lockfile
 
 ## Planned engine resources
 
-- https://docs.podman.io/en/latest/
-- https://pkg.go.dev/crypto/tls
+| Resource | Version | Declared license | Source / notes |
+|---|---|---|---|
+| Node.js runtime | 24.19.0 | MIT | [release source](https://github.com/nodejs/node/tree/v24.19.0); Node archive SHA-256 is in the toolchain lock. |
+| npm CLI (separate invocation) | 11.9.0 | Artistic-2.0 | [release source](https://github.com/npm/cli/tree/v11.9.0); Node 24.19.0 bundles npm 11.17.0, so use the pinned CLI package. |
+| Go toolchain | 1.27.2 | BSD-3-Clause | [source tag](https://go.googlesource.com/go/+/refs/tags/go1.27.2); official source build path and checksum metadata are in the toolchain lock. |
+| Podman Ubuntu provider | 4.9.3 (`4.9.3+ds1-1ubuntu0.2`) | Apache-2.0 (main project; package files may vary) | [Ubuntu source package](https://launchpad.net/ubuntu/+source/libpod/4.9.3+ds1-1ubuntu0.2); reference package is for Ubuntu 24.04 amd64. |
 
-Resolve exact pins and licenses at C02; upstream resources are not claimed installed by this document.
+No OCI image, external grammar or rule bundle has been selected; those choices belong to C12/C13. The package inventory above is not a complete redistribution notice or SBOM.

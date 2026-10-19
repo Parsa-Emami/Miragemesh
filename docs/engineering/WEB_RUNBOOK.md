@@ -2,14 +2,14 @@
 
 ## Local checkout
 
-Use Node 24.19.0 and npm 11.9.0 from the tested toolchain. From the repository root:
+Use Node 24.19.0. This Node archive bundles npm 11.17.0; invoke the separately pinned npm CLI 11.9.0 for project commands:
 
 ```sh
-npm ci --ignore-scripts
-npm run check
-npx --no-install playwright install chromium
-npm run test:browser
-npm run dev
+npx --yes --package=npm@11.9.0 --call 'npm ci --ignore-scripts'
+npx --yes --package=npm@11.9.0 --call 'npm run check'
+./node_modules/.bin/playwright install chromium
+npx --yes --package=npm@11.9.0 --call 'npm run test:browser'
+npx --yes --package=npm@11.9.0 --call 'npm run dev'
 ```
 
 Browser checks may use an operator-provided Chromium executable through the `WEB_TEST_CHROMIUM` process variable. CI uses the Playwright-managed browser. This test override never changes application configuration.
@@ -17,8 +17,8 @@ Browser checks may use an operator-provided Chromium executable through the `WEB
 Development URL: http://127.0.0.1:5173. To run the built shell separately:
 
 ```sh
-npm run build
-npm start -- --port 4307
+npx --yes --package=npm@11.9.0 --call 'npm run build'
+npx --yes --package=npm@11.9.0 --call 'npm start -- --port 4307'
 ```
 
 Built URL: http://127.0.0.1:4307. Browser routing uses hashes and hosting at the origin root. There is no subpath deployment in this release. Change the public nonsecret configuration in `ops/web/runtime-config.json`; `apps/web/public/runtime-config.json` must mirror it for static hosts/development. The Node server validates its config at startup and the browser validates its own project identity. Do not put credentials in either file.
@@ -32,7 +32,7 @@ The responsive React workspace, forty-step product roadmap, local bounded JSON s
 ## Build an artifact
 
 ```sh
-npm run package:web
+npx --yes --package=npm@11.9.0 --call 'npm run package:web'
 cd dist/release
 sha256sum -c SHA256SUMS.txt
 node scripts/serve-web.mjs --root web --port 4307 --config ops/web/runtime-config.json
