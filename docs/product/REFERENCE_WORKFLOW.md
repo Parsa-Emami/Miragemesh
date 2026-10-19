@@ -1,19 +1,24 @@
 # MirageMesh: reference workflow
 
-Status: planned domain acceptance; the current JSON structure preview does not implement this workflow.
+Status: planned domain acceptance contract; the current web JSON preview does not implement or execute this workflow. The C01 validator checks documentation metadata only.
 
-Enroll sensor -> apply signed config -> isolated decoy event -> disconnect -> spool -> reconnect with duplicate ACK test -> triage and retention gap check.
+The repository-owned scenario is `tests/scenarios/clone-to-value.json`. Its synthetic fixtures live under `tests/fixtures/miragemesh/C01/`; each records Apache-2.0 licensing and repository-authored provenance. Do not add real secrets, customer identities, sensor traffic, case data or unlicensed corpora.
 
-Required invariants:
+## Workflow
 
-- No egress by default
-- Signed desired state and monotonic apply
-- Replay-safe bounded spool with explicit loss accounting
+1. Enroll synthetic sensor `sensor-01` and apply signed desired configuration version 1.
+2. Accept `event-01` with sequence 1 and its domain fields: `sensor_id`, `event_id`, `sequence`, `observed_at`, `kind` and bounded `metadata`.
+3. Disconnect the sensor, queue `event-02` with sequence 2, reconnect, deliver it and repeat its acknowledgement. Expected behavior is one accepted copy; spool overflow must report loss explicitly.
+4. Triage the accepted events, inspect retention gaps, then restart services and restore the last accepted state. Applied version, event identities and loss/gap accounting must remain consistent.
 
-Required UAT:
+## Required invariants and failures
 
-- sensor معتبر enroll شود؛ token replay و certificate نامعتبر رد شوند
-- قطع شبکه و پرشدن spool رفتار مشخص دهد؛ reconnect داده را dedup کند
-- decoy به Internet و شبکهٔ داخلی عملیاتی دسترسی نداشته باشد
+- No egress by default.
+- Signed desired state applies monotonically.
+- The bounded offline spool is replay-safe and accounts explicitly for loss.
+- Replayed enrollment tokens and invalid certificates fail before event acceptance.
+- Spool overflow is visible; decoys cannot access the Internet or operational internal network.
 
-Machine contract: tests/scenarios/clone-to-value.json. C01/C04 create and freeze the actual synthetic positive/negative fixture formats; no real secrets, user source/traffic/case data or unlicensed corpus. A clean source clone must reproduce the entire workflow with restart and restore at C30.
+`node scripts/verify-reference.mjs` validates scenario structure, fixture references, provenance and license metadata. A successful validation does not execute or prove any workflow behavior. Engine behavior, isolation and restart/restore require later implementation and evidence; C30 is the local usability gate.
+
+The intended local setup is `npm run setup` followed by `npm start`. No paid account, cloud service, public domain or sibling repository is required for the core open-source profile.

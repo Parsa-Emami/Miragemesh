@@ -1,36 +1,35 @@
 {
+  "schema_version": 1,
   "project": "MirageMesh",
-  "status": "planned acceptance contract; not executed domain proof",
+  "status": "planned",
   "input": "repository-authored synthetic licensed fixtures",
   "steps": [
-    "Enroll sensor",
-    "apply signed config",
-    "isolated decoy event",
-    "disconnect",
-    "spool",
-    "reconnect with duplicate ACK test",
-    "triage and retention gap check."
+    { "id": "enroll", "action": "Enroll sensor sensor-01", "expected_result": "sensor-01 is enrolled and can authenticate with its issued identity" },
+    { "id": "apply-config", "action": "Apply signed desired configuration version 1", "expected_result": "The valid signature is accepted and applied version becomes 1" },
+    { "id": "decoy-event", "action": "Record event event-01 from sensor-01 with sequence 1", "expected_result": "The event is accepted with its sensor_id, event_id, sequence, observed_at, kind and bounded metadata" },
+    { "id": "disconnect", "action": "Disconnect the sensor from the collector", "expected_result": "The sensor reports the collector unavailable and retains queued event bytes locally" },
+    { "id": "spool", "action": "Queue event event-02 with sequence 2 while offline", "expected_result": "The event remains in the bounded sensor spool; overflow is reported as explicit loss" },
+    { "id": "reconnect", "action": "Reconnect and deliver event-02, then repeat its acknowledgement", "expected_result": "The collector records event-02 once and the repeated acknowledgement does not duplicate it" },
+    { "id": "triage-retention", "action": "Triage the accepted events and inspect the retention checkpoint", "expected_result": "Events remain attributable to sensor-01 and any retention gap is explicit" },
+    { "id": "restart-restore", "action": "Restart the local services and restore the last accepted local state", "expected_result": "Applied version, accepted event identities and explicit loss/gap accounting match the pre-restart state" }
   ],
   "expected_invariants": [
     "No egress by default",
     "Signed desired state and monotonic apply",
     "Replay-safe bounded spool with explicit loss accounting"
   ],
-  "negative_uat": [
-    "sensor معتبر enroll شود؛ token replay و certificate نامعتبر رد شوند",
-    "قطع شبکه و پرشدن spool رفتار مشخص دهد؛ reconnect داده را dedup کند",
-    "decoy به Internet و شبکهٔ داخلی عملیاتی دسترسی نداشته باشد"
+  "negative_cases": [
+    { "id": "token-replay", "action": "Enroll again using an already consumed token", "expected_failure": "Enrollment is rejected and no second sensor identity is created" },
+    { "id": "invalid-certificate", "action": "Send an event with an invalid certificate", "expected_failure": "Authentication is rejected before event acceptance" },
+    { "id": "spool-overflow", "action": "Queue events beyond the configured spool bound while offline", "expected_failure": "Additional events are not silently accepted; loss is reported explicitly" },
+    { "id": "egress-attempt", "action": "Attempt decoy access to the Internet and operational internal network", "expected_failure": "Network access is denied by default and no egress succeeds" }
   ],
-  "clean_host_commands": [
-    "git clone https://github.com/Parsa-Emami/Miragemesh.git",
-    "cd Miragemesh",
-    "npm run setup",
-    "npm start"
+  "fixtures": [
+    "tests/fixtures/miragemesh/C01/positive.json",
+    "tests/fixtures/miragemesh/C01/invalid.json",
+    "tests/fixtures/miragemesh/C01/expected-output.json"
   ],
-  "requires_at_C30": [
-    "real engine and required local providers",
-    "the entire workflow",
-    "restart and restore",
-    "no paid/cloud account or sibling clone"
-  ]
+  "execution": { "engine": "not implemented", "passed": false },
+  "clean_host_commands": ["git clone https://github.com/Parsa-Emami/Miragemesh.git", "cd Miragemesh", "npm run setup", "npm start"],
+  "requires_at_C30": ["real engine and required local providers", "the entire workflow", "restart and restore", "no paid/cloud account or sibling clone"]
 }

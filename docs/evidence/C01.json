@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "project": "MirageMesh",
+  "task": "C01",
+  "date": "2026-10-19",
+  "passed": true,
+  "planning_template": false,
+  "scope": "Frozen repository-owned reference workflow and fixture metadata validator; no engine execution certified",
+  "commit_id": "C01",
+  "base_commit": "7c52b9432c5e4a112664a7ea73a4141ef0051ba9",
+  "git_commit_created": false,
+  "source_identity": "sha256:8077fe323f118c5d62844f3c1d4c744a4e2c4723862c34d14976868b5d7d7ba4",
+  "source_identity_method": "SHA-256 over sorted C01-owned source/generated path bytes, NUL separators and each file SHA-256; excludes progress and evidence to avoid recursive self-reference",
+  "environment": {
+    "os": "Linux x86_64 (Ubuntu 24.04 environment)",
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "python": "3.12.3",
+    "hardware_observed": { "logical_cpus": 16, "memory_available_bytes": 14530842624, "filesystem_available_bytes": 130308665344 }
+  },
+  "fixture_hashes_sha256": {
+    "tests/fixtures/miragemesh/C01/expected-output.json": "6563cfe200ae660f1608419cd25ec9caa4224831c66898dd0a691e3cbd36056b",
+    "tests/fixtures/miragemesh/C01/invalid.json": "33eefcf744547e4b9fd2530caef29f0763adfb609d2bc0183b00992636d30876",
+    "tests/fixtures/miragemesh/C01/positive.json": "b91f21e1a45f24f2c43af88b9ffca84c3f42338de02b22ed1fdee6c7b3d79bba"
+  },
+  "fixture_provenance_license": "All three fixtures are repository-authored synthetic data; each declares Apache-2.0.",
+  "commands": [
+    { "command": "npm run validate:plan", "exit_code": 0, "result": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred." },
+    { "command": "node scripts/verify-reference.mjs", "exit_code": 0, "result": "Reference scenario and fixture metadata are valid; workflow execution is not verified." },
+    { "command": "npm test", "exit_code": 0, "result": "10 Node tests passed." },
+    { "command": "node --test tests/web/reference-contract.test.mjs", "exit_code": 0, "result": "4 tests passed, including missing action/result/invariant/reference, missing provenance/license, escaping path, unsupported version and false engine success claims." },
+    { "command": "npm run typecheck", "exit_code": 0, "result": "TypeScript check completed." },
+    { "command": "npm run build", "exit_code": 0, "result": "Vite production build completed." },
+    { "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v", "exit_code": 0, "result": "6 engineering CI source regression tests passed." },
+    { "command": "python3 scripts/validate_repo.py", "exit_code": 0, "result": "Validated 81 JSON files and repository contract invariants." },
+    { "command": "python3 scripts/plan.py validate", "exit_code": 0, "result": "40 planning intents, coverage and progress checked; no application runtime tests performed." },
+    { "command": "git diff --check", "exit_code": 0, "result": "No whitespace errors." }
+  ],
+  "results": {
+    "reference_contract_validator": "passed",
+    "scenario_execution": "not implemented and not tested",
+    "domain_engine": "not implemented",
+    "remote_github_actions": "not run"
+  },
+  "observed_limitations": [
+    "C01 certifies the specification and metadata validator only; it does not prove enrollment, signing, isolation, spool, retention, restart or restore behavior.",
+    "No lint script is defined in package.json.",
+    "python3 scripts/verify_ci_source.py was attempted and exited 1 because docs/product/REFERENCE_WORKFLOW.md differs from Git; this check requires a clean committed checkout. It is not counted as a passing command."
+  ],
+  "rollback_or_recovery_observation": "Documentation and fixture-only change; no application state or user data modified.",
+  "core_ready": false
+}

@@ -1,20 +1,39 @@
 {
   "project": "MirageMesh",
-  "date": "2026-10-16",
-  "base_commit": "7e839b9591db5f5856a77a148aaf4d88b21ba547",
-  "scope": "Repair CI for all main and Dependabot heads: historical source records, exact current Git checkout and real regression tests",
-  "core_tasks_verified": [],
-  "commands": [
-    "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
-    "python3 scripts/verify_ci_source.py",
-    "npm run check",
-    "npm run test:clone"
+  "date": "2026-10-19",
+  "base_commit": "7c52b9432c5e4a112664a7ea73a4141ef0051ba9",
+  "scope": "C01 reference workflow specification and metadata validation; no domain engine execution certified",
+  "core_tasks_verified": ["C01 specification only"],
+  "changed_paths": [
+    "apps/web/src/generated/project.json",
+    "docs/agents/SESSION_HANDOFF.json",
+    "docs/evidence/C01.json",
+    "docs/product/REFERENCE_WORKFLOW.md",
+    "plans/progress.json",
+    "scripts/verify-reference.mjs",
+    "tests/fixtures/miragemesh/C01/expected-output.json",
+    "tests/fixtures/miragemesh/C01/invalid.json",
+    "tests/fixtures/miragemesh/C01/positive.json",
+    "tests/scenarios/clone-to-value.json",
+    "tests/web/reference-contract.test.mjs"
   ],
-  "validation_results": "docs/evidence/ci-integrity-repair.json",
-  "final_source_identity": "Read the source_identity in docs/evidence/oss-roadmap.json; it excludes evidence and SHA256SUMS.txt to avoid recursive hashing. This is a source digest, not a fabricated remote commit ID.",
+  "commands": [
+    "npm run validate:plan",
+    "node scripts/verify-reference.mjs",
+    "npm test",
+    "npm run typecheck",
+    "npm run build",
+    "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
+    "python3 scripts/validate_repo.py",
+    "python3 scripts/plan.py validate",
+    "python3 scripts/verify_ci_source.py (exit 1 on dirty working tree)",
+    "git diff --check"
+  ],
+  "validation_results": "docs/evidence/C01.json",
+  "final_source_identity": "See docs/evidence/C01.json; local changes remain uncommitted.",
   "protected_paths_changed": [],
   "current_core_ready": false,
-  "next_task": "C01",
+  "next_task": "C02",
   "next_command": "npm run plan -- next",
-  "continuation": "See docs/engineering/CI_SOURCE_INTEGRITY.md for source proof scope. Historical evidence retains its original source; current runtime results are the actual new CI jobs. Core implementation remains at the existing next task."
+  "continuation": "C01 verifies only the frozen specification and metadata validator. C02 depends on this evidence. GitHub source-integrity verification requires a clean committed checkout and was not passed on this dirty working tree."
 }

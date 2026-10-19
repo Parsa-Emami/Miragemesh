@@ -1,0 +1,10 @@
+{
+  "provenance": "Repository-authored synthetic fixture; no customer, sensor or traffic data.",
+  "license": "Apache-2.0",
+  "case": "valid-offline-replay",
+  "sensor": { "sensor_id": "sensor-01", "applied_version": 1 },
+  "events": [
+    { "event_id": "event-01", "sequence": 1, "observed_at": "2026-01-01T00:00:00Z", "kind": "http.request", "metadata": { "path": "/health" } },
+    { "event_id": "event-02", "sequence": 2, "observed_at": "2026-01-01T00:00:02Z", "kind": "http.request", "metadata": { "path": "/login" } }
+  ]
+}

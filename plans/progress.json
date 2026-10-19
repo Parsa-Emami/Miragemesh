@@ -6,10 +6,10 @@
   "commits": [
     {
       "id": "C01",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": ["docs/evidence/C01.json"],
+      "source_identity": "sha256:8077fe323f118c5d62844f3c1d4c744a4e2c4723862c34d14976868b5d7d7ba4",
+      "notes": "C01 specification and metadata validator verified locally; this does not certify workflow engine execution."
     },
     {
       "id": "C02",

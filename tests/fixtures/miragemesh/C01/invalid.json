@@ -1,0 +1,8 @@
+{
+  "provenance": "Repository-authored synthetic fixture; no customer, sensor or traffic data.",
+  "license": "Apache-2.0",
+  "case": "replayed-token-and-invalid-certificate",
+  "token_replayed": true,
+  "certificate_valid": false,
+  "expected_failure": "Authentication and enrollment are rejected before event acceptance."
+}

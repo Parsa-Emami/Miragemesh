@@ -1,0 +1,14 @@
+{
+  "provenance": "Repository-authored synthetic expected output derived from the documented workflow.",
+  "license": "Apache-2.0",
+  "case": "valid-offline-replay",
+  "expected": {
+    "sensor_id": "sensor-01",
+    "applied_version": 1,
+    "accepted_event_ids": ["event-01", "event-02"],
+    "unique_accepted_event_count": 2,
+    "loss_accounting": { "reported": false, "dropped_count": 0 },
+    "egress": false,
+    "restart_restore_preserves_state": true
+  }
+}
