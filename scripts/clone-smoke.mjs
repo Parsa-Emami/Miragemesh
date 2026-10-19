@@ -4,6 +4,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
+import { goEnvironment } from './oss-bootstrap.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const temp = await mkdtemp(join(tmpdir(), 'oss-clone-'));
@@ -44,6 +45,11 @@ try {
   console.log(run('python3', ['scripts/verify_ci_source.py'], checkout));
   if (!process.env.npm_execpath) throw new Error('Invoke through npm run test:clone.');
   run(process.execPath, [process.env.npm_execpath, 'run', 'setup'], checkout);
+  await mkdir(join(checkout, 'dist/ci'), { recursive: true });
+  run('go', ['vet', './...'], checkout, { env: goEnvironment });
+  const engineTests = run('go', ['test', '-race', '-count=1', '-json', './...'], checkout, { env: goEnvironment });
+  await writeFile(join(checkout, 'dist/ci/engine-tests.jsonl'), engineTests + '\n');
+  console.log(run(process.execPath, ['scripts/verify-engine-tests.mjs', 'dist/ci/engine-tests.jsonl'], checkout));
   const event = await readFile(join(checkout, 'tests/fixtures/miragemesh/C04/valid-event.txt'), 'utf8');
   const expected = JSON.parse(await readFile(join(checkout, 'tests/fixtures/miragemesh/C04/expected-output.json'), 'utf8'));
   const validation = JSON.parse(run(join(checkout, 'dist/engine/miragemesh'), ['--validate-event'], checkout, { input: event }));
@@ -75,7 +81,7 @@ try {
   if (runtime.status !== 'ok' || runtime.scope !== 'engine-runtime' || runtime.toolchain !== 'go1.27.2' || runtime.coreReady !== false) throw new Error('Incorrect engine runtime health');
   console.log(JSON.stringify({
     passed: true, stagedTree: tree,
-    proof: 'real git clone -> npm run setup -> local event validation -> unified web and Go runtime startup', coreReady: false,
+    proof: 'real git clone -> npm run setup -> Go vet/race tests and discovery guard -> local event validation -> unified web and Go runtime startup', coreReady: false,
   }));
 } finally {
   if (server && server.exitCode === null && server.signalCode === null && server.pid) {

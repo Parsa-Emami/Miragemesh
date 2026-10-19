@@ -1,0 +1,11 @@
+{
+  "commit": "ef1872eff12708430c9ffd3df1d35ff31de5b218",
+  "git_tree": "57366267fffc9b21efb372dd9f2b853b22d6a6e8",
+  "current_source_identity": "sha256:dbbcbab4af6322f19e1a107c26dd611cd0d97ea5fba7de8e629055834a059909",
+  "c06_source_identity": "sha256:6d7670b3410d14f186f02b3a1b6535c606e7b9f32be6e3ea3ffd218e2d3fc880",
+  "verified_source_files": 348,
+  "source_matches_final_checkout": true,
+  "temporary_index": true,
+  "user_index_changed": false,
+  "branch_or_remote_refs_changed": false
+}

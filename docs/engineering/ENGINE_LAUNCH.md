@@ -31,6 +31,6 @@ SIGINT/SIGTERM stop both services, with a ten-second outer deadline and a five-s
 
 Use the pinned npm CLI for npm test, typecheck, build, browser, clone and package commands. Use `GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct'` for `go test ./...`, `go vet ./...` and `gofmt -l cmd/miragemesh`. Go tests and Node subprocess tests exercise actual sockets/processes. Synthetic upstream failures verify rejection only; they are not evidence of provider durability or identity.
 
-The existing web workflow prepares the pinned Go/Podman prerequisites on Ubuntu 24.04; the dedicated runtime integration workflow remains C06. package:web still ships a web-only artifact and cannot run the engine. Local workflow commands do not certify a remote Actions run.
+The existing web workflow prepares the pinned Go/Podman prerequisites on Ubuntu 24.04. C06 adds the dedicated runtime workflow for the existing C03-C05 engine, contracts and filesystem recovery tests; see [ENGINE_TESTS.md](ENGINE_TESTS.md) for commands, discovery guards and limits. package:web still ships a web-only artifact and cannot run the engine. Local workflow commands do not certify a remote Actions run.
 
 Sources: [Go toolchain selection](https://go.dev/doc/toolchain), [Go HTTP shutdown](https://pkg.go.dev/net/http#Server.Shutdown), [Node child processes](https://nodejs.org/docs/latest-v24.x/api/child_process.html). Go uses its BSD-3-Clause standard library; no third-party Go modules or synthetic go.sum are added.

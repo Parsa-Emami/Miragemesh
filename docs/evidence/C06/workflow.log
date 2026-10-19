@@ -1,0 +1,22 @@
+Executing workflow step: Verify locked Go toolchain
+go version go1.27.2 linux/amd64
+Executing workflow step: Format, vet and build the actual engine
+Executing workflow step: Test discovery guard regressions
+✔ accepts executed engine, contract and real recovery suites with interleaved output (49.733893ms)
+✔ rejects empty discovery and package-only success without executed tests (95.398989ms)
+✔ rejects a missing required suite or anchor (93.132725ms)
+✔ rejects a skipped anchor or a pass with no run (93.547283ms)
+✔ rejects failures in any package and unfinished package results (188.844831ms)
+✔ rejects malformed JSON events and missing input (183.4112ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 773.311426
+Executing workflow step: Run engine, contracts and filesystem recovery tests
+Executing workflow step: Require executed engine suites
+Verified 4 engine suites and 5 required test anchors.
+YAML parsed; all five runtime run steps passed locally. Remote actions and runner provisioning unverified.

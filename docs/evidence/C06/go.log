@@ -1,0 +1,15 @@
+✔ accepts executed engine, contract and real recovery suites with interleaved output (53.676081ms)
+✔ rejects empty discovery and package-only success without executed tests (95.155036ms)
+✔ rejects a missing required suite or anchor (96.724803ms)
+✔ rejects a skipped anchor or a pass with no run (100.478148ms)
+✔ rejects failures in any package and unfinished package results (188.461171ms)
+✔ rejects malformed JSON events and missing input (189.961057ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 795.601842
+Verified 4 engine suites and 5 required test anchors.

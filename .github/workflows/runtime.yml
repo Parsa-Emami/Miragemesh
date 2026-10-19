@@ -1,0 +1,50 @@
+name: engine-runtime
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: runtime-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      GOTOOLCHAIN: go1.27.2
+      GOSUMDB: sum.golang.org
+      GOPROXY: https://proxy.golang.org|direct
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version-file: .nvmrc
+      - name: Verify locked Go toolchain
+        run: |
+          go version
+          test "$(go env GOVERSION)" = go1.27.2
+      - name: Format, vet and build the actual engine
+        run: |
+          formatting=$("$(go env GOROOT)/bin/gofmt" -l cmd internal tests)
+          test -z "$formatting"
+          go vet ./...
+          mkdir -p dist/engine dist/ci
+          go build -trimpath -o dist/engine/miragemesh ./cmd/miragemesh
+      - name: Test discovery guard regressions
+        run: node --test tests/engineering/engine-tests.test.mjs
+      - name: Run engine, contracts and filesystem recovery tests
+        run: go test -race -count=1 -json ./... > dist/ci/engine-tests.jsonl
+      - name: Require executed engine suites
+        run: node scripts/verify-engine-tests.mjs dist/ci/engine-tests.jsonl
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: engine-tests-${{ github.sha }}-${{ github.run_id }}
+          path: dist/ci/engine-tests.jsonl
+          if-no-files-found: error
+          retention-days: 14
