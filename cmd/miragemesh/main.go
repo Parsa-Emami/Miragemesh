@@ -15,6 +15,8 @@ import (
 	"strconv"
 	"syscall"
 	"time"
+
+	"github.com/Parsa-Emami/Miragemesh/internal/contracts"
 )
 
 const version = "0.0.1"
@@ -86,10 +88,36 @@ func serve(ctx context.Context, address string, ready io.Writer) error {
 func main() {
 	address := flag.String("listen", "127.0.0.1:0", "loopback listen address")
 	showVersion := flag.Bool("version", false, "print runtime version and exit")
+	validate := flag.Bool("validate-event", false, "validate one v1 event from stdin without accepting or storing it")
 	flag.Parse()
+	validationFlag := false
+	flag.Visit(func(f *flag.Flag) {
+		if f.Name == "validate-event" {
+			validationFlag = true
+		}
+	})
+	if validationFlag {
+		if !*validate || len(os.Args) != 2 || os.Args[1] != "--validate-event" {
+			fmt.Fprintln(os.Stderr, "--validate-event must be used alone")
+			os.Exit(2)
+		}
+		ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+		defer stop()
+		ctx, cancel := context.WithTimeout(ctx, contracts.ValidationTimeout)
+		defer cancel()
+		result := contracts.Validate(ctx, os.Stdin, version)
+		if err := json.NewEncoder(os.Stdout).Encode(result); err != nil {
+			fmt.Fprintln(os.Stderr, "Unable to write validation result")
+			os.Exit(1)
+		}
+		if !result.Result.Valid {
+			os.Exit(1)
+		}
+		return
+	}
 	if flag.NArg() != 0 {
 		fmt.Fprintln(os.Stderr, "unexpected engine arguments")
-		os.Exit(1)
+		os.Exit(2)
 	}
 	if *showVersion {
 		json.NewEncoder(os.Stdout).Encode(health())

@@ -75,6 +75,21 @@ Updated 2026-10-19. Web package facts come from the committed npm lockfile. Tool
 | `typescript` | 7.0.2 | Apache-2.0 |
 | `vite` | 8.3.4 | MIT |
 
+## C04 contract-test dependencies
+
+These exact development-only versions come from package-lock.json, including their upstream npm URLs and integrity values. Ajv and ajv-formats execute the reviewed JSON Schema and date-time format checks in tests; neither enters the browser bundle or Go runtime.
+
+| Resource | Version | Declared license |
+|---|---|---|
+| `ajv` | 8.20.0 | MIT |
+| `ajv-formats` | 3.0.1 | MIT |
+| `fast-deep-equal` | 3.1.3 | MIT |
+| `fast-uri` | 3.1.8 | BSD-3-Clause |
+| `json-schema-traverse` | 1.0.0 | MIT |
+| `require-from-string` | 2.0.2 | MIT |
+
+Sources: [Ajv](https://ajv.js.org/), [formats](https://github.com/ajv-validator/ajv-formats). Complete shipped-artifact notices remain C31 work.
+
 ## Planned engine resources
 
 | Resource | Version | Declared license | Source / notes |

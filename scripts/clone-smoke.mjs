@@ -1,8 +1,9 @@
 import { spawn, spawnSync } from 'node:child_process';
-import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, rm, writeFile, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isDeepStrictEqual } from 'node:util';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const temp = await mkdtemp(join(tmpdir(), 'oss-clone-'));
@@ -43,6 +44,10 @@ try {
   console.log(run('python3', ['scripts/verify_ci_source.py'], checkout));
   if (!process.env.npm_execpath) throw new Error('Invoke through npm run test:clone.');
   run(process.execPath, [process.env.npm_execpath, 'run', 'setup'], checkout);
+  const event = await readFile(join(checkout, 'tests/fixtures/miragemesh/C04/valid-event.txt'), 'utf8');
+  const expected = JSON.parse(await readFile(join(checkout, 'tests/fixtures/miragemesh/C04/expected-output.json'), 'utf8'));
+  const validation = JSON.parse(run(join(checkout, 'dist/engine/miragemesh'), ['--validate-event'], checkout, { input: event }));
+  if (!isDeepStrictEqual(validation, expected.output)) throw new Error('Cloned engine event validation differs from its contract fixture');
 
   server = spawn(process.execPath, ['scripts/start-local.mjs', '--port', '0'], {
     cwd: checkout, stdio: ['ignore', 'pipe', 'pipe'],
@@ -70,7 +75,7 @@ try {
   if (runtime.status !== 'ok' || runtime.scope !== 'engine-runtime' || runtime.toolchain !== 'go1.27.2' || runtime.coreReady !== false) throw new Error('Incorrect engine runtime health');
   console.log(JSON.stringify({
     passed: true, stagedTree: tree,
-    proof: 'real git clone -> npm run setup -> unified web and Go runtime startup', coreReady: false,
+    proof: 'real git clone -> npm run setup -> local event validation -> unified web and Go runtime startup', coreReady: false,
   }));
 } finally {
   if (server && server.exitCode === null && server.signalCode === null && server.pid) {

@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "project": "MirageMesh",
+  "task": "C04",
+  "commit_id": "C04",
+  "date": "2026-10-19",
+  "base_commit": "70f4c219f3444d1a4c755e5eb9592558fa892049",
+  "git_commit_created": false,
+  "passed": true,
+  "planning_template": false,
+  "scope": "Typed local stateless HTTP-event v1 schema/Go validation and CLI, including actual rejection, exact bytes/numbers, resource bounds and cancellation. No sensor trust, collector acceptance, persistence or full workflow certified.",
+  "source_identity": "sha256:bf2b00b261595d100bfb5a86b30bba7e6eee26edc202b153473c0ecefe44e3ce",
+  "source_identity_method": "SHA-256 over sorted C04-owned source/config/docs/generated/fixture paths; hash each UTF-8 path + NUL + raw SHA-256 file digest. Excludes docs/evidence/, plans/progress.json and docs/agents/SESSION_HANDOFF.json to avoid self-reference.",
+  "source_paths": [
+    "README.md",
+    "THIRD_PARTY_NOTICES.md",
+    "apps/web/src/generated/project.json",
+    "cmd/miragemesh/main.go",
+    "contracts/README.md",
+    "contracts/input.schema.json",
+    "contracts/result.schema.json",
+    "docs/ROADMAP_FA.md",
+    "docs/engineering/CLONE_TO_RUN.md",
+    "docs/engineering/ENGINE_LAUNCH.md",
+    "docs/engineering/toolchain-lock.json",
+    "internal/contracts/event.go",
+    "internal/contracts/event_test.go",
+    "package-lock.json",
+    "package.json",
+    "plans/project-state.json",
+    "product/project.json",
+    "scripts/clone-smoke.mjs",
+    "tests/contracts/domain-contracts.test.mjs",
+    "tests/fixtures/miragemesh/C04/expected-output.json",
+    "tests/fixtures/miragemesh/C04/invalid.json",
+    "tests/fixtures/miragemesh/C04/positive.json",
+    "tests/fixtures/miragemesh/C04/valid-event.txt"
+  ],
+  "environment": {
+    "os": "Linux amd64",
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "go": "1.27.2",
+    "podman": "4.9.3 (Ubuntu 4.9.3+ds1-1ubuntu0.2), rootless probe passed",
+    "hardware_measurement": "C28 targets not measured"
+  },
+  "commands": [
+    {
+      "command": "bash -c \"node --version && npx --yes --package=npm@11.9.0 --call 'npm --version' && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go version && podman --version && dpkg-query -W podman && podman info --format '{{.Host.Security.Rootless}}' && uname -sm && git rev-parse HEAD && sha256sum package-lock.json && npm ls ajv ajv-formats\"",
+      "argv": [
+        "bash",
+        "-c",
+        "node --version && npx --yes --package=npm@11.9.0 --call 'npm --version' && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go version && podman --version && dpkg-query -W podman && podman info --format '{{.Host.Security.Rootless}}' && uname -sm && git rev-parse HEAD && sha256sum package-lock.json && npm ls ajv ajv-formats"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C04/tools.log",
+      "elapsed_seconds": 2.45
+    },
+    {
+      "command": "npx --yes --package=npm@11.9.0 --call \"npm run setup\"",
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run setup"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C04/setup.log",
+      "elapsed_seconds": 4.09
+    },
+    {
+      "command": "npx --yes --package=npm@11.9.0 --call \"npm run check\"",
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C04/check.log",
+      "elapsed_seconds": 15.02
+    },
+    {
+      "command": "bash -c \"GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go test -race -count=1 ./... && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go vet ./... && test -z \\\"$(GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' gofmt -l internal/contracts cmd/miragemesh)\\\"\"",
+      "argv": [
+        "bash",
+        "-c",
+        "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go test -race -count=1 ./... && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go vet ./... && test -z \"$(GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' gofmt -l internal/contracts cmd/miragemesh)\""
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C04/go.log",
+      "elapsed_seconds": 1.54
+    },
+    {
+      "command": "bash -c \"GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go test ./internal/contracts -fuzz=FuzzDecodeEvent -fuzztime=3s -parallel=2\"",
+      "argv": [
+        "bash",
+        "-c",
+        "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go test ./internal/contracts -fuzz=FuzzDecodeEvent -fuzztime=3s -parallel=2"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C04/fuzz.log",
+      "elapsed_seconds": 4.27
+    },
+    {
+      "command": "bash -c \"python3 scripts/validate_repo.py && python3 scripts/plan.py validate && python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v && node scripts/verify-resources.mjs && git diff --check\"",
+      "argv": [
+        "bash",
+        "-c",
+        "python3 scripts/validate_repo.py && python3 scripts/plan.py validate && python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v && node scripts/verify-resources.mjs && git diff --check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C04/metadata.log",
+      "elapsed_seconds": 0.55
+    },
+    {
+      "command": "npx --yes --package=npm@11.9.0 --call \"npm run test:browser\"",
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run test:browser"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C04/browser.log",
+      "elapsed_seconds": 2.67
+    },
+    {
+      "command": "bash -c \"strace -f -e trace=connect -o docs/evidence/C04/validation.trace dist/engine/miragemesh --validate-event < tests/fixtures/miragemesh/C04/valid-event.txt && ! rg 'AF_INET' docs/evidence/C04/validation.trace\"",
+      "argv": [
+        "bash",
+        "-c",
+        "strace -f -e trace=connect -o docs/evidence/C04/validation.trace dist/engine/miragemesh --validate-event < tests/fixtures/miragemesh/C04/valid-event.txt && ! rg 'AF_INET' docs/evidence/C04/validation.trace"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C04/network.log",
+      "elapsed_seconds": 0.02
+    },
+    {
+      "command": "npx --yes --package=npm@11.9.0 --call \"npm run package:web\"",
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run package:web"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C04/package.log",
+      "elapsed_seconds": 0.87
+    },
+    {
+      "command": "GIT_INDEX_FILE=<temporary candidate index> npx --yes --package=npm@11.9.0 --call \"npm run test:clone\"",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C04/clone.log",
+      "candidate_tree": "bb358f1071f388e51853ad46e595f8a3bb71ff84",
+      "elapsed_seconds": 4.76
+    }
+  ],
+  "fixture_hashes_sha256": {
+    "tests/fixtures/miragemesh/C04/expected-output.json": "1217f19c5f1fcaa1836af2965113825bb90ef05f806f5e824be2adb718daeb21",
+    "tests/fixtures/miragemesh/C04/invalid.json": "38c164e5b51f9b17c9de2017ea34e035364331744b0ca8b1a9bb605a8e2ca518",
+    "tests/fixtures/miragemesh/C04/positive.json": "fccd401aa272bc5a8930eeb61d3678922597ba7471d07f07488218b0e388da0a",
+    "tests/fixtures/miragemesh/C04/valid-event.txt": "a391f2daf6fd4283c0e78a795476413fbd525cae0f3b4ec81a83f81c4f9c0444"
+  },
+  "fixture_provenance_license": "All C04 manifests and valid-event.txt are repository-authored synthetic data under Apache-2.0; provenance recorded in wrapper manifests and contracts/README.md. No live data.",
+  "results": {
+    "node_tests": 31,
+    "contract_subprocess_schema_tests": 7,
+    "negative_fixture_cases": 42,
+    "go_race_vet_format": "passed",
+    "fuzz": "bounded three-second campaign with two workers passed; throughput is not a capacity benchmark",
+    "typecheck_and_build": "passed",
+    "browser_tests": 3,
+    "engineering_source_tests": 6,
+    "real_clone_setup_validation_health": "passed with exact isolated candidate snapshot and full-history source integrity",
+    "network": "strace of actual positive CLI validation observed no AF_INET connections; not a decoy isolation proof",
+    "remote_github_actions": "not run"
+  },
+  "security_review": "No HTTP/API admission, browser change, shell/payload execution, provider invocation or persistence in validation. Bounded reader, exact numbers, duplicate/case/unknown-key/UTF-8/surrogate/trailing rejection, typed redacted errors and reader ownership/cancellation tested. No protected files changed.",
+  "dependency_inventory": {
+    "node_modules/ajv": {
+      "version": "8.20.0",
+      "license": "MIT",
+      "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.20.0.tgz",
+      "integrity": "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA=="
+    },
+    "node_modules/ajv-formats": {
+      "version": "3.0.1",
+      "license": "MIT",
+      "resolved": "https://registry.npmjs.org/ajv-formats/-/ajv-formats-3.0.1.tgz",
+      "integrity": "sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ=="
+    },
+    "node_modules/fast-deep-equal": {
+      "version": "3.1.3",
+      "license": "MIT",
+      "resolved": "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz",
+      "integrity": "sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q=="
+    },
+    "node_modules/fast-uri": {
+      "version": "3.1.8",
+      "license": "BSD-3-Clause",
+      "resolved": "https://registry.npmjs.org/fast-uri/-/fast-uri-3.1.8.tgz",
+      "integrity": "sha512-GZMtZUTNRpOVIECoXwLNZS5xUGE+mVNbTB8h/7Rwh2TFWcBQiPzTgyZi05BF9UMZKkLJv8XBRJTlU7zg8+ZfMg=="
+    },
+    "node_modules/json-schema-traverse": {
+      "version": "1.0.0",
+      "license": "MIT",
+      "resolved": "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz",
+      "integrity": "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug=="
+    },
+    "node_modules/require-from-string": {
+      "version": "2.0.2",
+      "license": "MIT",
+      "resolved": "https://registry.npmjs.org/require-from-string/-/require-from-string-2.0.2.tgz",
+      "integrity": "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw=="
+    }
+  },
+  "development_regressions": "Observed expected RED for missing CLI/package, v0 schemas, contradictory partial-input digest and unpaired UTF-16 replacement; implemented fixes and reran full relevant checks.",
+  "observed_limitations": [
+    "C04 validates only http.request with metadata.path; no version-zero auto-migration. No identity, ingestion, durability, dedup or C17 claim.",
+    "JSON Schema validates materialized JSON values; Go additionally checks raw bytes, duplicate keys, Unicode escapes and exact numeric lexemes.",
+    "Validate owns io.ReadCloser; Close must unblock Read. The CLI imposes its two-second context; DecodeEvent consumers supply their own bounded context.",
+    "No JavaScript lint command is defined. Go vet and gofmt checks passed.",
+    "Remote GitHub Actions, runner apt setup, complete clean-host workflow and C28 hardware capacity were not tested.",
+    "The actual workspace is uncommitted; strict source integrity ran in an isolated candidate snapshot without changing the user index or refs.",
+    "C03 compiler-failure fixture intentionally prints a diagnostic, and Playwright retains the existing NO_COLOR/FORCE_COLOR warning."
+  ],
+  "core_ready": false,
+  "next_task": "C05",
+  "candidate_snapshot": {
+    "commit": "7e6f03db2125ff3f2dc0b5bb98ee8e8b95298210",
+    "git_tree": "bb358f1071f388e51853ad46e595f8a3bb71ff84",
+    "all_final_owned_source_paths_match": true,
+    "scope": "temporary unreferenced candidate snapshot; user index and branch unchanged; evidence/handoff may be finalized after verification"
+  },
+  "workspace_binary_sha256": "35e327bec8b4b536f61f01f33203b5e1d71dd5f09bace474a135f16e0ab6a902",
+  "artifact_hashes_sha256": {
+    "docs/evidence/C04/browser.log": "3f2bb17ff7834f9296436f89940faf2fb9cbec2aae1f1d6bc2078096bb038032",
+    "docs/evidence/C04/changed-files.txt": "e3ff6b27627de404ec739d309b67e0ba6a4940bff8deeeb458cc4fe96b2f27c8",
+    "docs/evidence/C04/check.log": "d39c53449263e2c71587ed3ad02b712a98c483014b0892a57ff48c63c90293d6",
+    "docs/evidence/C04/clone.log": "1ced92223feb7482079ecb109e7cce7ff92870a3d38bd809d20694cf6bd47a96",
+    "docs/evidence/C04/fuzz.log": "dffe2fcf91853c93b419ce6548c3b872c5377c04d229976f8b84f77079aab01d",
+    "docs/evidence/C04/go.log": "9f4cacc13ed87585156d95f1140b298c64ed0751ab5a2e2ab95cd8d04083834d",
+    "docs/evidence/C04/metadata.log": "665d4d9354793f30631c8132df04a4da56ecf067d9a3473768bf35add246e12b",
+    "docs/evidence/C04/network.log": "ebdedb8550b3c93cb035c9f827c71c3ec6d883325d7a8d303e5130b1d5b220f9",
+    "docs/evidence/C04/package.log": "08622119b0ee127bf0fd56ade76787c97c74143ad01abe795c6449115355aa0b",
+    "docs/evidence/C04/setup.log": "724e4116b16a9ec2a956676d8d70a28562e1bfceb02da049211619f10173e5b8",
+    "docs/evidence/C04/tools.log": "65ab705d5154c2c1dabcc81491fd1d86715f25ef32dd34ed2072a18f46ac370f",
+    "docs/evidence/C04/validation.trace": "a9a7785e100cfbb582dfd2dc95108d06cd53e49c349498dd792396b6b8734c1b"
+  },
+  "log_normalization": "Trailing blank lines removed from tools.log; command output content is unchanged."
+}

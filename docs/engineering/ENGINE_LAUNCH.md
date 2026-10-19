@@ -19,7 +19,7 @@ The web defaults to 127.0.0.1:4173; use `npm start -- --port 4307` for another p
 
 ## Health and shutdown
 
-The launcher starts dist/engine/miragemesh directly, waits for its bounded startup record and actual health, then starts the existing Node web server. Startup has a ten-second deadline. Its ready record reports the web port, engine address/PID and coreReady=false. The engine supports --version without opening a listener.
+The launcher starts dist/engine/miragemesh directly, waits for its bounded startup record and actual health, then starts the existing Node web server. Startup has a ten-second deadline. Its ready record reports the web port, engine address/PID and coreReady=false. The engine supports --version without opening a listener. C04 adds the separate local --validate-event command documented in contracts/README.md; it does not widen the HTTP health-only boundary.
 
 GET/HEAD `/api/engine/health` reads `/healthz` from the owned engine. A valid response is `{ "status": "ok", "scope": "engine-runtime", "version": "0.0.1", "toolchain": "go1.27.2", "coreReady": false }`. Non-200, redirects, malformed/oversized (>4096-byte) responses and a two-second timeout yield 503. Other domain routes remain unavailable and mutations return 405. Browser status refreshes every five seconds; failed health does not disable the existing local preview.
 

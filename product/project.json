@@ -93,7 +93,7 @@
     "default_engine_enabled": false,
     "preview_storage": "tab memory only",
     "offline_supported": false,
-    "engine_status": "runtime health only; domain processing unavailable",
+    "engine_status": "runtime health and local v1 event validation; ingestion unavailable",
     "source": "apps/web/src/main.tsx",
     "existing_backend": null
   },

@@ -5,7 +5,7 @@
   "profile": { "os": "linux", "architecture": "amd64", "reference_distribution": "Ubuntu 24.04 LTS (Noble)" },
   "web_lockfile": {
     "path": "package-lock.json",
-    "sha256": "a3a79c430af7626f20fa8615e81e2c1c9ddee4ef07b45611e01e1a8a15b6c40c",
+    "sha256": "7239d6eafede3b5d3a7571f2948fcf4e57fb7ce9d39cd0a92f821773b9097be4",
     "dependencies": {
       "react": "19.3.1",
       "react-dom": "19.3.1",
@@ -13,7 +13,9 @@
       "typescript": "7.0.2",
       "@types/react": "19.3.0",
       "@types/react-dom": "19.3.0",
-      "@playwright/test": "1.64.1"
+      "@playwright/test": "1.64.1",
+      "ajv": "8.20.0",
+      "ajv-formats": "3.0.1"
     },
     "registry": "https://registry.npmjs.org/"
   },
@@ -104,6 +106,9 @@
     { "path": "tests/fixtures/miragemesh/C01/expected-output.json", "sha256": "6563cfe200ae660f1608419cd25ec9caa4224831c66898dd0a691e3cbd36056b" },
     { "path": "tests/fixtures/miragemesh/C02/positive.json", "sha256": "39fbe47717e0ee5df53c18ac5841d165aa54a977bf72afa06c8a80fc8a3fcfbc" },
     { "path": "tests/fixtures/miragemesh/C02/invalid.json", "sha256": "18940f074bc6820e43f5f3c5eb3429ae8d85a8abb059c9b6d6c6d0a3397d1f7e" },
-    { "path": "tests/fixtures/miragemesh/C02/expected-output.json", "sha256": "a1c8493d7edc7ce45a0868ed71915683eb85f040dabc5d843c26a5a693f45714" }
+    { "path": "tests/fixtures/miragemesh/C02/expected-output.json", "sha256": "a1c8493d7edc7ce45a0868ed71915683eb85f040dabc5d843c26a5a693f45714" },
+    {"path": "tests/fixtures/miragemesh/C04/expected-output.json", "sha256": "1217f19c5f1fcaa1836af2965113825bb90ef05f806f5e824be2adb718daeb21"},
+    {"path": "tests/fixtures/miragemesh/C04/invalid.json", "sha256": "38c164e5b51f9b17c9de2017ea34e035364331744b0ca8b1a9bb605a8e2ca518"},
+    {"path": "tests/fixtures/miragemesh/C04/positive.json", "sha256": "fccd401aa272bc5a8930eeb61d3678922597ba7471d07f07488218b0e388da0a"}
   ]
 }

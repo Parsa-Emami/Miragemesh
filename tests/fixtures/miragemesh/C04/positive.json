@@ -1,0 +1,16 @@
+{
+  "fixture_version": 1,
+  "provenance": "Repository-authored synthetic C04 contract fixtures; no real sensor or traffic data.",
+  "license": "Apache-2.0",
+  "event": {
+    "schema_version": "1",
+    "sensor_id": "sensor-01",
+    "event_id": "event-01",
+    "sequence": 1,
+    "observed_at": "2026-01-01T00:00:00Z",
+    "kind": "http.request",
+    "metadata": {
+      "path": "/health"
+    }
+  }
+}

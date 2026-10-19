@@ -1,43 +1,239 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "MirageMesh result planning draft",
-  "type": "object",
-  "additionalProperties": false,
-  "properties": {
-    "schema_version": {
-      "const": "0"
+  "$id": "urn:parsa:miragemesh:result:1",
+  "title": "MirageMesh v1 local validation result",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "status",
+        "input_digest",
+        "engine_version",
+        "result",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "1"
+        },
+        "status": {
+          "type": "string",
+          "const": "unverified"
+        },
+        "input_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "engine_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "$ref": "#/$defs/valid"
+        },
+        "warnings": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
     },
-    "status": {
-      "enum": [
-        "complete",
-        "partial",
-        "failed",
-        "unverified"
-      ]
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "status",
+        "input_digest",
+        "engine_version",
+        "result",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "1"
+        },
+        "status": {
+          "type": "string",
+          "const": "failed"
+        },
+        "input_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "engine_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/failed"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "INVALID_JSON",
+                        "UNSUPPORTED_VERSION",
+                        "INVALID_INPUT"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "warnings": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
     },
-    "input_digest": {
-      "type": "string",
-      "pattern": "^[a-f0-9]{64}$"
-    },
-    "engine_version": {
-      "type": "string"
-    },
-    "result": {
-      "type": "object"
-    },
-    "warnings": {
-      "type": "array",
-      "items": {
-        "type": "string"
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "status",
+        "input_digest",
+        "engine_version",
+        "result",
+        "warnings"
+      ],
+      "properties": {
+        "schema_version": {
+          "type": "string",
+          "const": "1"
+        },
+        "status": {
+          "type": "string",
+          "const": "failed"
+        },
+        "input_digest": {
+          "type": "null"
+        },
+        "engine_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/failed"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "INPUT_TOO_LARGE",
+                        "INPUT_READ_FAILED",
+                        "CANCELLED",
+                        "TIMEOUT"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "warnings": {
+          "type": "array",
+          "maxItems": 0
+        }
       }
     }
-  },
-  "required": [
-    "schema_version",
-    "status",
-    "input_digest",
-    "engine_version",
-    "result",
-    "warnings"
-  ]
+  ],
+  "$defs": {
+    "valid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "valid",
+        "sensor_id",
+        "event_id",
+        "sequence"
+      ],
+      "properties": {
+        "valid": {
+          "type": "boolean",
+          "const": true
+        },
+        "sensor_id": {
+          "$ref": "urn:parsa:miragemesh:input:1#/$defs/identifier"
+        },
+        "event_id": {
+          "$ref": "urn:parsa:miragemesh:input:1#/$defs/identifier"
+        },
+        "sequence": {
+          "$ref": "urn:parsa:miragemesh:input:1#/$defs/sequence"
+        }
+      }
+    },
+    "failed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "valid",
+        "error"
+      ],
+      "properties": {
+        "valid": {
+          "type": "boolean",
+          "const": false
+        },
+        "error": {
+          "$ref": "#/$defs/error"
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "INVALID_JSON",
+            "UNSUPPORTED_VERSION",
+            "INVALID_INPUT",
+            "INPUT_TOO_LARGE",
+            "INPUT_READ_FAILED",
+            "CANCELLED",
+            "TIMEOUT"
+          ]
+        },
+        "field": {
+          "type": "string",
+          "enum": [
+            "schema_version",
+            "sensor_id",
+            "event_id",
+            "sequence",
+            "observed_at",
+            "kind",
+            "metadata"
+          ]
+        }
+      }
+    }
+  }
 }

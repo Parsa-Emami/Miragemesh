@@ -33,10 +33,12 @@
     },
     {
       "id": "C04",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C04.json"
+      ],
+      "source_identity": "sha256:bf2b00b261595d100bfb5a86b30bba7e6eee26edc202b153473c0ecefe44e3ce",
+      "notes": "Verified local stateless HTTP-event v1 schemas, real Go decoder/CLI, limits, redaction, timeout/cancellation and compatibility fixtures. No HTTP admission, identity, ingest, persistence or product readiness certified."
     },
     {
       "id": "C05",

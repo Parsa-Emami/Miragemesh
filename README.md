@@ -18,7 +18,7 @@ npm run setup
 npm start
 ```
 
-Open http://127.0.0.1:4173. Current features are a roadmap browser and local bounded JSON structure preview. No Python, database, paid/cloud account, public domain or sibling clone is needed for this shell. The local Go runtime exposes health/version only; domain processing remains unavailable. [Clone guide](docs/engineering/CLONE_TO_RUN.md).
+Open http://127.0.0.1:4173. Current features are a roadmap browser and local bounded JSON structure preview. No Python, database, paid/cloud account, public domain or sibling clone is needed for this shell. The supervised HTTP runtime exposes health/version only. A separate local command validates v1 HTTP-event documents without ingesting or storing them; domain processing remains unavailable. See [the event contract](contracts/README.md). [Clone guide](docs/engineering/CLONE_TO_RUN.md).
 
 ## Full product endpoint
 

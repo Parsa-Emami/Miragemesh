@@ -1,119 +1,76 @@
 {
   "project": "MirageMesh",
   "date": "2026-10-19",
-  "base_commit": "f11f2d3f1ae2940d74a0e61b314b7a20acb1704c",
-  "scope": "Actual local Go runtime lifecycle/health, supervised web startup/shutdown and bounded same-origin health integration; no domain feature readiness",
+  "base_commit": "70f4c219f3444d1a4c755e5eb9592558fa892049",
+  "scope": "Typed local stateless HTTP-event v1 schema/Go validation and CLI, including actual rejection, exact bytes/numbers, resource bounds and cancellation. No sensor trust, collector acceptance, persistence or full workflow certified.",
   "core_tasks_verified": [
     "C01 specification only",
-    "C02 resource/toolchain lock only",
-    "C03 local runtime lifecycle/health only"
+    "C02 resource lock only",
+    "C03 runtime lifecycle/health only",
+    "C04 local stateless event contract validation only"
   ],
   "changed_paths": [
-    ".github/workflows/web.yml",
     "README.md",
-    "START_HERE.md",
+    "THIRD_PARTY_NOTICES.md",
     "apps/web/src/generated/project.json",
-    "apps/web/src/lib/runtime-config.mjs",
-    "apps/web/src/main.tsx",
-    "apps/web/src/styles.css",
     "cmd/miragemesh/main.go",
-    "cmd/miragemesh/main_test.go",
+    "contracts/README.md",
+    "contracts/input.schema.json",
+    "contracts/result.schema.json",
     "docs/ROADMAP_FA.md",
     "docs/agents/SESSION_HANDOFF.json",
-    "docs/engineering/BOOTSTRAP_EVIDENCE.md",
     "docs/engineering/CLONE_TO_RUN.md",
     "docs/engineering/ENGINE_LAUNCH.md",
-    "docs/engineering/WEB_RUNBOOK.md",
-    "docs/evidence/C03.json",
-    "docs/evidence/C03/browser.log",
-    "docs/evidence/C03/changed-files.txt",
-    "docs/evidence/C03/check.log",
-    "docs/evidence/C03/clone.log",
-    "docs/evidence/C03/contracts.log",
-    "docs/evidence/C03/doctor.log",
-    "docs/evidence/C03/go.log",
-    "docs/evidence/C03/identities.log",
-    "docs/evidence/C03/network-check.mjs",
-    "docs/evidence/C03/network.log",
-    "docs/evidence/C03/network.trace",
-    "docs/evidence/C03/package-smoke.log",
-    "docs/evidence/C03/package.log",
-    "docs/evidence/C03/setup.log",
-    "go.mod",
-    "ops/runtime-requirements.json",
+    "docs/engineering/toolchain-lock.json",
+    "docs/evidence/C04.json",
+    "docs/evidence/C04/browser.log",
+    "docs/evidence/C04/changed-files.txt",
+    "docs/evidence/C04/check.log",
+    "docs/evidence/C04/clone.log",
+    "docs/evidence/C04/fuzz.log",
+    "docs/evidence/C04/go.log",
+    "docs/evidence/C04/metadata.log",
+    "docs/evidence/C04/network.log",
+    "docs/evidence/C04/package.log",
+    "docs/evidence/C04/setup.log",
+    "docs/evidence/C04/tools.log",
+    "docs/evidence/C04/validation.trace",
+    "internal/contracts/event.go",
+    "internal/contracts/event_test.go",
+    "package-lock.json",
     "package.json",
     "plans/progress.json",
     "plans/project-state.json",
     "product/project.json",
-    "scripts/build-engine.mjs",
     "scripts/clone-smoke.mjs",
-    "scripts/oss-bootstrap.mjs",
-    "scripts/serve-web.mjs",
-    "scripts/start-local.mjs",
-    "tests/browser/workspace.spec.ts",
-    "tests/fixtures/miragemesh/C03/expected-output.json",
-    "tests/fixtures/miragemesh/C03/invalid.json",
-    "tests/fixtures/miragemesh/C03/positive.json",
-    "tests/web/local-launch.test.mjs",
-    "tests/web/oss-tooling.test.mjs"
+    "tests/contracts/domain-contracts.test.mjs",
+    "tests/fixtures/miragemesh/C04/expected-output.json",
+    "tests/fixtures/miragemesh/C04/invalid.json",
+    "tests/fixtures/miragemesh/C04/positive.json",
+    "tests/fixtures/miragemesh/C04/valid-event.txt"
   ],
-  "final_source_identity": "sha256:1ce568d86983ba61d40202d23aea45bd25603b2912c2bae9fd6b5f1b1d369c97",
+  "final_source_identity": "sha256:bf2b00b261595d100bfb5a86b30bba7e6eee26edc202b153473c0ecefe44e3ce",
   "commands": [
-    "bash -c \"node --version && npx --yes --package=npm@11.9.0 --call 'npm --version' && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go version && podman --version && dpkg-query -W podman && podman info --format '{{.Host.Security.Rootless}}' && uname -sm && git rev-parse HEAD && sha256sum package-lock.json\"",
+    "bash -c \"node --version && npx --yes --package=npm@11.9.0 --call 'npm --version' && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go version && podman --version && dpkg-query -W podman && podman info --format '{{.Host.Security.Rootless}}' && uname -sm && git rev-parse HEAD && sha256sum package-lock.json && npm ls ajv ajv-formats\"",
     "npx --yes --package=npm@11.9.0 --call \"npm run setup\"",
     "npx --yes --package=npm@11.9.0 --call \"npm run check\"",
-    "bash -c \"GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go test -race ./... && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go vet ./... && test -z \\\"$(GOTOOLCHAIN=go1.27.2 gofmt -l cmd/miragemesh)\\\"\"",
+    "bash -c \"GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go test -race -count=1 ./... && GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go vet ./... && test -z \\\"$(GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' gofmt -l internal/contracts cmd/miragemesh)\\\"\"",
+    "bash -c \"GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go test ./internal/contracts -fuzz=FuzzDecodeEvent -fuzztime=3s -parallel=2\"",
+    "bash -c \"python3 scripts/validate_repo.py && python3 scripts/plan.py validate && python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v && node scripts/verify-resources.mjs && git diff --check\"",
     "npx --yes --package=npm@11.9.0 --call \"npm run test:browser\"",
-    "npx --yes --package=npm@11.9.0 --call \"npm run doctor && npm run setup -- --check\"",
-    "bash -c \"python3 scripts/plan.py validate && python3 scripts/validate_repo.py && python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v && node scripts/verify-resources.mjs && git diff --check\"",
-    "node docs/evidence/C03/network-check.mjs",
+    "bash -c \"strace -f -e trace=connect -o docs/evidence/C04/validation.trace dist/engine/miragemesh --validate-event < tests/fixtures/miragemesh/C04/valid-event.txt && ! rg 'AF_INET' docs/evidence/C04/validation.trace\"",
     "npx --yes --package=npm@11.9.0 --call \"npm run package:web\"",
-    "sha256sum -c SHA256SUMS.txt (in dist/release); Node createWebServer from packaged sources, verify assets and disabled engine route",
     "GIT_INDEX_FILE=<temporary candidate index> npx --yes --package=npm@11.9.0 --call \"npm run test:clone\""
   ],
-  "validation_results": "docs/evidence/C03.json",
+  "validation_results": "docs/evidence/C04.json",
   "protected_paths_changed": [],
   "current_core_ready": false,
-  "next_task": "C04",
+  "next_task": "C05",
   "next_command": "npm run plan -- next",
-  "continuation": "Implement only dependency-ready C04 typed domain contracts next. Runtime health is not domain readiness. C17 awaits C04-C16. Owner subsequently authorized one local commit with subject feat(runtime): implement unified local engine setup and launch; no push or remote Actions run; clone smoke uses an alternate candidate index and temporary unreferenced snapshot with full ancestry. Keep historical evidence unchanged.",
-  "latest_followup": {
-    "date": "2026-10-19",
-    "scope": "Owner-authorized narrow typography follow-up; no C04 domain work",
-    "changed_paths": [
-      "apps/web/src/styles.css",
-      "docs/agents/SESSION_HANDOFF.json"
-    ],
-    "change": "Replace locally resolved Inter with locally resolved DejaVu Sans; retain system fallback; no font asset, dependency or remote font request added.",
-    "source_sha256": {
-      "apps/web/src/styles.css": "60c1e75bebbe304d75aada3599717cde8e53336a034360d3056dc9d6a95bdb92"
-    },
-    "verification": [
-      {
-        "command": "npx --yes --package=npm@11.9.0 --call 'npm run build && npm run test:browser'",
-        "exit_code": 0,
-        "result": "TypeScript and web/Go build passed; 3 Chromium browser tests passed."
-      },
-      {
-        "command": "node /tmp/miragemesh-typography-review.mjs after",
-        "exit_code": 0,
-        "result": "Actual DejaVu Sans font confirmed through Chromium platform-font inspection at 1440px and 360px; workspace/roadmap have no horizontal overflow, page errors or external requests; screenshots reviewed."
-      },
-      {
-        "command": "git diff --check",
-        "exit_code": 0
-      }
-    ],
-    "limits": [
-      "Local font availability varies by host; system fallback is intentional.",
-      "No font files are redistributed; no font dependency or hook ignore added.",
-      "C03 evidence retains its original tested source identity; this CSS follow-up does not certify C04 or C17."
-    ]
-  },
-  "local_commit_authorization": {
-    "requested_subject": "feat(runtime): implement unified local engine setup and launch",
-    "includes": "C03 runtime work and the separately authorized typography follow-up",
+  "continuation": "C05 recoverable local writes is next. Reuse internal/contracts.DecodeEvent and typed Event; do not add a second event shape or widen v1 metadata implicitly. C04 validates only structure and does not accept/authenticate/persist events. C07 allocates identities/sequences; C12 owns capture/redaction. Historical C01-C03 evidence remains bound to its original source. The user authorized one local C04 commit with the requested subject. Push is not authorized; temporary candidate objects exist only for clone testing.",
+  "git_delivery": {
+    "commit_authorized": true,
     "push_authorized": false,
-    "note": "Read git log for the resulting commit SHA; source evidence retains the identities tested before this delivery commit."
+    "requested_subject": "feat(contracts): define typed versioned domain inputs and results"
   }
 }

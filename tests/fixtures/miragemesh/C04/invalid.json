@@ -1,0 +1,535 @@
+{
+  "fixture_version": 1,
+  "provenance": "Repository-authored synthetic C04 contract fixtures; no real sensor or traffic data.",
+  "license": "Apache-2.0",
+  "cases": [
+    {
+      "name": "v0",
+      "input": {
+        "schema_version": "0",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "UNSUPPORTED_VERSION"
+    },
+    {
+      "name": "future-version",
+      "input": {
+        "schema_version": "2",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "UNSUPPORTED_VERSION"
+    },
+    {
+      "name": "missing-version",
+      "input": {
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "UNSUPPORTED_VERSION"
+    },
+    {
+      "name": "missing-sensor_id",
+      "input": {
+        "schema_version": "1",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "missing-event_id",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "missing-sequence",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "missing-observed_at",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "missing-kind",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "missing-metadata",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request"
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-sensor_id-9",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-sensor_id-10",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-event_id-11",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-event_id-12",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-sequence-13",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": null,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-sequence-14",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": true,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-sequence-15",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": "1",
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-sequence-16",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": -1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-sequence-17",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1.5,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-sequence-18",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 9007199254740992,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-observed_at-19",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-02-30T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-observed_at-20",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-observed_at-21",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:60Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-observed_at-22",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01t00:00:00z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-kind-23",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "other.kind",
+        "metadata": {
+          "path": "/health"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-metadata-24",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {}
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-metadata-25",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": ""
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-metadata-26",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": null
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-metadata-27",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": {}
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-metadata-28",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/",
+          "password": "synthetic-private-sentinel"
+        }
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-metadata-29",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": []
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid-metadata-30",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": null
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "unknown-field",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        },
+        "unknown": "synthetic-private-sentinel"
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "wrong-case",
+      "input": {
+        "schema_version": "1",
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "observed_at": "2026-01-01T00:00:00Z",
+        "kind": "http.request",
+        "metadata": {
+          "path": "/health"
+        },
+        "Sensor_id": "synthetic-private-sentinel"
+      },
+      "code": "INVALID_INPUT"
+    },
+    {
+      "name": "malformed",
+      "raw": "{",
+      "code": "INVALID_JSON"
+    },
+    {
+      "name": "trailing",
+      "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}\n{}",
+      "code": "INVALID_JSON"
+    },
+    {
+      "name": "duplicate",
+      "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"sequence\":2,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}\n",
+      "code": "INVALID_JSON"
+    },
+    {
+      "name": "duplicate-metadata",
+      "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\",\"path\":\"synthetic-private-sentinel\"}}\n",
+      "code": "INVALID_JSON"
+    },
+    {
+      "name": "escaped-duplicate",
+      "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"\\u0073equence\":2,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}\n",
+      "code": "INVALID_JSON"
+    },
+    {
+      "name": "null-root",
+      "raw": "null",
+      "code": "INVALID_JSON"
+    },
+    {
+      "name": "array-root",
+      "raw": "[]",
+      "code": "INVALID_JSON"
+    },
+    {
+      "name": "unpaired-high",
+      "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"\\ud800\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}\n",
+      "code": "INVALID_JSON"
+    },
+    {
+      "name": "unpaired-low",
+      "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"\\udc00\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}\n",
+      "code": "INVALID_JSON"
+    }
+  ]
+}
