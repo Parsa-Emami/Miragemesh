@@ -43,9 +43,10 @@ type Receipt struct {
 	Generation  uint64 `json:"generation"`
 }
 type Record struct {
-	Receipt Receipt
-	Input   []byte
-	Event   contracts.Event
+	Receipt    Receipt
+	Input      []byte
+	Event      contracts.Event
+	Enrollment *contracts.EnrollmentRecord
 }
 
 type entry struct {
@@ -280,7 +281,7 @@ func Open(directory string, limits Limits) (*Store, error) {
 			if failure != nil || name != objectName(digest(data)) {
 				return nil, ErrRecovery
 			}
-			if _, failure := contracts.DecodeEvent(context.Background(), data); failure != nil {
+			if _, failure := decodeRecord(context.Background(), data); failure != nil {
 				return nil, ErrRecovery
 			}
 		}
@@ -367,19 +368,35 @@ func (s *Store) available(ctx context.Context) error {
 	}
 	return ctx.Err()
 }
+func decodeRecord(ctx context.Context, raw []byte) (Record, error) {
+	event, failure := contracts.DecodeEvent(ctx, raw)
+	if failure == nil {
+		return Record{Input: raw, Event: event}, nil
+	}
+	enrollment, failure := contracts.DecodeEnrollment(ctx, raw)
+	if failure != nil {
+		if ctx.Err() != nil {
+			return Record{}, ctx.Err()
+		}
+		return Record{}, ErrInvalidInput
+	}
+	return Record{Input: raw, Enrollment: &enrollment}, nil
+}
+
 func (s *Store) load(ctx context.Context, item entry) (Record, error) {
 	raw, err := s.readFile(objectName(item.Receipt.InputDigest), contracts.MaxInputBytes)
 	if err != nil || int64(len(raw)) != item.Size || digest(raw) != item.Receipt.InputDigest {
 		return Record{}, ErrRecovery
 	}
-	event, failure := contracts.DecodeEvent(ctx, raw)
-	if failure != nil {
+	record, err := decodeRecord(ctx, raw)
+	if err != nil {
 		if ctx.Err() != nil {
 			return Record{}, ctx.Err()
 		}
 		return Record{}, ErrRecovery
 	}
-	return Record{Receipt: item.Receipt, Input: raw, Event: event}, nil
+	record.Receipt = item.Receipt
+	return record, nil
 }
 func (s *Store) Read(ctx context.Context, id string) (Record, error) {
 	s.mu.Lock()
@@ -402,7 +419,7 @@ func (s *Store) Read(ctx context.Context, id string) (Record, error) {
 	return Record{}, ErrNotFound
 }
 func (s *Store) Commit(ctx context.Context, id string, input []byte) (receipt Receipt, err error) {
-	return s.commit(ctx, id, input, nil)
+	return s.commit(ctx, id, input, nil, false)
 }
 
 // CommitChecked runs check on stored records in generation order, then the new
@@ -411,10 +428,19 @@ func (s *Store) CommitChecked(ctx context.Context, id string, input []byte, chec
 	if check == nil {
 		return Receipt{}, ErrInvalidInput
 	}
-	return s.commit(ctx, id, input, check)
+	return s.commit(ctx, id, input, check, false)
 }
 
-func (s *Store) commit(ctx context.Context, id string, input []byte, check func(Record) error) (receipt Receipt, err error) {
+// CommitOnceChecked rejects an existing operation even for identical bytes.
+// Checks and publication share the same writer lock as ordinary event commits.
+func (s *Store) CommitOnceChecked(ctx context.Context, id string, input []byte, check func(Record) error) (Receipt, error) {
+	if check == nil {
+		return Receipt{}, ErrInvalidInput
+	}
+	return s.commit(ctx, id, input, check, true)
+}
+
+func (s *Store) commit(ctx context.Context, id string, input []byte, check func(Record) error, once bool) (receipt Receipt, err error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if err = s.available(ctx); err != nil {
@@ -423,7 +449,7 @@ func (s *Store) commit(ctx context.Context, id string, input []byte, check func(
 	if !validID(id) {
 		return Receipt{}, ErrInvalidInput
 	}
-	event, failure := contracts.DecodeEvent(ctx, input)
+	candidate, failure := decodeRecord(ctx, input)
 	if failure != nil {
 		if ctx.Err() != nil {
 			return Receipt{}, ctx.Err()
@@ -434,6 +460,9 @@ func (s *Store) commit(ctx context.Context, id string, input []byte, check func(
 	used := int64(0)
 	for _, item := range s.state.Operations {
 		if item.Receipt.OperationID == id {
+			if once {
+				return Receipt{}, ErrConflict
+			}
 			if item.Receipt.InputDigest != hash {
 				return Receipt{}, ErrConflict
 			}
@@ -464,7 +493,7 @@ func (s *Store) commit(ctx context.Context, id string, input []byte, check func(
 		used += item.Size
 	}
 	if check != nil {
-		if err = check(Record{Input: input, Event: event}); err != nil {
+		if err = check(candidate); err != nil {
 			return Receipt{}, err
 		}
 	}

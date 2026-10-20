@@ -1,0 +1,34 @@
+package rand // import "crypto/rand"
+
+func Read(b []byte) (n int, err error)
+    Read fills b with cryptographically secure random bytes. It never returns an
+    error, and always fills b entirely.
+
+    Read calls io.ReadFull on Reader and crashes the program irrecoverably if
+    an error is returned. The default Reader uses operating system APIs that are
+    documented to never return an error on all but legacy Linux systems.
+
+package sha256 // import "crypto/sha256"
+
+func Sum256(data []byte) [Size]byte
+    Sum256 returns the SHA256 checksum of the data.
+
+package base64 // import "encoding/base64"
+
+func (enc Encoding) Strict() *Encoding
+    Strict creates a new encoding identical to enc except with strict decoding
+    enabled. In this mode, the decoder requires that trailing padding bits are
+    zero, as described in RFC 4648 section 3.5.
+
+    Note that the input is still malleable, as new line characters (CR and LF)
+    are still ignored.
+
+package time // import "time"
+
+func (t Time) Format(layout string) string
+    Format returns a textual representation of the time value formatted
+    according to the layout defined by the argument. See the documentation for
+    the constant called Layout to see how to represent the layout format.
+
+    The executable example for Time.Format demonstrates the working of the
+    layout string in detail and is a good reference.

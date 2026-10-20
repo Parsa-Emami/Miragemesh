@@ -88,3 +88,19 @@ usability or C40 release. Source-bound C06 evidence records these limits.
 Official references: [Go test JSON events](https://pkg.go.dev/cmd/test2json#hdr-Output_Format),
 [Go toolchain selection](https://go.dev/doc/toolchain),
 [GitHub Actions secure use](https://docs.github.com/en/actions/reference/security/secure-use).
+
+## C08 required anchors
+
+C08 adds `TestEnrollmentRecordValidation` in `internal/contracts`;
+`TestEnrollmentSyscallFailuresPreserveRecoverableState` and
+`TestEnrollmentSIGKILLAtPublicationBoundaries` in `internal/storage`; and
+`TestEnrollmentIssueConsumeAndRestart`,
+`TestEnrollmentRejectsInvalidExpiredAndScopedTokens`,
+`TestEnrollmentConcurrentConsumptionAndSensorCompatibility`,
+`TestEnrollmentStorageFailuresAndCancellation`, and
+`TestEnrollmentRechecksClockBeforePublication` and
+`TestEnrollmentRejectsForgedStoredIdentity` in `tests`. The discovery guard
+and its regressions require all of them alongside the C03-C07 anchors.
+Fixtures are repository-authored Apache-2.0 data under the C08 fixture directory.
+These tests certify the internal service and real local storage boundary only;
+HTTP enrollment and PKI/mTLS remain outside the approved C08 scope.

@@ -1,0 +1,5 @@
+# github.com/Parsa-Emami/Miragemesh/tests
+tests/enrollment_test.go:19:2: no required module provides package github.com/Parsa-Emami/Miragemesh/internal/enrollment; to add it:
+	go get github.com/Parsa-Emami/Miragemesh/internal/enrollment
+FAIL	github.com/Parsa-Emami/Miragemesh/tests [setup failed]
+FAIL

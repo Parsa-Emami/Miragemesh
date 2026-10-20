@@ -69,10 +69,12 @@
     },
     {
       "id": "C08",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C08.json"
+      ],
+      "source_identity": "sha256:b8125962f740bae3a98ebcd4cab0a91a4a6be11eef047b703d828e67c553641d",
+      "notes": "Owner-approved F02 internal Go service verified with real C05 storage: explicit maxTTL, hashed sensor-scoped tokens, one-time atomic consumption, restart/replay, concurrent consumption, filesystem fault recovery and no enrollment network syscalls. No enrollment HTTP/UI/CLI, certificate issuance, mTLS, remote Actions or product readiness certified."
     },
     {
       "id": "C09",

@@ -8,9 +8,9 @@ import { join } from 'node:path';
 const module = 'github.com/Parsa-Emami/Miragemesh/';
 const suites = {
   'cmd/miragemesh': ['TestLifecycle'],
-  'internal/contracts': ['TestValidAndIncompatibleFixtures'],
-  'internal/storage': ['TestStorageSIGKILLAtPublicationBoundaries', 'TestStorageSyscallFailuresPreserveRecoverableState'],
-  tests: ['TestStorageExactBytesReplayAndReopen', 'TestSensorSequenceReplayAndRestart', 'TestSensorRejectsInvalidAndConflictingEvents'],
+  'internal/contracts': ['TestValidAndIncompatibleFixtures', 'TestEnrollmentRecordValidation'],
+  'internal/storage': ['TestStorageSIGKILLAtPublicationBoundaries', 'TestStorageSyscallFailuresPreserveRecoverableState', 'TestEnrollmentSyscallFailuresPreserveRecoverableState', 'TestEnrollmentSIGKILLAtPublicationBoundaries'],
+  tests: ['TestStorageExactBytesReplayAndReopen', 'TestSensorSequenceReplayAndRestart', 'TestSensorRejectsInvalidAndConflictingEvents', 'TestEnrollmentIssueConsumeAndRestart', 'TestEnrollmentRejectsInvalidExpiredAndScopedTokens', 'TestEnrollmentConcurrentConsumptionAndSensorCompatibility', 'TestEnrollmentStorageFailuresAndCancellation', 'TestEnrollmentRechecksClockBeforePublication', 'TestEnrollmentRejectsForgedStoredIdentity'],
 };
 function complete() {
   return Object.entries(suites).flatMap(([path, names]) => [
@@ -58,4 +58,10 @@ test('rejects failures in any package and unfinished package results', t => {
 test('rejects malformed JSON events and missing input', t => {
   for (const raw of ['broken\n', 'null\n', '{}\n']) assert.equal(verify(t, raw).status, 1);
   assert.equal(spawnSync(process.execPath, ['scripts/verify-engine-tests.mjs'], { encoding: 'utf8' }).status, 1);
+});
+
+test('requires enrollment validation, durable consumption, scope, clock, concurrency and crash anchors', t => {
+  for (const name of ['TestEnrollmentRecordValidation', 'TestEnrollmentIssueConsumeAndRestart', 'TestEnrollmentRejectsInvalidExpiredAndScopedTokens', 'TestEnrollmentConcurrentConsumptionAndSensorCompatibility', 'TestEnrollmentStorageFailuresAndCancellation', 'TestEnrollmentRechecksClockBeforePublication', 'TestEnrollmentRejectsForgedStoredIdentity', 'TestEnrollmentSyscallFailuresPreserveRecoverableState', 'TestEnrollmentSIGKILLAtPublicationBoundaries']) {
+    assert.equal(verify(t, complete().filter(event => event.Test !== name)).status, 1);
+  }
 });

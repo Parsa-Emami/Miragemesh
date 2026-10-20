@@ -1,6 +1,6 @@
 {
   "project": "MirageMesh",
-  "reviewed_commit": "19558e818aec76c33bf6f6993c0fd8979823d6b0",
+  "reviewed_commit": "2ff5f42d49a3d904f13f59c09fcce95f622dd513",
   "readiness": "WEB_FOUNDATION",
   "core_ready": false,
   "implemented": [
@@ -11,10 +11,11 @@
     "local stateless v1 HTTP-event contract validation with typed results",
     "internal bounded single-writer local storage adapter with atomic manifest publication and reopen/replay recovery",
     "dedicated engine CI workflow and required-test execution guard with local clean-clone verification; remote Actions unverified",
-    "typed sensor event acceptance using C04 validation and C05 durable storage, with exact replay and contiguous per-sensor sequences"
+    "typed sensor event acceptance using C04 validation and C05 durable storage, with exact replay and contiguous per-sensor sequences",
+    "internal durable sensor-scoped expiring one-time enrollment tokens with hashed storage and atomic consumption; no enrollment HTTP/UI or certificate issuance"
   ],
-  "engine": "Go runtime health and local event validation implemented; typed sensor event acceptance is durably stored with per-sensor sequence checks; authenticated ingestion and domain workflow pending",
-  "next_task": "C08",
+  "engine": "Go runtime health, local event validation, durable sensor event acceptance and internal enrollment service implemented; authenticated ingestion, PKI/mTLS and full domain workflow pending",
+  "next_task": "C09",
   "next_command": "npm run plan -- next",
   "full_product_endpoint": "C30 locally usable; C40 full published OSS v1"
 }

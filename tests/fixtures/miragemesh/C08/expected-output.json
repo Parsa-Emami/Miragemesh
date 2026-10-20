@@ -1,0 +1,15 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic enrollment inputs; no real identities or secrets.",
+  "successful_consumers": 1,
+  "raw_token_persisted": false,
+  "post_restart_replay": "REPLAY",
+  "interrupted_visibility": {
+    "staged": false,
+    "object": false,
+    "before-manifest": false,
+    "manifest": true,
+    "before-ack": true
+  }
+}

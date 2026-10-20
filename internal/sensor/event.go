@@ -30,6 +30,9 @@ func sequenceCheck() func(storage.Record) error {
 	}
 	sensors := make(map[string]*state)
 	return func(record storage.Record) error {
+		if record.Enrollment != nil {
+			return nil
+		}
 		previous := sensors[record.Event.SensorID]
 		if previous == nil {
 			previous = &state{eventIDs: make(map[string]struct{})}

@@ -3,9 +3,9 @@ import { readFileSync } from 'node:fs';
 const module = 'github.com/Parsa-Emami/Miragemesh/';
 const required = new Map(Object.entries({
   'cmd/miragemesh': ['TestLifecycle'],
-  'internal/contracts': ['TestValidAndIncompatibleFixtures'],
-  'internal/storage': ['TestStorageSIGKILLAtPublicationBoundaries', 'TestStorageSyscallFailuresPreserveRecoverableState'],
-  tests: ['TestStorageExactBytesReplayAndReopen', 'TestSensorSequenceReplayAndRestart', 'TestSensorRejectsInvalidAndConflictingEvents'],
+  'internal/contracts': ['TestValidAndIncompatibleFixtures', 'TestEnrollmentRecordValidation'],
+  'internal/storage': ['TestStorageSIGKILLAtPublicationBoundaries', 'TestStorageSyscallFailuresPreserveRecoverableState', 'TestEnrollmentSyscallFailuresPreserveRecoverableState', 'TestEnrollmentSIGKILLAtPublicationBoundaries'],
+  tests: ['TestStorageExactBytesReplayAndReopen', 'TestSensorSequenceReplayAndRestart', 'TestSensorRejectsInvalidAndConflictingEvents', 'TestEnrollmentIssueConsumeAndRestart', 'TestEnrollmentRejectsInvalidExpiredAndScopedTokens', 'TestEnrollmentConcurrentConsumptionAndSensorCompatibility', 'TestEnrollmentStorageFailuresAndCancellation', 'TestEnrollmentRechecksClockBeforePublication', 'TestEnrollmentRejectsForgedStoredIdentity'],
 }).map(([path, tests]) => [module + path, tests]));
 
 try {

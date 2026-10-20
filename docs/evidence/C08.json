@@ -1,0 +1,396 @@
+{
+  "commit_id": "C08",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "date": "2026-10-20",
+  "base_commit": "2ff5f42d49a3d904f13f59c09fcce95f622dd513",
+  "source_identity": "sha256:b8125962f740bae3a98ebcd4cab0a91a4a6be11eef047b703d828e67c553641d",
+  "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes); evidence, progress and session handoff excluded",
+  "source_manifest": "docs/evidence/C08/source-files.json",
+  "source_file_count": 361,
+  "scope": "F02 internal durable one-time sensor-scoped enrollment tokens over C05; no network admission or PKI.",
+  "owner_scope_resolution": "Implemented the explicitly approved plan: internal Go service only, explicit positive caller maxTTL, unchanged C04 public event/result and C05 manifest formats, no new database schema or adapter.",
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "go": "1.27.2",
+    "os": "Linux x86_64",
+    "filesystem": "ext4 mounted at /",
+    "providers": "Real C05 local filesystem only; no external identity provider",
+    "details": "docs/evidence/C08/environment.json",
+    "hardware_target": "C28 target not measured"
+  },
+  "commands": [
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/vet.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/engine-tests.jsonl"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "docs/evidence/C08/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/discovery.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "-count=1",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/standard-tests.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/gofmt",
+        "-l",
+        "cmd",
+        "internal",
+        "tests"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/gofmt.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "ci",
+        "--ignore-scripts",
+        "--no-fund"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/install.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/check.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "test:browser"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/browser.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/clone-before-metadata.log",
+      "snapshot_phase": "before final progress/project-state/web-status publication; final snapshot recorded separately"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "package:web"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/package.log"
+    },
+    {
+      "argv": [
+        "sha256sum",
+        "--check",
+        "SHA256SUMS.txt"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/package-checksums.log",
+      "cwd": "dist/release"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/repository.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/plan.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/plan.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/python-tests.log"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-resources.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/resources.log"
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-e",
+        "trace=network",
+        "-o",
+        "../docs/evidence/C08/network.trace",
+        "../dist/ci/enrollment.test",
+        "-test.run",
+        "^TestEnrollment",
+        "-test.v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/network-tests.log",
+      "cwd": "tests"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/clone.log",
+      "snapshot_phase": "final source/progress/project-state/generated web status; proof logs may be appended afterwards"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "validate:plan"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/plan-metadata.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "plan",
+        "--",
+        "next"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/next-task.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C08/diff-check.log",
+      "scope": "temporary candidate index; user staging unchanged"
+    }
+  ],
+  "results": {
+    "go_test_run_events": 140,
+    "go_test_pass_events": 140,
+    "required_engine_anchors": 16,
+    "npm_tests": 39,
+    "browser_tests": 3,
+    "python_source_integrity_tests": 6,
+    "network_syscalls": 0,
+    "concurrent_consumers": 12,
+    "successful_consumers": 1,
+    "syscall_failure_points": 9,
+    "sigkill_publication_boundaries": 5,
+    "typecheck": "Passed within npm run check",
+    "build": "Web and actual engine passed within npm run check",
+    "lint": "No standalone JavaScript lint configured; Go format and vet passed",
+    "regressions": "C04 formats and event fixtures; C05 receipts/recovery; C07 mixed-store sensor sequence/replay all passed",
+    "source_manifest_verified": true,
+    "dependency_and_toolchain_locks_unchanged": true,
+    "raw_token_persisted": false
+  },
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic inputs; no real identities, traffic or secrets",
+    "sha256": {
+      "tests/fixtures/miragemesh/C08/expected-output.json": "7b9497b5ec55aa8339dea4678a447691d55c0d85e30d4647fe653e2de4ae311f",
+      "tests/fixtures/miragemesh/C08/invalid.json": "882351b2d20b496b447590a7019c4d7913d8c633a537e17a3d101e323aa11688",
+      "tests/fixtures/miragemesh/C08/positive.json": "505207a53309ba4d0c803411d87178e9115ef117d71191451d8386ce0515cb33"
+    }
+  },
+  "security_review": {
+    "credentials": "32 crypto/rand bytes; canonical Base64URL; only SHA-256 persisted; raw token excluded from JSON and errors",
+    "authority": "Sensor binding, stored issue-kind/hash validation, expiry under writer lock, once-only publication and replay denial across reopen",
+    "storage": "Reuses bounded C05 private os.Root, flock, immutable objects, canonical manifest and durable publication; no parallel authority",
+    "transport": "No external enrollment/API/provider surface; focused real enrollment test binary trace contains no network syscalls",
+    "dependencies": "Standard library only; locked dependencies and protected files unchanged"
+  },
+  "failed_attempts": [
+    {
+      "expected": true,
+      "phase": "RED missing package",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C08/red.log"
+    },
+    {
+      "expected": true,
+      "phase": "RED behavior with API skeleton",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C08/red-behavior.log"
+    },
+    {
+      "expected": true,
+      "phase": "RED writer-lock expiry",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C08/red-clock.log"
+    },
+    {
+      "expected": false,
+      "phase": "Go package discovery ran concurrently with package:web rebuilding dist/release",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C08/engine-tests-packaging-race.jsonl",
+      "resolution": "Serial rerun passed; no product change required"
+    },
+    {
+      "expected": false,
+      "phase": "Candidate diff check found a trailing empty line in captured go doc output",
+      "exit_code": 2,
+      "output_path": "docs/evidence/C08/diff-check-before-normalization.log",
+      "resolution": "Normalized trailing blank lines in that evidence log; candidate diff rechecked."
+    }
+  ],
+  "observed_limitations": [
+    "Remote GitHub Actions execution unverified; no push/publication.",
+    "Internal Go service only: no enrollment HTTP/UI/CLI, certificate issuance, mTLS or authenticated ingestion.",
+    "Old event-only readers may reject enrollment objects; preserve a compatible reader and repair forward.",
+    "Wall clock is trusted; independent time authority and hostile host-clock rollback are outside this scope.",
+    "Local ext4 syscall/process-interruption results do not certify physical power loss or C28 capacity.",
+    "No C30 usability or C40 release claim."
+  ],
+  "rollback_or_recovery_observation": "After I/O failure Close/Open; unpublished valid-token consumption can retry; published consumption always fails replay. Never overwrite newer accepted state or downgrade its reader.",
+  "changed_paths": [
+    "apps/web/src/generated/project.json",
+    "docs/ROADMAP_FA.md",
+    "docs/agents/SESSION_HANDOFF.json",
+    "docs/architecture/ENROLLMENT.md",
+    "docs/architecture/STORAGE_PROOF.md",
+    "docs/engineering/ENGINE_TESTS.md",
+    "docs/evidence/C08.json",
+    "docs/evidence/C08/REPORT.md",
+    "docs/evidence/C08/browser.log",
+    "docs/evidence/C08/check.log",
+    "docs/evidence/C08/clone-before-metadata.log",
+    "docs/evidence/C08/clone.log",
+    "docs/evidence/C08/diff-check-before-normalization.log",
+    "docs/evidence/C08/diff-check.log",
+    "docs/evidence/C08/discovery.log",
+    "docs/evidence/C08/engine-tests-packaging-race.jsonl",
+    "docs/evidence/C08/engine-tests.jsonl",
+    "docs/evidence/C08/environment.json",
+    "docs/evidence/C08/gofmt.log",
+    "docs/evidence/C08/install.log",
+    "docs/evidence/C08/network-check.log",
+    "docs/evidence/C08/network-tests.log",
+    "docs/evidence/C08/network.trace",
+    "docs/evidence/C08/next-task.log",
+    "docs/evidence/C08/official-api.log",
+    "docs/evidence/C08/package-checksums.log",
+    "docs/evidence/C08/package.log",
+    "docs/evidence/C08/plan-metadata.log",
+    "docs/evidence/C08/plan.log",
+    "docs/evidence/C08/python-tests.log",
+    "docs/evidence/C08/red-behavior.log",
+    "docs/evidence/C08/red-clock.log",
+    "docs/evidence/C08/red.log",
+    "docs/evidence/C08/repository.log",
+    "docs/evidence/C08/resources.log",
+    "docs/evidence/C08/snapshot.json",
+    "docs/evidence/C08/source-files.json",
+    "docs/evidence/C08/standard-tests.log",
+    "docs/evidence/C08/vet.log",
+    "internal/contracts/enrollment.go",
+    "internal/contracts/enrollment_test.go",
+    "internal/enrollment/service.go",
+    "internal/sensor/event.go",
+    "internal/storage/adapter.go",
+    "internal/storage/recovery_test.go",
+    "plans/commits/C08.md",
+    "plans/progress.json",
+    "plans/project-state.json",
+    "plans/roadmap.json",
+    "scripts/verify-engine-tests.mjs",
+    "tests/engineering/engine-tests.test.mjs",
+    "tests/enrollment_test.go",
+    "tests/fixtures/miragemesh/C08/expected-output.json",
+    "tests/fixtures/miragemesh/C08/invalid.json",
+    "tests/fixtures/miragemesh/C08/positive.json",
+    "tests/web/oss-tooling.test.mjs"
+  ],
+  "delivery": {
+    "delivery_commit_created": true,
+    "push_authorized": false,
+    "publication_authorized": false,
+    "local_commit_authorized": true,
+    "commit_subject": "feat(enrollment): consume expiring one time tokens"
+  },
+  "clean_snapshot": {
+    "commit": "880ad1ce50ea46265941658c174415298f6c9f27",
+    "git_tree": "1bc4b9ba4816a50374a8987836f5c0247c0b1f56",
+    "verification_source_identity": "sha256:87a4bacf0754ea5b90388498a332f0a31cd44c60834027c48e1c72bb489559d0",
+    "runtime_clean_clone_passed": true,
+    "source_integrity_passed": true,
+    "user_index_unchanged": true,
+    "head_unchanged": true,
+    "candidate_only_no_branch_or_remote_ref": true,
+    "core_ready": false
+  },
+  "verification_notes": "Final check/browser and clean-snapshot runs include the final generated web status and metadata. The engine and network logs exercise the unchanged final Go source; later edits only publish metadata and evidence. Packaging and Go package discovery were serialized after one documented orchestration race."
+}

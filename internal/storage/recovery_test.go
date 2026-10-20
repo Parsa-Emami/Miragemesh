@@ -14,6 +14,8 @@ import (
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/Parsa-Emami/Miragemesh/internal/contracts"
 )
 
 func input(t *testing.T) []byte {
@@ -36,15 +38,39 @@ func fresh(t *testing.T) (*Store, string) {
 	return s, path
 }
 
-func TestStorageSyscallFailuresPreserveRecoverableState(t *testing.T) {
+// Enrollment uses the same syscall/crash harness with canonical lifecycle bytes
+// and the once-only commit path used by the real enrollment service.
+func recoveryInputs(t *testing.T, enrollment bool) ([]byte, []byte) {
+	t.Helper()
+	if !enrollment {
+		raw := input(t)
+		return raw, append(append([]byte{}, raw...), ' ')
+	}
+	r := contracts.EnrollmentRecord{SchemaVersion: "1", Kind: contracts.EnrollmentIssue, SensorID: "sensor-01", TokenHash: strings.Repeat("a", 64), IssuedAt: "2026-10-20T00:00:00Z", ExpiresAt: "2026-10-20T00:01:00Z"}
+	issue, _ := json.Marshal(r)
+	r.Kind = contracts.EnrollmentConsume
+	r.ConsumedAt = "2026-10-20T00:00:01Z"
+	consume, _ := json.Marshal(r)
+	return issue, consume
+}
+func recoveryCommit(s *Store, ctx context.Context, raw []byte, enrollment bool) (Receipt, error) {
+	if enrollment {
+		return s.CommitOnceChecked(ctx, "next", raw, func(Record) error { return nil })
+	}
+	return s.Commit(ctx, "next", raw)
+}
+func TestStorageSyscallFailuresPreserveRecoverableState(t *testing.T) { testSyscallFailures(t, false) }
+func TestEnrollmentSyscallFailuresPreserveRecoverableState(t *testing.T) {
+	testSyscallFailures(t, true)
+}
+func testSyscallFailures(t *testing.T, enrollment bool) {
 	for _, point := range []string{"write", "short-write", "stage-sync", "object-rename", "object-directory-sync", "manifest-write", "manifest-sync", "manifest-rename", "manifest-directory-sync"} {
 		t.Run(point, func(t *testing.T) {
 			s, path := fresh(t)
-			raw := input(t)
+			raw, next := recoveryInputs(t, enrollment)
 			if _, err := s.Commit(context.Background(), "prior", raw); err != nil {
 				t.Fatal(err)
 			}
-			next := append(append([]byte{}, raw...), ' ')
 			base := s.ops
 			writes, syncs, dirs := 0, 0, 0
 			s.ops.write = func(f *os.File, b []byte) (int, error) {
@@ -78,7 +104,7 @@ func TestStorageSyscallFailuresPreserveRecoverableState(t *testing.T) {
 				}
 				return base.rename(from, to)
 			}
-			receipt, err := s.Commit(context.Background(), "next", next)
+			receipt, err := recoveryCommit(s, context.Background(), next, enrollment)
 			want := ErrIO
 			if point == "manifest-directory-sync" {
 				want = ErrRecovery
@@ -106,7 +132,13 @@ func TestStorageSyscallFailuresPreserveRecoverableState(t *testing.T) {
 			} else if !errors.Is(err, ErrNotFound) {
 				t.Fatalf("partial generation visible: %v", err)
 			}
-			receipt, err = reopened.Commit(context.Background(), "next", next)
+			receipt, err = recoveryCommit(reopened, context.Background(), next, enrollment)
+			if enrollment && point == "manifest-directory-sync" {
+				if !errors.Is(err, ErrConflict) || receipt != (Receipt{}) {
+					t.Fatal("published consumption replayed", err)
+				}
+				return
+			}
 			if err != nil || receipt.Generation != 2 {
 				t.Fatalf("retry %+v: %v", receipt, err)
 			}
@@ -216,15 +248,22 @@ func TestStorageProcessHelper(t *testing.T) {
 		}
 		return nil
 	}
-	raw := append(input(t), ' ')
-	if _, err = s.Commit(context.Background(), "next", raw); err != nil {
+	enrollment := os.Getenv("MIRAGEMESH_STORAGE_ENROLLMENT") == "1"
+	_, raw := recoveryInputs(t, enrollment)
+	if _, err = recoveryCommit(s, context.Background(), raw, enrollment); err != nil {
 		fmt.Println("commit failed")
 		os.Exit(4)
 	}
 	os.Exit(5)
 }
-func TestStorageSIGKILLAtPublicationBoundaries(t *testing.T) {
-	rawExpected, err := os.ReadFile("../../tests/fixtures/miragemesh/C05/expected-output.json")
+func TestStorageSIGKILLAtPublicationBoundaries(t *testing.T)    { testSIGKILL(t, false) }
+func TestEnrollmentSIGKILLAtPublicationBoundaries(t *testing.T) { testSIGKILL(t, true) }
+func testSIGKILL(t *testing.T, enrollment bool) {
+	fixture := "../../tests/fixtures/miragemesh/C05/expected-output.json"
+	if enrollment {
+		fixture = "../../tests/fixtures/miragemesh/C08/expected-output.json"
+	}
+	rawExpected, err := os.ReadFile(fixture)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -237,13 +276,16 @@ func TestStorageSIGKILLAtPublicationBoundaries(t *testing.T) {
 	for _, phase := range []string{"staged", "object", "before-manifest", "manifest", "before-ack"} {
 		t.Run(phase, func(t *testing.T) {
 			s, path := fresh(t)
-			raw := input(t)
+			raw, next := recoveryInputs(t, enrollment)
 			if _, err := s.Commit(context.Background(), "prior", raw); err != nil {
 				t.Fatal(err)
 			}
 			s.Close()
 			cmd := exec.Command(os.Args[0], "-test.run=^TestStorageProcessHelper$", "-test.timeout=10s")
 			cmd.Env = append(os.Environ(), "MIRAGEMESH_STORAGE_HELPER=1", "MIRAGEMESH_STORAGE_PATH="+path, "MIRAGEMESH_STORAGE_PHASE="+phase)
+			if enrollment {
+				cmd.Env = append(cmd.Env, "MIRAGEMESH_STORAGE_ENROLLMENT=1")
+			}
 			stdout, err := cmd.StdoutPipe()
 			if err != nil {
 				t.Fatal(err)
@@ -295,7 +337,13 @@ func TestStorageSIGKILLAtPublicationBoundaries(t *testing.T) {
 			if published && err != nil || !published && !errors.Is(err, ErrNotFound) {
 				t.Fatalf("unexpected visibility: %v", err)
 			}
-			receipt, err := r.Commit(context.Background(), "next", append(raw, ' '))
+			receipt, err := recoveryCommit(r, context.Background(), next, enrollment)
+			if enrollment && published {
+				if !errors.Is(err, ErrConflict) || receipt != (Receipt{}) {
+					t.Fatal("killed consumption replayed", err)
+				}
+				return
+			}
 			if err != nil || receipt.Generation != 2 {
 				t.Fatalf("retry %+v: %v", receipt, err)
 			}

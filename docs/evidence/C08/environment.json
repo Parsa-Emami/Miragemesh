@@ -1,0 +1,65 @@
+{
+  "probes": [
+    {
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "exit_code": 0,
+      "output": "v24.19.0"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "--version"
+      ],
+      "exit_code": 0,
+      "output": "11.9.0"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "version"
+      ],
+      "exit_code": 0,
+      "output": "go version go1.27.2 linux/amd64"
+    },
+    {
+      "argv": [
+        "uname",
+        "-srm"
+      ],
+      "exit_code": 0,
+      "output": "Linux 7.0.0-38-generic x86_64"
+    },
+    {
+      "argv": [
+        "findmnt",
+        "-T",
+        ".",
+        "-n",
+        "-o",
+        "FSTYPE,TARGET"
+      ],
+      "exit_code": 0,
+      "output": "ext4   /"
+    },
+    {
+      "argv": [
+        "strace",
+        "--version"
+      ],
+      "exit_code": 0,
+      "output": "strace -- version 6.8\nCopyright (c) 1991-2024 The strace developers <https://strace.io>.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\nOptional features enabled: stack-trace=libunwind stack-demangle m32-mpers mx32-mpers"
+    }
+  ],
+  "locked_go_sources": {
+    "src/crypto/rand/rand.go": "7c289648d453d0bdca0f05091d00bb86c94b69637080c748ff3d3476677521ac",
+    "src/crypto/sha256/sha256.go": "34c5c7e8408022e7b8fd570453aebe6a95607761c14fbae61f465f9ba6328da9",
+    "src/encoding/base64/base64.go": "15e67707bc3f0925f7f56bd4002106681c6b64ba5bf553b4d8cc0bb8eca71aa5",
+    "src/time/time.go": "7d992810b162f65e02cea4d60fd0d90af59b3cafa2c8926ca08083d5c73451dc"
+  },
+  "hardware_target": "C28 target not measured",
+  "providers": "C05 local filesystem only; no enrollment identity/PKI provider"
+}

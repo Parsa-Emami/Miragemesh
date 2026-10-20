@@ -1,0 +1,19 @@
+=== RUN   TestEnrollmentIssueConsumeAndRestart
+--- PASS: TestEnrollmentIssueConsumeAndRestart (0.09s)
+=== RUN   TestEnrollmentRejectsInvalidExpiredAndScopedTokens
+=== RUN   TestEnrollmentRejectsInvalidExpiredAndScopedTokens/zero-ttl
+=== RUN   TestEnrollmentRejectsInvalidExpiredAndScopedTokens/negative-ttl
+=== RUN   TestEnrollmentRejectsInvalidExpiredAndScopedTokens/overlong-ttl
+--- PASS: TestEnrollmentRejectsInvalidExpiredAndScopedTokens (0.09s)
+    --- PASS: TestEnrollmentRejectsInvalidExpiredAndScopedTokens/zero-ttl (0.00s)
+    --- PASS: TestEnrollmentRejectsInvalidExpiredAndScopedTokens/negative-ttl (0.00s)
+    --- PASS: TestEnrollmentRejectsInvalidExpiredAndScopedTokens/overlong-ttl (0.00s)
+=== RUN   TestEnrollmentConcurrentConsumptionAndSensorCompatibility
+--- PASS: TestEnrollmentConcurrentConsumptionAndSensorCompatibility (0.14s)
+=== RUN   TestEnrollmentStorageFailuresAndCancellation
+--- PASS: TestEnrollmentStorageFailuresAndCancellation (0.07s)
+=== RUN   TestEnrollmentRechecksClockBeforePublication
+--- PASS: TestEnrollmentRechecksClockBeforePublication (0.04s)
+=== RUN   TestEnrollmentRejectsForgedStoredIdentity
+--- PASS: TestEnrollmentRejectsForgedStoredIdentity (0.08s)
+PASS

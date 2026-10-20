@@ -1,0 +1,1 @@
+Focused enrollment test binary passed; strace -f -e trace=network observed zero network syscalls. Compiler/download activity and other project suites are outside this trace.

@@ -684,14 +684,14 @@
       ],
       "verification": [
         "npm run validate:plan — All task/dependency/resource/reference/evidence metadata validates; no runtime capability inferred.",
-        "go test ./... — C03 creates this engine test command in the same commit; C06 adds CI/integration collection. Pass the actual C08 acceptance and negative cases on the selected engine; shell-only tests cannot certify this task."
+        "go test ./... — Run actual C08 enrollment, C04-C07 compatibility, once-only concurrency and filesystem failure/restart tests on Go 1.27.2."
       ],
       "acceptance": [
         "Replay and zero/overlong TTL fail; tokens are stored hashed."
       ],
       "evidence_path": "docs/evidence/C08.json",
       "rollback": "Revert the isolated source change when no incompatible data was accepted. Otherwise retain the latest valid bytes/export and compatible reader, and use tested forward repair; never overwrite newer accepted state with an old backup.",
-      "scope": "MirageMesh complete open-source local web profile",
+      "scope": "Owner-approved C08/F02: internal Go enrollment with real C05 persistence; no HTTP/UI/CLI, certificate issuance or authenticated ingest.",
       "task_file": "plans/commits/C08.md",
       "read_before": [
         "AGENTS.md",
@@ -710,31 +710,32 @@
           "measurement": "Unmeasured planning target; C28 must verify or reduce it."
         },
         "providers": [
-          "rootless Podman for isolated decoys"
+          "Existing C05 local filesystem adapter; no external enrollment/PKI provider in C08."
         ],
         "toolchain": "Go engine plus locked Node/TypeScript web tools; exact engine/provider pins and source-build steps resolved at C02.",
         "upstream": [
-          "https://docs.podman.io/en/latest/",
-          "https://pkg.go.dev/crypto/tls",
-          "https://nodejs.org/docs/latest-v24.x/api/"
+          "https://pkg.go.dev/crypto/rand#Read",
+          "https://pkg.go.dev/crypto/sha256#Sum256",
+          "https://pkg.go.dev/encoding/base64#Encoding.Strict"
         ],
         "fixture": {
           "path": "tests/fixtures/miragemesh/C08/",
-          "status": "planned; implement positive, negative and expected-output fixtures in this task",
+          "status": "Version 1 repository-authored issue/consume, invalid TTL and recovery outcome fixtures implemented; verification recorded separately.",
           "provenance": "repository-authored synthetic data or explicitly licensed upstream data"
         },
         "licenses": "Apache-2.0 project source; pin and inventory every shipped upstream library/provider/grammar/rule/dataset license. Unknown/restricted required resources block release."
       },
       "negative_cases": [
-        "Missing/expired/replayed identity and an unrelated owner/object scope fail before sensitive side effects.",
-        "A forged header, widened path/provider permission or unavailable identity provider cannot authorize a sensitive action.",
-        "No egress by default"
+        "Missing, malformed, unknown, expired or replayed tokens and a different sensor scope fail before publication.",
+        "Zero/negative/overlong TTL, invalid clocks, missing/closed/corrupt storage, quota and cancellation fail without false success.",
+        "Concurrent consumption and SIGKILL/syscall failures preserve a complete prior or new state; published consumption cannot succeed twice.",
+        "No enrollment egress; no HTTP/header/provider authorization surface enabled or certified by C08."
       ],
       "implementation_steps": [
         "Inspect the actual implementation, source/locks and verified dependencies for C08; preserve accepted existing behavior.",
-        "Define the versioned positive and negative sensor-event fixtures and expected error/result semantics under tests/fixtures/miragemesh/C08/.",
+        "Define versioned synthetic enrollment fixtures, provenance/license and exact positive/negative outcomes under tests/fixtures/miragemesh/C08/.",
         "Implement: Replay and zero/overlong TTL fail; tokens are stored hashed.",
-        "Change the listed exact targets and wire the actual typed outcome into the supported browser/engine workflow. Keep domain facts, validation, storage/provider adapters and UI separate.",
+        "Implement the internal typed service over C05, canonical issue/consume records and atomic once-only commits; preserve C04 event formats and C07 sequence/replay. HTTP/UI and PKI integration remain later work under the owner-approved boundary.",
         "Add regression/integration coverage for every acceptance and negative case; real storage/provider/security boundaries cannot be verified only with mocks.",
         "Run the labeled verification commands; record exact source, fixture license/hash, tool/provider versions, command exits and observed results in docs/evidence/C08.json. Update progress only when the whole task is genuinely verified."
       ],
@@ -747,16 +748,17 @@
         },
         {
           "command": "go test ./...",
-          "available_now": false,
+          "available_now": true,
           "introduced_by": "C03",
-          "expected": "C03 creates this engine test command in the same commit; C06 adds CI/integration collection. Pass the actual C08 acceptance and negative cases on the selected engine; shell-only tests cannot certify this task."
+          "expected": "Run actual C08 enrollment, C04-C07 compatibility, once-only concurrency and filesystem failure/restart tests on Go 1.27.2."
         }
       ],
       "stop_conditions": [
         "Do not modify database schemas, migrations, .env files or Dockerfiles. Use the compatible local port in ADR-0003; if unavoidable, mark that exact task blocked and continue independent authorized work.",
         "Do not invent versions, licenses, test results, provider success, source identities or deployment/release evidence.",
         "Do not substitute a generic JSON preview, successful placeholder endpoint, static example or mocked authority for required product behavior."
-      ]
+      ],
+      "owner_scope_resolution": "Approved implementation plan: explicit caller maxTTL; sensor-scoped issue/consume; same C05 authority; PKI/mTLS stays in C09; no owner/tenant/provider model added."
     },
     {
       "id": "C09",

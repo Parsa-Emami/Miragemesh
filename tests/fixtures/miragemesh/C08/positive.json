@@ -1,0 +1,13 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic enrollment inputs; no real identities or secrets.",
+  "sensor_id": "sensor-01",
+  "now": "2026-10-20T00:00:00Z",
+  "max_ttl_seconds": 60,
+  "limits": {
+    "max_operations": 32,
+    "max_bytes": 262144,
+    "max_manifest_bytes": 65536
+  }
+}

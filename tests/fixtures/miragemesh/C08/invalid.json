@@ -1,0 +1,19 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic enrollment inputs; no real identities or secrets.",
+  "cases": [
+    {
+      "name": "zero-ttl",
+      "ttl_seconds": 0
+    },
+    {
+      "name": "negative-ttl",
+      "ttl_seconds": -1
+    },
+    {
+      "name": "overlong-ttl",
+      "ttl_seconds": 61
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+--- FAIL: TestEnrollmentRechecksClockBeforePublication (0.04s)
+    enrollment_test.go:280: issued token expired while waiting for writer <nil>
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.042s
+FAIL

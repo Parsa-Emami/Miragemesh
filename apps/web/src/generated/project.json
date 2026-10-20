@@ -106,7 +106,7 @@
       "id": "C08",
       "title": "feat(enrollment): consume expiring one time tokens",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Replay and zero/overlong TTL fail; tokens are stored hashed."
       ],

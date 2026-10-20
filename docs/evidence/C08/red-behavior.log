@@ -1,0 +1,11 @@
+--- FAIL: TestEnrollmentIssueConsumeAndRestart (0.02s)
+    enrollment_test.go:63: invalid enrollment input
+--- FAIL: TestEnrollmentRejectsInvalidExpiredAndScopedTokens (0.02s)
+    enrollment_test.go:96: invalid max TTL accepted <nil>
+--- FAIL: TestEnrollmentConcurrentConsumptionAndSensorCompatibility (0.04s)
+    enrollment_test.go:138: invalid enrollment input
+--- FAIL: TestEnrollmentStorageFailuresAndCancellation (0.02s)
+    enrollment_test.go:165: invalid enrollment input
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.102s
+FAIL

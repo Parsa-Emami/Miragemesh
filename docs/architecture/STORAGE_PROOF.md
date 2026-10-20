@@ -163,3 +163,12 @@ Injected ENOSPC is not physical disk exhaustion, and SIGKILL is not power-loss
 certification. No C28 capacity target, authenticated ingestion, full restore,
 remote Actions run or C30 readiness follows from these tests. JavaScript lint is
 not configured; Go vet and format checks are the available Go static checks.
+
+## C08 additive record support
+
+C08 adds canonical typed enrollment issue/consume objects to the same adapter;
+the original C05 event-only proof above remains historical. Manifest shape,
+receipts and filesystem guarantees remain unchanged. `Record.Enrollment`
+distinguishes metadata from `Record.Event`; `CommitOnceChecked` rejects existing
+operation IDs instead of replaying success. See `ENROLLMENT.md` for the approved
+service boundary, mixed-store compatibility and forward-only reader recovery.
