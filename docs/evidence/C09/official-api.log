@@ -1,0 +1,876 @@
+-- tls
+package tls // import "crypto/tls"
+
+Package tls partially implements TLS 1.2, as specified in RFC 5246, and TLS 1.3,
+as specified in RFC 8446.
+
+# FIPS 140-3 mode
+
+When the program is in FIPS 140-3 mode, this package behaves as if only
+SP 800-140C and SP 800-140D approved protocol versions, cipher suites,
+signature algorithms, certificate public key types and sizes, and key exchange
+and derivation algorithms were implemented. Others are silently ignored and not
+negotiated, or rejected. This set may depend on the algorithms supported by
+the FIPS 140-3 Go Cryptographic Module selected with GOFIPS140, and may change
+across Go versions.
+
+[FIPS 140-3 mode]: https://go.dev/doc/security/fips140
+
+const TLS_RSA_WITH_RC4_128_SHA uint16 = 0x0005 ...
+const VersionTLS10 = 0x0301 ...
+const QUICEncryptionLevelInitial = QUICEncryptionLevel(iota) ...
+func CipherSuiteName(id uint16) string
+func Dial(network, addr string, config *Config) (*Conn, error)
+func DialWithDialer(dialer *net.Dialer, network, addr string, config *Config) (*Conn, error)
+func Listen(network, laddr string, config *Config) (net.Listener, error)
+func LoadX509KeyPair(certFile, keyFile string) (Certificate, error)
+func NewListener(inner net.Listener, config *Config) net.Listener
+func NewResumptionState(ticket []byte, state *SessionState) (*ClientSessionState, error)
+func ParseSessionState(data []byte) (*SessionState, error)
+func VersionName(version uint16) string
+func X509KeyPair(certPEMBlock, keyPEMBlock []byte) (Certificate, error)
+type AlertError uint8
+type Certificate struct{ ... }
+type CertificateRequestInfo struct{ ... }
+type CertificateVerificationError struct{ ... }
+type CipherSuite struct{ ... }
+    func CipherSuites() []*CipherSuite
+    func InsecureCipherSuites() []*CipherSuite
+type ClientAuthType int
+    const NoClientCert ClientAuthType = iota ...
+type ClientHelloInfo struct{ ... }
+type ClientSessionCache interface{ ... }
+    func NewLRUClientSessionCache(capacity int) ClientSessionCache
+type ClientSessionState struct{ ... }
+type Config struct{ ... }
+type Conn struct{ ... }
+    func Client(conn net.Conn, config *Config) *Conn
+    func Server(conn net.Conn, config *Config) *Conn
+type ConnectionState struct{ ... }
+type CurveID uint16
+    const CurveP256 CurveID = 23 ...
+type Dialer struct{ ... }
+type ECHRejectionError struct{ ... }
+type EncryptedClientHelloKey struct{ ... }
+type QUICConfig struct{ ... }
+type QUICConn struct{ ... }
+    func QUICClient(config *QUICConfig) *QUICConn
+    func QUICServer(config *QUICConfig) *QUICConn
+type QUICEncryptionLevel int
+type QUICEvent struct{ ... }
+type QUICEventKind int
+    const QUICNoEvent QUICEventKind = iota ...
+type QUICSessionTicketOptions struct{ ... }
+type RecordHeaderError struct{ ... }
+type RenegotiationSupport int
+    const RenegotiateNever RenegotiationSupport = iota ...
+type SessionState struct{ ... }
+type SignatureScheme uint16
+    const PKCS1WithSHA256 SignatureScheme = 0x0401 ...
+
+BUG: The crypto/tls package only implements some countermeasures
+against Lucky13 attacks on CBC-mode encryption, and only on SHA1
+variants. See http://www.isg.rhul.ac.uk/tls/TLStiming.pdf and
+https://www.imperialviolet.org/2013/02/04/luckythirteen.html.
+
+-- tls.Config
+package tls // import "crypto/tls"
+
+type Config struct {
+	// Rand provides the source of entropy for the connection.
+	// If Rand is nil, TLS uses the cryptographic random reader in package
+	// crypto/rand. The Reader must be safe for use by multiple goroutines.
+	//
+	// Deprecated: this should be left nil in production. Not all TLS
+	// configurations are guaranteed to use Rand. Test code can use
+	// [testing/cryptotest.SetGlobalRandom] instead.
+	Rand io.Reader
+
+	// Time returns the current time as the number of seconds since the epoch.
+	// If Time is nil, TLS uses time.Now.
+	Time func() time.Time
+
+	// Certificates contains one or more certificate chains to present to the
+	// other side of the connection. The first certificate compatible with the
+	// peer's requirements is selected automatically.
+	//
+	// Server configurations must set one of Certificates, GetCertificate or
+	// GetConfigForClient. Clients doing client-authentication may set either
+	// Certificates or GetClientCertificate.
+	//
+	// Note: if there are multiple Certificates, and they don't have the
+	// optional field Leaf set, certificate selection will incur a significant
+	// per-handshake performance cost.
+	Certificates []Certificate
+
+	// NameToCertificate maps from a certificate name to an element of
+	// Certificates. Note that a certificate name can be of the form
+	// '*.example.com' and so doesn't have to be a domain name as such.
+	//
+	// Deprecated: NameToCertificate only allows associating a single
+	// certificate with a given name. Leave this field nil to let the library
+	// select the first compatible chain from Certificates.
+	NameToCertificate map[string]*Certificate
+
+	// GetCertificate returns a Certificate based on the given
+	// ClientHelloInfo. It will only be called if the client supplies SNI
+	// information or if Certificates is empty.
+	//
+	// If GetCertificate is nil or returns nil, then the certificate is
+	// retrieved from NameToCertificate. If NameToCertificate is nil, the
+	// best element of Certificates will be used.
+	//
+	// Once a Certificate is returned it should not be modified.
+	GetCertificate func(*ClientHelloInfo) (*Certificate, error)
+
+	// GetClientCertificate, if not nil, is called when a server requests a
+	// certificate from a client. If set, the contents of Certificates will
+	// be ignored.
+	//
+	// If GetClientCertificate returns an error, the handshake will be
+	// aborted and that error will be returned. Otherwise
+	// GetClientCertificate must return a non-nil Certificate. If
+	// Certificate.Certificate is empty then no certificate will be sent to
+	// the server. If this is unacceptable to the server then it may abort
+	// the handshake.
+	//
+	// GetClientCertificate may be called multiple times for the same
+	// connection if renegotiation occurs or if TLS 1.3 is in use.
+	//
+	// Once a Certificate is returned it should not be modified.
+	GetClientCertificate func(*CertificateRequestInfo) (*Certificate, error)
+
+	// GetConfigForClient, if not nil, is called after a ClientHello is
+	// received from a client. It may return a non-nil Config in order to
+	// change the Config that will be used to handle this connection. If
+	// the returned Config is nil, the original Config will be used. The
+	// Config returned by this callback may not be subsequently modified.
+	//
+	// If GetConfigForClient is nil, the Config passed to Server() will be
+	// used for all connections.
+	//
+	// If SessionTicketKey is explicitly set on the returned Config, or if
+	// SetSessionTicketKeys is called on the returned Config, those keys will
+	// be used. Otherwise, the original Config keys will be used (and possibly
+	// rotated if they are automatically managed). WARNING: this allows session
+	// resumption of connections originally established with the parent (or a
+	// sibling) Config, which may bypass the [Config.VerifyPeerCertificate]
+	// value of the returned Config.
+	GetConfigForClient func(*ClientHelloInfo) (*Config, error)
+
+	// VerifyPeerCertificate, if not nil, is called after normal
+	// certificate verification by either a TLS client or server. It
+	// receives the raw ASN.1 certificates provided by the peer and also
+	// any verified chains that normal processing found. If it returns a
+	// non-nil error, the handshake is aborted and that error results.
+	//
+	// If normal verification fails then the handshake will abort before
+	// considering this callback. If normal verification is disabled (on the
+	// client when InsecureSkipVerify is set, or on a server when ClientAuth is
+	// RequestClientCert or RequireAnyClientCert), then this callback will be
+	// considered but the verifiedChains argument will always be nil. When
+	// ClientAuth is NoClientCert, this callback is not called on the server.
+	// rawCerts may be empty on the server if ClientAuth is RequestClientCert or
+	// VerifyClientCertIfGiven.
+	//
+	// This callback is not invoked on resumed connections. WARNING: this
+	// includes connections resumed across Configs returned by [Config.Clone] or
+	// [Config.GetConfigForClient] and their parents. If that is not intended,
+	// use [Config.VerifyConnection] instead, or set [Config.SessionTicketsDisabled].
+	//
+	// verifiedChains and its contents should not be modified.
+	VerifyPeerCertificate func(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error
+
+	// VerifyConnection, if not nil, is called after normal certificate
+	// verification and after VerifyPeerCertificate by either a TLS client
+	// or server. If it returns a non-nil error, the handshake is aborted
+	// and that error results.
+	//
+	// If normal verification fails then the handshake will abort before
+	// considering this callback. This callback will run for all connections,
+	// including resumptions, regardless of InsecureSkipVerify or ClientAuth
+	// settings.
+	VerifyConnection func(ConnectionState) error
+
+	// RootCAs defines the set of root certificate authorities
+	// that clients use when verifying server certificates.
+	// If RootCAs is nil, TLS uses the host's root CA set.
+	RootCAs *x509.CertPool
+
+	// NextProtos is a list of supported application level protocols, in
+	// order of preference. If both peers support ALPN, the selected
+	// protocol will be one from this list, and the connection will fail
+	// if there is no mutually supported protocol. If NextProtos is empty
+	// or the peer doesn't support ALPN, the connection will succeed and
+	// ConnectionState.NegotiatedProtocol will be empty.
+	NextProtos []string
+
+	// ServerName is used to verify the hostname on the returned
+	// certificates unless InsecureSkipVerify is given. It is also included
+	// in the client's handshake to support virtual hosting unless it is
+	// an IP address.
+	ServerName string
+
+	// ClientAuth determines the server's policy for
+	// TLS Client Authentication. The default is NoClientCert.
+	ClientAuth ClientAuthType
+
+	// ClientCAs defines the set of root certificate authorities
+	// that servers use if required to verify a client certificate
+	// by the policy in ClientAuth.
+	ClientCAs *x509.CertPool
+
+	// InsecureSkipVerify controls whether a client verifies the server's
+	// certificate chain and host name. If InsecureSkipVerify is true, crypto/tls
+	// accepts any certificate presented by the server and any host name in that
+	// certificate. In this mode, TLS is susceptible to machine-in-the-middle
+	// attacks unless custom verification is used. This should be used only for
+	// testing or in combination with VerifyConnection or VerifyPeerCertificate.
+	InsecureSkipVerify bool
+
+	// CipherSuites is a list of enabled TLS 1.0–1.2 cipher suites. The order of
+	// the list is ignored. Note that TLS 1.3 ciphersuites are not configurable.
+	//
+	// If CipherSuites is nil, a safe default list is used. The default cipher
+	// suites might change over time.
+	CipherSuites []uint16
+
+	// PreferServerCipherSuites is a legacy field and has no effect.
+	//
+	// It used to control whether the server would follow the client's or the
+	// server's preference. Servers now select the best mutually supported
+	// cipher suite based on logic that takes into account inferred client
+	// hardware, server hardware, and security.
+	//
+	// Deprecated: PreferServerCipherSuites is ignored.
+	PreferServerCipherSuites bool
+
+	// SessionTicketsDisabled may be set to true to disable session ticket and
+	// PSK (resumption) support. Note that on clients, session ticket support is
+	// also disabled if ClientSessionCache is nil.
+	SessionTicketsDisabled bool
+
+	// SessionTicketKey is used by TLS servers to provide session resumption.
+	// See RFC 5077 and the PSK mode of RFC 8446. If zero, it will be filled
+	// with random data before the first server handshake.
+	//
+	// Deprecated: if this field is left at zero, session ticket keys will be
+	// automatically rotated every day and dropped after seven days. For
+	// customizing the rotation schedule or synchronizing servers that are
+	// terminating connections for the same host, use SetSessionTicketKeys.
+	SessionTicketKey [32]byte
+
+	// ClientSessionCache is a cache of ClientSessionState entries for TLS
+	// session resumption. It is only used by clients.
+	ClientSessionCache ClientSessionCache
+
+	// UnwrapSession is called on the server to turn a ticket/identity
+	// previously produced by [WrapSession] into a usable session.
+	//
+	// UnwrapSession will usually either decrypt a session state in the ticket
+	// (for example with [Config.EncryptTicket]), or use the ticket as a handle
+	// to recover a previously stored state. It must use [ParseSessionState] to
+	// deserialize the session state.
+	//
+	// If UnwrapSession returns an error, the connection is terminated. If it
+	// returns (nil, nil), the session is ignored. crypto/tls may still choose
+	// not to resume the returned session.
+	UnwrapSession func(identity []byte, cs ConnectionState) (*SessionState, error)
+
+	// WrapSession is called on the server to produce a session ticket/identity.
+	//
+	// WrapSession must serialize the session state with [SessionState.Bytes].
+	// It may then encrypt the serialized state (for example with
+	// [Config.DecryptTicket]) and use it as the ticket, or store the state and
+	// return a handle for it.
+	//
+	// If WrapSession returns an error, the connection is terminated.
+	//
+	// Warning: the return value will be exposed on the wire and to clients in
+	// plaintext. The application is in charge of encrypting and authenticating
+	// it (and rotating keys) or returning high-entropy identifiers. Failing to
+	// do so correctly can compromise current, previous, and future connections
+	// depending on the protocol version.
+	WrapSession func(ConnectionState, *SessionState) ([]byte, error)
+
+	// MinVersion contains the minimum TLS version that is acceptable.
+	//
+	// By default, TLS 1.2 is currently used as the minimum. TLS 1.0 is the
+	// minimum supported by this package.
+	MinVersion uint16
+
+	// MaxVersion contains the maximum TLS version that is acceptable.
+	//
+	// By default, the maximum version supported by this package is used,
+	// which is currently TLS 1.3.
+	MaxVersion uint16
+
+	// CurvePreferences contains a set of supported key exchange mechanisms.
+	// The name refers to elliptic curves for legacy reasons, see [CurveID].
+	// The order of the list is ignored, and key exchange mechanisms are chosen
+	// from this list using an internal preference order. If empty, the default
+	// will be used.
+	//
+	// From Go 1.24, the default includes the [X25519MLKEM768] hybrid
+	// post-quantum key exchange. To disable it, set CurvePreferences explicitly
+	// or use the GODEBUG=tlsmlkem=0 environment variable.
+	//
+	// From Go 1.26, the default includes the [SecP256r1MLKEM768] and
+	// [SecP384r1MLKEM1024] hybrid post-quantum key exchanges, too. To disable
+	// them, set CurvePreferences explicitly or use either the
+	// GODEBUG=tlsmlkem=0 or the GODEBUG=tlssecpmlkem=0 environment variable.
+	CurvePreferences []CurveID
+
+	// DynamicRecordSizingDisabled disables adaptive sizing of TLS records.
+	// When true, the largest possible TLS record size is always used. When
+	// false, the size of TLS records may be adjusted in an attempt to
+	// improve latency.
+	DynamicRecordSizingDisabled bool
+
+	// Renegotiation controls what types of renegotiation are supported.
+	// The default, none, is correct for the vast majority of applications.
+	Renegotiation RenegotiationSupport
+
+	// KeyLogWriter optionally specifies a destination for TLS master secrets
+	// in NSS key log format that can be used to allow external programs
+	// such as Wireshark to decrypt TLS connections.
+	// See https://datatracker.ietf.org/doc/draft-ietf-tls-keylogfile/.
+	// Use of KeyLogWriter compromises security and should only be
+	// used for debugging.
+	KeyLogWriter io.Writer
+
+	// EncryptedClientHelloConfigList is a serialized ECHConfigList. If
+	// provided, clients will attempt to connect to servers using Encrypted
+	// Client Hello (ECH) using one of the provided ECHConfigs.
+	//
+	// Servers do not use this field. In order to configure ECH for servers, see
+	// the EncryptedClientHelloKeys field.
+	//
+	// If the list contains no valid ECH configs, the handshake will fail
+	// and return an error.
+	//
+	// If EncryptedClientHelloConfigList is set, MinVersion, if set, must
+	// be VersionTLS13.
+	//
+	// When EncryptedClientHelloConfigList is set, the handshake will only
+	// succeed if ECH is successfully negotiated. If the server rejects ECH,
+	// an ECHRejectionError error will be returned, which may contain a new
+	// ECHConfigList that the server suggests using.
+	//
+	// How this field is parsed may change in future Go versions, if the
+	// encoding described in the final Encrypted Client Hello RFC changes.
+	EncryptedClientHelloConfigList []byte
+
+	// EncryptedClientHelloRejectionVerify, if not nil, is called when ECH is
+	// rejected by the remote server, in order to verify the ECH provider
+	// certificate in the outer ClientHello. If it returns a non-nil error, the
+	// handshake is aborted and that error results.
+	//
+	// On the server side this field is not used.
+	//
+	// Unlike VerifyPeerCertificate and VerifyConnection, normal certificate
+	// verification will not be performed before calling
+	// EncryptedClientHelloRejectionVerify.
+	//
+	// If EncryptedClientHelloRejectionVerify is nil and ECH is rejected, the
+	// roots in RootCAs will be used to verify the ECH providers public
+	// certificate. VerifyPeerCertificate and VerifyConnection are not called
+	// when ECH is rejected, even if set, and InsecureSkipVerify is ignored.
+	EncryptedClientHelloRejectionVerify func(ConnectionState) error
+
+	// GetEncryptedClientHelloKeys, if not nil, is called when by a server when
+	// a client attempts ECH.
+	//
+	// If GetEncryptedClientHelloKeys is not nil, [EncryptedClientHelloKeys] is
+	// ignored.
+	//
+	// If GetEncryptedClientHelloKeys returns an error, the handshake will be
+	// aborted and the error will be returned. Otherwise,
+	// GetEncryptedClientHelloKeys must return a non-nil slice of
+	// [EncryptedClientHelloKey] that represents the acceptable ECH keys.
+	//
+	// For further details, see [EncryptedClientHelloKeys].
+	GetEncryptedClientHelloKeys func(*ClientHelloInfo) ([]EncryptedClientHelloKey, error)
+
+	// EncryptedClientHelloKeys are the ECH keys to use when a client
+	// attempts ECH.
+	//
+	// If EncryptedClientHelloKeys is set, MinVersion, if set, must be
+	// VersionTLS13.
+	//
+	// If a client attempts ECH, but it is rejected by the server, the server
+	// will send a list of configs to retry based on the set of
+	// EncryptedClientHelloKeys which have the SendAsRetry field set.
+	//
+	// If GetEncryptedClientHelloKeys is non-nil, EncryptedClientHelloKeys is
+	// ignored.
+	//
+	// On the client side, this field is ignored. In order to configure ECH for
+	// clients, see the EncryptedClientHelloConfigList field.
+	EncryptedClientHelloKeys []EncryptedClientHelloKey
+
+	// Has unexported fields.
+}
+    A Config structure is used to configure a TLS client or server. After one
+    has been passed to a TLS function it must not be modified. A Config may be
+    reused; the tls package will also not modify it.
+
+func (c *Config) BuildNameToCertificate()
+func (c *Config) Clone() *Config
+func (c *Config) DecryptTicket(identity []byte, cs ConnectionState) (*SessionState, error)
+func (c *Config) EncryptTicket(cs ConnectionState, ss *SessionState) ([]byte, error)
+func (c *Config) SetSessionTicketKeys(keys [][32]byte)
+-- tls.ConnectionState
+package tls // import "crypto/tls"
+
+type ConnectionState struct {
+	// Version is the TLS version used by the connection (e.g. VersionTLS12).
+	Version uint16
+
+	// HandshakeComplete is true if the handshake has concluded.
+	HandshakeComplete bool
+
+	// DidResume is true if this connection was successfully resumed from a
+	// previous session with a session ticket or similar mechanism.
+	DidResume bool
+
+	// CipherSuite is the cipher suite negotiated for the connection (e.g.
+	// TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_AES_128_GCM_SHA256).
+	CipherSuite uint16
+
+	// CurveID is the key exchange mechanism used for the connection. The name
+	// refers to elliptic curves for legacy reasons, see [CurveID]. If a legacy
+	// RSA key exchange is used, this value is zero.
+	CurveID CurveID
+
+	// NegotiatedProtocol is the application protocol negotiated with ALPN.
+	NegotiatedProtocol string
+
+	// NegotiatedProtocolIsMutual used to indicate a mutual NPN negotiation.
+	//
+	// Deprecated: this value is always true.
+	NegotiatedProtocolIsMutual bool
+
+	// ServerName is the value of the Server Name Indication extension sent by
+	// the client. It's available both on the server and on the client side.
+	ServerName string
+
+	// PeerCertificates are the parsed certificates sent by the peer, in the
+	// order in which they were sent. The first element is the leaf certificate
+	// that the connection is verified against.
+	//
+	// On the client side, it can't be empty. On the server side, it can be
+	// empty if Config.ClientAuth is not RequireAnyClientCert or
+	// RequireAndVerifyClientCert.
+	//
+	// PeerCertificates and its contents should not be modified.
+	PeerCertificates []*x509.Certificate
+
+	// VerifiedChains is a list of one or more chains where the first element is
+	// PeerCertificates[0] and the last element is from Config.RootCAs (on the
+	// client side) or Config.ClientCAs (on the server side).
+	//
+	// On the client side, it's set if Config.InsecureSkipVerify is false. On
+	// the server side, it's set if Config.ClientAuth is VerifyClientCertIfGiven
+	// (and the peer provided a certificate) or RequireAndVerifyClientCert.
+	//
+	// VerifiedChains and its contents should not be modified.
+	VerifiedChains [][]*x509.Certificate
+
+	// SignedCertificateTimestamps is a list of SCTs provided by the peer
+	// through the TLS handshake for the leaf certificate, if any.
+	SignedCertificateTimestamps [][]byte
+
+	// OCSPResponse is a stapled Online Certificate Status Protocol (OCSP)
+	// response provided by the peer for the leaf certificate, if any.
+	OCSPResponse []byte
+
+	// TLSUnique contains the "tls-unique" channel binding value (see RFC 5929,
+	// Section 3). This value will be nil for TLS 1.3 connections and for
+	// resumed connections that don't support Extended Master Secret (RFC 7627).
+	TLSUnique []byte
+
+	// ECHAccepted indicates if Encrypted Client Hello was offered by the client
+	// and accepted by the server. Currently, ECH is supported only on the
+	// client side.
+	ECHAccepted bool
+
+	// HelloRetryRequest indicates whether we sent a HelloRetryRequest if we
+	// are a server, or if we received a HelloRetryRequest if we are a client.
+	HelloRetryRequest bool
+
+	// LocalCertificate is the certificate chain presented to the peer, if any,
+	// during the handshake. This field is only populated for connections which
+	// are not resumed (DidResume is false).
+	LocalCertificate [][]byte
+
+	// Has unexported fields.
+}
+    ConnectionState records basic TLS details about the connection.
+
+func (cs *ConnectionState) ExportKeyingMaterial(label string, context []byte, length int) ([]byte, error)
+-- tls.X509KeyPair
+package tls // import "crypto/tls"
+
+func X509KeyPair(certPEMBlock, keyPEMBlock []byte) (Certificate, error)
+    X509KeyPair parses a public/private key pair from a pair of PEM encoded
+    data. On successful return, Certificate.Leaf will be populated.
+
+-- tls.Conn.Handshake
+package tls // import "crypto/tls"
+
+func (c *Conn) Handshake() error
+    Handshake runs the client or server handshake protocol if it has not yet
+    been run.
+
+    Most uses of this package need not call Handshake explicitly: the first
+    Conn.Read or Conn.Write will call it automatically.
+
+    For control over canceling or setting a timeout on a handshake, use
+    Conn.HandshakeContext or the Dialer's DialContext method instead.
+
+    In order to avoid denial of service attacks, the maximum RSA key size
+    allowed in certificates sent by either the TLS server or client is limited
+    to 8192 bits. This limit can be overridden by setting tlsmaxrsasize in the
+    GODEBUG environment variable (e.g. GODEBUG=tlsmaxrsasize=4096).
+
+-- tls.Conn.ConnectionState
+package tls // import "crypto/tls"
+
+func (c *Conn) ConnectionState() ConnectionState
+    ConnectionState returns basic TLS details about the connection.
+
+    The returned ConnectionState is only meaningful after the handshake has
+    completed, as reported by ConnectionState.HandshakeComplete; before then
+    its fields are not populated. The handshake is run automatically by the
+    first Conn.Read or Conn.Write, or it can be triggered explicitly with
+    Conn.Handshake.
+
+-- tls.ClientAuthType
+package tls // import "crypto/tls"
+
+type ClientAuthType int
+    ClientAuthType declares the policy the server will follow for TLS Client
+    Authentication.
+
+const NoClientCert ClientAuthType = iota ...
+func (i ClientAuthType) String() string
+package x509 // import "crypto/x509"
+
+func (c *Certificate) CheckSignatureFrom(parent *Certificate) error
+    CheckSignatureFrom verifies that the signature on c is a valid signature
+    from parent.
+
+    This is a low-level API that performs very limited checks, and not a full
+    path verifier. Most users should use Certificate.Verify instead.
+
+-- x509.Certificate.Verify
+package x509 // import "crypto/x509"
+
+func (c *Certificate) Verify(opts VerifyOptions) ([][]*Certificate, error)
+    Verify attempts to verify c by building one or more chains from c to a
+    certificate in opts.Roots, using certificates in opts.Intermediates if
+    needed. If successful, it returns one or more chains where the first element
+    of the chain is c and the last element is from opts.Roots.
+
+    If opts.Roots is nil, the platform verifier might be used, and verification
+    details might differ from what is described below. If system roots are
+    unavailable the returned error will be of type SystemRootsError.
+
+    Name constraints in the intermediates will be applied to all names claimed
+    in the chain, not just opts.DNSName. Thus it is invalid for a leaf to claim
+    example.com if an intermediate doesn't permit it, even if example.com is
+    not the name being validated. Note that DirectoryName constraints are not
+    supported.
+
+    Name constraint validation follows the rules from RFC 5280, with the
+    addition that DNS name constraints may use the leading period format defined
+    for emails and URIs. When a constraint has a leading period it indicates
+    that at least one additional label must be prepended to the constrained name
+    to be considered valid.
+
+    Extended Key Usage values are enforced nested down a chain, so an
+    intermediate or root that enumerates EKUs prevents a leaf from asserting an
+    EKU not in that list. (While this is not specified, it is common practice in
+    order to limit the types of certificates a CA can issue.)
+
+    Certificates that use SHA1WithRSA and ECDSAWithSHA1 signatures are not
+    supported, and will not be used to build chains.
+
+    Certificates other than c in the returned chains should not be modified.
+
+    WARNING: this function doesn't do any revocation checking.
+
+-- x509.VerifyOptions
+package x509 // import "crypto/x509"
+
+type VerifyOptions struct {
+	// DNSName, if set, is checked against the leaf certificate with
+	// Certificate.VerifyHostname or the platform verifier.
+	DNSName string
+
+	// Intermediates is an optional pool of certificates that are not trust
+	// anchors, but can be used to form a chain from the leaf certificate to a
+	// root certificate.
+	Intermediates *CertPool
+	// Roots is the set of trusted root certificates the leaf certificate needs
+	// to chain up to. If nil, the system roots or the platform verifier are used.
+	Roots *CertPool
+
+	// CurrentTime is used to check the validity of all certificates in the
+	// chain. If zero, the current time is used.
+	CurrentTime time.Time
+
+	// KeyUsages specifies which Extended Key Usage values are acceptable. A
+	// chain is accepted if it allows any of the listed values. An empty list
+	// means ExtKeyUsageServerAuth. To accept any key usage, include ExtKeyUsageAny.
+	KeyUsages []ExtKeyUsage
+
+	// MaxConstraintComparisions is the maximum number of comparisons to
+	// perform when checking a given certificate's name constraints. If
+	// zero, a sensible default is used. This limit prevents pathological
+	// certificates from consuming excessive amounts of CPU time when
+	// validating. It does not apply to the platform verifier.
+	MaxConstraintComparisions int
+
+	// CertificatePolicies specifies which certificate policy OIDs are
+	// acceptable during policy validation. An empty CertificatePolices
+	// field implies any valid policy is acceptable.
+	CertificatePolicies []OID
+
+	// Has unexported fields.
+}
+    VerifyOptions contains parameters for Certificate.Verify.
+
+-- x509.ParseRevocationList
+package x509 // import "crypto/x509"
+
+func ParseRevocationList(der []byte) (*RevocationList, error)
+    ParseRevocationList parses a X509 v2 Certificate Revocation List from the
+    given ASN.1 DER data.
+
+-- x509.RevocationList
+package x509 // import "crypto/x509"
+
+type RevocationList struct {
+	// Raw contains the complete ASN.1 DER content of the CRL (tbsCertList,
+	// signatureAlgorithm, and signatureValue.)
+	Raw []byte
+	// RawTBSRevocationList contains just the tbsCertList portion of the ASN.1
+	// DER.
+	RawTBSRevocationList []byte
+	// RawIssuer contains the DER encoded Issuer.
+	RawIssuer []byte
+	// RawSignatureAlgorithm contains the DER encoded signature algorithm as a
+	// PKIX AlgorithmIdentifier.
+	RawSignatureAlgorithm []byte
+
+	// Issuer contains the DN of the issuing certificate.
+	Issuer pkix.Name
+	// AuthorityKeyId is used to identify the public key associated with the
+	// issuing certificate. It is populated from the authorityKeyIdentifier
+	// extension when parsing a CRL. It is ignored when creating a CRL; the
+	// extension is populated from the issuing certificate itself.
+	AuthorityKeyId []byte
+
+	Signature []byte
+	// SignatureAlgorithm is used to determine the signature algorithm to be
+	// used when signing the CRL. If 0 the default algorithm for the signing
+	// key will be used.
+	SignatureAlgorithm SignatureAlgorithm
+
+	// RevokedCertificateEntries represents the revokedCertificates sequence in
+	// the CRL. It is used when creating a CRL and also populated when parsing a
+	// CRL. When creating a CRL, it may be empty or nil, in which case the
+	// revokedCertificates ASN.1 sequence will be omitted from the CRL entirely.
+	RevokedCertificateEntries []RevocationListEntry
+
+	// RevokedCertificates is used to populate the revokedCertificates
+	// sequence in the CRL if RevokedCertificateEntries is empty. It may be empty
+	// or nil, in which case an empty CRL will be created.
+	//
+	// Deprecated: Use RevokedCertificateEntries instead.
+	RevokedCertificates []pkix.RevokedCertificate
+
+	// Number is used to populate the X.509 v2 cRLNumber extension in the CRL,
+	// which should be a monotonically increasing sequence number for a given
+	// CRL scope and CRL issuer. It is also populated from the cRLNumber
+	// extension when parsing a CRL.
+	Number *big.Int
+
+	// ThisUpdate is used to populate the thisUpdate field in the CRL, which
+	// indicates the issuance date of the CRL.
+	ThisUpdate time.Time
+	// NextUpdate is used to populate the nextUpdate field in the CRL, which
+	// indicates the date by which the next CRL will be issued. NextUpdate
+	// must be greater than ThisUpdate.
+	NextUpdate time.Time
+
+	// Extensions contains raw X.509 extensions. When creating a CRL,
+	// the Extensions field is ignored, see ExtraExtensions.
+	Extensions []pkix.Extension
+
+	// ExtraExtensions contains any additional extensions to add directly to
+	// the CRL.
+	ExtraExtensions []pkix.Extension
+}
+    RevocationList represents a Certificate Revocation List (CRL) as specified
+    by RFC 5280.
+
+func ParseRevocationList(der []byte) (*RevocationList, error)
+func (rl *RevocationList) CheckSignatureFrom(parent *Certificate) error
+-- x509.RevocationList.CheckSignatureFrom
+package x509 // import "crypto/x509"
+
+func (rl *RevocationList) CheckSignatureFrom(parent *Certificate) error
+    CheckSignatureFrom verifies that the signature on rl is a valid signature
+    from issuer.
+
+-- x509.RevocationListEntry
+package x509 // import "crypto/x509"
+
+type RevocationListEntry struct {
+	// Raw contains the raw bytes of the revokedCertificates entry. It is set when
+	// parsing a CRL; it is ignored when generating a CRL.
+	Raw []byte
+
+	// SerialNumber represents the serial number of a revoked certificate. It is
+	// both used when creating a CRL and populated when parsing a CRL. It must not
+	// be nil.
+	SerialNumber *big.Int
+	// RevocationTime represents the time at which the certificate was revoked. It
+	// is both used when creating a CRL and populated when parsing a CRL. It must
+	// not be the zero time.
+	RevocationTime time.Time
+	// ReasonCode represents the reason for revocation, using the integer enum
+	// values specified in RFC 5280 Section 5.3.1. When creating a CRL, the zero
+	// value will result in the reasonCode extension being omitted. When parsing a
+	// CRL, the zero value may represent either the reasonCode extension being
+	// absent (which implies the default revocation reason of 0/Unspecified), or
+	// it may represent the reasonCode extension being present and explicitly
+	// containing a value of 0/Unspecified (which should not happen according to
+	// the DER encoding rules, but can and does happen anyway).
+	ReasonCode int
+
+	// Extensions contains raw X.509 extensions. When parsing CRL entries,
+	// this can be used to extract non-critical extensions that are not
+	// parsed by this package. When marshaling CRL entries, the Extensions
+	// field is ignored, see ExtraExtensions.
+	Extensions []pkix.Extension
+	// ExtraExtensions contains extensions to be copied, raw, into any
+	// marshaled CRL entries. Values override any extensions that would
+	// otherwise be produced based on the other fields. The ExtraExtensions
+	// field is not populated when parsing CRL entries, see Extensions.
+	ExtraExtensions []pkix.Extension
+}
+    RevocationListEntry represents an entry in the revokedCertificates sequence
+    of a CRL.
+
+const (
+	// NoClientCert indicates that no client certificate should be requested
+	// during the handshake, and if any certificates are sent they will not
+	// be verified.
+	NoClientCert ClientAuthType = iota
+	// RequestClientCert indicates that a client certificate should be requested
+	// during the handshake, but does not require that the client send any
+	// certificates.
+	RequestClientCert
+	// RequireAnyClientCert indicates that a client certificate should be requested
+	// during the handshake, and that at least one certificate is required to be
+	// sent by the client, but that certificate is not required to be valid.
+	RequireAnyClientCert
+	// VerifyClientCertIfGiven indicates that a client certificate should be requested
+	// during the handshake, but does not require that the client sends a
+	// certificate. If the client does send a certificate it is required to be
+	// valid.
+	VerifyClientCertIfGiven
+	// RequireAndVerifyClientCert indicates that a client certificate should be requested
+	// during the handshake, and that at least one valid certificate is required
+	// to be sent by the client.
+	RequireAndVerifyClientCert
+)
+package x509 // import "crypto/x509"
+
+const (
+	ExtKeyUsageAny                            ExtKeyUsage = iota // anyExtendedKeyUsage
+	ExtKeyUsageServerAuth                                        // serverAuth
+	ExtKeyUsageClientAuth                                        // clientAuth
+	ExtKeyUsageCodeSigning                                       // codeSigning
+	ExtKeyUsageEmailProtection                                   // emailProtection
+	ExtKeyUsageIPSECEndSystem                                    // ipsecEndSystem
+	ExtKeyUsageIPSECTunnel                                       // ipsecTunnel
+	ExtKeyUsageIPSECUser                                         // ipsecUser
+	ExtKeyUsageTimeStamping                                      // timeStamping
+	ExtKeyUsageOCSPSigning                                       // OCSPSigning
+	ExtKeyUsageMicrosoftServerGatedCrypto                        // msSGC
+	ExtKeyUsageNetscapeServerGatedCrypto                         // nsSGC
+	ExtKeyUsageMicrosoftCommercialCodeSigning                    // msCodeCom
+	ExtKeyUsageMicrosoftKernelCodeSigning                        // msKernelCode
+)
+-- tls.ClientAuthType constant block (RequireAndVerifyClientCert member) and x509.ExtKeyUsage constants
+package tls // import "crypto/tls"
+
+type ClientAuthType int
+    ClientAuthType declares the policy the server will follow for TLS Client
+    Authentication.
+
+const NoClientCert ClientAuthType = iota ...
+func (i ClientAuthType) String() string
+package x509 // import "crypto/x509"
+
+type ExtKeyUsage int
+    ExtKeyUsage represents an extended set of actions that are valid for a given
+    key. Each of the ExtKeyUsage* constants define a unique action.
+
+const ExtKeyUsageAny ExtKeyUsage = iota ...
+func (eku ExtKeyUsage) OID() OID
+func (i ExtKeyUsage) String() string
+
+-- tls.RequireAndVerifyClientCert const block (captured from an unqualified working directory)
+
+-- tls.RequireAndVerifyClientCert const block (captured from an unqualified working directory)
+package tls // import "crypto/tls"
+
+const (
+	// NoClientCert indicates that no client certificate should be requested
+	// during the handshake, and if any certificates are sent they will not
+	// be verified.
+	NoClientCert ClientAuthType = iota
+	// RequestClientCert indicates that a client certificate should be requested
+	// during the handshake, but does not require that the client send any
+	// certificates.
+	RequestClientCert
+	// RequireAnyClientCert indicates that a client certificate should be requested
+	// during the handshake, and that at least one certificate is required to be
+	// sent by the client, but that certificate is not required to be valid.
+	RequireAnyClientCert
+	// VerifyClientCertIfGiven indicates that a client certificate should be requested
+	// during the handshake, but does not require that the client sends a
+	// certificate. If the client does send a certificate it is required to be
+	// valid.
+	VerifyClientCertIfGiven
+	// RequireAndVerifyClientCert indicates that a client certificate should be requested
+	// during the handshake, and that at least one valid certificate is required
+	// to be sent by the client.
+	RequireAndVerifyClientCert
+)
+
+-- x509.ExtKeyUsage const block (captured from an unqualified working directory)
+package x509 // import "crypto/x509"
+
+const (
+	ExtKeyUsageAny                            ExtKeyUsage = iota // anyExtendedKeyUsage
+	ExtKeyUsageServerAuth                                        // serverAuth
+	ExtKeyUsageClientAuth                                        // clientAuth
+	ExtKeyUsageCodeSigning                                       // codeSigning
+	ExtKeyUsageEmailProtection                                   // emailProtection
+	ExtKeyUsageIPSECEndSystem                                    // ipsecEndSystem
+	ExtKeyUsageIPSECTunnel                                       // ipsecTunnel
+	ExtKeyUsageIPSECUser                                         // ipsecUser
+	ExtKeyUsageTimeStamping                                      // timeStamping
+	ExtKeyUsageOCSPSigning                                       // OCSPSigning
+	ExtKeyUsageMicrosoftServerGatedCrypto                        // msSGC
+	ExtKeyUsageNetscapeServerGatedCrypto                         // nsSGC
+	ExtKeyUsageMicrosoftCommercialCodeSigning                    // msCodeCom
+	ExtKeyUsageMicrosoftKernelCodeSigning                        // msKernelCode
+)

@@ -104,3 +104,26 @@ and its regressions require all of them alongside the C03-C07 anchors.
 Fixtures are repository-authored Apache-2.0 data under the C08 fixture directory.
 These tests certify the internal service and real local storage boundary only;
 HTTP enrollment and PKI/mTLS remain outside the approved C08 scope.
+
+## C09 required anchors
+
+C09 adds five `tests` anchors behind one real loopback mTLS boundary:
+`TestMTLSTrustedCollectorAcceptsEvents` proves a trusted collector whose
+fingerprint is operator-mapped to a sensor ingests the unchanged C07 event
+bytes through the real sensor/store pipeline and produces a durable receipt;
+`TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity` proves missing,
+unanchored, expired, server-only-EKU and revoked client certificates cannot
+ingest events and leave the manifest unchanged;
+`TestMTLSTypedVerdictsUseRealHandshakeTranscripts` re-evaluates captured real
+ ConnectionState values from completed handshakes through typed guard
+verdicts including an authority update that revokes a previously trusted
+serial and a scope mismatch that must fail before any storage side effect;
+`TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects` proves a
+replayed collector identity cannot ingest after its revocation is configured;
+`TestMTLSRejectsInvalidLocalIdentityConfigurations` drives 15 fixture rows of
+malformed local identity configurations through `pki.New`. The discovery
+guard and its regressions require all of them alongside the earlier anchors.
+Fixtures are repository-authored Apache-2.0 synthetic identity material under
+the C09 fixture directory; revocation is a locally delivered signed CRL with
+fail-closed staleness handling, and no OCSP or other network service is
+consulted.

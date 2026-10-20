@@ -1,0 +1,11 @@
+=== RUN   TestMTLSTrustedCollectorAcceptsEvents
+--- PASS: TestMTLSTrustedCollectorAcceptsEvents (0.06s)
+=== RUN   TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity
+--- PASS: TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity (0.05s)
+=== RUN   TestMTLSTypedVerdictsUseRealHandshakeTranscripts
+--- PASS: TestMTLSTypedVerdictsUseRealHandshakeTranscripts (0.05s)
+=== RUN   TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects
+--- PASS: TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects (0.03s)
+=== RUN   TestMTLSRejectsInvalidLocalIdentityConfigurations
+--- PASS: TestMTLSRejectsInvalidLocalIdentityConfigurations (0.00s)
+PASS

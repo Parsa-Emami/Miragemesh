@@ -1,0 +1,12 @@
+=== RUN   TestMTLSTrustedCollectorAcceptsEvents
+--- PASS: TestMTLSTrustedCollectorAcceptsEvents (0.05s)
+=== RUN   TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity
+--- PASS: TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity (0.05s)
+=== RUN   TestMTLSTypedVerdictsUseRealHandshakeTranscripts
+--- PASS: TestMTLSTypedVerdictsUseRealHandshakeTranscripts (0.04s)
+=== RUN   TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects
+--- PASS: TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects (0.02s)
+=== RUN   TestMTLSRejectsInvalidLocalIdentityConfigurations
+--- PASS: TestMTLSRejectsInvalidLocalIdentityConfigurations (0.00s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/tests	0.178s

@@ -764,7 +764,7 @@
       "id": "C09",
       "stage": "domain",
       "title": "feat(pki): authenticate collector traffic with mtls",
-      "status": "planned",
+      "status": "verified",
       "depends_on": [
         "C08"
       ],
@@ -813,7 +813,7 @@
         ],
         "fixture": {
           "path": "tests/fixtures/miragemesh/C09/",
-          "status": "planned; implement positive, negative and expected-output fixtures in this task",
+          "status": "Version 1 repository-authored positive, expected verdicts and invalid identity configuration fixtures implemented; verification recorded separately.",
           "provenance": "repository-authored synthetic data or explicitly licensed upstream data"
         },
         "licenses": "Apache-2.0 project source; pin and inventory every shipped upstream library/provider/grammar/rule/dataset license. Unknown/restricted required resources block release."

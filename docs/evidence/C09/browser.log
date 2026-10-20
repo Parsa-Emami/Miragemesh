@@ -1,0 +1,12 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 test:browser
+> playwright test
+
+
+Running 3 tests using 1 worker
+
+  ✓  1 tests/browser/workspace.spec.ts:2:1 › workspace, local preview, navigation and roadmap filters work (288ms)
+  ✓  2 tests/browser/workspace.spec.ts:25:1 › runtime failure remains explicit and the workspace is keyboard accessible at 360px (124ms)
+  ✓  3 tests/browser/workspace.spec.ts:37:1 › configuration failure blocks workspace startup (92ms)
+
+  3 passed (1.4s)

@@ -1,0 +1,48 @@
+{
+  "probes": [
+    {
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "exit_code": 0,
+      "output": "v24.19.0"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "--version"
+      ],
+      "exit_code": 0,
+      "output": "11.9.0"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "version"
+      ],
+      "exit_code": 0,
+      "output": "go version go1.27.2 linux/amd64"
+    },
+    {
+      "argv": [
+        "uname",
+        "-srm"
+      ],
+      "exit_code": 0,
+      "output": "Linux 7.0.0-38-generic x86_64"
+    },
+    {
+      "argv": [
+        "findmnt",
+        "-T",
+        ".",
+        "-no",
+        "FSTYPE,TARGET"
+      ],
+      "exit_code": 0,
+      "output": "ext4   /"
+    }
+  ]
+}

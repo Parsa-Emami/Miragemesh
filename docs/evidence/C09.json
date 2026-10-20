@@ -1,0 +1,402 @@
+{
+  "commit_id": "C09",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "date": "2026-10-20",
+  "base_commit": "a746af65eb4b1796c3e71e19d85d93feb199fc79",
+  "source_identity": "sha256:eaac5e7e8af168f7b847bb4fe903e1977bcacb6d6bf513ac83873cc5357711b7",
+  "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes); evidence, progress and session handoff excluded",
+  "source_manifest": "docs/evidence/C09/source-files.json",
+  "source_file_count": 366,
+  "scope": "F03 mTLS collector identity guard: locally configured anchors, a locally delivered signed CRL and operator fingerprint-to-sensor scope mappings over TLS 1.3; no authenticated ingest endpoint, issuance, OCSP or UI.",
+  "owner_scope_resolution": "Implemented the explicitly approved plan: internal Go guard only, TLS 1.3 with mandatory client verification, operator fingerprint-to-sensor scope mapping keyed by SHA-256 certificate fingerprints, one locally delivered signed CRL failing closed when stale, typed verdicts, no HTTP/UI/CLI surface, no certificate issuance, no OCSP/network revocation service, no owner/tenant model; unchanged C04 event formats, C07 ingest semantics, C08 enrollment and C05 storage authority.",
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "go": "1.27.2",
+    "os": "Linux x86_64",
+    "filesystem": "ext4 mounted at /",
+    "providers": "Real C05 local filesystem plus real loopback TLS listeners only; no external identity provider, CA, OCSP responder or other network service",
+    "hardware_target": "2 vCPU / 2048 MiB RAM / 10240 MiB free disk is the C28 target; unmeasured here",
+    "details": "docs/evidence/C09/environment.json"
+  },
+  "commands": [
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/vet.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/engine-tests.jsonl"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "docs/evidence/C09/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/discovery.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "-count=1",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/standard-tests.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/gofmt",
+        "-l",
+        "cmd",
+        "internal",
+        "tests"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/gofmt.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "ci",
+        "--ignore-scripts",
+        "--no-fund"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/install.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/check.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "test:browser"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/browser.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "package:web"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/package.log"
+    },
+    {
+      "argv": [
+        "sha256sum",
+        "--check",
+        "SHA256SUMS.txt"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/package-checksums.log",
+      "cwd": "dist/release"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/repository.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/plan.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/plan.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/python-tests.log"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-resources.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/resources.log"
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-e",
+        "trace=network",
+        "-o",
+        "../docs/evidence/C09/network.trace",
+        "/tmp/opencode/mtls.test",
+        "-test.run",
+        "^TestMTLS",
+        "-test.v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/network-tests.log",
+      "cwd": "tests"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/roadmap.mjs",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/plan-metadata.log"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/roadmap.mjs",
+        "--",
+        "next"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/next-task.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--no-color"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/diff-check.log",
+      "scope": "temporary candidate index; user staging area unchanged"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "./tests",
+        "-run",
+        "TestMTLS",
+        "-count=1",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/green.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "-race",
+        "-count=1",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/all-race.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/clone.log",
+      "snapshot_phase": "final source, tests, fixtures, guards, progress, project-state and generated web status; evidence-journal entries (clean_snapshot fields, REPORT.md, snapshot.json, diff-check and clone logs) appended afterwards"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--no-color"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C09/diff-check-final.log",
+      "scope": "real delivery index immediately before the delivery commit"
+    }
+  ],
+  "results": {
+    "go_test_run_events": 145,
+    "go_test_pass_events": 145,
+    "required_engine_anchors": 21,
+    "engine_suites": 4,
+    "npm_tests": 40,
+    "browser_tests": 3,
+    "python_source_integrity_tests": 6,
+    "network_syscalls": 10,
+    "network_syscall_destinations": "10 connect() syscalls, all AF_INET 127.0.0.1 loopback listeners; no other socket family or external destination",
+    "invalid_configuration_rows": 15,
+    "typecheck": "Passed within npm run check",
+    "build": "Web and actual engine passed within npm run check",
+    "lint": "No standalone JavaScript lint configured; Go format and vet passed",
+    "regressions": "C04 formats and event fixtures; C05 receipts/recovery; C07 sensor sequence/replay; C08 enrollment/recovery all passed with race",
+    "source_manifest_verified": true,
+    "dependency_and_toolchain_locks_unchanged": true,
+    "session_tickets": "Disabled; every connection re-runs the verdict through VerifyConnection"
+  },
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic identity material (anchors, listener and collector identities, signed CRLs) with fresh random keys per generation and reused unchanged C07 event bytes; no real identities, traffic or secrets",
+    "sha256": {
+      "tests/fixtures/miragemesh/C09/expected-output.json": "5868d5f9e1909b5e9e46bff0a39e137acf1fd40830410a9c275c1ee2b2e4a903",
+      "tests/fixtures/miragemesh/C09/invalid.json": "cd0b0a740f1e19a02d0e9df0c5e9b5aa6e80964c9b0c04c7e96bd7ec1c0e1ac2",
+      "tests/fixtures/miragemesh/C09/positive.json": "6adc286e8b593b5875000e3738a5c9113af1aa21be9891a963507f9d6b3f9593"
+    }
+  },
+  "security_review": {
+    "credentials": "Certificates carry synthetic test-only keys and are committed as clearly marked fixture data; the guard never emits or persists private key material beyond the operator-configured listener pair; scope maps are copied defensively at construction and per verdict",
+    "authority": "Terminal certificate of each verified chain must be a configured anchor, leaf validity is judged at the authoritative clock, the CRL must be signature-verified, structurally valid and fresh before membership, and no serial in the presented chain may appear in the CRL; verdicts precede decode and scope enforcement before any ingest side effect",
+    "storage": "No parallel storage authority; the guard imports only the standard library and internal/contracts and the unchanged C05 adapter remains the single durability boundary",
+    "transport": "TLS 1.3 only, RequireAndVerifyClientCert, local anchors as the only ClientCAs pool, session tickets disabled and VerifyConnection wired to the same authoritative verdict on every connection including resumes; revocation is a locally delivered signed CRL rechecked against the clock on every verdict with fail-closed staleness; focused trace shows loopback-only connect() syscalls",
+    "dependencies": "Standard library only; locked dependencies, Go toolchain pin and protected files unchanged"
+  },
+  "failed_attempts": [
+    {
+      "expected": true,
+      "phase": "RED missing pki package",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C09/red.log"
+    },
+    {
+      "expected": false,
+      "phase": "First guard version required HandshakeComplete in Verify",
+      "exit_code": 1,
+      "note": "TLS 1.3 invokes the server-side VerifyConnection after processing the client certificate, before the handshake completes, so the verdict never saw HandshakeComplete=true. Resolution: the verdict is keyed on the presented certificates and trust state; recorded in the committed implementation comments. No log was captured because this failure occurred during interactive development before evidence collection.",
+      "resolution": "Verify now accepts VerifyConnection handshake states; the tests pass with the committed implementation."
+    },
+    {
+      "expected": false,
+      "phase": "Negative dial assertions expected client-side handshake failure",
+      "exit_code": 1,
+      "note": "In TLS 1.3 the client handshake finishes before the server examines the client certificate, so a later server-side rejection cannot fail the dial. Resolution: the negative tests treat the listener verdict plus unchanged durable state as the authority. No log was captured; the committed tests encode this semantics.",
+      "resolution": "Tests now await listener-side typed failures with zero receipts and an unchanged manifest."
+    },
+    {
+      "expected": false,
+      "phase": "Discovery guard run against a C09-only partial test stream",
+      "exit_code": 1,
+      "note": "The guard intentionally requires a complete go test -json ./... stream; a C09-only run cannot satisfy it. Full-stream verification passed.",
+      "resolution": "Rerun the guard against the complete engine-tests.jsonl stream; no product change required."
+    }
+  ],
+  "observed_limitations": [
+    "Remote GitHub Actions execution unverified; no push/publication.",
+    "Local identity guard only: no HTTP/UI ingest endpoint, certificate issuance, OCSP or owner/tenant model; the real ingest endpoint belongs to C16 and rotation to C24.",
+    "Revocation depends on a trusted local clock and a locally delivered CRL; hostile host-clock rollback and network revocation transports are outside this scope.",
+    "Loopback tracing of the focused mTLS binary does not certify C13 decoy isolation, physical power-loss recovery or the full domain workflow.",
+    "No C30 usability or C40 release claim."
+  ],
+  "rollback_or_recovery_observation": "The guard is process-local state with no durable writes: redeploying a stale or invalid configuration fails closed at construction and cannot poison storage. Already-ingested events and prior receipts stay valid under the unchanged C05 authority; a later revocation is enforced by configuration-only change on the next connection.",
+  "changed_paths": [
+    "docs/ROADMAP_FA.md",
+    "docs/agents/SESSION_HANDOFF.json",
+    "docs/architecture/IDENTITY.md",
+    "docs/engineering/ENGINE_TESTS.md",
+    "docs/evidence/C09.json",
+    "docs/evidence/C09/REPORT.md",
+    "docs/evidence/C09/all-race.log",
+    "docs/evidence/C09/browser.log",
+    "docs/evidence/C09/check.log",
+    "docs/evidence/C09/clone.log",
+    "docs/evidence/C09/diff-check-final.log",
+    "docs/evidence/C09/diff-check.log",
+    "docs/evidence/C09/discovery.log",
+    "docs/evidence/C09/engine-tests.jsonl",
+    "docs/evidence/C09/environment.json",
+    "docs/evidence/C09/gofmt.log",
+    "docs/evidence/C09/green.log",
+    "docs/evidence/C09/install.log",
+    "docs/evidence/C09/network-check.log",
+    "docs/evidence/C09/network-tests.log",
+    "docs/evidence/C09/network.trace",
+    "docs/evidence/C09/next-task.log",
+    "docs/evidence/C09/official-api.log",
+    "docs/evidence/C09/package-checksums.log",
+    "docs/evidence/C09/package.log",
+    "docs/evidence/C09/plan-metadata.log",
+    "docs/evidence/C09/plan.log",
+    "docs/evidence/C09/python-tests.log",
+    "docs/evidence/C09/red.log",
+    "docs/evidence/C09/repository.log",
+    "docs/evidence/C09/resources.log",
+    "docs/evidence/C09/snapshot.json",
+    "docs/evidence/C09/source-files.json",
+    "docs/evidence/C09/standard-tests.log",
+    "docs/evidence/C09/vet.log",
+    "internal/pki/identity.go",
+    "plans/commits/C09.md",
+    "plans/progress.json",
+    "plans/project-state.json",
+    "plans/roadmap.json",
+    "scripts/verify-engine-tests.mjs",
+    "tests/engineering/engine-tests.test.mjs",
+    "tests/fixtures/miragemesh/C09/expected-output.json",
+    "tests/fixtures/miragemesh/C09/invalid.json",
+    "tests/fixtures/miragemesh/C09/positive.json",
+    "tests/mtls_test.go"
+  ],
+  "delivery": {
+    "delivery_commit_created": true,
+    "push_authorized": false,
+    "publication_authorized": false,
+    "local_commit_authorized": true,
+    "commit_subject": "feat(pki): authenticate collector traffic with mtls"
+  },
+  "verification_notes": "Validation ran against the final mTLS source, fixtures, guards and documentation. The diff check and clean-clone runs used isolated temporary candidate snapshots: no branch, remote ref or delivery commit moved during candidate verification. TLS 1.3 invokes the server-side VerifyConnection between client-certificate processing and handshake completion, so typed verdicts are evaluated on captured real ConnectionState values while transport denials are asserted from the listener outcome, receipts and unchanged manifest. Existing C07 event bytes are reused unchanged through the real sensor/store pipeline. clean_snapshot records the separate temporary source-proof object; metadata edits made after candidate verification only publish these evidence fields, matching the recorded C08 precedent.",
+  "clean_snapshot": {
+    "commit": "da8658b7cd8e0dac26e2598d322856cc10856bee",
+    "git_tree": "b05eab4cf4ef2359f865094a7c7394d4001f123f",
+    "verification_source_identity": "sha256:eaac5e7e8af168f7b847bb4fe903e1977bcacb6d6bf513ac83873cc5357711b7",
+    "runtime_clean_clone_passed": true,
+    "source_integrity_passed": true,
+    "user_index_unchanged": true,
+    "head_unchanged": true,
+    "candidate_only_no_branch_or_remote_ref": true,
+    "core_ready": false
+  }
+}

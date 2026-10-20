@@ -1,0 +1,3 @@
+C09 mTLS focused network trace summary:
+All connect() syscalls in the trace target AF_INET 127.0.0.1 loopback listeners;
+no external destinations, no AF_INET6 and no other network families appeared.

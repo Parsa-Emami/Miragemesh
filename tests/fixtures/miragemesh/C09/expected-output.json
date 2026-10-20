@@ -1,0 +1,18 @@
+{
+  "accepted_sequences": [
+    1
+  ],
+  "expected_verdicts": {
+    "collector": "IDENTITY_OK",
+    "config_invalid": "CONFIGURATION_INVALID",
+    "expired": "IDENTITY_EXPIRED",
+    "forged_crl": "REVOCATION_LIST_INVALID",
+    "revoked": "IDENTITY_REVOKED",
+    "scope_mismatch": "IDENTITY_SCOPE",
+    "stale_crl": "REVOCATION_LIST_STALE",
+    "untrusted": "IDENTITY_UNTRUSTED"
+  },
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic expected identity verdicts; event bytes are read unchanged from the C07 positive fixture. Missing identity and server-only EKU are transport failures without a captured transcript."
+}
