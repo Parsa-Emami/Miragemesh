@@ -402,6 +402,19 @@ func (s *Store) Read(ctx context.Context, id string) (Record, error) {
 	return Record{}, ErrNotFound
 }
 func (s *Store) Commit(ctx context.Context, id string, input []byte) (receipt Receipt, err error) {
+	return s.commit(ctx, id, input, nil)
+}
+
+// CommitChecked runs check on stored records in generation order, then the new
+// record, under the writer lock so invariants and publication are atomic.
+func (s *Store) CommitChecked(ctx context.Context, id string, input []byte, check func(Record) error) (receipt Receipt, err error) {
+	if check == nil {
+		return Receipt{}, ErrInvalidInput
+	}
+	return s.commit(ctx, id, input, check)
+}
+
+func (s *Store) commit(ctx context.Context, id string, input []byte, check func(Record) error) (receipt Receipt, err error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if err = s.available(ctx); err != nil {
@@ -410,7 +423,8 @@ func (s *Store) Commit(ctx context.Context, id string, input []byte) (receipt Re
 	if !validID(id) {
 		return Receipt{}, ErrInvalidInput
 	}
-	if _, failure := contracts.DecodeEvent(ctx, input); failure != nil {
+	event, failure := contracts.DecodeEvent(ctx, input)
+	if failure != nil {
 		if ctx.Err() != nil {
 			return Receipt{}, ctx.Err()
 		}
@@ -435,7 +449,24 @@ func (s *Store) Commit(ctx context.Context, id string, input []byte) (receipt Re
 			}
 			return item.Receipt, nil
 		}
+		if check != nil {
+			record, failure := s.load(ctx, item)
+			if failure != nil {
+				if errors.Is(failure, ErrRecovery) {
+					s.poisoned = true
+				}
+				return Receipt{}, failure
+			}
+			if failure = check(record); failure != nil {
+				return Receipt{}, failure
+			}
+		}
 		used += item.Size
+	}
+	if check != nil {
+		if err = check(Record{Input: input, Event: event}); err != nil {
+			return Receipt{}, err
+		}
 	}
 	if len(s.state.Operations) >= s.limits.MaxOperations || int64(len(input)) > s.limits.MaxBytes-used {
 		return Receipt{}, ErrQuota

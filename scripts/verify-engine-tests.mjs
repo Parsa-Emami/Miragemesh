@@ -5,7 +5,7 @@ const required = new Map(Object.entries({
   'cmd/miragemesh': ['TestLifecycle'],
   'internal/contracts': ['TestValidAndIncompatibleFixtures'],
   'internal/storage': ['TestStorageSIGKILLAtPublicationBoundaries', 'TestStorageSyscallFailuresPreserveRecoverableState'],
-  tests: ['TestStorageExactBytesReplayAndReopen'],
+  tests: ['TestStorageExactBytesReplayAndReopen', 'TestSensorSequenceReplayAndRestart', 'TestSensorRejectsInvalidAndConflictingEvents'],
 }).map(([path, tests]) => [module + path, tests]));
 
 try {

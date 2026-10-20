@@ -1,0 +1,80 @@
+[
+  {
+    "name": "plan-metadata",
+    "argv": [
+      "npx",
+      "--yes",
+      "--package=npm@11.9.0",
+      "--call",
+      "npm run validate:plan"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/C07/plan-metadata.log"
+  },
+  {
+    "name": "plan",
+    "argv": [
+      "python3",
+      "scripts/plan.py",
+      "validate"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/C07/plan.log"
+  },
+  {
+    "name": "repository",
+    "argv": [
+      "python3",
+      "scripts/validate_repo.py"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/C07/repository.log"
+  },
+  {
+    "name": "python-tests",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/engineering",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/C07/python-tests.log"
+  },
+  {
+    "name": "resources",
+    "argv": [
+      "node",
+      "scripts/verify-resources.mjs"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/C07/resources.log"
+  },
+  {
+    "name": "next-task",
+    "argv": [
+      "npx",
+      "--yes",
+      "--package=npm@11.9.0",
+      "--call",
+      "npm run plan -- next"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/C07/next-task.log"
+  },
+  {
+    "name": "diff-check",
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/C07/diff-check.log"
+  }
+]

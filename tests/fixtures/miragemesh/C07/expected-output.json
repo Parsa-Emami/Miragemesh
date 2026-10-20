@@ -1,0 +1,12 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Expected outcomes for repository-authored synthetic C07 sensor events.",
+  "accepted_sequences": [
+    1,
+    2,
+    3
+  ],
+  "retry": "same bytes returns the original receipt without a new generation",
+  "restart": "accepted event IDs and sequences remain readable after reopening storage"
+}

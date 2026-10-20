@@ -94,7 +94,7 @@
       "id": "C07",
       "title": "feat(sensor): define identity sequence and event contract",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Event IDs and monotonic sequence survive restart and validate payload limits."
       ],

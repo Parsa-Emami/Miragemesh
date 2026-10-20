@@ -10,7 +10,7 @@ const suites = {
   'cmd/miragemesh': ['TestLifecycle'],
   'internal/contracts': ['TestValidAndIncompatibleFixtures'],
   'internal/storage': ['TestStorageSIGKILLAtPublicationBoundaries', 'TestStorageSyscallFailuresPreserveRecoverableState'],
-  tests: ['TestStorageExactBytesReplayAndReopen'],
+  tests: ['TestStorageExactBytesReplayAndReopen', 'TestSensorSequenceReplayAndRestart', 'TestSensorRejectsInvalidAndConflictingEvents'],
 };
 function complete() {
   return Object.entries(suites).flatMap(([path, names]) => [
@@ -37,6 +37,11 @@ test('rejects empty discovery and package-only success without executed tests', 
 test('rejects a missing required suite or anchor', t => {
   for (const events of [complete().filter(event => event.Package !== module + 'internal/storage'), complete().filter(event => event.Test !== 'TestStorageSIGKILLAtPublicationBoundaries')]) {
     assert.equal(verify(t, events).status, 1);
+  }
+});
+test('requires persistent sensor sequence and invalid-event regression anchors', t => {
+  for (const name of ['TestSensorSequenceReplayAndRestart', 'TestSensorRejectsInvalidAndConflictingEvents']) {
+    assert.equal(verify(t, complete().filter(event => event.Test !== name)).status, 1);
   }
 });
 test('rejects a skipped anchor or a pass with no run', t => {

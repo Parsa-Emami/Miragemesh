@@ -60,10 +60,12 @@
     },
     {
       "id": "C07",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C07.json"
+      ],
+      "source_identity": "sha256:cb84d27f0a80e6848857d286cda735790573b75ca9309ad896cbd5d8095d61ce",
+      "notes": "F01 verified locally using C04 validation and C05 durable storage. Per-sensor sequences begin at 1 and advance contiguously; event IDs are unique per sensor; exact bytes replay the original receipt, and sequence continues after reopen. No authenticated ingest endpoint, enrollment, mTLS, remote Actions, or product readiness certified."
     },
     {
       "id": "C08",

@@ -1,0 +1,327 @@
+{
+  "commit_id": "C07",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "date": "2026-10-20",
+  "base_commit": "19558e818aec76c33bf6f6993c0fd8979823d6b0",
+  "scope": "F01: validate typed sensor events under C04, persist them through the C05 local adapter, require contiguous independent per-sensor sequences and unique per-sensor event IDs, and return exact receipts for byte-identical retries.",
+  "owner_scope_resolution": "Implemented the approved C07 plan only. No HTTP ingest endpoint, UI write path, enrollment, mTLS, database schema, parallel storage format, new dependency, commit or push.",
+  "source_identity": "sha256:cb84d27f0a80e6848857d286cda735790573b75ca9309ad896cbd5d8095d61ce",
+  "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes); evidence, progress and session handoff excluded",
+  "source_manifest": "docs/evidence/C07/source-files.json",
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "go": "1.27.2",
+    "os": "Linux x86_64",
+    "filesystem": "ext4 mounted at /",
+    "providers": "None required for C07; acceptance tests use the existing local filesystem adapter",
+    "hardware_measurement": "C28 target not measured"
+  },
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "formatting=$(\"$(go env GOROOT)/bin/gofmt\" -l cmd internal tests); test -z \"$formatting\""
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/go.log"
+    },
+    {
+      "argv": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/go.log"
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/engine-tests.jsonl"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "docs/evidence/C07/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/discovery.log"
+    },
+    {
+      "argv": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "dist/engine/miragemesh",
+        "./cmd/miragemesh"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/go.log"
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "tests/engineering/engine-tests.test.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/discovery-regressions.log"
+    },
+    {
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/check.log"
+    },
+    {
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run test:browser"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/browser.log"
+    },
+    {
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/clone.log",
+      "clean_snapshot_commit": "2d667aed25d3fb7aaae099a180c1b514ece67905",
+      "clean_snapshot_tree": "1bade81bad742f0561f926115aa6b52812966365"
+    },
+    {
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run package:web"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/package.log"
+    },
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "cd dist/release && sha256sum --check SHA256SUMS.txt"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/package-checksums.log"
+    },
+    {
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run validate:plan"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/plan-metadata.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/plan.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/plan.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/repository.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/python-tests.log"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-resources.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/resources.log"
+    },
+    {
+      "argv": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run plan -- next"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/next-task.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/diff-check.log"
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-count=1",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C07/go.log"
+    }
+  ],
+  "results": {
+    "go_packages_started": 5,
+    "go_test_run_events": 100,
+    "go_test_pass_events": 100,
+    "required_engine_anchors": 7,
+    "C07_test_anchors": [
+      "TestSensorSequenceReplayAndRestart",
+      "TestSensorRejectsInvalidAndConflictingEvents"
+    ],
+    "npm_tests": 38,
+    "browser_tests": 3,
+    "python_source_integrity_tests": 6,
+    "fixture_cases": [
+      "valid per-sensor sequence 1, 2, 3",
+      "independent sensor sequence 1",
+      "exact replay before and after reopen",
+      "zero sequence",
+      "malformed JSON",
+      "oversized payload",
+      "sequence gap",
+      "same-sequence conflicting bytes"
+    ],
+    "typecheck": "Passed within npm run check",
+    "lint": "No standalone lint script exists",
+    "event_identity": "Reusing event_id for a later per-sensor sequence is rejected atomically; the next valid event remains accepted."
+  },
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C07 events; no real sensor data.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C07/positive.json": "5a7796a8285ea7e9bf374da9bcc726e51fbaaef2e07083fd02e587eefaacc528",
+      "tests/fixtures/miragemesh/C07/invalid.json": "abce98eb682add4f130051152773f1232a5f6b6ae0ed852a247488a07d111451",
+      "tests/fixtures/miragemesh/C07/expected-output.json": "1b6f6b829e2b1f50507ee26c91661d479cf9e6cd33c7caba5f7776e8635d51b8"
+    }
+  },
+  "clean_snapshot": {
+    "commit": "2d667aed25d3fb7aaae099a180c1b514ece67905",
+    "git_tree": "1bade81bad742f0561f926115aa6b52812966365",
+    "verification_source_identity": "sha256:a58d44f9aa682f274effebfae001c63c41507947c7799119087093fe1d6ac653",
+    "staged_tree": "1bade81bad742f0561f926115aa6b52812966365",
+    "source_integrity_passed": true,
+    "runtime_clean_clone_passed": true,
+    "candidate_only_no_branch_or_remote_ref": true,
+    "core_ready": false
+  },
+  "security_review": {
+    "validation": "Reuses C04 DecodeEvent and its 8192-byte cap; invalid payloads fail before storage calls.",
+    "storage": "Reuses C05 private single-writer root, bounded objects, exact-byte receipts and atomic manifest. Sequence and event-ID checks run under the writer lock before publication. Operation IDs use a deterministic SHA-256 namespace over sensor ID and sequence, not an authentication claim.",
+    "dependencies": "No new dependency, secret, outbound network request, database schema or migration."
+  },
+  "observed_limitations": [
+    "GitHub Actions remote execution is unverified.",
+    "C07 adds a typed local acceptance function, not an HTTP ingest endpoint or authenticated collector.",
+    "Restart/reopen on local ext4 is verified; physical power-loss durability and C28 hardware capacity are not certified.",
+    "C30 usability, C40 release and product readiness are not certified."
+  ],
+  "rollback_or_recovery_observation": "C05 remains the only durable authority. Close and reopen the existing store, replay exact event bytes to obtain the original receipt, then continue with the next per-sensor sequence; no new recovery format was introduced.",
+  "changed_paths": [
+    "apps/web/src/generated/project.json",
+    "docs/ROADMAP_FA.md",
+    "docs/agents/SESSION_HANDOFF.json",
+    "docs/engineering/ENGINE_TESTS.md",
+    "docs/evidence/C07.json",
+    "docs/evidence/C07/browser.log",
+    "docs/evidence/C07/build.log",
+    "docs/evidence/C07/check.log",
+    "docs/evidence/C07/clone.log",
+    "docs/evidence/C07/diff-check.log",
+    "docs/evidence/C07/discovery-regressions.log",
+    "docs/evidence/C07/discovery.log",
+    "docs/evidence/C07/engine-tests.jsonl",
+    "docs/evidence/C07/environment.log",
+    "docs/evidence/C07/go.log",
+    "docs/evidence/C07/gofmt.log",
+    "docs/evidence/C07/metadata-commands.json",
+    "docs/evidence/C07/metadata.log",
+    "docs/evidence/C07/next-task.log",
+    "docs/evidence/C07/package-checksums.log",
+    "docs/evidence/C07/package-lock.sha256",
+    "docs/evidence/C07/package.log",
+    "docs/evidence/C07/plan-metadata.log",
+    "docs/evidence/C07/plan.log",
+    "docs/evidence/C07/python-tests.log",
+    "docs/evidence/C07/repository.log",
+    "docs/evidence/C07/resources.log",
+    "docs/evidence/C07/source-files.json",
+    "docs/evidence/C07/standard-tests.log",
+    "docs/evidence/C07/vet.log",
+    "internal/sensor/event.go",
+    "internal/storage/adapter.go",
+    "plans/progress.json",
+    "plans/project-state.json",
+    "scripts/verify-engine-tests.mjs",
+    "tests/engineering/engine-tests.test.mjs",
+    "tests/event_test.go",
+    "tests/fixtures/miragemesh/C07/expected-output.json",
+    "tests/fixtures/miragemesh/C07/invalid.json",
+    "tests/fixtures/miragemesh/C07/positive.json",
+    "tests/web/oss-tooling.test.mjs"
+  ],
+  "source_file_count": 353,
+  "delivery": {
+    "local_commit_authorized": true,
+    "commit_subject": "feat(sensor): define identity sequence and event contract",
+    "push_authorized": false,
+    "publication_authorized": false
+  }
+}

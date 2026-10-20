@@ -52,7 +52,7 @@ module. Existing files and fixtures remain unchanged by C06.
 | `cmd/miragemesh` | `main_test.go`: real loopback health, shutdown, unsafe/occupied address rejection | `TestLifecycle` |
 | `internal/contracts` | `event_test.go`: v1/legacy fixtures, malformed inputs, exact numbers, limits, read failure and cancellation | `TestValidAndIncompatibleFixtures` |
 | `internal/storage` | `recovery_test.go`: injected filesystem failures, actual SIGKILL, reopen/replay and orphan handling | `TestStorageSIGKILLAtPublicationBoundaries`, `TestStorageSyscallFailuresPreserveRecoverableState` |
-| `tests` | `storage_test.go`: real adapter, exact bytes, quotas, locking, concurrency, corruption and hostile metadata | `TestStorageExactBytesReplayAndReopen` |
+| `tests` | `storage_test.go`: real adapter, exact bytes, quotas, locking, concurrency, corruption and hostile metadata; `event_test.go`: persistent per-sensor sequence, exact retry and invalid input | `TestStorageExactBytesReplayAndReopen`, `TestSensorSequenceReplayAndRestart`, `TestSensorRejectsInvalidAndConflictingEvents` |
 
 The guard reads Go's JSON events and requires a `run` followed by `pass` for each
 anchor, completed required packages, and no failure or unfinished package. Empty

@@ -1,0 +1,16 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C07 sensor events; no real sensor data.",
+  "limits": {
+    "max_operations": 16,
+    "max_bytes": 131072,
+    "max_manifest_bytes": 65536
+  },
+  "events": [
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-02\",\"sequence\":2,\"observed_at\":\"2026-01-01T00:00:01Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/ready\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-03\",\"sequence\":3,\"observed_at\":\"2026-01-01T00:00:02Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/next\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-02\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}\n"
+  ]
+}

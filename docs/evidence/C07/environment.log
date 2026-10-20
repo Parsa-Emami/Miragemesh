@@ -1,0 +1,17 @@
+## tools-go.log
+go version go1.27.2 linux/amd64
+
+## tools-node.log
+v24.19.0
+
+## tools-npm.log
+11.9.0
+
+## tools-platform.log
+Linux x86_64
+
+## tools-filesystem.log
+ext4   /
+
+## package-lock.sha256
+7239d6eafede3b5d3a7571f2948fcf4e57fb7ce9d39cd0a92f821773b9097be4  package-lock.json
