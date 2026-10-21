@@ -1,0 +1,44 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C14 offline events and desired state. Test keys are ephemeral in-memory values; no real traffic or credentials.",
+  "now": "2026-10-21T00:00:00Z",
+  "sensor_id": "sensor-01",
+  "limits": {
+    "max_payload_bytes": 8192,
+    "max_sensors": 5
+  },
+  "bounds": {
+    "heartbeat_seconds": {
+      "min": 1,
+      "max": 60
+    },
+    "spool_limit_events": {
+      "min": 1,
+      "max": 8
+    },
+    "event_batch_limit": {
+      "min": 1,
+      "max": 8
+    }
+  },
+  "bounds_provenance": "Small test policy, not product defaults or capacity measurements.",
+  "storage_limits": {
+    "max_operations": 64,
+    "max_bytes": 1048576,
+    "max_manifest_bytes": 65536
+  },
+  "payloads": {
+    "initial": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":1,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":2,\"event_batch_limit\":1}}",
+    "lower": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":2,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":1,\"event_batch_limit\":1}}",
+    "raise": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":3,\"event_batch_limit\":1}}",
+    "other": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-02\",\"revision\":1,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":1,\"event_batch_limit\":1}}"
+  },
+  "events": [
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/offline\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-02\",\"sequence\":2,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/offline\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-03\",\"sequence\":3,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/offline\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-04\",\"sequence\":4,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/offline\"}}\n"
+  ],
+  "other_event": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-02\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/offline\"}}\n"
+}

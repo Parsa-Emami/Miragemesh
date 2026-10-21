@@ -51,3 +51,11 @@ reports the typed outcome, so the isolation is part of the supported workflow.
 C13 publishes no decoy surface: the container has no inbound path either, and
 the egress attempt of the scenario stays denied. See
 `docs/architecture/DECOY_ISOLATION.md`.
+
+C14 implements the local retention of step 3 as an internal Go queue:
+`spool.New(store, applier)` and `Enqueue` retain exact C04 event bytes through
+C05 using the C11 applied signed `spool_limit_events`. Full queues return an
+explicit quota error and exact replay keeps the original receipt after restart.
+C15 owns overflow loss accounting; C16 owns collector delivery, durable ACKs and
+capacity reclamation. The queue has no network/CLI/browser surface and does not
+execute the whole scenario. See `docs/architecture/CONFIG_APPLY.md`.

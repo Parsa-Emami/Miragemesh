@@ -1,0 +1,5 @@
+--- FAIL: TestSpoolDurableBoundedReplayAndRestart (0.11s)
+    spool_test.go:105: full spool: {OperationID:sensor/ab7788d22eb7372f79712a3019ddc0b260f902df42b810119150d1b8a6efb116/3 InputDigest:b4feee3dd059f6bbe8ac96f8598ebcc895aedefa9761e28d8acbd34c603efb0f Generation:4} <nil>
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.116s
+FAIL

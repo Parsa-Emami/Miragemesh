@@ -178,7 +178,7 @@
       "id": "C14",
       "title": "feat(spool): persist bounded offline events",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Disconnect and restart retain accepted events up to configured bound."
       ],

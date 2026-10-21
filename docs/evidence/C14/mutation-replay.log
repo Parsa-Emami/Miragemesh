@@ -1,0 +1,5 @@
+--- FAIL: TestSpoolDurableBoundedReplayAndRestart (0.09s)
+    spool_test.go:96: lost-ack replay: {OperationID: InputDigest: Generation:0} sensor sequence out of order
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.096s
+FAIL

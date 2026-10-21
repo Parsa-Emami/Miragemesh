@@ -1,0 +1,5 @@
+# github.com/Parsa-Emami/Miragemesh/tests
+tests/spool_test.go:20:2: no required module provides package github.com/Parsa-Emami/Miragemesh/internal/spool; to add it:
+	go get github.com/Parsa-Emami/Miragemesh/internal/spool
+FAIL	github.com/Parsa-Emami/Miragemesh/tests [setup failed]
+FAIL

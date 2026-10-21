@@ -2,8 +2,9 @@
 
 The internal sensor applier reconciles C10 signed desired state with C05 durable
 records. The committed configuration is the observed configuration in this slice.
-Decoy, spool and batch consumers remain C12-C16 work. This does not claim an
-external provider has applied the settings.
+C14 consumes the persisted `spool_limit_events` setting through the internal
+spool service below. Decoy settings and batch consumers remain separate work.
+This does not claim an external provider has applied the settings.
 
 ```go
 applier, err := sensor.NewApplier(ctx, store, verifier) // same config.Verifier as C10
@@ -90,3 +91,50 @@ perform a rollback or migration of user data.
 The byte encoding follows [Go JSON byte-slice encoding](https://pkg.go.dev/encoding/json#Marshal);
 signature verification follows [Go Ed25519](https://pkg.go.dev/crypto/ed25519#Verify).
 The persistence mechanism reuses C05's [file synchronization](https://pkg.go.dev/os#File.Sync).
+
+## C14 bounded offline spool
+
+```go
+queue, err := spool.New(store, applier) // borrowed C05 store and its C11 applier
+receipt, err := queue.Enqueue(ctx, eventBytes)
+records, err := store.Records(ctx) // existing owned, bounded durable snapshot
+```
+
+`Enqueue` uses the existing C04 decoder, C07 sequence and event identity checks,
+and the same `sensor/<sha256(sensor_id)>/<sequence>` operation ID. It stores the
+exact original event bytes in the unchanged C05 version 1 manifest. A successful
+receipt follows the final directory flush; reopening and replaying the same
+bytes returns the original receipt, including when the spool is full.
+
+The additive `sensor.AcceptBounded` helper reads and authenticates the current
+applied configuration and checks the per-sensor retained-event count inside
+`Store.Update`, under the same writer lock and publication path as C05 commits.
+Configuration changes and competing queue instances therefore share one ordered
+transaction. The store and applier must refer to the same handle: a mismatch
+returns `config.ErrInvalidInput` before a write. Missing dependencies or a nil
+queue return `spool.ErrInvalidInput`; no applied configuration returns
+`spool.ErrUnconfigured`. Event, context and storage errors retain their existing
+typed semantics. Stored config history is verified at its original acceptance
+time, following C11's last-known applied-state semantics.
+
+The signed `spool_limit_events` is the per-sensor bound. Other sensors,
+enrollment records and config history do not consume that event count; C05's
+global operation, byte and manifest quotas still apply. A new event at capacity
+returns `storage.ErrQuota` and no receipt. Lowering the signed bound retains all
+accepted bytes and prevents additional events until the bound permits them.
+No eviction, loss counter or gap marker is implemented here; C15 owns that policy.
+
+All retained events count as pending in C14. Durable collector ACKs and capacity
+reclamation belong to C16, whose exact targets must be reviewed to include the
+required spool/storage changes. C14 adds no ACK API, network transport, CLI,
+browser write surface, new disk record type or dependency. Existing
+`sensor.Accept` callers, including the decoy, keep their C07 behavior; they are
+not routed through this new consumer automatically. C26 and C30 remain the
+combined resilience and complete workflow gates.
+
+Rollback requires no data conversion: accepted events remain readable by the
+existing C05/C07 readers. Preserve those bytes and never restore an older
+manifest to remove them. The C14 tests exercise the real queue during five
+SIGKILL boundaries and nine filesystem faults through C05's existing test-only
+seam. These tests establish local restart visibility and injected-error recovery,
+not physical power-loss durability or measured C28 capacity.

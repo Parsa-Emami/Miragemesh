@@ -1,0 +1,23 @@
+✔ accepts executed engine, contract and real recovery suites with interleaved output (80.788396ms)
+✔ rejects empty discovery and package-only success without executed tests (124.172118ms)
+✔ rejects a missing required suite or anchor (108.096266ms)
+✔ requires persistent sensor sequence and invalid-event regression anchors (109.790297ms)
+✔ rejects a skipped anchor or a pass with no run (104.138299ms)
+✔ rejects failures in any package and unfinished package results (202.869573ms)
+✔ rejects malformed JSON events and missing input (192.13306ms)
+✔ requires enrollment validation, durable consumption, scope, clock, concurrency and crash anchors (476.541486ms)
+✔ requires mTLS acceptance, transport denial, typed verdicts, issuer-bound revocation, revoked replay and configuration anchors (297.346239ms)
+✔ requires signed desired state, unsigned rejection, stale rejection and exact-byte signature anchors (642.793539ms)
+✔ requires durable apply, real crash/recovery, shared-writer serialization and rejection anchors (492.068668ms)
+✔ requires decoy observation, echo, request bound, prerequisite, restart and no-execution anchors (350.835709ms)
+✔ requires decoy isolation control, cleanup, immutability, runtime bound, cancellation and workflow anchors (432.515469ms)
+✔ requires decoy egress, runtime limit, reconciliation, provider and adapter anchors (335.249242ms)
+✔ requires bounded spool persistence, rejection, concurrency, configuration and recovery anchors (398.131299ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4460.319248

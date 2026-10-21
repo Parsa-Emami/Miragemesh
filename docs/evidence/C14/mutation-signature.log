@@ -1,0 +1,5 @@
+--- FAIL: TestSpoolRejectsForgedAppliedConfiguration (0.09s)
+    spool_test.go:336: forged config accepted: {OperationID:sensor/ab7788d22eb7372f79712a3019ddc0b260f902df42b810119150d1b8a6efb116/1 InputDigest:de9b369bafbb9a0e6cd2d0082edb38792c9ee1527bfcc7b52b3de0b23ce8f5c6 Generation:3} <nil>
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.090s
+FAIL

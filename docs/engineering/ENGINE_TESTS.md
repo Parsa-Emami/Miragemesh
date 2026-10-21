@@ -281,3 +281,22 @@ engine workflow and not only through the package. The expected outcomes of
 the integration run are read from the versioned fixture
 `tests/fixtures/miragemesh/C13/expected-output.json` and compared with the
 observed results, so the fixture cannot drift.
+
+## C14 required anchors
+
+The `tests` package now requires `TestSpoolDurableBoundedReplayAndRestart`,
+`TestSpoolRejectsInvalidAndUnconfiguredEvents`,
+`TestSpoolCapacityIsAtomicAndPerSensor`,
+`TestSpoolUsesLatestAppliedBoundWithoutDropping`,
+`TestSpoolStorageQuotaAndRecoveryFailures` and
+`TestSpoolRejectsForgedAppliedConfiguration`. They exercise the internal Go
+queue against real C05 state and ephemeral C11 signing keys. No collector or
+network connectivity is needed for the queue.
+
+`internal/storage/spool_recovery_test.go` reuses C11's existing test-only
+filesystem seam and crash-boundary harness to call the real `spool.Enqueue`.
+`TestSpoolSIGKILLAtPublicationBoundaries` covers staged bytes, object rename,
+before/after manifest publication and before acknowledgement;
+`TestSpoolSyscallFailuresPreserveRecoverableState` covers the nine filesystem
+failures. Both anchors are required by the discovery guard. Repeated recovery
+and exact retry retain one event and return its original receipt.

@@ -1,0 +1,18 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C14 offline events and desired state. Test keys are ephemeral in-memory values; no real traffic or credentials.",
+  "accepted_sequences": [
+    1,
+    2
+  ],
+  "full_error": "storage quota exceeded",
+  "negative_rows": 8,
+  "interrupted_events": {
+    "staged": 1,
+    "object": 1,
+    "before-manifest": 1,
+    "manifest": 2,
+    "before-ack": 2
+  }
+}

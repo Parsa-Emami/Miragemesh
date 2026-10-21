@@ -1,6 +1,6 @@
 {
   "project": "MirageMesh",
-  "reviewed_commit": "0797ed25339ffd877137ee78d14a8a8f94cea0b0",
+  "reviewed_commit": "7c0d0bd4453de748f5b76cd5a4dae7fe11487a56",
   "readiness": "WEB_FOUNDATION",
   "core_ready": false,
   "implemented": [
@@ -17,10 +17,11 @@
     "internal signed versioned desired state: strict typed document, Ed25519 signature over the exact payload bytes with a local operator key separate from the mTLS trust material, monotonic per-sensor revision and typed rejection that never replaces the active configuration; process state only, no HTTP/CLI/UI",
     "internal durable applied configuration via sensor.Applier and the existing C05 store: exact signed bytes and acceptance time, persisted monotonic revision, replay, bounded history and crash convergence; external settings consumers remain pending",
     "internal metadata-only HTTP decoy: bounded requests, fixed non-echoing answers, path-only observations recorded as version 1 events under the separate decoy-01 identity through C04 validation and C05 storage; no published listener, container isolation or egress denial",
-    "internal decoy isolation: a rootless container with no network, no capabilities, no host namespace, a read-only root filesystem and hard process and memory limits, applied through a limited container provider and verified against the observed and the effective runtime controls, started by the engine workflow with --decoy-isolation and a typed outcome; no published decoy surface and no inbound path"
+    "internal decoy isolation: a rootless container with no network, no capabilities, no host namespace, a read-only root filesystem and hard process and memory limits, applied through a limited container provider and verified against the observed and the effective runtime controls, started by the engine workflow with --decoy-isolation and a typed outcome; no published decoy surface and no inbound path",
+    "internal bounded offline spool through C05 and C11 signed per-sensor settings: exact C04 event bytes, atomic limit/config/sequence checks, exact replay at capacity, restart and real crash/fault recovery; no ACK reclamation, overflow loss policy or transport"
   ],
-  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation, a metadata-only HTTP decoy, its rootless container isolation and the engine workflow that starts it implemented; spool/batch consumers, authenticated ingest, a published decoy surface and the full workflow pending",
-  "next_task": "C14",
+  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation, a metadata-only HTTP decoy, its rootless container isolation and the engine workflow that starts it implemented; bounded internal spool implemented; overflow loss policy, durable batch ACK/reclamation, authenticated ingest, a published decoy surface and the full workflow pending",
+  "next_task": "C15",
   "next_command": "npm run plan -- next",
   "full_product_endpoint": "C30 locally usable; C40 full published OSS v1"
 }

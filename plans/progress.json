@@ -123,10 +123,12 @@
     },
     {
       "id": "C14",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C14.json"
+      ],
+      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5",
+      "notes": "Owner-approved F08 internal Go queue on C05/C11. Signed per-sensor spool_limit_events, authenticated current configuration and event capacity share one writer transaction; exact C04 bytes and C07 identities survive restart and replay at capacity. Real queue SIGKILL at five publication boundaries and nine injected filesystem failures converge without duplicate events. C15 owns loss/gap policy and C16 owns durable ACK/reclamation; its targets need review. No new disk record, HTTP/CLI/UI, dependency, remote Actions or full-product-readiness claim."
     },
     {
       "id": "C15",

@@ -1,56 +1,217 @@
 {
   "project": "MirageMesh",
-  "date": "2026-10-21",
-  "base_commit": "bc84ea6156b478a1dd12e534622459bddb1f5cad",
-  "scope": "F07 decoy isolation: the C12 decoy handler runs inside a rootless container that has no network at all, no capabilities, no host namespace and a read-only root filesystem, bounded by a hard process and memory limit. The supervisor states the policy, the limited container provider applies it and the supervisor verifies the observed and the effective controls before it reports a running decoy. The engine starts the isolated decoy with --decoy-isolation and propagates the typed outcome.",
-  "final_source_identity": "sha256:2582a704264779e6eba41e37ff7902b46d6b32094c2e2d6322d559ab327fadcc",
-  "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes) over tracked and non-ignored untracked files; docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded because they publish this identity themselves.",
-  "core_tasks_verified": [
-    "C01-C10: retain historical source-bound evidence",
-    "C11: durable applied-config reconciliation through C05, verified locally",
-    "C12: metadata-only HTTP decoy with path-only observations through C04 and C05, verified locally",
-    "C13: rootless container isolation of the decoy with denied egress and runtime limits, verified locally"
-  ],
-  "commands": "C13 web CI follow-up: exact commands, exits and output paths are appended to docs/evidence/C13.json; ci-web-*.log contains the controlled reproduction and clean-clone results.",
-  "blockers": [],
-  "limitations": [
-    "No decoy surface is published: the container has no network at all, so the decoy address is reachable only from inside its own namespace. Publishing the decoy to untrusted peers with the outbound denial kept is later workflow work.",
-    "The engine workflow verifies one isolated decoy and removes it again; it does not keep a decoy running. A persistent decoy service is later workflow work.",
-    "The memory limit needs a rootless runtime with cgroup delegation. A runtime without it fails the policy verification; the limit is never reported as held because it was requested.",
-    "The provider is the only place that runs another program. It runs the container runtime with a fixed argument vector, without a shell and without a network client, and it never pulls an image.",
-    "The pinned image is not redistributed by MirageMesh. Its digest, platform, provenance and the license of every component are recorded in docs/engineering/toolchain-lock.json; the image contains a GPL-2.0-only busybox component, which the operator accepts by pulling it.",
-    "The decoy host of the tests is a test fixture, not a product listener: it exists so that the real C12 handler runs under the isolation policy and so that the probes measure the isolation from inside the container. The decoy artifact of the engine workflow is supplied by the operator; the decoy service binary is later work.",
-    "The state directory of the workflow must be writable by the operator: a rootless installation cannot write into /var/lib, so the examples use a user owned path and the engine refuses a state path that is not a private directory of the owner.",
-    "The C12 card and plans/roadmap.json are unchanged. The C12 evidence stays bound to its own historical source; the C12 anchor of the decoy package is extended, not weakened.",
-    "The bc84ea6 GitHub Actions engine-runtime job passed; web-foundation failed at npm run test:clone. The web workflow omitted the locked image pull, and a controlled empty store reproduces the resulting failure. The exact remote Go test is hidden by truncated logging. The updated web workflow has only local verification; a new remote run requires a push."
-  ],
-  "next_task": "C14",
-  "next_command": "npm run plan -- next",
-  "delivery": {
-    "delivery_commit_created": true,
-    "push_authorized": false,
-    "publication_authorized": false,
-    "local_commit_authorized": true,
-    "commit_subject": "fix(ci): prepare pinned decoy image for clone tests",
-    "commit_identity": "The web CI follow-up was committed locally; no push or publication was performed."
-  },
-  "notes": "C13 web CI fix: web-foundation now pulls the locked Alpine image and verifies its digest before clone-smoke. An empty Podman store reproduces the missing-image failure; after pull the same C13 test and a full staged clean-clone pass locally. No remote run of this changed workflow has occurred. npm run check also passed locally. The full clean-clone also passed using the isolated Podman image store after pull.",
+  "last_task": "C14",
+  "status": "verified",
+  "base_commit": "7c0d0bd4453de748f5b76cd5a4dae7fe11487a56",
+  "final_commit": null,
+  "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5",
+  "evidence": "docs/evidence/C14.json",
+  "summary": "internal bounded offline spool through C05 and C11 signed per-sensor settings: exact C04 event bytes, atomic limit/config/sequence checks, exact replay at capacity, restart and real crash/fault recovery; no ACK reclamation, overflow loss policy or transport",
   "changed_paths": [
-    ".github/workflows/web.yml",
-    "docs/evidence/C13.json",
-    "docs/evidence/C13/source-files.json",
-    "docs/evidence/C13/ci-web-missing-image.log",
-    "docs/evidence/C13/ci-web-pull.log",
-    "docs/evidence/C13/ci-web-image-inspect.log",
-    "docs/evidence/C13/ci-web-pulled-image.log",
-    "docs/evidence/C13/ci-web-clone.log",
-    "plans/progress.json",
+    "apps/web/src/generated/project.json",
+    "docs/ROADMAP_FA.md",
     "docs/agents/SESSION_HANDOFF.json",
-    "docs/evidence/C13/ci-web-plan.log",
-    "docs/evidence/C13/ci-web-repository.log",
-    "docs/evidence/C13/ci-web-source-verify.log",
-    "docs/evidence/C13/ci-web-yaml.log",
-    "docs/evidence/C13/ci-web-check.log",
-    "docs/evidence/C13/ci-web-isolated-clone.log"
-  ]
+    "docs/architecture/CONFIG_APPLY.md",
+    "docs/architecture/DESIRED_STATE.md",
+    "docs/engineering/ENGINE_TESTS.md",
+    "docs/evidence/C14.json",
+    "docs/evidence/C14/browser.log",
+    "docs/evidence/C14/check.log",
+    "docs/evidence/C14/clone-preflight.log.gz",
+    "docs/evidence/C14/clone.log",
+    "docs/evidence/C14/commands.jsonl",
+    "docs/evidence/C14/discovery-red.log.gz",
+    "docs/evidence/C14/discovery.log",
+    "docs/evidence/C14/engine-discovery.log",
+    "docs/evidence/C14/engine-tests.log",
+    "docs/evidence/C14/environment.log",
+    "docs/evidence/C14/environment.py",
+    "docs/evidence/C14/final-browser.log",
+    "docs/evidence/C14/final-check.log",
+    "docs/evidence/C14/final-clone.log",
+    "docs/evidence/C14/final-diff.log",
+    "docs/evidence/C14/final-engine-discovery.log",
+    "docs/evidence/C14/final-engine-tests.log",
+    "docs/evidence/C14/final-plan.log",
+    "docs/evidence/C14/final-repository.log",
+    "docs/evidence/C14/final-source.log",
+    "docs/evidence/C14/focused.log",
+    "docs/evidence/C14/format.log",
+    "docs/evidence/C14/go-red.log",
+    "docs/evidence/C14/install.log",
+    "docs/evidence/C14/mutation-quota.log",
+    "docs/evidence/C14/mutation-replay.log",
+    "docs/evidence/C14/mutation-signature.log",
+    "docs/evidence/C14/network-build.log",
+    "docs/evidence/C14/network-final.log",
+    "docs/evidence/C14/network-final.trace",
+    "docs/evidence/C14/network-verify.log",
+    "docs/evidence/C14/network.log",
+    "docs/evidence/C14/network.trace",
+    "docs/evidence/C14/next-task.log",
+    "docs/evidence/C14/package-checksums.log",
+    "docs/evidence/C14/package.log",
+    "docs/evidence/C14/plan-python.log",
+    "docs/evidence/C14/python-tests.log",
+    "docs/evidence/C14/repository.log",
+    "docs/evidence/C14/review-diff.py",
+    "docs/evidence/C14/run.py",
+    "docs/evidence/C14/source-files.json",
+    "docs/evidence/C14/source.log",
+    "docs/evidence/C14/spool-race.log",
+    "docs/evidence/C14/spool-tests.log",
+    "docs/evidence/C14/stdlib-reference.log.gz",
+    "docs/evidence/C14/verify-clone.py",
+    "docs/evidence/C14/verify-mutations.py",
+    "docs/evidence/C14/verify-source.py",
+    "docs/evidence/C14/vet.log",
+    "docs/evidence/C14/workflow-provider.log",
+    "docs/product/REFERENCE_WORKFLOW.md",
+    "internal/sensor/event.go",
+    "internal/spool/store.go",
+    "internal/storage/spool_recovery_test.go",
+    "plans/progress.json",
+    "plans/project-state.json",
+    "scripts/verify-engine-tests.mjs",
+    "tests/engineering/engine-tests.test.mjs",
+    "tests/fixtures/miragemesh/C14/expected-output.json",
+    "tests/fixtures/miragemesh/C14/invalid.json",
+    "tests/fixtures/miragemesh/C14/positive.json",
+    "tests/spool_test.go"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C14/final-check.log",
+      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C14/final-engine-tests.log",
+      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C14/final-browser.log",
+      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "docs/evidence/C14/final-engine-tests.log"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C14/final-engine-discovery.log",
+      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "import os,subprocess;os.chdir(\"dist/release\");subprocess.run([\"sha256sum\",\"--check\",\"SHA256SUMS.txt\"],check=True)"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C14/package-checksums.log",
+      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C14/verify-source.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C14/final-source.log",
+      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C14/verify-clone.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C14/final-clone.log",
+      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C14/review-diff.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C14/final-diff.log",
+      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "plan",
+        "--",
+        "next"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C14/next-task.log",
+      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+    }
+  ],
+  "blockers": [],
+  "scope_limits": [
+    "All retained sensor events count as pending; C16 owns durable ACK and space reclamation. C15 owns loss counters and gap markers.",
+    "Existing sensor.Accept and decoy callers remain independent of the opt-in spool service.",
+    "SIGKILL and injected errors are not physical power-loss certification; C28 resource capacity remains unmeasured.",
+    "Local workflow equivalents do not certify a hosted Actions run, C30 local usability or C40 release."
+  ],
+  "next_task": "C15",
+  "next_command": "npm run plan -- next",
+  "future_card_note": "When C16 is selected, review exact targets to include durable sensor-side ACK/reclamation through the spool/storage contract. C14 intentionally exposes no ACK API.",
+  "delivery": {
+    "commit_created": false,
+    "push_performed": false,
+    "publication_performed": false,
+    "note": "Clone smoke creates temporary unreferenced Git snapshot objects only, not a delivery commit or branch."
+  },
+  "base_source_identity": "sha256:2582a704264779e6eba41e37ff7902b46d6b32094c2e2d6322d559ab327fadcc",
+  "final_source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5",
+  "local_clone_verification": {
+    "passed": true,
+    "candidate_tree": "53c5cb2d3cfe666cbb175f81f2827dda19fad00d",
+    "c14_source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5",
+    "snapshot_commit": "d4b5e7caa7256169c134fa623a6ff321fc81b6d9",
+    "git_source_integrity_identity": "sha256:91ff4b379c1221dc199de97a1b2dee5406ca422f23ca2d0b979ade5231df8cac",
+    "output_path": "docs/evidence/C14/final-clone.log",
+    "remote_runner": false,
+    "delivery_commit": false,
+    "binding": "The helper compared every C14 source hash with the candidate Git tree before clone-smoke verified the real clone, full history and runtime tests. Evidence/progress/handoff updates after this snapshot are excluded from the C14 runtime identity."
+  },
+  "test_counts": {
+    "required_engine_anchors": 76,
+    "go_top_level_tests_passed": 94,
+    "go_subtests_passed": 178,
+    "node_tests_passed": 46,
+    "browser_tests_passed": 3,
+    "python_tests_passed": 6,
+    "spool_sigkill_boundaries": 5,
+    "spool_filesystem_fault_cases": 9,
+    "spool_network_syscalls_observed": 0
+  },
+  "remote_actions_executed": false
 }

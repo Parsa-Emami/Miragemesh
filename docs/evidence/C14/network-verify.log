@@ -1,0 +1,1 @@
+Spool tests passed under strace; zero network syscalls observed.

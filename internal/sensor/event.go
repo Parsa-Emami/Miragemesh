@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/Parsa-Emami/Miragemesh/internal/config"
 	"github.com/Parsa-Emami/Miragemesh/internal/contracts"
 	"github.com/Parsa-Emami/Miragemesh/internal/storage"
 )
@@ -16,6 +17,7 @@ import (
 var (
 	ErrInvalidEvent = errors.New("invalid sensor event")
 	ErrOutOfOrder   = errors.New("sensor sequence out of order")
+	ErrUnconfigured = errors.New("spool has no applied configuration")
 )
 
 func operationID(sensorID string, sequence int64) string {
@@ -56,15 +58,73 @@ func Accept(ctx context.Context, store *storage.Store, input []byte) (storage.Re
 	if store == nil {
 		return storage.Receipt{}, ErrInvalidEvent
 	}
+	event, err := decodeEvent(ctx, input)
+	if err != nil {
+		return storage.Receipt{}, err
+	}
+	return store.CommitChecked(ctx, operationID(event.SensorID, event.Sequence), input, sequenceCheck())
+}
+
+func decodeEvent(ctx context.Context, input []byte) (contracts.Event, error) {
 	event, failure := contracts.DecodeEvent(ctx, input)
 	if failure != nil {
 		if ctx.Err() != nil {
-			return storage.Receipt{}, ctx.Err()
+			return contracts.Event{}, ctx.Err()
 		}
-		return storage.Receipt{}, fmt.Errorf("%w: %v", ErrInvalidEvent, failure)
+		return contracts.Event{}, fmt.Errorf("%w: %v", ErrInvalidEvent, failure)
 	}
 	if event.Sequence < 1 {
-		return storage.Receipt{}, ErrInvalidEvent
+		return contracts.Event{}, ErrInvalidEvent
 	}
-	return store.CommitChecked(ctx, operationID(event.SensorID, event.Sequence), input, sequenceCheck())
+	return event, nil
+}
+
+// AcceptBounded uses the current authenticated applied setting and event count
+// in one C05 writer transaction. The applier must belong to this same store.
+func AcceptBounded(ctx context.Context, store *storage.Store, input []byte, applier *Applier) (storage.Receipt, error) {
+	if store == nil || applier == nil || applier.store != store {
+		return storage.Receipt{}, config.ErrInvalidInput
+	}
+	event, err := decodeEvent(ctx, input)
+	if err != nil {
+		return storage.Receipt{}, err
+	}
+	input = append([]byte(nil), input...)
+	id := operationID(event.SensorID, event.Sequence)
+	return store.Update(ctx, func(records []storage.Record) (string, []byte, error) {
+		latest, err := applier.project(ctx, records)
+		if err != nil {
+			return "", nil, err
+		}
+		current, exists := latest[event.SensorID]
+		if !exists {
+			return "", nil, ErrUnconfigured
+		}
+		document, err := config.Parse(current.Config.Payload)
+		if err != nil {
+			return "", nil, storage.ErrRecovery
+		}
+		check := sequenceCheck()
+		count, replay := 0, false
+		for _, record := range records {
+			if err := check(record); err != nil {
+				return "", nil, err
+			}
+			if record.Config == nil && record.Enrollment == nil && record.Event.SensorID == event.SensorID {
+				count++
+			}
+			replay = replay || record.Receipt.OperationID == id
+		}
+		if replay {
+			return id, input, nil
+		}
+		if err := check(storage.Record{Event: event}); err != nil {
+			return "", nil, err
+		}
+		// All retained events are pending until C16 adds durable ACK/reclamation.
+		if count >= document.Settings.SpoolLimitEvents {
+			return "", nil, storage.ErrQuota
+		}
+		return id, input, nil
+	})
 }

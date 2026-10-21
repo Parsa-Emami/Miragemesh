@@ -1,0 +1,47 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C14 offline events and desired state. Test keys are ephemeral in-memory values; no real traffic or credentials.",
+  "cases": [
+    {
+      "name": "malformed",
+      "input": "{",
+      "error": "invalid_event"
+    },
+    {
+      "name": "unsupported",
+      "input": "{\"schema_version\":\"2\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-02\",\"sequence\":2,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/offline\"}}\n",
+      "error": "invalid_event"
+    },
+    {
+      "name": "oversized",
+      "build": "oversized",
+      "error": "invalid_event"
+    },
+    {
+      "name": "zero-sequence",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-00\",\"sequence\":0,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/offline\"}}\n",
+      "error": "invalid_event"
+    },
+    {
+      "name": "gap",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-03\",\"sequence\":3,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/offline\"}}\n",
+      "error": "out_of_order"
+    },
+    {
+      "name": "reused-event-id",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":2,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/offline\"}}\n",
+      "error": "conflict"
+    },
+    {
+      "name": "conflicting-bytes",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/different\"}}\n",
+      "error": "conflict"
+    },
+    {
+      "name": "unconfigured-sensor",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-03\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/offline\"}}\n",
+      "error": "unconfigured"
+    }
+  ]
+}

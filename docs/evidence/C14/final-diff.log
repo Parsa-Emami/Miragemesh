@@ -1,0 +1,21 @@
+apps/web/src/generated/project.json                |   2 +-
+ docs/ROADMAP_FA.md                                 |   2 +
+ docs/agents/SESSION_HANDOFF.json                   | 255 +++++++++++++---
+ docs/architecture/CONFIG_APPLY.md                  |  52 +++-
+ docs/architecture/DESIRED_STATE.md                 |  10 +-
+ docs/engineering/ENGINE_TESTS.md                   |  19 ++
+ docs/product/REFERENCE_WORKFLOW.md                 |   8 +
+ internal/sensor/event.go                           |  68 ++++-
+ internal/spool/store.go                            |  37 +++
+ internal/storage/spool_recovery_test.go            | 232 ++++++++++++++
+ plans/progress.json                                |  10 +-
+ plans/project-state.json                           |   9 +-
+ scripts/verify-engine-tests.mjs                    |   4 +-
+ tests/engineering/engine-tests.test.mjs            |  10 +-
+ tests/fixtures/miragemesh/C14/expected-output.json |  18 ++
+ tests/fixtures/miragemesh/C14/invalid.json         |  47 +++
+ tests/fixtures/miragemesh/C14/positive.json        |  44 +++
+ tests/spool_test.go                                | 338 +++++++++++++++++++++
+ 18 files changed, 1095 insertions(+), 70 deletions(-)
+Reviewed candidate changes: 70
+Protected paths, event schemas, manifests and dependency locks unchanged; real index preserved.

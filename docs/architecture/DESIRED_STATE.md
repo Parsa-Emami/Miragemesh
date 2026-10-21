@@ -89,10 +89,12 @@ limit:
 A byte budget is not an accepted event-count limit. The product file carries
 `spool_max_mib` and `payload_max_kib`, and the C10 numbers are this task's
 proposal for what those two figures mean in events; the storage adapter's own
-limits are test settings rather than spool configuration. The owner confirms
-the final values when the bounded spool lands in C14 and C15. The engine
-therefore hard-codes none of them, so a later card can align the real spool
-policy without changing the engine or invalidating a signature.
+limits are test settings rather than spool configuration. For C14 the owner
+selected the signed per-sensor `spool_limit_events` value as the actual bound,
+with no new product default or fixed ceiling. The deployment still supplies
+its accepted `config.Bounds`; the proposed C10 fixture numbers remain test
+policy. C15 owns the overflow policy. The engine hard-codes none of these
+policy values.
 
 The three settings must also agree with each other: `event_batch_limit` may
 not exceed `spool_limit_events`. A batch larger than the whole spool is an

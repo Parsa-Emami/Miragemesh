@@ -1,0 +1,13 @@
+--- FAIL: TestSpoolDurableBoundedReplayAndRestart (0.00s)
+    spool_test.go:60: invalid C14 positive fixture open fixtures/miragemesh/C14/positive.json: no such file or directory
+--- FAIL: TestSpoolRejectsInvalidAndUnconfiguredEvents (0.00s)
+    spool_test.go:113: invalid C14 positive fixture open fixtures/miragemesh/C14/positive.json: no such file or directory
+--- FAIL: TestSpoolCapacityIsAtomicAndPerSensor (0.00s)
+    spool_test.go:190: invalid C14 positive fixture open fixtures/miragemesh/C14/positive.json: no such file or directory
+--- FAIL: TestSpoolUsesLatestAppliedBoundWithoutDropping (0.00s)
+    spool_test.go:236: invalid C14 positive fixture open fixtures/miragemesh/C14/positive.json: no such file or directory
+--- FAIL: TestSpoolStorageQuotaAndRecoveryFailures (0.00s)
+    spool_test.go:289: invalid C14 positive fixture open fixtures/miragemesh/C14/positive.json: no such file or directory
+--- FAIL: TestSpoolRejectsForgedAppliedConfiguration (0.00s)
+    spool_test.go:318: invalid C14 positive fixture open fixtures/miragemesh/C14/positive.json: no such file or directory
+FAIL
