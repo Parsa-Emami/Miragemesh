@@ -31,12 +31,32 @@ func GapOperationID(sensorID string, sequence int64) string {
 	return "spool-gap/" + hex.EncodeToString(sum[:]) + "/" + strconv.FormatInt(sequence, 10)
 }
 
+// AckOperationID is stable across retries of one delivered sensor sequence.
+func AckOperationID(sensorID string, sequence int64) string {
+	sum := sha256.Sum256([]byte(sensorID))
+	return "spool-ack/" + hex.EncodeToString(sum[:]) + "/" + strconv.FormatInt(sequence, 10)
+}
+
 func sequenceCheck() func(storage.Record) error {
+	type accepted struct {
+		eventID string
+		digest  string
+	}
 	type state struct {
 		sequence int64
 		eventIDs map[string]struct{}
+		events   map[int64]accepted
+		acked    map[int64]struct{}
 	}
 	sensors := make(map[string]*state)
+	stateFor := func(sensorID string) *state {
+		previous := sensors[sensorID]
+		if previous == nil {
+			previous = &state{eventIDs: make(map[string]struct{}), events: make(map[int64]accepted), acked: make(map[int64]struct{})}
+			sensors[sensorID] = previous
+		}
+		return previous
+	}
 	return func(record storage.Record) error {
 		if record.Enrollment != nil || record.Config != nil {
 			return nil
@@ -45,11 +65,7 @@ func sequenceCheck() func(storage.Record) error {
 			if record.Receipt.OperationID != GapOperationID(record.Gap.SensorID, record.Gap.Sequence) {
 				return storage.ErrRecovery
 			}
-			previous := sensors[record.Gap.SensorID]
-			if previous == nil {
-				previous = &state{eventIDs: make(map[string]struct{})}
-				sensors[record.Gap.SensorID] = previous
-			}
+			previous := stateFor(record.Gap.SensorID)
 			if record.Gap.Sequence != previous.sequence+1 {
 				return ErrOutOfOrder
 			}
@@ -60,14 +76,29 @@ func sequenceCheck() func(storage.Record) error {
 			previous.eventIDs[record.Gap.EventID] = struct{}{}
 			return nil
 		}
+		if record.Ack != nil {
+			ack := record.Ack
+			if record.Receipt.OperationID != AckOperationID(ack.SensorID, ack.Sequence) {
+				return storage.ErrRecovery
+			}
+			previous := sensors[ack.SensorID]
+			if previous == nil {
+				return storage.ErrRecovery
+			}
+			event, exists := previous.events[ack.Sequence]
+			if !exists || event.eventID != ack.EventID || event.digest != ack.InputDigest {
+				return storage.ErrRecovery
+			}
+			if _, exists := previous.acked[ack.Sequence]; exists {
+				return storage.ErrConflict
+			}
+			previous.acked[ack.Sequence] = struct{}{}
+			return nil
+		}
 		if record.Event.SchemaVersion == "" {
 			return storage.ErrRecovery
 		}
-		previous := sensors[record.Event.SensorID]
-		if previous == nil {
-			previous = &state{eventIDs: make(map[string]struct{})}
-			sensors[record.Event.SensorID] = previous
-		}
+		previous := stateFor(record.Event.SensorID)
 		if record.Event.Sequence != previous.sequence+1 {
 			return ErrOutOfOrder
 		}
@@ -76,8 +107,29 @@ func sequenceCheck() func(storage.Record) error {
 		}
 		previous.sequence = record.Event.Sequence
 		previous.eventIDs[record.Event.EventID] = struct{}{}
+		previous.events[record.Event.Sequence] = accepted{eventID: record.Event.EventID, digest: record.Receipt.InputDigest}
 		return nil
 	}
+}
+
+// ValidateSequence checks persisted records followed by already-decoded, new
+// events. Exact replays must be filtered by the caller before this check.
+func ValidateSequence(records []storage.Record, next []contracts.Event) error {
+	check := sequenceCheck()
+	for _, record := range records {
+		if err := check(record); err != nil {
+			return err
+		}
+	}
+	for _, event := range next {
+		if event.SchemaVersion == "" {
+			return ErrInvalidEvent
+		}
+		if err := check(storage.Record{Event: event}); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 // Accept validates and durably records one event. Exact retries return the
@@ -139,13 +191,17 @@ func AcceptBoundedWithOverflow(ctx context.Context, store *storage.Store, input 
 			return "", nil, storage.ErrRecovery
 		}
 		check := sequenceCheck()
-		count, replay, droppedReplay := 0, false, false
+		pending, replay, droppedReplay := 0, false, false
+		acked := make(map[int64]struct{})
 		for _, record := range records {
 			if err := check(record); err != nil {
 				return "", nil, err
 			}
-			if record.Config == nil && record.Enrollment == nil && record.Gap == nil && record.Event.SensorID == event.SensorID {
-				count++
+			if record.Ack != nil && record.Ack.SensorID == event.SensorID {
+				acked[record.Ack.Sequence] = struct{}{}
+			}
+			if record.Event.SchemaVersion != "" && record.Event.SensorID == event.SensorID {
+				pending++
 			}
 			replay = replay || record.Receipt.OperationID == id
 			droppedReplay = droppedReplay || (record.Gap != nil && record.Gap.SensorID == event.SensorID && record.Gap.Sequence == event.Sequence)
@@ -162,8 +218,10 @@ func AcceptBoundedWithOverflow(ctx context.Context, store *storage.Store, input 
 		if err := check(storage.Record{Event: event}); err != nil {
 			return "", nil, err
 		}
-		// All retained events are pending until C16 adds durable ACK/reclamation.
-		if count >= document.Settings.SpoolLimitEvents {
+		// Only unacknowledged retained events consume the signed spool bound.
+		// C16 ACK records are append-only checkpoints and never delete events.
+		pending -= len(acked)
+		if pending >= document.Settings.SpoolLimitEvents {
 			if overflow != nil {
 				return overflow(event, input)
 			}

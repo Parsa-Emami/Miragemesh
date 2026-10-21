@@ -4,9 +4,10 @@ The owner-approved C09/F03 scope is an internal Go guard that authenticates
 collector traffic against locally configured trust state: a set of
 self-signed CA anchors, one listener certificate, a locally delivered signed
 CRL and an operator-authored fingerprint-to-sensor-scope mapping. There is no
-HTTP, CLI or UI surface in C09; the real ingest endpoint lands in C16 and the
-engine owns all domain integration, UI work stays in `apps/web`, and adapters
-sit at the boundaries per ADR-0003.
+HTTP, CLI or UI surface in C09; C16 adds only the internal collector delivery
+boundary and claims no public ingest endpoint, and the engine owns all domain
+integration, UI work stays in `apps/web`, and adapters sit at the boundaries per
+ADR-0003.
 
 ## Trusted in-process interface
 

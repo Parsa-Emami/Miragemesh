@@ -1,0 +1,2 @@
+PASS
+C16 collector tests passed under strace; zero network syscalls observed

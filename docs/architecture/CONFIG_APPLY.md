@@ -137,10 +137,9 @@ Stable operation IDs make retries idempotent; sensor sequence validation treats
 a gap as the sequence that was lost, allowing later events after a configuration
 raises capacity. The marker does not retain the lost event payload.
 
-All retained events remain pending until C16 adds durable collector ACKs and
-capacity reclamation; gap markers remain loss history. C16's exact targets must
-be reviewed to include the required spool/storage changes. C14/C15 add no ACK
-API, network transport, CLI, browser write surface or dependency. Existing
+C16 adds durable collector acknowledgements and capacity reclamation below; gap
+markers remain loss history and are never acknowledged. C14/C15 add no ACK API,
+network transport, CLI, browser write surface or dependency. Existing
 `sensor.Accept` callers, including the decoy, keep their C07 behavior; they are
 not routed through this new consumer automatically. C26 and C30 remain the
 combined resilience and complete workflow gates.
@@ -152,3 +151,67 @@ the real queue during five SIGKILL boundaries and nine filesystem faults through
 C05's existing test-only seam. These tests establish local restart visibility
 and injected-error recovery, not physical power-loss durability or measured C28
 capacity.
+
+## C16 collector batches and durable acknowledgements
+
+```go
+ingestor, err := collector.New(store, applier) // same C05 handle and C11 applier
+result, err := ingestor.Ingest(ctx, "sensor-01", collector.Batch{
+	ID: "batch-01", FirstSequence: 1, LastSequence: 2,
+	Events: [][]byte{firstEventBytes, secondEventBytes},
+})
+```
+
+`internal/collector` is an internal Go boundary. It adds no network listener,
+HTTP route, mTLS terminator, CLI or UI. The sensor ID is supplied by the caller
+and is not an authentication claim; C09's mTLS guard remains a separate building
+block, and no authenticated ingest endpoint is claimed here. C16 proves the
+duplicate-free durable delivery semantics that a future transport can call.
+
+The batch shape follows the existing OpenAPI `/sensors/{sensor}/events/batch`
+contract: a correlation `batch_id`, inclusive `first_sequence` and
+`last_sequence`, and exact C04 event bytes. `batch_id` is correlation metadata,
+not event identity. Event identity is `(sensor_id, sequence)` with exact bytes
+and digest, matching `contracts/event-types.v1.json`. The batch must be
+contiguous, within C04 limits and within the applied signed `event_batch_limit`.
+The whole batch is decoded and checked before the first visible write; a replay
+of exactly the accepted bytes is not a new observation, while different bytes
+for the same event identity return `storage.ErrConflict`.
+
+For each event, `Ingest` uses `sensor.Accept` (C07), which persists the exact
+event bytes and advances the per-sensor sequence. After every event in the batch
+is durable, it commits one append-only `spool.ack` record per event through
+`Store.Update`, under the same writer lock and C05 publication path. An ACK
+contains `schema_version`, `kind`, `sensor_id`, `event_id`, `sequence` and the
+SHA-256 `input_digest` of the accepted event. Its stable operation ID is
+`spool-ack/<sha256(sensor_id)>/<sequence>`; it is an opaque identifier, never a
+filesystem path. `Ingest` returns only after all events and all ACKs are
+durable, so retrying after a lost acknowledgement returns the original receipts
+and creates no duplicate observation.
+
+ACKs do not delete or rewrite event bytes and do not change the C04 event or C05
+manifest schema. They consume the explicit C05 operation, byte and manifest
+quotas. `spool.Enqueue` counts only events without a valid ACK toward the signed
+`spool_limit_events`, so acknowledging delivered events reclaims spool capacity.
+A gap is loss history and cannot be acknowledged; a forged, orphaned, duplicate
+or future ACK fails sequence/history validation with `storage.ErrRecovery` or
+`storage.ErrConflict` and reclaims no capacity. C15 loss counters and ranges are
+preserved.
+
+The collector accepts no filesystem path. `metadata.path` remains inert C04
+text: traversal- or symlink-looking values are never resolved, opened or used as
+storage names. The replay test uses `../../etc/passwd` and a symlink path and
+proves an outside sentinel is unchanged; there is no path input to reject before
+commit because the event bytes are the only input. The package imports only the
+standard context, hashing/JSON, error/format and UTF-8 packages plus internal
+config, contracts, sensor and storage; it has no `net`, `os`, `os/exec`,
+`path/filepath` or `syscall` import, and the discovery anchor enforces that
+allowlist.
+
+C16 adds canonical `spool.ack` records to the version 1 manifest. Readers
+predating C16 reject a store containing them; rollback must retain the latest
+event and ACK bytes and a C16-compatible reader. Never delete an event while its
+ACK remains. C17/C18 segmentation and indexing must skip `spool.gap` and
+`spool.ack` as event records, and C23 retention must remove or preserve them
+consistently with their event. C16 adds no database schema, migration,
+environment file, Dockerfile, sibling import or public surface.

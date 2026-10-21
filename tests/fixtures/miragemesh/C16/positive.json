@@ -1,0 +1,69 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C16 batch acknowledgements. Test keys are ephemeral in-memory values; no real traffic or credentials.",
+  "bounds_provenance": "Small test policy, not product defaults or capacity measurements.",
+  "now": "2026-10-21T00:00:00Z",
+  "sensor_id": "sensor-01",
+  "limits": {
+    "max_payload_bytes": 8192,
+    "max_sensors": 5
+  },
+  "bounds": {
+    "heartbeat_seconds": {
+      "min": 1,
+      "max": 60
+    },
+    "spool_limit_events": {
+      "min": 1,
+      "max": 8
+    },
+    "event_batch_limit": {
+      "min": 1,
+      "max": 8
+    }
+  },
+  "storage_limits": {
+    "max_operations": 64,
+    "max_bytes": 1048576,
+    "max_manifest_bytes": 65536
+  },
+  "quota_limits": {
+    "max_operations": 2,
+    "max_bytes": 1048576,
+    "max_manifest_bytes": 65536
+  },
+  "payloads": {
+    "initial": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":1,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":2,\"event_batch_limit\":2}}"
+  },
+  "events": [
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/1\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-02\",\"sequence\":2,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/2\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-03\",\"sequence\":3,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/3\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-04\",\"sequence\":4,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/4\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-05\",\"sequence\":5,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/5\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-06\",\"sequence\":6,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/6\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-07\",\"sequence\":7,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/7\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-08\",\"sequence\":8,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/8\"}}\n"
+  ],
+  "batches": {
+    "first": {
+      "batch_id": "batch-01",
+      "first_sequence": 1,
+      "last_sequence": 2,
+      "event_indexes": [0, 1]
+    },
+    "second": {
+      "batch_id": "batch-02",
+      "first_sequence": 3,
+      "last_sequence": 4,
+      "event_indexes": [2, 3]
+    },
+    "single": {
+      "batch_id": "batch-03",
+      "first_sequence": 5,
+      "last_sequence": 5,
+      "event_indexes": [4]
+    }
+  }
+}

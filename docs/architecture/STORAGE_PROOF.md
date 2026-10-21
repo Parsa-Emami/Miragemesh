@@ -1,10 +1,11 @@
 # C05: bounded local storage proof
 
 C05 implements an internal Go file adapter under ADR-0003. It persists validated
-C04 v1 event bytes and an operation receipt. It does not enroll or authenticate
-sensors, authorize operators, ingest collector traffic, advance ACKs/sequences,
-or implement ACK/retention/segments. Runtime HTTP remains health-only, with
-`coreReady: false`; no CLI or browser write path is enabled.
+C04 v1 event bytes and an operation receipt. The adapter itself does not enroll
+or authenticate sensors, authorize operators, ingest collector traffic, advance
+ACKs/sequences (C16 records ACKs above it), or implement retention/segments.
+Runtime HTTP remains health-only, with `coreReady: false`; no CLI or browser
+write path is enabled.
 
 The owner explicitly selected **storage only** when reviewing C05. The card's
 generic identity/header/provider negatives and browser integration instruction
@@ -202,3 +203,24 @@ the omitted event bytes, but not the event payload. Its stable operation ID
 makes exact retries idempotent. Readers predating C15 reject stores containing
 gap records; rollback must retain a C15-compatible reader and the latest valid
 manifest.
+
+## C16 compatible acknowledgement records
+
+C16 adds canonical `spool.ack` records through the same C05 operation manifest,
+writer lock, hashes, quotas and atomic publication. The manifest schema remains
+version 1. The record carries sensor/event identity, sequence and the SHA-256
+digest of the exact event bytes that were already stored. It is append-only and
+never deletes or rewrites the event object. The stable operation ID
+`spool-ack/<sha256(sensor_id)>/<sequence>` makes exact retries idempotent without
+becoming a path. `Record.Ack` identifies the canonical record; `Record.Event`
+stays empty for it. ACK records consume the same operation, byte and manifest
+quotas as other compatible records.
+
+`Store.Update` lets `internal/collector` verify the stored event and reuse the
+exact ACK bytes under the writer lock. A forged or orphaned ACK fails the
+collector/sensor history validation; this is record/history validation, not
+storage-level authentication of a caller. Readers predating C16 reject a
+directory containing ACK records. Rollback must preserve the latest event and
+ACK bytes and use a C16-compatible reader; never restore an older manifest to
+erase ACKs. C16 adds no schema migration, database, environment file or
+Dockerfile.

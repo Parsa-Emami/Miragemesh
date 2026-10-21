@@ -47,6 +47,7 @@ type Record struct {
 	Input      []byte
 	Event      contracts.Event
 	Gap        *contracts.SpoolGapRecord
+	Ack        *contracts.SpoolAckRecord
 	Enrollment *contracts.EnrollmentRecord
 	Config     *contracts.AppliedConfig
 }
@@ -386,6 +387,10 @@ func decodeRecord(ctx context.Context, raw []byte) (Record, error) {
 	gap, err := contracts.DecodeSpoolGap(ctx, raw)
 	if err == nil {
 		return Record{Input: raw, Gap: &gap}, nil
+	}
+	ack, err := contracts.DecodeSpoolAck(ctx, raw)
+	if err == nil {
+		return Record{Input: raw, Ack: &ack}, nil
 	}
 	if ctx.Err() != nil {
 		return Record{}, ctx.Err()

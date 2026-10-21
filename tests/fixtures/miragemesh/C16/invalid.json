@@ -1,0 +1,117 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C16 negative inputs. No real traffic or credentials.",
+  "sensor_id": "sensor-01",
+  "cases": [
+    {
+      "name": "empty_batch",
+      "batch_id": "batch-empty",
+      "first_sequence": 1,
+      "last_sequence": 1,
+      "event_indexes": [],
+      "expected_error": "collector: invalid batch",
+      "expected_is": "invalid_batch"
+    },
+    {
+      "name": "missing_batch_id",
+      "batch_id": "",
+      "first_sequence": 1,
+      "last_sequence": 1,
+      "event_indexes": [0],
+      "expected_error": "collector: invalid batch",
+      "expected_is": "invalid_batch"
+    },
+    {
+      "name": "batch_limit_exceeded",
+      "batch_id": "batch-over",
+      "first_sequence": 1,
+      "last_sequence": 3,
+      "event_indexes": [0, 1, 2],
+      "expected_error": "collector: batch exceeds applied event_batch_limit",
+      "expected_is": "batch_too_large"
+    },
+    {
+      "name": "malformed_event",
+      "batch_id": "batch-bad",
+      "first_sequence": 1,
+      "last_sequence": 1,
+      "raw_event": "{}",
+      "expected_error": "invalid sensor event",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "unsupported_version",
+      "batch_id": "batch-version",
+      "first_sequence": 1,
+      "last_sequence": 1,
+      "raw_event": "{\"schema_version\":\"2\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/1\"}}",
+      "expected_error": "UNSUPPORTED_VERSION",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "zero_sequence",
+      "batch_id": "batch-zero",
+      "first_sequence": 1,
+      "last_sequence": 1,
+      "raw_event": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-zero\",\"sequence\":0,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/0\"}}",
+      "expected_error": "invalid sensor event",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "oversized_event",
+      "batch_id": "batch-large",
+      "first_sequence": 1,
+      "last_sequence": 1,
+      "raw_event_build": "max+1",
+      "expected_error": "INPUT_TOO_LARGE",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "sensor_mismatch",
+      "batch_id": "batch-scope",
+      "first_sequence": 1,
+      "last_sequence": 1,
+      "raw_event": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-02\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/1\"}}",
+      "expected_error": "collector: event sensor does not match batch sensor",
+      "expected_is": "sensor_mismatch"
+    },
+    {
+      "name": "sequence_metadata_mismatch",
+      "batch_id": "batch-meta",
+      "first_sequence": 1,
+      "last_sequence": 2,
+      "event_indexes": [0],
+      "expected_error": "collector: invalid batch",
+      "expected_is": "invalid_batch"
+    },
+    {
+      "name": "batch_start_zero",
+      "batch_id": "batch-start",
+      "first_sequence": 0,
+      "last_sequence": 1,
+      "event_indexes": [0],
+      "expected_error": "collector: invalid batch",
+      "expected_is": "invalid_batch"
+    },
+    {
+      "name": "out_of_order",
+      "batch_id": "batch-order",
+      "first_sequence": 3,
+      "last_sequence": 3,
+      "event_indexes": [2],
+      "expected_error": "sensor sequence out of order",
+      "expected_is": "out_of_order"
+    },
+    {
+      "name": "conflicting_replay",
+      "batch_id": "batch-conflict",
+      "first_sequence": 1,
+      "last_sequence": 1,
+      "prior_event_indexes": [0],
+      "raw_event": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-conflict\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/replay/1\"}}",
+      "expected_error": "storage conflict",
+      "expected_is": "conflict"
+    }
+  ]
+}

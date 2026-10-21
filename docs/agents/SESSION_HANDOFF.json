@@ -1,63 +1,61 @@
 {
   "project": "MirageMesh",
-  "last_task": "C15",
+  "last_task": "C16",
   "status": "verified",
-  "base_commit": "529cfd431c837c406ef4d27b8989964ef0edd994",
+  "base_commit": "62609fb910a374af21c53596bd07b00857a079b6",
   "final_commit": null,
-  "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f",
-  "evidence": "docs/evidence/C15.json",
-  "summary": "internal C05-backed spool overflow: signed-bound drop-new behavior, durable idempotent gap markers, restart-rebuilt loss counts/ranges and gap-aware sequence continuation; no ACK/reclamation or transport",
+  "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+  "evidence": "docs/evidence/C16.json",
+  "summary": "internal collector batch delivery with exact C04 bytes, whole-batch validation, durable append-only spool.ack records through C05, lost-ACK replay without duplicate observations and unacknowledged-only spool capacity; review fix removes the misleading Replayed result field; no transport, public endpoint, CLI, UI or authentication claim",
   "changed_paths": [
     "apps/web/src/generated/project.json",
     "docs/ROADMAP_FA.md",
     "docs/agents/SESSION_HANDOFF.json",
     "docs/architecture/CONFIG_APPLY.md",
+    "docs/architecture/IDENTITY.md",
     "docs/architecture/STORAGE_PROOF.md",
     "docs/engineering/ENGINE_TESTS.md",
-    "docs/evidence/C15.json",
-    "docs/evidence/C15/browser.log",
-    "docs/evidence/C15/clone-final.log",
-    "docs/evidence/C15/clone.py",
-    "docs/evidence/C15/commands.jsonl",
-    "docs/evidence/C15/discovery.log",
-    "docs/evidence/C15/engine-tests.log",
-    "docs/evidence/C15/environment.log",
-    "docs/evidence/C15/environment.py",
-    "docs/evidence/C15/final-check.log",
-    "docs/evidence/C15/format.log",
-    "docs/evidence/C15/network.log",
-    "docs/evidence/C15/network.trace",
-    "docs/evidence/C15/next-task.log",
-    "docs/evidence/C15/package-checksums.log",
-    "docs/evidence/C15/package.log",
-    "docs/evidence/C15/python-tests.log",
-    "docs/evidence/C15/repo-contracts.log",
-    "docs/evidence/C15/run.py",
-    "docs/evidence/C15/runtime-provider.log",
-    "docs/evidence/C15/source-files.json",
-    "docs/evidence/C15/validate-final.log",
-    "docs/evidence/C15/validate-plan.log",
-    "docs/evidence/C15/verify-network.py",
-    "docs/evidence/C15/verify-source.log",
-    "docs/evidence/C15/verify-source.py",
-    "docs/evidence/C15/vet.log",
+    "docs/evidence/C16.json",
+    "docs/evidence/C16/browser.log",
+    "docs/evidence/C16/clone-final.log",
+    "docs/evidence/C16/clone.py",
+    "docs/evidence/C16/commands.jsonl",
+    "docs/evidence/C16/discovery.log",
+    "docs/evidence/C16/engine-tests.log",
+    "docs/evidence/C16/environment.log",
+    "docs/evidence/C16/environment.py",
+    "docs/evidence/C16/final-check.log",
+    "docs/evidence/C16/format.log",
+    "docs/evidence/C16/network.log",
+    "docs/evidence/C16/network.trace",
+    "docs/evidence/C16/next-task.log",
+    "docs/evidence/C16/package-checksums.log",
+    "docs/evidence/C16/package.log",
+    "docs/evidence/C16/python-tests.log",
+    "docs/evidence/C16/repo-contracts.log",
+    "docs/evidence/C16/run.py",
+    "docs/evidence/C16/source-files.json",
+    "docs/evidence/C16/validate-plan.log",
+    "docs/evidence/C16/verify-network.py",
+    "docs/evidence/C16/verify-source.py",
+    "docs/evidence/C16/vet.log",
     "docs/product/REFERENCE_WORKFLOW.md",
-    "internal/contracts/spool_gap.go",
-    "internal/contracts/spool_gap_test.go",
+    "internal/collector/ingest.go",
+    "internal/contracts/spool_ack.go",
+    "internal/contracts/spool_ack_test.go",
+    "internal/sensor/apply.go",
     "internal/sensor/event.go",
-    "internal/spool/overflow.go",
-    "internal/spool/store.go",
     "internal/storage/adapter.go",
+    "internal/storage/collector_recovery_test.go",
+    "plans/commits/C09.md",
     "plans/progress.json",
     "plans/project-state.json",
     "scripts/verify-engine-tests.mjs",
     "tests/engineering/engine-tests.test.mjs",
-    "tests/fixtures/miragemesh/C14/expected-output.json",
-    "tests/fixtures/miragemesh/C15/expected-output.json",
-    "tests/fixtures/miragemesh/C15/invalid.json",
-    "tests/fixtures/miragemesh/C15/positive.json",
-    "tests/overflow_test.go",
-    "tests/spool_test.go"
+    "tests/fixtures/miragemesh/C16/expected-output.json",
+    "tests/fixtures/miragemesh/C16/invalid.json",
+    "tests/fixtures/miragemesh/C16/positive.json",
+    "tests/replay_test.go"
   ],
   "commands": [
     {
@@ -70,18 +68,34 @@
         "./..."
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/engine-tests.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/engine-tests.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 39.501,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "0c0685199210b05b0dbd73f21ecfc940e990b4c1e10cb12e1621d58e93fc6990"
     },
     {
       "argv": [
         "node",
         "scripts/verify-engine-tests.mjs",
-        "docs/evidence/C15/engine-tests.log"
+        "docs/evidence/C16/engine-tests.log"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/discovery.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/discovery.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 0.083,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "6c3e2a3cfc86a06a30465611e8fe214b194e1dd852df68adea6ff80624f15e86"
     },
     {
       "argv": [
@@ -90,8 +104,16 @@
         "./..."
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/vet.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/vet.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 0.572,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "argv": [
@@ -100,18 +122,35 @@
         "import subprocess; x=subprocess.check_output([\"gofmt\",\"-l\",\"cmd\",\"internal\",\"tests\"],text=True); print(x,end=\"\"); assert not x"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/format.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/format.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 0.035,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "argv": [
-        "npm",
-        "run",
-        "test:browser"
+        "./node_modules/.bin/playwright",
+        "test",
+        "--config",
+        "/tmp/opencode/c16-playwright.config.mjs"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/browser.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/browser.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 2.001,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "b910bb7ac5558c460f46f926fa161c946e7236dacfc3cbb4026a4c7f521e1fd5"
     },
     {
       "argv": [
@@ -120,8 +159,16 @@
         "package:web"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/package.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/package.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 0.174,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "08622119b0ee127bf0fd56ade76787c97c74143ad01abe795c6449115355aa0b"
     },
     {
       "argv": [
@@ -130,8 +177,16 @@
         "import os,subprocess; os.chdir(\"dist/release\"); subprocess.run([\"sha256sum\",\"--check\",\"SHA256SUMS.txt\"],check=True)"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/package-checksums.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/package-checksums.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 0.026,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "88b1f0e10fc663d8955696e61b17b37bbd83c150b162c38cbec3030fc8a8ac3b"
     },
     {
       "argv": [
@@ -139,8 +194,16 @@
         "scripts/validate_repo.py"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/repo-contracts.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/repo-contracts.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 0.169,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "d2a9a507dcb937771fa5fc7ef4a9f605b40e4883094dc199fd9a4957d453bbe1"
     },
     {
       "argv": [
@@ -155,43 +218,50 @@
         "-v"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/python-tests.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/python-tests.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 0.865,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "185d2fe64af0aa7eea499afd3eded69ce160442ea32f0d6bc19fa80340b9ce21"
     },
     {
       "argv": [
         "python3",
-        "docs/evidence/C15/verify-network.py"
+        "docs/evidence/C16/verify-network.py"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/network.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
-    },
-    {
-      "argv": [
-        "podman",
-        "run",
-        "--rm",
-        "--network=none",
-        "--memory=67108864",
-        "--memory-swap=67108864",
-        "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
-        "sh",
-        "-c",
-        "test \"$(cat /sys/fs/cgroup/memory.max)\" = 67108864"
-      ],
-      "exit_code": 0,
-      "output_path": "docs/evidence/C15/runtime-provider.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/network.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 4.183,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "507ddb865d5adeefe14e897bf8f4835e225ca13b31d1668de0ec70c7af4a3f7e"
     },
     {
       "argv": [
         "python3",
-        "docs/evidence/C15/environment.py"
+        "docs/evidence/C16/environment.py"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/environment.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/environment.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 1.97,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "47e9b4b04b9f4805edda3ce0012144d179a38977b93e0b1d58ed32c1f313f24a"
     },
     {
       "argv": [
@@ -200,8 +270,16 @@
         "validate:plan"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/validate-plan.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/validate-plan.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 0.333,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "bbe7c0c8988c2df98f4c8d9f5e981c0fdcbc6965252577a3d0eace7e36cd67a5"
     },
     {
       "argv": [
@@ -210,8 +288,16 @@
         "check"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/final-check.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/final-check.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 16.535,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "35a2d187f90cb8d127b328d9c8df3d9194242cbc5e6c54f885b63dbe0cbdf62a"
     },
     {
       "argv": [
@@ -222,48 +308,46 @@
         "next"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/next-task.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/next-task.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 0.302,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "b33d726a12c77f1dc381e69a06c23e71d7f26c6e973c510e79ce1ae84e0ce609"
     },
     {
       "argv": [
         "python3",
-        "docs/evidence/C15/clone.py"
+        "docs/evidence/C16/clone.py"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C15/clone-final.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
-    },
-    {
-      "argv": [
-        "python3",
-        "docs/evidence/C15/verify-source.py"
-      ],
-      "exit_code": 0,
-      "output_path": "docs/evidence/C15/verify-source.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
-    },
-    {
-      "argv": [
-        "npm",
-        "run",
-        "validate:plan"
-      ],
-      "exit_code": 0,
-      "output_path": "docs/evidence/C15/validate-final.log",
-      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+      "output_path": "docs/evidence/C16/clone-final.log",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "elapsed_seconds": 44.158,
+      "environment_overrides": {
+        "GOTOOLCHAIN": "go1.27.2",
+        "GOSUMDB": "sum.golang.org",
+        "GOPROXY": "https://proxy.golang.org|direct",
+        "npm_cli": "11.9.0 via pinned npm bin first in PATH"
+      },
+      "stored_output_sha256": "32dc31faaa3b3e38999c8b35c14a8e6c74a1f6a2f13fd4a10c428ad90e92f65c"
     }
   ],
   "blockers": [],
   "scope_limits": [
-    "Every accepted event remains pending until C16 implements durable ACK and reclamation; markers remain loss history.",
-    "C14 readers reject the new gap record type, so rollback after a marker is written requires a C15-compatible reader.",
-    "Local clone and injected-error checks are not physical power-loss or GitHub Actions proof; C28 resource capacity is unmeasured.",
-    "No standalone JavaScript lint script is defined; formatting, Go vet, TypeScript, tests and builds were run."
+    "Only local process-crash/injected-error recovery is proven; physical power loss and remote-runner/GitHub Actions behavior are not certified.",
+    "No transport, mTLS terminator, authenticated ingest endpoint, HTTP/CLI/UI surface or real sensor identity is added or claimed.",
+    "C28 resource capacity is unmeasured; C30 remains the full clean-host workflow/restart/restore gate.",
+    "C17/C18 segmentation/indexing must skip spool.gap and spool.ack as events, and C23 retention must not orphan an ACK or delete an event while its ACK remains.",
+    "Browser regression ran on 127.0.0.1:4174 with a temporary Playwright config because another user process occupied the canonical 4173 port; the same three browser tests passed."
   ],
-  "next_task": "C16",
+  "next_task": "C17",
   "next_command": "npm run plan -- next",
-  "future_card_note": "C16 must re-review internal/collector/ingest.go and tests/replay_test.go targets to include durable spool ACK and capacity reclamation; preserve and report all C15 gap markers. C17/retention must retain the spool.gap record type.",
+  "future_card_note": "C17 segment rotation and C18 index rebuild must skip spool.gap and spool.ack as event records; C23 retention must not delete an event while its ACK remains or orphan an ACK. C16 does not add an authenticated transport endpoint, mTLS listener, CLI or UI.",
   "delivery": {
     "commit_created": false,
     "push_performed": false,
@@ -271,13 +355,13 @@
   },
   "local_clone_verification": {
     "passed": true,
-    "candidate_tree": "1c0cf49db2f8a9b660bac842a0987a7a21ec98e5",
-    "snapshot_commit": "9bf488c86cf10b10e6718cb7c1763059fa3a018e",
-    "git_source_integrity_identity": "sha256:6412ecdcb0d778de0149f47037722c5918984ef461e1f389a5f900f9f935e01c",
-    "output_path": "docs/evidence/C15/clone-final.log",
+    "candidate_tree": "8d3fab37a685accd066a3bb828379272a05a5245",
+    "snapshot_commit": "632292cc355ea4d6b9db57bd16f8a5aaba1b61eb",
+    "git_source_integrity_identity": "sha256:1f9c3b89eb6387fa0cd0407f076950346aba3597834c6cf6c2ec8cdd44ff21d1",
+    "output_path": "docs/evidence/C16/clone-final.log",
     "remote_runner": false,
     "delivery_commit": false,
     "runtime_tests_certified": false,
-    "binding": "Temporary local snapshot of the final C15 source passed clean-clone setup, Go vet/race/discovery, event validation and local runtime startup. It does not certify hosted Actions or product readiness."
+    "binding": "Temporary local snapshot of the final C16 source passed clean-clone setup, Go vet/race/discovery, event validation and local runtime startup. It does not certify hosted Actions or product readiness."
   }
 }

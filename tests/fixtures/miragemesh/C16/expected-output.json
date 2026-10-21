@@ -1,0 +1,14 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Expected values are hand-derived from the C16 synthetic sequence and the stable operation-id convention.",
+  "batch_id": "batch-01",
+  "acknowledged_sequences": [1, 2],
+  "ack_operation_ids": [
+    "spool-ack/ab7788d22eb7372f79712a3019ddc0b260f902df42b810119150d1b8a6efb116/1",
+    "spool-ack/ab7788d22eb7372f79712a3019ddc0b260f902df42b810119150d1b8a6efb116/2"
+  ],
+  "resume_sequences_after_ack": [3, 4],
+  "event_batch_limit": 2,
+  "spool_limit_events": 2
+}

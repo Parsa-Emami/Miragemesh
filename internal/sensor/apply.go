@@ -136,6 +136,12 @@ func (a *Applier) Apply(ctx context.Context, payload, signature []byte) (config.
 	return result, nil
 }
 
+// SameStore reports whether this applier reads the given store. Callers that
+// combine config and event writes must reject a mismatched pair.
+func (a *Applier) SameStore(store *storage.Store) bool {
+	return a != nil && a.store == store
+}
+
 // Active rebuilds the observed applied state from the current durable snapshot.
 // Storage failures are explicit errors rather than a missing or stale cache hit.
 func (a *Applier) Active(ctx context.Context, sensorID string) (config.Applied, bool, error) {

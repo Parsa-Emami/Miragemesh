@@ -1,0 +1,5 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 package:web
+> node scripts/package-web.mjs
+
+Packaged web-only release; source dirty=true; engineReady=false

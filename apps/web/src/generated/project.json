@@ -202,7 +202,7 @@
       "id": "C16",
       "title": "feat(replay): upload batches with durable acknowledgements",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Lost ACK may replay but cannot create duplicate incident observations."
       ],

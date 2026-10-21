@@ -57,7 +57,19 @@ C14 implements the local retention of step 3 as an internal Go queue:
 C05 using the C11 applied signed `spool_limit_events`. Full queues drop the new
 event and durably record its sequence gap; an exact retry reports the same typed
 drop without double-counting. C05 global quota exhaustion returns an explicit
-storage error without claiming the loss was recorded. C16 owns collector
-delivery, durable ACKs and capacity reclamation. The queue has no
+storage error without claiming the loss was recorded. The queue has no
 network/CLI/browser surface and does not execute the whole scenario. See
+`docs/architecture/CONFIG_APPLY.md`.
+
+C16 implements collector delivery for step 3 as an internal Go boundary:
+`collector.New(store, applier)` and `Ingest` accept a contiguous
+`batch_id`/`first_sequence`/`last_sequence` batch of exact C04 bytes, persist
+every event through the C07 sequence, then commit append-only `spool.ack`
+records through C05. `Ingest` succeeds only after every event and ACK is
+durable. An exact retry after a lost acknowledgement returns the original
+receipts and creates no duplicate event observation; acknowledged events no
+longer consume the signed spool limit, so capacity is reclaimed. A forged,
+orphaned or out-of-order ACK fails closed. C16 adds no listener, public HTTP/CLI
+surface, mTLS terminator or UI and does not execute the whole scenario; C30 is
+still the local end-to-end gate. See `docs/engineering/ENGINE_TESTS.md` and
 `docs/architecture/CONFIG_APPLY.md`.

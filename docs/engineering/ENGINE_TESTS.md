@@ -312,3 +312,48 @@ package requires `TestSpoolOverflowPersistsDroppedEventAndResumesAfterGap`,
 to prove durable drop-new markers, idempotent retry, restart recovery,
 gap-aware sequence continuation and explicit quota failure. The discovery guard
 regression removes each anchor in turn and requires rejection.
+
+## C16 required anchors
+
+The `internal/contracts` package requires `TestSpoolAckRecordValidation` for the
+canonical version, kind, identity, sequence and digest fields. `internal/storage`
+requires `TestCollectorSIGKILLAtAcknowledgementBoundaries` and
+`TestCollectorSyscallFailuresPreserveRecoverableState`. The `tests` package
+requires:
+
+- `TestCollectorDurableBatchAcknowledgementSurvivesRestart`
+- `TestCollectorLostAcknowledgementReplayIsIdempotent`
+- `TestCollectorAcknowledgementReclaimsSpoolCapacity`
+- `TestCollectorRejectsForgedAndOrphanedAcknowledgements`
+- `TestCollectorRejectsInvalidBatchesBeforeCommit`
+- `TestCollectorRequiresConfigurationAndStorageQuota`
+- `TestCollectorConcurrentReplayCreatesOneObservation`
+- `TestCollectorTreatsPathsAsOpaqueAndHasNoEgress`
+
+The positive fixture under `tests/fixtures/miragemesh/C16/` is repository-authored
+Apache-2.0 synthetic data with eight v1 events and a signed
+`spool_limit_events=2`, `event_batch_limit=2`. The first two-event batch is
+acknowledged, capacity is reclaimed, and the next two-event batch and one-event
+batch are accepted. The invalid fixture covers empty and missing-ID batches,
+metadata/event count mismatches, the applied batch limit, malformed, unsupported
+version, zero-sequence, oversized and sensor-mismatched events, out-of-order
+sequences and conflicting exact-byte replay. Each rejection must return a typed
+error and leave the manifest and record counts unchanged.
+
+The external recovery tests run the actual collector in a child process, verify
+the writer lock is still held, then SIGKILL it after the event commit, after the
+ACK object publication, before the ACK manifest rename and after the ACK manifest
+directory flush. Nine injected ACK publication failures cover write, short write,
+stage sync, object rename, object directory sync, manifest write, manifest sync,
+manifest rename and manifest directory sync. Reopening the real C05 store must
+show either the event-only prefix or the event-plus-ACK prefix as appropriate,
+and an exact retry must converge to one event and one ACK. These are local
+process-crash and injected-filesystem-error proofs, not physical power-loss,
+transport, mTLS, remote-runner or C30 readiness results.
+
+The path/egress anchor uses traversal-looking and symlink metadata paths and
+proves an outside sentinel is unchanged. It also parses every file in
+`internal/collector` and requires an exact import allowlist, so `net`, `os`,
+`os/exec`, `path/filepath` and `syscall` cannot enter the package. C16 adds no
+listener, public endpoint, CLI or UI. The discovery guard regression removes each
+C16 anchor in turn and requires rejection.

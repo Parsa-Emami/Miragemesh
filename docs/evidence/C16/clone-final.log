@@ -1,0 +1,7 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 test:clone
+> node scripts/clone-smoke.mjs
+
+{"schema_version": 1, "passed": true, "scope": "Source integrity only; runtime results belong to this commit's CI jobs", "commit": "632292cc355ea4d6b9db57bd16f8a5aaba1b61eb", "git_tree": "8d3fab37a685accd066a3bb828379272a05a5245", "current_source_identity": "sha256:1f9c3b89eb6387fa0cd0407f076950346aba3597834c6cf6c2ec8cdd44ff21d1", "historical_manifest": {"commit": "09ea1d6f0216e4d2a567e7db256c062094ca3764", "verified_files": 291}, "historical_evidence": {"commit": "7e839b9591db5f5856a77a148aaf4d88b21ba547", "source_identity": "sha256:70cabd1f8cb58f9f1e05da9864196ba98e947dfab6c3eafe91ba4fc0aa021176"}, "runtime_tests_certified": false, "core_tasks_certified": []}
+Verified 4 engine suites and 92 required test anchors.
+{"passed":true,"stagedTree":"8d3fab37a685accd066a3bb828379272a05a5245","proof":"real git clone -> npm run setup -> Go vet/race tests and discovery guard -> local event validation -> unified web and Go runtime startup","coreReady":false}
