@@ -1,0 +1,629 @@
+{
+  "commit_id": "C12",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "date": "2026-10-21",
+  "base_commit": "0797ed25339ffd877137ee78d14a8a8f94cea0b0",
+  "source_identity": "sha256:c53f1a4fe9499501cae70cd33abbf477dc9151e9728609c24ec89facf0c87368",
+  "source_manifest": "docs/evidence/C12/source-files.json",
+  "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes) over tracked and non-ignored untracked files; docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded because they publish this identity themselves.",
+  "scope": "F06 internal metadata-only HTTP decoy: one bounded request is answered with a fixed body and only the request path is observed, recorded as the existing version 1 http.request event through C04 validation and C05 durable storage under the separate decoy-01 identity. No command execution, no echoed request content, no listener, no container and no provider.",
+  "owner_scope_resolution": "The owner approved the internal decoy component on the C12 card targets only: internal/decoy/http.go and tests/decoy_test.go with the C12 fixtures. The decoy identity is decoy-01 so its sequence space stays separate from the reported sensor-01 events. Rejected requests answer with an explicit status and a fixed body. The C12 card and plans/roadmap.json metadata are unchanged; no commit, push or publication was requested or performed.",
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0 from /home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm, the CLI pinned by package.json packageManager",
+    "go": "1.27.2 through the official Go toolchain mechanism (GOTOOLCHAIN=go1.27.2, GOSUMDB=sum.golang.org)",
+    "os": "Linux x86_64 (7.0.0-38-generic)",
+    "filesystem": "ext4",
+    "providers": "Go standard library and the existing local C05 storage; no container, network or external provider is required by this slice. Podman 4.9.3 is present for the existing clone/setup checks.",
+    "hardware_target": "C28 target remains unmeasured; no capacity certification.",
+    "details": "docs/evidence/C12/environment.log",
+    "npm_bundled_with_node": "11.17.0 at /home/amirreza/.nvm/versions/node/v24.19.0/lib/node_modules/npm/bin/npm-cli.js. It is the npm that ships with the Node bundle and it was not used for any recorded project command; every recorded npm command runs the pinned 11.9.0 CLI by absolute path, and that directory is first on PATH so the nested npm calls of the project scripts use the same pinned CLI.",
+    "npm_pinned_path": "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+    "npm_commands": "npm ci, npm run check, npm run prepare:web, npm run package:web, npm run validate:plan and npm run plan -- next are recorded with the absolute path of the pinned 11.9.0 CLI."
+  },
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "node --version && /home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm --version && node /home/amirreza/.nvm/versions/node/v24.19.0/lib/node_modules/npm/bin/npm-cli.js --version && go version && uname -srmo && findmnt -T . -n -o FSTYPE && git rev-parse HEAD && command -v strace && podman --version"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/environment.log",
+      "elapsed_seconds": 0.184
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-fund"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/install.log",
+      "elapsed_seconds": 0.821
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/repository.log",
+      "elapsed_seconds": 0.099
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/python-tests.log",
+      "elapsed_seconds": 0.384
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/plan.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/plan-python.log",
+      "elapsed_seconds": 0.051
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "mkdir -p dist/ci && go test -race -count=1 -json ./... > dist/ci/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/engine-tests.jsonl",
+      "elapsed_seconds": 6.613
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "dist/ci/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/discovery.log",
+      "elapsed_seconds": 0.027
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "tests/engineering/engine-tests.test.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/discovery-regression.log",
+      "elapsed_seconds": 1.722
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "./tests",
+        "-run",
+        "^TestDecoy",
+        "-count=1",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/focused.log",
+      "elapsed_seconds": 0.706
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-count=1",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/standard-tests.log",
+      "elapsed_seconds": 5.386
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "c12_formatting=$(gofmt -l cmd internal tests); test -z \"$c12_formatting\""
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/format.log",
+      "elapsed_seconds": 0.016
+    },
+    {
+      "argv": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/vet.log",
+      "elapsed_seconds": 0.115
+    },
+    {
+      "argv": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "dist/engine/miragemesh",
+        "./cmd/miragemesh"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/build.log",
+      "elapsed_seconds": 0.087
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/check.log",
+      "elapsed_seconds": 17.995
+    },
+    {
+      "argv": [
+        "./node_modules/.bin/playwright",
+        "test",
+        "--config",
+        "/tmp/opencode/c12/playwright.local.config.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/browser-alt-port.log",
+      "elapsed_seconds": 2.109
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-c",
+        "-o",
+        "dist/ci/c12-tests",
+        "./tests"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/network-build.log",
+      "elapsed_seconds": 0.087
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "cd tests && strace -f -e trace=network,execve -o ../docs/evidence/C12/network.trace ../dist/ci/c12-tests -test.run \"^TestDecoy\" -test.count=1"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/network-tests.log",
+      "elapsed_seconds": 0.574
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "prepare:web"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/prepare.log",
+      "elapsed_seconds": 0.182
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "package:web"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/package.log",
+      "elapsed_seconds": 0.383
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "cd dist/release && sha256sum --check SHA256SUMS.txt"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/package-checksums.log",
+      "elapsed_seconds": 0.006
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "validate:plan"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/plan.log",
+      "elapsed_seconds": 0.337
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "plan",
+        "--",
+        "next"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/next-task.log",
+      "elapsed_seconds": 0.243
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C12/verify-clone.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/clone.log",
+      "elapsed_seconds": 35.091
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "go test -race -count=1 -json ./... > dist/ci/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/final-race.jsonl",
+      "elapsed_seconds": 7.25
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "dist/ci/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/final-discovery.log",
+      "elapsed_seconds": 0.083
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "c12_formatting=$(gofmt -l cmd internal tests); test -z \"$c12_formatting\""
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/final-format.log",
+      "elapsed_seconds": 0.116
+    },
+    {
+      "argv": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/final-vet.log",
+      "elapsed_seconds": 0.461
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "plan",
+        "--",
+        "next"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/final-next-task.log",
+      "elapsed_seconds": 0.147
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "validate:plan"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/final-plan.log",
+      "elapsed_seconds": 0.148
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C12/verify-source.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/final-source-verify.log",
+      "elapsed_seconds": 0.048
+    },
+    {
+      "argv": [
+        "python3",
+        "/tmp/opencode/c12/diff.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/final-diff.log.gz",
+      "elapsed_seconds": 0.084,
+      "note": "Raw diff output preserved byte-for-byte as gzip because the captured diff contains context lines that end with a space."
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "go test -race -count=1 -json ./... > dist/ci/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/final-race.jsonl",
+      "elapsed_seconds": 7.948
+    },
+    {
+      "argv": [
+        "python3",
+        "/tmp/opencode/c12/diff.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C12/final-diff.log.gz",
+      "elapsed_seconds": 0.051,
+      "note": "Raw diff output preserved byte-for-byte as gzip because the captured diff contains context lines that end with a space."
+    }
+  ],
+  "results": {
+    "go_top_level_tests": 67,
+    "discovery_suites": 4,
+    "required_test_anchors": 52,
+    "node_tests": 43,
+    "browser_tests": 3,
+    "python_integrity_tests": 6,
+    "c12_negative_fixture_rows": 13,
+    "mutation_checks_caught": 7,
+    "network_syscalls_in_focused_tests": 0,
+    "process_executions_in_focused_tests": 1,
+    "lint": "Go format and vet; no standalone JavaScript lint script is configured.",
+    "typecheck": "Passed via npm run check.",
+    "build": "Web and engine passed via npm run check; the engine also built directly.",
+    "dependencies": "No dependency or lockfile changes.",
+    "next_task": "C13",
+    "npm_cli": "11.9.0 (pinned) for the recorded project commands; 11.17.0 is only the npm bundled with Node 24.19.0"
+  },
+  "acceptance_checks": [
+    {
+      "acceptance": "No command execution or sensitive response echo occurs and request size is bounded.",
+      "result": "verified",
+      "evidence": "TestDecoyRecordsMetadataOnlyInteraction drives the real handler against the real C05 store: one accepted request commits exactly one version 1 http.request observation whose metadata holds only the path. TestDecoyNeverEchoesRequestContent sends the synthetic marker in the query, the header and the body: the fixed answer and the committed bytes contain the marker nowhere. TestDecoyBoundsRequestSize rejects a declared and an observed body above the bound with 413 and commits nothing, and accepts a body exactly at the bound. TestDecoyNeverExecutesCommandsOrEgresses parses every file of the decoy package, requires its exact import set, resolves the local name of the net/http import from its declaration, rejects a dot import and checks every identifier the package takes from net/http, so only the handler API is allowed: the package cannot open a file, run a process or dial a remote service, and an outbound client call fails the anchor under any import name. strace -f -e trace=network,execve over the focused test binary recorded zero network syscalls and exactly one execve, the test binary itself."
+    }
+  ],
+  "negative_case_checks": [
+    {
+      "case": "Missing prerequisites, malformed fixtures or unavailable required providers produce an explicit error rather than placeholder success.",
+      "result": "verified",
+      "evidence": "TestDecoyFailsClosedOnMissingPrerequisites covers the six construction cases of the fixture: a missing store, a missing clock, an invalid identity, a zero request bound, a zero path bound and a request bound above the version 1 event limit all return decoy.ErrInvalidInput. A closed store answers 503 with the fixed unavailable body instead of the accepted body. The six rejected requests of the fixture answer 405, 413 and 400 with their fixed bodies and commit nothing. No provider is required by this slice; a missing provider cannot silently succeed because none is used."
+    },
+    {
+      "case": "Repeat after restart and verify the declared invariant and documented recovery outcome.",
+      "result": "verified",
+      "evidence": "TestDecoyObservationsSurviveRestart accepts a sensor-01 event, records a decoy observation, closes and reopens the store, rebuilds the decoy and records another observation: the store holds the sensor event plus the two decoy observations with the contiguous decoy-01 sequence 1 and 2. The rebuild recovers the sequence from the durable history, so there is no duplicate and no gap. A decoy whose identity has a non-contiguous history fails closed with storage.ErrRecovery instead of renumbering."
+    },
+    {
+      "case": "No egress by default",
+      "result": "verified",
+      "evidence": "The decoy package has no listener, no client and no outbound call: the import allowlist of TestDecoyNeverExecutesCommandsOrEgresses admits only the standard HTTP, hashing, JSON and text packages and the existing contract, sensor and storage packages, and its net/http identifier allowlist admits only the handler API under the local name resolved from the import declaration, so a client call such as http.DefaultClient.Do, an aliased web.DefaultClient.Do, a dot import and a second package file are all rejected by the anchor. The focused test binary recorded zero network syscalls under strace. Container isolation and egress denial for a published decoy remain the C13 work and are not claimed here."
+    }
+  ],
+  "security_review": {
+    "verification": "The decoy reuses the C04 version 1 event contract and the C05 publication path through sensor.Accept; the observation is validated by the existing contract before it is committed.",
+    "atomicity": "One observation is committed under the existing single-writer lock. The sequence advances only after the store accepted the record, so a rejected or failed observation leaves no gap in the accepted history.",
+    "data_bounds": "The request body is bounded by the explicit deployment bound and read only to enforce it. The recorded path is bounded in bytes, must be valid UTF-8 and must not contain control characters. The assembled observation stays inside the version 1 event payload limit.",
+    "echo": "Every answer is a fixed constant: no request-derived value, no internal state and no error detail reaches the caller. The query, the headers and the body are discarded and never recorded. The recorded path is never resolved against a file, a command or a URL. The package takes no client identifier from net/http: the anchor resolves the local import name, rejects a dot import, scans every file of the package and admits only the handler API.",
+    "filesystem": "The decoy opens no file. The durable bytes are written by the existing C05 adapter with its 0700/0600 ownership, atomic manifest publication and directory flush.",
+    "known_limits": "The local clock and the private store remain trusted. The recorded path can contain an attacker-chosen value by design, because the path is the observation; it is never executed or resolved. A second decoy instance on the same store can lose a sequence race and then answers 503 instead of committing a conflicting observation."
+  },
+  "failed_attempts": [
+    {
+      "expected": true,
+      "phase": "Initial C12 RED",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C12/red.log",
+      "note": "The first test compile failed because the internal/decoy package did not exist."
+    },
+    {
+      "expected": true,
+      "phase": "Discovery guard RED",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C12/discovery-red.log",
+      "note": "Removing a C12 anchor was accepted by the old discovery guard; the regression failed. The guard now requires all seven new anchors."
+    },
+    {
+      "expected": true,
+      "phase": "Plan validation before the evidence file existed",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C12/plan-python.log",
+      "note": "The plan validator reads the evidence of a verified task. The evidence file was written after the source identity, then both plan validators were repeated and passed."
+    },
+    {
+      "expected": false,
+      "phase": "Clean-clone preflight on raw captured output",
+      "exit_code": 2,
+      "output_path": "docs/evidence/C12/clone-preflight-failure.log.gz",
+      "note": "git diff --check found a blank line at the end of one captured npm log. The raw bytes are preserved byte-for-byte as gzip instead of changing code or relaxing the check; the clean-clone run was repeated after this evidence-only repair."
+    },
+    {
+      "expected": false,
+      "phase": "Canonical browser command on the repository port",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C12/browser-port-conflict.log.gz",
+      "note": "npm run test:browser starts its own server on 127.0.0.1:4173 and refuses to reuse a port that is taken. On this host an unrelated vite preview server of another project holds 4173, so the canonical command cannot start. The same suite, tests and options were run on the free port 4180 with an external configuration file and passed; the foreign process was left untouched."
+    }
+  ],
+  "mutation_checks": [
+    {
+      "mutation": "request-bound",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyBoundsRequestSize$",
+      "output_path": "docs/evidence/C12/mutation-request-bound.log"
+    },
+    {
+      "mutation": "echo-path",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyNeverEchoesRequestContent$",
+      "output_path": "docs/evidence/C12/mutation-echo-path.log"
+    },
+    {
+      "mutation": "sequence-recovery",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyObservationsSurviveRestart$",
+      "output_path": "docs/evidence/C12/mutation-sequence-recovery.log"
+    },
+    {
+      "mutation": "outbound-client",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyNeverExecutesCommandsOrEgresses$",
+      "output_path": "docs/evidence/C12/mutation-outbound-client.log",
+      "note": "An http.NewRequest and http.DefaultClient.Do call added to the handler fails the anchor; the identifier check names both client identifiers."
+    },
+    {
+      "mutation": "aliased-outbound-client",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyNeverExecutesCommandsOrEgresses$",
+      "output_path": "docs/evidence/C12/mutation-aliased-outbound-client.log",
+      "note": "The net/http import renamed to web with a web.DefaultClient.Do call fails the anchor; the string check does not match it, the resolved import name does."
+    },
+    {
+      "mutation": "dot-import",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyNeverExecutesCommandsOrEgresses$",
+      "output_path": "docs/evidence/C12/mutation-dot-import.log",
+      "note": "A dot import of net/http fails the anchor with the explicit dot-import verdict."
+    },
+    {
+      "mutation": "outbound-client-second-file",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyNeverExecutesCommandsOrEgresses$",
+      "output_path": "docs/evidence/C12/mutation-outbound-client-second-file.log",
+      "note": "A second file of the decoy package with an aliased client call fails the anchor; the whole package is scanned."
+    }
+  ],
+  "observed_limitations": [
+    "Internal component only: no engine listener is published, no container is started and no public decoy surface exists in C12.",
+    "Decoy isolation, egress denial, PID and memory limits are the C13 work and are not proven here.",
+    "Remote GitHub Actions execution is unverified. The local workflow commands and the clean-clone verification are recorded separately; no push or publication was performed.",
+    "The C12 card and plans/roadmap.json still describe go test ./... as unavailable for this task; that metadata change needs its own owner approval and was not made.",
+    "The observed path is attacker-chosen by design and is stored as the observation; it is never executed, resolved or echoed.",
+    "The C05 store and the local clock remain trusted; whole-history rollback and physical power-loss resilience are outside this evidence.",
+    "No commit was created: the owner did not request one, and no push or publication is authorized.",
+    "The owner review observed one TCP broken pipe failure of the unrelated C09 anchor TestMTLSRejectsIssuersWithoutRevocationCoverage in a full race run. It was not reproducible locally: 100 consecutive race runs of the mTLS anchors, three consecutive full race runs and three repeated package runs passed. The likely cause is a client write racing the rejection close in the C09 test helper. C12 does not touch the TLS, listener or pki code, so that pre-existing C09 test race was left unchanged and is reported to the owner as a separate item."
+  ],
+  "rollback_or_recovery_observation": "The change adds new files and one new package. Before any observation is accepted, reverting the source removes the decoy and its observations. After observations are accepted, keep the directory and a C12-compatible reader: the observations are ordinary version 1 events, so the C07 reader still decodes them, and the decoy-01 identity only adds a new sequence space. Never restore an older backup over newer accepted records.",
+  "delivery": {
+    "delivery_commit_created": false,
+    "push_authorized": false,
+    "publication_authorized": false,
+    "local_commit_authorized": false,
+    "commit_subject": null,
+    "commit_identity": "No commit was created. The owner did not request one; the delivery stays in the working tree."
+  },
+  "verification_notes": "Commands use the locked local Go 1.27.2 and Node 24.19.0 toolchains with the official checksum database, and every recorded npm command runs the npm 11.9.0 CLI pinned by package.json. The tests and the discovery regression were written before their implementation. Seven deliberate mutations were caught by behavioural assertions and every source was restored byte-for-byte: the request bound, the echoed path, the recovered sequence, a direct outbound client call, an aliased outbound client call, a dot import of net/http and an outbound client call in a second file of the decoy package. The source identity, the evidence and the progress entry publish the same source; the final source inventory and the clean-clone snapshot bind the final source separately. The recorded race stream is the final engine suite run; the earlier engine-tests run produced the same suite result. The browser suite was executed on the free port 4180 because an unrelated process of another project holds the repository port 4173 on this host; the canonical command and its conflict output are recorded as a failed attempt.",
+  "source_file_count": 389,
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C12 decoy requests, rejected requests and expected outcomes. The marker value exists only to prove that request content is never echoed or recorded; no real traffic, credential, hostname, customer or production data is present.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C12/expected-output.json": "3372548273d5ca4ab0181bff8c61ca0bfdfd14671d52408fe212912cc5ec5ff2",
+      "tests/fixtures/miragemesh/C12/invalid.json": "82ee3bb1938c9266b9eb355a8c6c1baacb7ae484a9848177668071b5f19bc69a",
+      "tests/fixtures/miragemesh/C12/positive.json": "e49fefe5a02df51daf4b60dbb54254ddf5e89b579c2bf4e06908fcf65b2b9205"
+    }
+  },
+  "evidence_log_encoding": "Selected raw terminal logs are gzip compressed to preserve their original output bytes while satisfying git diff --check.",
+  "changed_paths": [
+    "apps/web/src/generated/project.json",
+    "docs/ROADMAP_FA.md",
+    "docs/agents/SESSION_HANDOFF.json",
+    "docs/architecture/DECOY_HTTP.md",
+    "docs/engineering/ENGINE_TESTS.md",
+    "docs/evidence/C12.json",
+    "docs/evidence/C12/browser-alt-port.log",
+    "docs/evidence/C12/browser-port-conflict.log.gz",
+    "docs/evidence/C12/build.log",
+    "docs/evidence/C12/candidate-diff-stat.log",
+    "docs/evidence/C12/check.log",
+    "docs/evidence/C12/clone-preflight-failure.log.gz",
+    "docs/evidence/C12/clone.log",
+    "docs/evidence/C12/commands.jsonl",
+    "docs/evidence/C12/discovery-red.log.gz",
+    "docs/evidence/C12/discovery-regression.log",
+    "docs/evidence/C12/discovery.log",
+    "docs/evidence/C12/engine-tests.jsonl",
+    "docs/evidence/C12/environment.log",
+    "docs/evidence/C12/final-diff.log.gz",
+    "docs/evidence/C12/final-discovery.log",
+    "docs/evidence/C12/final-format.log",
+    "docs/evidence/C12/final-next-task.log",
+    "docs/evidence/C12/final-plan.log",
+    "docs/evidence/C12/final-race.jsonl",
+    "docs/evidence/C12/final-race.log",
+    "docs/evidence/C12/final-source-verify.log",
+    "docs/evidence/C12/final-vet.log",
+    "docs/evidence/C12/focused.log",
+    "docs/evidence/C12/format.log",
+    "docs/evidence/C12/install.log",
+    "docs/evidence/C12/mutation-aliased-outbound-client.log",
+    "docs/evidence/C12/mutation-dot-import.log",
+    "docs/evidence/C12/mutation-echo-path.log",
+    "docs/evidence/C12/mutation-outbound-client-second-file.log",
+    "docs/evidence/C12/mutation-outbound-client.log",
+    "docs/evidence/C12/mutation-request-bound.log",
+    "docs/evidence/C12/mutation-sequence-recovery.log",
+    "docs/evidence/C12/network-build.log",
+    "docs/evidence/C12/network-tests.log",
+    "docs/evidence/C12/network.trace",
+    "docs/evidence/C12/next-task.log",
+    "docs/evidence/C12/package-checksums.log",
+    "docs/evidence/C12/package.log",
+    "docs/evidence/C12/plan-python.log",
+    "docs/evidence/C12/plan.log",
+    "docs/evidence/C12/prepare.log.gz",
+    "docs/evidence/C12/python-tests.log",
+    "docs/evidence/C12/red.log",
+    "docs/evidence/C12/repository.log",
+    "docs/evidence/C12/source-files.json",
+    "docs/evidence/C12/standard-tests.log",
+    "docs/evidence/C12/verify-clone.py",
+    "docs/evidence/C12/verify-source.py",
+    "docs/evidence/C12/vet.log",
+    "docs/product/REFERENCE_WORKFLOW.md",
+    "internal/decoy/http.go",
+    "plans/progress.json",
+    "plans/project-state.json",
+    "scripts/verify-engine-tests.mjs",
+    "tests/decoy_test.go",
+    "tests/engineering/engine-tests.test.mjs",
+    "tests/fixtures/miragemesh/C12/expected-output.json",
+    "tests/fixtures/miragemesh/C12/invalid.json",
+    "tests/fixtures/miragemesh/C12/positive.json"
+  ],
+  "local_clone_verification": {
+    "passed": true,
+    "proof": "Staged working tree in a temporary index, git diff --cached --check, then npm run test:clone: real git clone, npm run setup, go vet, the race engine suite, the discovery guard, the engine event validation and the unified web and Go runtime startup.",
+    "output_path": "docs/evidence/C12/clone.log",
+    "delivery_commit": false,
+    "remote_runner": false,
+    "source_identity_note": "The existing clone integrity tool hashes progress and the session handoff as well, so its identity differs from the C12 source_identity by design. The C12 identity excludes the two files that publish it.",
+    "snapshot_commit": "e1425b6549af6bd170773fdac57d5e31abdff0c3",
+    "snapshot_tree": "ce09f7d50a321aeaf2793fa04acd41db6b6218d5",
+    "snapshot_integrity_identity": "sha256:38585d38b6b68e3b3c3807cf252246ae651f77bca09e9ebd9898f3ddf51ec2d5"
+  }
+}

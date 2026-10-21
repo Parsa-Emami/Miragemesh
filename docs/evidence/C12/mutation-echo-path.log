@@ -1,0 +1,5 @@
+--- FAIL: TestDecoyNeverEchoesRequestContent (0.06s)
+    decoy_test.go:230: body "{\"status\":\"ok\"} /login"
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.069s
+FAIL

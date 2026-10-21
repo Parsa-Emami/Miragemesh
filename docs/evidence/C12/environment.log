@@ -1,0 +1,9 @@
+v24.19.0
+11.9.0
+11.17.0
+go version go1.27.2 linux/amd64
+Linux 7.0.0-38-generic x86_64 GNU/Linux
+ext4
+0797ed25339ffd877137ee78d14a8a8f94cea0b0
+/usr/bin/strace
+podman version 4.9.3

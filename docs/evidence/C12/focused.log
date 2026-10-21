@@ -1,0 +1,16 @@
+=== RUN   TestDecoyRecordsMetadataOnlyInteraction
+--- PASS: TestDecoyRecordsMetadataOnlyInteraction (0.08s)
+=== RUN   TestDecoyNeverEchoesRequestContent
+--- PASS: TestDecoyNeverEchoesRequestContent (0.04s)
+=== RUN   TestDecoyBoundsRequestSize
+--- PASS: TestDecoyBoundsRequestSize (0.04s)
+=== RUN   TestDecoyRejectsUnsupportedMethodAndInvalidPath
+--- PASS: TestDecoyRejectsUnsupportedMethodAndInvalidPath (0.09s)
+=== RUN   TestDecoyFailsClosedOnMissingPrerequisites
+--- PASS: TestDecoyFailsClosedOnMissingPrerequisites (0.09s)
+=== RUN   TestDecoyObservationsSurviveRestart
+--- PASS: TestDecoyObservationsSurviveRestart (0.07s)
+=== RUN   TestDecoyNeverExecutesCommandsOrEgresses
+--- PASS: TestDecoyNeverExecutesCommandsOrEgresses (0.00s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/tests	0.423s

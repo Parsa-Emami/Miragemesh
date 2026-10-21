@@ -1,0 +1,6 @@
+--- FAIL: TestDecoyNeverExecutesCommandsOrEgresses (0.00s)
+    decoy_test.go:507: ../internal/decoy/http.go names the net/http identifier NewRequest, which is not a handler API
+    decoy_test.go:507: ../internal/decoy/http.go names the net/http identifier DefaultClient, which is not a handler API
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.008s
+FAIL

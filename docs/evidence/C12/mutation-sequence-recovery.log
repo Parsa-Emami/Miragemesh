@@ -1,0 +1,5 @@
+--- FAIL: TestDecoyObservationsSurviveRestart (0.08s)
+    decoy_test.go:370: status after restart 503
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.087s
+FAIL

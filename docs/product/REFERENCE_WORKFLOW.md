@@ -28,3 +28,12 @@ C11 implements only the internal signed-configuration part of steps 1 and 4:
 original acceptance time through C05. It does not execute the full scenario or
 apply settings to a decoy/spool; those consumers belong to later cards. See
 `docs/architecture/CONFIG_APPLY.md` for this supported in-process interface.
+
+C12 adds the decoy observation of step 2 as an internal component:
+`decoy.New` and `decoy.Service.ServeHTTP` answer a request with a fixed body
+and record one bounded observation of the path through the C04 contract and the
+C05 store, under the separate `decoy-01` identity. The decoy never executes a
+command, never echoes request content and bounds the request size. It is not a
+published surface in C12: no listener, no container isolation and no egress
+denial are proven here, and the scenario itself is still not executed end to
+end. See `docs/architecture/DECOY_HTTP.md`.

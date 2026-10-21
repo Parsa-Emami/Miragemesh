@@ -1,0 +1,31 @@
+957117 execve("../dist/ci/c12-tests", ["../dist/ci/c12-tests", "-test.run", "^TestDecoy", "-test.count=1"], 0x7ffc86cdebb0 /* 86 vars */) = 0
+957117 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957117 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957117 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957120 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957120 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957120 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957120 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957127 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957121 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=957117, si_uid=1000} ---
+957127 +++ exited with 0 +++
+957121 +++ exited with 0 +++
+957120 +++ exited with 0 +++
+957118 +++ exited with 0 +++
+957122 +++ exited with 0 +++
+957119 +++ exited with 0 +++
+957117 +++ exited with 0 +++

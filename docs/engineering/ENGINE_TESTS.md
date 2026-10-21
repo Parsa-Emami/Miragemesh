@@ -208,3 +208,27 @@ nine injected write/sync/rename failures cover ENOSPC, short writes and EIO.
 Ephemeral signing keys cross an anonymous child-process pipe and never enter
 fixtures, argv, environment or disk. These are local process-crash and injected
 filesystem-error proofs, not physical power-loss or remote-runner results.
+
+## C12 required anchors
+
+C12 requires `TestDecoyRecordsMetadataOnlyInteraction`,
+`TestDecoyNeverEchoesRequestContent`, `TestDecoyBoundsRequestSize`,
+`TestDecoyRejectsUnsupportedMethodAndInvalidPath`,
+`TestDecoyFailsClosedOnMissingPrerequisites`,
+`TestDecoyObservationsSurviveRestart` and
+`TestDecoyNeverExecutesCommandsOrEgresses` in `tests`.
+
+The decoy tests drive the real handler against the real C05 store: an accepted
+request commits one version 1 observation, a rejected request commits nothing
+and answers with its fixed status, and the recorded observation survives a
+store reopen with the next sequence. The last anchor parses every file of the
+decoy package: it requires the exact import set, resolves the local name of the
+`net/http` import from its declaration, rejects a dot import and checks every
+identifier the package takes from `net/http`, so only the handler API is
+allowed and a client call such as `http.DefaultClient.Do` or an aliased
+`web.DefaultClient.Do` fails the anchor. The fixtures under
+`tests/fixtures/miragemesh/C12/` are repository-authored Apache-2.0 synthetic
+requests and expectations; the marker value exists only to prove that request
+content is never echoed or recorded. C12 adds no listener, no container and no
+network provider, so these are local component proofs and not isolation,
+egress-denial or remote-runner results.

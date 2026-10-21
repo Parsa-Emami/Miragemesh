@@ -1,0 +1,20 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Expected outcomes for the repository-authored synthetic C12 decoy fixtures. No real traffic, credential, hostname, customer or production data is present.",
+  "accepted_interactions": 3,
+  "accepted_sequences": [1, 2, 3],
+  "recorded_kind": "http.request",
+  "recorded_paths": ["/health", "/login", "/ready"],
+  "rejected_cases": 13,
+  "response_bodies": {
+    "accepted": "{\"status\":\"ok\"}",
+    "invalid_request": "{\"error\":\"invalid_request\"}",
+    "method_not_allowed": "{\"error\":\"method_not_allowed\"}",
+    "request_too_large": "{\"error\":\"request_too_large\"}",
+    "unavailable": "{\"error\":\"unavailable\"}"
+  },
+  "namespace": "decoy-01 observations never share the sensor-01 sequence space.",
+  "restart": "A decoy rebuilt on the reopened store continues the decoy-01 sequence: no duplicate and no gap.",
+  "not_claimed": "No decoy listener is published by the engine in C12, and no container isolation, egress denial or resource limit is proven here."
+}

@@ -154,7 +154,7 @@
       "id": "C12",
       "title": "feat(decoy): implement limited metadata only http decoy",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "No command execution or sensitive response echo occurs and request size is bounded."
       ],

@@ -1,0 +1,5 @@
+--- FAIL: TestDecoyNeverExecutesCommandsOrEgresses (0.00s)
+    decoy_test.go:489: ../internal/decoy/http.go dot-imports net/http
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.004s
+FAIL

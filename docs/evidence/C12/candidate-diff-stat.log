@@ -1,0 +1,66 @@
+ apps/web/src/generated/project.json                |   2 +-
+ docs/ROADMAP_FA.md                                 |   2 +
+ docs/agents/SESSION_HANDOFF.json                   | 158 ++--
+ docs/architecture/DECOY_HTTP.md                    |  95 +++
+ docs/engineering/ENGINE_TESTS.md                   |  24 +
+ docs/evidence/C12.json                             | 607 ++++++++++++++
+ docs/evidence/C12/browser-alt-port.log             |   8 +
+ docs/evidence/C12/browser-port-conflict.log.gz     | Bin 0 -> 191 bytes
+ docs/evidence/C12/build.log                        |   0
+ docs/evidence/C12/candidate-diff-stat.log          |  67 ++
+ docs/evidence/C12/check.log                        |  92 ++
+ docs/evidence/C12/clone-preflight-failure.log.gz   | Bin 0 -> 377 bytes
+ docs/evidence/C12/clone.log                        |   0
+ docs/evidence/C12/commands.jsonl                   |  22 +
+ docs/evidence/C12/discovery-regression.log         |  20 +
+ docs/evidence/C12/discovery.log                    |   1 +
+ docs/evidence/C12/engine-tests.jsonl               | 923 +++++++++++++++++++++
+ docs/evidence/C12/engine-tests.log                 |   0
+ docs/evidence/C12/environment.log                  |   9 +
+ docs/evidence/C12/final-diff.log.gz                | Bin 0 -> 8468 bytes
+ docs/evidence/C12/final-discovery.log              |   1 +
+ docs/evidence/C12/final-format.log                 |   0
+ docs/evidence/C12/final-next-task.log              | 104 +++
+ docs/evidence/C12/final-plan.log                   |   5 +
+ docs/evidence/C12/final-race.jsonl                 | 923 +++++++++++++++++++++
+ docs/evidence/C12/final-race.log                   |   0
+ docs/evidence/C12/final-source-verify.log          |   1 +
+ docs/evidence/C12/final-vet.log                    |   0
+ docs/evidence/C12/focused.log                      |  16 +
+ docs/evidence/C12/format.log                       |   0
+ docs/evidence/C12/install.log                      |   2 +
+ .../C12/mutation-aliased-outbound-client.log       |   6 +
+ docs/evidence/C12/mutation-dot-import.log          |   5 +
+ docs/evidence/C12/mutation-echo-path.log           |   5 +
+ .../C12/mutation-outbound-client-second-file.log   |   6 +
+ docs/evidence/C12/mutation-outbound-client.log     |   7 +
+ docs/evidence/C12/mutation-request-bound.log       |   5 +
+ docs/evidence/C12/mutation-sequence-recovery.log   |   5 +
+ docs/evidence/C12/network-build.log                |   0
+ docs/evidence/C12/network-tests.log                |   1 +
+ docs/evidence/C12/network.trace                    |  31 +
+ docs/evidence/C12/next-task.log                    | 104 +++
+ docs/evidence/C12/package-checksums.log            |  17 +
+ docs/evidence/C12/package.log                      |   5 +
+ docs/evidence/C12/plan-python.log                  |   1 +
+ docs/evidence/C12/plan.log                         |   5 +
+ docs/evidence/C12/prepare.log.gz                   | Bin 0 -> 97 bytes
+ docs/evidence/C12/python-tests.log                 |  11 +
+ docs/evidence/C12/red.log                          |   5 +
+ docs/evidence/C12/repository.log                   |   2 +
+ docs/evidence/C12/source-files.json                | 394 +++++++++
+ docs/evidence/C12/standard-tests.log               |   9 +
+ docs/evidence/C12/verify-clone.py                  |  27 +
+ docs/evidence/C12/verify-source.py                 |  24 +
+ docs/evidence/C12/vet.log                          |   0
+ docs/product/REFERENCE_WORKFLOW.md                 |   9 +
+ internal/decoy/http.go                             | 228 +++++
+ plans/progress.json                                |  10 +-
+ plans/project-state.json                           |   9 +-
+ scripts/verify-engine-tests.mjs                    |   2 +-
+ tests/decoy_test.go                                | 520 ++++++++++++
+ tests/engineering/engine-tests.test.mjs            |   8 +-
+ tests/fixtures/miragemesh/C12/expected-output.json |  20 +
+ tests/fixtures/miragemesh/C12/invalid.json         |  94 +++
+ tests/fixtures/miragemesh/C12/positive.json        |  59 ++
+ 65 files changed, 4617 insertions(+), 99 deletions(-)

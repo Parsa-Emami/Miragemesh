@@ -1,0 +1,94 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C12 negative cases: rejected requests, incomplete construction and an unavailable store. No real traffic, credential, hostname, customer or production data is present.",
+  "cases": [
+    {
+      "name": "unsupported-method",
+      "kind": "request",
+      "method": "PUT",
+      "path": "/config",
+      "expected_status": 405
+    },
+    {
+      "name": "declared-length-too-large",
+      "kind": "request",
+      "method": "POST",
+      "path": "/upload",
+      "declared_bytes": 2048,
+      "expected_status": 413
+    },
+    {
+      "name": "body-too-large",
+      "kind": "request",
+      "method": "POST",
+      "path": "/upload",
+      "body_bytes": 2048,
+      "unknown_length": true,
+      "expected_status": 413
+    },
+    {
+      "name": "path-too-long",
+      "kind": "request",
+      "method": "GET",
+      "path_length": 512,
+      "expected_status": 400
+    },
+    {
+      "name": "control-character-path",
+      "kind": "request",
+      "method": "GET",
+      "control_character_path": true,
+      "expected_status": 400
+    },
+    {
+      "name": "empty-path",
+      "kind": "request",
+      "method": "GET",
+      "empty_path": true,
+      "expected_status": 400
+    },
+    {
+      "name": "missing-store",
+      "kind": "construction",
+      "field": "store",
+      "expected_error": "invalid decoy input"
+    },
+    {
+      "name": "missing-clock",
+      "kind": "construction",
+      "field": "clock",
+      "expected_error": "invalid decoy input"
+    },
+    {
+      "name": "invalid-sensor-id",
+      "kind": "construction",
+      "field": "sensor_id",
+      "expected_error": "invalid decoy input"
+    },
+    {
+      "name": "zero-request-bound",
+      "kind": "construction",
+      "field": "max_request_bytes",
+      "expected_error": "invalid decoy input"
+    },
+    {
+      "name": "zero-path-bound",
+      "kind": "construction",
+      "field": "max_path_bytes",
+      "expected_error": "invalid decoy input"
+    },
+    {
+      "name": "request-bound-above-event-limit",
+      "kind": "construction",
+      "field": "max_request_bytes",
+      "value": 8193,
+      "expected_error": "invalid decoy input"
+    },
+    {
+      "name": "unavailable-store",
+      "kind": "storage",
+      "expected_status": 503
+    }
+  ]
+}

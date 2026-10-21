@@ -1,0 +1,5 @@
+# github.com/Parsa-Emami/Miragemesh/tests
+tests/decoy_test.go:21:2: no required module provides package github.com/Parsa-Emami/Miragemesh/internal/decoy; to add it:
+	go get github.com/Parsa-Emami/Miragemesh/internal/decoy
+FAIL	github.com/Parsa-Emami/Miragemesh/tests [setup failed]
+FAIL

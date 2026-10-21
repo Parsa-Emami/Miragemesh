@@ -1,0 +1,59 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C12 decoy requests and expectations. No real traffic, credential, hostname, customer or production data is present; the marker value exists only to prove that request content is never echoed or recorded.",
+  "now": "2026-10-21T00:00:00Z",
+  "sensor_id": "decoy-01",
+  "sensitive_marker": "synthetic-marker-must-not-be-echoed",
+  "options": {
+    "max_request_bytes": 1024,
+    "max_path_bytes": 256
+  },
+  "storage_limits": {
+    "max_operations": 16,
+    "max_bytes": 131072,
+    "max_manifest_bytes": 65536
+  },
+  "requests": [
+    {
+      "name": "health-probe",
+      "method": "GET",
+      "path": "/health",
+      "query": "?token=synthetic-marker-must-not-be-echoed",
+      "headers": {
+        "X-Synthetic": "synthetic-marker-must-not-be-echoed"
+      },
+      "body": "",
+      "expected_status": 200,
+      "expected_body": "{\"status\":\"ok\"}",
+      "expected_recorded_path": "/health",
+      "expected_sequence": 1
+    },
+    {
+      "name": "form-post",
+      "method": "POST",
+      "path": "/login",
+      "query": "",
+      "headers": {
+        "Authorization": "Bearer synthetic-marker-must-not-be-echoed"
+      },
+      "body": "password=synthetic-marker-must-not-be-echoed",
+      "expected_status": 200,
+      "expected_body": "{\"status\":\"ok\"}",
+      "expected_recorded_path": "/login",
+      "expected_sequence": 2
+    },
+    {
+      "name": "head-probe",
+      "method": "HEAD",
+      "path": "/ready",
+      "query": "",
+      "headers": {},
+      "body": "",
+      "expected_status": 200,
+      "expected_body": "",
+      "expected_recorded_path": "/ready",
+      "expected_sequence": 3
+    }
+  ]
+}

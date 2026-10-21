@@ -105,10 +105,12 @@
     },
     {
       "id": "C12",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C12.json"
+      ],
+      "source_identity": "sha256:c53f1a4fe9499501cae70cd33abbf477dc9151e9728609c24ec89facf0c87368",
+      "notes": "F06 verified locally: the internal decoy component answers one request with a fixed body, observes only the path and records it as a version 1 http.request event through C04 validation and C05 storage under the separate decoy-01 identity. Seven anchors cover the recorded observation, the absence of any echoed request content, the bounded request size, the rejected method and path, the fail-closed prerequisites, the restart sequence and the exact import set of the package. Three deliberate mutations were caught. No listener is published, no container isolation or egress denial is proven, no public API, dependency, schema or product limit changed, and no remote Actions run or product readiness is claimed."
     },
     {
       "id": "C13",
