@@ -1,5 +1,5 @@
 {
-  "source_identity": "sha256:f86f6b91b188cd34c4ca6345f942a94cffb816164f1ea4ae39e7dd7c7d184580",
+  "source_identity": "sha256:2582a704264779e6eba41e37ff7902b46d6b32094c2e2d6322d559ab327fadcc",
   "files": {
     ".agents/SKILLS_AUDIT.md": "d4964430cf549d12cec42e6c7f5a08372f201474f7f8ae2353a8245f2540a1e0",
     ".agents/skill-licenses/addyosmani-agent-skills-MIT.txt": "6f202f8bd568cd730dbb2b0d1f8e243bc74c2fa1f64dbce9b2c7ea08bd5c9fd7",
@@ -45,7 +45,7 @@
     ".github/workflows/contracts.yml": "1c94dbadec4c7f2e1c2424554e87710eb3635b5df101189f9303501917dea85c",
     ".github/workflows/plan.yml": "2cc9906b9605a83ea0e9bffaefc1707bec701a28be7e97c2ad3464572582e910",
     ".github/workflows/runtime.yml": "f5c2fad323898dfea0c376f3e8f66d7094474ecdc7e6838168546e260e01250a",
-    ".github/workflows/web.yml": "31f247dbb908cf23fb29a7084c28b6ce85df8e558a2de249ffb285f5e8341ef6",
+    ".github/workflows/web.yml": "84668e424fec5692356c36928b6ba37e82729a0ebf2cd4443ea3b619978bdb7c",
     ".gitignore": "7e0c2797c1312b4c30202def1d40ec28897615184831191d5afc2f679700c650",
     ".nvmrc": "7e8a2fa94951112b894a3dbe3d05efef5e9263741fa49125f0a70f40fedab4cc",
     "ACCEPTANCE_GATES_V7.md": "90e224ba551690639a0416768102b38f7a0955f254dbb0391e23b6a5a5d65929",

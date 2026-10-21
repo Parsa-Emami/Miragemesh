@@ -1,9 +1,9 @@
 {
   "project": "MirageMesh",
   "date": "2026-10-21",
-  "base_commit": "2e78097eb89101b3ee76a69b8448d9f2694cb432",
+  "base_commit": "bc84ea6156b478a1dd12e534622459bddb1f5cad",
   "scope": "F07 decoy isolation: the C12 decoy handler runs inside a rootless container that has no network at all, no capabilities, no host namespace and a read-only root filesystem, bounded by a hard process and memory limit. The supervisor states the policy, the limited container provider applies it and the supervisor verifies the observed and the effective controls before it reports a running decoy. The engine starts the isolated decoy with --decoy-isolation and propagates the typed outcome.",
-  "final_source_identity": "sha256:f86f6b91b188cd34c4ca6345f942a94cffb816164f1ea4ae39e7dd7c7d184580",
+  "final_source_identity": "sha256:2582a704264779e6eba41e37ff7902b46d6b32094c2e2d6322d559ab327fadcc",
   "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes) over tracked and non-ignored untracked files; docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded because they publish this identity themselves.",
   "core_tasks_verified": [
     "C01-C10: retain historical source-bound evidence",
@@ -11,7 +11,7 @@
     "C12: metadata-only HTTP decoy with path-only observations through C04 and C05, verified locally",
     "C13: rootless container isolation of the decoy with denied egress and runtime limits, verified locally"
   ],
-  "commands": "C13 follow-up: exact outputs are in docs/evidence/C13/ci-fix-*.log and ci-fix-engine-tests.jsonl; original C13 run history remains in docs/evidence/C13/commands.jsonl.",
+  "commands": "C13 web CI follow-up: exact commands, exits and output paths are appended to docs/evidence/C13.json; ci-web-*.log contains the controlled reproduction and clean-clone results.",
   "blockers": [],
   "limitations": [
     "No decoy surface is published: the container has no network at all, so the decoy address is reachable only from inside its own namespace. Publishing the decoy to untrusted peers with the outbound denial kept is later workflow work.",
@@ -22,8 +22,7 @@
     "The decoy host of the tests is a test fixture, not a product listener: it exists so that the real C12 handler runs under the isolation policy and so that the probes measure the isolation from inside the container. The decoy artifact of the engine workflow is supplied by the operator; the decoy service binary is later work.",
     "The state directory of the workflow must be writable by the operator: a rootless installation cannot write into /var/lib, so the examples use a user owned path and the engine refuses a state path that is not a private directory of the owner.",
     "The C12 card and plans/roadmap.json are unchanged. The C12 evidence stays bound to its own historical source; the C12 anchor of the decoy package is extended, not weakened.",
-    "The original C13 delivery had no commit. A separate follow-up fix commit is authorized and created locally; no push or publication was performed.",
-    "The GitHub Actions runs for base commit 2e78097 failed while observing effective cgroup limits. The local fix reads those files through /proc/<container-pid>/root/sys/fs/cgroup instead of mapping Podman inspect CgroupPath into the runner mount, and passes the full race suite and clean-clone workflow locally. GitHub Actions on the updated source remain unverified; no commit or push was made."
+    "The bc84ea6 GitHub Actions engine-runtime job passed; web-foundation failed at npm run test:clone. The web workflow omitted the locked image pull, and a controlled empty store reproduces the resulting failure. The exact remote Go test is hidden by truncated logging. The updated web workflow has only local verification; a new remote run requires a push."
   ],
   "next_task": "C14",
   "next_command": "npm run plan -- next",
@@ -32,24 +31,26 @@
     "push_authorized": false,
     "publication_authorized": false,
     "local_commit_authorized": true,
-    "commit_subject": "fix(podman): read effective cgroup limits in container namespace",
-    "commit_identity": "Follow-up fix committed locally; push and publication were not performed."
+    "commit_subject": "fix(ci): prepare pinned decoy image for clone tests",
+    "commit_identity": "The web CI follow-up was committed locally; no push or publication was performed."
   },
-  "notes": "C13 CI follow-up. The provider reads pids.max, memory.max and memory.swap.max via the container process mount namespace rather than mapping Podman inspect CgroupPath into the runner mount. Local race suite, engine discovery, vet, formatting, plan validation, source verification and clean-clone checks passed. The fix is committed locally; remote Actions have not been rerun.",
+  "notes": "C13 web CI fix: web-foundation now pulls the locked Alpine image and verifies its digest before clone-smoke. An empty Podman store reproduces the missing-image failure; after pull the same C13 test and a full staged clean-clone pass locally. No remote run of this changed workflow has occurred. npm run check also passed locally. The full clean-clone also passed using the isolated Podman image store after pull.",
   "changed_paths": [
-    "internal/podman/podman.go",
+    ".github/workflows/web.yml",
     "docs/evidence/C13.json",
     "docs/evidence/C13/source-files.json",
-    "docs/evidence/C13/ci-fix-engine-tests.jsonl",
-    "docs/evidence/C13/ci-fix-discovery.log",
-    "docs/evidence/C13/ci-fix-clone.log",
-    "docs/evidence/C13/ci-fix-vet.log",
-    "docs/evidence/C13/ci-fix-format.log",
-    "docs/evidence/C13/ci-fix-plan.log",
+    "docs/evidence/C13/ci-web-missing-image.log",
+    "docs/evidence/C13/ci-web-pull.log",
+    "docs/evidence/C13/ci-web-image-inspect.log",
+    "docs/evidence/C13/ci-web-pulled-image.log",
+    "docs/evidence/C13/ci-web-clone.log",
     "plans/progress.json",
     "docs/agents/SESSION_HANDOFF.json",
-    "docs/evidence/C13/ci-fix-source-verify.log",
-    "docs/evidence/C13/ci-fix-repository.log",
-    "docs/evidence/C13/ci-fix-diff-check.log"
+    "docs/evidence/C13/ci-web-plan.log",
+    "docs/evidence/C13/ci-web-repository.log",
+    "docs/evidence/C13/ci-web-source-verify.log",
+    "docs/evidence/C13/ci-web-yaml.log",
+    "docs/evidence/C13/ci-web-check.log",
+    "docs/evidence/C13/ci-web-isolated-clone.log"
   ]
 }

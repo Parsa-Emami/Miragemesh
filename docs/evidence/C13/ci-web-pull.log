@@ -1,0 +1,6 @@
+Trying to pull docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62...
+Getting image source signatures
+Copying blob sha256:1074353eec0db2c1d81d5af2671e56e00cf5738486f5762609ea33d606f88612
+Copying config sha256:e7b39c54cdeca0d2aae83114bb605753a5f5bc511fe8be7590e38f6d9f915dad
+Writing manifest to image destination
+e7b39c54cdeca0d2aae83114bb605753a5f5bc511fe8be7590e38f6d9f915dad

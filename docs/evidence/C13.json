@@ -5,11 +5,11 @@
   "planning_template": false,
   "date": "2026-10-21",
   "base_commit": "cde5ab68f58a40ba346ddc4fe010597fea8be99d",
-  "source_identity": "sha256:f86f6b91b188cd34c4ca6345f942a94cffb816164f1ea4ae39e7dd7c7d184580",
+  "source_identity": "sha256:2582a704264779e6eba41e37ff7902b46d6b32094c2e2d6322d559ab327fadcc",
   "source_manifest": "docs/evidence/C13/source-files.json",
   "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes) over tracked and non-ignored untracked files; docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded because they publish this identity themselves.",
   "scope": "F07 decoy isolation: the C12 decoy handler runs inside a rootless container that has no network at all, no capabilities, no host namespace and a read-only root filesystem, bounded by a hard process and memory limit. The supervisor states the policy, the limited container provider applies it and the supervisor verifies the observed and the effective controls before it reports a running decoy. The engine starts the isolated decoy with --decoy-isolation and propagates the typed outcome.",
-  "owner_scope_resolution": "The owner approved the internal decoy isolation on the C13 card targets, a test only decoy host that runs the real C12 handler inside the container, the image locked by full digest with its provenance and licenses recorded, a minimal runtime workflow preparation, and a minimal extension of the C12 anchor. The reviews required the mount roles bound to the fixed container targets, the immutability of the validated policy, the verification of the exact and the effective runtime controls, the reporting of a failed cleanup, the wiring of the typed outcome into the supported engine workflow, a digest pinned image with no implicit pull, the cancellation of the runtime calls, a bounded capture of the runtime output, the use of the versioned expected outcome fixture, the rollback of a container that an uncertain start may have created, the signals of the operator in the workflow and the explicit removal before the outcome is written. All of them are implemented and each one is proved by a mutation and a regression. No commit, push or publication was requested or performed. The last review required that the runtime copies no proxy setting of the host into the decoy, that the command fails when it cannot deliver its typed result and that the restart regression compares the exact number of the stored observations. All three are implemented, proved by a regression and recorded in the evidence.",
+  "owner_scope_resolution": "The owner approved the internal decoy isolation on the C13 card targets, a test only decoy host that runs the real C12 handler inside the container, the image locked by full digest with its provenance and licenses recorded, a minimal runtime workflow preparation, and a minimal extension of the C12 anchor. The reviews required the mount roles bound to the fixed container targets, the immutability of the validated policy, the verification of the exact and the effective runtime controls, the reporting of a failed cleanup, the wiring of the typed outcome into the supported engine workflow, a digest pinned image with no implicit pull, the cancellation of the runtime calls, a bounded capture of the runtime output, the use of the versioned expected outcome fixture, the rollback of a container that an uncertain start may have created, the signals of the operator in the workflow and the explicit removal before the outcome is written. All of them are implemented and each one is proved by a mutation and a regression. At the original C13 implementation handoff, no commit, push or publication was requested or performed; the owner later requested the bc84ea6 follow-up commit. The last review required that the runtime copies no proxy setting of the host into the decoy, that the command fails when it cannot deliver its typed result and that the restart regression compares the exact number of the stored observations. All three are implemented, proved by a regression and recorded in the evidence.",
   "environment": {
     "node": "24.19.0",
     "npm": "11.9.0 from /home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm, the CLI pinned by package.json packageManager",
@@ -441,6 +441,123 @@
       ],
       "exit_code": 0,
       "output_path": "docs/evidence/C13/ci-fix-diff-check.log"
+    },
+    {
+      "argv": [
+        "env",
+        "XDG_DATA_HOME=/tmp/miragemesh-podman-ci-pYgWkL",
+        "podman",
+        "pull",
+        "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-web-pull.log",
+      "note": "Re-run of the successful cold pull into isolated storage; output captured here."
+    },
+    {
+      "argv": [
+        "env",
+        "XDG_DATA_HOME=/tmp/miragemesh-podman-ci-pYgWkL",
+        "podman",
+        "image",
+        "inspect",
+        "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
+        "--format",
+        "{{.Digest}} {{.Architecture}}/{{.Os}}"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-web-image-inspect.log",
+      "note": "The image digest and amd64/linux platform match the lock."
+    },
+    {
+      "argv": [
+        "env",
+        "XDG_DATA_HOME=/tmp/miragemesh-podman-ci-pYgWkL",
+        "GOTOOLCHAIN=go1.27.2",
+        "GOSUMDB=sum.golang.org",
+        "GOPROXY=https://proxy.golang.org|direct",
+        "go",
+        "test",
+        "-race",
+        "-run",
+        "^TestDecoyIsolationStopsAndRemovesItsContainer$",
+        "-count=1",
+        "-v",
+        "./tests"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-web-pulled-image.log",
+      "note": "Same test passes after the pinned image is available in isolated storage."
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-web-clone.log",
+      "note": "Full clean-clone workflow on a staged snapshot containing the web CI preparation fix; 4 engine suites and 68 anchors passed locally."
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "validate:plan"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-web-plan.log",
+      "note": "Final C13 evidence and roadmap metadata validation passed."
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-web-repository.log",
+      "note": "Repository JSON and contract invariants passed."
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C13/verify-source.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-web-source-verify.log",
+      "note": "399 source files match the updated source manifest and identity."
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "import yaml; yaml.safe_load(open(\".github/workflows/web.yml\")); print(\"web workflow YAML parsed\")"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-web-yaml.log",
+      "note": "The edited web workflow parses as YAML."
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-web-check.log",
+      "note": "Plan metadata, web and engine build, TypeScript typecheck and 45 Node tests passed on the updated checkout."
+    },
+    {
+      "argv": [
+        "env",
+        "XDG_DATA_HOME=/tmp/miragemesh-podman-ci-pYgWkL",
+        "npm",
+        "run",
+        "test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-web-isolated-clone.log",
+      "note": "Full clean-clone Go race suite and discovery guard passed using the separately initialized Podman image store after the pinned image pull."
     }
   ],
   "results": {
@@ -521,6 +638,20 @@
       "exit_code": 1,
       "output_path": "docs/evidence/C13/clone.log",
       "note": "The clone verification failed in the unrelated C09 anchor TestMTLSRejectsIssuersWithoutRevocationCoverage with a TCP broken pipe. The rejected collector closes the connection after the handshake, so the write of the payload raced that close. The test helper now treats a closed connection as the rejection it is, thirty consecutive race runs of the anchor and five consecutive runs of the whole package pass, and the clean-clone verification was repeated."
+    },
+    {
+      "expected": false,
+      "phase": "GitHub Actions web-foundation on bc84ea6156b478a1dd12e534622459bddb1f5cad",
+      "exit_code": 1,
+      "output_path": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39620543170/job/119292506151",
+      "note": "The npm run test:clone step failed at the nested Go race suite on a fresh worker. The web workflow prepared rootless Podman but did not pull the locked Alpine image; C13 uses --pull=never. An isolated empty local Podman store reproduces the explicit missing-image failure."
+    },
+    {
+      "expected": true,
+      "phase": "Controlled fresh Podman storage without the locked image",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C13/ci-web-missing-image.log",
+      "note": "TestDecoyIsolationStopsAndRemovesItsContainer fails explicitly at provider start because --pull=never refuses an image absent from the isolated store. The same test passes after the image is pulled."
     }
   ],
   "mutation_checks": [
@@ -637,20 +768,21 @@
     "The pinned image is not redistributed by MirageMesh. Its digest, platform, provenance and the license of every component are recorded in docs/engineering/toolchain-lock.json; the image contains a GPL-2.0-only busybox component, which the operator accepts by pulling it.",
     "The decoy host of the tests is a test fixture, not a product listener: it exists so that the real C12 handler runs under the isolation policy and so that the probes measure the isolation from inside the container. The decoy artifact of the engine workflow is supplied by the operator; the decoy service binary is later work.",
     "The state directory of the workflow must be writable by the operator: a rootless installation cannot write into /var/lib, so the examples use a user owned path and the engine refuses a state path that is not a private directory of the owner.",
-    "Remote GitHub Actions execution is unverified. The local workflow commands, including the new provider and image preparation step, are recorded separately; no push or publication was performed.",
+    "The original C13 delivery had no remote Actions result. The later bc84ea6 engine-runtime run succeeded and web-foundation failed at clone-smoke; the current web CI fix has not run remotely.",
     "The C12 card and plans/roadmap.json are unchanged. The C12 evidence stays bound to its own historical source; the C12 anchor of the decoy package is extended, not weakened.",
-    "No commit was created: the owner did not request one, and no push or publication is authorized."
+    "This source identity includes the locally committed web CI fix. The prior bc84ea6 follow-up is present on origin/main; this updated source has not been pushed.",
+    "GitHub Actions on the updated web workflow source have not run. The failed bc84ea6 web job and the controlled local missing-image reproduction identify the absent CI image preparation; the engine-runtime job for that SHA succeeded."
   ],
   "rollback_or_recovery_observation": "The change adds a new package, a new decoy file and a test fixture. Reverting them removes the isolation and leaves the C12 decoy untouched. A running decoy container is removed by the supervisor; a container left behind by an earlier run is removed by the next start. The durable observations live outside the container in the C05 store, so they survive a restart and must be preserved like any other accepted event.",
   "delivery": {
-    "delivery_commit_created": false,
+    "delivery_commit_created": true,
     "push_authorized": false,
     "publication_authorized": false,
-    "local_commit_authorized": false,
-    "commit_subject": null,
-    "commit_identity": "No commit was created. The owner did not request one; the delivery stays in the working tree."
+    "local_commit_authorized": true,
+    "commit_subject": "fix(ci): prepare pinned decoy image for clone tests",
+    "commit_identity": "This updated web CI source was committed locally; no push or publication was performed."
   },
-  "verification_notes": "Commands use the locked local Go 1.27.2 and Node 24.19.0 toolchains with the official checksum database, and every recorded npm command runs the npm 11.9.0 CLI pinned by package.json. The isolation anchors and the discovery regression were written before their implementation. Thirteen deliberate mutations of the isolation sources were caught by behavioural assertions and every source was restored byte-for-byte: the memory limit, the process limit, the privileged container, the user namespace, the pull policy, the cancellation, the bound of the captured output, the digest requirement, the mount roles, the completeness of the mounts, the copy of the policy, the effective control verification and the report of a failed cleanup. The source identity, the evidence and the progress entry publish the same source; the final source inventory and the clean-clone snapshot bind the final source separately. The browser suite was executed on the free port 4180 because an unrelated process of another project holds the repository port 4173 on this host.",
+  "verification_notes": "Commands use the locked local Go 1.27.2 and Node 24.19.0 toolchains with the official checksum database, and every recorded npm command runs the npm 11.9.0 CLI pinned by package.json. The isolation anchors and the discovery regression were written before their implementation. Thirteen deliberate mutations of the isolation sources were caught by behavioural assertions and every source was restored byte-for-byte: the memory limit, the process limit, the privileged container, the user namespace, the pull policy, the cancellation, the bound of the captured output, the digest requirement, the mount roles, the completeness of the mounts, the copy of the policy, the effective control verification and the report of a failed cleanup. The source identity, the evidence and the progress entry publish the same source; the final source inventory and the clean-clone snapshot bind the final source separately. The browser suite was executed on the free port 4180 because an unrelated process of another project holds the repository port 4173 on this host. Web CI follow-up: .github/workflows/web.yml now pulls the locked image by full digest and verifies the observed digest before clone-smoke. The controlled empty-store C13 test fails, then passes after pull; the full staged clean-clone check passes locally. Remote Actions on this updated workflow remain pending. The full clean-clone was repeated with the separately initialized Podman storage after the pinned image pull; all 68 anchors passed.",
   "source_file_count": 399,
   "fixtures": {
     "license": "Apache-2.0",
@@ -745,7 +877,19 @@
     "tests/egress_test.go",
     "tests/egress_workflow_test.go",
     "tests/engineering/engine-tests.test.mjs",
-    "tests/mtls_test.go"
+    "tests/mtls_test.go",
+    ".github/workflows/web.yml",
+    "docs/evidence/C13/ci-web-missing-image.log",
+    "docs/evidence/C13/ci-web-pull.log",
+    "docs/evidence/C13/ci-web-image-inspect.log",
+    "docs/evidence/C13/ci-web-pulled-image.log",
+    "docs/evidence/C13/ci-web-clone.log",
+    "docs/evidence/C13/ci-web-plan.log",
+    "docs/evidence/C13/ci-web-repository.log",
+    "docs/evidence/C13/ci-web-source-verify.log",
+    "docs/evidence/C13/ci-web-yaml.log",
+    "docs/evidence/C13/ci-web-check.log",
+    "docs/evidence/C13/ci-web-isolated-clone.log"
   ],
   "local_clone_verification": {
     "passed": true,

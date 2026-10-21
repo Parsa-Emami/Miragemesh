@@ -118,8 +118,8 @@
       "evidence": [
         "docs/evidence/C13.json"
       ],
-      "source_identity": "sha256:f86f6b91b188cd34c4ca6345f942a94cffb816164f1ea4ae39e7dd7c7d184580",
-      "notes": "F07 verified locally on the updated source: rootless no-network decoy isolation, effective PID/memory controls, egress denial, restart, cleanup and typed outcomes. The Podman adapter now reads effective cgroup files through the container process mount namespace instead of mapping the inspect path into the runner mount. Full Go race suite, discovery guard, vet, formatting, clean-clone verification and plan validation pass locally. GitHub Actions for the preceding commit failed at effective cgroup observation; CI on this updated source remains pending. No remote success is claimed."
+      "source_identity": "sha256:2582a704264779e6eba41e37ff7902b46d6b32094c2e2d6322d559ab327fadcc",
+      "notes": "F07 remains verified locally on this source: rootless no-network decoy isolation, effective PID/memory controls, egress denial, restart, cleanup and typed outcomes. GitHub Actions on bc84ea6 passed engine-runtime but web-foundation failed in the nested clone Go tests. The web workflow omitted the locked image pull while C13 requires --pull=never; a controlled empty store reproduces the missing-image failure, and the same test passes after pull. The updated web workflow pulls and verifies the pinned digest. Full clean-clone and npm run check passed locally. The exact failing Go test is absent from the truncated remote log, and remote Actions on the updated source remain pending."
     },
     {
       "id": "C14",

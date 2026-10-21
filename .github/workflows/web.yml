@@ -30,6 +30,8 @@ jobs:
           sudo apt-get install --yes --allow-downgrades --no-install-recommends podman=4.9.3+ds1-1ubuntu0.2
           GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go version
           podman info --format '{{.Host.Security.Rootless}}'
+          podman pull docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
+          test "$(podman image inspect docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 --format '{{.Digest}}')" = "sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62"
       - run: npx --yes --package=npm@11.9.0 --call 'npm run build'
       - run: npx --yes --package=npm@11.9.0 --call 'npm test'
       - run: ./node_modules/.bin/playwright install --with-deps chromium

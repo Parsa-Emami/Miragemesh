@@ -1,0 +1,4 @@
+=== RUN   TestDecoyIsolationStopsAndRemovesItsContainer
+--- PASS: TestDecoyIsolationStopsAndRemovesItsContainer (3.71s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/tests	4.736s
