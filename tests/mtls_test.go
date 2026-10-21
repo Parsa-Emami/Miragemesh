@@ -480,22 +480,26 @@ func TestMTLSTypedVerdictsUseRealHandshakeTranscripts(t *testing.T) {
 
 	dualGuard := c09Guard(t, c09Options(t, fixture, func(options *pki.Options) {
 		options.Anchors = c09Anchors(fixture, "primary", "secondary")
-		options.RevocationListPEM = fixture.RevocationList
-		options.Scopes = fixture.Scopes
 	}))
 	dualAddress, dualCapture := c09Listener(t, dualGuard, nil, nil)
+	// A CA2 chain could verify against the dual anchor pool, but the guard
+	// carries only the primary anchor's CRL: the secondary issuer has no
+	// revocation coverage, so the handshake is denied with the typed
+	// untrusted verdict instead of being captured. The dial itself completes
+	// because TLS 1.3 clients finish their handshake before the server
+	// measures the client certificate.
 	if dialErr := c09Dial(t, dualAddress, c09ClientConfig(t, fixture, "untrusted"), nil); dialErr != nil {
-		t.Fatal("untrusted capture dial failed")
+		t.Fatal("untrusted dial failed")
 	}
 	c09Wait(t, dualCapture, func() bool {
-		states, _, _, _ := dualCapture.snapshot()
-		return len(states) == 1
-	}, "untrusted capture")
-	dualStates, _, _, _ := dualCapture.snapshot()
-	untrustedState := dualStates[0]
-
-	if _, err := deployed.Verify(untrustedState); !errors.Is(err, pki.ErrUntrusted) {
-		t.Fatalf("CA2 chain passed under deployed guard: %v", err)
+		_, _, failures, _ := dualCapture.snapshot()
+		return len(failures) == 1
+	}, "CA2 chain denial")
+	_, _, dualFailures, _ := dualCapture.snapshot()
+	for _, failure := range dualFailures {
+		if !errors.Is(failure, pki.ErrUntrusted) {
+			t.Fatalf("CA2 chain denial was not typed ErrUntrusted: %v", dualFailures)
+		}
 	}
 	if expected.ExpectedVerdicts["untrusted"] != "IDENTITY_UNTRUSTED" {
 		t.Fatalf("fixture verdict drift: %s", expected.ExpectedVerdicts["untrusted"])
@@ -557,14 +561,24 @@ func TestMTLSTypedVerdictsUseRealHandshakeTranscripts(t *testing.T) {
 	}
 }
 
-// TestMTLSRevocationMembershipNeverCrossesIssuers proves RFC 5280
-// (issuer, serial) revocation membership across a real transport: the
-// trusted CRL is signed by the primary anchor and revokes serial 7004 of
-// that issuer, while a different certificate with the same serial issued
-// by the secondary anchor is scoped, authenticates and ingests; the
-// primary-issued certificate carrying the same serial stays revoked.
-func TestMTLSRevocationMembershipNeverCrossesIssuers(t *testing.T) {
+// TestMTLSRejectsIssuersWithoutRevocationCoverage proves the C09 revocation
+// guarantee is complete across a real transport: the guard carries exactly
+// one locally delivered CRL, so every issuer it authenticates must be covered
+// by that CRL. On a dual-anchor configuration with only the primary
+// anchor's CRL, a secondary-issued collector is rejected with a typed
+// untrusted verdict, even though its serial number appears on that CRL — the
+// rejection is coverage-based, not serial-based — while the covered
+// primary-issued collector still authenticates and ingests and the
+// primary-issued same-serial collector stays revoked.
+func TestMTLSRejectsIssuersWithoutRevocationCoverage(t *testing.T) {
 	fixture, expected, _ := c09Files(t)
+	// Fixture sanity: the colliding collector carries the same serial as the
+	// revoked primary-issued collector but was issued by the secondary
+	// anchor, which has no configured CRL.
+	if fixture.Identities["colliding"].Serial != fixture.Identities["revoked"].Serial {
+		t.Fatalf("serial collision fixture drift: %s vs %s",
+			fixture.Identities["colliding"].Serial, fixture.Identities["revoked"].Serial)
+	}
 	guard := c09Guard(t, c09Options(t, fixture, func(options *pki.Options) {
 		options.Anchors = c09Anchors(fixture, "primary", "secondary")
 		options.RevocationListPEM = fixture.RevocationList
@@ -574,48 +588,79 @@ func TestMTLSRevocationMembershipNeverCrossesIssuers(t *testing.T) {
 	store := openStore(t, path, fixture.Limits)
 	events := c09SensorEvents(t)
 	address, outcome := c09Listener(t, guard, events[:1], store)
-	if dialErr := c09Dial(t, address, c09ClientConfig(t, fixture, "colliding"), events[0]); dialErr != nil {
-		t.Fatalf("cross-issuer collector handshake: %v", dialErr)
+	// The covered issuer is unaffected: a primary-issued collector that the
+	// CRL does not revoke still authenticates and ingests through the real
+	// sensor/store pipeline even with the uncovered secondary anchor present
+	// in the same trust pool.
+	if dialErr := c09Dial(t, address, c09ClientConfig(t, fixture, "collector"), events[0]); dialErr != nil {
+		t.Fatalf("covered collector handshake: %v", dialErr)
 	}
 	c09Wait(t, outcome, func() bool {
 		_, identities, _, receipts := outcome.snapshot()
 		return len(identities) == 1 && len(receipts) == 1
-	}, "cross-issuer same-serial acceptance")
-	_, identities, _, receipts := outcome.snapshot()
+	}, "covered collector acceptance")
+	_, identities, _, _ := outcome.snapshot()
 	identity := identities[0]
-	// The colliding identity carries the same serial as the revoked
-	// primary-issued certificate but was issued by the secondary anchor.
-	if identity.SerialNumber != fixture.Identities["revoked"].Serial {
-		t.Fatalf("serial collision fixture drift: %+v", identity)
-	}
-	if identity.Fingerprint == fixture.CollectorFP || fixture.Scopes[identity.Fingerprint] == nil {
-		t.Fatalf("cross-issuer fingerprint drift: %+v", identity)
+	if identity.Fingerprint != fixture.CollectorFP || identity.SerialNumber != fixture.Identities["collector"].Serial {
+		t.Fatalf("covered collector identity drift: %+v", identity)
 	}
 	if len(identity.AllowedScopes) != 1 || identity.AllowedScopes[0] != fixture.SensorID {
-		t.Fatalf("cross-issuer identity scopes drifted: %+v", identity)
+		t.Fatalf("covered collector scopes drifted: %+v", identity)
 	}
-	if receipts[0].Generation != 1 {
-		t.Fatalf("cross-issuer receipt: %+v", receipts[0])
-	}
-	if expected.ExpectedVerdicts["colliding"] != "IDENTITY_OK" {
-		t.Fatalf("fixture verdict drift: %s", expected.ExpectedVerdicts["colliding"])
+	if expected.ExpectedVerdicts["collector"] != "IDENTITY_OK" {
+		t.Fatalf("fixture verdict drift: %s", expected.ExpectedVerdicts["collector"])
 	}
 	denialBefore := c09ManifestDigest(t, path)
-	// On the same listener, the primary-issued certificate with the same
-	// serial is revoked by the CRL and cannot authenticate.
-	c09Dial(t, address, c09ClientConfig(t, fixture, "revoked"), nil)
+	// The uncovered issuer fails closed. The colliding collector carries
+	// serial 7004, which the primary CRL revokes for the primary issuer, but
+	// its certificate was issued by the secondary anchor, so membership can
+	// never apply to it: the verdict must be the typed untrusted denial and
+	// must never masquerade as revocation.
+	if dialErr := c09Dial(t, address, c09ClientConfig(t, fixture, "colliding"), events[0]); dialErr != nil {
+		t.Fatalf("uncovered collector handshake: %v", dialErr)
+	}
 	c09Wait(t, outcome, func() bool {
-		_, _, failures, received := outcome.snapshot()
-		return len(failures) >= 1 && len(received) == 1
-	}, "same-issuer revoked denial")
+		_, _, failures, receipts := outcome.snapshot()
+		return len(failures) == 1 && len(receipts) == 1
+	}, "issuer-without-coverage denial")
 	_, _, failures, _ := outcome.snapshot()
-	typed := false
+	coverageTyped := false
+	revocationTyped := false
 	for _, failure := range failures {
+		if errors.Is(failure, pki.ErrUntrusted) {
+			coverageTyped = true
+		}
 		if errors.Is(failure, pki.ErrRevoked) {
-			typed = true
+			revocationTyped = true
 		}
 	}
-	if !typed {
+	if !coverageTyped {
+		t.Fatalf("issuer without revocation coverage was not typed ErrUntrusted: %v", failures)
+	}
+	if revocationTyped {
+		t.Fatalf("uncovered issuer verdict used serial-only membership: %v", failures)
+	}
+	if expected.ExpectedVerdicts["colliding"] != "IDENTITY_UNTRUSTED" {
+		t.Fatalf("fixture verdict drift: %s", expected.ExpectedVerdicts["colliding"])
+	}
+	if after := c09ManifestDigest(t, path); after != denialBefore {
+		t.Fatalf("uncovered issuer denial changed durable state")
+	}
+	// On the same listener, the primary-issued certificate with the same
+	// serial is revoked by the CRL and cannot authenticate either.
+	c09Dial(t, address, c09ClientConfig(t, fixture, "revoked"), nil)
+	c09Wait(t, outcome, func() bool {
+		_, _, failures, receipts := outcome.snapshot()
+		return len(failures) == 2 && len(receipts) == 1
+	}, "same-issuer revoked denial")
+	_, _, failures, _ = outcome.snapshot()
+	revokedTyped := false
+	for _, failure := range failures {
+		if errors.Is(failure, pki.ErrRevoked) {
+			revokedTyped = true
+		}
+	}
+	if !revokedTyped {
 		t.Fatalf("same-issuer revocation was not typed: %v", failures)
 	}
 	if after := c09ManifestDigest(t, path); after != denialBefore {

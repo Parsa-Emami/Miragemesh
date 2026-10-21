@@ -1,491 +1,532 @@
-118891 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=118891, si_uid=1000} ---
-118891 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_TCP) = 7
-118891 socket(AF_INET6, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_TCP) = 7
-118891 setsockopt(7, SOL_IPV6, IPV6_V6ONLY, [1], 4) = 0
-118891 bind(7, {sa_family=AF_INET6, sin6_port=htons(0), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "::1", &sin6_addr), sin6_scope_id=0}, 28) = 0
-118891 socket(AF_INET6, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_TCP) = 8
-118891 setsockopt(8, SOL_IPV6, IPV6_V6ONLY, [0], 4) = 0
-118891 bind(8, {sa_family=AF_INET6, sin6_port=htons(0), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "::ffff:127.0.0.1", &sin6_addr), sin6_scope_id=0}, 28) = 0
-118891 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
-118891 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
-118891 setsockopt(7, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118891 bind(7, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118891 listen(7, 4096)                  = 0
-118891 getsockname(7, {sa_family=AF_INET, sin_port=htons(35085), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118891 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
-118893 accept4(7,  <unfinished ...>
-118891 connect(8, {sa_family=AF_INET, sin_port=htons(35085), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
-118893 <... accept4 resumed>0x3ca2bb0d94a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118891 <... connect resumed>)           = -1 EINPROGRESS (Operation now in progress)
-118895 accept4(7, {sa_family=AF_INET, sin_port=htons(44376), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
-118891 getsockopt(8, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
-118891 getpeername(8, {sa_family=AF_INET, sin_port=htons(35085), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118891 getsockname(8, {sa_family=AF_INET, sin_port=htons(44376), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118891 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4) = 0
-118895 getsockname(9,  <unfinished ...>
-118891 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118895 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(35085), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118891 <... setsockopt resumed>)        = 0
-118891 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118895 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118891 <... setsockopt resumed>)        = 0
-118891 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118895 <... setsockopt resumed>)        = 0
-118891 <... setsockopt resumed>)        = 0
-118891 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118895 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118891 <... setsockopt resumed>)        = 0
-118895 <... setsockopt resumed>)        = 0
-118895 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4) = 0
-118895 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
-118895 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
-118895 accept4(7, 0x3ca2bb0e4ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118897 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=118891, si_uid=1000} ---
-118897 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=118891, si_uid=1000} ---
-118891 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
-118891 setsockopt(7, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118891 bind(7, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118891 listen(7, 4096)                  = 0
-118891 getsockname(7, {sa_family=AF_INET, sin_port=htons(45543), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118891 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
-118891 connect(8, {sa_family=AF_INET, sin_port=htons(45543), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
-118897 accept4(7, 0x3ca2bb0d24a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118891 <... connect resumed>)           = -1 EINPROGRESS (Operation now in progress)
-118891 accept4(7, {sa_family=AF_INET, sin_port=htons(58750), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
-118894 getsockopt(8, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
-118891 getsockname(9, {sa_family=AF_INET, sin_port=htons(45543), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118894 getpeername(8,  <unfinished ...>
-118891 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4) = 0
-118894 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(45543), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118891 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4) = 0
-118894 getsockname(8,  <unfinished ...>
-118891 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4) = 0
-118894 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(58750), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118891 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
-118894 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118891 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
-118894 <... setsockopt resumed>)        = 0
-118894 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118891 accept4(7,  <unfinished ...>
-118894 <... setsockopt resumed>)        = 0
-118891 <... accept4 resumed>0x3ca2bb0d24a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118894 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4) = 0
-118894 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
-118894 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
-118894 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 8
-118894 setsockopt(8, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118894 bind(8, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118894 listen(8, 4096)                  = 0
-118894 getsockname(8, {sa_family=AF_INET, sin_port=htons(37743), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118897 accept4(8,  <unfinished ...>
-118894 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP <unfinished ...>
-118897 <... accept4 resumed>0x3ca2bb0d2ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118894 <... socket resumed>)            = 9
-118894 connect(9, {sa_family=AF_INET, sin_port=htons(37743), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
-118893 accept4(8, {sa_family=AF_INET, sin_port=htons(45394), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 10
-118894 getsockopt(9, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
-118894 getpeername(9, {sa_family=AF_INET, sin_port=htons(37743), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118893 getsockname(10,  <unfinished ...>
-118894 getsockname(9,  <unfinished ...>
-118893 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(37743), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118894 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(45394), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118894 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118893 setsockopt(10, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118894 <... setsockopt resumed>)        = 0
-118894 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118893 <... setsockopt resumed>)        = 0
-118894 <... setsockopt resumed>)        = 0
-118894 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118893 setsockopt(10, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118894 <... setsockopt resumed>)        = 0
-118894 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118893 <... setsockopt resumed>)        = 0
-118894 <... setsockopt resumed>)        = 0
-118894 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118893 setsockopt(10, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118894 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118893 setsockopt(10, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
-118893 setsockopt(10, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
-118893 accept4(8, 0x3ca2bb0d2ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118893 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 9
-118893 setsockopt(9, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118893 bind(9, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118893 listen(9, 4096)                  = 0
-118893 getsockname(9, {sa_family=AF_INET, sin_port=htons(37925), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118893 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 10
-118893 connect(10, {sa_family=AF_INET, sin_port=htons(37925), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
-118895 accept4(9,  <unfinished ...>
-118893 <... connect resumed>)           = -1 EINPROGRESS (Operation now in progress)
-118895 <... accept4 resumed>{sa_family=AF_INET, sin_port=htons(55964), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 11
-118897 getsockopt(10, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
-118895 getsockname(11,  <unfinished ...>
-118897 getpeername(10,  <unfinished ...>
-118895 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(37925), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118897 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(37925), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118897 getsockname(10,  <unfinished ...>
-118895 setsockopt(11, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118897 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(55964), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118895 <... setsockopt resumed>)        = 0
-118897 setsockopt(10, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118895 setsockopt(11, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118897 <... setsockopt resumed>)        = 0
-118897 setsockopt(10, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118895 <... setsockopt resumed>)        = 0
-118897 <... setsockopt resumed>)        = 0
-118895 setsockopt(11, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118897 setsockopt(10, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118895 <... setsockopt resumed>)        = 0
-118897 <... setsockopt resumed>)        = 0
-118897 setsockopt(10, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118895 setsockopt(11, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118897 <... setsockopt resumed>)        = 0
-118897 setsockopt(10, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118895 <... setsockopt resumed>)        = 0
-118897 <... setsockopt resumed>)        = 0
-118895 setsockopt(11, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
-118895 accept4(9, 0x3ca2bb0d34a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118893 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 10
-118893 setsockopt(10, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118893 bind(10, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118893 listen(10, 4096)                 = 0
-118893 getsockname(10, {sa_family=AF_INET, sin_port=htons(35181), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118897 accept4(10,  <unfinished ...>
-118893 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 12
-118897 <... accept4 resumed>0x3ca2bb0d94a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118893 connect(12, {sa_family=AF_INET, sin_port=htons(35181), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
-118897 accept4(10, {sa_family=AF_INET, sin_port=htons(33496), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 11
-118893 getsockopt(12, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
-118897 getsockname(11,  <unfinished ...>
-118893 getpeername(12,  <unfinished ...>
-118897 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(35181), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118893 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(35181), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118897 setsockopt(11, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118893 getsockname(12,  <unfinished ...>
-118897 <... setsockopt resumed>)        = 0
-118893 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(33496), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118897 setsockopt(11, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118893 setsockopt(12, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118897 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118897 setsockopt(11, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118893 setsockopt(12, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118897 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118897 setsockopt(11, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118893 setsockopt(12, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118897 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118897 setsockopt(11, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118893 setsockopt(12, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118897 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118893 setsockopt(12, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
-118897 accept4(10, 0x3ca2bb0d94a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118893 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 11
-118893 setsockopt(11, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118893 bind(11, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118893 listen(11, 4096)                 = 0
-118893 getsockname(11, {sa_family=AF_INET, sin_port=htons(46543), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118895 accept4(11,  <unfinished ...>
-118893 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP <unfinished ...>
-118895 <... accept4 resumed>0x3ca2bb0d9ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118893 <... socket resumed>)            = 12
-118893 connect(12, {sa_family=AF_INET, sin_port=htons(46543), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
-118895 accept4(11, {sa_family=AF_INET, sin_port=htons(51504), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 13
-118895 getsockname(13, {sa_family=AF_INET, sin_port=htons(46543), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118895 setsockopt(13, SOL_TCP, TCP_NODELAY, [1], 4) = 0
-118895 setsockopt(13, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118894 getsockopt(12, SOL_SOCKET, SO_ERROR,  <unfinished ...>
-118895 <... setsockopt resumed>)        = 0
-118895 setsockopt(13, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118894 <... getsockopt resumed>[0], [4]) = 0
-118895 <... setsockopt resumed>)        = 0
-118894 getpeername(12,  <unfinished ...>
-118895 setsockopt(13, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118894 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(46543), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118895 <... setsockopt resumed>)        = 0
-118895 setsockopt(13, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118894 getsockname(12,  <unfinished ...>
-118895 <... setsockopt resumed>)        = 0
-118894 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(51504), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118894 setsockopt(12, SOL_TCP, TCP_NODELAY, [1], 4) = 0
-118895 accept4(11,  <unfinished ...>
-118894 setsockopt(12, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118895 <... accept4 resumed>0x3ca2bb0d9ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118894 <... setsockopt resumed>)        = 0
-118894 setsockopt(12, SOL_TCP, TCP_KEEPIDLE, [15], 4) = 0
-118894 setsockopt(12, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
-118894 setsockopt(12, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
-118894 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 12
-118894 setsockopt(12, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118894 bind(12, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118894 listen(12, 4096)                 = 0
-118894 getsockname(12, {sa_family=AF_INET, sin_port=htons(36667), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118894 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP <unfinished ...>
-118897 accept4(12,  <unfinished ...>
-118894 <... socket resumed>)            = 13
-118897 <... accept4 resumed>0x3ca2bb5264a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118894 connect(13, {sa_family=AF_INET, sin_port=htons(36667), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
-118897 accept4(12, {sa_family=AF_INET, sin_port=htons(53716), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 14
-118897 getsockname(14, {sa_family=AF_INET, sin_port=htons(36667), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118894 getsockopt(13, SOL_SOCKET, SO_ERROR,  <unfinished ...>
-118897 setsockopt(14, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118894 <... getsockopt resumed>[0], [4]) = 0
-118897 <... setsockopt resumed>)        = 0
-118894 getpeername(13,  <unfinished ...>
-118897 setsockopt(14, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118894 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(36667), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118897 <... setsockopt resumed>)        = 0
-118894 getsockname(13,  <unfinished ...>
-118897 setsockopt(14, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118894 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(53716), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118897 <... setsockopt resumed>)        = 0
-118894 setsockopt(13, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118897 setsockopt(14, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118894 <... setsockopt resumed>)        = 0
-118897 <... setsockopt resumed>)        = 0
-118894 setsockopt(13, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118897 setsockopt(14, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118894 <... setsockopt resumed>)        = 0
-118897 <... setsockopt resumed>)        = 0
-118894 setsockopt(13, SOL_TCP, TCP_KEEPIDLE, [15], 4) = 0
-118894 setsockopt(13, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118897 accept4(12,  <unfinished ...>
-118894 <... setsockopt resumed>)        = 0
-118894 setsockopt(13, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118897 <... accept4 resumed>0x3ca2bb5264a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118894 <... setsockopt resumed>)        = 0
-118894 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=118891, si_uid=1000} ---
-118894 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
-118894 setsockopt(7, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118894 bind(7, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118894 listen(7, 4096)                  = 0
-118894 getsockname(7, {sa_family=AF_INET, sin_port=htons(43865), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118891 accept4(7, 0x3ca2bb0d24a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118894 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=118891, si_uid=1000} ---
-118899 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=118891, si_uid=1000} ---
-118899 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
-118899 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=118891, si_uid=1000} ---
-118891 connect(8, {sa_family=AF_INET, sin_port=htons(43865), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
-118891 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=118891, si_uid=1000} ---
-118898 accept4(7, {sa_family=AF_INET, sin_port=htons(33252), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
-118891 getsockopt(8, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
-118891 getpeername(8, {sa_family=AF_INET, sin_port=htons(43865), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118898 getsockname(9,  <unfinished ...>
-118891 getsockname(8, {sa_family=AF_INET, sin_port=htons(33252), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118898 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(43865), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118891 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4) = 0
-118898 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118891 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4) = 0
-118898 <... setsockopt resumed>)        = 0
-118891 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118898 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118891 <... setsockopt resumed>)        = 0
-118891 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118898 <... setsockopt resumed>)        = 0
-118891 <... setsockopt resumed>)        = 0
-118891 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118898 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118891 <... setsockopt resumed>)        = 0
-118898 <... setsockopt resumed>)        = 0
-118898 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
-118898 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
-118898 accept4(7, 0x3ca2bb0e9ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118893 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 8
-118893 setsockopt(8, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118893 bind(8, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118893 listen(8, 4096)                  = 0
-118893 getsockname(8, {sa_family=AF_INET, sin_port=htons(32971), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118893 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 9
-118893 connect(9, {sa_family=AF_INET, sin_port=htons(32971), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
-118891 accept4(8, 0x3ca2bb0d24a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118893 <... connect resumed>)           = -1 EINPROGRESS (Operation now in progress)
-118900 accept4(8, {sa_family=AF_INET, sin_port=htons(49506), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 10
-118900 getsockname(10,  <unfinished ...>
-118893 getsockopt(9, SOL_SOCKET, SO_ERROR,  <unfinished ...>
-118900 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(32971), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118893 <... getsockopt resumed>[0], [4]) = 0
-118900 setsockopt(10, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118893 getpeername(9,  <unfinished ...>
-118900 <... setsockopt resumed>)        = 0
-118893 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(32971), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118900 setsockopt(10, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118893 getsockname(9, {sa_family=AF_INET, sin_port=htons(49506), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118900 <... setsockopt resumed>)        = 0
-118893 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118900 setsockopt(10, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118893 <... setsockopt resumed>)        = 0
-118900 <... setsockopt resumed>)        = 0
-118893 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118900 setsockopt(10, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118893 <... setsockopt resumed>)        = 0
-118900 <... setsockopt resumed>)        = 0
-118893 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118900 setsockopt(10, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118893 <... setsockopt resumed>)        = 0
-118900 <... setsockopt resumed>)        = 0
-118893 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
-118893 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118900 accept4(8,  <unfinished ...>
-118893 <... setsockopt resumed>)        = 0
-118900 <... accept4 resumed>0x3ca2bb0d24a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118898 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 9
-118898 setsockopt(9, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118898 bind(9, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118898 listen(9, 4096)                  = 0
-118898 getsockname(9, {sa_family=AF_INET, sin_port=htons(32947), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118898 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP <unfinished ...>
-118893 accept4(9,  <unfinished ...>
-118898 <... socket resumed>)            = 10
-118898 connect(10, {sa_family=AF_INET, sin_port=htons(32947), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
-118893 <... accept4 resumed>0x3ca2bb5254a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118898 <... connect resumed>)           = -1 EINPROGRESS (Operation now in progress)
-118893 accept4(9, {sa_family=AF_INET, sin_port=htons(49702), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 11
-118898 getsockopt(10, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
-118898 getpeername(10,  <unfinished ...>
-118893 getsockname(11,  <unfinished ...>
-118898 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(32947), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118893 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(32947), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118898 getsockname(10,  <unfinished ...>
-118893 setsockopt(11, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118898 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(49702), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118893 <... setsockopt resumed>)        = 0
-118898 setsockopt(10, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118893 setsockopt(11, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118898 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118898 setsockopt(10, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118893 setsockopt(11, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118898 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118898 setsockopt(10, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118893 setsockopt(11, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118898 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118898 setsockopt(10, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118893 setsockopt(11, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118898 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118898 setsockopt(10, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
-118893 accept4(9, 0x3ca2bb47bca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118898 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=118891, si_uid=1000} ---
-118898 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
-118898 setsockopt(7, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118898 bind(7, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118898 listen(7, 4096)                  = 0
-118898 getsockname(7, {sa_family=AF_INET, sin_port=htons(36817), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118898 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
-118898 connect(8, {sa_family=AF_INET, sin_port=htons(36817), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
-118899 accept4(7,  <unfinished ...>
-118898 <... connect resumed>)           = -1 EINPROGRESS (Operation now in progress)
-118899 <... accept4 resumed>{sa_family=AF_INET, sin_port=htons(44666), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
-118899 getsockname(9,  <unfinished ...>
-118898 getsockopt(8, SOL_SOCKET, SO_ERROR,  <unfinished ...>
-118899 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(36817), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118898 <... getsockopt resumed>[0], [4]) = 0
-118899 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118898 getpeername(8,  <unfinished ...>
-118899 <... setsockopt resumed>)        = 0
-118898 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(36817), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118899 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118898 getsockname(8,  <unfinished ...>
-118899 <... setsockopt resumed>)        = 0
-118898 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(44666), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118899 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118898 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118899 <... setsockopt resumed>)        = 0
-118898 <... setsockopt resumed>)        = 0
-118899 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118898 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118899 <... setsockopt resumed>)        = 0
-118898 <... setsockopt resumed>)        = 0
-118899 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118898 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118899 <... setsockopt resumed>)        = 0
-118898 <... setsockopt resumed>)        = 0
-118898 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
-118899 accept4(7,  <unfinished ...>
-118898 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
-118899 <... accept4 resumed>0x3ca2bb525ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118891 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=118891, si_uid=1000} ---
-118891 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=118891, si_uid=1000} ---
-118893 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
-118893 connect(8, {sa_family=AF_INET, sin_port=htons(36817), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
-118899 accept4(7, {sa_family=AF_INET, sin_port=htons(44680), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
-118898 getsockopt(8, SOL_SOCKET, SO_ERROR,  <unfinished ...>
-118899 getsockname(9,  <unfinished ...>
-118898 <... getsockopt resumed>[0], [4]) = 0
-118899 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(36817), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118898 getpeername(8,  <unfinished ...>
-118899 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118898 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(36817), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118899 <... setsockopt resumed>)        = 0
-118899 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118898 getsockname(8,  <unfinished ...>
-118899 <... setsockopt resumed>)        = 0
-118898 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(44680), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118899 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118898 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118899 <... setsockopt resumed>)        = 0
-118898 <... setsockopt resumed>)        = 0
-118899 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118898 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118899 <... setsockopt resumed>)        = 0
-118898 <... setsockopt resumed>)        = 0
-118899 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118898 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118899 <... setsockopt resumed>)        = 0
-118898 <... setsockopt resumed>)        = 0
-118898 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
-118899 accept4(7,  <unfinished ...>
-118898 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118899 <... accept4 resumed>0x3ca2bb525ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118898 <... setsockopt resumed>)        = 0
-118893 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
-118893 setsockopt(7, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
-118893 bind(7, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
-118893 listen(7, 4096)                  = 0
-118893 getsockname(7, {sa_family=AF_INET, sin_port=htons(44587), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118893 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
-118893 connect(8, {sa_family=AF_INET, sin_port=htons(44587), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
-118898 accept4(7, 0x3ca2bb525ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118893 <... connect resumed>)           = -1 EINPROGRESS (Operation now in progress)
-118900 accept4(7, {sa_family=AF_INET, sin_port=htons(60072), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
-118893 getsockopt(8, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
-118893 getpeername(8,  <unfinished ...>
-118900 getsockname(9,  <unfinished ...>
-118893 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(44587), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118900 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(44587), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118893 getsockname(8, {sa_family=AF_INET, sin_port=htons(60072), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
-118900 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118893 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
-118900 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118900 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118893 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
-118900 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118900 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118893 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
-118900 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118900 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118893 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
-118900 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118900 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118893 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
-118900 <... setsockopt resumed>)        = 0
-118893 <... setsockopt resumed>)        = 0
-118900 accept4(7, 0x3ca2bb525ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
-118893 +++ exited with 0 +++
-118900 +++ exited with 0 +++
-118898 +++ exited with 0 +++
-118899 +++ exited with 0 +++
-118897 +++ exited with 0 +++
-118896 +++ exited with 0 +++
-118894 +++ exited with 0 +++
-118892 +++ exited with 0 +++
-118895 +++ exited with 0 +++
-118891 +++ exited with 0 +++
+209841 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_TCP) = 7
+209846 socket(AF_INET6, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_TCP) = 7
+209846 setsockopt(7, SOL_IPV6, IPV6_V6ONLY, [1], 4) = 0
+209846 bind(7, {sa_family=AF_INET6, sin6_port=htons(0), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "::1", &sin6_addr), sin6_scope_id=0}, 28) = 0
+209846 socket(AF_INET6, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_TCP) = 8
+209846 setsockopt(8, SOL_IPV6, IPV6_V6ONLY, [0], 4) = 0
+209846 bind(8, {sa_family=AF_INET6, sin6_port=htons(0), sin6_flowinfo=htonl(0), inet_pton(AF_INET6, "::ffff:127.0.0.1", &sin6_addr), sin6_scope_id=0}, 28) = 0
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
+209846 setsockopt(7, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209846 bind(7, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209846 listen(7, 4096)                  = 0
+209846 getsockname(7, {sa_family=AF_INET, sin_port=htons(39297), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209843 accept4(7, 0x2ff1ac11c4a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
+209846 connect(8, {sa_family=AF_INET, sin_port=htons(39297), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209844 accept4(7, {sa_family=AF_INET, sin_port=htons(57910), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
+209846 getsockopt(8, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
+209846 getpeername(8, {sa_family=AF_INET, sin_port=htons(39297), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209846 getsockname(8, {sa_family=AF_INET, sin_port=htons(57910), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209846 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4) = 0
+209846 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4) = 0
+209844 getsockname(9,  <unfinished ...>
+209846 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209844 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(39297), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209846 <... setsockopt resumed>)        = 0
+209846 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209844 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209846 <... setsockopt resumed>)        = 0
+209844 <... setsockopt resumed>)        = 0
+209846 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
+209844 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4) = 0
+209844 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4) = 0
+209844 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
+209844 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
+209844 accept4(7, 0x2ff1ac12eca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209841 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209841 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209841 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
+209841 setsockopt(7, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209841 bind(7, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209841 listen(7, 4096)                  = 0
+209841 getsockname(7, {sa_family=AF_INET, sin_port=htons(38329), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209841 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
+209841 connect(8, {sa_family=AF_INET, sin_port=htons(38329), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
+209847 accept4(7, 0x2ff1ac4644a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209841 <... connect resumed>)           = -1 EINPROGRESS (Operation now in progress)
+209846 accept4(7, {sa_family=AF_INET, sin_port=htons(39920), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
+209841 getsockopt(8, SOL_SOCKET, SO_ERROR,  <unfinished ...>
+209846 getsockname(9,  <unfinished ...>
+209841 <... getsockopt resumed>[0], [4]) = 0
+209846 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(38329), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209841 getpeername(8,  <unfinished ...>
+209846 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209841 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(38329), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209846 <... setsockopt resumed>)        = 0
+209841 getsockname(8,  <unfinished ...>
+209846 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209841 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(39920), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209846 <... setsockopt resumed>)        = 0
+209841 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209846 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209841 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209841 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209846 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209841 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209841 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209846 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209841 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209841 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
+209841 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209846 accept4(7,  <unfinished ...>
+209841 <... setsockopt resumed>)        = 0
+209846 <... accept4 resumed>0x2ff1ac4644a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209841 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 8
+209841 setsockopt(8, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209841 bind(8, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209841 listen(8, 4096)                  = 0
+209841 getsockname(8, {sa_family=AF_INET, sin_port=htons(36435), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209841 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP <unfinished ...>
+209847 accept4(8,  <unfinished ...>
+209841 <... socket resumed>)            = 9
+209847 <... accept4 resumed>0x2ff1ac464ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209841 connect(9, {sa_family=AF_INET, sin_port=htons(36435), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209843 accept4(8, {sa_family=AF_INET, sin_port=htons(55066), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 10
+209841 getsockopt(9, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
+209843 getsockname(10,  <unfinished ...>
+209841 getpeername(9,  <unfinished ...>
+209843 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(36435), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209841 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(36435), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209843 setsockopt(10, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209841 getsockname(9,  <unfinished ...>
+209843 <... setsockopt resumed>)        = 0
+209841 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(55066), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209843 setsockopt(10, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209841 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209843 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209843 setsockopt(10, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209841 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209843 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209843 setsockopt(10, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209841 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209843 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209843 setsockopt(10, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209841 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209843 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209841 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
+209843 accept4(8, 0x2ff1ac464ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209841 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 9
+209841 setsockopt(9, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209841 bind(9, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209841 listen(9, 4096)                  = 0
+209841 getsockname(9, {sa_family=AF_INET, sin_port=htons(42479), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209841 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP <unfinished ...>
+209847 accept4(9,  <unfinished ...>
+209841 <... socket resumed>)            = 10
+209847 <... accept4 resumed>0x2ff1ac4654a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209841 connect(10, {sa_family=AF_INET, sin_port=htons(42479), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209844 accept4(9, {sa_family=AF_INET, sin_port=htons(53182), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 11
+209841 getsockopt(10, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
+209841 getpeername(10,  <unfinished ...>
+209844 getsockname(11,  <unfinished ...>
+209841 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(42479), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209844 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(42479), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209841 getsockname(10,  <unfinished ...>
+209844 setsockopt(11, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209841 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(53182), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209844 <... setsockopt resumed>)        = 0
+209841 setsockopt(10, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209844 setsockopt(11, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209841 <... setsockopt resumed>)        = 0
+209844 <... setsockopt resumed>)        = 0
+209841 setsockopt(10, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209844 setsockopt(11, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209841 <... setsockopt resumed>)        = 0
+209844 <... setsockopt resumed>)        = 0
+209841 setsockopt(10, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209844 setsockopt(11, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209841 <... setsockopt resumed>)        = 0
+209844 <... setsockopt resumed>)        = 0
+209841 setsockopt(10, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209844 setsockopt(11, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209841 <... setsockopt resumed>)        = 0
+209844 <... setsockopt resumed>)        = 0
+209841 setsockopt(10, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
+209844 accept4(9, 0x2ff1ac4654a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209847 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 10
+209847 setsockopt(10, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209847 bind(10, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209847 listen(10, 4096)                 = 0
+209847 getsockname(10, {sa_family=AF_INET, sin_port=htons(39805), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209841 accept4(10, 0x2ff1ac11c4a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209847 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 11
+209847 connect(11, {sa_family=AF_INET, sin_port=htons(39805), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209844 accept4(10, {sa_family=AF_INET, sin_port=htons(38990), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 12
+209844 getsockname(12,  <unfinished ...>
+209841 getsockopt(11, SOL_SOCKET, SO_ERROR,  <unfinished ...>
+209844 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(39805), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209841 <... getsockopt resumed>[0], [4]) = 0
+209844 setsockopt(12, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209841 getpeername(11,  <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209841 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(39805), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209844 setsockopt(12, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209841 getsockname(11,  <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209841 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(38990), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209844 setsockopt(12, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209841 setsockopt(11, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209844 setsockopt(12, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209841 setsockopt(11, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209844 setsockopt(12, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209841 setsockopt(11, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209841 setsockopt(11, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
+209844 accept4(10,  <unfinished ...>
+209841 setsockopt(11, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209844 <... accept4 resumed>0x2ff1ac11c4a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209841 <... setsockopt resumed>)        = 0
+209843 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 11
+209843 setsockopt(11, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209843 bind(11, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209843 listen(11, 4096)                 = 0
+209843 getsockname(11, {sa_family=AF_INET, sin_port=htons(42507), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209841 accept4(11, 0x2ff1ac465ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209843 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 12
+209843 connect(12, {sa_family=AF_INET, sin_port=htons(42507), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209847 accept4(11, {sa_family=AF_INET, sin_port=htons(49900), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 13
+209847 getsockname(13, {sa_family=AF_INET, sin_port=htons(42507), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209847 setsockopt(13, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209841 getsockopt(12, SOL_SOCKET, SO_ERROR,  <unfinished ...>
+209847 <... setsockopt resumed>)        = 0
+209841 <... getsockopt resumed>[0], [4]) = 0
+209847 setsockopt(13, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209841 getpeername(12,  <unfinished ...>
+209847 <... setsockopt resumed>)        = 0
+209841 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(42507), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209847 setsockopt(13, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209841 getsockname(12,  <unfinished ...>
+209847 <... setsockopt resumed>)        = 0
+209841 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(49900), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209847 setsockopt(13, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209841 setsockopt(12, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209847 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209847 setsockopt(13, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209841 setsockopt(12, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209847 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209841 setsockopt(12, SOL_TCP, TCP_KEEPIDLE, [15], 4) = 0
+209847 accept4(11,  <unfinished ...>
+209841 setsockopt(12, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209847 <... accept4 resumed>0x2ff1ac465ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209841 <... setsockopt resumed>)        = 0
+209841 setsockopt(12, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
+209841 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 12
+209841 setsockopt(12, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209841 bind(12, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209841 listen(12, 4096)                 = 0
+209841 getsockname(12, {sa_family=AF_INET, sin_port=htons(45335), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209847 accept4(12, 0x2ff1ac11cca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209841 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 13
+209841 connect(13, {sa_family=AF_INET, sin_port=htons(45335), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209843 accept4(12, {sa_family=AF_INET, sin_port=htons(39138), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 14
+209841 getsockopt(13, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
+209843 getsockname(14,  <unfinished ...>
+209841 getpeername(13,  <unfinished ...>
+209843 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(45335), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209841 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(45335), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209843 setsockopt(14, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209841 getsockname(13,  <unfinished ...>
+209843 <... setsockopt resumed>)        = 0
+209841 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(39138), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209843 setsockopt(14, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209841 setsockopt(13, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209843 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209843 setsockopt(14, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209841 setsockopt(13, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209843 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209843 setsockopt(14, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209841 setsockopt(13, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209843 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209843 setsockopt(14, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209841 setsockopt(13, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209843 <... setsockopt resumed>)        = 0
+209841 <... setsockopt resumed>)        = 0
+209841 setsockopt(13, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
+209843 accept4(12, 0x2ff1ac11cca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209841 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209848 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209848 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209846 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209849 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209844 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
+209844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209844 setsockopt(7, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209844 bind(7, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209844 listen(7, 4096)                  = 0
+209844 getsockname(7, {sa_family=AF_INET, sin_port=htons(46041), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209848 accept4(7, 0x2ff1ac11e4a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209844 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
+209844 connect(8, {sa_family=AF_INET, sin_port=htons(46041), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209847 accept4(7, {sa_family=AF_INET, sin_port=htons(45960), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
+209847 getsockname(9, {sa_family=AF_INET, sin_port=htons(46041), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209844 getsockopt(8, SOL_SOCKET, SO_ERROR,  <unfinished ...>
+209847 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209844 <... getsockopt resumed>[0], [4]) = 0
+209847 <... setsockopt resumed>)        = 0
+209844 getpeername(8,  <unfinished ...>
+209847 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209844 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(46041), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209847 <... setsockopt resumed>)        = 0
+209847 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209844 getsockname(8,  <unfinished ...>
+209847 <... setsockopt resumed>)        = 0
+209844 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(45960), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209847 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209844 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209847 <... setsockopt resumed>)        = 0
+209844 <... setsockopt resumed>)        = 0
+209847 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209844 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209847 <... setsockopt resumed>)        = 0
+209844 <... setsockopt resumed>)        = 0
+209844 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209847 accept4(7,  <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209847 <... accept4 resumed>0x2ff1ac12fca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209844 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
+209844 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 8
+209846 setsockopt(8, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209846 bind(8, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209846 listen(8, 4096)                  = 0
+209846 getsockname(8, {sa_family=AF_INET, sin_port=htons(40151), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 9
+209846 connect(9, {sa_family=AF_INET, sin_port=htons(40151), sin_addr=inet_addr("127.0.0.1")}, 16 <unfinished ...>
+209844 accept4(8, 0x2ff1ac569ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209846 <... connect resumed>)           = -1 EINPROGRESS (Operation now in progress)
+209848 accept4(8, {sa_family=AF_INET, sin_port=htons(48870), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 10
+209848 getsockname(10, {sa_family=AF_INET, sin_port=htons(40151), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209848 setsockopt(10, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209846 getsockopt(9, SOL_SOCKET, SO_ERROR,  <unfinished ...>
+209848 <... setsockopt resumed>)        = 0
+209846 <... getsockopt resumed>[0], [4]) = 0
+209848 setsockopt(10, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209846 getpeername(9,  <unfinished ...>
+209848 <... setsockopt resumed>)        = 0
+209846 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(40151), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209848 setsockopt(10, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209846 getsockname(9,  <unfinished ...>
+209848 <... setsockopt resumed>)        = 0
+209846 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(48870), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209848 setsockopt(10, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209846 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209848 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209848 setsockopt(10, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209846 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209848 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209846 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4) = 0
+209848 accept4(8,  <unfinished ...>
+209846 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209848 <... accept4 resumed>0x2ff1ac569ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209846 <... setsockopt resumed>)        = 0
+209846 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 9
+209846 setsockopt(9, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209846 bind(9, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209846 listen(9, 4096)                  = 0
+209846 getsockname(9, {sa_family=AF_INET, sin_port=htons(44971), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209848 accept4(9,  <unfinished ...>
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP <unfinished ...>
+209848 <... accept4 resumed>0x2ff1ac11eca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209846 <... socket resumed>)            = 10
+209846 connect(10, {sa_family=AF_INET, sin_port=htons(44971), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209844 accept4(9, {sa_family=AF_INET, sin_port=htons(53520), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 11
+209844 getsockname(11,  <unfinished ...>
+209846 getsockopt(10, SOL_SOCKET, SO_ERROR,  <unfinished ...>
+209844 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(44971), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209846 <... getsockopt resumed>[0], [4]) = 0
+209844 setsockopt(11, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209846 getpeername(10,  <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209846 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(44971), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209844 setsockopt(11, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209846 getsockname(10,  <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209846 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(53520), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209844 setsockopt(11, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209846 setsockopt(10, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209844 setsockopt(11, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209846 setsockopt(10, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209844 setsockopt(11, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209846 setsockopt(10, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209846 setsockopt(10, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
+209844 accept4(9,  <unfinished ...>
+209846 setsockopt(10, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209844 <... accept4 resumed>0x2ff1ac11eca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209846 <... setsockopt resumed>)        = 0
+209846 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
+209846 setsockopt(7, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209846 bind(7, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209846 listen(7, 4096)                  = 0
+209846 getsockname(7, {sa_family=AF_INET, sin_port=htons(45895), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209849 accept4(7, 0x2ff1ac5654a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
+209846 connect(8, {sa_family=AF_INET, sin_port=htons(45895), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209848 accept4(7, {sa_family=AF_INET, sin_port=htons(39160), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
+209848 getsockname(9, {sa_family=AF_INET, sin_port=htons(45895), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209849 getsockopt(8, SOL_SOCKET, SO_ERROR,  <unfinished ...>
+209848 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209849 <... getsockopt resumed>[0], [4]) = 0
+209848 <... setsockopt resumed>)        = 0
+209849 getpeername(8,  <unfinished ...>
+209848 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209849 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(45895), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209848 <... setsockopt resumed>)        = 0
+209849 getsockname(8,  <unfinished ...>
+209848 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209849 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(39160), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209848 <... setsockopt resumed>)        = 0
+209849 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209848 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209849 <... setsockopt resumed>)        = 0
+209848 <... setsockopt resumed>)        = 0
+209849 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209848 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209849 <... setsockopt resumed>)        = 0
+209848 <... setsockopt resumed>)        = 0
+209849 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4) = 0
+209849 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209848 accept4(7,  <unfinished ...>
+209849 <... setsockopt resumed>)        = 0
+209848 <... accept4 resumed>0x2ff1ac5654a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209849 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
+209846 connect(8, {sa_family=AF_INET, sin_port=htons(45895), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209844 accept4(7, {sa_family=AF_INET, sin_port=htons(39172), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
+209844 getsockname(9,  <unfinished ...>
+209846 getsockopt(8, SOL_SOCKET, SO_ERROR,  <unfinished ...>
+209844 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(45895), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209846 <... getsockopt resumed>[0], [4]) = 0
+209844 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209846 getpeername(8,  <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209846 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(45895), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209844 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209846 getsockname(8,  <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209846 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(39172), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209844 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209846 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209844 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209846 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209844 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209846 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209844 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209846 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
+209846 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209844 accept4(7,  <unfinished ...>
+209846 <... setsockopt resumed>)        = 0
+209844 <... accept4 resumed>0x2ff1ac5654a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209846 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP) = 8
+209846 connect(8, {sa_family=AF_INET, sin_port=htons(45895), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209849 accept4(7, {sa_family=AF_INET, sin_port=htons(39184), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
+209848 getsockopt(8, SOL_SOCKET, SO_ERROR,  <unfinished ...>
+209849 getsockname(9,  <unfinished ...>
+209848 <... getsockopt resumed>[0], [4]) = 0
+209849 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(45895), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209848 getpeername(8,  <unfinished ...>
+209849 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209848 <... getpeername resumed>{sa_family=AF_INET, sin_port=htons(45895), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209849 <... setsockopt resumed>)        = 0
+209848 getsockname(8,  <unfinished ...>
+209849 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209848 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(39184), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209849 <... setsockopt resumed>)        = 0
+209848 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209849 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209848 <... setsockopt resumed>)        = 0
+209849 <... setsockopt resumed>)        = 0
+209848 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209849 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209848 <... setsockopt resumed>)        = 0
+209849 <... setsockopt resumed>)        = 0
+209848 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209849 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209848 <... setsockopt resumed>)        = 0
+209849 <... setsockopt resumed>)        = 0
+209848 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4) = 0
+209848 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
+209849 accept4(7, 0x2ff1ac5654a4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=209841, si_uid=1000} ---
+209848 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_MPTCP) = 7
+209848 setsockopt(7, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+209848 bind(7, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+209848 listen(7, 4096)                  = 0
+209848 getsockname(7, {sa_family=AF_INET, sin_port=htons(46155), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209844 accept4(7,  <unfinished ...>
+209848 socket(AF_INET, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, IPPROTO_IP <unfinished ...>
+209844 <... accept4 resumed>0x2ff1ac565ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209848 <... socket resumed>)            = 8
+209848 connect(8, {sa_family=AF_INET, sin_port=htons(46155), sin_addr=inet_addr("127.0.0.1")}, 16) = -1 EINPROGRESS (Operation now in progress)
+209846 accept4(7, {sa_family=AF_INET, sin_port=htons(33050), sin_addr=inet_addr("127.0.0.1")}, [112 => 16], SOCK_CLOEXEC|SOCK_NONBLOCK) = 9
+209848 getsockopt(8, SOL_SOCKET, SO_ERROR, [0], [4]) = 0
+209848 getpeername(8, {sa_family=AF_INET, sin_port=htons(46155), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209846 getsockname(9,  <unfinished ...>
+209848 getsockname(8,  <unfinished ...>
+209846 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(46155), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209848 <... getsockname resumed>{sa_family=AF_INET, sin_port=htons(33050), sin_addr=inet_addr("127.0.0.1")}, [112 => 16]) = 0
+209846 setsockopt(9, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209848 setsockopt(8, SOL_TCP, TCP_NODELAY, [1], 4 <unfinished ...>
+209846 <... setsockopt resumed>)        = 0
+209848 <... setsockopt resumed>)        = 0
+209848 setsockopt(8, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209846 setsockopt(9, SOL_SOCKET, SO_KEEPALIVE, [1], 4 <unfinished ...>
+209848 <... setsockopt resumed>)        = 0
+209848 setsockopt(8, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209846 <... setsockopt resumed>)        = 0
+209848 <... setsockopt resumed>)        = 0
+209848 setsockopt(8, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209846 setsockopt(9, SOL_TCP, TCP_KEEPIDLE, [15], 4 <unfinished ...>
+209848 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209848 setsockopt(8, SOL_TCP, TCP_KEEPCNT, [9], 4 <unfinished ...>
+209846 setsockopt(9, SOL_TCP, TCP_KEEPINTVL, [15], 4 <unfinished ...>
+209848 <... setsockopt resumed>)        = 0
+209846 <... setsockopt resumed>)        = 0
+209846 setsockopt(9, SOL_TCP, TCP_KEEPCNT, [9], 4) = 0
+209846 accept4(7, 0x2ff1ac565ca4, [112], SOCK_CLOEXEC|SOCK_NONBLOCK) = -1 EAGAIN (Resource temporarily unavailable)
+209849 +++ exited with 0 +++
+209848 +++ exited with 0 +++
+209847 +++ exited with 0 +++
+209846 +++ exited with 0 +++
+209844 +++ exited with 0 +++
+209843 +++ exited with 0 +++
+209842 +++ exited with 0 +++
+209845 +++ exited with 0 +++
+209841 +++ exited with 0 +++

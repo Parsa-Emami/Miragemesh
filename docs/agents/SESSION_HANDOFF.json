@@ -2,9 +2,9 @@
   "project": "MirageMesh",
   "date": "2026-10-20",
   "base_commit": "a746af65eb4b1796c3e71e19d85d93feb199fc79",
-  "review_base_commit": "c89127f8f7c20e0b1f65cabcfbc96185a009845c",
+  "review_base_commit": "d1eebc79bc24455b6f1907e3b343c8effc255800",
   "scope": "F03 mTLS collector identity guard: locally configured anchors, a locally delivered signed CRL and operator fingerprint-to-sensor scope mappings over TLS 1.3; no authenticated ingest endpoint, issuance, OCSP or UI.",
-  "final_source_identity": "sha256:f29ad0323fefb2f9145933be3a3ce710dd957e07dbf23d3994dae102b2c50bc7",
+  "final_source_identity": "sha256:d1a815b9e433dea184856c0d61bd241e1441f25cdc37825062e9b7f71696cff1",
   "changed_paths": [
     ".gitignore",
     "apps/web/src/generated/project.json",
@@ -55,7 +55,7 @@
   ],
   "core_tasks_verified": [
     "C01-C08: retain historical source-bound evidence",
-    "C09: local mTLS collector identity guard with RFC 5280 issuer-bound CRL matching and the documented direct-issuance chain restriction; no HTTP ingest surface, issuance or OCSP"
+    "C09: local mTLS collector identity guard with RFC 5280 issuer-bound CRL matching, CRL-issuer coverage for every accepted chain and the documented direct-issuance chain restriction; no HTTP ingest surface, issuance or OCSP"
   ],
   "commands": [
     "npm run check",
@@ -75,7 +75,7 @@
     "Remote GitHub Actions execution unverified; no push/publication.",
     "Local identity guard only: no HTTP/UI ingest endpoint, certificate issuance, OCSP or owner/tenant model.",
     "Revocation depends on a trusted local clock and a locally delivered CRL; hostile clock rollback and network revocation transports are outside this scope.",
-    "Chains are restricted to [leaf, configured anchor]; revocation coverage of a second issuer requires that issuer's own CRL, which the single RevocationListPEM option cannot carry today.",
+    "The accepted client-issuer set is exactly the CRL-signing anchor (single CRL); coverage of a second issuer requires that issuer's own CRL, which the single RevocationListPEM option cannot carry today.",
     "Loopback tracing of the focused mTLS binary does not certify C13 decoy isolation or the full domain workflow.",
     "No C30 usability or C40 release claim."
   ],
@@ -87,12 +87,12 @@
     "publication_authorized": false,
     "local_commit_authorized": true,
     "commit_subject": "feat(pki): authenticate collector traffic with mtls",
-    "review_fix_commit_subject": "fix(pki): match CRL revocation to certificate issuer"
+    "review_fix_commit_subject": "fix(pki): require CRL issuer coverage for client chains"
   },
   "clean_snapshot": {
-    "commit": "70acbe1ccc3c48bcff97d189677ed06b9ba73b20",
-    "git_tree": "305849c955c6ab75769fd2d64e62b6eafc6d5a33",
-    "verification_source_identity": "sha256:f29ad0323fefb2f9145933be3a3ce710dd957e07dbf23d3994dae102b2c50bc7",
+    "commit": "8c5aef00bb526eb96cd7ba340af9a0b693b64d57",
+    "git_tree": "0be5ddd33eece53091bb255e8f5aba9706605968",
+    "verification_source_identity": "sha256:d1a815b9e433dea184856c0d61bd241e1441f25cdc37825062e9b7f71696cff1",
     "runtime_clean_clone_passed": true,
     "source_integrity_passed": true,
     "user_index_unchanged": true,

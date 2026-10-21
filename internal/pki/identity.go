@@ -65,8 +65,12 @@ type Guard struct {
 	anchors map[string]*x509.Certificate
 	server  tls.Certificate
 	crl     *x509.RevocationList
-	revoked map[string]bool
-	scopes  map[string][]string
+	// authority is the SHA-256 fingerprint of the configured anchor that
+	// signed the CRL: the only issuer whose population the single local
+	// CRL can revoke, so it is the only issuer whose clients authenticate.
+	authority string
+	revoked   map[string]bool
+	scopes    map[string][]string
 }
 
 // New validates the complete local identity configuration and fails closed
@@ -91,6 +95,7 @@ func New(options Options) (*Guard, error) {
 	}
 	anchors := make(map[string]*x509.Certificate, len(options.Anchors))
 	pool := x509.NewCertPool()
+	parsed := make([]*x509.Certificate, 0, len(options.Anchors))
 	for _, anchorPEM := range options.Anchors {
 		cert, err := parseCertificatePEM(anchorPEM)
 		if err != nil {
@@ -111,6 +116,7 @@ func New(options Options) (*Guard, error) {
 		}
 		anchors[fingerprint] = cert
 		pool.AddCert(cert)
+		parsed = append(parsed, cert)
 	}
 	if options.ServerCertificatePEM == "" || options.ServerKeyPEM == "" {
 		return nil, ErrInvalidInput
@@ -161,14 +167,22 @@ func New(options Options) (*Guard, error) {
 	if err != nil {
 		return nil, ErrRevocationListInvalid
 	}
-	verified := false
-	for _, candidate := range anchors {
+	// One revocation authority: the CRL must be signed by a configured
+	// anchor and only member certificates of that anchor are evaluated
+	// against it. The issuing anchor is recorded by fingerprint so Verify
+	// can keep every accepted collector inside the CRL issuer's population;
+	// with a single local CRL, an issuer without coverage fails closed.
+	// Verify rejects chains whose leaf is not directly issued by the
+	// terminal anchor, so revocations carried by intermediate CAs are
+	// structurally out of scope.
+	authority := ""
+	for _, candidate := range parsed {
 		if bytes.Equal(candidate.RawSubject, crl.RawIssuer) && crl.CheckSignatureFrom(candidate) == nil {
-			verified = true
+			authority = fingerprintOf(candidate.Raw)
 			break
 		}
 	}
-	if !verified {
+	if authority == "" {
 		return nil, ErrRevocationListInvalid
 	}
 	if crl.Number == nil {
@@ -183,11 +197,8 @@ func New(options Options) (*Guard, error) {
 	if now.Before(crl.ThisUpdate) {
 		return nil, ErrRevocationListInvalid
 	}
-	// One revocation authority: the CRL must be signed by a configured
-	// anchor and only member certificates of that anchor are evaluated
-	// against it. Verify rejects chains whose leaf is not directly issued
-	// by the terminal anchor, so revocations carried by intermediate CAs
-	// are structurally out of scope.
+	// Revocation membership is carried by (issuer, serial) identity and is
+	// enforced only against the authority population.
 	revoked := make(map[string]bool, len(crl.RevokedCertificateEntries))
 	for _, entry := range crl.RevokedCertificateEntries {
 		if entry.SerialNumber == nil {
@@ -196,13 +207,14 @@ func New(options Options) (*Guard, error) {
 		revoked[serialText(entry.SerialNumber)] = true
 	}
 	return &Guard{
-		clock:   options.Clock,
-		pool:    pool,
-		anchors: anchors,
-		server:  server,
-		crl:     crl,
-		revoked: revoked,
-		scopes:  scopes,
+		clock:     options.Clock,
+		pool:      pool,
+		anchors:   anchors,
+		server:    server,
+		crl:       crl,
+		authority: authority,
+		revoked:   revoked,
+		scopes:    scopes,
 	}, nil
 }
 
@@ -239,12 +251,13 @@ func (g *Guard) Authenticate(conn *tls.Conn) (Identity, error) {
 // Verify re-evaluates one captured or live TLS handshake state against the
 // local trust state and the authoritative clock. The terminal certificate
 // must be one of the configured anchors, the chain must be exactly
-// [leaf, anchor] so the leaf is issued directly by a configured anchor, the
-// leaf validity window must hold, the revocation list must be fresh and
-// each chain certificate the CRL issuer itself issued must not carry a
-// revoked serial number. States observed through VerifyConnection
-// during a TLS 1.3 handshake are accepted: the transport gate already
-// guarantees the chain was produced by this guard's listeners.
+// [leaf, anchor] so the leaf is issued directly by the configured anchor
+// that signed the guard's CRL — the only issuer whose population revocation
+// coverage can reach — the leaf validity window must hold, the revocation
+// list must be fresh and each chain certificate the CRL issuer itself
+// issued must not carry a revoked serial number. States observed through
+// VerifyConnection during a TLS 1.3 handshake are accepted: the transport
+// gate already guarantees the chain was produced by this guard's listeners.
 func (g *Guard) Verify(state tls.ConnectionState) (Identity, error) {
 	now := g.clock()
 	if now.IsZero() || now.Year() < 1000 {
@@ -266,10 +279,15 @@ func (g *Guard) Verify(state tls.ConnectionState) (Identity, error) {
 	// is signed by a configured anchor) and matches membership on the DER
 	// issuer, never on the serial alone. To keep every accepted collector
 	// inside the revocation authority's population the chain must be
-	// [leaf, anchor]: client chains carrying intermediate CAs are rejected
-	// because revocations issued by those intermediates can never be loaded
-	// here. Fail closed.
+	// [leaf, anchor] with the anchor being the CRL issuer itself: client
+	// chains carrying intermediate CAs are rejected because revocations
+	// issued by those intermediates can never be loaded here, and leaves
+	// issued by any other anchor are rejected because that issuer has no
+	// CRL coverage. Fail closed.
 	if len(chain) != 2 || !bytes.Equal(chain[0].RawIssuer, chain[1].RawSubject) {
+		return Identity{}, ErrUntrusted
+	}
+	if fingerprintOf(chain[1].Raw) != g.authority {
 		return Identity{}, ErrUntrusted
 	}
 	leaf := chain[0]
@@ -282,10 +300,12 @@ func (g *Guard) Verify(state tls.ConnectionState) (Identity, error) {
 	if now.Before(g.crl.ThisUpdate) {
 		return Identity{}, ErrRevocationListInvalid
 	}
-	// (issuer, serial) matching: serial numbers are unique only within one
-	// issuer, so a revocation entry only rejects certificates the CRL issuer
-	// itself issued. In particular a same-serial certificate from another
-	// configured anchor is never falsely revoked.
+	// (issuer, serial) matching against the authority population: serial
+	// numbers are unique only within one issuer, so a revocation entry only
+	// rejects certificates the CRL issuer itself issued. The issuer DN
+	// comparison is retained as defense in depth; issuers outside the
+	// authority's population were already rejected above and can never be
+	// falsely revoked by a serial appearing in another issuer's CRL.
 	for _, cert := range chain {
 		if !bytes.Equal(cert.RawIssuer, g.crl.RawIssuer) {
 			continue

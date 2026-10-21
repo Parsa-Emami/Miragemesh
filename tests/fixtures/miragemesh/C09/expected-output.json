@@ -4,7 +4,7 @@
   ],
   "expected_verdicts": {
     "collector": "IDENTITY_OK",
-    "colliding": "IDENTITY_OK",
+    "colliding": "IDENTITY_UNTRUSTED",
     "config_invalid": "CONFIGURATION_INVALID",
     "expired": "IDENTITY_EXPIRED",
     "forged_crl": "REVOCATION_LIST_INVALID",

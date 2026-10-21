@@ -82,8 +82,8 @@
       "evidence": [
         "docs/evidence/C09.json"
       ],
-      "source_identity": "sha256:f29ad0323fefb2f9145933be3a3ce710dd957e07dbf23d3994dae102b2c50bc7",
-      "notes": "F03 verified locally with real loopback mTLS: TLS 1.3-only guard with mandatory client verification, operator fingerprint-to-sensor scope mapping, locally delivered signed CRL failing closed when stale, typed verdicts on captured real handshakes, revoked identity replay denied before side effects, and 15 invalid configuration rows rejected. Revocation membership follows RFC 5280 (issuer, serial): chains are restricted to [leaf, anchor] with issuer-keyed CRL matching, and cross-issuer serial collisions are regressions. No HTTP/CLI surface, certificate issuance, OCSP, remote Actions or product readiness certified."
+      "source_identity": "sha256:d1a815b9e433dea184856c0d61bd241e1441f25cdc37825062e9b7f71696cff1",
+      "notes": "F03 verified locally with real loopback mTLS: TLS 1.3-only guard with mandatory client verification, operator fingerprint-to-sensor scope mapping, locally delivered signed CRL failing closed when stale, typed verdicts on captured real handshakes, revoked identity replay denied before side effects, and 15 invalid configuration rows rejected. Revocation membership follows RFC 5280 (issuer, serial): chains are restricted to [leaf, authority anchor], the authority is the configured anchor that signed the single CRL, uncovered issuers fail closed with typed ErrUntrusted, and issuer-bound membership never applies another issuer's serials. No HTTP/CLI surface, certificate issuance, OCSP, remote Actions or product readiness certified."
     },
     {
       "id": "C10",

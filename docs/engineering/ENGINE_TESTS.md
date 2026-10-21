@@ -120,11 +120,14 @@ ingest events and leave the manifest unchanged;
  ConnectionState values from completed handshakes through typed guard
 verdicts including an authority update that revokes a previously trusted
 serial and a scope mismatch that must fail before any storage side effect;
-`TestMTLSRevocationMembershipNeverCrossesIssuers` proves RFC 5280
-(issuer, serial) membership with one real listener reconfigured over both
-anchors: a secondary-issued certificate sharing the primary-issued revoked
-serial authenticates, is scoped and ingests, while the primary-issued
-certificate with the same serial stays revoked with zero new receipts;
+`TestMTLSRejectsIssuersWithoutRevocationCoverage` proves the guard carries
+exactly one locally delivered CRL and authenticates only issuers it can
+revoke: on a dual-anchor configuration with only the primary anchor's CRL, a
+secondary-issued certificate whose serial appears on that CRL is rejected
+with typed `ErrUntrusted` (coverage-based, never serial-based), the
+covered primary-issued collector still authenticates and ingests through the
+real sensor/store pipeline, and the primary-issued certificate with the same
+serial stays revoked with zero new receipts;
 `TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects` proves a
 replayed collector identity cannot ingest after its revocation is configured;
 `TestMTLSRejectsInvalidLocalIdentityConfigurations` drives 15 fixture rows of

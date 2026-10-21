@@ -1,5 +1,5 @@
 {
-  "source_identity": "sha256:f29ad0323fefb2f9145933be3a3ce710dd957e07dbf23d3994dae102b2c50bc7",
+  "source_identity": "sha256:d1a815b9e433dea184856c0d61bd241e1441f25cdc37825062e9b7f71696cff1",
   "algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes); evidence, progress and session handoff excluded",
   "files": [
     {
@@ -456,7 +456,7 @@
     },
     {
       "path": "docs/architecture/IDENTITY.md",
-      "sha256": "6fcdd35da0cb5b7d6754cecc975f283154b3c52de51ce2d6dec0fc759bb2c9b4"
+      "sha256": "01a95caa22879dfd18729dea318540c7a987d248f20e8967d64b2eaef0e075b9"
     },
     {
       "path": "docs/architecture/IMPLEMENTATION_BLUEPRINT.md",
@@ -488,7 +488,7 @@
     },
     {
       "path": "docs/engineering/ENGINE_TESTS.md",
-      "sha256": "5dbd6995d87302b38ffa423bd76bc186b765cd6d0b1a0d28e185189f7fd75816"
+      "sha256": "d766a65ad6fdcf37021e88392a1943731e54318862c6fe284bdc3b2f9feec82f"
     },
     {
       "path": "docs/engineering/GITHUB_BASELINE.json",
@@ -564,7 +564,7 @@
     },
     {
       "path": "internal/pki/identity.go",
-      "sha256": "5faeee504e363c45bdba82eb87c30fdba77a4a3580aaf2fb28d5647f12539121"
+      "sha256": "eb1b40e2f282314742519d1d96c08450e439bf8a69e36a26d68bc15433193ec4"
     },
     {
       "path": "internal/sensor/event.go",
@@ -992,7 +992,7 @@
     },
     {
       "path": "plans/commits/C09.md",
-      "sha256": "f0572d14c91b09eaa12f04bf909ebe53f34a6bd26c4bd4dbcaf4cc3d67c54b5f"
+      "sha256": "2debde971c26656400aba3bac91dc81e412d6076ef664a919b7b8996720384f0"
     },
     {
       "path": "plans/commits/C10.md",
@@ -1208,7 +1208,7 @@
     },
     {
       "path": "scripts/verify-engine-tests.mjs",
-      "sha256": "0aedc95fe01266a2bed4bd469f96b50efa00f4d74f87e24a007c3fa4d33a8427"
+      "sha256": "a1569d18ae6725ce97c3c9645b96f66b5218e6693e286eee264c08b61ed8934c"
     },
     {
       "path": "scripts/verify-reference.mjs",
@@ -1316,7 +1316,7 @@
     },
     {
       "path": "tests/engineering/engine-tests.test.mjs",
-      "sha256": "514321d668bfe76f181e85829db60cd5c0d06c5ae161d361e2ac07d10c2205de"
+      "sha256": "3ccffa7c7a28ba2e6bb7e25049a8f384f3ae12d98be6b7016a4ec4d2c1ed5f81"
     },
     {
       "path": "tests/engineering/test_ci_source.py",
@@ -1420,7 +1420,7 @@
     },
     {
       "path": "tests/fixtures/miragemesh/C09/expected-output.json",
-      "sha256": "3f32c593c1ab43a7e7327745002f3b56a963d217ef3d1e39e1ee3559f1a91fca"
+      "sha256": "bd0d9468c5f733aebe6ed45b6e627ccb99fec6c22c5b88d5f4d8d02f3c9a3638"
     },
     {
       "path": "tests/fixtures/miragemesh/C09/invalid.json",
@@ -1432,7 +1432,7 @@
     },
     {
       "path": "tests/mtls_test.go",
-      "sha256": "6593b75c59140932b79129338ad67dede672aface9acc2430c4489a97b888b20"
+      "sha256": "c9cb6464ce2d45ff3c770520def27c7e507e6b0f6bed538888ec6a093ff6ac06"
     },
     {
       "path": "tests/scenarios/clone-to-value.json",

@@ -51,27 +51,32 @@ number; the guard supports exactly one revocation authority — the locally
 delivered CRL signed by a configured anchor — and cannot load intermediate
 CRLs, therefore intermediate-issued collectors are structurally out of
 scope and can never bypass revocation by presenting a chain that x509
-itself labels as verified); the leaf validity window must hold at the clock
+itself labels as verified); the terminal anchor must be the configured
+anchor that signed the guard's CRL, so leaves issued by any other configured
+anchor fail closed with `ErrUntrusted`: the guard carries a single CRL and
+authenticates only issuers it can revoke; the leaf validity window must
+hold at the clock
 (`ErrExpired` for both not-yet-valid and expired certificates); the CRL must
 be fresh at the clock with `ErrRevocationListStale` after its NextUpdate
 (passes) and `ErrRevocationListInvalid` before its ThisUpdate or for any
 structure, type, numbering or signature failure; and every chain
 certificate the CRL issuer itself issued must carry a serial absent from
 the CRL (`ErrRevoked`) — matching is by issuer and serial, never by serial
-alone, so a same-serial certificate issued by a different anchor is never
-falsely revoked. `Allows` performs the
+alone. `Allows` performs the
 identity verdict first and then enforces the operator's scope mapping with a
 typed `ErrScope` before any ingest work.
 
 This is the C09 restriction documented to reviewers as the smallest suitable
 fix for RFC 5280 issuer-blind CRL matching ([RFC 5280 section 5](https://www.rfc-editor.org/rfc/rfc5280.html)):
-per-guard trust domains act as single issuer generally, with anchors still
-available for listener chain verification and future multi-CRL work; a
-collector issued by a second configured anchor authenticates only when the
-operator scopes its fingerprint and its revocation coverage requires that
-issuer's own CRL, which the single-`RevocationListPEM` option cannot carry.
-Fail-closed chain shape plus issuer-keyed membership keeps every accepted
-collector inside the one revocation authority the guard can verify.
+the revocation authority is a single issuer, keyed by the fingerprint of the
+anchor that signed the CRL, and the accepted client-issuer set equals that
+authority's population. Anchors without CRL coverage remain in the trust
+pool only for listener chain verification and future multi-CRL work
+(C24); until an issuer's own CRL is delivered, the guard refuses to
+authenticate anything that issuer signed rather than accepting a collector
+whose revocation it could never enforce. Fail-closed chain shape plus
+issuer-keyed membership keeps every accepted collector inside the one
+revocation authority the guard can verify.
 
 `New` validates the CRL against the construction clock — a stale list cannot
 be configured — and `Verify` rechecks the same freshness window on every
@@ -119,9 +124,11 @@ durable receipts, transport denial for missing/untrusted/expired/wrong-EKU/
 revoked and intermediate-issued chains with typed `ErrUntrusted`, typed
 verdicts evaluated on captured real ConnectionState
 transcripts (including a later revocation update of a previously trusted
-identity and a scope mismatch rejected before side effects), issuer-bound
-revocation membership (same serial across issuers, one accepted and one
-revoked on the same listener), the replay of a
+identity and a scope mismatch rejected before side effects), the issuer
+coverage contract on a real dual-anchor listener (secondary-issued collector
+with a colliding revoked serial rejected as untrusted while the covered
+primary-issued collector ingests and the primary-issued same-serial stays
+revoked), the replay of a
 revoked identity into a reconfigured listener, and 15 invalid configuration
 fixture rows. The Go discovery guard requires the C09 anchors. A focused
 syscall trace of the mTLS test binary must show loopback connections only; it

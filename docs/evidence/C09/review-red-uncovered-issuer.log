@@ -1,0 +1,28 @@
+C09 review round 2 negative regression probes: the issuer-coverage contract
+(closed CRL issuer population) ran against the pre-fix matcher. Two phases:
+
+Phase 1 - first red: the new regression TestMTLSRejectsIssuersWithoutRevocationCoverage
+ran against the committed pre-fix source (d1eebc79bc24455b6f1907e3b343c8effc255800)
+which still accepted uncovered issuers:
+
+--- FAIL: TestMTLSRejectsIssuersWithoutRevocationCoverage (5.05s)
+    mtls_test.go:618: timeout waiting for issuer-without-coverage denial: states=4 identities=2 receipts=2 failures=[]
+
+The secondary-issued (uncovered) colliding collector authenticated and INGESTED
+(identities=2 receipts=2, zero denials): exactly the review finding.
+
+Phase 2 - reverted experiment: after implementing the fix, internal/pki/identity.go
+was temporarily reverted to the d1eebc7 matcher in the worktree only, and both
+contract-bearing tests ran against it:
+
+--- FAIL: TestMTLSTypedVerdictsUseRealHandshakeTranscripts (5.03s)
+    mtls_test.go:494: timeout waiting for CA2 chain denial: states=1 identities=1 receipts=0 failures=[]
+--- FAIL: TestMTLSRejectsIssuersWithoutRevocationCoverage (5.05s)
+    mtls_test.go:622: timeout waiting for issuer-without-coverage denial: states=4 identities=2 receipts=2 failures=[]
+FAIL    github.com/Parsa-Emami/Miragemesh/tests 10.090s
+
+The CA2 chain was captured (accepted) instead of denied under the old matcher and
+the colliding collector ingested. Result: both regressions fail under the old
+(coverage-blind) matcher and pass under the committed fix; identity.go was
+restored before the verification battery. Not a tool run against the delivered
+source; kept outside main commands.

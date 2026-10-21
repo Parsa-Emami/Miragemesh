@@ -5,8 +5,8 @@
 
 Running 3 tests using 1 worker
 
-  ✓  1 tests/browser/workspace.spec.ts:2:1 › workspace, local preview, navigation and roadmap filters work (471ms)
-  ✓  2 tests/browser/workspace.spec.ts:25:1 › runtime failure remains explicit and the workspace is keyboard accessible at 360px (137ms)
-  ✓  3 tests/browser/workspace.spec.ts:37:1 › configuration failure blocks workspace startup (89ms)
+  ✓  1 tests/browser/workspace.spec.ts:2:1 › workspace, local preview, navigation and roadmap filters work (334ms)
+  ✓  2 tests/browser/workspace.spec.ts:25:1 › runtime failure remains explicit and the workspace is keyboard accessible at 360px (140ms)
+  ✓  3 tests/browser/workspace.spec.ts:37:1 › configuration failure blocks workspace startup (94ms)
 
-  3 passed (1.8s)
+  3 passed (1.5s)

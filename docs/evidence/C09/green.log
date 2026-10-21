@@ -4,11 +4,11 @@
 --- PASS: TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity (0.06s)
 === RUN   TestMTLSTypedVerdictsUseRealHandshakeTranscripts
 --- PASS: TestMTLSTypedVerdictsUseRealHandshakeTranscripts (0.04s)
-=== RUN   TestMTLSRevocationMembershipNeverCrossesIssuers
---- PASS: TestMTLSRevocationMembershipNeverCrossesIssuers (0.05s)
+=== RUN   TestMTLSRejectsIssuersWithoutRevocationCoverage
+--- PASS: TestMTLSRejectsIssuersWithoutRevocationCoverage (0.06s)
 === RUN   TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects
 --- PASS: TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects (0.02s)
 === RUN   TestMTLSRejectsInvalidLocalIdentityConfigurations
 --- PASS: TestMTLSRejectsInvalidLocalIdentityConfigurations (0.00s)
 PASS
-ok  	github.com/Parsa-Emami/Miragemesh/tests	0.238s
+ok  	github.com/Parsa-Emami/Miragemesh/tests	0.237s

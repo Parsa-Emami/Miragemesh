@@ -4,8 +4,8 @@
 --- PASS: TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity (0.06s)
 === RUN   TestMTLSTypedVerdictsUseRealHandshakeTranscripts
 --- PASS: TestMTLSTypedVerdictsUseRealHandshakeTranscripts (0.05s)
-=== RUN   TestMTLSRevocationMembershipNeverCrossesIssuers
---- PASS: TestMTLSRevocationMembershipNeverCrossesIssuers (0.05s)
+=== RUN   TestMTLSRejectsIssuersWithoutRevocationCoverage
+--- PASS: TestMTLSRejectsIssuersWithoutRevocationCoverage (0.06s)
 === RUN   TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects
 --- PASS: TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects (0.03s)
 === RUN   TestMTLSRejectsInvalidLocalIdentityConfigurations
