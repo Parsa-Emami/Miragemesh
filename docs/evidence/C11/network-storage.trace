@@ -1,0 +1,87 @@
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710853 +++ exited with 0 +++
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710854 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710854, si_uid=1000} ---
+710854 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710854, si_uid=1000} ---
+710859 +++ killed by SIGKILL +++
+710858 +++ killed by SIGKILL +++
+710857 +++ killed by SIGKILL +++
+710856 +++ killed by SIGKILL +++
+710854 +++ killed by SIGKILL +++
+710843 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=710854, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+710844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710847 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710847 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710863 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710863, si_uid=1000} ---
+710867 +++ killed by SIGKILL +++
+710866 +++ killed by SIGKILL +++
+710865 +++ killed by SIGKILL +++
+710864 +++ killed by SIGKILL +++
+710863 +++ killed by SIGKILL +++
+710842 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=710863, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710871 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710871, si_uid=1000} ---
+710875 +++ killed by SIGKILL +++
+710874 +++ killed by SIGKILL +++
+710873 +++ killed by SIGKILL +++
+710872 +++ killed by SIGKILL +++
+710871 +++ killed by SIGKILL +++
+710843 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=710871, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+710844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710881 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710881, si_uid=1000} ---
+710884 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710881, si_uid=1000} ---
+710884 +++ killed by SIGKILL +++
+710885 +++ killed by SIGKILL +++
+710882 +++ killed by SIGKILL +++
+710883 +++ killed by SIGKILL +++
+710881 +++ killed by SIGKILL +++
+710843 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=710881, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+710847 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710894 +++ killed by SIGKILL +++
+710893 +++ killed by SIGKILL +++
+710892 +++ killed by SIGKILL +++
+710891 +++ killed by SIGKILL +++
+710889 +++ killed by SIGKILL +++
+710844 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=710889, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710847 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710847 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710847 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710847 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710847 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710847 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710847 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710844 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710847 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=710842, si_uid=1000} ---
+710842 ???( <unfinished ...>
+710847 +++ exited with 0 +++
+710844 +++ exited with 0 +++
+710846 +++ exited with 0 +++
+710843 +++ exited with 0 +++
+710845 +++ exited with 0 +++
+710842 +++ exited with 0 +++

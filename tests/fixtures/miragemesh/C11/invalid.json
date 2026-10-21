@@ -1,0 +1,135 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic desired-state documents for the negative cases. No key material, secret, customer or production configuration is present; the engine signs with an ephemeral in-memory key pair created by the test.",
+  "cases": [
+    {
+      "name": "unsigned_document",
+      "definition": "A valid revision 3 document submitted without any signature.",
+      "mode": "unsigned",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+      "expected": "UNSIGNED"
+    },
+    {
+      "name": "tampered_document",
+      "definition": "The revision 2 document was signed, then a single byte of the submitted payload changed to revision 3.",
+      "mode": "tampered",
+      "signed_payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":2,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":45,\"spool_limit_events\":4096,\"event_batch_limit\":128}}",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":45,\"spool_limit_events\":4096,\"event_batch_limit\":128}}",
+      "expected": "INVALID_SIGNATURE"
+    },
+    {
+      "name": "reserialized_document",
+      "definition": "The same revision 2 document re-serialized with different whitespace; the signature covers the exact original bytes and the engine never re-serializes at verification time.",
+      "mode": "reserialized",
+      "signed_payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":2,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":45,\"spool_limit_events\":4096,\"event_batch_limit\":128}}",
+      "payload": "{\"schema_version\": \"1\", \"sensor_id\": \"sensor-01\", \"revision\": 2, \"issued_at\": \"2026-10-21T00:00:00Z\", \"expires_at\": \"2026-11-21T00:00:00Z\", \"settings\": {\"heartbeat_seconds\": 45, \"spool_limit_events\": 4096, \"event_batch_limit\": 128}}",
+      "expected": "INVALID_SIGNATURE"
+    },
+    {
+      "name": "wrong_signing_key",
+      "definition": "The revision 2 document signed by a different ephemeral key than the configured trusted key.",
+      "mode": "other_key",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":2,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":45,\"spool_limit_events\":4096,\"event_batch_limit\":128}}",
+      "expected": "INVALID_SIGNATURE"
+    },
+    {
+      "name": "expired_document",
+      "definition": "A correctly signed revision 3 document whose validity window ended before the authoritative clock.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-10-01T00:00:00Z\",\"expires_at\":\"2026-10-02T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+      "expected": "EXPIRED"
+    },
+    {
+      "name": "not_yet_valid_document",
+      "definition": "A correctly signed revision 3 document issued after the authoritative clock.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-11-01T00:00:00Z\",\"expires_at\":\"2026-12-01T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+      "expected": "NOT_YET_VALID"
+    },
+    {
+      "name": "stale_revision",
+      "definition": "A correctly signed revision 1 document offered while revision 2 is the active configuration.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":1,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+      "expected": "STALE"
+    },
+    {
+      "name": "conflicting_revision",
+      "definition": "A correctly signed revision 2 document with different settings than the active revision 2 configuration.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":2,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":60,\"spool_limit_events\":4096,\"event_batch_limit\":128}}",
+      "expected": "CONFLICT"
+    },
+    {
+      "name": "malformed_json",
+      "definition": "A correctly signed truncated payload.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":",
+      "expected": "INVALID_INPUT"
+    },
+    {
+      "name": "unknown_field",
+      "definition": "A correctly signed document carrying a member outside the version 1 schema.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64},\"unexpected\":true}",
+      "expected": "INVALID_INPUT"
+    },
+    {
+      "name": "duplicate_field",
+      "definition": "A correctly signed document repeating the sensor_id member.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64},\"sensor_id\":\"sensor-02\"}",
+      "expected": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid_schema_version",
+      "definition": "A correctly signed document declaring an unsupported schema version.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"2\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+      "expected": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid_revision",
+      "definition": "A correctly signed document with a non-positive operational revision.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":0,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+      "expected": "INVALID_INPUT"
+    },
+    {
+      "name": "invalid_timestamp",
+      "definition": "A correctly signed document with an impossible RFC 3339 instant.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-13-45T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+      "expected": "INVALID_INPUT"
+    },
+    {
+      "name": "expires_before_issued",
+      "definition": "A correctly signed document whose validity window ends before it starts.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-10-01T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+      "expected": "INVALID_INPUT"
+    },
+    {
+      "name": "settings_out_of_range",
+      "definition": "A correctly signed document with a heartbeat below the documented lower bound.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":0,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+      "expected": "INVALID_INPUT"
+    },
+    {
+      "name": "batch_exceeds_spool",
+      "definition": "A correctly signed document whose event batch is larger than the whole spool it must fit into.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":1,\"event_batch_limit\":10}}",
+      "expected": "INVALID_INPUT"
+    },
+    {
+      "name": "oversized_payload",
+      "definition": "A correctly signed document larger than the shared 8192 byte payload cap.",
+      "mode": "build",
+      "build": "oversized",
+      "expected": "INVALID_INPUT"
+    }
+  ]
+}

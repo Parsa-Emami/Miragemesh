@@ -1,0 +1,626 @@
+{
+  "commit_id": "C11",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "date": "2026-10-21",
+  "base_commit": "39e2bf0d9cad29e42b8b6260aae26a6f24ab1969",
+  "source_identity": "sha256:fde91a05cba01744d00282395ec34cd0050b03899d712c04511e080c89520559",
+  "source_manifest": "docs/evidence/C11/source-files.json",
+  "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes) over tracked and non-ignored untracked files; docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded because they publish this identity themselves.",
+  "scope": "F05 internal durable applied configuration: exact signed payload, original acceptance timestamp and per-sensor revision are committed through the existing C05 adapter and reconstructed after restart. The committed settings document is the observed state in this slice. External decoy/spool/batch consumers remain C12-C16 work.",
+  "owner_scope_resolution": "The owner approved extending the existing storage adapter without a parallel persistence engine or database schema changes. C10 New/Apply/Active retain process-local behaviour; its shared VerifyAt validation supports sensor.NewApplier, Apply and Active with durable storage. No HTTP, CLI, UI, key lifecycle, dependency or new product setting bounds.",
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0 from /home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin",
+    "go": "1.27.2 from /home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin",
+    "os": "Linux x86_64",
+    "filesystem": "ext4",
+    "providers": "Go standard library and existing local C05 storage; no runtime container/network/provider required. Podman 4.9.3 is present for the existing clone/setup checks.",
+    "hardware_target": "C28 target remains unmeasured; no capacity certification.",
+    "details": "docs/evidence/C11/environment.log"
+  },
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "node --version && npm --version && go version && uname -srmo && findmnt -T . -n -o FSTYPE && git rev-parse HEAD && command -v strace && podman --version"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/environment.log",
+      "elapsed_seconds": 0.123
+    },
+    {
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-fund"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/install.log",
+      "elapsed_seconds": 0.839
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/repository.log",
+      "elapsed_seconds": 0.145
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/python-tests.log",
+      "elapsed_seconds": 0.619
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/plan.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/plan-python.log",
+      "elapsed_seconds": 0.058
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/engine-tests.jsonl",
+      "elapsed_seconds": 6.824
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/check.log",
+      "elapsed_seconds": 14.773
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "c11_formatting=$(gofmt -l cmd internal tests); test -z \"$c11_formatting\""
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/format.log",
+      "elapsed_seconds": 0.012
+    },
+    {
+      "argv": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/vet.log",
+      "elapsed_seconds": 0.22
+    },
+    {
+      "argv": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "dist/engine/miragemesh",
+        "./cmd/miragemesh"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/build.log",
+      "elapsed_seconds": 0.072
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-count=1",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/standard-tests.log",
+      "elapsed_seconds": 5.082
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "./tests",
+        "./internal/storage",
+        "./internal/contracts",
+        "-run",
+        "^TestApply|^TestAppliedConfig",
+        "-count=1",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/focused.log",
+      "elapsed_seconds": 1.947
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "docs/evidence/C11/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/discovery.log",
+      "elapsed_seconds": 0.054
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-c",
+        "-o",
+        "dist/ci/c11-tests",
+        "./tests"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/network-build.log",
+      "elapsed_seconds": 0.438
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/browser.log",
+      "elapsed_seconds": 2.057
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/final-race.jsonl",
+      "elapsed_seconds": 6.562
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "docs/evidence/C11/final-race.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/final-discovery.log",
+      "elapsed_seconds": 0.054
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "cd tests && strace -f -e trace=network -o ../docs/evidence/C11/network.trace ../dist/ci/c11-tests -test.run \"^TestApply\" -test.count=1"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/network-tests.log",
+      "elapsed_seconds": 0.815
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-c",
+        "-o",
+        "dist/ci/c11-storage-tests",
+        "./internal/storage"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/network-storage-build.log",
+      "elapsed_seconds": 0.241
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "cd internal/storage && strace -f -e trace=network -o ../../docs/evidence/C11/network-storage.trace ../../dist/ci/c11-storage-tests -test.run \"^TestApply\" -test.count=1"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/network-storage-tests.log",
+      "elapsed_seconds": 1.191
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "prepare:web"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/prepare.log.gz",
+      "elapsed_seconds": 0.18
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/final-check.log",
+      "elapsed_seconds": 14.321
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C11/verify-clone.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/clone.log",
+      "elapsed_seconds": 11.749
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/plan.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/final-plan-python.log",
+      "elapsed_seconds": 0.057
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/final-repository.log",
+      "elapsed_seconds": 0.099
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "package:web"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/package.log",
+      "elapsed_seconds": 0.184
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "cd dist/release && sha256sum --check SHA256SUMS.txt"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/package-checksums.log",
+      "elapsed_seconds": 0.004
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "c11_formatting=$(gofmt -l cmd internal tests); test -z \"$c11_formatting\""
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/final-format.log",
+      "elapsed_seconds": 0.011
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C11/verify-source.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/source-verify.log",
+      "elapsed_seconds": 0.05
+    },
+    {
+      "argv": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/final-vet.log",
+      "elapsed_seconds": 0.155
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "validate:plan"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/final-plan.log",
+      "elapsed_seconds": 0.187
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "plan",
+        "--",
+        "next"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/next-task.log",
+      "elapsed_seconds": 0.193
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C11/verify-source.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/final-source-verify.log",
+      "elapsed_seconds": 0.044
+    },
+    {
+      "argv": [
+        "python3",
+        "/tmp/miragemesh-c11-diff.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C11/final-diff.log",
+      "elapsed_seconds": 0.142
+    }
+  ],
+  "results": {
+    "go_top_level_tests": 60,
+    "discovery_suites": 4,
+    "required_test_anchors": 45,
+    "node_tests": 42,
+    "browser_tests": 3,
+    "python_integrity_tests": 6,
+    "negative_fixture_rows": 18,
+    "sigkill_boundaries": 5,
+    "filesystem_fault_cases": 9,
+    "network_syscalls_in_focused_tests": 0,
+    "network_syscalls_in_focused_storage_tests": 0,
+    "mutation_checks_caught": 5,
+    "lint": "Go format/vet; no standalone JavaScript lint script is configured.",
+    "typecheck": "Passed via npm run check.",
+    "build": "Web and engine passed via npm run check; engine also built directly.",
+    "dependencies": "No dependency or lockfile changes.",
+    "next_task": "C12"
+  },
+  "acceptance_checks": [
+    {
+      "acceptance": "Crash during config apply converges with recorded applied revision.",
+      "result": "verified",
+      "evidence": "TestApplySIGKILLAtPublicationBoundaries kills a subprocess running the real sensor applier after staged sync, object rename, before manifest rename, after manifest rename and after directory flush before acknowledgement. A reopen recovers only the expected complete prior/new revision with exact payload; retry converges to revision 2 with exactly two records. TestApplyDurableRevisionAndRestart proves exact bytes and original apply timestamp survive reopen/replay, even with an advanced clock."
+    }
+  ],
+  "negative_case_checks": [
+    {
+      "case": "Missing prerequisites, malformed fixtures or unavailable required providers produce an explicit error rather than placeholder success.",
+      "result": "verified",
+      "evidence": "NewApplier rejects nil storage, an incomplete verifier and cancellation. All 18 C11 negative documents produce the expected typed C10 error without changing active state or manifest. No external provider is required by this approved slice. Missing/malformed fixtures fail the tests explicitly."
+    },
+    {
+      "case": "Repeat after restart and verify the declared invariant and documented recovery outcome.",
+      "result": "verified",
+      "evidence": "Real store reopen and five SIGKILL points preserve/recover the exact applied revision and bytes. Nine injected ENOSPC/short-write/EIO cases return empty results and poison the handle; reopening and retry preserve the prior complete state or reveal the complete published state, never a partial successful result."
+    },
+    {
+      "case": "No egress by default",
+      "result": "verified",
+      "evidence": "strace -f -e trace=network on the focused tests and storage test binaries recorded zero network syscalls. All signing keys are generated in memory; crash helpers receive their ephemeral key only through an anonymous stdin pipe."
+    }
+  ],
+  "security_review": {
+    "verification": "Exact-byte Ed25519 validation, typed document/policy bounds and admission-time validity checks are reused from C10. Recovery validates original acceptance instant, signatures, operation identities and monotonic revision history before returning state.",
+    "atomicity": "Store.Update holds one writer lock across history validation, candidate selection and the original C05 commit/flush path. Exact replay returns the original envelope; concurrent conflicting documents cannot both win.",
+    "data_bounds": "Public input cap stays 8192 bytes. The canonical internal base64 envelope has a separate 16384-byte cap. The full encoded bytes and every revision count against existing explicit C05 quotas.",
+    "filesystem": "Existing 0700/0600 ownership, flock, no-follow checks, hash validation, atomic manifest and poison/reopen recovery remain in use.",
+    "known_limits": "The local clock, acceptance metadata and private store remain trusted. Whole-history malicious rollback/removal and physical power loss are outside this evidence. Current signing key and bounds must validate history; incompatible changes fail closed rather than silently discard it."
+  },
+  "failed_attempts": [
+    {
+      "expected": true,
+      "phase": "Initial C11 RED",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C11/red.log",
+      "note": "The first test compile failed because sensor.Applier, NewApplier, storage.Records and the applied-config record did not exist."
+    },
+    {
+      "expected": true,
+      "phase": "Discovery guard RED",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C11/discovery-red.log.gz",
+      "note": "Removing a C11 anchor was accepted by the old discovery guard; the regression failed. The guard now requires all ten new anchors."
+    },
+    {
+      "expected": false,
+      "phase": "First direct test-binary network trace",
+      "exit_code": 1,
+      "note": "The binary was launched at repository root, while Go tests expect their package working directory. Fixture reads failed explicitly. Corrected commands run from tests/ and internal/storage/; both focused traces passed with zero network syscalls."
+    },
+    {
+      "expected": false,
+      "phase": "Candidate diff preflight before clean-clone verification",
+      "exit_code": 2,
+      "output_path": "docs/evidence/C11/clone.log.gz",
+      "note": "Git diff --check found whitespace in exact captured terminal output. Those raw logs are preserved byte-for-byte as gzip instead of changing code or relaxing the check; the clean-clone run is repeated after this evidence-only repair."
+    }
+  ],
+  "mutation_checks": [
+    {
+      "mutation": "stale",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestApplyConcurrentReconcilersAndReplay$",
+      "output_path": "docs/evidence/C11/mutation-stale.log"
+    },
+    {
+      "mutation": "recovery-signature",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestApplyRecoveryRejectsForgedHistory$/wrong-signer",
+      "output_path": "docs/evidence/C11/mutation-recovery-signature.log"
+    },
+    {
+      "mutation": "replay-time",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestApplyDurableRevisionAndRestart$",
+      "output_path": "docs/evidence/C11/mutation-replay-time.log"
+    },
+    {
+      "mutation": "flush",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestApplySyscallFailuresPreserveRecoverableState$/manifest-directory-sync",
+      "output_path": "docs/evidence/C11/mutation-flush.log"
+    },
+    {
+      "mutation": "event-routing",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestApplyDurableRevisionAndRestart$",
+      "output_path": "docs/evidence/C11/mutation-event-routing.log"
+    }
+  ],
+  "observed_limitations": [
+    "Internal configuration state only; no decoy/spool/batch side effect, HTTP/CLI/UI or full product workflow.",
+    "Remote GitHub Actions execution unverified. Local workflow commands and clean-clone verification are recorded separately; no push or publication.",
+    "Old readers cannot decode new config records. Preserve accepted bytes and a C11-compatible reader for rollback; no destructive data action was performed.",
+    "Append-only revision history is quota-bounded and has no compaction. Incompatible verification key/bounds fail recovery closed.",
+    "Physical power-loss resilience, host-clock rollback defence and C30/C40 readiness are unverified."
+  ],
+  "rollback_or_recovery_observation": "Before new config data is accepted, the isolated source change can be reverted. After acceptance, preserve the directory and a compatible reader; do not restore an older backup or remove newer revisions. C05 reopening reconciles recognized staging/orphans and rejects missing/corrupt referenced records.",
+  "delivery": {
+    "delivery_commit_created": true,
+    "push_authorized": false,
+    "publication_authorized": false,
+    "local_commit_authorized": true,
+    "commit_subject": "feat(apply): reconcile observed and desired sensor state",
+    "commit_identity": "The Git commit containing this delivery metadata; resolve with git log -1 -- docs/evidence/C11.json."
+  },
+  "verification_notes": "Commands use the locked local Go 1.27.2 and npm 11.9.0. Initial tests and discovery regressions were written before their implementation. Five deliberate mutations were caught by behavioural assertions and restored byte-for-byte. The final engine race suite reruns the strengthened timestamp/contention tests. Source/evidence metadata is published after behaviour checks; the final source inventory and clean-clone snapshot bind the final source separately.",
+  "source_file_count": 383,
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C11 desired-state documents (C10-compatible) and expected verdict/crash outcomes. No key material or production data.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C11/expected-output.json": "f7e8655fa69b89f9dad367845a8288b74bb3c0ff9c879c0bc9c5104485e543bd",
+      "tests/fixtures/miragemesh/C11/invalid.json": "26b870e0ed5e846a7cc380edfa2352a3762f7ba309289d9ae5905d99e3ac06ed",
+      "tests/fixtures/miragemesh/C11/positive.json": "e7d831a32379a8076e19a41efdabb476df949c73429bb05af4879035eaa34516"
+    }
+  },
+  "evidence_log_encoding": "Selected raw terminal logs are gzip compressed to preserve their original output bytes while satisfying git diff --check.",
+  "changed_paths": [
+    "apps/web/src/generated/project.json",
+    "docs/ROADMAP_FA.md",
+    "docs/agents/SESSION_HANDOFF.json",
+    "docs/architecture/CONFIG_APPLY.md",
+    "docs/architecture/DESIRED_STATE.md",
+    "docs/architecture/STORAGE_PROOF.md",
+    "docs/engineering/ENGINE_TESTS.md",
+    "docs/evidence/C11.json",
+    "docs/evidence/C11/browser.log",
+    "docs/evidence/C11/build.log",
+    "docs/evidence/C11/candidate-diff-stat.log",
+    "docs/evidence/C11/check.log",
+    "docs/evidence/C11/clone.log",
+    "docs/evidence/C11/clone.log.gz",
+    "docs/evidence/C11/commands.jsonl",
+    "docs/evidence/C11/discovery-red.log.gz",
+    "docs/evidence/C11/discovery-regression.log",
+    "docs/evidence/C11/discovery.log",
+    "docs/evidence/C11/engine-tests.jsonl",
+    "docs/evidence/C11/environment.log",
+    "docs/evidence/C11/final-check.log",
+    "docs/evidence/C11/final-diff.log",
+    "docs/evidence/C11/final-discovery.log",
+    "docs/evidence/C11/final-format.log",
+    "docs/evidence/C11/final-plan-python.log",
+    "docs/evidence/C11/final-plan.log",
+    "docs/evidence/C11/final-race.jsonl",
+    "docs/evidence/C11/final-repository.log",
+    "docs/evidence/C11/final-source-verify.log",
+    "docs/evidence/C11/final-vet.log",
+    "docs/evidence/C11/focused.log",
+    "docs/evidence/C11/format.log",
+    "docs/evidence/C11/install.log",
+    "docs/evidence/C11/mutation-event-routing.log",
+    "docs/evidence/C11/mutation-flush.log",
+    "docs/evidence/C11/mutation-recovery-signature.log",
+    "docs/evidence/C11/mutation-replay-time.log",
+    "docs/evidence/C11/mutation-stale.log",
+    "docs/evidence/C11/mutations.json",
+    "docs/evidence/C11/network-build.log",
+    "docs/evidence/C11/network-storage-build.log",
+    "docs/evidence/C11/network-storage-tests.log",
+    "docs/evidence/C11/network-storage.trace",
+    "docs/evidence/C11/network-tests.log",
+    "docs/evidence/C11/network.trace",
+    "docs/evidence/C11/next-task.log",
+    "docs/evidence/C11/package-checksums.log",
+    "docs/evidence/C11/package.log",
+    "docs/evidence/C11/plan-python.log",
+    "docs/evidence/C11/prepare.log.gz",
+    "docs/evidence/C11/python-tests.log",
+    "docs/evidence/C11/red.log",
+    "docs/evidence/C11/repository.log",
+    "docs/evidence/C11/source-files.json",
+    "docs/evidence/C11/source-identity.log",
+    "docs/evidence/C11/source-verify.log",
+    "docs/evidence/C11/standard-tests.log",
+    "docs/evidence/C11/verify-clone.py",
+    "docs/evidence/C11/verify-source.py",
+    "docs/evidence/C11/vet.log",
+    "docs/product/REFERENCE_WORKFLOW.md",
+    "internal/config/sign.go",
+    "internal/contracts/config.go",
+    "internal/contracts/config_test.go",
+    "internal/sensor/apply.go",
+    "internal/sensor/event.go",
+    "internal/storage/adapter.go",
+    "internal/storage/apply_recovery_test.go",
+    "internal/storage/export_test.go",
+    "internal/storage/update.go",
+    "plans/commits/C11.md",
+    "plans/progress.json",
+    "plans/project-state.json",
+    "plans/roadmap.json",
+    "scripts/verify-engine-tests.mjs",
+    "tests/apply_test.go",
+    "tests/engineering/engine-tests.test.mjs",
+    "tests/fixtures/miragemesh/C11/expected-output.json",
+    "tests/fixtures/miragemesh/C11/invalid.json",
+    "tests/fixtures/miragemesh/C11/positive.json"
+  ],
+  "local_clone_verification": {
+    "passed": true,
+    "snapshot_commit": "54f5d2e979f2087a61a60d6fdc8d75a9c03624e4",
+    "snapshot_tree": "535390f8cda9a46eb02947dd55a8632f2a9006ed",
+    "snapshot_integrity_identity": "sha256:f1db4fa2ba8c5bb90e9ba60deb265098ec2f03dac1ac72a72c5f76d4e26ea9c1",
+    "identity_note": "The existing clone integrity tool includes progress and handoff in its hash. C11 source_identity excludes these self-publishing metadata files; the implementation, fixtures, documentation and generated web data are bound by the C11 source manifest. The handoff changed-path inventory was finalized after this snapshot.",
+    "output_path": "docs/evidence/C11/clone.log",
+    "delivery_commit": false,
+    "remote_runner": false
+  }
+}

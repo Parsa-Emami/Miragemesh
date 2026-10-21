@@ -1,0 +1,35 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic desired-state documents. No key material, secret, customer, sensor or production configuration is present; the engine signs with an ephemeral in-memory key pair created by the test.",
+  "now": "2026-10-21T00:00:00Z",
+  "sensor_id": "sensor-01",
+  "limits": {
+    "max_payload_bytes": 8192,
+    "max_sensors": 5
+  },
+  "bounds": {
+    "heartbeat_seconds": {
+      "min": 5,
+      "max": 3600
+    },
+    "spool_limit_events": {
+      "min": 1,
+      "max": 12800
+    },
+    "event_batch_limit": {
+      "min": 1,
+      "max": 12800
+    }
+  },
+  "bounds_provenance": "Proposed C10 deployment policy, not an already accepted product limit: the spool and batch ceilings are the pre-existing product profile numbers in product/project.json (spool_max_mib 100 divided by payload_max_kib 8) expressed as an event count, and the heartbeat range is the C10 engineering choice. The owner confirms the final values when the bounded spool lands in C14 and C15; a deployment states its own bounds and the engine ships none.",
+  "payloads": {
+    "initial": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":1,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+    "next": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":2,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":45,\"spool_limit_events\":4096,\"event_batch_limit\":128}}"
+  },
+  "storage_limits": {
+    "max_operations": 32,
+    "max_bytes": 262144,
+    "max_manifest_bytes": 65536
+  }
+}

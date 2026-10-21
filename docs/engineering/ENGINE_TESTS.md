@@ -188,3 +188,23 @@ Fixtures are repository-authored Apache-2.0 synthetic desired-state documents
 under the C10 fixture directory and contain no key material: every test signs
 with one ephemeral in-memory Ed25519 key pair. C10 changes no storage format,
 no API and no UI.
+
+## C11 required anchors
+
+C11 requires `TestAppliedConfigRecordValidation` in `internal/contracts`;
+`TestApplySIGKILLAtPublicationBoundaries` and
+`TestApplySyscallFailuresPreserveRecoverableState` in `internal/storage`; and
+`TestApplyDurableRevisionAndRestart`,
+`TestApplyRejectsInvalidDesiredStateWithoutDurableChanges`,
+`TestApplyConcurrentReconcilersAndReplay`,
+`TestApplyPrerequisitesQuotaAndCancellation`,
+`TestApplyRecoveryRejectsForgedHistory`, `TestApplyPreservesMaximumExactPayload`,
+and `TestApplyRechecksClockAndCancellationInsideWriterLock` in `tests`.
+
+The external storage tests run the actual sensor applier with the existing
+filesystem seam exposed only in `_test.go`. Five SIGKILL phases cover staged
+bytes, object rename, before manifest, manifest rename and before acknowledgement;
+nine injected write/sync/rename failures cover ENOSPC, short writes and EIO.
+Ephemeral signing keys cross an anonymous child-process pipe and never enter
+fixtures, argv, environment or disk. These are local process-crash and injected
+filesystem-error proofs, not physical power-loss or remote-runner results.

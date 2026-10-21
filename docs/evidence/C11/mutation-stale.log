@@ -1,0 +1,5 @@
+--- FAIL: TestApplyConcurrentReconcilersAndReplay (0.07s)
+    apply_test.go:206: stale replay accepted <nil>
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.070s
+FAIL

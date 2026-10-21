@@ -142,7 +142,7 @@
       "id": "C11",
       "title": "feat(apply): reconcile observed and desired sensor state",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Crash during config apply converges with recorded applied revision."
       ],

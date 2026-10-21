@@ -1,0 +1,6 @@
+--- FAIL: TestApplyRecoveryRejectsForgedHistory (0.06s)
+    --- FAIL: TestApplyRecoveryRejectsForgedHistory/wrong-signer (0.06s)
+        apply_test.go:341: forged history recovered <nil>
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.068s
+FAIL

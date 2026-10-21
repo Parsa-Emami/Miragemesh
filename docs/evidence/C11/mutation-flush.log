@@ -1,0 +1,6 @@
+--- FAIL: TestApplySyscallFailuresPreserveRecoverableState (0.05s)
+    --- FAIL: TestApplySyscallFailuresPreserveRecoverableState/manifest-directory-sync (0.05s)
+        apply_recovery_test.go:285: false success or leaked path <nil>
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/internal/storage	0.053s
+FAIL

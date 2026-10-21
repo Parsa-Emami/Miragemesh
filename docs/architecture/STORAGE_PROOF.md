@@ -172,3 +172,23 @@ receipts and filesystem guarantees remain unchanged. `Record.Enrollment`
 distinguishes metadata from `Record.Event`; `CommitOnceChecked` rejects existing
 operation IDs instead of replaying success. See `ENROLLMENT.md` for the approved
 service boundary, mixed-store compatibility and forward-only reader recovery.
+
+## C11 compatible extension
+
+The manifest remains version 1 and uses the same atomic publication, hashes,
+permissions, writer lock and quotas. `Record.Config` identifies canonical internal
+`config.applied` records alongside C04 events and C08 enrollment. Their byte-slice
+payload and signature fields use JSON base64 to retain signed bytes exactly. The
+public event and desired-state payload caps remain 8192 bytes; internal object
+reads have a separate 16384-byte envelope cap so a maximum-size payload still
+fits with its signature and acceptance timestamp. `MaxBytes` counts the entire
+stored envelope, and each accepted revision consumes an operation.
+
+`Records(ctx)` returns an owned, ordered, quota-bounded snapshot. `Update(ctx,
+choose)` reads that snapshot and selects the ID/bytes under the same writer lock
+as commit, then reuses the existing publication path. Its callback must not call
+back into the store. These operations let C11 check the latest revision and reuse
+the exact original envelope on replay atomically; they introduce no second
+manifest or persistence engine. Readers predating C11 cannot decode a directory
+containing config records. Preserve those bytes and a C11-compatible reader when
+rolling back code; do not replace the directory with an older backup.

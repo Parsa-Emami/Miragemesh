@@ -1,0 +1,36 @@
+{"argv": ["bash", "-c", "node --version && npm --version && go version && uname -srmo && findmnt -T . -n -o FSTYPE && git rev-parse HEAD && command -v strace && podman --version"], "exit_code": 0, "output_path": "docs/evidence/C11/environment.log", "elapsed_seconds": 0.123}
+{"argv": ["npm", "ci", "--ignore-scripts", "--no-fund"], "exit_code": 0, "output_path": "docs/evidence/C11/install.log", "elapsed_seconds": 0.839}
+{"argv": ["python3", "scripts/validate_repo.py"], "exit_code": 0, "output_path": "docs/evidence/C11/repository.log", "elapsed_seconds": 0.145}
+{"argv": ["python3", "-m", "unittest", "discover", "-s", "tests/engineering", "-p", "test_*.py", "-v"], "exit_code": 0, "output_path": "docs/evidence/C11/python-tests.log", "elapsed_seconds": 0.619}
+{"argv": ["python3", "scripts/plan.py", "validate"], "exit_code": 0, "output_path": "docs/evidence/C11/plan-python.log", "elapsed_seconds": 0.058}
+{"argv": ["go", "test", "-race", "-count=1", "-json", "./..."], "exit_code": 0, "output_path": "docs/evidence/C11/engine-tests.jsonl", "elapsed_seconds": 6.824}
+{"argv": ["npm", "run", "check"], "exit_code": 0, "output_path": "docs/evidence/C11/check.log", "elapsed_seconds": 14.773}
+{"argv": ["bash", "-c", "c11_formatting=$(gofmt -l cmd internal tests); test -z \"$c11_formatting\""], "exit_code": 0, "output_path": "docs/evidence/C11/format.log", "elapsed_seconds": 0.012}
+{"argv": ["go", "vet", "./..."], "exit_code": 0, "output_path": "docs/evidence/C11/vet.log", "elapsed_seconds": 0.22}
+{"argv": ["go", "build", "-trimpath", "-o", "dist/engine/miragemesh", "./cmd/miragemesh"], "exit_code": 0, "output_path": "docs/evidence/C11/build.log", "elapsed_seconds": 0.072}
+{"argv": ["go", "test", "-count=1", "./..."], "exit_code": 0, "output_path": "docs/evidence/C11/standard-tests.log", "elapsed_seconds": 5.082}
+{"argv": ["go", "test", "./tests", "./internal/storage", "./internal/contracts", "-run", "^TestApply|^TestAppliedConfig", "-count=1", "-v"], "exit_code": 0, "output_path": "docs/evidence/C11/focused.log", "elapsed_seconds": 1.947}
+{"argv": ["node", "scripts/verify-engine-tests.mjs", "docs/evidence/C11/engine-tests.jsonl"], "exit_code": 0, "output_path": "docs/evidence/C11/discovery.log", "elapsed_seconds": 0.054}
+{"argv": ["go", "test", "-c", "-o", "dist/ci/c11-tests", "./tests"], "exit_code": 0, "output_path": "docs/evidence/C11/network-build.log", "elapsed_seconds": 0.438}
+{"argv": ["strace", "-f", "-e", "trace=network", "-o", "docs/evidence/C11/network.trace", "dist/ci/c11-tests", "-test.run", "^TestApply", "-test.count=1"], "exit_code": 1, "output_path": "docs/evidence/C11/network-tests.log", "elapsed_seconds": 0.016}
+{"argv": ["npm", "run", "test:browser"], "exit_code": 0, "output_path": "docs/evidence/C11/browser.log", "elapsed_seconds": 2.057}
+{"argv": ["go", "test", "-race", "-count=1", "-json", "./..."], "exit_code": 0, "output_path": "docs/evidence/C11/final-race.jsonl", "elapsed_seconds": 6.562}
+{"argv": ["node", "scripts/verify-engine-tests.mjs", "docs/evidence/C11/final-race.jsonl"], "exit_code": 0, "output_path": "docs/evidence/C11/final-discovery.log", "elapsed_seconds": 0.054}
+{"argv": ["bash", "-c", "cd tests && strace -f -e trace=network -o ../docs/evidence/C11/network.trace ../dist/ci/c11-tests -test.run \"^TestApply\" -test.count=1"], "exit_code": 0, "output_path": "docs/evidence/C11/network-tests.log", "elapsed_seconds": 0.815}
+{"argv": ["go", "test", "-c", "-o", "dist/ci/c11-storage-tests", "./internal/storage"], "exit_code": 0, "output_path": "docs/evidence/C11/network-storage-build.log", "elapsed_seconds": 0.241}
+{"argv": ["bash", "-c", "cd internal/storage && strace -f -e trace=network -o ../../docs/evidence/C11/network-storage.trace ../../dist/ci/c11-storage-tests -test.run \"^TestApply\" -test.count=1"], "exit_code": 0, "output_path": "docs/evidence/C11/network-storage-tests.log", "elapsed_seconds": 1.191}
+{"argv": ["npm", "run", "prepare:web"], "exit_code": 0, "output_path": "docs/evidence/C11/prepare.log.gz", "elapsed_seconds": 0.18}
+{"argv": ["npm", "run", "check"], "exit_code": 0, "output_path": "docs/evidence/C11/final-check.log", "elapsed_seconds": 14.321}
+{"argv": ["python3", "/tmp/miragemesh-c11-clone.py"], "exit_code": 1, "output_path": "docs/evidence/C11/clone.log.gz", "elapsed_seconds": 0.141}
+{"argv": ["python3", "docs/evidence/C11/verify-clone.py"], "exit_code": 0, "output_path": "docs/evidence/C11/clone.log", "elapsed_seconds": 11.749}
+{"argv": ["python3", "scripts/plan.py", "validate"], "exit_code": 0, "output_path": "docs/evidence/C11/final-plan-python.log", "elapsed_seconds": 0.057}
+{"argv": ["python3", "scripts/validate_repo.py"], "exit_code": 0, "output_path": "docs/evidence/C11/final-repository.log", "elapsed_seconds": 0.099}
+{"argv": ["npm", "run", "package:web"], "exit_code": 0, "output_path": "docs/evidence/C11/package.log", "elapsed_seconds": 0.184}
+{"argv": ["bash", "-c", "cd dist/release && sha256sum --check SHA256SUMS.txt"], "exit_code": 0, "output_path": "docs/evidence/C11/package-checksums.log", "elapsed_seconds": 0.004}
+{"argv": ["bash", "-c", "c11_formatting=$(gofmt -l cmd internal tests); test -z \"$c11_formatting\""], "exit_code": 0, "output_path": "docs/evidence/C11/final-format.log", "elapsed_seconds": 0.011}
+{"argv": ["python3", "docs/evidence/C11/verify-source.py"], "exit_code": 0, "output_path": "docs/evidence/C11/source-verify.log", "elapsed_seconds": 0.05}
+{"argv": ["go", "vet", "./..."], "exit_code": 0, "output_path": "docs/evidence/C11/final-vet.log", "elapsed_seconds": 0.155}
+{"argv": ["npm", "run", "validate:plan"], "exit_code": 0, "output_path": "docs/evidence/C11/final-plan.log", "elapsed_seconds": 0.187}
+{"argv": ["npm", "run", "plan", "--", "next"], "exit_code": 0, "output_path": "docs/evidence/C11/next-task.log", "elapsed_seconds": 0.193}
+{"argv": ["python3", "docs/evidence/C11/verify-source.py"], "exit_code": 0, "output_path": "docs/evidence/C11/final-source-verify.log", "elapsed_seconds": 0.044}
+{"argv": ["python3", "/tmp/miragemesh-c11-diff.py"], "exit_code": 0, "output_path": "docs/evidence/C11/final-diff.log", "elapsed_seconds": 0.142}

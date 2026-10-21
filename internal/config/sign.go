@@ -3,8 +3,8 @@
 // The service validates one strictly typed desired-state document, verifies
 // its Ed25519 signature over the exact submitted payload bytes and keeps the
 // accepted document as the active configuration of the running process. The
-// active configuration is process state: C11 owns the durable applied
-// revision and the convergence of a config apply after a crash.
+// active configuration here is process state; internal/sensor.Applier uses
+// the same verification rules for durable C11 reconciliation.
 //
 // The signing key is trusted local configuration and is independent from the
 // mTLS collector certificate authorities and revocation material. This
@@ -159,6 +159,49 @@ func Sign(payload []byte, privateKey ed25519.PrivateKey) ([]byte, error) {
 	return ed25519.Sign(privateKey, payload), nil
 }
 
+func (s *Service) verifyDocument(ctx context.Context, payload, signature []byte) (Document, error) {
+	if s == nil {
+		return Document{}, ErrInvalidInput
+	}
+	if err := ctx.Err(); err != nil {
+		return Document{}, err
+	}
+	if len(signature) == 0 {
+		return Document{}, ErrUnsigned
+	}
+	if !ed25519.Verify(s.verifier.PublicKey, payload, signature) {
+		return Document{}, ErrInvalidSignature
+	}
+	document, err := Parse(payload)
+	if err != nil {
+		return Document{}, err
+	}
+	if !s.boundsAllow(document.Settings) {
+		return Document{}, ErrInvalidInput
+	}
+	return document, nil
+}
+
+// VerifyAt validates a signed document at a trusted instant without applying it.
+// Recovery uses the recorded acceptance time; new admission uses the current clock.
+func (s *Service) VerifyAt(ctx context.Context, payload, signature []byte, now time.Time) (Document, error) {
+	document, err := s.verifyDocument(ctx, payload, signature)
+	if err != nil {
+		return Document{}, err
+	}
+	now = now.UTC()
+	if now.IsZero() || now.Year() < 1000 {
+		return Document{}, ErrInvalidInput
+	}
+	if now.Before(document.IssuedAt) {
+		return Document{}, ErrNotYetValid
+	}
+	if !now.Before(document.ExpiresAt) {
+		return Document{}, ErrExpired
+	}
+	return document, nil
+}
+
 // Apply verifies one signed desired state and makes it the active
 // configuration of its sensor. The order is fixed: a missing signature
 // fails first, then the signature over the exact bytes, then the document
@@ -174,18 +217,9 @@ func (s *Service) Apply(ctx context.Context, payload, signature []byte) (Applied
 	if err := ctx.Err(); err != nil {
 		return Applied{}, err
 	}
-	if len(signature) == 0 {
-		return Applied{}, ErrUnsigned
-	}
-	if !ed25519.Verify(s.verifier.PublicKey, payload, signature) {
-		return Applied{}, ErrInvalidSignature
-	}
-	document, err := Parse(payload)
+	document, err := s.verifyDocument(ctx, payload, signature)
 	if err != nil {
 		return Applied{}, err
-	}
-	if !s.boundsAllow(document.Settings) {
-		return Applied{}, ErrInvalidInput
 	}
 	now := s.verifier.Clock().UTC()
 	if now.IsZero() || now.Year() < 1000 {

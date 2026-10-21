@@ -96,10 +96,12 @@
     },
     {
       "id": "C11",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C11.json"
+      ],
+      "source_identity": "sha256:fde91a05cba01744d00282395ec34cd0050b03899d712c04511e080c89520559",
+      "notes": "Owner-approved F05 internal durable configuration on C05: exact signed payload, acceptance time and monotonic per-sensor applied revision survive restart; five real SIGKILL boundaries, nine filesystem fault cases, replay, concurrency and typed negative cases verified locally. No external decoy/spool/batch effects, HTTP/CLI/UI, key lifecycle, remote Actions or product-readiness claim."
     },
     {
       "id": "C12",

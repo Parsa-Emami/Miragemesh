@@ -1,0 +1,5 @@
+--- FAIL: TestApplyDurableRevisionAndRestart (0.13s)
+    apply_test.go:99: config broke event sequence sensor sequence out of order
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.133s
+FAIL

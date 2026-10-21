@@ -1,0 +1,37 @@
+[
+  {
+    "mutation": "stale",
+    "exit_code": 1,
+    "assertion_caught": true,
+    "test": "^TestApplyConcurrentReconcilersAndReplay$",
+    "output_path": "docs/evidence/C11/mutation-stale.log"
+  },
+  {
+    "mutation": "recovery-signature",
+    "exit_code": 1,
+    "assertion_caught": true,
+    "test": "^TestApplyRecoveryRejectsForgedHistory$/wrong-signer",
+    "output_path": "docs/evidence/C11/mutation-recovery-signature.log"
+  },
+  {
+    "mutation": "replay-time",
+    "exit_code": 1,
+    "assertion_caught": true,
+    "test": "^TestApplyDurableRevisionAndRestart$",
+    "output_path": "docs/evidence/C11/mutation-replay-time.log"
+  },
+  {
+    "mutation": "flush",
+    "exit_code": 1,
+    "assertion_caught": true,
+    "test": "^TestApplySyscallFailuresPreserveRecoverableState$/manifest-directory-sync",
+    "output_path": "docs/evidence/C11/mutation-flush.log"
+  },
+  {
+    "mutation": "event-routing",
+    "exit_code": 1,
+    "assertion_caught": true,
+    "test": "^TestApplyDurableRevisionAndRestart$",
+    "output_path": "docs/evidence/C11/mutation-event-routing.log"
+  }
+]

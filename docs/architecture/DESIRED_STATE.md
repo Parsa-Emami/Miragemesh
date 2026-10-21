@@ -6,7 +6,8 @@ exact submitted payload bytes and keeps the accepted document as the active
 configuration of the running process. There is no HTTP, CLI or UI surface in
 C10; the engine owns the domain behaviour, UI work stays in `apps/web` and
 adapters sit at the boundaries per ADR-0003. The durable applied revision and
-the convergence of a config apply after a crash belong to C11.
+the convergence of a config apply after a crash are provided by C11 through
+`internal/sensor.Applier`; see `CONFIG_APPLY.md`.
 
 ## Trusted in-process interface
 
@@ -204,3 +205,13 @@ Official standard-library sources: [Ed25519 signing and verification](https://pk
 [JSON decoder tokens](https://pkg.go.dev/encoding/json#Decoder.Token),
 [RFC 8032 Ed25519](https://www.rfc-editor.org/rfc/rfc8032.html).
 Implementation is checked against the repository-locked Go 1.27.2 source.
+
+## C11 durable integration
+
+C11 reuses this service's `VerifyAt(ctx, payload, signature, instant)` without
+changing `New`, `Apply`, `Active`, `Sign`, document fields, error precedence or
+setting bounds. `VerifyAt` validates but never changes process state. The sensor
+applier uses it for admission at the current clock and for recovery at the
+original recorded acceptance time. Durable callers use `sensor.NewApplier`
+rather than treating a C10 process-local `Apply` result as a durable receipt.
+See [CONFIG_APPLY.md](CONFIG_APPLY.md) for the durable interface and limits.

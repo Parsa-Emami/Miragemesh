@@ -47,6 +47,7 @@ type Record struct {
 	Input      []byte
 	Event      contracts.Event
 	Enrollment *contracts.EnrollmentRecord
+	Config     *contracts.AppliedConfig
 }
 
 type entry struct {
@@ -160,9 +161,9 @@ func (s *Store) inspect(names []string) error {
 		if err != nil || !private(info, 0600) {
 			return ErrRecovery
 		}
-		bound := max(s.limits.MaxManifestBytes, int64(contracts.MaxInputBytes))
+		bound := max(s.limits.MaxManifestBytes, int64(contracts.MaxStoredInputBytes))
 		if object {
-			bound = contracts.MaxInputBytes
+			bound = contracts.MaxStoredInputBytes
 		}
 		if name == ".lock" {
 			bound = 0
@@ -257,7 +258,7 @@ func Open(directory string, limits Limits) (*Store, error) {
 	references := make(map[string]bool)
 	for i, item := range s.state.Operations {
 		r := item.Receipt
-		if !validID(r.OperationID) || ids[r.OperationID] || !hexName(r.InputDigest, 64) || r.Generation != uint64(i+1) || item.Size < 1 || item.Size > contracts.MaxInputBytes || item.Size > limits.MaxBytes-used {
+		if !validID(r.OperationID) || ids[r.OperationID] || !hexName(r.InputDigest, 64) || r.Generation != uint64(i+1) || item.Size < 1 || item.Size > contracts.MaxStoredInputBytes || item.Size > limits.MaxBytes-used {
 			return nil, ErrRecovery
 		}
 		ids[r.OperationID] = true
@@ -277,7 +278,7 @@ func Open(directory string, limits Limits) (*Store, error) {
 	}
 	for _, name := range names {
 		if strings.HasPrefix(name, "object-") && !references[name] {
-			data, failure := s.readFile(name, contracts.MaxInputBytes)
+			data, failure := s.readFile(name, contracts.MaxStoredInputBytes)
 			if failure != nil || name != objectName(digest(data)) {
 				return nil, ErrRecovery
 			}
@@ -374,17 +375,21 @@ func decodeRecord(ctx context.Context, raw []byte) (Record, error) {
 		return Record{Input: raw, Event: event}, nil
 	}
 	enrollment, failure := contracts.DecodeEnrollment(ctx, raw)
-	if failure != nil {
-		if ctx.Err() != nil {
-			return Record{}, ctx.Err()
-		}
-		return Record{}, ErrInvalidInput
+	if failure == nil {
+		return Record{Input: raw, Enrollment: &enrollment}, nil
 	}
-	return Record{Input: raw, Enrollment: &enrollment}, nil
+	config, err := contracts.DecodeAppliedConfig(ctx, raw)
+	if err == nil {
+		return Record{Input: raw, Config: &config}, nil
+	}
+	if ctx.Err() != nil {
+		return Record{}, ctx.Err()
+	}
+	return Record{}, ErrInvalidInput
 }
 
 func (s *Store) load(ctx context.Context, item entry) (Record, error) {
-	raw, err := s.readFile(objectName(item.Receipt.InputDigest), contracts.MaxInputBytes)
+	raw, err := s.readFile(objectName(item.Receipt.InputDigest), contracts.MaxStoredInputBytes)
 	if err != nil || int64(len(raw)) != item.Size || digest(raw) != item.Receipt.InputDigest {
 		return Record{}, ErrRecovery
 	}
@@ -443,6 +448,10 @@ func (s *Store) CommitOnceChecked(ctx context.Context, id string, input []byte, 
 func (s *Store) commit(ctx context.Context, id string, input []byte, check func(Record) error, once bool) (receipt Receipt, err error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	return s.commitLocked(ctx, id, input, check, once)
+}
+
+func (s *Store) commitLocked(ctx context.Context, id string, input []byte, check func(Record) error, once bool) (receipt Receipt, err error) {
 	if err = s.available(ctx); err != nil {
 		return Receipt{}, err
 	}
@@ -525,7 +534,7 @@ func (s *Store) commit(ctx context.Context, id string, input []byte, check func(
 	}
 	object := objectName(hash)
 	if _, failure := s.root.Lstat(object); failure == nil {
-		existing, failure := s.readFile(object, contracts.MaxInputBytes)
+		existing, failure := s.readFile(object, contracts.MaxStoredInputBytes)
 		if failure != nil || !bytes.Equal(input, existing) {
 			return Receipt{}, ErrRecovery
 		}

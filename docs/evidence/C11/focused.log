@@ -1,0 +1,120 @@
+=== RUN   TestApplyDurableRevisionAndRestart
+--- PASS: TestApplyDurableRevisionAndRestart (0.27s)
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/unsigned_document
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/tampered_document
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/reserialized_document
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/wrong_signing_key
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/expired_document
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/not_yet_valid_document
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/stale_revision
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/conflicting_revision
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/malformed_json
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/unknown_field
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/duplicate_field
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/invalid_schema_version
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/invalid_revision
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/invalid_timestamp
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/expires_before_issued
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/settings_out_of_range
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/batch_exceeds_spool
+=== RUN   TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/oversized_payload
+--- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges (0.07s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/unsigned_document (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/tampered_document (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/reserialized_document (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/wrong_signing_key (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/expired_document (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/not_yet_valid_document (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/stale_revision (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/conflicting_revision (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/malformed_json (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/unknown_field (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/duplicate_field (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/invalid_schema_version (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/invalid_revision (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/invalid_timestamp (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/expires_before_issued (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/settings_out_of_range (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/batch_exceeds_spool (0.00s)
+    --- PASS: TestApplyRejectsInvalidDesiredStateWithoutDurableChanges/oversized_payload (0.00s)
+=== RUN   TestApplyConcurrentReconcilersAndReplay
+--- PASS: TestApplyConcurrentReconcilersAndReplay (0.09s)
+=== RUN   TestApplyPrerequisitesQuotaAndCancellation
+--- PASS: TestApplyPrerequisitesQuotaAndCancellation (0.13s)
+=== RUN   TestApplyRecoveryRejectsForgedHistory
+=== RUN   TestApplyRecoveryRejectsForgedHistory/wrong-signer
+=== RUN   TestApplyRecoveryRejectsForgedHistory/invalid-time
+=== RUN   TestApplyRecoveryRejectsForgedHistory/wrong-operation
+=== RUN   TestApplyRecoveryRejectsForgedHistory/rollback
+--- PASS: TestApplyRecoveryRejectsForgedHistory (0.39s)
+    --- PASS: TestApplyRecoveryRejectsForgedHistory/wrong-signer (0.10s)
+    --- PASS: TestApplyRecoveryRejectsForgedHistory/invalid-time (0.10s)
+    --- PASS: TestApplyRecoveryRejectsForgedHistory/wrong-operation (0.10s)
+    --- PASS: TestApplyRecoveryRejectsForgedHistory/rollback (0.10s)
+=== RUN   TestApplyPreservesMaximumExactPayload
+--- PASS: TestApplyPreservesMaximumExactPayload (0.08s)
+=== RUN   TestApplyRechecksClockAndCancellationInsideWriterLock
+=== RUN   TestApplyRechecksClockAndCancellationInsideWriterLock/expiry
+=== RUN   TestApplyRechecksClockAndCancellationInsideWriterLock/cancel
+--- PASS: TestApplyRechecksClockAndCancellationInsideWriterLock (0.12s)
+    --- PASS: TestApplyRechecksClockAndCancellationInsideWriterLock/expiry (0.07s)
+    --- PASS: TestApplyRechecksClockAndCancellationInsideWriterLock/cancel (0.05s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/tests	1.150s
+=== RUN   TestApplyCrashProcessHelper
+--- PASS: TestApplyCrashProcessHelper (0.00s)
+=== RUN   TestApplySIGKILLAtPublicationBoundaries
+=== RUN   TestApplySIGKILLAtPublicationBoundaries/staged
+=== RUN   TestApplySIGKILLAtPublicationBoundaries/object
+=== RUN   TestApplySIGKILLAtPublicationBoundaries/before-manifest
+=== RUN   TestApplySIGKILLAtPublicationBoundaries/manifest
+=== RUN   TestApplySIGKILLAtPublicationBoundaries/before-ack
+--- PASS: TestApplySIGKILLAtPublicationBoundaries (0.72s)
+    --- PASS: TestApplySIGKILLAtPublicationBoundaries/staged (0.16s)
+    --- PASS: TestApplySIGKILLAtPublicationBoundaries/object (0.14s)
+    --- PASS: TestApplySIGKILLAtPublicationBoundaries/before-manifest (0.16s)
+    --- PASS: TestApplySIGKILLAtPublicationBoundaries/manifest (0.12s)
+    --- PASS: TestApplySIGKILLAtPublicationBoundaries/before-ack (0.13s)
+=== RUN   TestApplySyscallFailuresPreserveRecoverableState
+=== RUN   TestApplySyscallFailuresPreserveRecoverableState/write
+=== RUN   TestApplySyscallFailuresPreserveRecoverableState/short-write
+=== RUN   TestApplySyscallFailuresPreserveRecoverableState/stage-sync
+=== RUN   TestApplySyscallFailuresPreserveRecoverableState/object-rename
+=== RUN   TestApplySyscallFailuresPreserveRecoverableState/object-directory-sync
+=== RUN   TestApplySyscallFailuresPreserveRecoverableState/manifest-write
+=== RUN   TestApplySyscallFailuresPreserveRecoverableState/manifest-sync
+=== RUN   TestApplySyscallFailuresPreserveRecoverableState/manifest-rename
+=== RUN   TestApplySyscallFailuresPreserveRecoverableState/manifest-directory-sync
+--- PASS: TestApplySyscallFailuresPreserveRecoverableState (0.78s)
+    --- PASS: TestApplySyscallFailuresPreserveRecoverableState/write (0.12s)
+    --- PASS: TestApplySyscallFailuresPreserveRecoverableState/short-write (0.12s)
+    --- PASS: TestApplySyscallFailuresPreserveRecoverableState/stage-sync (0.11s)
+    --- PASS: TestApplySyscallFailuresPreserveRecoverableState/object-rename (0.11s)
+    --- PASS: TestApplySyscallFailuresPreserveRecoverableState/object-directory-sync (0.06s)
+    --- PASS: TestApplySyscallFailuresPreserveRecoverableState/manifest-write (0.07s)
+    --- PASS: TestApplySyscallFailuresPreserveRecoverableState/manifest-sync (0.07s)
+    --- PASS: TestApplySyscallFailuresPreserveRecoverableState/manifest-rename (0.08s)
+    --- PASS: TestApplySyscallFailuresPreserveRecoverableState/manifest-directory-sync (0.05s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/internal/storage	1.505s
+=== RUN   TestAppliedConfigRecordValidation
+=== RUN   TestAppliedConfigRecordValidation/version
+=== RUN   TestAppliedConfigRecordValidation/kind
+=== RUN   TestAppliedConfigRecordValidation/empty-payload
+=== RUN   TestAppliedConfigRecordValidation/oversized-payload
+=== RUN   TestAppliedConfigRecordValidation/short-signature
+=== RUN   TestAppliedConfigRecordValidation/invalid-time
+=== RUN   TestAppliedConfigRecordValidation/offset-time
+=== RUN   TestAppliedConfigRecordValidation/zero-time
+--- PASS: TestAppliedConfigRecordValidation (0.00s)
+    --- PASS: TestAppliedConfigRecordValidation/version (0.00s)
+    --- PASS: TestAppliedConfigRecordValidation/kind (0.00s)
+    --- PASS: TestAppliedConfigRecordValidation/empty-payload (0.00s)
+    --- PASS: TestAppliedConfigRecordValidation/oversized-payload (0.00s)
+    --- PASS: TestAppliedConfigRecordValidation/short-signature (0.00s)
+    --- PASS: TestAppliedConfigRecordValidation/invalid-time (0.00s)
+    --- PASS: TestAppliedConfigRecordValidation/offset-time (0.00s)
+    --- PASS: TestAppliedConfigRecordValidation/zero-time (0.00s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/internal/contracts	0.003s

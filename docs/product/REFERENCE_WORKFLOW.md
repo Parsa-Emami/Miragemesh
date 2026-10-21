@@ -22,3 +22,9 @@ The repository-owned scenario is `tests/scenarios/clone-to-value.json`. Its synt
 `node scripts/verify-reference.mjs` validates scenario structure, fixture references, provenance and license metadata. A successful validation does not execute or prove any workflow behavior. Engine behavior, isolation and restart/restore require later implementation and evidence; C30 is the local usability gate.
 
 The intended local setup is `npm run setup` followed by `npm start`. No paid account, cloud service, public domain or sibling repository is required for the core open-source profile.
+
+C11 implements only the internal signed-configuration part of steps 1 and 4:
+`sensor.NewApplier` persists and recovers the exact applied payload, revision and
+original acceptance time through C05. It does not execute the full scenario or
+apply settings to a decoy/spool; those consumers belong to later cards. See
+`docs/architecture/CONFIG_APPLY.md` for this supported in-process interface.

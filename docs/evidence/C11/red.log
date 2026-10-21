@@ -1,0 +1,14 @@
+# github.com/Parsa-Emami/Miragemesh/tests [github.com/Parsa-Emami/Miragemesh/tests.test]
+tests/apply_test.go:45:83: undefined: sensor.Applier
+tests/apply_test.go:47:19: undefined: sensor.NewApplier
+tests/apply_test.go:52:39: undefined: sensor.Applier
+tests/apply_test.go:136:36: undefined: sensor.Applier
+tests/apply_test.go:142:17: s.Records undefined (type *storage.Store has no field or method Records)
+tests/apply_test.go:151:19: undefined: sensor.NewApplier
+tests/apply_test.go:152:19: undefined: sensor.NewApplier
+tests/apply_test.go:154:19: undefined: sensor.NewApplier
+tests/apply_test.go:155:21: undefined: sensor.Applier
+tests/apply_test.go:190:22: undefined: contracts.AppliedConfig
+tests/apply_test.go:190:22: too many errors
+FAIL	github.com/Parsa-Emami/Miragemesh/tests [build failed]
+FAIL

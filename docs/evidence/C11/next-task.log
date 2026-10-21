@@ -1,0 +1,104 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 plan
+> node scripts/roadmap.mjs next
+
+{
+  "task": {
+    "id": "C12",
+    "stage": "domain",
+    "title": "feat(decoy): implement limited metadata only http decoy",
+    "status": "planned",
+    "depends_on": [
+      "C11"
+    ],
+    "requirements": [
+      "F06"
+    ],
+    "deliverables": [
+      "internal/decoy/http.go",
+      "tests/decoy_test.go"
+    ],
+    "verification": [
+      "npm run validate:plan — All task/dependency/resource/reference/evidence metadata validates; no runtime capability inferred.",
+      "go test ./... — C03 creates this engine test command in the same commit; C06 adds CI/integration collection. Pass the actual C12 acceptance and negative cases on the selected engine; shell-only tests cannot certify this task."
+    ],
+    "acceptance": [
+      "No command execution or sensitive response echo occurs and request size is bounded."
+    ],
+    "evidence_path": "docs/evidence/C12.json",
+    "rollback": "Revert the isolated source change when no incompatible data was accepted. Otherwise retain the latest valid bytes/export and compatible reader, and use tested forward repair; never overwrite newer accepted state with an old backup.",
+    "scope": "MirageMesh complete open-source local web profile",
+    "task_file": "plans/commits/C12.md",
+    "read_before": [
+      "AGENTS.md",
+      "docs/agents/EXECUTION_CONTRACT.md",
+      "docs/architecture/ADR-0003-open-source-local-first.md",
+      "docs/product/REFERENCE_WORKFLOW.md",
+      "plans/project-state.json"
+    ],
+    "before": "Entry requirement: verified C11 evidence. Preserve its demonstrated behavior; inspect actual source and any recorded blockers before editing.",
+    "after": "No command execution or sensitive response echo occurs and request size is bounded.",
+    "resources": {
+      "hardware": {
+        "vcpu": 2,
+        "ram_mib": 2048,
+        "free_disk_mib": 10240,
+        "measurement": "Unmeasured planning target; C28 must verify or reduce it."
+      },
+      "providers": [
+        "rootless Podman for isolated decoys"
+      ],
+      "toolchain": "Go engine plus locked Node/TypeScript web tools; exact engine/provider pins and source-build steps resolved at C02.",
+      "upstream": [
+        "https://docs.podman.io/en/latest/",
+        "https://pkg.go.dev/crypto/tls",
+        "https://nodejs.org/docs/latest-v24.x/api/"
+      ],
+      "fixture": {
+        "path": "tests/fixtures/miragemesh/C12/",
+        "status": "planned; implement positive, negative and expected-output fixtures in this task",
+        "provenance": "repository-authored synthetic data or explicitly licensed upstream data"
+      },
+      "licenses": "Apache-2.0 project source; pin and inventory every shipped upstream library/provider/grammar/rule/dataset license. Unknown/restricted required resources block release."
+    },
+    "negative_cases": [
+      "Missing prerequisites, malformed fixtures or unavailable required providers produce an explicit error rather than placeholder success.",
+      "Repeat after restart and verify the declared invariant and documented recovery outcome.",
+      "No egress by default"
+    ],
+    "implementation_steps": [
+      "Inspect the actual implementation, source/locks and verified dependencies for C12; preserve accepted existing behavior.",
+      "Define the versioned positive and negative sensor-event fixtures and expected error/result semantics under tests/fixtures/miragemesh/C12/.",
+      "Implement: No command execution or sensitive response echo occurs and request size is bounded.",
+      "Change the listed exact targets and wire the actual typed outcome into the supported browser/engine workflow. Keep domain facts, validation, storage/provider adapters and UI separate.",
+      "Add regression/integration coverage for every acceptance and negative case; real storage/provider/security boundaries cannot be verified only with mocks.",
+      "Run the labeled verification commands; record exact source, fixture license/hash, tool/provider versions, command exits and observed results in docs/evidence/C12.json. Update progress only when the whole task is genuinely verified."
+    ],
+    "verification_commands": [
+      {
+        "command": "npm run validate:plan",
+        "available_now": true,
+        "introduced_by": "web-foundation",
+        "expected": "All task/dependency/resource/reference/evidence metadata validates; no runtime capability inferred."
+      },
+      {
+        "command": "go test ./...",
+        "available_now": false,
+        "introduced_by": "C03",
+        "expected": "C03 creates this engine test command in the same commit; C06 adds CI/integration collection. Pass the actual C12 acceptance and negative cases on the selected engine; shell-only tests cannot certify this task."
+      }
+    ],
+    "stop_conditions": [
+      "Do not modify database schemas, migrations, .env files or Dockerfiles. Use the compatible local port in ADR-0003; if unavoidable, mark that exact task blocked and continue independent authorized work.",
+      "Do not invent versions, licenses, test results, provider success, source identities or deployment/release evidence.",
+      "Do not substitute a generic JSON preview, successful placeholder endpoint, static example or mocked authority for required product behavior."
+    ]
+  },
+  "progress": {
+    "id": "C12",
+    "status": "planned",
+    "evidence": [],
+    "source_identity": null,
+    "notes": ""
+  }
+}

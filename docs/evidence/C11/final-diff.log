@@ -1,0 +1,82 @@
+ apps/web/src/generated/project.json                |   2 +-
+ docs/ROADMAP_FA.md                                 |   2 +
+ docs/agents/SESSION_HANDOFF.json                   | 169 ++--
+ docs/architecture/CONFIG_APPLY.md                  |  92 +++
+ docs/architecture/DESIRED_STATE.md                 |  13 +-
+ docs/architecture/STORAGE_PROOF.md                 |  20 +
+ docs/engineering/ENGINE_TESTS.md                   |  20 +
+ docs/evidence/C11.json                             | 579 +++++++++++++
+ docs/evidence/C11/browser.log                      |  18 +
+ docs/evidence/C11/build.log                        |   0
+ docs/evidence/C11/candidate-diff-stat.log          |  69 ++
+ docs/evidence/C11/check.log                        |  91 +++
+ docs/evidence/C11/clone.log                        |   7 +
+ docs/evidence/C11/clone.log.gz                     | Bin 0 -> 349 bytes
+ docs/evidence/C11/commands.jsonl                   |  35 +
+ docs/evidence/C11/discovery-red.log.gz             | Bin 0 -> 979 bytes
+ docs/evidence/C11/discovery-regression.log         |  19 +
+ docs/evidence/C11/discovery.log                    |   1 +
+ docs/evidence/C11/engine-tests.jsonl               | 892 +++++++++++++++++++++
+ docs/evidence/C11/environment.log                  |   8 +
+ docs/evidence/C11/final-check.log                  |  91 +++
+ docs/evidence/C11/final-diff.log                   |   0
+ docs/evidence/C11/final-discovery.log              |   1 +
+ docs/evidence/C11/final-format.log                 |   0
+ docs/evidence/C11/final-plan-python.log            |   1 +
+ docs/evidence/C11/final-plan.log                   |   5 +
+ docs/evidence/C11/final-race.jsonl                 | 892 +++++++++++++++++++++
+ docs/evidence/C11/final-repository.log             |   2 +
+ docs/evidence/C11/final-source-verify.log          |   1 +
+ docs/evidence/C11/final-vet.log                    |   0
+ docs/evidence/C11/focused.log                      | 120 +++
+ docs/evidence/C11/format.log                       |   0
+ docs/evidence/C11/install.log                      |   2 +
+ docs/evidence/C11/mutation-event-routing.log       |   5 +
+ docs/evidence/C11/mutation-flush.log               |   6 +
+ docs/evidence/C11/mutation-recovery-signature.log  |   6 +
+ docs/evidence/C11/mutation-replay-time.log         |   5 +
+ docs/evidence/C11/mutation-stale.log               |   5 +
+ docs/evidence/C11/mutations.json                   |  37 +
+ docs/evidence/C11/network-build.log                |   0
+ docs/evidence/C11/network-storage-build.log        |   0
+ docs/evidence/C11/network-storage-tests.log        |   1 +
+ docs/evidence/C11/network-storage.trace            |  87 ++
+ docs/evidence/C11/network-tests.log                |   1 +
+ docs/evidence/C11/network.trace                    |  46 ++
+ docs/evidence/C11/next-task.log                    | 104 +++
+ docs/evidence/C11/package-checksums.log            |  17 +
+ docs/evidence/C11/package.log                      |   5 +
+ docs/evidence/C11/plan-python.log                  |   1 +
+ docs/evidence/C11/prepare.log.gz                   | Bin 0 -> 97 bytes
+ docs/evidence/C11/python-tests.log                 |  11 +
+ docs/evidence/C11/red.log                          |  14 +
+ docs/evidence/C11/repository.log                   |   2 +
+ docs/evidence/C11/source-files.json                | 388 +++++++++
+ docs/evidence/C11/source-identity.log              |   3 +
+ docs/evidence/C11/source-verify.log                |   1 +
+ docs/evidence/C11/standard-tests.log               |   8 +
+ docs/evidence/C11/verify-clone.py                  |  17 +
+ docs/evidence/C11/verify-source.py                 |  19 +
+ docs/evidence/C11/vet.log                          |   0
+ docs/product/REFERENCE_WORKFLOW.md                 |   6 +
+ internal/config/sign.go                            |  58 +-
+ internal/contracts/config.go                       |  44 +
+ internal/contracts/config_test.go                  |  57 ++
+ internal/sensor/apply.go                           | 158 ++++
+ internal/sensor/event.go                           |   2 +-
+ internal/storage/adapter.go                        |  33 +-
+ internal/storage/apply_recovery_test.go            | 307 +++++++
+ internal/storage/export_test.go                    |  16 +
+ internal/storage/update.go                         |  51 ++
+ plans/commits/C11.md                               |  20 +-
+ plans/progress.json                                |  10 +-
+ plans/project-state.json                           |   9 +-
+ plans/roadmap.json                                 |   6 +-
+ scripts/verify-engine-tests.mjs                    |   6 +-
+ tests/apply_test.go                                | 438 ++++++++++
+ tests/engineering/engine-tests.test.mjs            |  12 +-
+ tests/fixtures/miragemesh/C11/expected-output.json |  15 +
+ tests/fixtures/miragemesh/C11/invalid.json         | 135 ++++
+ tests/fixtures/miragemesh/C11/positive.json        |  35 +
+ 80 files changed, 5237 insertions(+), 122 deletions(-)
+All task additions included; diff whitespace, protected paths and unchanged user index verified.
