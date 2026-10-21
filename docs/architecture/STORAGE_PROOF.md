@@ -3,7 +3,7 @@
 C05 implements an internal Go file adapter under ADR-0003. It persists validated
 C04 v1 event bytes and an operation receipt. It does not enroll or authenticate
 sensors, authorize operators, ingest collector traffic, advance ACKs/sequences,
-or implement spool/retention/segments. Runtime HTTP remains health-only, with
+or implement ACK/retention/segments. Runtime HTTP remains health-only, with
 `coreReady: false`; no CLI or browser write path is enabled.
 
 The owner explicitly selected **storage only** when reviewing C05. The card's
@@ -11,7 +11,7 @@ generic identity/header/provider negatives and browser integration instruction
 cannot certify nonexistent authentication or admission. Those concerns stay with
 their owning cards; they are not replaced with mock authority. C06 owns runtime
 CI, C07 identity/sequence allocation, C08/C09 enrollment/mTLS, C12 capture,
-C14 spool and later collector/segment cards own their domain semantics.
+C14/C15 spool and later collector/segment cards own their domain semantics.
 
 ## Interface and limits
 
@@ -192,3 +192,13 @@ the exact original envelope on replay atomically; they introduce no second
 manifest or persistence engine. Readers predating C11 cannot decode a directory
 containing config records. Preserve those bytes and a C11-compatible reader when
 rolling back code; do not replace the directory with an older backup.
+
+## C15 compatible gap records
+
+C15 adds canonical `spool.gap` records through the same C05 operation manifest,
+writer lock, quotas and atomic publication. The manifest schema is unchanged.
+The typed record contains sensor/event identity, the lost sequence and digest of
+the omitted event bytes, but not the event payload. Its stable operation ID
+makes exact retries idempotent. Readers predating C15 reject stores containing
+gap records; rollback must retain a C15-compatible reader and the latest valid
+manifest.

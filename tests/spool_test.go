@@ -70,7 +70,6 @@ func TestSpoolDurableBoundedReplayAndRestart(t *testing.T) {
 		License           string  `json:"license"`
 		Provenance        string  `json:"provenance"`
 		AcceptedSequences []int64 `json:"accepted_sequences"`
-		FullError         string  `json:"full_error"`
 	}
 	raw, err := os.ReadFile("fixtures/miragemesh/C14/expected-output.json")
 	if err != nil || json.Unmarshal(raw, &expected) != nil || expected.FixtureVersion != 1 || expected.License != "Apache-2.0" || expected.Provenance == "" || len(expected.AcceptedSequences) != 2 {
@@ -101,11 +100,22 @@ func TestSpoolDurableBoundedReplayAndRestart(t *testing.T) {
 		}
 	}
 	got, err := q.Enqueue(context.Background(), []byte(f.Events[2]))
-	if !errors.Is(err, storage.ErrQuota) || err.Error() != expected.FullError || got != (storage.Receipt{}) {
+	if !errors.Is(err, spool.ErrDropped) || got != (storage.Receipt{}) {
 		t.Fatalf("full spool: %+v %v", got, err)
 	}
-	if !bytes.Equal(before, c14Manifest(t, path)) {
-		t.Fatal("replay or overflow changed authoritative bytes")
+	afterDrop := c14Manifest(t, path)
+	if bytes.Equal(before, afterDrop) {
+		t.Fatal("overflow did not durably record a gap")
+	}
+	if got, err := q.Enqueue(context.Background(), []byte(f.Events[2])); !errors.Is(err, spool.ErrDropped) || got != (storage.Receipt{}) {
+		t.Fatalf("dropped replay: %+v %v", got, err)
+	}
+	if !bytes.Equal(afterDrop, c14Manifest(t, path)) {
+		t.Fatal("dropped replay counted the loss twice")
+	}
+	loss, err := q.Losses(context.Background(), "sensor-01")
+	if err != nil || loss.Count != 1 {
+		t.Fatalf("overflow loss summary: %+v %v", loss, err)
 	}
 }
 
@@ -202,7 +212,7 @@ func TestSpoolCapacityIsAtomicAndPerSensor(t *testing.T) {
 			event := []byte(strings.ReplaceAll(strings.ReplaceAll(f.Events[0], `"sequence":1`, fmt.Sprintf(`"sequence":%d`, i)), `"event-01"`, fmt.Sprintf(`"event-%02d"`, i)))
 			for attempt := 0; attempt < 30; attempt++ {
 				_, err := queues[i%2].Enqueue(context.Background(), event)
-				if err == nil || errors.Is(err, storage.ErrQuota) {
+				if err == nil || errors.Is(err, storage.ErrQuota) || errors.Is(err, spool.ErrDropped) {
 					return
 				}
 				if !errors.Is(err, sensor.ErrOutOfOrder) {
@@ -223,7 +233,7 @@ func TestSpoolCapacityIsAtomicAndPerSensor(t *testing.T) {
 	}
 	counts := map[string]int{}
 	for _, r := range records {
-		if r.Config == nil && r.Enrollment == nil {
+		if r.Config == nil && r.Enrollment == nil && r.Gap == nil {
 			counts[r.Event.SensorID]++
 		}
 	}
@@ -232,7 +242,7 @@ func TestSpoolCapacityIsAtomicAndPerSensor(t *testing.T) {
 	}
 }
 
-func TestSpoolUsesLatestAppliedBoundWithoutDropping(t *testing.T) {
+func TestSpoolUsesLatestAppliedBoundWithoutEviction(t *testing.T) {
 	f := c14Files(t)
 	public, key := c10Key(t)
 	s := openStore(t, storePath(t), f.StorageLimits)
@@ -250,8 +260,8 @@ func TestSpoolUsesLatestAppliedBoundWithoutDropping(t *testing.T) {
 		t.Fatal(err)
 	}
 	c11Apply(t, a, key, f.Payloads["lower"])
-	if _, err = q.Enqueue(context.Background(), []byte(f.Events[2])); !errors.Is(err, storage.ErrQuota) {
-		t.Fatal("lower bound ignored", err)
+	if _, err = q.Enqueue(context.Background(), []byte(f.Events[2])); !errors.Is(err, spool.ErrDropped) {
+		t.Fatal("lower bound did not record loss", err)
 	}
 	if got, err := q.Enqueue(context.Background(), []byte(f.Events[0])); err != nil || got != first {
 		t.Fatal("lower bound erased replay", got, err)
@@ -273,11 +283,11 @@ func TestSpoolUsesLatestAppliedBoundWithoutDropping(t *testing.T) {
 		}
 	}
 	c11Apply(t, a, key, f.Payloads["raise"])
-	if _, err = q.Enqueue(context.Background(), []byte(f.Events[2])); err != nil {
-		t.Fatal("new bound not consumed", err)
+	if _, err = q.Enqueue(context.Background(), []byte(f.Events[2])); !errors.Is(err, spool.ErrDropped) {
+		t.Fatal("dropped event was accepted after a settings change", err)
 	}
-	if _, err = q.Enqueue(context.Background(), []byte(f.Events[3])); !errors.Is(err, storage.ErrQuota) {
-		t.Fatal(err)
+	if _, err = q.Enqueue(context.Background(), []byte(f.Events[3])); err != nil {
+		t.Fatal("sequence after the recorded gap was rejected", err)
 	}
 	// Existing C07 admission remains independent of the new spool consumer.
 	if _, err = sensor.Accept(context.Background(), s, []byte(f.Events[3])); err != nil {

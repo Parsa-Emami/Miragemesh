@@ -287,7 +287,7 @@ observed results, so the fixture cannot drift.
 The `tests` package now requires `TestSpoolDurableBoundedReplayAndRestart`,
 `TestSpoolRejectsInvalidAndUnconfiguredEvents`,
 `TestSpoolCapacityIsAtomicAndPerSensor`,
-`TestSpoolUsesLatestAppliedBoundWithoutDropping`,
+`TestSpoolUsesLatestAppliedBoundWithoutEviction`,
 `TestSpoolStorageQuotaAndRecoveryFailures` and
 `TestSpoolRejectsForgedAppliedConfiguration`. They exercise the internal Go
 queue against real C05 state and ephemeral C11 signing keys. No collector or
@@ -300,3 +300,15 @@ before/after manifest publication and before acknowledgement;
 `TestSpoolSyscallFailuresPreserveRecoverableState` covers the nine filesystem
 failures. Both anchors are required by the discovery guard. Repeated recovery
 and exact retry retain one event and return its original receipt.
+
+## C15 required anchors
+
+The `internal/contracts` package requires `TestSpoolGapRecordValidation` for
+canonical version, identity, sequence and digest validation. The `tests`
+package requires `TestSpoolOverflowPersistsDroppedEventAndResumesAfterGap`,
+`TestSpoolOverflowIsBoundedByStorageQuota`,
+`TestSpoolOverflowRejectsInvalidEventsWithoutCountingLoss` and
+`TestSpoolOverflowRejectsNilQueueAndCancellation`. They use the real C05 store
+to prove durable drop-new markers, idempotent retry, restart recovery,
+gap-aware sequence continuation and explicit quota failure. The discovery guard
+regression removes each anchor in turn and requires rejection.

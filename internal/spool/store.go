@@ -33,5 +33,5 @@ func (s *Store) Enqueue(ctx context.Context, input []byte) (storage.Receipt, err
 	if s == nil {
 		return storage.Receipt{}, ErrInvalidInput
 	}
-	return sensor.AcceptBounded(ctx, s.store, input, s.applier)
+	return s.enqueueOverflow(ctx, input)
 }

@@ -1,0 +1,10 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C15 negative inputs. No real traffic or credentials.",
+  "cases": [
+    { "name": "malformed_full_queue_event", "input": "{}", "expected_error": "invalid sensor event" },
+    { "name": "different_event_same_dropped_sequence", "event_id": "event-conflict", "expected_error": "storage conflict" },
+    { "name": "global_storage_quota", "expected_error": "storage quota exceeded" }
+  ]
+}

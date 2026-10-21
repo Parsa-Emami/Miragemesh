@@ -132,10 +132,12 @@
     },
     {
       "id": "C15",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C15.json"
+      ],
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f",
+      "notes": "F09 verified locally: the signed per-sensor bound drops new valid events with append-only C05 gap records, exposes restart-rebuilt loss counts/ranges, retries idempotently, and continues sequences after gaps; global quota failure is explicit. No ACK reclamation, network surface, remote Actions, or full-product readiness claim."
     },
     {
       "id": "C16",

@@ -1,6 +1,6 @@
 {
   "project": "MirageMesh",
-  "reviewed_commit": "7c0d0bd4453de748f5b76cd5a4dae7fe11487a56",
+  "reviewed_commit": "529cfd431c837c406ef4d27b8989964ef0edd994",
   "readiness": "WEB_FOUNDATION",
   "core_ready": false,
   "implemented": [
@@ -20,8 +20,8 @@
     "internal decoy isolation: a rootless container with no network, no capabilities, no host namespace, a read-only root filesystem and hard process and memory limits, applied through a limited container provider and verified against the observed and the effective runtime controls, started by the engine workflow with --decoy-isolation and a typed outcome; no published decoy surface and no inbound path",
     "internal bounded offline spool through C05 and C11 signed per-sensor settings: exact C04 event bytes, atomic limit/config/sequence checks, exact replay at capacity, restart and real crash/fault recovery; no ACK reclamation, overflow loss policy or transport"
   ],
-  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation, a metadata-only HTTP decoy, its rootless container isolation and the engine workflow that starts it implemented; bounded internal spool implemented; overflow loss policy, durable batch ACK/reclamation, authenticated ingest, a published decoy surface and the full workflow pending",
-  "next_task": "C15",
+  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation, a metadata-only HTTP decoy, its rootless container isolation and the engine workflow that starts it implemented; bounded internal spool with durable overflow gap markers and restart-rebuilt loss counters implemented; durable batch ACK/reclamation, authenticated ingest, a published decoy surface and the full workflow pending",
+  "next_task": "C16",
   "next_command": "npm run plan -- next",
   "full_product_endpoint": "C30 locally usable; C40 full published OSS v1"
 }

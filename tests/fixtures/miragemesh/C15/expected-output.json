@@ -1,0 +1,11 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Expected values are hand-derived from the C15 synthetic sequence fixture.",
+  "accepted_sequences_before_overflow": [1, 2],
+  "dropped_sequence": 3,
+  "loss_count_after_exact_retry_and_next_full_event": 2,
+  "gap_ranges": [{ "from": 3, "through": 4 }],
+  "sequence_after_gap": 5,
+  "quota_failure_persisted_loss_count": 0
+}

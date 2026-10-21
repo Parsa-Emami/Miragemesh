@@ -1,95 +1,65 @@
 {
   "project": "MirageMesh",
-  "last_task": "C14",
+  "last_task": "C15",
   "status": "verified",
-  "base_commit": "7c0d0bd4453de748f5b76cd5a4dae7fe11487a56",
+  "base_commit": "529cfd431c837c406ef4d27b8989964ef0edd994",
   "final_commit": null,
-  "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5",
-  "evidence": "docs/evidence/C14.json",
-  "summary": "internal bounded offline spool through C05 and C11 signed per-sensor settings: exact C04 event bytes, atomic limit/config/sequence checks, exact replay at capacity, restart and real crash/fault recovery; no ACK reclamation, overflow loss policy or transport",
+  "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f",
+  "evidence": "docs/evidence/C15.json",
+  "summary": "internal C05-backed spool overflow: signed-bound drop-new behavior, durable idempotent gap markers, restart-rebuilt loss counts/ranges and gap-aware sequence continuation; no ACK/reclamation or transport",
   "changed_paths": [
     "apps/web/src/generated/project.json",
     "docs/ROADMAP_FA.md",
     "docs/agents/SESSION_HANDOFF.json",
     "docs/architecture/CONFIG_APPLY.md",
-    "docs/architecture/DESIRED_STATE.md",
+    "docs/architecture/STORAGE_PROOF.md",
     "docs/engineering/ENGINE_TESTS.md",
-    "docs/evidence/C14.json",
-    "docs/evidence/C14/browser.log",
-    "docs/evidence/C14/check.log",
-    "docs/evidence/C14/clone-preflight.log.gz",
-    "docs/evidence/C14/clone.log",
-    "docs/evidence/C14/commands.jsonl",
-    "docs/evidence/C14/discovery-red.log.gz",
-    "docs/evidence/C14/discovery.log",
-    "docs/evidence/C14/engine-discovery.log",
-    "docs/evidence/C14/engine-tests.log",
-    "docs/evidence/C14/environment.log",
-    "docs/evidence/C14/environment.py",
-    "docs/evidence/C14/final-browser.log",
-    "docs/evidence/C14/final-check.log",
-    "docs/evidence/C14/final-clone.log",
-    "docs/evidence/C14/final-diff.log",
-    "docs/evidence/C14/final-engine-discovery.log",
-    "docs/evidence/C14/final-engine-tests.log",
-    "docs/evidence/C14/final-plan.log",
-    "docs/evidence/C14/final-repository.log",
-    "docs/evidence/C14/final-source.log",
-    "docs/evidence/C14/focused.log",
-    "docs/evidence/C14/format.log",
-    "docs/evidence/C14/go-red.log",
-    "docs/evidence/C14/install.log",
-    "docs/evidence/C14/mutation-quota.log",
-    "docs/evidence/C14/mutation-replay.log",
-    "docs/evidence/C14/mutation-signature.log",
-    "docs/evidence/C14/network-build.log",
-    "docs/evidence/C14/network-final.log",
-    "docs/evidence/C14/network-final.trace",
-    "docs/evidence/C14/network-verify.log",
-    "docs/evidence/C14/network.log",
-    "docs/evidence/C14/network.trace",
-    "docs/evidence/C14/next-task.log",
-    "docs/evidence/C14/package-checksums.log",
-    "docs/evidence/C14/package.log",
-    "docs/evidence/C14/plan-python.log",
-    "docs/evidence/C14/python-tests.log",
-    "docs/evidence/C14/repository.log",
-    "docs/evidence/C14/review-diff.py",
-    "docs/evidence/C14/run.py",
-    "docs/evidence/C14/source-files.json",
-    "docs/evidence/C14/source.log",
-    "docs/evidence/C14/spool-race.log",
-    "docs/evidence/C14/spool-tests.log",
-    "docs/evidence/C14/stdlib-reference.log.gz",
-    "docs/evidence/C14/verify-clone.py",
-    "docs/evidence/C14/verify-mutations.py",
-    "docs/evidence/C14/verify-source.py",
-    "docs/evidence/C14/vet.log",
-    "docs/evidence/C14/workflow-provider.log",
+    "docs/evidence/C15.json",
+    "docs/evidence/C15/browser.log",
+    "docs/evidence/C15/clone-final.log",
+    "docs/evidence/C15/clone.py",
+    "docs/evidence/C15/commands.jsonl",
+    "docs/evidence/C15/discovery.log",
+    "docs/evidence/C15/engine-tests.log",
+    "docs/evidence/C15/environment.log",
+    "docs/evidence/C15/environment.py",
+    "docs/evidence/C15/final-check.log",
+    "docs/evidence/C15/format.log",
+    "docs/evidence/C15/network.log",
+    "docs/evidence/C15/network.trace",
+    "docs/evidence/C15/next-task.log",
+    "docs/evidence/C15/package-checksums.log",
+    "docs/evidence/C15/package.log",
+    "docs/evidence/C15/python-tests.log",
+    "docs/evidence/C15/repo-contracts.log",
+    "docs/evidence/C15/run.py",
+    "docs/evidence/C15/runtime-provider.log",
+    "docs/evidence/C15/source-files.json",
+    "docs/evidence/C15/validate-final.log",
+    "docs/evidence/C15/validate-plan.log",
+    "docs/evidence/C15/verify-network.py",
+    "docs/evidence/C15/verify-source.log",
+    "docs/evidence/C15/verify-source.py",
+    "docs/evidence/C15/vet.log",
     "docs/product/REFERENCE_WORKFLOW.md",
+    "internal/contracts/spool_gap.go",
+    "internal/contracts/spool_gap_test.go",
     "internal/sensor/event.go",
+    "internal/spool/overflow.go",
     "internal/spool/store.go",
-    "internal/storage/spool_recovery_test.go",
+    "internal/storage/adapter.go",
     "plans/progress.json",
     "plans/project-state.json",
     "scripts/verify-engine-tests.mjs",
     "tests/engineering/engine-tests.test.mjs",
     "tests/fixtures/miragemesh/C14/expected-output.json",
-    "tests/fixtures/miragemesh/C14/invalid.json",
-    "tests/fixtures/miragemesh/C14/positive.json",
+    "tests/fixtures/miragemesh/C15/expected-output.json",
+    "tests/fixtures/miragemesh/C15/invalid.json",
+    "tests/fixtures/miragemesh/C15/positive.json",
+    "tests/overflow_test.go",
     "tests/spool_test.go"
   ],
   "commands": [
-    {
-      "argv": [
-        "npm",
-        "run",
-        "check"
-      ],
-      "exit_code": 0,
-      "output_path": "docs/evidence/C14/final-check.log",
-      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
-    },
     {
       "argv": [
         "go",
@@ -100,8 +70,38 @@
         "./..."
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C14/final-engine-tests.log",
-      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+      "output_path": "docs/evidence/C15/engine-tests.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "docs/evidence/C15/engine-tests.log"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C15/discovery.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+    },
+    {
+      "argv": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C15/vet.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "import subprocess; x=subprocess.check_output([\"gofmt\",\"-l\",\"cmd\",\"internal\",\"tests\"],text=True); print(x,end=\"\"); assert not x"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C15/format.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
     },
     {
       "argv": [
@@ -110,55 +110,108 @@
         "test:browser"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C14/final-browser.log",
-      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+      "output_path": "docs/evidence/C15/browser.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
     },
     {
       "argv": [
-        "node",
-        "scripts/verify-engine-tests.mjs",
-        "docs/evidence/C14/final-engine-tests.log"
+        "npm",
+        "run",
+        "package:web"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C14/final-engine-discovery.log",
-      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+      "output_path": "docs/evidence/C15/package.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
     },
     {
       "argv": [
         "python3",
         "-c",
-        "import os,subprocess;os.chdir(\"dist/release\");subprocess.run([\"sha256sum\",\"--check\",\"SHA256SUMS.txt\"],check=True)"
+        "import os,subprocess; os.chdir(\"dist/release\"); subprocess.run([\"sha256sum\",\"--check\",\"SHA256SUMS.txt\"],check=True)"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C14/package-checksums.log",
-      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+      "output_path": "docs/evidence/C15/package-checksums.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
     },
     {
       "argv": [
         "python3",
-        "docs/evidence/C14/verify-source.py"
+        "scripts/validate_repo.py"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C14/final-source.log",
-      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+      "output_path": "docs/evidence/C15/repo-contracts.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
     },
     {
       "argv": [
         "python3",
-        "docs/evidence/C14/verify-clone.py"
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C14/final-clone.log",
-      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+      "output_path": "docs/evidence/C15/python-tests.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
     },
     {
       "argv": [
         "python3",
-        "docs/evidence/C14/review-diff.py"
+        "docs/evidence/C15/verify-network.py"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C14/final-diff.log",
-      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+      "output_path": "docs/evidence/C15/network.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+    },
+    {
+      "argv": [
+        "podman",
+        "run",
+        "--rm",
+        "--network=none",
+        "--memory=67108864",
+        "--memory-swap=67108864",
+        "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
+        "sh",
+        "-c",
+        "test \"$(cat /sys/fs/cgroup/memory.max)\" = 67108864"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C15/runtime-provider.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C15/environment.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C15/environment.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "validate:plan"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C15/validate-plan.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C15/final-check.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
     },
     {
       "argv": [
@@ -169,49 +222,62 @@
         "next"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C14/next-task.log",
-      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5"
+      "output_path": "docs/evidence/C15/next-task.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C15/clone.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C15/clone-final.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C15/verify-source.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C15/verify-source.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "validate:plan"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C15/validate-final.log",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f"
     }
   ],
   "blockers": [],
   "scope_limits": [
-    "All retained sensor events count as pending; C16 owns durable ACK and space reclamation. C15 owns loss counters and gap markers.",
-    "Existing sensor.Accept and decoy callers remain independent of the opt-in spool service.",
-    "SIGKILL and injected errors are not physical power-loss certification; C28 resource capacity remains unmeasured.",
-    "Local workflow equivalents do not certify a hosted Actions run, C30 local usability or C40 release."
+    "Every accepted event remains pending until C16 implements durable ACK and reclamation; markers remain loss history.",
+    "C14 readers reject the new gap record type, so rollback after a marker is written requires a C15-compatible reader.",
+    "Local clone and injected-error checks are not physical power-loss or GitHub Actions proof; C28 resource capacity is unmeasured.",
+    "No standalone JavaScript lint script is defined; formatting, Go vet, TypeScript, tests and builds were run."
   ],
-  "next_task": "C15",
+  "next_task": "C16",
   "next_command": "npm run plan -- next",
-  "future_card_note": "When C16 is selected, review exact targets to include durable sensor-side ACK/reclamation through the spool/storage contract. C14 intentionally exposes no ACK API.",
+  "future_card_note": "C16 must re-review internal/collector/ingest.go and tests/replay_test.go targets to include durable spool ACK and capacity reclamation; preserve and report all C15 gap markers. C17/retention must retain the spool.gap record type.",
   "delivery": {
     "commit_created": false,
     "push_performed": false,
-    "publication_performed": false,
-    "note": "Clone smoke creates temporary unreferenced Git snapshot objects only, not a delivery commit or branch."
+    "publication_performed": false
   },
-  "base_source_identity": "sha256:2582a704264779e6eba41e37ff7902b46d6b32094c2e2d6322d559ab327fadcc",
-  "final_source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5",
   "local_clone_verification": {
     "passed": true,
-    "candidate_tree": "53c5cb2d3cfe666cbb175f81f2827dda19fad00d",
-    "c14_source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5",
-    "snapshot_commit": "d4b5e7caa7256169c134fa623a6ff321fc81b6d9",
-    "git_source_integrity_identity": "sha256:91ff4b379c1221dc199de97a1b2dee5406ca422f23ca2d0b979ade5231df8cac",
-    "output_path": "docs/evidence/C14/final-clone.log",
+    "candidate_tree": "1c0cf49db2f8a9b660bac842a0987a7a21ec98e5",
+    "snapshot_commit": "9bf488c86cf10b10e6718cb7c1763059fa3a018e",
+    "git_source_integrity_identity": "sha256:6412ecdcb0d778de0149f47037722c5918984ef461e1f389a5f900f9f935e01c",
+    "output_path": "docs/evidence/C15/clone-final.log",
     "remote_runner": false,
     "delivery_commit": false,
-    "binding": "The helper compared every C14 source hash with the candidate Git tree before clone-smoke verified the real clone, full history and runtime tests. Evidence/progress/handoff updates after this snapshot are excluded from the C14 runtime identity."
-  },
-  "test_counts": {
-    "required_engine_anchors": 76,
-    "go_top_level_tests_passed": 94,
-    "go_subtests_passed": 178,
-    "node_tests_passed": 46,
-    "browser_tests_passed": 3,
-    "python_tests_passed": 6,
-    "spool_sigkill_boundaries": 5,
-    "spool_filesystem_fault_cases": 9,
-    "spool_network_syscalls_observed": 0
-  },
-  "remote_actions_executed": false
+    "runtime_tests_certified": false,
+    "binding": "Temporary local snapshot of the final C15 source passed clean-clone setup, Go vet/race/discovery, event validation and local runtime startup. It does not certify hosted Actions or product readiness."
+  }
 }

@@ -6,7 +6,6 @@
     1,
     2
   ],
-  "full_error": "storage quota exceeded",
   "negative_rows": 8,
   "interrupted_events": {
     "staged": 1,

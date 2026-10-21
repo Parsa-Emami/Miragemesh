@@ -120,21 +120,35 @@ time, following C11's last-known applied-state semantics.
 The signed `spool_limit_events` is the per-sensor bound. Other sensors,
 enrollment records and config history do not consume that event count; C05's
 global operation, byte and manifest quotas still apply. A new event at capacity
-returns `storage.ErrQuota` and no receipt. Lowering the signed bound retains all
-accepted bytes and prevents additional events until the bound permits them.
-No eviction, loss counter or gap marker is implemented here; C15 owns that policy.
+follows C15's drop-new policy. After the event has been validated and its loss
+marker durably committed, `Enqueue` returns a zero event receipt and an error
+matching `spool.ErrDropped`; a retry of the exact dropped bytes returns the same
+typed outcome without another marker. The per-sensor loss query rebuilds its
+count and contiguous sequence ranges from C05 records. Lowering the signed bound
+retains all accepted bytes. Marker records do not consume the signed event
+count, but they do consume C05's global quotas; if those quotas prevent marker
+publication, the call returns `storage.ErrQuota` and does not report a recorded
+loss.
 
-All retained events count as pending in C14. Durable collector ACKs and capacity
-reclamation belong to C16, whose exact targets must be reviewed to include the
-required spool/storage changes. C14 adds no ACK API, network transport, CLI,
-browser write surface, new disk record type or dependency. Existing
+C15 adds the canonical internal `spool.gap` record to the C05 version 1
+manifest without changing the manifest or C04 event schema. It carries sensor
+and event identity, sequence and the SHA-256 digest of the omitted exact input.
+Stable operation IDs make retries idempotent; sensor sequence validation treats
+a gap as the sequence that was lost, allowing later events after a configuration
+raises capacity. The marker does not retain the lost event payload.
+
+All retained events remain pending until C16 adds durable collector ACKs and
+capacity reclamation; gap markers remain loss history. C16's exact targets must
+be reviewed to include the required spool/storage changes. C14/C15 add no ACK
+API, network transport, CLI, browser write surface or dependency. Existing
 `sensor.Accept` callers, including the decoy, keep their C07 behavior; they are
 not routed through this new consumer automatically. C26 and C30 remain the
 combined resilience and complete workflow gates.
 
-Rollback requires no data conversion: accepted events remain readable by the
-existing C05/C07 readers. Preserve those bytes and never restore an older
-manifest to remove them. The C14 tests exercise the real queue during five
-SIGKILL boundaries and nine filesystem faults through C05's existing test-only
-seam. These tests establish local restart visibility and injected-error recovery,
-not physical power-loss durability or measured C28 capacity.
+Rollback after a C15 gap has been written requires a C15-compatible reader;
+C14 readers reject the new record type. Preserve accepted events and gap
+history, and never restore an older manifest to remove them. C14 tests exercise
+the real queue during five SIGKILL boundaries and nine filesystem faults through
+C05's existing test-only seam. These tests establish local restart visibility
+and injected-error recovery, not physical power-loss durability or measured C28
+capacity.

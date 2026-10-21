@@ -54,8 +54,10 @@ the egress attempt of the scenario stays denied. See
 
 C14 implements the local retention of step 3 as an internal Go queue:
 `spool.New(store, applier)` and `Enqueue` retain exact C04 event bytes through
-C05 using the C11 applied signed `spool_limit_events`. Full queues return an
-explicit quota error and exact replay keeps the original receipt after restart.
-C15 owns overflow loss accounting; C16 owns collector delivery, durable ACKs and
-capacity reclamation. The queue has no network/CLI/browser surface and does not
-execute the whole scenario. See `docs/architecture/CONFIG_APPLY.md`.
+C05 using the C11 applied signed `spool_limit_events`. Full queues drop the new
+event and durably record its sequence gap; an exact retry reports the same typed
+drop without double-counting. C05 global quota exhaustion returns an explicit
+storage error without claiming the loss was recorded. C16 owns collector
+delivery, durable ACKs and capacity reclamation. The queue has no
+network/CLI/browser surface and does not execute the whole scenario. See
+`docs/architecture/CONFIG_APPLY.md`.

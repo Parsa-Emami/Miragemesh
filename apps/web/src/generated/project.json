@@ -190,7 +190,7 @@
       "id": "C15",
       "title": "feat(overflow): expose controlled event loss counters",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Full spool follows documented drop policy with gap marker and cannot fill host disk."
       ],
