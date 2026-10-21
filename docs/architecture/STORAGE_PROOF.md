@@ -224,3 +224,50 @@ directory containing ACK records. Rollback must preserve the latest event and
 ACK bytes and use a C16-compatible reader; never restore an older manifest to
 erase ACKs. C16 adds no schema migration, database, environment file or
 Dockerfile.
+
+## C17 separate immutable event segments
+
+C17 adds a separate append-only JSONL segment log in `internal/events`; it does
+not extend the C05 manifest or use a database schema. C05 remains authoritative
+for acceptance receipts, spool/gap/ACK records, configuration and enrollment.
+C16 remains authoritative for batch validation and durable ACKs. `AppendRecords`
+projects an already-owned C05 snapshot and deliberately cannot rewrite C05 state;
+no atomicity between a C16 commit and a segment append is claimed.
+
+Segment files use stable 20-digit ordinals and `.jsonl`, `.sealed.jsonl` or
+`.incomplete.jsonl` suffixes in a private, separately locked directory. An append
+validates the complete C04 event before creating or changing a file, then writes
+exactly one framed JSONL record and syncs it. Rotation syncs/closes the active
+file, renames it to sealed, syncs the directory, creates the next active file
+with `O_EXCL`, syncs again and only then appends. A torn final tail is preserved
+byte-for-byte and renamed to `.incomplete.jsonl` on Open; its complete valid
+prefix remains readable, while `Offset`, `Bytes` and SHA-256 `Digest` describe
+the tail explicitly. The tail is never surfaced as an event or as an event
+sequence gap.
+
+Limits are mandatory: positive segment/record bounds and at least
+`contracts.MaxInputBytes + 1` bytes per segment. Test values are policy only.
+Unknown entries, symlinks, hardlinks, public modes, zero or duplicate ordinals,
+blank or malformed complete records, sealed tails and oversized files fail closed
+with `ErrRecovery`; Open does not repair them. Ordinal gaps are allowed and are
+not event sequence gaps, but C17 defines no retention command: C23 must keep
+deletion explainable with audit metadata and must preserve an ordinal
+high-water mark before all segments can be removed.
+
+The engine runtime exposes a one-shot `--project-segments` command with explicit
+C05 and segment directories plus mandatory limits. It requires an existing C05
+manifest, rejects overlapping directories, projects only the owned snapshot and
+reports a typed JSON outcome with appended/skipped/incomplete metadata,
+`deduplicated:false` and `atomic_with_c16:false`. It writes no C05 receipt or ACK
+and opens no listener. A failed projection still reports the durable segment
+state that exists, and marks that state unknown when the writer cannot expose a
+snapshot. A repeated invocation duplicates events; C18 owns the checkpoint.
+
+`internal/events/segments_recovery_test.go` uses real child-process SIGKILL and
+injected syscall failures; `tests/rotation_test.go` covers rotation, restart,
+incomplete metadata, unsafe inventory, C16 projection and no-network imports;
+`cmd/miragemesh/segments_test.go` drives a real child process through the engine
+flags and checks unchanged C05 receipts, exact incomplete metadata and typed
+failures. These remain local process/filesystem proofs, not physical power-loss,
+capacity, full-workflow or release claims. See
+`docs/architecture/EVENT_SEGMENTS.md`.

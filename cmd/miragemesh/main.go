@@ -17,6 +17,8 @@ import (
 	"time"
 
 	"github.com/Parsa-Emami/Miragemesh/internal/contracts"
+	"github.com/Parsa-Emami/Miragemesh/internal/events"
+	"github.com/Parsa-Emami/Miragemesh/internal/storage"
 )
 
 const version = "0.0.1"
@@ -97,11 +99,26 @@ func main() {
 	processes := flag.Int("decoy-pids-limit", 0, "hard process limit of the isolated decoy")
 	decoyName := flag.String("decoy-name", "miragemesh-decoy", "name of the isolated decoy container")
 	decoyListen := flag.String("decoy-listen", "127.0.0.1:8080", "address the decoy binds inside its own namespace")
+	projectMode := flag.Bool("project-segments", false, "project the existing C05 snapshot into immutable segments and exit")
+	storageDir := flag.String("storage-dir", "", "existing C05 storage directory for --project-segments")
+	segmentsDir := flag.String("segments-dir", "", "immutable segment directory for --project-segments")
+	storageMaxOperations := flag.Int("storage-max-operations", 0, "maximum C05 operations for --project-segments")
+	storageMaxBytes := flag.Int64("storage-max-bytes", 0, "maximum C05 bytes for --project-segments")
+	storageMaxManifestBytes := flag.Int64("storage-max-manifest-bytes", 0, "maximum C05 manifest bytes for --project-segments")
+	segmentsMaxCount := flag.Int("segments-max-count", 0, "maximum immutable segments for --project-segments")
+	segmentsMaxRecords := flag.Int64("segments-max-records", 0, "maximum records per segment for --project-segments")
+	segmentsMaxBytes := flag.Int64("segments-max-bytes", 0, "maximum bytes per segment for --project-segments")
 	flag.Parse()
 	validationFlag := false
+	projectConfig := false
 	flag.Visit(func(f *flag.Flag) {
 		if f.Name == "validate-event" {
 			validationFlag = true
+		}
+		switch f.Name {
+		case "storage-dir", "segments-dir", "storage-max-operations", "storage-max-bytes",
+			"storage-max-manifest-bytes", "segments-max-count", "segments-max-records", "segments-max-bytes":
+			projectConfig = true
 		}
 	})
 	if validationFlag {
@@ -122,6 +139,36 @@ func main() {
 			os.Exit(1)
 		}
 		return
+	}
+	if projectConfig && !*projectMode {
+		fmt.Fprintln(os.Stderr, "--storage-dir and segment limits require --project-segments")
+		os.Exit(2)
+	}
+	if *projectMode {
+		if *isolation || *showVersion {
+			fmt.Fprintln(os.Stderr, "--project-segments cannot be combined with another engine mode")
+			os.Exit(2)
+		}
+		if flag.NArg() != 0 {
+			fmt.Fprintln(os.Stderr, "unexpected engine arguments")
+			os.Exit(2)
+		}
+		ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+		defer stop()
+		os.Exit(runSegmentProjection(ctx, segmentProjectionOptions{
+			StorageDir:  *storageDir,
+			SegmentsDir: *segmentsDir,
+			StorageLimits: storage.Limits{
+				MaxOperations:    *storageMaxOperations,
+				MaxBytes:         *storageMaxBytes,
+				MaxManifestBytes: *storageMaxManifestBytes,
+			},
+			SegmentLimits: events.Limits{
+				MaxSegments:          *segmentsMaxCount,
+				MaxRecordsPerSegment: *segmentsMaxRecords,
+				MaxBytesPerSegment:   *segmentsMaxBytes,
+			},
+		}))
 	}
 	if *isolation {
 		// The runtime calls of the workflow follow the signals of the

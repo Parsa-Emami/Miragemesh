@@ -1,6 +1,6 @@
 {
   "project": "MirageMesh",
-  "reviewed_commit": "62609fb910a374af21c53596bd07b00857a079b6",
+  "reviewed_commit": "8de8a9daeb1489ec387a31da56757969342c1ed2",
   "readiness": "WEB_FOUNDATION",
   "core_ready": false,
   "implemented": [
@@ -20,10 +20,11 @@
     "internal decoy isolation: a rootless container with no network, no capabilities, no host namespace, a read-only root filesystem and hard process and memory limits, applied through a limited container provider and verified against the observed and the effective runtime controls, started by the engine workflow with --decoy-isolation and a typed outcome; no published decoy surface and no inbound path",
     "internal bounded offline spool through C05 and C11 signed per-sensor settings: exact C04 event bytes, atomic limit/config/sequence checks, exact replay at capacity, restart and real crash/fault recovery",
     "internal C05-backed spool overflow policy: drop-new with durable append-only gap markers, stable typed retries and restart-rebuilt per-sensor loss counters; gaps remain explicit loss history",
-    "internal collector batch delivery with exact C04 bytes, whole-batch validation, durable append-only spool.ack records, lost-ACK replay without duplicate observations and unacknowledged-only spool capacity; no transport, public endpoint, CLI, UI or authentication claim"
+    "internal collector batch delivery with exact C04 bytes, whole-batch validation, durable append-only spool.ack records, lost-ACK replay without duplicate observations and unacknowledged-only spool capacity; no transport, public endpoint, CLI, UI or authentication claim",
+    "internal immutable event segment log with bounded record/byte rotation, stable positive ordinals, sealed files, explicit incomplete-tail Offset/Bytes/Digest metadata, typed recovery, C16 projection that skips gaps, ACKs, enrollment and configuration, and a one-shot --project-segments engine command with typed outcomes that report the durable segment state of a failed projection; no retention, index or deduplication checkpoint"
   ],
-  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation, a metadata-only HTTP decoy, its rootless container isolation and the engine workflow that starts it implemented; bounded internal spool with durable overflow gap markers, loss counters and durable collector batch acknowledgements implemented; segment rotation/indexing, retention, authenticated ingest, a published decoy surface and the full workflow pending",
-  "next_task": "C17",
+  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation, a metadata-only HTTP decoy, its rootless container isolation, the engine workflow that starts it, bounded internal spool with durable overflow gap markers, loss counters, durable collector batch acknowledgements and immutable event segment rotation with explicit incomplete-tail recovery, a one-shot --project-segments engine workflow with typed outcomes, failed-projection segment-state reporting and zero-ordinal rejection implemented; index/checkpoint, retention, authenticated ingest, a published decoy surface and the full workflow pending",
+  "next_task": "C18",
   "next_command": "npm run plan -- next",
   "full_product_endpoint": "C30 locally usable; C40 full published OSS v1"
 }

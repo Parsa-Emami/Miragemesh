@@ -150,10 +150,12 @@
     },
     {
       "id": "C17",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C17.json"
+      ],
+      "source_identity": "sha256:283088d00cf00782e31c78e651b97945aaf962262c2fb90bf8efe3d5729be624",
+      "notes": "C17 follow-up review fix verified: a failed projection now reports the durable segment state that exists and marks the state unknown when the writer cannot report one, with a command-level quota regression compared against the segment directory on disk. Evidence rebuilt from 17 fresh commands at sha256:283088d00cf00782e31c78e651b97945aaf962262c2fb90bf8efe3d5729be624: 5 engine suites/115 anchors, 136 top-level Go tests, 240 subtests, 49 Node tests, 3 browser tests and 6 Python tests. No commit, push or publication occurred."
     },
     {
       "id": "C18",

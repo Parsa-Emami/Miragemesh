@@ -1,6 +1,6 @@
 # Local Go runtime lifecycle (C03)
 
-The C03 runtime is a real Go HTTP process with lifecycle/health only. It does not enroll sensors, process events, persist state, authenticate domain operations or run decoys. C04 defines domain contracts, C05 proves the compatible ADR-0003 storage adapter, and C06 adds dedicated engine integration CI. C17 remains dependency-blocked.
+The C03 runtime is a real Go HTTP process with lifecycle/health only. It does not enroll sensors, process events, persist state, authenticate domain operations or run decoys. C04 defines domain contracts, C05 proves the compatible ADR-0003 storage adapter, C06 adds dedicated engine integration CI, and C17 adds internal immutable segment storage with explicit incomplete-tail recovery plus a one-shot `--project-segments` command. None of those adds an HTTP domain route or widens the health-only listener.
 
 ## Prepare and run
 
@@ -19,7 +19,7 @@ The web defaults to 127.0.0.1:4173; use `npm start -- --port 4307` for another p
 
 ## Health and shutdown
 
-The launcher starts dist/engine/miragemesh directly, waits for its bounded startup record and actual health, then starts the existing Node web server. Startup has a ten-second deadline. Its ready record reports the web port, engine address/PID and coreReady=false. The engine supports --version without opening a listener. C04 adds the separate local --validate-event command documented in contracts/README.md; it does not widen the HTTP health-only boundary.
+The launcher starts dist/engine/miragemesh directly, waits for its bounded startup record and actual health, then starts the existing Node web server. Startup has a ten-second deadline. Its ready record reports the web port, engine address/PID and coreReady=false. The engine supports --version without opening a listener. C04 adds the separate local --validate-event command documented in contracts/README.md; it does not widen the HTTP health-only boundary. C17 adds the separate one-shot `--project-segments` command documented in [EVENT_SEGMENTS.md](../architecture/EVENT_SEGMENTS.md); `npm start` does not invoke it and it opens no listener.
 
 GET/HEAD `/api/engine/health` reads `/healthz` from the owned engine. A valid response is `{ "status": "ok", "scope": "engine-runtime", "version": "0.0.1", "toolchain": "go1.27.2", "coreReady": false }`. Non-200, redirects, malformed/oversized (>4096-byte) responses and a two-second timeout yield 503. Other domain routes remain unavailable and mutations return 405. Browser status refreshes every five seconds; failed health does not disable the existing local preview.
 

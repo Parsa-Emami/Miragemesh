@@ -1,0 +1,59 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored expected C17 rotation, restart and incomplete-tail semantics.",
+  "bounds_provenance": "Expected counts use the small test-policy limits in positive.json; they are not product capacity claims.",
+  "record_rotation": {
+    "segments": [
+      {
+        "id": "segment-00000000000000000001",
+        "records": 3,
+        "sealed": true
+      },
+      {
+        "id": "segment-00000000000000000002",
+        "records": 2,
+        "sealed": false
+      }
+    ],
+    "resume_segment": "segment-00000000000000000002"
+  },
+  "byte_rotation": {
+    "segments": [
+      {
+        "id": "segment-00000000000000000001",
+        "records": 2,
+        "sealed": true
+      },
+      {
+        "id": "segment-00000000000000000002",
+        "records": 2,
+        "sealed": true
+      },
+      {
+        "id": "segment-00000000000000000003",
+        "records": 1,
+        "sealed": false
+      }
+    ],
+    "resume_segment": "segment-00000000000000000003"
+  },
+  "incomplete_tail": {
+    "valid_records_before_tail": 2,
+    "incomplete_segment": "segment-00000000000000000002",
+    "resume_segment": "segment-00000000000000000003",
+    "tail_not_an_event": true
+  },
+  "restart": {
+    "sealed_segments_unchanged": true,
+    "resume_after_restart": "segment-00000000000000000002"
+  },
+  "retention_gap": {
+    "removed_segment": "segment-00000000000000000001",
+    "remaining_segments": [
+      "segment-00000000000000000002",
+      "segment-00000000000000000003"
+    ],
+    "gap_is_not_event_sequence_gap": true
+  }
+}

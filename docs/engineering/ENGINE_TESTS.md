@@ -49,10 +49,11 @@ module. Existing files and fixtures remain unchanged by C06.
 
 | Package | Existing tests | Required execution anchor |
 | --- | --- | --- |
-| `cmd/miragemesh` | `main_test.go`: real loopback health, shutdown, unsafe/occupied address rejection | `TestLifecycle` |
+| `cmd/miragemesh` | `main_test.go`: real loopback health, shutdown, unsafe/occupied address rejection; `segments_test.go`: real child-process projection through the engine flags, exact incomplete metadata, typed failures, unchanged C05 receipts, failed-projection segment state and unknown-state marker | `TestLifecycle`, `TestSegmentProjectionWorkflowProjectsC05Snapshot`, `TestSegmentProjectionWorkflowReportsIncompleteTail`, `TestSegmentProjectionWorkflowReportsTypedFailure`, `TestSegmentProjectionWorkflowReportsPartialQuotaState`, `TestSegmentProjectionStateIsUnknownWhenTheWriterCannotReport` |
 | `internal/contracts` | `event_test.go`: v1/legacy fixtures, malformed inputs, exact numbers, limits, read failure and cancellation | `TestValidAndIncompatibleFixtures` |
 | `internal/storage` | `recovery_test.go`: injected filesystem failures, actual SIGKILL, reopen/replay and orphan handling | `TestStorageSIGKILLAtPublicationBoundaries`, `TestStorageSyscallFailuresPreserveRecoverableState` |
-| `tests` | `storage_test.go`: real adapter, exact bytes, quotas, locking, concurrency, corruption and hostile metadata; `event_test.go`: persistent per-sensor sequence, exact retry and invalid input | `TestStorageExactBytesReplayAndReopen`, `TestSensorSequenceReplayAndRestart`, `TestSensorRejectsInvalidAndConflictingEvents` |
+| `internal/events` | `segments_recovery_test.go`: actual child-process SIGKILL at rotation boundaries, incomplete-tail preservation and injected syscall failures | `TestSegmentsSIGKILLAtRotationBoundaries`, `TestSegmentsSyscallFailuresPreserveRecoverableState`, `TestSegmentsRecoverIncompleteFinalRecord`, `TestSegmentsIncompleteTailKeepsRawBytesAndOffset` |
+| `tests` | `storage_test.go`: real adapter, exact bytes, quotas, locking, concurrency, corruption and hostile metadata; `event_test.go`: persistent per-sensor sequence, exact retry and invalid input; `rotation_test.go`: immutable rotation, incomplete tails, projection and no-network checks | `TestStorageExactBytesReplayAndReopen`, `TestSensorSequenceReplayAndRestart`, `TestSensorRejectsInvalidAndConflictingEvents`, `TestSegmentRotationAcrossRecordAndByteBounds`, `TestSegmentProjectionSkipsNonEventRecords` |
 
 The guard reads Go's JSON events and requires a `run` followed by `pass` for each
 anchor, completed required packages, and no failure or unfinished package. Empty
@@ -357,3 +358,74 @@ proves an outside sentinel is unchanged. It also parses every file in
 `os/exec`, `path/filepath` and `syscall` cannot enter the package. C16 adds no
 listener, public endpoint, CLI or UI. The discovery guard regression removes each
 C16 anchor in turn and requires rejection.
+
+## C17 required anchors
+
+The `internal/events` package requires
+`TestSegmentsSIGKILLAtRotationBoundaries`,
+`TestSegmentsSyscallFailuresPreserveRecoverableState`,
+`TestSegmentsRecoverIncompleteFinalRecord` and
+`TestSegmentsIncompleteTailKeepsRawBytesAndOffset`. The `cmd/miragemesh` package
+requires `TestSegmentProjectionWorkflowProjectsC05Snapshot`,
+`TestSegmentProjectionWorkflowReportsIncompleteTail`,
+`TestSegmentProjectionWorkflowReportsTypedFailure`,
+`TestSegmentProjectionWorkflowReportsPartialQuotaState` and
+`TestSegmentProjectionStateIsUnknownWhenTheWriterCannotReport`; each starts a real
+child process through the engine flags and parses its typed JSON outcome. The `tests`
+package requires:
+
+- `TestSegmentRotationAcrossRecordAndByteBounds`
+- `TestSegmentRecordsSurviveRestartAndRemainImmutable`
+- `TestSegmentRotationAllowsRetentionOrdinalGaps`
+- `TestSegmentRotationMarksIncompleteFinalRecordAfterRestart`
+- `TestSegmentAppendRejectsInvalidEventsBeforeWrite`
+- `TestSegmentRotationRejectsInvalidLimitsAndClosedWriter`
+- `TestSegmentAppendAcceptsMaxFrameAndRejectsOversize`
+- `TestSegmentProjectionRejectsAmbiguousRecords`
+- `TestSegmentProjectionSkipsEnrollmentRecord`
+- `TestSegmentCrashFixtureDeclaresBoundaries`
+- `TestSegmentRotationRejectsCorruptAndUnsafeState`
+- `TestSegmentProjectionSkipsNonEventRecords`
+- `TestSegmentProjectionFailureDoesNotRewriteC16Acknowledgement`
+- `TestSegmentRotationHasNoNetworkImports`
+
+The positive fixture uses repository-authored Apache-2.0 synthetic v1 events
+with small record, byte and incomplete-tail test policies. It is not a product
+default or capacity claim. The invalid fixture covers malformed events, invalid
+limits and the unsafe inventory: unknown files, zero and duplicate ordinals,
+symlinked segments/directories, hardlinks, public modes, sealed tails, incomplete
+files without tails, multiple active files, oversized files and stale limits.
+
+The internal recovery test starts real child processes, observes a deterministic
+boundary, sends SIGKILL and reopens the directory. Boundaries cover before and
+after the seal rename, after next-active creation, during the first record write
+and before recovery's incomplete rename. The syscall test injects create,
+rename, directory-sync, write, short-write and file-sync failures while the
+remaining filesystem operations stay real. Reopening must preserve the complete
+prefix, mark only a genuinely torn final tail with Offset/Bytes/Digest, and
+permit a later append. `TestSegmentsIncompleteTailKeepsRawBytesAndOffset` also
+checks that recovery does not rewrite the tail bytes.
+
+The external tests exercise record and byte rotation, stable IDs, reopen and
+sealed immutability, ordinal gaps, max-frame acceptance, invalid inputs, the
+8 KiB oversized rejection, C16 projection that skips gaps/ACKs/config/enrollment,
+the max-segment quota failure, and that a segment failure does not rewrite C16
+receipts or ACKs. The no-network anchor parses `internal/events` and requires an
+exact standard-library/internal allowlist with no `net*` or `os/exec` import.
+The evidence network trace runs the segment package and the projection workflow
+under `strace -e trace=network`; it observes no socket, connect, bind or listen
+syscall.
+
+The runtime workflow test invokes `--project-segments` in a real child process,
+not only the package API. It verifies that the command requires an existing C05
+store, rejects overlapping storage/segment directories before either side writes,
+projects a C05 snapshot without changing its records, reports exact incomplete
+metadata, and returns exit `2`/`error_kind:"invalid_input"` and
+exit `1`/`error_kind:"recovery"` for typed failures. A quota failure after one
+durable append reports that sealed segment, and the same result is compared with
+the segment directory on disk. When the writer cannot report a snapshot, the
+outcome marks the segment state as unknown instead of empty. The outcome always
+states `deduplicated:false` and `atomic_with_c16:false`; repetition is not
+deduplicated.
+These are local process/filesystem proofs; no remote Actions, physical power
+loss, capacity, C23 retention, C30 workflow or release claim follows.

@@ -214,9 +214,11 @@
       "id": "C17",
       "title": "feat(segments): rotate immutable event segments",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
-        "Crash at rotation preserves valid records and marks incomplete final record explicitly."
+        "Crash at rotation preserves valid records and marks incomplete final record explicitly.",
+        "The supported engine workflow projects an existing C05 snapshot through the typed segment outcome without rewriting C16 receipts or ACKs.",
+        "A failed projection reports the durable segment state that exists, or marks that state unknown when the writer cannot report one."
       ],
       "dependsOn": [
         "C16"

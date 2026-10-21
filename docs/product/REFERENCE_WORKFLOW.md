@@ -73,3 +73,26 @@ orphaned or out-of-order ACK fails closed. C16 adds no listener, public HTTP/CLI
 surface, mTLS terminator or UI and does not execute the whole scenario; C30 is
 still the local end-to-end gate. See `docs/engineering/ENGINE_TESTS.md` and
 `docs/architecture/CONFIG_APPLY.md`.
+
+C17 implements immutable segment storage for the accepted event stream:
+`events.Open`, `Append` and `AppendRecords` write newline-framed C04 events into
+bounded active JSONL segments, sync each record, then seal a full segment by
+rename and directory sync before starting the next. A crash at rotation leaves
+complete records readable. A torn final tail is preserved byte-for-byte as an
+explicit `.incomplete.jsonl` file with Offset, Bytes and SHA-256 Digest; it is
+never treated as an event or as an event sequence gap. `AppendRecords` skips C15
+gaps, C16 acknowledgements, enrollment and applied configuration, and deliberately
+provides no durable deduplication; C18 owns the projection index/checkpoint.
+Segment failure cannot rewrite C16 receipts or ACKs, and no atomicity between the
+two writes is claimed.
+
+The engine also exposes a one-shot `--project-segments` command with explicit
+C05/segment directories and mandatory limits. It requires an existing C05 store,
+rejects overlapping directories, projects the snapshot without writing a C05
+receipt or ACK, reports typed appended/skipped/incomplete data and returns
+exit `2` for invalid configuration or `1` for a runtime failure. A failed
+projection reports the segment state that is already durable, or marks it
+unknown when no trustworthy snapshot exists. It opens no
+listener and does not execute the whole scenario. C17 adds no retention command
+or UI; C23 owns deletion/retention and C30 remains the end-to-end gate. See
+`docs/architecture/EVENT_SEGMENTS.md`.

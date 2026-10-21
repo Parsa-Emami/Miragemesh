@@ -1,0 +1,103 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C17 negative cases. No real credentials, identities or traffic are included.",
+  "cases": [
+    {
+      "name": "empty",
+      "raw": "",
+      "error": "invalid event"
+    },
+    {
+      "name": "malformed_json",
+      "raw": "{\"schema_version\":\"1\"",
+      "error": "invalid event"
+    },
+    {
+      "name": "unsupported_version",
+      "raw": "{\"schema_version\":\"2\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}",
+      "error": "invalid event"
+    },
+    {
+      "name": "missing_field",
+      "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\"}",
+      "error": "invalid event"
+    },
+    {
+      "name": "trailing_garbage",
+      "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}x",
+      "error": "invalid event"
+    },
+    {
+      "name": "two_trailing_newlines",
+      "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}\n\n",
+      "error": "invalid event"
+    },
+    {
+      "name": "gap_record_is_not_an_event",
+      "raw": "{\"schema_version\":\"1\",\"kind\":\"spool.gap\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-03\",\"sequence\":3,\"input_digest\":\"0000000000000000000000000000000000000000000000000000000000000000\"}",
+      "error": "invalid event"
+    },
+    {
+      "name": "ack_record_is_not_an_event",
+      "raw": "{\"schema_version\":\"1\",\"kind\":\"spool.ack\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"input_digest\":\"0000000000000000000000000000000000000000000000000000000000000000\"}",
+      "error": "invalid event"
+    },
+    {
+      "name": "config_record_is_not_an_event",
+      "raw": "{\"schema_version\":\"1\",\"kind\":\"config.applied\"}",
+      "error": "invalid event"
+    },
+    {
+      "name": "enrollment_record_is_not_an_event",
+      "raw": "{\"schema_version\":\"1\",\"kind\":\"sensor.enrollment\"}",
+      "error": "invalid event"
+    }
+  ],
+  "limits": [
+    {
+      "name": "zero_segments",
+      "max_segments": 0,
+      "max_records_per_segment": 1,
+      "max_bytes_per_segment": 8193,
+      "error": "invalid input"
+    },
+    {
+      "name": "zero_records",
+      "max_segments": 1,
+      "max_records_per_segment": 0,
+      "max_bytes_per_segment": 8193,
+      "error": "invalid input"
+    },
+    {
+      "name": "bytes_below_event_frame",
+      "max_segments": 1,
+      "max_records_per_segment": 1,
+      "max_bytes_per_segment": 8192,
+      "error": "invalid input"
+    },
+    {
+      "name": "negative_segments",
+      "max_segments": -1,
+      "max_records_per_segment": 1,
+      "max_bytes_per_segment": 8193,
+      "error": "invalid input"
+    }
+  ],
+  "unsafe_state": [
+    "unknown_file",
+    "zero_ordinal",
+    "symlink_segment",
+    "hardlink_segment",
+    "public_segment_mode",
+    "sealed_tail",
+    "incomplete_without_tail",
+    "duplicate_ordinal",
+    "two_active_segments",
+    "oversized_segment",
+    "too_many_records",
+    "too_many_segments",
+    "symlinked_directory",
+    "symlinked_parent"
+  ]
+}

@@ -1,0 +1,142 @@
+2712690 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712690 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712690 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712690 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712690 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712703 +++ exited with 0 +++
+2712706 +++ killed by SIGKILL +++
+2712708 +++ killed by SIGKILL +++
+2712705 +++ killed by SIGKILL +++
+2712707 +++ killed by SIGKILL +++
+2712704 +++ killed by SIGKILL +++
+2712690 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=2712704, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+2712690 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712712 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712709, si_uid=1000} ---
+2712710 +++ killed by SIGKILL +++
+2712712 +++ killed by SIGKILL +++
+2712711 +++ killed by SIGKILL +++
+2712709 +++ killed by SIGKILL +++
+2712690 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=2712709, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+2712695 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712714 +++ killed by SIGKILL +++
+2712717 +++ killed by SIGKILL +++
+2712716 +++ killed by SIGKILL +++
+2712715 +++ killed by SIGKILL +++
+2712713 +++ killed by SIGKILL +++
+2712695 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=2712713, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+2712695 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712720 +++ killed by SIGKILL +++
+2712723 +++ killed by SIGKILL +++
+2712721 +++ killed by SIGKILL +++
+2712722 +++ killed by SIGKILL +++
+2712719 +++ killed by SIGKILL +++
+2712694 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=2712719, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+2712694 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712730 +++ killed by SIGKILL +++
+2712731 +++ killed by SIGKILL +++
+2712729 +++ killed by SIGKILL +++
+2712732 +++ killed by SIGKILL +++
+2712728 +++ killed by SIGKILL +++
+2712695 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=2712728, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+2712695 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712695 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712695 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712695 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712695 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712695 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712695 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712695 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712690, si_uid=1000} ---
+2712695 +++ exited with 0 +++
+2712694 +++ exited with 0 +++
+2712692 +++ exited with 0 +++
+2712691 +++ exited with 0 +++
+2712693 +++ exited with 0 +++
+2712690 +++ exited with 0 +++
+2712741 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712741 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712741 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712741 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712748 +++ exited with 0 +++
+2712752 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712749, si_uid=1000} ---
+2712757 +++ exited with 0 +++
+2712756 +++ exited with 0 +++
+2712755 +++ exited with 0 +++
+2712754 +++ exited with 0 +++
+2712753 +++ exited with 0 +++
+2712752 +++ exited with 0 +++
+2712751 +++ exited with 0 +++
+2712749 +++ exited with 0 +++
+2712745 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2712749, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+2712745 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712745 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712745 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712745 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712767, si_uid=1000} ---
+2712775 +++ exited with 0 +++
+2712774 +++ exited with 0 +++
+2712773 +++ exited with 0 +++
+2712772 +++ exited with 0 +++
+2712771 +++ exited with 0 +++
+2712770 +++ exited with 0 +++
+2712769 +++ exited with 0 +++
+2712768 +++ exited with 0 +++
+2712767 +++ exited with 0 +++
+2712746 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2712767, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+2712746 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712746 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712777 ???( <unfinished ...>
+2712785 +++ exited with 2 +++
+2712784 +++ exited with 2 +++
+2712783 +++ exited with 2 +++
+2712782 +++ exited with 2 +++
+2712781 +++ exited with 2 +++
+2712780 +++ exited with 2 +++
+2712779 +++ exited with 2 +++
+2712777 +++ exited with 2 +++
+2712746 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2712777, si_uid=1000, si_status=2, si_utime=0, si_stime=0} ---
+2712741 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712741 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712741 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712795 +++ exited with 2 +++
+2712794 +++ exited with 2 +++
+2712793 +++ exited with 2 +++
+2712792 +++ exited with 2 +++
+2712791 +++ exited with 2 +++
+2712790 +++ exited with 2 +++
+2712788 +++ exited with 2 +++
+2712741 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2712788, si_uid=1000, si_status=2, si_utime=0, si_stime=0} ---
+2712741 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712741 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712826 +++ exited with 1 +++
+2712823 +++ exited with 1 +++
+2712828 +++ exited with 1 +++
+2712830 +++ exited with 1 +++
+2712829 +++ exited with 1 +++
+2712827 +++ exited with 1 +++
+2712825 +++ exited with 1 +++
+2712824 +++ exited with 1 +++
+2712822 +++ exited with 1 +++
+2712741 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2712822, si_uid=1000, si_status=1, si_utime=0, si_stime=0} ---
+2712741 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712746 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712746 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712746 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712745 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712741, si_uid=1000} ---
+2712837 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2712834, si_uid=1000} ---
+2712841 +++ exited with 1 +++
+2712840 +++ exited with 1 +++
+2712838 +++ exited with 1 +++
+2712837 +++ exited with 1 +++
+2712842 +++ exited with 1 +++
+2712835 +++ exited with 1 +++
+2712839 +++ exited with 1 +++
+2712836 +++ exited with 1 +++
+2712834 +++ exited with 1 +++
+2712741 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=2712834, si_uid=1000, si_status=1, si_utime=0, si_stime=0} ---
+2712747 +++ exited with 0 +++
+2712746 +++ exited with 0 +++
+2712745 +++ exited with 0 +++
+2712743 +++ exited with 0 +++
+2712742 +++ exited with 0 +++
+2712744 +++ exited with 0 +++
+2712741 +++ exited with 0 +++

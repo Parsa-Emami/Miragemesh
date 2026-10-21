@@ -1,0 +1,39 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored C17 crash-boundary expectations. These are deterministic test outcomes, not power-loss certification.",
+  "phases": [
+    {
+      "name": "before_seal_rename",
+      "valid_records": 2,
+      "incomplete": false,
+      "resume_segment": "segment-00000000000000000002"
+    },
+    {
+      "name": "after_seal_rename",
+      "valid_records": 2,
+      "incomplete": false,
+      "resume_segment": "segment-00000000000000000002"
+    },
+    {
+      "name": "after_next_create",
+      "valid_records": 2,
+      "incomplete": false,
+      "resume_segment": "segment-00000000000000000002"
+    },
+    {
+      "name": "torn_first_record",
+      "valid_records": 2,
+      "incomplete": true,
+      "incomplete_segment": "segment-00000000000000000002",
+      "resume_segment": "segment-00000000000000000003"
+    },
+    {
+      "name": "before_incomplete_rename",
+      "valid_records": 2,
+      "incomplete": true,
+      "incomplete_segment": "segment-00000000000000000001",
+      "resume_segment": "segment-00000000000000000002"
+    }
+  ]
+}

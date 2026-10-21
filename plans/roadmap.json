@@ -1501,14 +1501,19 @@
       ],
       "deliverables": [
         "internal/events/segments.go",
-        "tests/rotation_test.go"
+        "tests/rotation_test.go",
+        "cmd/miragemesh/segments.go",
+        "cmd/miragemesh/segments_test.go",
+        "cmd/miragemesh/main.go"
       ],
       "verification": [
         "npm run validate:plan — All task/dependency/resource/reference/evidence metadata validates; no runtime capability inferred.",
         "go test ./... — C03 creates this engine test command in the same commit; C06 adds CI/integration collection. Pass the actual C17 acceptance and negative cases on the selected engine; shell-only tests cannot certify this task."
       ],
       "acceptance": [
-        "Crash at rotation preserves valid records and marks incomplete final record explicitly."
+        "Crash at rotation preserves valid records and marks incomplete final record explicitly.",
+        "The supported engine workflow projects an existing C05 snapshot through the typed segment outcome without rewriting C16 receipts or ACKs.",
+        "A failed projection reports the durable segment state that exists, or marks that state unknown when the writer cannot report one."
       ],
       "evidence_path": "docs/evidence/C17.json",
       "rollback": "Revert the isolated source change when no incompatible data was accepted. Otherwise retain the latest valid bytes/export and compatible reader, and use tested forward repair; never overwrite newer accepted state with an old backup.",
@@ -1548,6 +1553,8 @@
       },
       "negative_cases": [
         "Missing prerequisites, malformed fixtures or unavailable required providers produce an explicit error rather than placeholder success.",
+        "A zero segment ordinal and overlapping C05/segment directories are rejected explicitly.",
+        "A quota failure after a durable append does not report an empty segment store.",
         "Repeat after restart and verify the declared invariant and documented recovery outcome.",
         "No egress by default"
       ],
@@ -1555,7 +1562,7 @@
         "Inspect the actual implementation, source/locks and verified dependencies for C17; preserve accepted existing behavior.",
         "Define the versioned positive and negative sensor-event fixtures and expected error/result semantics under tests/fixtures/miragemesh/C17/.",
         "Implement: Crash at rotation preserves valid records and marks incomplete final record explicitly.",
-        "Change the listed exact targets and wire the actual typed outcome into the supported browser/engine workflow. Keep domain facts, validation, storage/provider adapters and UI separate.",
+        "Change the listed exact targets and wire the actual typed outcome into the supported engine workflow through the one-shot --project-segments mode. It must require an existing C05 store, reject overlapping directories, write no C05 receipt or ACK and report its typed JSON outcome without opening an HTTP listener. Keep domain facts, validation, storage/provider adapters and UI separate.",
         "Add regression/integration coverage for every acceptance and negative case; real storage/provider/security boundaries cannot be verified only with mocks.",
         "Run the labeled verification commands; record exact source, fixture license/hash, tool/provider versions, command exits and observed results in docs/evidence/C17.json. Update progress only when the whole task is genuinely verified."
       ],

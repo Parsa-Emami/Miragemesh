@@ -1,0 +1,3 @@
+PASS
+PASS
+C17 segment tests and the --project-segments workflow passed under strace; zero network syscalls observed
