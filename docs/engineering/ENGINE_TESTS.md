@@ -140,7 +140,7 @@ consulted.
 
 ## C10 required anchors
 
-C10 adds twelve `tests` anchors over the real internal desired-state service:
+C10 adds thirteen `tests` anchors over the real internal desired-state service:
 `TestConfigSignedDesiredStateBecomesActive` proves a signed version 1 document
 becomes the active configuration, that the active payload is the exact
 submitted bytes, that a higher revision replaces it and that the exact
@@ -151,10 +151,10 @@ the typed `ErrUnsigned` and leaves the active configuration byte-identical;
 stale revision, an expired document, a not-yet-valid document and a
 conflicting revision are rejected with their typed errors without replacing
 the active configuration;
-`TestConfigRejectsInvalidDesiredStateDocuments` drives the 17 fixture rows of
+`TestConfigRejectsInvalidDesiredStateDocuments` drives the 18 fixture rows of
 malformed, unknown-member, duplicated-member, wrong-version, wrong-revision,
-wrong-timestamp, inverted-window, out-of-policy and oversized documents
-through the service;
+wrong-timestamp, inverted-window, out-of-policy, incoherent-settings and
+oversized documents through the service;
 `TestConfigSignatureCoversExactPayloadBytes` proves the signature covers the
 exact payload bytes: a re-serialized variant of a signed document and a
 single-byte change both fail with `ErrInvalidSignature`;
@@ -176,7 +176,11 @@ service waits for that lock is rejected and never becomes active; and
 `TestConfigSettingsBoundsAreDeploymentPolicy` proves the accepted range of
 the settings is explicit deployment policy: the engine ships no limit of its
 own, a deployment with tighter bounds rejects a document that a deployment
-with wider bounds accepts. `TestConfigFreshServiceHasNoRememberedActiveState` proves a restarted service
+with wider bounds accepts; and
+`TestConfigRejectsIncoherentDesiredStateSettings` proves the settings must
+agree with each other, so an event batch larger than the spool it has to fit
+into is rejected as an internally inconsistent document.
+`TestConfigFreshServiceHasNoRememberedActiveState` proves a restarted service
 owns no remembered applied revision, so the documented recovery outcome is that
 the operator re-applies the latest signed desired state. The discovery guard
 and its regressions require all of them alongside the earlier anchors.

@@ -567,8 +567,8 @@
   },
   {
    "path": "docs/architecture/DESIRED_STATE.md",
-   "sha256": "a45bdc0cfc0571f387bbb6cf6b584730feb2e49ba4642251ba06cf542ad43b44",
-   "bytes": 10422
+   "sha256": "cf151be3b5599892849fdd2d860b121622c1cc626bfe3976dcf470e796849c18",
+   "bytes": 11003
   },
   {
    "path": "docs/architecture/ENROLLMENT.md",
@@ -617,8 +617,8 @@
   },
   {
    "path": "docs/engineering/ENGINE_TESTS.md",
-   "sha256": "07ad73eb566b2bcf4a9f1e7837d78c8237fb6322e0c948d7c8fe4f7641177496",
-   "bytes": 11547
+   "sha256": "291e1bfe4dc2d9af8834837c5c23ccb537d94b281490480efb7bfe4afe8d960e",
+   "bytes": 11783
   },
   {
    "path": "docs/engineering/GITHUB_BASELINE.json",
@@ -687,8 +687,8 @@
   },
   {
    "path": "internal/config/sign.go",
-   "sha256": "99a5cd84c4bb07d06db70b5391dd536761a6c644dc1840b2f8a25c6899ba0ff7",
-   "bytes": 15578
+   "sha256": "1b903357f9e15b6f76864a0d9cbba3f2ff9aebf0d656d8fd10be8d025c06eb8c",
+   "bytes": 15958
   },
   {
    "path": "internal/contracts/enrollment.go",
@@ -1257,8 +1257,8 @@
   },
   {
    "path": "plans/commits/C10.md",
-   "sha256": "a1bebf55fe350841f2726575465094f728f810760ab98a65b189bd3ccf9e5d12",
-   "bytes": 6718
+   "sha256": "abe469f5a22f361d105ecc976354c3b4967ac28a5716a69317509211540864df",
+   "bytes": 7120
   },
   {
    "path": "plans/commits/C11.md",
@@ -1522,8 +1522,8 @@
   },
   {
    "path": "scripts/verify-engine-tests.mjs",
-   "sha256": "0c454e32165960476ab3269f5c7f059637934ab3723278914dbd3ec90fe73bde",
-   "bytes": 3866
+   "sha256": "5b0c87c9cd1c6439da15eb9c6cb5c8a3ca6447a692d822d78fa9a23cb8898479",
+   "bytes": 3917
   },
   {
    "path": "scripts/verify-reference.mjs",
@@ -1652,8 +1652,8 @@
   },
   {
    "path": "tests/config_signature_test.go",
-   "sha256": "96de2689d49929fd8e0733a738d48579fab88d26c58bad89005aace14ad99853",
-   "bytes": 26609
+   "sha256": "9bdd12e06915f2397a8e49685343c7f2f84d874c0c52929b333aad002936d8a5",
+   "bytes": 28332
   },
   {
    "path": "tests/contracts/domain-contracts.test.mjs",
@@ -1662,8 +1662,8 @@
   },
   {
    "path": "tests/engineering/engine-tests.test.mjs",
-   "sha256": "97ec9b83d117f8b3f4dcca85a04f7fea76938891bbb34cceb453d740cd523271",
-   "bytes": 6948
+   "sha256": "d7c9329f7c94ecb625f0402c9893b415300a104cb46440ae966a0a9ed912f93c",
+   "bytes": 7050
   },
   {
    "path": "tests/engineering/test_ci_source.py",
@@ -1807,13 +1807,13 @@
   },
   {
    "path": "tests/fixtures/miragemesh/C10/expected-output.json",
-   "sha256": "7fcef3dc779ff26c22ad33ef017a509f357f5eb5cef5f83c81628d115a069cb1",
-   "bytes": 1172
+   "sha256": "b17d08e4e40979310848c393704d8c886c8794026b14ec21ff6718013c7c38ca",
+   "bytes": 1216
   },
   {
    "path": "tests/fixtures/miragemesh/C10/invalid.json",
-   "sha256": "392601a5d19621cb94e5c49b767ae51110338c125772c9351f81994d7f8ad8b1",
-   "bytes": 8555
+   "sha256": "26b870e0ed5e846a7cc380edfa2352a3762f7ba309289d9ae5905d99e3ac06ed",
+   "bytes": 9040
   },
   {
    "path": "tests/fixtures/miragemesh/C10/positive.json",

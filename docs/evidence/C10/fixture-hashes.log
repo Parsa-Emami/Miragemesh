@@ -1,3 +1,3 @@
-7fcef3dc779ff26c22ad33ef017a509f357f5eb5cef5f83c81628d115a069cb1  tests/fixtures/miragemesh/C10/expected-output.json
-392601a5d19621cb94e5c49b767ae51110338c125772c9351f81994d7f8ad8b1  tests/fixtures/miragemesh/C10/invalid.json
+b17d08e4e40979310848c393704d8c886c8794026b14ec21ff6718013c7c38ca  tests/fixtures/miragemesh/C10/expected-output.json
+26b870e0ed5e846a7cc380edfa2352a3762f7ba309289d9ae5905d99e3ac06ed  tests/fixtures/miragemesh/C10/invalid.json
 5a3eddcb79fde38531583938c350d4e6a38d009666a131fa02ae5e3a89e67e7e  tests/fixtures/miragemesh/C10/positive.json

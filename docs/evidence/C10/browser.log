@@ -1,12 +1,13 @@
-
-> @parsa-emami/miragemesh-web@0.0.1 test:browser
-> playwright test
+# Browser suite executed on an isolated loopback port (4183) with the unchanged repository suite and application.
+# The default port 4173 was held on this host by an unrelated Vite preview server of another project
+# (Projects/self/protfolio); this task did not stop that process. The assertions, the test file and the served
+# application are unchanged; only the config's port differs from playwright.config.ts.
 
 
 Running 3 tests using 1 worker
 
-  ✓  1 tests/browser/workspace.spec.ts:2:1 › workspace, local preview, navigation and roadmap filters work (290ms)
-  ✓  2 tests/browser/workspace.spec.ts:25:1 › runtime failure remains explicit and the workspace is keyboard accessible at 360px (130ms)
-  ✓  3 tests/browser/workspace.spec.ts:37:1 › configuration failure blocks workspace startup (90ms)
+  ✓  1 tests/browser/workspace.spec.ts:2:1 › workspace, local preview, navigation and roadmap filters work (344ms)
+  ✓  2 tests/browser/workspace.spec.ts:25:1 › runtime failure remains explicit and the workspace is keyboard accessible at 360px (108ms)
+  ✓  3 tests/browser/workspace.spec.ts:37:1 › configuration failure blocks workspace startup (96ms)
 
-  3 passed (1.4s)
+  3 passed (1.5s)

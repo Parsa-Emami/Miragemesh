@@ -1,4 +1,4 @@
 # C10 source identity: SHA-256 over sorted UTF-8 relative path + NUL + raw SHA-256(file bytes)
 # excluded: docs/evidence/**, plans/progress.json, docs/agents/SESSION_HANDOFF.json, SHA256SUMS.txt
 # files: 372
-sha256:f52edb95159676756a394ec1dcb171a216b5db78da1dadb37c1fab440c05f2c1
+sha256:14f8d2477e88f4d54041f890219e6249070523c58ae476309f49780aa8b331b9

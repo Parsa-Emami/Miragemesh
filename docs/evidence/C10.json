@@ -5,7 +5,7 @@
   "planning_template": false,
   "date": "2026-10-21",
   "base_commit": "46179f4f821964864bdd3e00fa474df8cb8884f3",
-  "source_identity": "sha256:f52edb95159676756a394ec1dcb171a216b5db78da1dadb37c1fab440c05f2c1",
+  "source_identity": "sha256:14f8d2477e88f4d54041f890219e6249070523c58ae476309f49780aa8b331b9",
   "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes) over every tracked or untracked non-ignored file; evidence, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded because they publish this identity themselves. Reproduce with the command recorded in docs/evidence/C10/source-identity.log.",
   "source_manifest": "docs/evidence/C10/source-files.json",
   "source_file_count": 372,
@@ -152,7 +152,8 @@
         "test:browser"
       ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C10/browser.log"
+      "output_path": "docs/evidence/C10/browser.log",
+      "note": "The standard npm run test:browser could not bind its default port 4173 because an unrelated Vite preview server of another project on this host already holds it; this task did not stop that process. The unchanged repository browser suite and application were therefore executed on an isolated loopback port with a temporary configuration outside the repository."
     },
     {
       "argv": [
@@ -257,16 +258,16 @@
     }
   ],
   "results": {
-    "go_test_run_events": 158,
-    "go_test_pass_events": 158,
+    "go_test_run_events": 159,
+    "go_test_pass_events": 159,
     "go_test_fail_events": 0,
-    "required_engine_anchors": 34,
+    "required_engine_anchors": 35,
     "engine_suites": 4,
-    "c10_anchors": 12,
+    "c10_anchors": 13,
     "npm_tests": 41,
     "browser_tests": 3,
     "python_source_integrity_tests": 6,
-    "invalid_document_rows": 17,
+    "invalid_document_rows": 18,
     "network_syscalls": 0,
     "network_syscall_destinations": "No socket, connect, bind, listen, accept, sendto or recvfrom syscall appears in the traced run of the focused C10 test binary: the desired-state service performs no network operation at all.",
     "typecheck": "Passed within npm run check",
@@ -284,8 +285,8 @@
     "provenance": "Repository-authored synthetic desired-state documents and expected verdicts. No key material, secret, customer, sensor or production configuration is present.",
     "sha256": {
       "tests/fixtures/miragemesh/C10/positive.json": "5a3eddcb79fde38531583938c350d4e6a38d009666a131fa02ae5e3a89e67e7e",
-      "tests/fixtures/miragemesh/C10/invalid.json": "392601a5d19621cb94e5c49b767ae51110338c125772c9351f81994d7f8ad8b1",
-      "tests/fixtures/miragemesh/C10/expected-output.json": "7fcef3dc779ff26c22ad33ef017a509f357f5eb5cef5f83c81628d115a069cb1"
+      "tests/fixtures/miragemesh/C10/invalid.json": "26b870e0ed5e846a7cc380edfa2352a3762f7ba309289d9ae5905d99e3ac06ed",
+      "tests/fixtures/miragemesh/C10/expected-output.json": "b17d08e4e40979310848c393704d8c886c8794026b14ec21ff6718013c7c38ca"
     },
     "hash_log": "docs/evidence/C10/fixture-hashes.log"
   },
@@ -353,6 +354,18 @@
       "phase": "Owner review round one on a444f05",
       "exit_code": 1,
       "note": "The review reported three defects (aliased active payload, retained caller key, expiry checked before the state lock) and one policy wording (settings ceilings presented as an accepted product profile). All four are resolved in the fix commit with dedicated regressions; the details are recorded in the review section."
+    },
+    {
+      "expected": false,
+      "phase": "Owner follow-up review of 2a2d15c",
+      "exit_code": 1,
+      "note": "The follow-up review reported two P2 findings: stale product-policy wording in the evidence and the session handoff, and a documented batch-to-spool constraint that the implementation did not enforce. Both are resolved in the fix commit, with the evidence and handoff wording corrected and the document coherence rule implemented and covered."
+    },
+    {
+      "expected": false,
+      "phase": "Standard browser run on the default port",
+      "exit_code": 1,
+      "note": "Playwright reported that http://127.0.0.1:4173/readyz was already used. The listener belongs to an unrelated Vite preview server of another project on this host, so this task did not stop it and ran the unchanged suite on an isolated loopback port with a temporary configuration outside the repository; all three browser tests passed there."
     }
   ],
   "observed_limitations": [
@@ -360,9 +373,10 @@
     "The active configuration is process state: C10 does not persist the accepted desired state, does not change internal/storage or internal/sensor and cannot recover an applied revision after a restart. The durable applied revision and the crash convergence of an apply are C11 work.",
     "No HTTP, CLI or UI surface: the desired-state service is an internal Go package like the C08 enrollment service and the C09 identity guard.",
     "One configured verification key and one authoritative clock; no key generation, storage, rotation, recovery, multi-signer support, fleet policy or tenant model.",
-    "Desired-state settings semantics belong to later cards: the spool and batch ceilings follow the documented product profile, the heartbeat bounds are the C10 engineering choice, and the decoy, spool and ACK behaviour belongs to C12 to C16.",
+    "Desired-state settings semantics belong to later cards: the spool and batch ceilings are proposed C10 deployment policy derived from the pre-existing byte budget (spool_max_mib 100) and payload cap (payload_max_kib 8), not an accepted event-count limit, the heartbeat bounds are the C10 engineering choice, and the decoy, spool and ACK behaviour belongs to C12 to C16. The final event-count limits remain subject to confirmation with C14 and C15.",
     "The loopback trace of the focused C10 test binary certifies that this package performs no network operation; it does not certify C13 decoy isolation, the full domain workflow, physical power-loss recovery or C30 and C40 readiness.",
-    "The ambient GOSUMDB=off setting of this environment blocks the automatic Go toolchain download check, so the cached official Go 1.27.2 toolchain binary was invoked directly; the module has no external dependency and no module download was needed."
+    "The ambient GOSUMDB=off setting of this environment blocks the automatic Go toolchain download check, so the cached official Go 1.27.2 toolchain binary was invoked directly; the module has no external dependency and no module download was needed.",
+    "The standard npm run test:browser command could not bind its default port 4173 on this host because an unrelated Vite preview server of another project holds it; the unchanged browser suite was executed on an isolated loopback port instead and this task did not stop the foreign process."
   ],
   "rollback_or_recovery_observation": "The C10 change set is additive and isolated: one new internal package, one new test file, three new fixtures and documentation. internal/storage, internal/sensor, internal/contracts, cmd/miragemesh, the C04 to C09 behaviour, the web application and every lockfile are unchanged, so reverting the C10 commit restores the previous tree exactly. Because the active configuration is process state, a reverted or restarted service has no accepted desired state to preserve and the operator re-applies the latest signed desired state.",
   "changed_paths": [
@@ -431,6 +445,16 @@
       "Finding 3 (must fix): the validity window was judged before the state lock was taken. The clock and the window are now rechecked under that lock immediately before the active configuration changes, and TestConfigExpiryIsRecheckedAtAcceptanceTime proves a document that expires while the service waits is rejected.",
       "Finding 4 (should fix): the settings ceilings were described as an already documented product profile. The numbers now live in the fixture as proposed C10 policy with their provenance recorded, the accepted range is explicit deployment policy in config.Bounds, the engine hard-codes no limit, and TestConfigSettingsBoundsAreDeploymentPolicy proves that a deployment with tighter bounds rejects a document that a deployment with wider bounds accepts. The product file carries spool_max_mib 100 and payload_max_kib 8, not an event count; the storage adapter limits are test settings, so the earlier wording overstated the status of the numbers."
     ],
-    "verification": "Every fix was proven by a mutation check: aliasing the payload, dropping the key copy, removing the under-lock recheck and re-adding an engine-side ceiling each fail the named anchor."
+    "verification": "Every fix was proven by a mutation check: aliasing the payload, dropping the key copy, removing the under-lock recheck and re-adding an engine-side ceiling each fail the named anchor.",
+    "follow_up": {
+      "source": "review.md (owner follow-up code review of commit 2a2d15c, kept untracked and git-ignored so the checkout stays clean)",
+      "reviewed_commit": "2a2d15c",
+      "findings": 2,
+      "resolved": [
+        "Finding 1 (P2): the stale product-policy wording in docs/evidence/C10.json (observed_limitations) and docs/agents/SESSION_HANDOFF.json (limitations) is corrected. Both now state that the spool and batch ceilings are proposed C10 deployment policy derived from the pre-existing byte budget (spool_max_mib 100) and payload cap (payload_max_kib 8), not an accepted event-count limit, and that the final event-count limits remain subject to confirmation with C14 and C15.",
+        "Finding 2 (P2): the documented batch-to-spool constraint is now enforced. A document whose event_batch_limit exceeds its spool_limit_events is internally inconsistent and is rejected with ErrInvalidInput, in Parse and therefore on the operator side as well. The rule is a document coherence invariant between two fields, not a product limit; the architecture document states it that way, and the new anchor TestConfigRejectsIncoherentDesiredStateSettings plus the new batch_exceeds_spool fixture row cover it."
+      ],
+      "verification": "Removing the coherence rule fails TestConfigRejectsIncoherentDesiredStateSettings; the previous four mutation checks still hold."
+    }
   }
 }

@@ -81,17 +81,25 @@ limit:
 
 | Setting | Proposed range | Source of the number |
 | --- | --- | --- |
-| `spool_limit_events` | 1..12800 | the pre-existing product profile in `product/project.json` (`spool_max_mib` 100 over `payload_max_kib` 8) expressed as an event count |
-| `event_batch_limit` | 1..12800 | the same ceiling: a batch may not exceed the spool capacity |
+| `spool_limit_events` | 1..12800 | the pre-existing byte budget in `product/project.json` (`spool_max_mib` 100) over the pre-existing payload cap (`payload_max_kib` 8), expressed here as an event count |
+| `event_batch_limit` | 1..12800 | the same proposed ceiling for one batch |
 | `heartbeat_seconds` | 5..3600 | the C10 engineering choice recorded here |
 
-The owner confirms the final values when the bounded spool lands in C14 and
-C15. The earlier C10 wording that called these values "the documented product
-profile" overstated their status: the product file carries a byte budget and a
-payload cap, not an event count, and the storage adapter's own limits are test
-settings rather than spool configuration. The engine therefore hard-codes none
-of them, so a later card can align the real spool policy without changing the
-engine or invalidating a signature.
+A byte budget is not an accepted event-count limit. The product file carries
+`spool_max_mib` and `payload_max_kib`, and the C10 numbers are this task's
+proposal for what those two figures mean in events; the storage adapter's own
+limits are test settings rather than spool configuration. The owner confirms
+the final values when the bounded spool lands in C14 and C15. The engine
+therefore hard-codes none of them, so a later card can align the real spool
+policy without changing the engine or invalidating a signature.
+
+The three settings must also agree with each other: `event_batch_limit` may
+not exceed `spool_limit_events`. A batch larger than the whole spool is an
+internally inconsistent document, because the sensor could never hold the
+batch it is told to send. C10 enforces this as a document invariant and
+rejects such a document with `ErrInvalidInput`. It is a coherence rule between
+two fields of the same document, not a product limit; the absolute values and
+the drop policy stay deployment policy and later cards.
 
 A member outside the version 1 schema, a duplicated member and a
 case-insensitively matched member are all rejected, so a signed payload has
@@ -128,10 +136,11 @@ invalidates the signature.
 `ErrNotYetValid`, `ErrStale`, `ErrConflict` and `ErrQuota` are the regimes a
 caller can assert against with `errors.Is`. `Apply` evaluates them in a fixed
 order: a missing signature fails first, then the signature over the exact
-bytes, then the document fields, then the settings against the deployment
-bounds, then the validity window and finally the revision against the active
-configuration. Context cancellation is reported before any other verdict.
-`ErrQuota` bounds the number of sensors the service tracks.
+bytes, then the document fields (including the coherence of the settings),
+then the settings against the deployment bounds, then the validity window and
+finally the revision against the active configuration. Context cancellation is
+reported before any other verdict. `ErrQuota` bounds the number of sensors the
+service tracks.
 
 The validity window is judged twice: once before the state lock is taken and
 again under that lock, immediately before the active configuration changes.

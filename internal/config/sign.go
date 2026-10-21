@@ -322,6 +322,13 @@ func Parse(payload []byte) (Document, error) {
 	if err != nil {
 		return Document{}, err
 	}
+	// A batch larger than the whole spool is an internally inconsistent
+	// document: the sensor could never hold the batch it is told to send.
+	// This is a coherence rule between two fields of the same document, not
+	// a product limit; the absolute values stay deployment policy.
+	if settings.EventBatchLimit > settings.SpoolLimitEvents {
+		return Document{}, ErrInvalidInput
+	}
 	document.Settings = settings
 	return document, nil
 }

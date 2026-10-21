@@ -350,7 +350,7 @@ func TestConfigRejectsInvalidDesiredStateDocuments(t *testing.T) {
 		t.Fatal("the signed desired state did not become active")
 	}
 	verdicts := c10Verdicts()
-	if len(invalid.Cases) != 17 {
+	if len(invalid.Cases) != 18 {
 		t.Fatalf("C10 fixture rows drifted: %d", len(invalid.Cases))
 	}
 	for _, testCase := range invalid.Cases {
@@ -641,6 +641,38 @@ func TestConfigSettingsBoundsAreDeploymentPolicy(t *testing.T) {
 	strict := c10Service(t, fixture, public)
 	if _, err = strict.Apply(context.Background(), widePayload, wideSignature); !errors.Is(err, config.ErrInvalidInput) {
 		t.Fatalf("out of policy desired state error = %v, want %v", err, config.ErrInvalidInput)
+	}
+}
+
+// TestConfigRejectsIncoherentDesiredStateSettings proves the document
+// settings must agree with each other: an event batch larger than the whole
+// spool it has to fit into is an internally inconsistent desired state and is
+// rejected before it can become the active configuration.
+func TestConfigRejectsIncoherentDesiredStateSettings(t *testing.T) {
+	fixture, invalid, _ := c10Files(t)
+	public, private := c10Key(t)
+	service := c10Service(t, fixture, public)
+	testCase := c10CaseByName(t, invalid, "batch_exceeds_spool")
+	payload := c10Payload(t, testCase)
+	if _, err := config.Parse(payload); !errors.Is(err, config.ErrInvalidInput) {
+		t.Fatalf("incoherent document parse error = %v, want %v", err, config.ErrInvalidInput)
+	}
+	signature := c10Signature(t, testCase, private, private)
+	if _, err := service.Apply(context.Background(), payload, signature); !errors.Is(err, config.ErrInvalidInput) {
+		t.Fatalf("incoherent desired state error = %v, want %v", err, config.ErrInvalidInput)
+	}
+	if _, ok := service.Active(fixture.Expected.SensorID); ok {
+		t.Fatal("the incoherent desired state became the active configuration")
+	}
+	// A coherent document with a batch that exactly fills the spool is
+	// accepted.
+	coherent := []byte(`{"schema_version":"1","sensor_id":"sensor-01","revision":1,"issued_at":"2026-10-21T00:00:00Z","expires_at":"2026-11-21T00:00:00Z","settings":{"heartbeat_seconds":30,"spool_limit_events":10,"event_batch_limit":10}}`)
+	coherentSignature, err := config.Sign(coherent, private)
+	if err != nil {
+		t.Fatalf("sign desired state: %v", err)
+	}
+	if _, err = service.Apply(context.Background(), coherent, coherentSignature); err != nil {
+		t.Fatalf("apply coherent desired state: %v", err)
 	}
 }
 

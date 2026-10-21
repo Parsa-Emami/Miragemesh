@@ -19,6 +19,7 @@
     "invalid_timestamp": "INVALID_INPUT",
     "expires_before_issued": "INVALID_INPUT",
     "settings_out_of_range": "INVALID_INPUT",
+    "batch_exceeds_spool": "INVALID_INPUT",
     "oversized_payload": "INVALID_INPUT"
   },
   "expected_active": {

@@ -118,6 +118,13 @@
       "expected": "INVALID_INPUT"
     },
     {
+      "name": "batch_exceeds_spool",
+      "definition": "A correctly signed document whose event batch is larger than the whole spool it must fit into.",
+      "mode": "signed",
+      "payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":3,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":1,\"event_batch_limit\":10}}",
+      "expected": "INVALID_INPUT"
+    },
+    {
       "name": "oversized_payload",
       "definition": "A correctly signed document larger than the shared 8192 byte payload cap.",
       "mode": "build",
