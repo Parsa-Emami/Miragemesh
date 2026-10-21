@@ -12,7 +12,15 @@
 --- PASS: TestConfigRejectsMissingPrerequisites (0.00s)
 === RUN   TestConfigRejectsDesiredStateSensorQuota
 --- PASS: TestConfigRejectsDesiredStateSensorQuota (0.00s)
+=== RUN   TestConfigAppliedPayloadCannotMutateActiveState
+--- PASS: TestConfigAppliedPayloadCannotMutateActiveState (0.00s)
+=== RUN   TestConfigTrustedKeyIsCopiedAtConstruction
+--- PASS: TestConfigTrustedKeyIsCopiedAtConstruction (0.00s)
+=== RUN   TestConfigExpiryIsRecheckedAtAcceptanceTime
+--- PASS: TestConfigExpiryIsRecheckedAtAcceptanceTime (0.00s)
+=== RUN   TestConfigSettingsBoundsAreDeploymentPolicy
+--- PASS: TestConfigSettingsBoundsAreDeploymentPolicy (0.00s)
 === RUN   TestConfigFreshServiceHasNoRememberedActiveState
 --- PASS: TestConfigFreshServiceHasNoRememberedActiveState (0.00s)
 PASS
-ok  	github.com/Parsa-Emami/Miragemesh/tests	0.009s
+ok  	github.com/Parsa-Emami/Miragemesh/tests	0.010s

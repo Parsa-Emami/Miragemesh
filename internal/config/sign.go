@@ -39,19 +39,9 @@ var (
 	ErrQuota            = errors.New("config: desired state sensor quota exceeded")
 )
 
-// The version 1 desired-state bounds. The spool and batch ceilings follow the
-// documented product profile (a 100 MiB spool over an 8 KiB payload cap). The
-// heartbeat bounds are the C10 engineering choice recorded in
-// docs/architecture/DESIRED_STATE.md.
-const (
-	MinHeartbeatSeconds = 5
-	MaxHeartbeatSeconds = 3600
-	MinSpoolLimitEvents = 1
-	MaxSpoolLimitEvents = 12800
-	MinEventBatchLimit  = 1
-	MaxEventBatchLimit  = 12800
-)
-
+// The version 1 desired-state settings carry no hidden default: the accepted
+// range of every setting is explicit deployment policy (see Bounds) and the
+// engine ships no product limit of its own.
 var (
 	documentFields = []string{"schema_version", "sensor_id", "revision", "issued_at", "expires_at", "settings"}
 	settingsFields = []string{"heartbeat_seconds", "spool_limit_events", "event_batch_limit"}
@@ -84,13 +74,28 @@ type Applied struct {
 	AppliedAt time.Time
 }
 
+// Bounds are the explicit deployment limits for the version 1 desired-state
+// settings. They are trusted local configuration: the engine ships no hidden
+// default and no product policy of its own, and a deployment states the
+// accepted range of every setting. The C10 values are proposed policy, not an
+// already accepted product limit; see docs/architecture/DESIRED_STATE.md.
+type Bounds struct {
+	MinHeartbeatSeconds int
+	MaxHeartbeatSeconds int
+	MinSpoolLimitEvents int
+	MaxSpoolLimitEvents int
+	MinEventBatchLimit  int
+	MaxEventBatchLimit  int
+}
+
 // Verifier is the trusted local configuration of the desired-state
-// authority: the signing public key, the authoritative clock and the bound
-// on tracked sensors.
+// authority: the signing public key, the authoritative clock, the bound on
+// tracked sensors and the accepted range of every setting.
 type Verifier struct {
 	PublicKey  ed25519.PublicKey
 	Clock      func() time.Time
 	MaxSensors int
+	Bounds     Bounds
 }
 
 type active struct {
@@ -107,19 +112,43 @@ type Service struct {
 }
 
 // New validates the trusted local configuration and fails closed on an
-// incomplete one. The public key length is checked here because the
-// standard library panics on a public key of the wrong size.
+// incomplete one. The public key length is checked here because the standard
+// library panics on a public key of the wrong size. The key bytes are copied
+// into service-owned memory: the caller's slice must not stay able to change
+// which signer the service trusts after construction.
 func New(verifier Verifier) (*Service, error) {
 	if len(verifier.PublicKey) != ed25519.PublicKeySize || verifier.Clock == nil || verifier.MaxSensors <= 0 {
 		return nil, ErrInvalidInput
 	}
+	if !validBounds(verifier.Bounds) {
+		return nil, ErrInvalidInput
+	}
+	key := make(ed25519.PublicKey, ed25519.PublicKeySize)
+	copy(key, verifier.PublicKey)
+	verifier.PublicKey = key
 	return &Service{verifier: verifier, active: make(map[string]*active)}, nil
 }
 
-// Sign returns the Ed25519 signature of the exact payload bytes. This is
-// the operator side: it refuses to sign a document the engine would reject.
-// The engine never re-serializes a document, so a signature always covers
-// the bytes that were submitted.
+// validBounds requires an explicit, positive and ordered range for every
+// setting. There is no default, no empty range and no unlimited mode.
+func validBounds(bounds Bounds) bool {
+	for _, entry := range []struct{ lower, upper int }{
+		{bounds.MinHeartbeatSeconds, bounds.MaxHeartbeatSeconds},
+		{bounds.MinSpoolLimitEvents, bounds.MaxSpoolLimitEvents},
+		{bounds.MinEventBatchLimit, bounds.MaxEventBatchLimit},
+	} {
+		if entry.lower < 1 || entry.upper < entry.lower {
+			return false
+		}
+	}
+	return true
+}
+
+// Sign returns the Ed25519 signature of the exact payload bytes. This is the
+// operator side: it refuses to sign a structurally invalid document. The
+// accepted range of the settings is deployment policy, so only the receiving
+// deployment can judge it. The engine never re-serializes a document, so a
+// signature always covers the bytes that were submitted.
 func Sign(payload []byte, privateKey ed25519.PrivateKey) ([]byte, error) {
 	if len(privateKey) != ed25519.PrivateKeySize {
 		return nil, ErrInvalidInput
@@ -133,8 +162,11 @@ func Sign(payload []byte, privateKey ed25519.PrivateKey) ([]byte, error) {
 // Apply verifies one signed desired state and makes it the active
 // configuration of its sensor. The order is fixed: a missing signature
 // fails first, then the signature over the exact bytes, then the document
-// fields, then the validity window and finally the monotonic revision. A
-// rejected document never replaces the active configuration.
+// fields, then the settings against the deployment bounds, then the validity
+// window and finally the monotonic revision. The validity window is rechecked
+// under the state lock, so a document that expires while the service waits
+// cannot become the active configuration. A rejected document never replaces
+// the active configuration.
 func (s *Service) Apply(ctx context.Context, payload, signature []byte) (Applied, error) {
 	if s == nil {
 		return Applied{}, ErrInvalidInput
@@ -152,6 +184,9 @@ func (s *Service) Apply(ctx context.Context, payload, signature []byte) (Applied
 	if err != nil {
 		return Applied{}, err
 	}
+	if !s.boundsAllow(document.Settings) {
+		return Applied{}, ErrInvalidInput
+	}
 	now := s.verifier.Clock().UTC()
 	if now.IsZero() || now.Year() < 1000 {
 		return Applied{}, ErrInvalidInput
@@ -164,6 +199,19 @@ func (s *Service) Apply(ctx context.Context, payload, signature []byte) (Applied
 	}
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	// Recheck the authoritative clock and the validity window under the state
+	// lock: the document must still be valid at the moment it becomes the
+	// active configuration.
+	now = s.verifier.Clock().UTC()
+	if now.IsZero() || now.Year() < 1000 {
+		return Applied{}, ErrInvalidInput
+	}
+	if now.Before(document.IssuedAt) {
+		return Applied{}, ErrNotYetValid
+	}
+	if !now.Before(document.ExpiresAt) {
+		return Applied{}, ErrExpired
+	}
 	current, exists := s.active[document.SensorID]
 	if exists {
 		if document.Revision < current.revision {
@@ -191,8 +239,22 @@ func (s *Service) Apply(ctx context.Context, payload, signature []byte) (Applied
 		Payload:   append([]byte(nil), payload...),
 		AppliedAt: now,
 	}
-	s.active[document.SensorID] = &active{revision: applied.Revision, payload: applied.Payload, applied: applied.AppliedAt}
+	// The active state owns its own copy: a caller that mutates the returned
+	// payload must not be able to change the stored active configuration.
+	s.active[document.SensorID] = &active{
+		revision: applied.Revision,
+		payload:  append([]byte(nil), payload...),
+		applied:  applied.AppliedAt,
+	}
 	return applied, nil
+}
+
+// boundsAllow reports whether every setting is inside the deployment policy.
+func (s *Service) boundsAllow(settings Settings) bool {
+	bounds := s.verifier.Bounds
+	return settings.HeartbeatSeconds >= bounds.MinHeartbeatSeconds && settings.HeartbeatSeconds <= bounds.MaxHeartbeatSeconds &&
+		settings.SpoolLimitEvents >= bounds.MinSpoolLimitEvents && settings.SpoolLimitEvents <= bounds.MaxSpoolLimitEvents &&
+		settings.EventBatchLimit >= bounds.MinEventBatchLimit && settings.EventBatchLimit <= bounds.MaxEventBatchLimit
 }
 
 // Active returns the active desired state of one sensor. The payload is a
@@ -352,7 +414,9 @@ func instant(raw json.RawMessage) (time.Time, error) {
 	return parsed.UTC(), nil
 }
 
-// parseSettings reads the bounded version 1 settings of one document.
+// parseSettings reads the version 1 settings of one document. The values are
+// parsed but not ranged here: the accepted range is deployment policy and is
+// applied by the service against its configured bounds.
 func parseSettings(raw json.RawMessage) (Settings, error) {
 	fields, err := members(raw, settingsFields)
 	if err != nil {
@@ -367,15 +431,13 @@ func parseSettings(raw json.RawMessage) (Settings, error) {
 	for _, entry := range []struct {
 		name   string
 		target *int
-		lower  int
-		upper  int
 	}{
-		{"heartbeat_seconds", &settings.HeartbeatSeconds, MinHeartbeatSeconds, MaxHeartbeatSeconds},
-		{"spool_limit_events", &settings.SpoolLimitEvents, MinSpoolLimitEvents, MaxSpoolLimitEvents},
-		{"event_batch_limit", &settings.EventBatchLimit, MinEventBatchLimit, MaxEventBatchLimit},
+		{"heartbeat_seconds", &settings.HeartbeatSeconds},
+		{"spool_limit_events", &settings.SpoolLimitEvents},
+		{"event_batch_limit", &settings.EventBatchLimit},
 	} {
 		value, err := integer(fields[entry.name])
-		if err != nil || value < int64(entry.lower) || value > int64(entry.upper) {
+		if err != nil {
 			return Settings{}, ErrInvalidInput
 		}
 		*entry.target = int(value)

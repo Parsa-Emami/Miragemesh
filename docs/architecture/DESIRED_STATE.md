@@ -15,6 +15,11 @@ service, err := config.New(config.Verifier{
     PublicKey:  operatorPublicKey,
     Clock:      time.Now,
     MaxSensors: maxSensors,
+    Bounds: config.Bounds{
+        MinHeartbeatSeconds: 5, MaxHeartbeatSeconds: 3600,
+        MinSpoolLimitEvents: 1, MaxSpoolLimitEvents: 12800,
+        MinEventBatchLimit:  1, MaxEventBatchLimit:  12800,
+    },
 })
 signature, err := config.Sign(payload, operatorPrivateKey)   // operator side
 applied, err := service.Apply(ctx, payload, signature)
@@ -24,9 +29,11 @@ active, ok := service.Active("sensor-01")
 
 `config.New` fails closed on an incomplete configuration and returns
 `ErrInvalidInput`; the public key length is checked there because the standard
-library panics on a public key of the wrong size. The clock is trusted
-application configuration, never a field supplied by a document. Tests pass a
-controlled clock; production passes `time.Now`.
+library panics on a public key of the wrong size, and the key bytes are copied
+into service-owned memory so the caller cannot change which signer the
+service trusts after construction. The clock is trusted application
+configuration, never a field supplied by a document. Tests pass a controlled
+clock; production passes `time.Now`.
 
 The signing key is trusted local configuration and is completely independent
 from the mTLS collector certificate authorities and revocation material:
@@ -62,14 +69,33 @@ time zone, so a value never depends on the host time zone, and instants are
 compared in UTC. The validity window is `[issued_at, expires_at)` and
 `expires_at` must be after `issued_at`.
 
-`settings` carries exactly three bounded integers. `spool_limit_events` and
-`event_batch_limit` are bounded by 12800, which is the documented product
-profile (a 100 MiB spool over an 8 KiB payload cap). `heartbeat_seconds` is
-bounded by 5..3600, the C10 engineering choice recorded here; the product
-profile's runtime admission limits are enforced by the collector, not by the
-document validator. A member outside the version 1 schema, a duplicated member
-and a case-insensitively matched member are all rejected, so a signed payload
-has exactly one field reading.
+`settings` carries exactly three integers. Their accepted range is explicit
+deployment policy (`config.Bounds`), not a limit the engine ships: a
+deployment states the accepted range of every setting and the engine rejects
+anything outside it with `ErrInvalidInput`. There is no default, no empty
+range and no unlimited mode, and an unset or inverted range is an incomplete
+configuration that `config.New` rejects.
+
+The C10 fixture carries **proposed** policy, not an already accepted product
+limit:
+
+| Setting | Proposed range | Source of the number |
+| --- | --- | --- |
+| `spool_limit_events` | 1..12800 | the pre-existing product profile in `product/project.json` (`spool_max_mib` 100 over `payload_max_kib` 8) expressed as an event count |
+| `event_batch_limit` | 1..12800 | the same ceiling: a batch may not exceed the spool capacity |
+| `heartbeat_seconds` | 5..3600 | the C10 engineering choice recorded here |
+
+The owner confirms the final values when the bounded spool lands in C14 and
+C15. The earlier C10 wording that called these values "the documented product
+profile" overstated their status: the product file carries a byte budget and a
+payload cap, not an event count, and the storage adapter's own limits are test
+settings rather than spool configuration. The engine therefore hard-codes none
+of them, so a later card can align the real spool policy without changing the
+engine or invalidating a signature.
+
+A member outside the version 1 schema, a duplicated member and a
+case-insensitively matched member are all rejected, so a signed payload has
+exactly one field reading.
 
 The payload is bounded by the shared `contracts.MaxInputBytes` cap of 8192
 bytes, the same cap the C04 event contract uses.
@@ -86,9 +112,11 @@ not allow. The consequence is documented rather than hidden: two different byte
 encodings of the same document are two different documents, and the strict
 member rules keep one unambiguous field reading per payload.
 
-`config.Sign` is the operator side. It refuses to sign a document the engine
-would reject and returns the signature of the exact bytes it was given, so the
-signed bytes and the submitted bytes are always the same bytes.
+`config.Sign` is the operator side. It refuses to sign a structurally invalid
+document and returns the signature of the exact bytes it was given, so the
+signed bytes and the submitted bytes are always the same bytes. The accepted
+range of the settings is deployment policy, so only the receiving deployment
+can judge it and the operator side does not decide it.
 
 Because the signature covers the whole payload, it covers every document field:
 a changed `sensor_id`, `revision`, timestamp, setting or schema version
@@ -100,9 +128,16 @@ invalidates the signature.
 `ErrNotYetValid`, `ErrStale`, `ErrConflict` and `ErrQuota` are the regimes a
 caller can assert against with `errors.Is`. `Apply` evaluates them in a fixed
 order: a missing signature fails first, then the signature over the exact
-bytes, then the document fields, then the validity window, then the revision
-against the active configuration. Context cancellation is reported before any
-other verdict. `ErrQuota` bounds the number of sensors the service tracks.
+bytes, then the document fields, then the settings against the deployment
+bounds, then the validity window and finally the revision against the active
+configuration. Context cancellation is reported before any other verdict.
+`ErrQuota` bounds the number of sensors the service tracks.
+
+The validity window is judged twice: once before the state lock is taken and
+again under that lock, immediately before the active configuration changes.
+A document that expires while the service waits for the lock is therefore
+rejected with `ErrExpired` and never becomes the active configuration, which
+is the same rule the C08 enrollment service applies to its token expiry.
 
 A desired state is stale when it cannot become the active configuration
 because it is older than the active revision (`ErrStale`), because its
@@ -114,8 +149,10 @@ active configuration unchanged.
 
 Every rejection leaves the active configuration byte-identical: the active
 revision, the active payload bytes and the active apply time are unchanged
-after a rejected document. The active payload is a copy, so a caller cannot
-mutate it.
+after a rejected document. The active state owns its own copy of the payload,
+and `Active` returns another copy, so neither a caller that mutates the
+result of `Apply` nor a caller that mutates the result of `Active` can change
+the stored signed configuration.
 
 ## Scope limits and the C11 boundary
 
@@ -139,8 +176,12 @@ authored Apache-2.0 fixtures under `tests/fixtures/miragemesh/C10/`: it proves
 that a signed document becomes the active configuration, that an unsigned,
 tampered, re-serialized, wrongly signed, expired, not-yet-valid, stale,
 conflicting or structurally invalid document is rejected with its typed error,
-and that no rejection ever replaces the active configuration. The
-discovery guard requires the C10 anchors.
+and that no rejection ever replaces the active configuration. It also proves
+the ownership and timing rules: the result of `Apply` cannot mutate the
+active configuration, the configured verification key cannot be changed by the
+caller after construction, the validity window is rechecked at acceptance
+time, and the accepted range of the settings is deployment policy rather than
+an engine limit. The discovery guard requires the C10 anchors.
 
 There is no HTTP, CLI or UI surface, no key generation, storage, rotation or
 recovery, no multi-signer support, no fleet or tenant policy and no network

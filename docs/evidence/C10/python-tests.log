@@ -6,6 +6,6 @@ test_shallow_history_fails_with_an_actionable_message (test_ci_source.CiSourceTe
 test_untracked_source_is_not_silently_omitted (test_ci_source.CiSourceTest.test_untracked_source_is_not_silently_omitted) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.347s
+Ran 6 tests in 0.342s
 
 OK

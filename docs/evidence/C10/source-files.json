@@ -567,8 +567,8 @@
   },
   {
    "path": "docs/architecture/DESIRED_STATE.md",
-   "sha256": "7b9a5446a33f49a27d5805750b601eb0a0270ad4c30025003cdb73602e079375",
-   "bytes": 7962
+   "sha256": "a45bdc0cfc0571f387bbb6cf6b584730feb2e49ba4642251ba06cf542ad43b44",
+   "bytes": 10422
   },
   {
    "path": "docs/architecture/ENROLLMENT.md",
@@ -617,8 +617,8 @@
   },
   {
    "path": "docs/engineering/ENGINE_TESTS.md",
-   "sha256": "6e9c5060976c618fc9463f0b8d3b30428bf1d975d81a33bc7ab2c0375d81a97a",
-   "bytes": 10684
+   "sha256": "07ad73eb566b2bcf4a9f1e7837d78c8237fb6322e0c948d7c8fe4f7641177496",
+   "bytes": 11547
   },
   {
    "path": "docs/engineering/GITHUB_BASELINE.json",
@@ -687,8 +687,8 @@
   },
   {
    "path": "internal/config/sign.go",
-   "sha256": "96c010d71c07c0246f0d635f0352bf07060d732532a659bebecb9ed83993cc75",
-   "bytes": 12898
+   "sha256": "99a5cd84c4bb07d06db70b5391dd536761a6c644dc1840b2f8a25c6899ba0ff7",
+   "bytes": 15578
   },
   {
    "path": "internal/contracts/enrollment.go",
@@ -1257,8 +1257,8 @@
   },
   {
    "path": "plans/commits/C10.md",
-   "sha256": "fae20ce3ef9e7e1181d7d5837458cac5108f054741d203f89c9bc6964c8037d0",
-   "bytes": 6293
+   "sha256": "a1bebf55fe350841f2726575465094f728f810760ab98a65b189bd3ccf9e5d12",
+   "bytes": 6718
   },
   {
    "path": "plans/commits/C11.md",
@@ -1522,8 +1522,8 @@
   },
   {
    "path": "scripts/verify-engine-tests.mjs",
-   "sha256": "cc029ba09f43a1774f794b48e543e646a3b0116bd3fb66c1ab1274c501ce20ca",
-   "bytes": 3675
+   "sha256": "0c454e32165960476ab3269f5c7f059637934ab3723278914dbd3ec90fe73bde",
+   "bytes": 3866
   },
   {
    "path": "scripts/verify-reference.mjs",
@@ -1652,8 +1652,8 @@
   },
   {
    "path": "tests/config_signature_test.go",
-   "sha256": "3b7070e2709b79ee42c2014816c4f211c20a17f9b1d10aac966edaae13085dd7",
-   "bytes": 18453
+   "sha256": "96de2689d49929fd8e0733a738d48579fab88d26c58bad89005aace14ad99853",
+   "bytes": 26609
   },
   {
    "path": "tests/contracts/domain-contracts.test.mjs",
@@ -1662,8 +1662,8 @@
   },
   {
    "path": "tests/engineering/engine-tests.test.mjs",
-   "sha256": "9a577d6f4a7cb5186afba5e1f9cc24cab9111d6a4c88ae937ebf3c61d83fdd5b",
-   "bytes": 6566
+   "sha256": "97ec9b83d117f8b3f4dcca85a04f7fea76938891bbb34cceb453d740cd523271",
+   "bytes": 6948
   },
   {
    "path": "tests/engineering/test_ci_source.py",
@@ -1817,8 +1817,8 @@
   },
   {
    "path": "tests/fixtures/miragemesh/C10/positive.json",
-   "sha256": "e6ddaf1fe81bf212d57077f314f2ff1a7b210e0817e52e4b64aedc0ff173c864",
-   "bytes": 1176
+   "sha256": "5a3eddcb79fde38531583938c350d4e6a38d009666a131fa02ae5e3a89e67e7e",
+   "bytes": 2456
   },
   {
    "path": "tests/mtls_test.go",

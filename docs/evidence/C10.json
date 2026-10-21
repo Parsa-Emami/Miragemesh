@@ -5,7 +5,7 @@
   "planning_template": false,
   "date": "2026-10-21",
   "base_commit": "46179f4f821964864bdd3e00fa474df8cb8884f3",
-  "source_identity": "sha256:afb3488b7e16cf0513a9ba5abb576cdc9487c8c602f712a1ec319773b208f572",
+  "source_identity": "sha256:f52edb95159676756a394ec1dcb171a216b5db78da1dadb37c1fab440c05f2c1",
   "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes) over every tracked or untracked non-ignored file; evidence, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded because they publish this identity themselves. Reproduce with the command recorded in docs/evidence/C10/source-identity.log.",
   "source_manifest": "docs/evidence/C10/source-files.json",
   "source_file_count": 372,
@@ -242,15 +242,27 @@
       ],
       "exit_code": 0,
       "output_path": "docs/evidence/C10/next-task.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "-race",
+        "-count=1",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/all-race.log",
+      "note": "Re-run after the owner review fixes."
     }
   ],
   "results": {
-    "go_test_run_events": 154,
-    "go_test_pass_events": 154,
+    "go_test_run_events": 158,
+    "go_test_pass_events": 158,
     "go_test_fail_events": 0,
-    "required_engine_anchors": 30,
+    "required_engine_anchors": 34,
     "engine_suites": 4,
-    "c10_anchors": 8,
+    "c10_anchors": 12,
     "npm_tests": 41,
     "browser_tests": 3,
     "python_source_integrity_tests": 6,
@@ -271,7 +283,7 @@
     "license": "Apache-2.0",
     "provenance": "Repository-authored synthetic desired-state documents and expected verdicts. No key material, secret, customer, sensor or production configuration is present.",
     "sha256": {
-      "tests/fixtures/miragemesh/C10/positive.json": "e6ddaf1fe81bf212d57077f314f2ff1a7b210e0817e52e4b64aedc0ff173c864",
+      "tests/fixtures/miragemesh/C10/positive.json": "5a3eddcb79fde38531583938c350d4e6a38d009666a131fa02ae5e3a89e67e7e",
       "tests/fixtures/miragemesh/C10/invalid.json": "392601a5d19621cb94e5c49b767ae51110338c125772c9351f81994d7f8ad8b1",
       "tests/fixtures/miragemesh/C10/expected-output.json": "7fcef3dc779ff26c22ad33ef017a509f357f5eb5cef5f83c81628d115a069cb1"
     },
@@ -335,6 +347,12 @@
       "phase": "First browser run: the Playwright web server port was transiently busy",
       "exit_code": 1,
       "note": "The first npm run test:browser invocation reported that http://127.0.0.1:4173/readyz was already used. No process of this task held that port and the immediate re-run passed all three browser tests; the recorded log is the passing run."
+    },
+    {
+      "expected": false,
+      "phase": "Owner review round one on a444f05",
+      "exit_code": 1,
+      "note": "The review reported three defects (aliased active payload, retained caller key, expiry checked before the state lock) and one policy wording (settings ceilings presented as an accepted product profile). All four are resolved in the fix commit with dedicated regressions; the details are recorded in the review section."
     }
   ],
   "observed_limitations": [
@@ -354,6 +372,7 @@
     "docs/architecture/DESIRED_STATE.md",
     "docs/engineering/ENGINE_TESTS.md",
     "docs/evidence/C10.json",
+    "docs/evidence/C10/all-race.log",
     "docs/evidence/C10/browser.log",
     "docs/evidence/C10/build.log",
     "docs/evidence/C10/check.log",
@@ -401,5 +420,17 @@
     "local_commit_authorized": true,
     "commit_subject": "feat(config): sign versioned desired state"
   },
-  "verification_notes": "The C10 tests were written first and the first run failed because the internal/config package did not exist; the implementation then made them pass without weakening an assertion. The engine battery ran the pinned Go 1.27.2 toolchain binary that the C09 evidence used, because the ambient GOSUMDB=off setting blocks the automatic toolchain download check in this environment; the module has no external dependency, so no module download and no network access was needed to build or test it. The desired-state package performs no socket operation: the traced run of the focused test binary contains no socket, connect, bind, listen, accept, sendto or recvfrom syscall. The clean clone verification used an isolated candidate index, so the uncommitted task files were verified without touching the user staging area. The recorded source identity covers the verified source and excludes only the files that publish that identity itself, so it stays stable and reproducible after the final metadata edits."
+  "verification_notes": "The C10 tests were written first and the first run failed because the internal/config package did not exist; the implementation then made them pass without weakening an assertion. The engine battery ran the pinned Go 1.27.2 toolchain binary that the C09 evidence used, because the ambient GOSUMDB=off setting blocks the automatic toolchain download check in this environment; the module has no external dependency, so no module download and no network access was needed to build or test it. The desired-state package performs no socket operation: the traced run of the focused test binary contains no socket, connect, bind, listen, accept, sendto or recvfrom syscall. The clean clone verification used an isolated candidate index, so the uncommitted task files were verified without touching the user staging area. The recorded source identity covers the verified source and excludes only the files that publish that identity itself, so it stays stable and reproducible after the final metadata edits.",
+  "review": {
+    "source": "review.md (owner follow-up code review of commit a444f05, kept untracked and git-ignored so the checkout stays clean)",
+    "reviewed_commit": "a444f0554298470af838f24e5729ccb228274495",
+    "findings": 4,
+    "resolved": [
+      "Finding 1 (must fix): the payload returned by Apply aliased the slice stored as the active configuration. The active state now owns a separate copy and a new anchor TestConfigAppliedPayloadCannotMutateActiveState proves that mutating the returned payload cannot change the active signed bytes.",
+      "Finding 2 (must fix): New retained the caller's mutable public-key slice. The key bytes are now copied into service-owned memory and TestConfigTrustedKeyIsCopiedAtConstruction proves that overwriting the caller's slice cannot change the trusted signer.",
+      "Finding 3 (must fix): the validity window was judged before the state lock was taken. The clock and the window are now rechecked under that lock immediately before the active configuration changes, and TestConfigExpiryIsRecheckedAtAcceptanceTime proves a document that expires while the service waits is rejected.",
+      "Finding 4 (should fix): the settings ceilings were described as an already documented product profile. The numbers now live in the fixture as proposed C10 policy with their provenance recorded, the accepted range is explicit deployment policy in config.Bounds, the engine hard-codes no limit, and TestConfigSettingsBoundsAreDeploymentPolicy proves that a deployment with tighter bounds rejects a document that a deployment with wider bounds accepts. The product file carries spool_max_mib 100 and payload_max_kib 8, not an event count; the storage adapter limits are test settings, so the earlier wording overstated the status of the numbers."
+    ],
+    "verification": "Every fix was proven by a mutation check: aliasing the payload, dropping the key copy, removing the under-lock recheck and re-adding an engine-side ceiling each fail the named anchor."
+  }
 }

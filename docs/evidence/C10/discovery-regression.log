@@ -1,13 +1,13 @@
-✔ accepts executed engine, contract and real recovery suites with interleaved output (33.936969ms)
-✔ rejects empty discovery and package-only success without executed tests (49.5675ms)
-✔ rejects a missing required suite or anchor (53.929626ms)
-✔ requires persistent sensor sequence and invalid-event regression anchors (50.158952ms)
-✔ rejects a skipped anchor or a pass with no run (48.86989ms)
-✔ rejects failures in any package and unfinished package results (102.078844ms)
-✔ rejects malformed JSON events and missing input (101.771752ms)
-✔ requires enrollment validation, durable consumption, scope, clock, concurrency and crash anchors (230.916334ms)
-✔ requires mTLS acceptance, transport denial, typed verdicts, issuer-bound revocation, revoked replay and configuration anchors (154.028307ms)
-✔ requires signed desired state, unsigned rejection, stale rejection and exact-byte signature anchors (205.415238ms)
+✔ accepts executed engine, contract and real recovery suites with interleaved output (29.631543ms)
+✔ rejects empty discovery and package-only success without executed tests (50.267547ms)
+✔ rejects a missing required suite or anchor (52.792318ms)
+✔ requires persistent sensor sequence and invalid-event regression anchors (54.224766ms)
+✔ rejects a skipped anchor or a pass with no run (56.118457ms)
+✔ rejects failures in any package and unfinished package results (100.096935ms)
+✔ rejects malformed JSON events and missing input (101.522991ms)
+✔ requires enrollment validation, durable consumption, scope, clock, concurrency and crash anchors (236.833687ms)
+✔ requires mTLS acceptance, transport denial, typed verdicts, issuer-bound revocation, revoked replay and configuration anchors (160.119351ms)
+✔ requires signed desired state, unsigned rejection, stale rejection and exact-byte signature anchors (318.026069ms)
 ℹ tests 10
 ℹ suites 0
 ℹ pass 10
@@ -15,4 +15,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1083.121468
+ℹ duration_ms 1212.502746

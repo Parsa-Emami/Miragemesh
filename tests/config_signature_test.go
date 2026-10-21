@@ -23,15 +23,31 @@ type c10Limits struct {
 	MaxSensors      int `json:"max_sensors"`
 }
 
+type c10Range struct {
+	Min int `json:"min"`
+	Max int `json:"max"`
+}
+
+type c10Bounds struct {
+	HeartbeatSeconds c10Range `json:"heartbeat_seconds"`
+	SpoolLimitEvents c10Range `json:"spool_limit_events"`
+	EventBatchLimit  c10Range `json:"event_batch_limit"`
+}
+
 type c10Positive struct {
-	FixtureVersion int               `json:"fixture_version"`
-	License        string            `json:"license"`
-	Provenance     string            `json:"provenance"`
-	Now            string            `json:"now"`
-	SensorID       string            `json:"sensor_id"`
-	Limits         c10Limits         `json:"limits"`
-	Payloads       map[string]string `json:"payloads"`
-	Expected       struct {
+	FixtureVersion   int               `json:"fixture_version"`
+	License          string            `json:"license"`
+	Provenance       string            `json:"provenance"`
+	BoundsProvenance string            `json:"bounds_provenance"`
+	Now              string            `json:"now"`
+	SensorID         string            `json:"sensor_id"`
+	Limits           c10Limits         `json:"limits"`
+	Bounds           c10Bounds         `json:"bounds"`
+	TightBounds      c10Bounds         `json:"tight_bounds"`
+	WideBounds       c10Bounds         `json:"wide_bounds"`
+	WidePayload      string            `json:"wide_payload"`
+	Payloads         map[string]string `json:"payloads"`
+	Expected         struct {
 		InitialRevision int64           `json:"initial_revision"`
 		NextRevision    int64           `json:"next_revision"`
 		SensorID        string          `json:"sensor_id"`
@@ -94,6 +110,9 @@ func c10Files(t *testing.T) (*c10Positive, *c10Invalid, *c10Expected) {
 	if positive.Limits.MaxPayloadBytes != 8192 || positive.Limits.MaxSensors <= 0 {
 		t.Fatalf("unexpected C10 limits: %+v", positive.Limits)
 	}
+	if positive.BoundsProvenance == "" {
+		t.Fatal("the C10 fixture does not record the provenance of the proposed bounds")
+	}
 	if len(positive.Payloads) != 2 || positive.Payloads["initial"] == "" || positive.Payloads["next"] == "" {
 		t.Fatal("C10 positive fixture is missing a desired-state document")
 	}
@@ -122,17 +141,33 @@ func c10Key(t *testing.T) (ed25519.PublicKey, ed25519.PrivateKey) {
 	return public, private
 }
 
-func c10Service(t *testing.T, fixture *c10Positive, public ed25519.PublicKey) *config.Service {
+// c10Verifier builds the trusted local configuration of one deployment from
+// the fixture. The accepted range of every setting is explicit deployment
+// policy: the engine ships no product limit of its own.
+func c10Verifier(t *testing.T, fixture *c10Positive, public ed25519.PublicKey, bounds c10Bounds) config.Verifier {
 	t.Helper()
 	now, err := time.Parse(time.RFC3339, fixture.Now)
 	if err != nil {
 		t.Fatal(err)
 	}
-	service, err := config.New(config.Verifier{
+	return config.Verifier{
 		PublicKey:  public,
 		Clock:      func() time.Time { return now },
 		MaxSensors: fixture.Limits.MaxSensors,
-	})
+		Bounds: config.Bounds{
+			MinHeartbeatSeconds: bounds.HeartbeatSeconds.Min,
+			MaxHeartbeatSeconds: bounds.HeartbeatSeconds.Max,
+			MinSpoolLimitEvents: bounds.SpoolLimitEvents.Min,
+			MaxSpoolLimitEvents: bounds.SpoolLimitEvents.Max,
+			MinEventBatchLimit:  bounds.EventBatchLimit.Min,
+			MaxEventBatchLimit:  bounds.EventBatchLimit.Max,
+		},
+	}
+}
+
+func c10Service(t *testing.T, fixture *c10Positive, public ed25519.PublicKey) *config.Service {
+	t.Helper()
+	service, err := config.New(c10Verifier(t, fixture, public, fixture.Bounds))
 	if err != nil {
 		t.Fatalf("config service: %v", err)
 	}
@@ -369,15 +404,20 @@ func TestConfigSignatureCoversExactPayloadBytes(t *testing.T) {
 func TestConfigRejectsMissingPrerequisites(t *testing.T) {
 	fixture, _, _ := c10Files(t)
 	public, private := c10Key(t)
-	now, err := time.Parse(time.RFC3339, fixture.Now)
-	if err != nil {
-		t.Fatal(err)
-	}
+	base := c10Verifier(t, fixture, public, fixture.Bounds)
+	now := base.Clock()
 	invalid := []config.Verifier{
-		{PublicKey: nil, Clock: func() time.Time { return now }, MaxSensors: 1},
-		{PublicKey: ed25519.PublicKey(public[:31]), Clock: func() time.Time { return now }, MaxSensors: 1},
-		{PublicKey: public, Clock: nil, MaxSensors: 1},
-		{PublicKey: public, Clock: func() time.Time { return now }, MaxSensors: 0},
+		{PublicKey: nil, Clock: base.Clock, MaxSensors: 1, Bounds: base.Bounds},
+		{PublicKey: ed25519.PublicKey(public[:31]), Clock: base.Clock, MaxSensors: 1, Bounds: base.Bounds},
+		{PublicKey: public, Clock: nil, MaxSensors: 1, Bounds: base.Bounds},
+		{PublicKey: public, Clock: base.Clock, MaxSensors: 0, Bounds: base.Bounds},
+		// An unset or inverted settings range is an incomplete configuration.
+		{PublicKey: public, Clock: base.Clock, MaxSensors: 1},
+		{PublicKey: public, Clock: base.Clock, MaxSensors: 1, Bounds: config.Bounds{
+			MinHeartbeatSeconds: 10, MaxHeartbeatSeconds: 5,
+			MinSpoolLimitEvents: 1, MaxSpoolLimitEvents: 10,
+			MinEventBatchLimit: 1, MaxEventBatchLimit: 10,
+		}},
 	}
 	for _, verifier := range invalid {
 		service, err := config.New(verifier)
@@ -388,21 +428,24 @@ func TestConfigRejectsMissingPrerequisites(t *testing.T) {
 			t.Fatal("an invalid configuration constructed a service")
 		}
 	}
-	if _, err = config.Sign([]byte(fixture.Payloads["initial"]), ed25519.PrivateKey(private[:31])); !errors.Is(err, config.ErrInvalidInput) {
+	if now.IsZero() {
+		t.Fatal("the fixture clock is not usable")
+	}
+	if _, err := config.Sign([]byte(fixture.Payloads["initial"]), ed25519.PrivateKey(private[:31])); !errors.Is(err, config.ErrInvalidInput) {
 		t.Fatalf("short signing key error = %v, want %v", err, config.ErrInvalidInput)
 	}
-	if _, err = config.Sign([]byte(`{"schema_version":"2"}`), private); !errors.Is(err, config.ErrInvalidInput) {
+	if _, err := config.Sign([]byte(`{"schema_version":"2"}`), private); !errors.Is(err, config.ErrInvalidInput) {
 		t.Fatalf("invalid document signature error = %v, want %v", err, config.ErrInvalidInput)
 	}
 	var missing *config.Service
 	signature := ed25519.Sign(private, []byte(fixture.Payloads["initial"]))
-	if _, err = missing.Apply(context.Background(), []byte(fixture.Payloads["initial"]), signature); !errors.Is(err, config.ErrInvalidInput) {
+	if _, err := missing.Apply(context.Background(), []byte(fixture.Payloads["initial"]), signature); !errors.Is(err, config.ErrInvalidInput) {
 		t.Fatalf("missing service error = %v, want %v", err, config.ErrInvalidInput)
 	}
 	service := c10Service(t, fixture, public)
 	cancelled, cancel := context.WithCancel(context.Background())
 	cancel()
-	if _, err = service.Apply(cancelled, []byte(fixture.Payloads["initial"]), ed25519.Sign(private, []byte(fixture.Payloads["initial"]))); !errors.Is(err, context.Canceled) {
+	if _, err := service.Apply(cancelled, []byte(fixture.Payloads["initial"]), ed25519.Sign(private, []byte(fixture.Payloads["initial"]))); !errors.Is(err, context.Canceled) {
 		t.Fatalf("cancelled apply error = %v, want %v", err, context.Canceled)
 	}
 }
@@ -410,15 +453,9 @@ func TestConfigRejectsMissingPrerequisites(t *testing.T) {
 func TestConfigRejectsDesiredStateSensorQuota(t *testing.T) {
 	fixture, _, _ := c10Files(t)
 	public, private := c10Key(t)
-	now, err := time.Parse(time.RFC3339, fixture.Now)
-	if err != nil {
-		t.Fatal(err)
-	}
-	service, err := config.New(config.Verifier{
-		PublicKey:  public,
-		Clock:      func() time.Time { return now },
-		MaxSensors: 1,
-	})
+	verifier := c10Verifier(t, fixture, public, fixture.Bounds)
+	verifier.MaxSensors = 1
+	service, err := config.New(verifier)
 	if err != nil {
 		t.Fatalf("config service: %v", err)
 	}
@@ -437,6 +474,173 @@ func TestConfigRejectsDesiredStateSensorQuota(t *testing.T) {
 	active, ok := service.Active(fixture.Expected.SensorID)
 	if !ok || active.Revision != fixture.Expected.InitialRevision {
 		t.Fatalf("active %+v present=%v", active, ok)
+	}
+}
+
+// TestConfigAppliedPayloadCannotMutateActiveState proves the active
+// configuration owns its own bytes: a caller that mutates the payload
+// returned by Apply cannot change the stored signed configuration.
+func TestConfigAppliedPayloadCannotMutateActiveState(t *testing.T) {
+	fixture, _, _ := c10Files(t)
+	public, private := c10Key(t)
+	service := c10Service(t, fixture, public)
+	payload := []byte(fixture.Payloads["initial"])
+	signature, err := config.Sign(payload, private)
+	if err != nil {
+		t.Fatalf("sign desired state: %v", err)
+	}
+	applied, err := service.Apply(context.Background(), payload, signature)
+	if err != nil {
+		t.Fatalf("apply desired state: %v", err)
+	}
+	if len(applied.Payload) == 0 {
+		t.Fatal("the applied payload is empty")
+	}
+	applied.Payload[0] = 'X'
+	active, ok := service.Active(fixture.Expected.SensorID)
+	if !ok {
+		t.Fatal("the signed desired state did not become active")
+	}
+	if !bytes.Equal(active.Payload, payload) {
+		t.Fatal("the applied result aliased the active configuration")
+	}
+	if active.Revision != fixture.Expected.InitialRevision {
+		t.Fatalf("active revision %d", active.Revision)
+	}
+}
+
+// TestConfigTrustedKeyIsCopiedAtConstruction proves the trust anchor cannot
+// change after construction: mutating the caller's key slice leaves the
+// configured signer authoritative.
+func TestConfigTrustedKeyIsCopiedAtConstruction(t *testing.T) {
+	fixture, _, _ := c10Files(t)
+	public, private := c10Key(t)
+	verifier := c10Verifier(t, fixture, public, fixture.Bounds)
+	service, err := config.New(verifier)
+	if err != nil {
+		t.Fatalf("config service: %v", err)
+	}
+	payload := []byte(fixture.Payloads["initial"])
+	signature, err := config.Sign(payload, private)
+	if err != nil {
+		t.Fatalf("sign desired state: %v", err)
+	}
+	// The caller overwrites the key bytes it handed to the service.
+	for i := range public {
+		public[i] = 0
+	}
+	if _, err = service.Apply(context.Background(), payload, signature); err != nil {
+		t.Fatalf("apply desired state after the key bytes changed: %v", err)
+	}
+	// A document signed by the overwritten key is not trusted.
+	other, otherPrivate := c10Key(t)
+	for i := range other {
+		other[i] = 0
+	}
+	foreign, err := config.Sign(payload, otherPrivate)
+	if err != nil {
+		t.Fatalf("sign desired state: %v", err)
+	}
+	if _, err = service.Apply(context.Background(), payload, foreign); !errors.Is(err, config.ErrInvalidSignature) {
+		t.Fatalf("foreign signature error = %v, want %v", err, config.ErrInvalidSignature)
+	}
+}
+
+// TestConfigExpiryIsRecheckedAtAcceptanceTime proves the validity window is
+// judged at the moment the document becomes the active configuration: a
+// document that expires while the service waits for the state lock is
+// rejected and never replaces the active configuration.
+func TestConfigExpiryIsRecheckedAtAcceptanceTime(t *testing.T) {
+	fixture, _, _ := c10Files(t)
+	public, private := c10Key(t)
+	verifier := c10Verifier(t, fixture, public, fixture.Bounds)
+	issued, err := time.Parse(time.RFC3339, fixture.Now)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// The clock reads the instant before the window on the first call and the
+	// expiry instant on every later call: the document is valid when it is
+	// verified and expired when it would become the active configuration.
+	var window struct {
+		ExpiresAt string `json:"expires_at"`
+	}
+	if err := json.Unmarshal([]byte(fixture.Payloads["initial"]), &window); err != nil {
+		t.Fatalf("malformed fixture document: %v", err)
+	}
+	expires, err := time.Parse(time.RFC3339, window.ExpiresAt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	reads := 0
+	verifier.Clock = func() time.Time {
+		reads++
+		if reads == 1 {
+			return issued
+		}
+		return expires
+	}
+	service, err := config.New(verifier)
+	if err != nil {
+		t.Fatalf("config service: %v", err)
+	}
+	payload := []byte(fixture.Payloads["initial"])
+	signature, err := config.Sign(payload, private)
+	if err != nil {
+		t.Fatalf("sign desired state: %v", err)
+	}
+	if _, err = service.Apply(context.Background(), payload, signature); !errors.Is(err, config.ErrExpired) {
+		t.Fatalf("expired desired state error = %v, want %v", err, config.ErrExpired)
+	}
+	if _, ok := service.Active(fixture.Expected.SensorID); ok {
+		t.Fatal("the expired desired state became the active configuration")
+	}
+}
+
+// TestConfigSettingsBoundsAreDeploymentPolicy proves the accepted range of
+// the settings is explicit deployment policy: the engine ships no product
+// limit, and a deployment with tighter bounds rejects a document that a
+// deployment with wider bounds accepts.
+func TestConfigSettingsBoundsAreDeploymentPolicy(t *testing.T) {
+	fixture, _, _ := c10Files(t)
+	public, private := c10Key(t)
+	payload := []byte(fixture.Payloads["initial"])
+	signature, err := config.Sign(payload, private)
+	if err != nil {
+		t.Fatalf("sign desired state: %v", err)
+	}
+	proposed := c10Service(t, fixture, public)
+	if _, err = proposed.Apply(context.Background(), payload, signature); err != nil {
+		t.Fatalf("apply desired state: %v", err)
+	}
+	tightVerifier := c10Verifier(t, fixture, public, fixture.TightBounds)
+	tight, err := config.New(tightVerifier)
+	if err != nil {
+		t.Fatalf("config service: %v", err)
+	}
+	if _, err = tight.Apply(context.Background(), payload, signature); !errors.Is(err, config.ErrInvalidInput) {
+		t.Fatalf("out of policy desired state error = %v, want %v", err, config.ErrInvalidInput)
+	}
+	if _, ok := tight.Active(fixture.Expected.SensorID); ok {
+		t.Fatal("the rejected desired state became the active configuration")
+	}
+	// A deployment that states a wider range accepts a document the proposed
+	// policy rejects: the engine ships no limit of its own.
+	wideVerifier := c10Verifier(t, fixture, public, fixture.WideBounds)
+	wider, err := config.New(wideVerifier)
+	if err != nil {
+		t.Fatalf("config service: %v", err)
+	}
+	widePayload := []byte(fixture.WidePayload)
+	wideSignature, err := config.Sign(widePayload, private)
+	if err != nil {
+		t.Fatalf("sign desired state: %v", err)
+	}
+	if _, err = wider.Apply(context.Background(), widePayload, wideSignature); err != nil {
+		t.Fatalf("apply desired state within the deployment policy: %v", err)
+	}
+	strict := c10Service(t, fixture, public)
+	if _, err = strict.Apply(context.Background(), widePayload, wideSignature); !errors.Is(err, config.ErrInvalidInput) {
+		t.Fatalf("out of policy desired state error = %v, want %v", err, config.ErrInvalidInput)
 	}
 }
 

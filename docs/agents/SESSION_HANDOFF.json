@@ -2,8 +2,8 @@
   "project": "MirageMesh",
   "date": "2026-10-21",
   "base_commit": "46179f4f821964864bdd3e00fa474df8cb8884f3",
-  "scope": "F04 signed versioned desired state: an internal Go service that validates one strictly typed desired-state document, verifies its Ed25519 signature over the exact submitted payload bytes with a local operator key and keeps the accepted document as the active configuration of the running process. No HTTP, CLI or UI surface, no key generation/storage/rotation/recovery and no durable applied revision.",
-  "final_source_identity": "sha256:afb3488b7e16cf0513a9ba5abb576cdc9487c8c602f712a1ec319773b208f572",
+  "scope": "F04 signed versioned desired state: an internal Go service that validates one strictly typed desired-state document, verifies its Ed25519 signature over the exact submitted payload bytes with a local operator key and keeps the accepted document as the active configuration of the running process. No HTTP, CLI or UI surface, no key generation/storage/rotation/recovery and no durable applied revision. Owner review round one on a444f05 is resolved: the active state owns its own payload copy, the verification key is copied into service-owned memory at construction, the validity window is rechecked under the state lock at acceptance time, and the accepted range of the settings is explicit deployment policy instead of a hard-coded product limit.",
+  "final_source_identity": "sha256:f52edb95159676756a394ec1dcb171a216b5db78da1dadb37c1fab440c05f2c1",
   "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes) over every tracked or untracked non-ignored file; evidence, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded because they publish this identity themselves.",
   "changed_paths": [
     "apps/web/src/generated/project.json",
@@ -12,6 +12,7 @@
     "docs/architecture/DESIRED_STATE.md",
     "docs/engineering/ENGINE_TESTS.md",
     "docs/evidence/C10.json",
+    "docs/evidence/C10/all-race.log",
     "docs/evidence/C10/browser.log",
     "docs/evidence/C10/build.log",
     "docs/evidence/C10/check.log",
@@ -85,5 +86,6 @@
   ],
   "next_task": "C11",
   "next_command": "npm run plan -- next",
-  "notes": "The C10 tests were written before the implementation and the first run failed because internal/config did not exist. The implementation then made them pass, and three deliberate mutations (disabling the stale revision guard, letting a stale rejection overwrite the active configuration and accepting unknown members) were each caught by the named anchor and reverted. The owner fixed the scope: only internal/config/sign.go and tests/config_signature_test.go, the fixtures and the evidence; internal/storage, internal/sensor and internal/contracts are unchanged and the durable applied revision belongs to C11."
+  "notes": "The C10 tests were written before the implementation and the first run failed because internal/config did not exist. The implementation then made them pass, and three deliberate mutations (disabling the stale revision guard, letting a stale rejection overwrite the active configuration and accepting unknown members) were each caught by the named anchor and reverted. The owner fixed the scope: only internal/config/sign.go and tests/config_signature_test.go, the fixtures and the evidence; internal/storage, internal/sensor and internal/contracts are unchanged and the durable applied revision belongs to C11.",
+  "review_base_commit": "a444f0554298470af838f24e5729ccb228274495"
 }

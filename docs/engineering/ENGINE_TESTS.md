@@ -140,7 +140,7 @@ consulted.
 
 ## C10 required anchors
 
-C10 adds eight `tests` anchors over the real internal desired-state service:
+C10 adds twelve `tests` anchors over the real internal desired-state service:
 `TestConfigSignedDesiredStateBecomesActive` proves a signed version 1 document
 becomes the active configuration, that the active payload is the exact
 submitted bytes, that a higher revision replaces it and that the exact
@@ -153,7 +153,7 @@ conflicting revision are rejected with their typed errors without replacing
 the active configuration;
 `TestConfigRejectsInvalidDesiredStateDocuments` drives the 17 fixture rows of
 malformed, unknown-member, duplicated-member, wrong-version, wrong-revision,
-wrong-timestamp, inverted-window, out-of-range and oversized documents
+wrong-timestamp, inverted-window, out-of-policy and oversized documents
 through the service;
 `TestConfigSignatureCoversExactPayloadBytes` proves the signature covers the
 exact payload bytes: a re-serialized variant of a signed document and a
@@ -163,8 +163,20 @@ short signing keys, an invalid document, a missing service and a cancelled
 context fail explicitly without a panic or a placeholder success;
 `TestConfigRejectsDesiredStateSensorQuota` proves a desired state for a sensor
 beyond the configured bound fails with `ErrQuota` and leaves the tracked
-active configuration untouched; and
-`TestConfigFreshServiceHasNoRememberedActiveState` proves a restarted service
+active configuration untouched;
+`TestConfigAppliedPayloadCannotMutateActiveState` proves the result of
+`Apply` never aliases the stored active configuration, so mutating the
+returned payload cannot change the active signed bytes;
+`TestConfigTrustedKeyIsCopiedAtConstruction` proves the verification key is
+copied into service-owned memory, so overwriting the caller's key slice
+cannot change which signer the service trusts;
+`TestConfigExpiryIsRecheckedAtAcceptanceTime` proves the validity window is
+judged again under the state lock, so a document that expires while the
+service waits for that lock is rejected and never becomes active; and
+`TestConfigSettingsBoundsAreDeploymentPolicy` proves the accepted range of
+the settings is explicit deployment policy: the engine ships no limit of its
+own, a deployment with tighter bounds rejects a document that a deployment
+with wider bounds accepts. `TestConfigFreshServiceHasNoRememberedActiveState` proves a restarted service
 owns no remembered applied revision, so the documented recovery outcome is that
 the operator re-applies the latest signed desired state. The discovery guard
 and its regressions require all of them alongside the earlier anchors.

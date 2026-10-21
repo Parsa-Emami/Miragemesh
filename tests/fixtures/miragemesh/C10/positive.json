@@ -8,6 +8,23 @@
     "max_payload_bytes": 8192,
     "max_sensors": 5
   },
+  "bounds": {
+    "heartbeat_seconds": { "min": 5, "max": 3600 },
+    "spool_limit_events": { "min": 1, "max": 12800 },
+    "event_batch_limit": { "min": 1, "max": 12800 }
+  },
+  "tight_bounds": {
+    "heartbeat_seconds": { "min": 5, "max": 60 },
+    "spool_limit_events": { "min": 1, "max": 128 },
+    "event_batch_limit": { "min": 1, "max": 8 }
+  },
+  "wide_bounds": {
+    "heartbeat_seconds": { "min": 1, "max": 100000 },
+    "spool_limit_events": { "min": 1, "max": 1000000 },
+    "event_batch_limit": { "min": 1, "max": 100000 }
+  },
+  "wide_payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":1,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":5000,\"spool_limit_events\":500000,\"event_batch_limit\":50000}}",
+  "bounds_provenance": "Proposed C10 deployment policy, not an already accepted product limit: the spool and batch ceilings are the pre-existing product profile numbers in product/project.json (spool_max_mib 100 divided by payload_max_kib 8) expressed as an event count, and the heartbeat range is the C10 engineering choice. The owner confirms the final values when the bounded spool lands in C14 and C15; a deployment states its own bounds and the engine ships none.",
   "payloads": {
     "initial": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":1,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
     "next": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":2,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":45,\"spool_limit_events\":4096,\"event_batch_limit\":128}}"
