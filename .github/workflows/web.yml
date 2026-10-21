@@ -38,7 +38,7 @@ jobs:
       - run: npx --yes --package=npm@11.9.0 --call 'npm run test:browser'
       - run: npx --yes --package=npm@11.9.0 --call 'npm run test:clone'
       - run: npx --yes --package=npm@11.9.0 --call 'npm run package:web'
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: web-${{ github.sha }}
           path: dist/release/
