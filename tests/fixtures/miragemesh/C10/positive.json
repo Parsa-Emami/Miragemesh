@@ -1,0 +1,25 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic desired-state documents. No key material, secret, customer, sensor or production configuration is present; the engine signs with an ephemeral in-memory key pair created by the test.",
+  "now": "2026-10-21T00:00:00Z",
+  "sensor_id": "sensor-01",
+  "limits": {
+    "max_payload_bytes": 8192,
+    "max_sensors": 5
+  },
+  "payloads": {
+    "initial": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":1,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+    "next": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":2,\"issued_at\":\"2026-10-21T00:00:00Z\",\"expires_at\":\"2026-11-21T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":45,\"spool_limit_events\":4096,\"event_batch_limit\":128}}"
+  },
+  "expected": {
+    "initial_revision": 1,
+    "next_revision": 2,
+    "sensor_id": "sensor-01",
+    "settings": {
+      "heartbeat_seconds": 30,
+      "spool_limit_events": 4096,
+      "event_batch_limit": 64
+    }
+  }
+}

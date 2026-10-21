@@ -1,0 +1,17 @@
+=== RUN   TestConfigSignedDesiredStateBecomesActive
+--- PASS: TestConfigSignedDesiredStateBecomesActive (0.00s)
+=== RUN   TestConfigRejectsUnsignedDesiredState
+--- PASS: TestConfigRejectsUnsignedDesiredState (0.00s)
+=== RUN   TestConfigRejectsStaleDesiredStateWithoutReplacingActiveConfig
+--- PASS: TestConfigRejectsStaleDesiredStateWithoutReplacingActiveConfig (0.00s)
+=== RUN   TestConfigRejectsInvalidDesiredStateDocuments
+--- PASS: TestConfigRejectsInvalidDesiredStateDocuments (0.00s)
+=== RUN   TestConfigSignatureCoversExactPayloadBytes
+--- PASS: TestConfigSignatureCoversExactPayloadBytes (0.00s)
+=== RUN   TestConfigRejectsMissingPrerequisites
+--- PASS: TestConfigRejectsMissingPrerequisites (0.00s)
+=== RUN   TestConfigRejectsDesiredStateSensorQuota
+--- PASS: TestConfigRejectsDesiredStateSensorQuota (0.00s)
+=== RUN   TestConfigFreshServiceHasNoRememberedActiveState
+--- PASS: TestConfigFreshServiceHasNoRememberedActiveState (0.00s)
+PASS

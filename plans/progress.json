@@ -87,10 +87,12 @@
     },
     {
       "id": "C10",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C10.json"
+      ],
+      "source_identity": "sha256:afb3488b7e16cf0513a9ba5abb576cdc9487c8c602f712a1ec319773b208f572",
+      "notes": "F04 verified locally: internal signed versioned desired state with a strict typed document, an Ed25519 signature over the exact payload bytes using a local operator key that is independent from the mTLS CA and CRL material, a monotonic per-sensor revision and typed rejections for unsigned, wrongly signed, tampered, re-serialized, expired, not-yet-valid, stale and conflicting documents. No rejection replaces the active configuration. The active configuration is process state: the durable applied revision and the crash convergence of an apply belong to C11. No HTTP/CLI/UI surface, no key generation/storage/rotation/recovery, no key material in the repository or fixtures, no network service, no remote Actions or product readiness certified."
     },
     {
       "id": "C11",

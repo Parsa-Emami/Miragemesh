@@ -1,0 +1,5 @@
+# github.com/Parsa-Emami/Miragemesh/tests
+tests/config_signature_test.go:15:2: no required module provides package github.com/Parsa-Emami/Miragemesh/internal/config; to add it:
+	go get github.com/Parsa-Emami/Miragemesh/internal/config
+FAIL	github.com/Parsa-Emami/Miragemesh/tests [setup failed]
+FAIL

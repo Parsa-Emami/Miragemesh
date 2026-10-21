@@ -1,0 +1,5 @@
+node: v24.19.0
+npm: 11.17.0
+go: go version go1.27.2 linux/amd64
+os: Linux 7.0.0-38-generic x86_64
+fs: ext4   /

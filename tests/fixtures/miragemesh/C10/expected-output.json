@@ -1,0 +1,33 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic expected verdicts for the C10 desired-state documents; derived from the documented contract in docs/architecture/DESIRED_STATE.md.",
+  "expected_verdicts": {
+    "unsigned_document": "UNSIGNED",
+    "tampered_document": "INVALID_SIGNATURE",
+    "reserialized_document": "INVALID_SIGNATURE",
+    "wrong_signing_key": "INVALID_SIGNATURE",
+    "expired_document": "EXPIRED",
+    "not_yet_valid_document": "NOT_YET_VALID",
+    "stale_revision": "STALE",
+    "conflicting_revision": "CONFLICT",
+    "malformed_json": "INVALID_INPUT",
+    "unknown_field": "INVALID_INPUT",
+    "duplicate_field": "INVALID_INPUT",
+    "invalid_schema_version": "INVALID_INPUT",
+    "invalid_revision": "INVALID_INPUT",
+    "invalid_timestamp": "INVALID_INPUT",
+    "expires_before_issued": "INVALID_INPUT",
+    "settings_out_of_range": "INVALID_INPUT",
+    "oversized_payload": "INVALID_INPUT"
+  },
+  "expected_active": {
+    "sensor_id": "sensor-01",
+    "revision": 2
+  },
+  "expected_settings": {
+    "heartbeat_seconds": 45,
+    "spool_limit_events": 4096,
+    "event_batch_limit": 128
+  }
+}

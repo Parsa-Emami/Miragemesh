@@ -137,3 +137,38 @@ Fixtures are repository-authored Apache-2.0 synthetic identity material under
 the C09 fixture directory; revocation is a locally delivered signed CRL with
 fail-closed staleness handling, and no OCSP or other network service is
 consulted.
+
+## C10 required anchors
+
+C10 adds eight `tests` anchors over the real internal desired-state service:
+`TestConfigSignedDesiredStateBecomesActive` proves a signed version 1 document
+becomes the active configuration, that the active payload is the exact
+submitted bytes, that a higher revision replaces it and that the exact
+redelivery of the active revision is an idempotent no-op;
+`TestConfigRejectsUnsignedDesiredState` proves a missing signature fails with
+the typed `ErrUnsigned` and leaves the active configuration byte-identical;
+`TestConfigRejectsStaleDesiredStateWithoutReplacingActiveConfig` proves a
+stale revision, an expired document, a not-yet-valid document and a
+conflicting revision are rejected with their typed errors without replacing
+the active configuration;
+`TestConfigRejectsInvalidDesiredStateDocuments` drives the 17 fixture rows of
+malformed, unknown-member, duplicated-member, wrong-version, wrong-revision,
+wrong-timestamp, inverted-window, out-of-range and oversized documents
+through the service;
+`TestConfigSignatureCoversExactPayloadBytes` proves the signature covers the
+exact payload bytes: a re-serialized variant of a signed document and a
+single-byte change both fail with `ErrInvalidSignature`;
+`TestConfigRejectsMissingPrerequisites` proves incomplete configuration,
+short signing keys, an invalid document, a missing service and a cancelled
+context fail explicitly without a panic or a placeholder success;
+`TestConfigRejectsDesiredStateSensorQuota` proves a desired state for a sensor
+beyond the configured bound fails with `ErrQuota` and leaves the tracked
+active configuration untouched; and
+`TestConfigFreshServiceHasNoRememberedActiveState` proves a restarted service
+owns no remembered applied revision, so the documented recovery outcome is that
+the operator re-applies the latest signed desired state. The discovery guard
+and its regressions require all of them alongside the earlier anchors.
+Fixtures are repository-authored Apache-2.0 synthetic desired-state documents
+under the C10 fixture directory and contain no key material: every test signs
+with one ephemeral in-memory Ed25519 key pair. C10 changes no storage format,
+no API and no UI.

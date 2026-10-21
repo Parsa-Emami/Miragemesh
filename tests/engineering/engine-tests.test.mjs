@@ -10,7 +10,7 @@ const suites = {
   'cmd/miragemesh': ['TestLifecycle'],
   'internal/contracts': ['TestValidAndIncompatibleFixtures', 'TestEnrollmentRecordValidation'],
   'internal/storage': ['TestStorageSIGKILLAtPublicationBoundaries', 'TestStorageSyscallFailuresPreserveRecoverableState', 'TestEnrollmentSyscallFailuresPreserveRecoverableState', 'TestEnrollmentSIGKILLAtPublicationBoundaries'],
-  tests: ['TestStorageExactBytesReplayAndReopen', 'TestSensorSequenceReplayAndRestart', 'TestSensorRejectsInvalidAndConflictingEvents', 'TestEnrollmentIssueConsumeAndRestart', 'TestEnrollmentRejectsInvalidExpiredAndScopedTokens', 'TestEnrollmentConcurrentConsumptionAndSensorCompatibility', 'TestEnrollmentStorageFailuresAndCancellation', 'TestEnrollmentRechecksClockBeforePublication', 'TestEnrollmentRejectsForgedStoredIdentity', 'TestMTLSTrustedCollectorAcceptsEvents', 'TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity', 'TestMTLSTypedVerdictsUseRealHandshakeTranscripts', 'TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects', 'TestMTLSRejectsIssuersWithoutRevocationCoverage', 'TestMTLSRejectsInvalidLocalIdentityConfigurations'],
+  tests: ['TestStorageExactBytesReplayAndReopen', 'TestSensorSequenceReplayAndRestart', 'TestSensorRejectsInvalidAndConflictingEvents', 'TestEnrollmentIssueConsumeAndRestart', 'TestEnrollmentRejectsInvalidExpiredAndScopedTokens', 'TestEnrollmentConcurrentConsumptionAndSensorCompatibility', 'TestEnrollmentStorageFailuresAndCancellation', 'TestEnrollmentRechecksClockBeforePublication', 'TestEnrollmentRejectsForgedStoredIdentity', 'TestMTLSTrustedCollectorAcceptsEvents', 'TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity', 'TestMTLSTypedVerdictsUseRealHandshakeTranscripts', 'TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects', 'TestMTLSRejectsIssuersWithoutRevocationCoverage', 'TestMTLSRejectsInvalidLocalIdentityConfigurations', 'TestConfigSignedDesiredStateBecomesActive', 'TestConfigRejectsUnsignedDesiredState', 'TestConfigRejectsStaleDesiredStateWithoutReplacingActiveConfig', 'TestConfigRejectsInvalidDesiredStateDocuments', 'TestConfigSignatureCoversExactPayloadBytes', 'TestConfigRejectsMissingPrerequisites', 'TestConfigRejectsDesiredStateSensorQuota', 'TestConfigFreshServiceHasNoRememberedActiveState'],
 };
 function complete() {
   return Object.entries(suites).flatMap(([path, names]) => [
@@ -68,6 +68,12 @@ test('requires enrollment validation, durable consumption, scope, clock, concurr
 
 test('requires mTLS acceptance, transport denial, typed verdicts, issuer-bound revocation, revoked replay and configuration anchors', t => {
   for (const name of ['TestMTLSTrustedCollectorAcceptsEvents', 'TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity', 'TestMTLSTypedVerdictsUseRealHandshakeTranscripts', 'TestMTLSRejectsIssuersWithoutRevocationCoverage', 'TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects', 'TestMTLSRejectsInvalidLocalIdentityConfigurations']) {
+    assert.equal(verify(t, complete().filter(event => event.Test !== name)).status, 1);
+  }
+});
+
+test('requires signed desired state, unsigned rejection, stale rejection and exact-byte signature anchors', t => {
+  for (const name of ['TestConfigSignedDesiredStateBecomesActive', 'TestConfigRejectsUnsignedDesiredState', 'TestConfigRejectsStaleDesiredStateWithoutReplacingActiveConfig', 'TestConfigRejectsInvalidDesiredStateDocuments', 'TestConfigSignatureCoversExactPayloadBytes', 'TestConfigRejectsMissingPrerequisites', 'TestConfigRejectsDesiredStateSensorQuota', 'TestConfigFreshServiceHasNoRememberedActiveState']) {
     assert.equal(verify(t, complete().filter(event => event.Test !== name)).status, 1);
   }
 });

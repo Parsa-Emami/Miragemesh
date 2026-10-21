@@ -1,0 +1,90 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 check
+> npm run validate:plan && npm run build && npm test
+
+
+> @parsa-emami/miragemesh-web@0.0.1 validate:plan
+> node scripts/roadmap.mjs validate
+
+Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred.
+
+> @parsa-emami/miragemesh-web@0.0.1 build
+> npm run prepare:web && npm run typecheck && vite build --config apps/web/vite.config.ts && npm run build:engine
+
+
+> @parsa-emami/miragemesh-web@0.0.1 prepare:web
+> node scripts/generate-web-data.mjs
+
+
+> @parsa-emami/miragemesh-web@0.0.1 typecheck
+> tsc -p tsconfig.json
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 18 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.78 kB │ gzip:  0.46 kB
+dist/web/assets/index-Dudyu7vU.css    4.37 kB │ gzip:  1.63 kB
+dist/web/assets/index-DaYMPLKM.js   242.01 kB │ gzip: 76.21 kB
+
+✓ built in 214ms
+
+> @parsa-emami/miragemesh-web@0.0.1 build:engine
+> node scripts/build-engine.mjs
+
+
+> @parsa-emami/miragemesh-web@0.0.1 test
+> node --test tests/web/*.test.mjs tests/contracts/*.test.mjs tests/engineering/*.test.mjs
+
+✔ CLI accepts the exact v1 fixture and reports validation without acceptance authority (13.197168ms)
+✔ real schemas and Go reject every incompatible structural fixture (328.130742ms)
+✔ identifier, exact numeric, timestamp and UTF-8 byte boundaries agree with the Go validator (90.086474ms)
+✔ invalid CLI combinations fail usage without launching a server (12.913659ms)
+✔ result schema rejects contradictory authority, errors and incomplete-input digests (5.966769ms)
+✔ an actual stdin read failure returns only a typed error and no partial digest (6.373028ms)
+✔ an open stdin expires and either termination signal returns a redacted cancellation (2215.54202ms)
+✔ accepts executed engine, contract and real recovery suites with interleaved output (31.403047ms)
+✔ rejects empty discovery and package-only success without executed tests (65.184614ms)
+✔ rejects a missing required suite or anchor (63.984083ms)
+✔ requires persistent sensor sequence and invalid-event regression anchors (60.483647ms)
+✔ rejects a skipped anchor or a pass with no run (67.158329ms)
+✔ rejects failures in any package and unfinished package results (106.760012ms)
+✔ rejects malformed JSON events and missing input (114.717337ms)
+✔ requires enrollment validation, durable consumption, scope, clock, concurrency and crash anchors (248.323629ms)
+✔ requires mTLS acceptance, transport denial, typed verdicts, issuer-bound revocation, revoked replay and configuration anchors (168.787676ms)
+✔ requires signed desired state, unsigned rejection, stale rejection and exact-byte signature anchors (214.466016ms)
+✔ public configuration fails closed on engine flags, external endpoints, unknown keys and project mismatch (1.513476ms)
+✔ preview rejects hostile structure, excessive UTF-8 size and excessive complexity (1.570562ms)
+✔ HTTP isolation, cache rules, health semantics, methods, traversal and symlink containment (80.503473ms)
+✔ generated project and runtime identity agree with exactly forty original product tasks (0.963669ms)
+✔ real launcher serves engine health, preserves disabled admission, stops and restarts (95.90143ms)
+✔ engine crash stops the web listener with a failing outcome (12.058322ms)
+✔ occupied web port remains owned by its server and launch cleans up its engine (10.057065ms)
+✔ missing engine and invalid configuration fail before a successful launch (5.450315ms)
+✔ health boundary rejects malformed, oversized, redirected, unavailable and stalled upstreams (2017.79878ms)
+✔ synthetic C03 fixtures are versioned and cannot claim product readiness (1.038528ms)
+✔ CLI SIGINT and SIGTERM release both listeners; supervisor death closes engine stdin (213.418456ms)
+✔ unresponsive startup times out and cancellation terminates only the owned child (10043.409239ms)
+# example.invalid/synthetic/cmd/miragemesh
+cmd/miragemesh/main.go:2:15: undefined: missing
+✔ failed Go compilation preserves the previous binary and removes staging output (49.165665ms)
+✔ startup rejects forged non-loopback handshakes and unsafe health destinations (26.398713ms)
+✔ setup validates toolchain/options and stops at the first failed install (1.313733ms)
+✔ setup rejects missing tools, wrong pins and a non-rootless provider before building (0.650725ms)
+✔ roadmap rejects absent resources, escaping paths and unproved completion (16.539899ms)
+✔ accepts the repository reference scenario and its licensed fixtures (7.435341ms)
+✔ rejects missing workflow requirements and fixture provenance (6.687535ms)
+✔ rejects fixture metadata without provenance or license (4.053257ms)
+✔ rejects escaping paths, unsupported versions and false engine success claims (4.930415ms)
+✔ accepts exact versioned resources, an explicitly optional missing tool and synthetic fixtures (9.450925ms)
+✔ rejects floating resources, missing official metadata and mismatched integrity (10.501986ms)
+✔ rejects unavailable required resources and fixture escapes or checksum changes (7.077874ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12561.904208

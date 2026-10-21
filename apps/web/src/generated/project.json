@@ -130,7 +130,7 @@
       "id": "C10",
       "title": "feat(config): sign versioned desired state",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Unsigned or stale desired state fails without replacing active config."
       ],

@@ -1,0 +1,405 @@
+{
+  "commit_id": "C10",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "date": "2026-10-21",
+  "base_commit": "46179f4f821964864bdd3e00fa474df8cb8884f3",
+  "source_identity": "sha256:afb3488b7e16cf0513a9ba5abb576cdc9487c8c602f712a1ec319773b208f572",
+  "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes) over every tracked or untracked non-ignored file; evidence, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded because they publish this identity themselves. Reproduce with the command recorded in docs/evidence/C10/source-identity.log.",
+  "source_manifest": "docs/evidence/C10/source-files.json",
+  "source_file_count": 372,
+  "scope": "F04 signed versioned desired state: an internal Go service that validates one strictly typed desired-state document, verifies its Ed25519 signature over the exact submitted payload bytes with a local operator key and keeps the accepted document as the active configuration of the running process. No HTTP, CLI or UI surface, no key generation/storage/rotation/recovery and no durable applied revision.",
+  "owner_scope_resolution": "Implemented the explicitly approved C10 plan: internal Go package internal/config plus its tests and Apache-2.0 fixtures only. The owner fixed the document fields (schema_version, sensor_id, revision, issued_at, expires_at, settings with heartbeat_seconds, spool_limit_events and event_batch_limit), required Ed25519 with a local operator key that is separate from the mTLS CA/CRL material, required the signature to cover every document field, required a standard canonicalization method or the exact-payload-bytes fallback, and rejected any change outside internal/config/sign.go and tests/config_signature_test.go. The durable applied revision and the crash convergence of an apply are C11 work, so internal/storage, internal/sensor and internal/contracts are unchanged and the active configuration is process state. No key material, public or private, is committed to the repository or to the fixtures.",
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0 (locked CLI invoked from the local npx cache, as the C09 evidence did)",
+    "go": "1.27.2 (cached official toolchain binary)",
+    "os": "Linux x86_64",
+    "filesystem": "ext4 mounted at /",
+    "providers": "Go standard library only: no provider, no container image, no database, no network service and no external identity authority. The desired-state package performs no socket operation.",
+    "hardware_target": "2 vCPU / 2048 MiB RAM / 10240 MiB free disk is the C28 target; unmeasured here",
+    "details": "docs/evidence/C10/environment.log"
+  },
+  "commands": [
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/gofmt",
+        "-l",
+        "cmd",
+        "internal",
+        "tests"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/gofmt.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/vet.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "build",
+        "-trimpath",
+        "-o",
+        "dist/engine/miragemesh",
+        "./cmd/miragemesh"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/build.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "-count=1",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/standard-tests.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/engine-tests.jsonl"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "docs/evidence/C10/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/discovery.log"
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "tests/engineering/engine-tests.test.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/discovery-regression.log"
+    },
+    {
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "./tests",
+        "-run",
+        "^TestConfig",
+        "-count=1",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/green.log"
+    },
+    {
+      "argv": [
+        "strace",
+        "-f",
+        "-e",
+        "trace=network",
+        "-o",
+        "../docs/evidence/C10/network.trace",
+        "/tmp/opencode/config.test",
+        "-test.run",
+        "^TestConfig",
+        "-test.v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/network-tests.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "ci",
+        "--ignore-scripts",
+        "--no-fund"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/install.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/check.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "test:browser"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/browser.log"
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "package:web"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/package.log"
+    },
+    {
+      "argv": [
+        "sha256sum",
+        "--check",
+        "SHA256SUMS.txt"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/package-checksums.log",
+      "note": "Executed inside dist/release, the packaged artifact manifest produced by npm run package:web. The repository root SHA256SUMS.txt is a historical source manifest verified against its own recorded commit by scripts/verify_ci_source.py and is not a working-tree checksum list."
+    },
+    {
+      "argv": [
+        "node",
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/clone.log",
+      "note": "Executed with an isolated candidate index (GIT_INDEX_FILE) so the uncommitted task files were verified without touching the user staging area."
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/repository.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/plan.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/plan.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/python-tests.log"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-resources.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/resources.log"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/roadmap.mjs",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/plan-metadata.log"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/roadmap.mjs",
+        "next"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C10/next-task.log"
+    }
+  ],
+  "results": {
+    "go_test_run_events": 154,
+    "go_test_pass_events": 154,
+    "go_test_fail_events": 0,
+    "required_engine_anchors": 30,
+    "engine_suites": 4,
+    "c10_anchors": 8,
+    "npm_tests": 41,
+    "browser_tests": 3,
+    "python_source_integrity_tests": 6,
+    "invalid_document_rows": 17,
+    "network_syscalls": 0,
+    "network_syscall_destinations": "No socket, connect, bind, listen, accept, sendto or recvfrom syscall appears in the traced run of the focused C10 test binary: the desired-state service performs no network operation at all.",
+    "typecheck": "Passed within npm run check",
+    "build": "Web and actual engine passed within npm run check",
+    "lint": "No standalone JavaScript lint configured; Go format and vet passed",
+    "regressions": "C04 formats and event fixtures, C05 receipts and recovery, C07 sensor sequence and replay, C08 enrollment and recovery and C09 mTLS identity all passed unchanged with the race detector; the clean clone repeated vet, race tests, the discovery guard, the C04 event validation fixture and the unified web and Go runtime startup.",
+    "source_manifest_verified": true,
+    "dependency_and_toolchain_locks_unchanged": true,
+    "key_material_in_repository": "None: the fixtures carry no key, the tests sign with one ephemeral in-memory Ed25519 key pair and no private key is stored or committed.",
+    "active_configuration": "Process state owned by internal/config; no desired state is written to the C05 file adapter and internal/storage, internal/sensor and internal/contracts are unchanged.",
+    "next_task": "C11 (npm run plan -- next returns C11 feat(apply): reconcile observed and desired sensor state)"
+  },
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic desired-state documents and expected verdicts. No key material, secret, customer, sensor or production configuration is present.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C10/positive.json": "e6ddaf1fe81bf212d57077f314f2ff1a7b210e0817e52e4b64aedc0ff173c864",
+      "tests/fixtures/miragemesh/C10/invalid.json": "392601a5d19621cb94e5c49b767ae51110338c125772c9351f81994d7f8ad8b1",
+      "tests/fixtures/miragemesh/C10/expected-output.json": "7fcef3dc779ff26c22ad33ef017a509f357f5eb5cef5f83c81628d115a069cb1"
+    },
+    "hash_log": "docs/evidence/C10/fixture-hashes.log"
+  },
+  "acceptance_checks": [
+    {
+      "acceptance": "Unsigned or stale desired state fails without replacing active config.",
+      "result": "verified",
+      "evidence": "TestConfigRejectsUnsignedDesiredState, TestConfigRejectsStaleDesiredStateWithoutReplacingActiveConfig, TestConfigRejectsInvalidDesiredStateDocuments and TestConfigSignatureCoversExactPayloadBytes compare the active revision, the active payload bytes and the active apply time before and after every rejection; all 17 fixture rows fail with their typed error and the active configuration stays byte-identical."
+    }
+  ],
+  "negative_case_checks": [
+    {
+      "case": "Missing prerequisites, malformed fixtures or unavailable required providers produce an explicit error rather than placeholder success.",
+      "result": "verified",
+      "evidence": "TestConfigRejectsMissingPrerequisites rejects an absent, short and invalid public key, an absent clock, a zero sensor bound, a short signing key, an invalid document, a missing service and a cancelled context with ErrInvalidInput or the context error; no panic and no placeholder success. The fixtures themselves are read strictly: a missing or malformed fixture fails the test."
+    },
+    {
+      "case": "Repeat after restart and verify the declared invariant and documented recovery outcome.",
+      "result": "verified",
+      "evidence": "TestConfigFreshServiceHasNoRememberedActiveState proves a restarted service owns no remembered applied revision, still rejects an unsigned document and still leaves no active configuration; the documented recovery outcome is that the operator re-applies the latest signed desired state. The durable applied revision and crash convergence are C11 work and are not claimed here."
+    },
+    {
+      "case": "No egress by default",
+      "result": "verified",
+      "evidence": "The traced run of the focused C10 test binary contains no socket, connect, bind, listen, accept, sendto or recvfrom syscall. internal/config imports only the Go standard library and internal/contracts, and never opens a connection."
+    }
+  ],
+  "security_review": {
+    "signature": "Ed25519 over the exact submitted payload bytes; the engine never re-serializes a document, so a re-serialized variant and a single-byte change both fail verification. The signature covers every document field because it covers the whole payload.",
+    "trust_boundary": "The verification key and the clock are trusted local configuration. The key is independent from the mTLS collector certificate authorities and revocation material; internal/config does not import internal/pki. The public key length is validated before use because the standard library panics on a public key of the wrong size.",
+    "key_material": "C10 neither creates, stores, rotates nor recovers key material. No key material, public or private, is committed to the repository or to the fixtures; the tests sign with one ephemeral in-memory key pair that is never written to disk.",
+    "fail_closed": "Every anomaly fails closed with a typed error before any state change: a missing signature, an invalid signature, an invalid document, an expired or not-yet-valid window, a stale or conflicting revision and an exceeded sensor bound all leave the active configuration unchanged.",
+    "input_bounds": "The payload is bounded by the shared 8192 byte contracts.MaxInputBytes cap, the sensor bound is explicit, the revision must be a positive integer and the settings are explicitly bounded.",
+    "parsing": "Unknown, duplicated and case-insensitively matched members are rejected so a signed payload has exactly one field reading; unpaired UTF-16 escapes are rejected before decoding.",
+    "known_limits": "The active configuration is process state: a restart forgets it, there is one configured verification key, there is no fleet or tenant policy and the expiry window depends on the local clock. Host clock rollback is not defended against."
+  },
+  "failed_attempts": [
+    {
+      "expected": true,
+      "phase": "RED missing internal/config package",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C10/red.log",
+      "note": "The C10 tests were written before the implementation: the first run failed because internal/config did not exist."
+    },
+    {
+      "expected": false,
+      "phase": "First test run: the fixture helper and the mode dispatch were incomplete",
+      "exit_code": 1,
+      "note": "The helper rebuilt the oversized payload under a mode name the dispatcher did not know, so the case failed with an explicit unknown-mode error instead of a verdict. Resolution: the dispatch handles the build mode and signs the built bytes. The defect was in the test helper, not in the engine."
+    },
+    {
+      "expected": false,
+      "phase": "Mutation checks: the stale revision guard, the active configuration guard and the strict member rules",
+      "exit_code": 1,
+      "note": "Three deliberate mutations of internal/config were applied one at a time and reverted: disabling the stale revision check, letting a stale rejection overwrite the active configuration, and accepting unknown members. Each mutation was caught by the named C10 anchor, so the anchors assert behaviour rather than the current implementation."
+    },
+    {
+      "expected": false,
+      "phase": "First browser run: the Playwright web server port was transiently busy",
+      "exit_code": 1,
+      "note": "The first npm run test:browser invocation reported that http://127.0.0.1:4173/readyz was already used. No process of this task held that port and the immediate re-run passed all three browser tests; the recorded log is the passing run."
+    }
+  ],
+  "observed_limitations": [
+    "Remote GitHub Actions execution unverified; no push or publication.",
+    "The active configuration is process state: C10 does not persist the accepted desired state, does not change internal/storage or internal/sensor and cannot recover an applied revision after a restart. The durable applied revision and the crash convergence of an apply are C11 work.",
+    "No HTTP, CLI or UI surface: the desired-state service is an internal Go package like the C08 enrollment service and the C09 identity guard.",
+    "One configured verification key and one authoritative clock; no key generation, storage, rotation, recovery, multi-signer support, fleet policy or tenant model.",
+    "Desired-state settings semantics belong to later cards: the spool and batch ceilings follow the documented product profile, the heartbeat bounds are the C10 engineering choice, and the decoy, spool and ACK behaviour belongs to C12 to C16.",
+    "The loopback trace of the focused C10 test binary certifies that this package performs no network operation; it does not certify C13 decoy isolation, the full domain workflow, physical power-loss recovery or C30 and C40 readiness.",
+    "The ambient GOSUMDB=off setting of this environment blocks the automatic Go toolchain download check, so the cached official Go 1.27.2 toolchain binary was invoked directly; the module has no external dependency and no module download was needed."
+  ],
+  "rollback_or_recovery_observation": "The C10 change set is additive and isolated: one new internal package, one new test file, three new fixtures and documentation. internal/storage, internal/sensor, internal/contracts, cmd/miragemesh, the C04 to C09 behaviour, the web application and every lockfile are unchanged, so reverting the C10 commit restores the previous tree exactly. Because the active configuration is process state, a reverted or restarted service has no accepted desired state to preserve and the operator re-applies the latest signed desired state.",
+  "changed_paths": [
+    "apps/web/src/generated/project.json",
+    "docs/ROADMAP_FA.md",
+    "docs/agents/SESSION_HANDOFF.json",
+    "docs/architecture/DESIRED_STATE.md",
+    "docs/engineering/ENGINE_TESTS.md",
+    "docs/evidence/C10.json",
+    "docs/evidence/C10/browser.log",
+    "docs/evidence/C10/build.log",
+    "docs/evidence/C10/check.log",
+    "docs/evidence/C10/clone.log",
+    "docs/evidence/C10/diff-check.log",
+    "docs/evidence/C10/discovery-regression.log",
+    "docs/evidence/C10/discovery.log",
+    "docs/evidence/C10/engine-tests.jsonl",
+    "docs/evidence/C10/environment.log",
+    "docs/evidence/C10/fixture-hashes.log",
+    "docs/evidence/C10/gofmt.log",
+    "docs/evidence/C10/green.log",
+    "docs/evidence/C10/install.log",
+    "docs/evidence/C10/network-build.log",
+    "docs/evidence/C10/network-tests.log",
+    "docs/evidence/C10/network.trace",
+    "docs/evidence/C10/next-task.log",
+    "docs/evidence/C10/package-checksums.log",
+    "docs/evidence/C10/package.log",
+    "docs/evidence/C10/plan-metadata.log",
+    "docs/evidence/C10/plan.log",
+    "docs/evidence/C10/python-tests.log",
+    "docs/evidence/C10/red.log",
+    "docs/evidence/C10/repository.log",
+    "docs/evidence/C10/resources.log",
+    "docs/evidence/C10/source-files.json",
+    "docs/evidence/C10/source-identity.log",
+    "docs/evidence/C10/standard-tests.log",
+    "docs/evidence/C10/vet.log",
+    "internal/config/sign.go",
+    "plans/commits/C10.md",
+    "plans/progress.json",
+    "plans/project-state.json",
+    "scripts/verify-engine-tests.mjs",
+    "tests/config_signature_test.go",
+    "tests/engineering/engine-tests.test.mjs",
+    "tests/fixtures/miragemesh/C10/expected-output.json",
+    "tests/fixtures/miragemesh/C10/invalid.json",
+    "tests/fixtures/miragemesh/C10/positive.json"
+  ],
+  "delivery": {
+    "delivery_commit_created": true,
+    "push_authorized": false,
+    "publication_authorized": false,
+    "local_commit_authorized": true,
+    "commit_subject": "feat(config): sign versioned desired state"
+  },
+  "verification_notes": "The C10 tests were written first and the first run failed because the internal/config package did not exist; the implementation then made them pass without weakening an assertion. The engine battery ran the pinned Go 1.27.2 toolchain binary that the C09 evidence used, because the ambient GOSUMDB=off setting blocks the automatic toolchain download check in this environment; the module has no external dependency, so no module download and no network access was needed to build or test it. The desired-state package performs no socket operation: the traced run of the focused test binary contains no socket, connect, bind, listen, accept, sendto or recvfrom syscall. The clean clone verification used an isolated candidate index, so the uncommitted task files were verified without touching the user staging area. The recorded source identity covers the verified source and excludes only the files that publish that identity itself, so it stays stable and reproducible after the final metadata edits."
+}
