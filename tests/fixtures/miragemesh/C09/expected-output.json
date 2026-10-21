@@ -4,9 +4,11 @@
   ],
   "expected_verdicts": {
     "collector": "IDENTITY_OK",
+    "colliding": "IDENTITY_OK",
     "config_invalid": "CONFIGURATION_INVALID",
     "expired": "IDENTITY_EXPIRED",
     "forged_crl": "REVOCATION_LIST_INVALID",
+    "intermediate_leaf": "IDENTITY_UNTRUSTED",
     "revoked": "IDENTITY_REVOKED",
     "scope_mismatch": "IDENTITY_SCOPE",
     "stale_crl": "REVOCATION_LIST_STALE",

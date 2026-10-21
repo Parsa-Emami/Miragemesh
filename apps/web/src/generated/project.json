@@ -118,7 +118,7 @@
       "id": "C09",
       "title": "feat(pki): authenticate collector traffic with mtls",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Expired, untrusted and revoked certificates cannot ingest events."
       ],

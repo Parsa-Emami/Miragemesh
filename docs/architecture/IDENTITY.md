@@ -43,15 +43,35 @@ rules. A configuration without a revocation list is incomplete and rejected.
 `ErrRevoked`, `ErrRevocationListInvalid`, `ErrRevocationListStale` and
 `ErrScope` are the regimes a caller can assert against with
 `errors.Is`. Verify requires a presented client certificate; the terminal
-certificate of the verified chain must be one of the configured anchors
-(`ErrUntrusted` otherwise); the leaf validity window must hold at the clock
+certificate of the verified chain must be one of the configured anchors and
+the chain must be exactly `[leaf, anchor]` — the leaf must be issued directly
+by that anchor, so client chains carrying intermediate CAs are rejected with
+`ErrUntrusted` (RFC 5280 identifies a certificate by issuer and serial
+number; the guard supports exactly one revocation authority — the locally
+delivered CRL signed by a configured anchor — and cannot load intermediate
+CRLs, therefore intermediate-issued collectors are structurally out of
+scope and can never bypass revocation by presenting a chain that x509
+itself labels as verified); the leaf validity window must hold at the clock
 (`ErrExpired` for both not-yet-valid and expired certificates); the CRL must
 be fresh at the clock with `ErrRevocationListStale` after its NextUpdate
 (passes) and `ErrRevocationListInvalid` before its ThisUpdate or for any
-structure, type, numbering or signature failure; and no serial in the
-presented chain may appear in the CRL (`ErrRevoked`). `Allows` performs the
+structure, type, numbering or signature failure; and every chain
+certificate the CRL issuer itself issued must carry a serial absent from
+the CRL (`ErrRevoked`) — matching is by issuer and serial, never by serial
+alone, so a same-serial certificate issued by a different anchor is never
+falsely revoked. `Allows` performs the
 identity verdict first and then enforces the operator's scope mapping with a
 typed `ErrScope` before any ingest work.
+
+This is the C09 restriction documented to reviewers as the smallest suitable
+fix for RFC 5280 issuer-blind CRL matching ([RFC 5280 section 5](https://www.rfc-editor.org/rfc/rfc5280.html)):
+per-guard trust domains act as single issuer generally, with anchors still
+available for listener chain verification and future multi-CRL work; a
+collector issued by a second configured anchor authenticates only when the
+operator scopes its fingerprint and its revocation coverage requires that
+issuer's own CRL, which the single-`RevocationListPEM` option cannot carry.
+Fail-closed chain shape plus issuer-keyed membership keeps every accepted
+collector inside the one revocation authority the guard can verify.
 
 `New` validates the CRL against the construction clock — a stale list cannot
 be configured — and `Verify` rechecks the same freshness window on every
@@ -94,11 +114,14 @@ provider pin changes; the C07 event contract and receipts are unchanged.
 ## Verification and limits
 
 `tests/mtls_test.go` uses real loopback TLS listeners and clients against the
-actual filesystem-backed store: five anchors cover trusted acceptance with
+actual filesystem-backed store: six anchors cover trusted acceptance with
 durable receipts, transport denial for missing/untrusted/expired/wrong-EKU/
-revoked identities, typed verdicts evaluated on captured real ConnectionState
+revoked and intermediate-issued chains with typed `ErrUntrusted`, typed
+verdicts evaluated on captured real ConnectionState
 transcripts (including a later revocation update of a previously trusted
-identity and a scope mismatch rejected before side effects), the replay of a
+identity and a scope mismatch rejected before side effects), issuer-bound
+revocation membership (same serial across issuers, one accepted and one
+revoked on the same listener), the replay of a
 revoked identity into a reconfigured listener, and 15 invalid configuration
 fixture rows. The Go discovery guard requires the C09 anchors. A focused
 syscall trace of the mTLS test binary must show loopback connections only; it
@@ -112,5 +135,6 @@ Official standard-library sources:
 [X509KeyPair](https://pkg.go.dev/crypto/tls#X509KeyPair),
 [x509.ParseRevocationList](https://pkg.go.dev/crypto/x509#ParseRevocationList),
 [RevocationList.CheckSignatureFrom](https://pkg.go.dev/crypto/x509#RevocationList.CheckSignatureFrom),
-[Certificate.Verify](https://pkg.go.dev/crypto/x509#Certificate.Verify).
+[Certificate.Verify](https://pkg.go.dev/crypto/x509#Certificate.Verify),
+[RFC 5280 (X.509 PKI certificate and CRL profile)](https://www.rfc-editor.org/rfc/rfc5280.html).
 Implementation is checked against the repository-locked Go 1.27.2 source.

@@ -5,7 +5,7 @@
   "planning_template": false,
   "date": "2026-10-20",
   "base_commit": "a746af65eb4b1796c3e71e19d85d93feb199fc79",
-  "source_identity": "sha256:eaac5e7e8af168f7b847bb4fe903e1977bcacb6d6bf513ac83873cc5357711b7",
+  "source_identity": "sha256:f29ad0323fefb2f9145933be3a3ce710dd957e07dbf23d3994dae102b2c50bc7",
   "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes); evidence, progress and session handoff excluded",
   "source_manifest": "docs/evidence/C09/source-files.json",
   "source_file_count": 366,
@@ -194,7 +194,6 @@
       "argv": [
         "node",
         "scripts/roadmap.mjs",
-        "--",
         "next"
       ],
       "exit_code": 0,
@@ -245,7 +244,7 @@
       ],
       "exit_code": 0,
       "output_path": "docs/evidence/C09/clone.log",
-      "snapshot_phase": "final source, tests, fixtures, guards, progress, project-state and generated web status; evidence-journal entries (clean_snapshot fields, REPORT.md, snapshot.json, diff-check and clone logs) appended afterwards"
+      "snapshot_phase": "final source, tests, fixtures, guards, progress, project-state, generated web status and review-fix code; evidence-journal entries (final source identity, C09.json, REPORT.md, snapshot fields, progress/handoff and diff-check-final) appended afterwards"
     },
     {
       "argv": [
@@ -257,19 +256,19 @@
       ],
       "exit_code": 0,
       "output_path": "docs/evidence/C09/diff-check-final.log",
-      "scope": "real delivery index immediately before the delivery commit"
+      "scope": "real delivery index immediately before the review-fix commit"
     }
   ],
   "results": {
-    "go_test_run_events": 145,
-    "go_test_pass_events": 145,
-    "required_engine_anchors": 21,
+    "go_test_run_events": 146,
+    "go_test_pass_events": 146,
+    "required_engine_anchors": 22,
     "engine_suites": 4,
     "npm_tests": 40,
     "browser_tests": 3,
     "python_source_integrity_tests": 6,
-    "network_syscalls": 10,
-    "network_syscall_destinations": "10 connect() syscalls, all AF_INET 127.0.0.1 loopback listeners; no other socket family or external destination",
+    "network_syscalls": 13,
+    "network_syscall_destinations": "13 connect() syscalls, all AF_INET 127.0.0.1 loopback listeners; no other connect() socket family or external destination",
     "invalid_configuration_rows": 15,
     "typecheck": "Passed within npm run check",
     "build": "Web and actual engine passed within npm run check",
@@ -281,16 +280,23 @@
   },
   "fixtures": {
     "license": "Apache-2.0",
-    "provenance": "Repository-authored synthetic identity material (anchors, listener and collector identities, signed CRLs) with fresh random keys per generation and reused unchanged C07 event bytes; no real identities, traffic or secrets",
+    "provenance": "Repository-authored synthetic identity material (anchors, intermediate CA, listener and collector identities, signed CRLs) with fresh random keys per generation and reused unchanged C07 event bytes; no real identities, traffic or secrets",
     "sha256": {
-      "tests/fixtures/miragemesh/C09/expected-output.json": "5868d5f9e1909b5e9e46bff0a39e137acf1fd40830410a9c275c1ee2b2e4a903",
-      "tests/fixtures/miragemesh/C09/invalid.json": "cd0b0a740f1e19a02d0e9df0c5e9b5aa6e80964c9b0c04c7e96bd7ec1c0e1ac2",
-      "tests/fixtures/miragemesh/C09/positive.json": "6adc286e8b593b5875000e3738a5c9113af1aa21be9891a963507f9d6b3f9593"
+      "tests/fixtures/miragemesh/C09/expected-output.json": "3f32c593c1ab43a7e7327745002f3b56a963d217ef3d1e39e1ee3559f1a91fca",
+      "tests/fixtures/miragemesh/C09/invalid.json": "8d8bcb3d78046fac275785e13d8aadaaa7e6bd0563739573047f01531aeb7b68",
+      "tests/fixtures/miragemesh/C09/positive.json": "1b35be54e5aa4ec35973c488826b7d18845210ab2ed40f5b4632c2ed5b46ef90"
     }
+  },
+  "review": {
+    "source": "review.md (owner report at the repository root; kept untracked and git-ignored so the checkout stays clean, bytes unchanged)",
+    "sha256": "84296863a4e7db9b6fa4e82a4f633725f174a8760b62d9fa9c4e66cf0ffc3c25",
+    "reviewed_commit": "c89127f8f7c20e0b1f65cabcfbc96185a009845c",
+    "finding_severity": "must fix",
+    "summary": "CRL membership was matched by serial number alone although RFC 5280 identifies a revoked certificate by (issuer, serial); New only accepts CRLs signed by a configured anchor while intermediate-including chains were accepted, so intermediate-era revocations could be bypassed and a legitimate same-serial certificate from another issuer could be falsely rejected."
   },
   "security_review": {
     "credentials": "Certificates carry synthetic test-only keys and are committed as clearly marked fixture data; the guard never emits or persists private key material beyond the operator-configured listener pair; scope maps are copied defensively at construction and per verdict",
-    "authority": "Terminal certificate of each verified chain must be a configured anchor, leaf validity is judged at the authoritative clock, the CRL must be signature-verified, structurally valid and fresh before membership, and no serial in the presented chain may appear in the CRL; verdicts precede decode and scope enforcement before any ingest side effect",
+    "authority": "Terminal certificate of each verified chain must be a configured anchor and the chain must be exactly [leaf, anchor] with the leaf issued directly by that anchor, so intermediate CAs cannot authenticate while the single revocation authority is an anchor; leaf validity is judged at the authoritative clock, the CRL must be signature-verified, structurally valid and fresh before membership, and every chain certificate the CRL issuer itself issued must carry a serial absent from the CRL (issuer, serial matching per RFC 5280, never serial alone); verdicts precede decode and scope enforcement before any ingest side effect",
     "storage": "No parallel storage authority; the guard imports only the standard library and internal/contracts and the unchanged C05 adapter remains the single durability boundary",
     "transport": "TLS 1.3 only, RequireAndVerifyClientCert, local anchors as the only ClientCAs pool, session tickets disabled and VerifyConnection wired to the same authoritative verdict on every connection including resumes; revocation is a locally delivered signed CRL rechecked against the clock on every verdict with fail-closed staleness; focused trace shows loopback-only connect() syscalls",
     "dependencies": "Standard library only; locked dependencies, Go toolchain pin and protected files unchanged"
@@ -322,18 +328,28 @@
       "exit_code": 1,
       "note": "The guard intentionally requires a complete go test -json ./... stream; a C09-only run cannot satisfy it. Full-stream verification passed.",
       "resolution": "Rerun the guard against the complete engine-tests.jsonl stream; no product change required."
+    },
+    {
+      "expected": false,
+      "phase": "Owner review found issuer-blind CRL revocation matching in the delivered guard",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C09/review-red-reverted-matcher.log",
+      "note": "The review is a valid must-find: serial-only membership allowed chains x509 verifies to authenticate revocations the guard can never load (intermediate CRLs) and could falsely reject a legitimate same-serial certificate from another configured anchor. Both reviewer regressions were reproduced against the pre-fix matcher by temporarily reverting internal/pki/identity.go in the worktree only; identity.go was then restored and the whole battery re-ran green against the fix.",
+      "resolution": "Committed the reviewer's smallest suitable option plus issuer-keyed membership: Verify rejects chains that are not [leaf, terminal anchor] (leaf issued directly by the configured anchor, documented restriction), CRL membership is matched on (issuer, serial) per RFC 5280, and two new regressions (intermediate-issued chain denied with typed ErrUntrusted; secondary-issued same-serial collector accepted while the primary-issued same serial stays revoked) bind the fix to the finding."
     }
   ],
   "observed_limitations": [
     "Remote GitHub Actions execution unverified; no push/publication.",
     "Local identity guard only: no HTTP/UI ingest endpoint, certificate issuance, OCSP or owner/tenant model; the real ingest endpoint belongs to C16 and rotation to C24.",
     "Revocation depends on a trusted local clock and a locally delivered CRL; hostile host-clock rollback and network revocation transports are outside this scope.",
+    "The guard honors its documented single revocation authority: only chains directly issued by a configured anchor are accepted, so intermediate CAs are structural out of scope and revocation coverage of a second issuer requires that issuer's own CRL which the single-RevocationListPEM option cannot carry today.",
     "Loopback tracing of the focused mTLS binary does not certify C13 decoy isolation, physical power-loss recovery or the full domain workflow.",
     "No C30 usability or C40 release claim."
   ],
   "rollback_or_recovery_observation": "The guard is process-local state with no durable writes: redeploying a stale or invalid configuration fails closed at construction and cannot poison storage. Already-ingested events and prior receipts stay valid under the unchanged C05 authority; a later revocation is enforced by configuration-only change on the next connection.",
   "changed_paths": [
-    "docs/ROADMAP_FA.md",
+    ".gitignore",
+    "apps/web/src/generated/project.json",
     "docs/agents/SESSION_HANDOFF.json",
     "docs/architecture/IDENTITY.md",
     "docs/engineering/ENGINE_TESTS.md",
@@ -355,7 +371,6 @@
     "docs/evidence/C09/network-tests.log",
     "docs/evidence/C09/network.trace",
     "docs/evidence/C09/next-task.log",
-    "docs/evidence/C09/official-api.log",
     "docs/evidence/C09/package-checksums.log",
     "docs/evidence/C09/package.log",
     "docs/evidence/C09/plan-metadata.log",
@@ -364,6 +379,7 @@
     "docs/evidence/C09/red.log",
     "docs/evidence/C09/repository.log",
     "docs/evidence/C09/resources.log",
+    "docs/evidence/C09/review-red-reverted-matcher.log",
     "docs/evidence/C09/snapshot.json",
     "docs/evidence/C09/source-files.json",
     "docs/evidence/C09/standard-tests.log",
@@ -371,27 +387,28 @@
     "internal/pki/identity.go",
     "plans/commits/C09.md",
     "plans/progress.json",
-    "plans/project-state.json",
-    "plans/roadmap.json",
     "scripts/verify-engine-tests.mjs",
     "tests/engineering/engine-tests.test.mjs",
     "tests/fixtures/miragemesh/C09/expected-output.json",
     "tests/fixtures/miragemesh/C09/invalid.json",
     "tests/fixtures/miragemesh/C09/positive.json",
-    "tests/mtls_test.go"
+    "tests/mtls_test.go",
+    "tests/web/oss-tooling.test.mjs"
   ],
   "delivery": {
     "delivery_commit_created": true,
     "push_authorized": false,
     "publication_authorized": false,
     "local_commit_authorized": true,
-    "commit_subject": "feat(pki): authenticate collector traffic with mtls"
+    "commit_subject": "feat(pki): authenticate collector traffic with mtls",
+    "review_base_commit": "c89127f8f7c20e0b1f65cabcfbc96185a009845c",
+    "review_fix_commit_subject": "fix(pki): match CRL revocation to certificate issuer"
   },
-  "verification_notes": "Validation ran against the final mTLS source, fixtures, guards and documentation. The diff check and clean-clone runs used isolated temporary candidate snapshots: no branch, remote ref or delivery commit moved during candidate verification. TLS 1.3 invokes the server-side VerifyConnection between client-certificate processing and handshake completion, so typed verdicts are evaluated on captured real ConnectionState values while transport denials are asserted from the listener outcome, receipts and unchanged manifest. Existing C07 event bytes are reused unchanged through the real sensor/store pipeline. clean_snapshot records the separate temporary source-proof object; metadata edits made after candidate verification only publish these evidence fields, matching the recorded C08 precedent.",
+  "verification_notes": "Validation ran against the review-fix mTLS source, fixtures, guards and documentation; the delivered guard c89127f8f7c20e0b1f65cabcfbc96185a009845c stayed exercised in the same battery plus the review-driven regressions. The diff check and clean-clone runs used isolated temporary candidate snapshots: no branch, remote ref or delivery commit moved during candidate verification. TLS 1.3 invokes the server-side VerifyConnection between client-certificate processing and handshake completion, so typed verdicts are evaluated on captured real ConnectionState values while transport denials are asserted from the listener outcome, receipts and unchanged manifest. Existing C07 event bytes are reused unchanged through the real sensor/store pipeline. The review fix republished narrative counts and hashes for this revision (146 Go events, 22 anchors, 13 loopback connects, regenerated fixtures with intermediate CA, intermediate-issued leaf and cross-issuer serial collision identities). clean_snapshot records the separate temporary source-proof object; metadata edits made after candidate verification only publish these evidence fields, matching the recorded C09 delivery precedent, and the post-commit re-verification re-ran the validators, focused tests and a clean clone of the real fix commit.",
   "clean_snapshot": {
-    "commit": "da8658b7cd8e0dac26e2598d322856cc10856bee",
-    "git_tree": "b05eab4cf4ef2359f865094a7c7394d4001f123f",
-    "verification_source_identity": "sha256:eaac5e7e8af168f7b847bb4fe903e1977bcacb6d6bf513ac83873cc5357711b7",
+    "commit": "70acbe1ccc3c48bcff97d189677ed06b9ba73b20",
+    "git_tree": "305849c955c6ab75769fd2d64e62b6eafc6d5a33",
+    "verification_source_identity": "sha256:f29ad0323fefb2f9145933be3a3ce710dd957e07dbf23d3994dae102b2c50bc7",
     "runtime_clean_clone_passed": true,
     "source_integrity_passed": true,
     "user_index_unchanged": true,

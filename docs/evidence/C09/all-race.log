@@ -1,7 +1,7 @@
-ok  	github.com/Parsa-Emami/Miragemesh/cmd/miragemesh	3.123s
-ok  	github.com/Parsa-Emami/Miragemesh/internal/contracts	1.026s
+ok  	github.com/Parsa-Emami/Miragemesh/cmd/miragemesh	1.017s
+ok  	github.com/Parsa-Emami/Miragemesh/internal/contracts	1.028s
 ?   	github.com/Parsa-Emami/Miragemesh/internal/enrollment	[no test files]
 ?   	github.com/Parsa-Emami/Miragemesh/internal/pki	[no test files]
 ?   	github.com/Parsa-Emami/Miragemesh/internal/sensor	[no test files]
-ok  	github.com/Parsa-Emami/Miragemesh/internal/storage	4.157s
-ok  	github.com/Parsa-Emami/Miragemesh/tests	3.486s
+ok  	github.com/Parsa-Emami/Miragemesh/internal/storage	4.522s
+ok  	github.com/Parsa-Emami/Miragemesh/tests	3.826s

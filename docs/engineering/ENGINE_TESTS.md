@@ -107,17 +107,24 @@ HTTP enrollment and PKI/mTLS remain outside the approved C08 scope.
 
 ## C09 required anchors
 
-C09 adds five `tests` anchors behind one real loopback mTLS boundary:
+C09 adds six `tests` anchors behind one real loopback mTLS boundary:
 `TestMTLSTrustedCollectorAcceptsEvents` proves a trusted collector whose
 fingerprint is operator-mapped to a sensor ingests the unchanged C07 event
 bytes through the real sensor/store pipeline and produces a durable receipt;
 `TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity` proves missing,
-unanchored, expired, server-only-EKU and revoked client certificates cannot
+unanchored, expired, server-only-EKU, revoked and intermediate-issued (the
+`[leaf, intermediate, anchor]` chain passes x509 verification but fails the
+guard's direct-issuance rule with typed `ErrUntrusted`) client certificates cannot
 ingest events and leave the manifest unchanged;
 `TestMTLSTypedVerdictsUseRealHandshakeTranscripts` re-evaluates captured real
  ConnectionState values from completed handshakes through typed guard
 verdicts including an authority update that revokes a previously trusted
 serial and a scope mismatch that must fail before any storage side effect;
+`TestMTLSRevocationMembershipNeverCrossesIssuers` proves RFC 5280
+(issuer, serial) membership with one real listener reconfigured over both
+anchors: a secondary-issued certificate sharing the primary-issued revoked
+serial authenticates, is scoped and ingests, while the primary-issued
+certificate with the same serial stays revoked with zero new receipts;
 `TestMTLSSubsequentConnectionsStopReplayedIdentityBeforeSideEffects` proves a
 replayed collector identity cannot ingest after its revocation is configured;
 `TestMTLSRejectsInvalidLocalIdentityConfigurations` drives 15 fixture rows of

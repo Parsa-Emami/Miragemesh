@@ -2,10 +2,12 @@
   "project": "MirageMesh",
   "date": "2026-10-20",
   "base_commit": "a746af65eb4b1796c3e71e19d85d93feb199fc79",
+  "review_base_commit": "c89127f8f7c20e0b1f65cabcfbc96185a009845c",
   "scope": "F03 mTLS collector identity guard: locally configured anchors, a locally delivered signed CRL and operator fingerprint-to-sensor scope mappings over TLS 1.3; no authenticated ingest endpoint, issuance, OCSP or UI.",
-  "final_source_identity": "sha256:eaac5e7e8af168f7b847bb4fe903e1977bcacb6d6bf513ac83873cc5357711b7",
+  "final_source_identity": "sha256:f29ad0323fefb2f9145933be3a3ce710dd957e07dbf23d3994dae102b2c50bc7",
   "changed_paths": [
-    "docs/ROADMAP_FA.md",
+    ".gitignore",
+    "apps/web/src/generated/project.json",
     "docs/agents/SESSION_HANDOFF.json",
     "docs/architecture/IDENTITY.md",
     "docs/engineering/ENGINE_TESTS.md",
@@ -27,7 +29,6 @@
     "docs/evidence/C09/network-tests.log",
     "docs/evidence/C09/network.trace",
     "docs/evidence/C09/next-task.log",
-    "docs/evidence/C09/official-api.log",
     "docs/evidence/C09/package-checksums.log",
     "docs/evidence/C09/package.log",
     "docs/evidence/C09/plan-metadata.log",
@@ -36,6 +37,7 @@
     "docs/evidence/C09/red.log",
     "docs/evidence/C09/repository.log",
     "docs/evidence/C09/resources.log",
+    "docs/evidence/C09/review-red-reverted-matcher.log",
     "docs/evidence/C09/snapshot.json",
     "docs/evidence/C09/source-files.json",
     "docs/evidence/C09/standard-tests.log",
@@ -43,18 +45,17 @@
     "internal/pki/identity.go",
     "plans/commits/C09.md",
     "plans/progress.json",
-    "plans/project-state.json",
-    "plans/roadmap.json",
     "scripts/verify-engine-tests.mjs",
     "tests/engineering/engine-tests.test.mjs",
     "tests/fixtures/miragemesh/C09/expected-output.json",
     "tests/fixtures/miragemesh/C09/invalid.json",
     "tests/fixtures/miragemesh/C09/positive.json",
-    "tests/mtls_test.go"
+    "tests/mtls_test.go",
+    "tests/web/oss-tooling.test.mjs"
   ],
   "core_tasks_verified": [
     "C01-C08: retain historical source-bound evidence",
-    "C09: local mTLS collector identity guard; no HTTP ingest surface, issuance or OCSP"
+    "C09: local mTLS collector identity guard with RFC 5280 issuer-bound CRL matching and the documented direct-issuance chain restriction; no HTTP ingest surface, issuance or OCSP"
   ],
   "commands": [
     "npm run check",
@@ -74,6 +75,7 @@
     "Remote GitHub Actions execution unverified; no push/publication.",
     "Local identity guard only: no HTTP/UI ingest endpoint, certificate issuance, OCSP or owner/tenant model.",
     "Revocation depends on a trusted local clock and a locally delivered CRL; hostile clock rollback and network revocation transports are outside this scope.",
+    "Chains are restricted to [leaf, configured anchor]; revocation coverage of a second issuer requires that issuer's own CRL, which the single RevocationListPEM option cannot carry today.",
     "Loopback tracing of the focused mTLS binary does not certify C13 decoy isolation or the full domain workflow.",
     "No C30 usability or C40 release claim."
   ],
@@ -84,12 +86,13 @@
     "push_authorized": false,
     "publication_authorized": false,
     "local_commit_authorized": true,
-    "commit_subject": "feat(pki): authenticate collector traffic with mtls"
+    "commit_subject": "feat(pki): authenticate collector traffic with mtls",
+    "review_fix_commit_subject": "fix(pki): match CRL revocation to certificate issuer"
   },
   "clean_snapshot": {
-    "commit": "da8658b7cd8e0dac26e2598d322856cc10856bee",
-    "git_tree": "b05eab4cf4ef2359f865094a7c7394d4001f123f",
-    "verification_source_identity": "sha256:eaac5e7e8af168f7b847bb4fe903e1977bcacb6d6bf513ac83873cc5357711b7",
+    "commit": "70acbe1ccc3c48bcff97d189677ed06b9ba73b20",
+    "git_tree": "305849c955c6ab75769fd2d64e62b6eafc6d5a33",
+    "verification_source_identity": "sha256:f29ad0323fefb2f9145933be3a3ce710dd957e07dbf23d3994dae102b2c50bc7",
     "runtime_clean_clone_passed": true,
     "source_integrity_passed": true,
     "user_index_unchanged": true,

@@ -1,5 +1,1 @@
-
-> @parsa-emami/miragemesh-web@0.0.1 validate:plan
-> node scripts/roadmap.mjs validate
-
 Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred.

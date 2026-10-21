@@ -1,0 +1,14 @@
+C09 review-fix negative regression probe: the two new tests ran against the
+pre-fix matcher (serial-only membership, no direct-issuance chain shape) by
+temporarily reverting internal/pki/identity.go in the worktree only:
+
+--- FAIL: TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity (0.06s)
+    mtls_test.go:438: intermediate chain denial was not typed ErrUntrusted: [pki: sensor scope is not assigned to the identity]
+--- FAIL: TestMTLSRevocationMembershipNeverCrossesIssuers (5.02s)
+    mtls_test.go:580: timeout waiting for cross-issuer same-serial acceptance: states=0 identities=0 receipts=0 failures=[pki: certificate is revoked by the configured list]
+FAIL    github.com/Parsa-Emami/Miragemesh/tests 5.085s
+
+Result: both regressions fail under the old (issuer-blind) matcher and pass
+under the committed fix; identity.go was restored before the verification
+battery. This run certifies the regressions bind to the finding, not to any
+mock. Not a tool run against the delivered source; kept outside main commands.

@@ -1,5 +1,5 @@
 {
-  "source_identity": "sha256:eaac5e7e8af168f7b847bb4fe903e1977bcacb6d6bf513ac83873cc5357711b7",
+  "source_identity": "sha256:f29ad0323fefb2f9145933be3a3ce710dd957e07dbf23d3994dae102b2c50bc7",
   "algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes); evidence, progress and session handoff excluded",
   "files": [
     {
@@ -184,7 +184,7 @@
     },
     {
       "path": ".gitignore",
-      "sha256": "b2ccb6f35f24c1c952bd8a13c0624dfdd66aa4e886083ef642359d1803043937"
+      "sha256": "7e0c2797c1312b4c30202def1d40ec28897615184831191d5afc2f679700c650"
     },
     {
       "path": ".nvmrc",
@@ -340,7 +340,7 @@
     },
     {
       "path": "apps/web/src/generated/project.json",
-      "sha256": "f0b8d463cbdb01f9c5fbf700fc5f4ed34b0d1e1b260df79947f184d5ac1297d7"
+      "sha256": "460a3d296bb95cd935e190ebd2dec1c2d2bfef92cd611d927020511fda07e445"
     },
     {
       "path": "apps/web/src/lib/preview.mjs",
@@ -456,7 +456,7 @@
     },
     {
       "path": "docs/architecture/IDENTITY.md",
-      "sha256": "38fb8bae189e27d62c637d2c1ebd256065cc5599ab9f9615bb79b24c89b970a5"
+      "sha256": "6fcdd35da0cb5b7d6754cecc975f283154b3c52de51ce2d6dec0fc759bb2c9b4"
     },
     {
       "path": "docs/architecture/IMPLEMENTATION_BLUEPRINT.md",
@@ -488,7 +488,7 @@
     },
     {
       "path": "docs/engineering/ENGINE_TESTS.md",
-      "sha256": "7a58516d804e0be1c34e68710771ea569bfaa07dd062975b2daa122f39311d93"
+      "sha256": "5dbd6995d87302b38ffa423bd76bc186b765cd6d0b1a0d28e185189f7fd75816"
     },
     {
       "path": "docs/engineering/GITHUB_BASELINE.json",
@@ -564,7 +564,7 @@
     },
     {
       "path": "internal/pki/identity.go",
-      "sha256": "503d629175fc10f62acb44703b9631757507520207ee574da700db31f1e727c4"
+      "sha256": "5faeee504e363c45bdba82eb87c30fdba77a4a3580aaf2fb28d5647f12539121"
     },
     {
       "path": "internal/sensor/event.go",
@@ -992,7 +992,7 @@
     },
     {
       "path": "plans/commits/C09.md",
-      "sha256": "fc8a9d274fb12772cb7712fbc5a60d41c20d994c86497b823d164838a0e3af8e"
+      "sha256": "f0572d14c91b09eaa12f04bf909ebe53f34a6bd26c4bd4dbcaf4cc3d67c54b5f"
     },
     {
       "path": "plans/commits/C10.md",
@@ -1208,7 +1208,7 @@
     },
     {
       "path": "scripts/verify-engine-tests.mjs",
-      "sha256": "dcb0391f64d1ed605b48495146fa5b75c9d03108ca0c2444a7b3d8d6a7d255b6"
+      "sha256": "0aedc95fe01266a2bed4bd469f96b50efa00f4d74f87e24a007c3fa4d33a8427"
     },
     {
       "path": "scripts/verify-reference.mjs",
@@ -1316,7 +1316,7 @@
     },
     {
       "path": "tests/engineering/engine-tests.test.mjs",
-      "sha256": "818e7df31e3fe2b13a7c3862a15bb9e928c04ffb34744dc7f9281d0df6b3b258"
+      "sha256": "514321d668bfe76f181e85829db60cd5c0d06c5ae161d361e2ac07d10c2205de"
     },
     {
       "path": "tests/engineering/test_ci_source.py",
@@ -1420,19 +1420,19 @@
     },
     {
       "path": "tests/fixtures/miragemesh/C09/expected-output.json",
-      "sha256": "5868d5f9e1909b5e9e46bff0a39e137acf1fd40830410a9c275c1ee2b2e4a903"
+      "sha256": "3f32c593c1ab43a7e7327745002f3b56a963d217ef3d1e39e1ee3559f1a91fca"
     },
     {
       "path": "tests/fixtures/miragemesh/C09/invalid.json",
-      "sha256": "cd0b0a740f1e19a02d0e9df0c5e9b5aa6e80964c9b0c04c7e96bd7ec1c0e1ac2"
+      "sha256": "8d8bcb3d78046fac275785e13d8aadaaa7e6bd0563739573047f01531aeb7b68"
     },
     {
       "path": "tests/fixtures/miragemesh/C09/positive.json",
-      "sha256": "6adc286e8b593b5875000e3738a5c9113af1aa21be9891a963507f9d6b3f9593"
+      "sha256": "1b35be54e5aa4ec35973c488826b7d18845210ab2ed40f5b4632c2ed5b46ef90"
     },
     {
       "path": "tests/mtls_test.go",
-      "sha256": "da1eb68b1b14b5a13a7d33369a8c07fe1cde6bc6192f6279d375a633cc6dde6c"
+      "sha256": "6593b75c59140932b79129338ad67dede672aface9acc2430c4489a97b888b20"
     },
     {
       "path": "tests/scenarios/clone-to-value.json",
@@ -1452,7 +1452,7 @@
     },
     {
       "path": "tests/web/oss-tooling.test.mjs",
-      "sha256": "b5a7708c86652affc7e655f983b200b1e2b1ecba8eff8c7a60743f2208ae2a8e"
+      "sha256": "b6c87a8cb53e944698e8933c787a0122c6f302d7ce3d83d344006223a23d5f2e"
     },
     {
       "path": "tests/web/reference-contract.test.mjs",

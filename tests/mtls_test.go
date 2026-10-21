@@ -120,8 +120,10 @@ func c09IdentityPEMs(t *testing.T, fixture *c09Data, name string) tls.Certificat
 	if !exists || len(material.Certificate) == 0 || len(material.Key) == 0 {
 		t.Fatalf("missing fixture identity %s", name)
 	}
+	// tls.X509KeyPair accepts a concatenated PEM block: an identity may
+	// carry its full presented chain (leaf first, then its issuer).
 	cert, err := tls.X509KeyPair([]byte(material.Certificate), []byte(material.Key))
-	if err != nil || len(cert.Certificate) != 1 {
+	if err != nil || len(cert.Certificate) == 0 {
 		t.Fatalf("fixture identity %s: %v", name, err)
 	}
 	return cert
@@ -406,7 +408,7 @@ func TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity(t *testing.T) {
 	store := openStore(t, path, fixture.Limits)
 	events := c09SensorEvents(t)
 	before := c09ManifestDigest(t, path)
-	for _, name := range []string{"", "untrusted", "expired", "server_only", "revoked"} {
+	for _, name := range []string{"", "untrusted", "expired", "server_only", "revoked", "intermediate_leaf"} {
 		address, outcome := c09Listener(t, guard, events[:1], store)
 		c09Dial(t, address, c09ClientConfig(t, fixture, name), events[0])
 		label := name
@@ -420,6 +422,25 @@ func TestMTLSRejectsUntrustedExpiredWrongEKUAndRevokedIdentity(t *testing.T) {
 			_, _, failures, receipts := outcome.snapshot()
 			return len(failures) >= 1 && len(receipts) == 0
 		}, fmt.Sprintf("%s transport denial", label))
+		if name == "intermediate_leaf" {
+			// The chain [leaf, intermediate, anchor] passes x509 verification,
+			// so the typed ErrUntrusted verdict proves the guard's direct
+			// issuance rule rejected it: an intermediate-issued collector
+			// cannot authenticate while its issuer's CRLs are unsupported.
+			_, _, failures, _ := outcome.snapshot()
+			typed := false
+			for _, failure := range failures {
+				if errors.Is(failure, pki.ErrUntrusted) {
+					typed = true
+				}
+			}
+			if !typed {
+				t.Fatalf("intermediate chain denial was not typed ErrUntrusted: %v", failures)
+			}
+			if expected.ExpectedVerdicts["intermediate_leaf"] != "IDENTITY_UNTRUSTED" {
+				t.Fatalf("fixture verdict drift: %s", expected.ExpectedVerdicts["intermediate_leaf"])
+			}
+		}
 		_, _, _, receipts := outcome.snapshot()
 		if len(receipts) != 0 {
 			t.Fatalf("%s identity produced receipts: %+v", label, receipts)
@@ -530,6 +551,75 @@ func TestMTLSTypedVerdictsUseRealHandshakeTranscripts(t *testing.T) {
 	}
 	if after := c09ManifestDigest(t, path); after != before {
 		t.Fatalf("scope denial changed durable state")
+	}
+	if err := store.Close(); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// TestMTLSRevocationMembershipNeverCrossesIssuers proves RFC 5280
+// (issuer, serial) revocation membership across a real transport: the
+// trusted CRL is signed by the primary anchor and revokes serial 7004 of
+// that issuer, while a different certificate with the same serial issued
+// by the secondary anchor is scoped, authenticates and ingests; the
+// primary-issued certificate carrying the same serial stays revoked.
+func TestMTLSRevocationMembershipNeverCrossesIssuers(t *testing.T) {
+	fixture, expected, _ := c09Files(t)
+	guard := c09Guard(t, c09Options(t, fixture, func(options *pki.Options) {
+		options.Anchors = c09Anchors(fixture, "primary", "secondary")
+		options.RevocationListPEM = fixture.RevocationList
+		options.Scopes = fixture.Scopes
+	}))
+	path := storePath(t)
+	store := openStore(t, path, fixture.Limits)
+	events := c09SensorEvents(t)
+	address, outcome := c09Listener(t, guard, events[:1], store)
+	if dialErr := c09Dial(t, address, c09ClientConfig(t, fixture, "colliding"), events[0]); dialErr != nil {
+		t.Fatalf("cross-issuer collector handshake: %v", dialErr)
+	}
+	c09Wait(t, outcome, func() bool {
+		_, identities, _, receipts := outcome.snapshot()
+		return len(identities) == 1 && len(receipts) == 1
+	}, "cross-issuer same-serial acceptance")
+	_, identities, _, receipts := outcome.snapshot()
+	identity := identities[0]
+	// The colliding identity carries the same serial as the revoked
+	// primary-issued certificate but was issued by the secondary anchor.
+	if identity.SerialNumber != fixture.Identities["revoked"].Serial {
+		t.Fatalf("serial collision fixture drift: %+v", identity)
+	}
+	if identity.Fingerprint == fixture.CollectorFP || fixture.Scopes[identity.Fingerprint] == nil {
+		t.Fatalf("cross-issuer fingerprint drift: %+v", identity)
+	}
+	if len(identity.AllowedScopes) != 1 || identity.AllowedScopes[0] != fixture.SensorID {
+		t.Fatalf("cross-issuer identity scopes drifted: %+v", identity)
+	}
+	if receipts[0].Generation != 1 {
+		t.Fatalf("cross-issuer receipt: %+v", receipts[0])
+	}
+	if expected.ExpectedVerdicts["colliding"] != "IDENTITY_OK" {
+		t.Fatalf("fixture verdict drift: %s", expected.ExpectedVerdicts["colliding"])
+	}
+	denialBefore := c09ManifestDigest(t, path)
+	// On the same listener, the primary-issued certificate with the same
+	// serial is revoked by the CRL and cannot authenticate.
+	c09Dial(t, address, c09ClientConfig(t, fixture, "revoked"), nil)
+	c09Wait(t, outcome, func() bool {
+		_, _, failures, received := outcome.snapshot()
+		return len(failures) >= 1 && len(received) == 1
+	}, "same-issuer revoked denial")
+	_, _, failures, _ := outcome.snapshot()
+	typed := false
+	for _, failure := range failures {
+		if errors.Is(failure, pki.ErrRevoked) {
+			typed = true
+		}
+	}
+	if !typed {
+		t.Fatalf("same-issuer revocation was not typed: %v", failures)
+	}
+	if after := c09ManifestDigest(t, path); after != denialBefore {
+		t.Fatalf("same-issuer revocation changed durable state")
 	}
 	if err := store.Close(); err != nil {
 		t.Fatal(err)

@@ -1,7 +1,3 @@
-
-> @parsa-emami/miragemesh-web@0.0.1 plan
-> node scripts/roadmap.mjs next
-
 {
   "task": {
     "id": "C10",
