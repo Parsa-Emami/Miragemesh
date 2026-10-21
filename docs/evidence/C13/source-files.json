@@ -1,4 +1,5 @@
 {
+  "source_identity": "sha256:f86f6b91b188cd34c4ca6345f942a94cffb816164f1ea4ae39e7dd7c7d184580",
   "files": {
     ".agents/SKILLS_AUDIT.md": "d4964430cf549d12cec42e6c7f5a08372f201474f7f8ae2353a8245f2540a1e0",
     ".agents/skill-licenses/addyosmani-agent-skills-MIT.txt": "6f202f8bd568cd730dbb2b0d1f8e243bc74c2fa1f64dbce9b2c7ea08bd5c9fd7",
@@ -151,7 +152,7 @@
     "internal/decoy/isolation.go": "39b654c71a4b238d1561294b52c4972af6ad14865e0734011f7c0ff20d1bc7af",
     "internal/enrollment/service.go": "751c43e1cf8aa413108f99cf0093ba1829a9db77f17a0b9f8571f0544cad32a7",
     "internal/pki/identity.go": "eb1b40e2f282314742519d1d96c08450e439bf8a69e36a26d68bc15433193ec4",
-    "internal/podman/podman.go": "172dcc06d6a46b2b028152ded72dce5b3507c99b90060a078e69131f9a149b40",
+    "internal/podman/podman.go": "0bc060776948b8681d18f5944a45c4c18ff7014a92da1700e9838648dd7bd3ca",
     "internal/sensor/apply.go": "6269deba1241c9cefc967bc9fd9b1e8e0efc32c628adf9fe75b337ed604810d2",
     "internal/sensor/event.go": "abf839f20c3c7fe7b737de8218f248e7e255cf4fcc813bf66df1ed9ab6c95a00",
     "internal/storage/adapter.go": "4181e694e7879246633d28184a04fd9bb446cf4a3ac954f9f3c2c067156e15b6",
@@ -399,6 +400,5 @@
     "tests/web/reference-contract.test.mjs": "d2ebab43ebe93c6b71a910ba5f43f05ffee23162e6d177b8fd633c6acaa6f0d2",
     "tests/web/resource-contract.test.mjs": "be41d46a67141daa82b73731cc76ee81da6e648d69a756bb7609e7fbdd554f84",
     "tsconfig.json": "190adb87c356c813083ccc9a5fe0bea7618324210ab3af0ace64f68525ab6986"
-  },
-  "source_identity": "sha256:3e324818d92cedb616dd3845e6de29d8062f8bac152433dcd658f561b532aee3"
+  }
 }

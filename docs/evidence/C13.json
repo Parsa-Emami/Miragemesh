@@ -5,7 +5,7 @@
   "planning_template": false,
   "date": "2026-10-21",
   "base_commit": "cde5ab68f58a40ba346ddc4fe010597fea8be99d",
-  "source_identity": "sha256:3e324818d92cedb616dd3845e6de29d8062f8bac152433dcd658f561b532aee3",
+  "source_identity": "sha256:f86f6b91b188cd34c4ca6345f942a94cffb816164f1ea4ae39e7dd7c7d184580",
   "source_manifest": "docs/evidence/C13/source-files.json",
   "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes) over tracked and non-ignored untracked files; docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded because they publish this identity themselves.",
   "scope": "F07 decoy isolation: the C12 decoy handler runs inside a rootless container that has no network at all, no capabilities, no host namespace and a read-only root filesystem, bounded by a hard process and memory limit. The supervisor states the policy, the limited container provider applies it and the supervisor verifies the observed and the effective controls before it reports a running decoy. The engine starts the isolated decoy with --decoy-isolation and propagates the typed outcome.",
@@ -376,6 +376,71 @@
       "output_path": "docs/evidence/C13/final-diff.log.gz",
       "elapsed_seconds": 0.06,
       "note": "Raw diff output preserved byte-for-byte as gzip because the captured diff contains context lines that end with a space."
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go test -race -count=1 -json ./... > docs/evidence/C13/ci-fix-engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-fix-engine-tests.jsonl",
+      "note": "C13 follow-up after reading effective cgroup controls through the container process mount namespace."
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "docs/evidence/C13/ci-fix-engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-fix-discovery.log"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-fix-clone.log",
+      "note": "The clean-clone workflow reported 68 required anchors; runtime proof is from the Go race suite above."
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go vet ./... > docs/evidence/C13/ci-fix-vet.log 2>&1"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-fix-vet.log"
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "gofmt -l cmd internal tests > docs/evidence/C13/ci-fix-format.log && test ! -s docs/evidence/C13/ci-fix-format.log"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-fix-format.log"
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "npm run validate:plan > docs/evidence/C13/ci-fix-plan.log 2>&1"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-fix-plan.log"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/ci-fix-diff-check.log"
     }
   ],
   "results": {

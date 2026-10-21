@@ -182,10 +182,14 @@ func (p *Provider) Inspect(ctx context.Context, id string) (decoy.Runtime, error
 	}
 	// The effective limits of the control group decide whether the limits are
 	// really in force. A runtime without cgroup delegation reports no limit.
-	if state.State.CgroupPath != "" {
-		processes, processErr := cgroupLimit(state.State.CgroupPath, "pids.max")
-		memory, memoryErr := cgroupLimit(state.State.CgroupPath, "memory.max")
-		swap, swapErr := cgroupLimit(state.State.CgroupPath, "memory.swap.max")
+	if state.State.Pid > 0 {
+		// Read the cgroup mount as the container process sees it. The inspect
+		// path is relative to the host's cgroup hierarchy and is not necessarily
+		// visible from a rootless runner's cgroup namespace.
+		cgroupRoot := fmt.Sprintf("/proc/%d/root/sys/fs/cgroup", state.State.Pid)
+		processes, processErr := cgroupLimit(cgroupRoot, "pids.max")
+		memory, memoryErr := cgroupLimit(cgroupRoot, "memory.max")
+		swap, swapErr := cgroupLimit(cgroupRoot, "memory.swap.max")
 		if processErr == nil && memoryErr == nil && swapErr == nil {
 			runtime.ControlsObserved = true
 			runtime.EffectivePidsLimit = processes
@@ -433,8 +437,8 @@ func capabilitySets(pid int) (string, string, error) {
 
 // cgroupLimit returns one effective limit of the control group of a
 // container. A limit that is not a number is not a limit.
-func cgroupLimit(cgroupPath, name string) (int64, error) {
-	data, err := os.ReadFile("/sys/fs/cgroup" + cgroupPath + "/" + name)
+func cgroupLimit(cgroupRoot, name string) (int64, error) {
+	data, err := os.ReadFile(cgroupRoot + "/" + name)
 	if err != nil {
 		return 0, err
 	}
@@ -479,9 +483,8 @@ func (w *boundedWriter) String() string {
 type containerState struct {
 	ID    string `json:"Id"`
 	State struct {
-		Status     string `json:"Status"`
-		Pid        int    `json:"Pid"`
-		CgroupPath string `json:"CgroupPath"`
+		Status string `json:"Status"`
+		Pid    int    `json:"Pid"`
 	} `json:"State"`
 	HostConfig struct {
 		PidsLimit      int      `json:"PidsLimit"`
