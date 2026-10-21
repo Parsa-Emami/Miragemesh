@@ -37,3 +37,17 @@ command, never echoes request content and bounds the request size. It is not a
 published surface in C12: no listener, no container isolation and no egress
 denial are proven here, and the scenario itself is still not executed end to
 end. See `docs/architecture/DECOY_HTTP.md`.
+
+C13 adds the isolation of that decoy: the decoy runs in a rootless container
+with no network at all, no capabilities, no host namespace, a read-only root
+filesystem and hard process and memory limits. `decoy.NewSupervisor` states
+the policy, `internal/podman` applies it and the supervisor verifies the
+observed and the effective state before it reports a running decoy; a container
+that does not match the policy is removed and reported as an explicit failure.
+The decoy handler of C12 runs inside that container and answers on its own
+loopback, so the recorded observations are the observations of the isolated
+decoy. The engine starts the isolated decoy with `--decoy-isolation` and
+reports the typed outcome, so the isolation is part of the supported workflow.
+C13 publishes no decoy surface: the container has no inbound path either, and
+the egress attempt of the scenario stays denied. See
+`docs/architecture/DECOY_ISOLATION.md`.

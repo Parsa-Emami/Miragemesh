@@ -2,7 +2,11 @@
   "schema_version": 1,
   "project": "MirageMesh",
   "verified_on": "2026-10-19",
-  "profile": { "os": "linux", "architecture": "amd64", "reference_distribution": "Ubuntu 24.04 LTS (Noble)" },
+  "profile": {
+    "os": "linux",
+    "architecture": "amd64",
+    "reference_distribution": "Ubuntu 24.04 LTS (Noble)"
+  },
   "web_lockfile": {
     "path": "package-lock.json",
     "sha256": "7239d6eafede3b5d3a7571f2948fcf4e57fb7ce9d39cd0a92f821773b9097be4",
@@ -35,7 +39,11 @@
       "license": "MIT",
       "license_url": "https://github.com/nodejs/node/blob/v24.19.0/LICENSE",
       "source_build": "Use the official v24.19.0 source tag and the documented Unix build prerequisites and ./configure && make steps; inspect deps/* license notices when redistributing a built runtime.",
-      "probe": { "command": "node --version", "exit_code": 0, "version": "v24.19.0" }
+      "probe": {
+        "command": "node --version",
+        "exit_code": 0,
+        "version": "v24.19.0"
+      }
     },
     {
       "id": "npm-cli",
@@ -52,7 +60,11 @@
       "license": "Artistic-2.0",
       "license_url": "https://github.com/npm/cli/blob/v11.9.0/LICENSE",
       "source_build": "Check out the npm/cli v11.9.0 tag, install its locked dependencies with the existing pinned Node/npm runtime (`npm ci --ignore-scripts`), then run `node bin/npm-cli.js --version`; npm is JavaScript and has no compilation step.",
-      "probe": { "command": "npx --yes --package=npm@11.9.0 --call 'npm --version'", "exit_code": 0, "version": "11.9.0" }
+      "probe": {
+        "command": "npx --yes --package=npm@11.9.0 --call 'npm --version'",
+        "exit_code": 0,
+        "version": "11.9.0"
+      }
     },
     {
       "id": "go-toolchain",
@@ -74,7 +86,11 @@
       "license": "BSD-3-Clause",
       "license_url": "https://go.dev/LICENSE",
       "source_build": "Bootstrap with Go 1.26.2 linux/amd64 (official archive SHA-256 990e6b4bbba816dc3ee129eaeaf4b42f17c2800b88a2166c265ac1a200262282), check out the go1.27.2 source tag and run src/make.bash with GOROOT_BOOTSTRAP set to that toolchain.",
-      "probe": { "command": "GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct GOTOOLCHAIN=go1.27.2 go version", "exit_code": 0, "version": "go version go1.27.2 linux/amd64" }
+      "probe": {
+        "command": "GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct GOTOOLCHAIN=go1.27.2 go version",
+        "exit_code": 0,
+        "version": "go version go1.27.2 linux/amd64"
+      }
     },
     {
       "id": "podman-provider",
@@ -92,23 +108,127 @@
       "license": "Apache-2.0",
       "license_url": "https://github.com/containers/podman/blob/v4.9.3/LICENSE",
       "source_build": "Fetch the matching Ubuntu libpod source package, install its declared build dependencies, then run dpkg-buildpackage -b -uc -us. This builds the distro-patched provider package.",
-      "probe": { "command": "podman --version and dpkg-query -W podman", "exit_code": 0, "version": "4.9.3+ds1-1ubuntu0.2" }
+      "probe": {
+        "command": "podman --version and dpkg-query -W podman",
+        "exit_code": 0,
+        "version": "4.9.3+ds1-1ubuntu0.2"
+      }
+    },
+    {
+      "id": "decoy-image",
+      "required": true,
+      "version": "3.23.2",
+      "platform": "linux/amd64",
+      "artifact_url": "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
+      "integrity": {
+        "algorithm": "sha256",
+        "expected": "sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
+        "observed": "sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62"
+      },
+      "image_id": "sha256:e7b39c54cdeca0d2aae83114bb605753a5f5bc511fe8be7590e38f6d9f915dad",
+      "source_url": "https://github.com/alpinelinux/docker-alpine/blob/1c744e2d49059e51b063a11a6e3e18c9ccf04ab8/x86_64/Dockerfile",
+      "license": "MIT (Alpine Linux base, musl) with GPL-2.0-only busybox, Apache-2.0 OpenSSL, MPL-2.0 ca-certificates-bundle and zlib",
+      "license_url": "https://pkgs.alpinelinux.org/package/v3.23/main/x86_64/busybox",
+      "source_build": "The official Docker Hub library/alpine image is built by the Alpine Linux maintainers from the x86_64 Dockerfile of the docker-alpine repository. MirageMesh neither redistributes nor modifies the image: the operator pulls this digest and the container runtime verifies it.",
+      "component_licenses": [
+        {
+          "component": "alpine-baselayout 3.7.1-r8",
+          "license": "MIT"
+        },
+        {
+          "component": "alpine-keys 2.6-r0",
+          "license": "MIT"
+        },
+        {
+          "component": "alpine-release 3.23.2-r0",
+          "license": "MIT"
+        },
+        {
+          "component": "apk-tools 3.0.3-r1 and libapk 3.0.3-r1",
+          "license": "MIT"
+        },
+        {
+          "component": "busybox 1.37.0-r30 and busybox-binsh 1.37.0-r30",
+          "license": "GPL-2.0-only"
+        },
+        {
+          "component": "ca-certificates-bundle 20251003-r0",
+          "license": "MPL-2.0"
+        },
+        {
+          "component": "libcrypto3 3.5.4-r0 and libssl3 3.5.4-r0",
+          "license": "Apache-2.0"
+        },
+        {
+          "component": "musl 1.2.5-r21 and musl-utils 1.2.5-r21",
+          "license": "MIT"
+        },
+        {
+          "component": "scanelf 1.3.8-r2",
+          "license": "MIT"
+        },
+        {
+          "component": "ssl_client 1.37.0-r30",
+          "license": "GPL-2.0-only"
+        },
+        {
+          "component": "zlib 1.3.1-r2",
+          "license": "Zlib"
+        }
+      ],
+      "probe": {
+        "command": "podman pull docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 && podman image inspect docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 --format '{{.Digest}} {{.Architecture}}/{{.Os}}'",
+        "exit_code": 0,
+        "version": "sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 amd64/linux"
+      }
     }
   ],
   "not_applicable": [
-    { "id": "oci-image", "reason": "C12/C13 select and isolate the first decoy image; no image is selected or required by the C02 toolchain check." },
-    { "id": "grammar", "reason": "No external protocol grammar is selected in current source or the C01 reference contract." },
-    { "id": "rule", "reason": "No third-party rule bundle is selected in current source or the C01 reference contract." }
+    {
+      "id": "grammar",
+      "reason": "No external protocol grammar is selected in current source or the C01 reference contract."
+    },
+    {
+      "id": "rule",
+      "reason": "No third-party rule bundle is selected in current source or the C01 reference contract."
+    }
   ],
   "fixtures": [
-    { "path": "tests/fixtures/miragemesh/C01/positive.json", "sha256": "b91f21e1a45f24f2c43af88b9ffca84c3f42338de02b22ed1fdee6c7b3d79bba" },
-    { "path": "tests/fixtures/miragemesh/C01/invalid.json", "sha256": "33eefcf744547e4b9fd2530caef29f0763adfb609d2bc0183b00992636d30876" },
-    { "path": "tests/fixtures/miragemesh/C01/expected-output.json", "sha256": "6563cfe200ae660f1608419cd25ec9caa4224831c66898dd0a691e3cbd36056b" },
-    { "path": "tests/fixtures/miragemesh/C02/positive.json", "sha256": "39fbe47717e0ee5df53c18ac5841d165aa54a977bf72afa06c8a80fc8a3fcfbc" },
-    { "path": "tests/fixtures/miragemesh/C02/invalid.json", "sha256": "18940f074bc6820e43f5f3c5eb3429ae8d85a8abb059c9b6d6c6d0a3397d1f7e" },
-    { "path": "tests/fixtures/miragemesh/C02/expected-output.json", "sha256": "a1c8493d7edc7ce45a0868ed71915683eb85f040dabc5d843c26a5a693f45714" },
-    {"path": "tests/fixtures/miragemesh/C04/expected-output.json", "sha256": "1217f19c5f1fcaa1836af2965113825bb90ef05f806f5e824be2adb718daeb21"},
-    {"path": "tests/fixtures/miragemesh/C04/invalid.json", "sha256": "38c164e5b51f9b17c9de2017ea34e035364331744b0ca8b1a9bb605a8e2ca518"},
-    {"path": "tests/fixtures/miragemesh/C04/positive.json", "sha256": "fccd401aa272bc5a8930eeb61d3678922597ba7471d07f07488218b0e388da0a"}
+    {
+      "path": "tests/fixtures/miragemesh/C01/positive.json",
+      "sha256": "b91f21e1a45f24f2c43af88b9ffca84c3f42338de02b22ed1fdee6c7b3d79bba"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C01/invalid.json",
+      "sha256": "33eefcf744547e4b9fd2530caef29f0763adfb609d2bc0183b00992636d30876"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C01/expected-output.json",
+      "sha256": "6563cfe200ae660f1608419cd25ec9caa4224831c66898dd0a691e3cbd36056b"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C02/positive.json",
+      "sha256": "39fbe47717e0ee5df53c18ac5841d165aa54a977bf72afa06c8a80fc8a3fcfbc"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C02/invalid.json",
+      "sha256": "18940f074bc6820e43f5f3c5eb3429ae8d85a8abb059c9b6d6c6d0a3397d1f7e"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C02/expected-output.json",
+      "sha256": "a1c8493d7edc7ce45a0868ed71915683eb85f040dabc5d843c26a5a693f45714"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C04/expected-output.json",
+      "sha256": "1217f19c5f1fcaa1836af2965113825bb90ef05f806f5e824be2adb718daeb21"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C04/invalid.json",
+      "sha256": "38c164e5b51f9b17c9de2017ea34e035364331744b0ca8b1a9bb605a8e2ca518"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C04/positive.json",
+      "sha256": "fccd401aa272bc5a8930eeb61d3678922597ba7471d07f07488218b0e388da0a"
+    }
   ]
 }

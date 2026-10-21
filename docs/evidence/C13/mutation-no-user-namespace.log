@@ -1,0 +1,5 @@
+--- FAIL: TestDecoyIsolationDeniesInternetAndPrivateSubnets (2.04s)
+    egress_test.go:289: starting the isolated decoy: decoy: the provider did not honour the isolation policy: the container exited before it served
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	2.047s
+FAIL

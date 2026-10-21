@@ -114,10 +114,12 @@
     },
     {
       "id": "C13",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C13.json"
+      ],
+      "source_identity": "sha256:3e324818d92cedb616dd3845e6de29d8062f8bac152433dcd658f561b532aee3",
+      "notes": "F07 verified locally: the decoy runs in a rootless container with no network, no capabilities, no host namespace, a read-only root filesystem and hard process and memory limits. The supervisor states the policy, the Podman adapter applies it and the supervisor verifies the observed runtime state before it reports a running decoy; a container that does not match the policy is removed and reported as an explicit failure. The C12 handler itself runs inside the container and records its observations in the durable C05 store. Seven anchors cover the egress denial, the runtime limits, the restart reconciliation, the provider failures, the policy validation, the cleanup and the limited permission of the adapter; four deliberate mutations were caught. No decoy surface is published, the image is pinned by digest and inventoried, no remote Actions run and no product readiness is claimed."
     },
     {
       "id": "C14",

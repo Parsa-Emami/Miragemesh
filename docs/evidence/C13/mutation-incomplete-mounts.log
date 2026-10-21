@@ -1,0 +1,8 @@
+--- FAIL: TestDecoyIsolationPolicyRejectsUnsafeConfiguration (0.42s)
+    egress_test.go:533: missing-artifact-mount error = <nil>, want decoy: invalid isolation policy
+    egress_test.go:536: missing-artifact-mount returned a supervisor
+    egress_test.go:533: missing-state-mount error = <nil>, want decoy: invalid isolation policy
+    egress_test.go:536: missing-state-mount returned a supervisor
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.428s
+FAIL

@@ -1,0 +1,35 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C13 isolation policy and expectations. The image reference is the pinned upstream Alpine Linux image recorded in docs/engineering/toolchain-lock.json; the probe targets are public addresses and the documentation ranges of the private address space. No credential, customer, host or production data is present.",
+  "image": "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
+  "image_digest": "sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
+  "image_platform": "linux/amd64",
+  "image_version": "3.23.2",
+  "memory_bytes": 67108864,
+  "pids_limit": 32,
+  "sensor_id": "decoy-01",
+  "listen": "127.0.0.1:8080",
+  "host_target": "/usr/local/bin/decoy",
+  "host_command": "/usr/local/bin/decoy",
+  "store_target": "/var/lib/miragemesh",
+  "egress_targets": [
+    "1.1.1.1:80",
+    "8.8.8.8:53"
+  ],
+  "private_subnet_targets": [
+    "10.0.0.1:80",
+    "172.16.0.1:80",
+    "192.168.0.1:80"
+  ],
+  "expected": {
+    "network_mode": "none",
+    "capabilities": "0000000000000000",
+    "routes": 0,
+    "egress_connected": false,
+    "process_limit_held": true,
+    "memory_limit_held": true,
+    "recorded_observations": 1,
+    "recorded_path": "/health"
+  }
+}

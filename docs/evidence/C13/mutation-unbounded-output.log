@@ -1,0 +1,5 @@
+--- FAIL: TestDecoyIsolationAdapterBoundsRuntimeOutput (0.02s)
+    egress_workflow_test.go:199: the captured output is 4000000 bytes
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.023s
+FAIL

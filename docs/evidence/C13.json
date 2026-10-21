@@ -1,0 +1,692 @@
+{
+  "commit_id": "C13",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "date": "2026-10-21",
+  "base_commit": "cde5ab68f58a40ba346ddc4fe010597fea8be99d",
+  "source_identity": "sha256:3e324818d92cedb616dd3845e6de29d8062f8bac152433dcd658f561b532aee3",
+  "source_manifest": "docs/evidence/C13/source-files.json",
+  "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes) over tracked and non-ignored untracked files; docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded because they publish this identity themselves.",
+  "scope": "F07 decoy isolation: the C12 decoy handler runs inside a rootless container that has no network at all, no capabilities, no host namespace and a read-only root filesystem, bounded by a hard process and memory limit. The supervisor states the policy, the limited container provider applies it and the supervisor verifies the observed and the effective controls before it reports a running decoy. The engine starts the isolated decoy with --decoy-isolation and propagates the typed outcome.",
+  "owner_scope_resolution": "The owner approved the internal decoy isolation on the C13 card targets, a test only decoy host that runs the real C12 handler inside the container, the image locked by full digest with its provenance and licenses recorded, a minimal runtime workflow preparation, and a minimal extension of the C12 anchor. The reviews required the mount roles bound to the fixed container targets, the immutability of the validated policy, the verification of the exact and the effective runtime controls, the reporting of a failed cleanup, the wiring of the typed outcome into the supported engine workflow, a digest pinned image with no implicit pull, the cancellation of the runtime calls, a bounded capture of the runtime output, the use of the versioned expected outcome fixture, the rollback of a container that an uncertain start may have created, the signals of the operator in the workflow and the explicit removal before the outcome is written. All of them are implemented and each one is proved by a mutation and a regression. No commit, push or publication was requested or performed. The last review required that the runtime copies no proxy setting of the host into the decoy, that the command fails when it cannot deliver its typed result and that the restart regression compares the exact number of the stored observations. All three are implemented, proved by a regression and recorded in the evidence.",
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0 from /home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm, the CLI pinned by package.json packageManager",
+    "npm_bundled_with_node": "11.17.0 at /home/amirreza/.nvm/versions/node/v24.19.0/lib/node_modules/npm/bin/npm-cli.js. It is the npm that ships with the Node bundle and it was not used for any recorded project command.",
+    "go": "1.27.2 through the official Go toolchain mechanism (GOTOOLCHAIN=go1.27.2, GOSUMDB=sum.golang.org)",
+    "os": "Linux x86_64 (7.0.0-38-generic)",
+    "filesystem": "ext4",
+    "providers": "rootless Podman 4.9.3 and the pinned Alpine Linux image docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62, recorded in docs/engineering/toolchain-lock.json. The cgroup v2 delegation of the host applies the memory and process limits.",
+    "hardware_target": "C28 target remains unmeasured; no capacity certification.",
+    "details": "docs/evidence/C13/environment.log"
+  },
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "node --version && /home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm --version && node /home/amirreza/.nvm/versions/node/v24.19.0/lib/node_modules/npm/bin/npm-cli.js --version && go version && uname -srmo && findmnt -T . -n -o FSTYPE && git rev-parse HEAD && command -v strace && podman --version && podman info --format '{{.Host.Security.Rootless}}' && podman image inspect docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 --format '{{.Digest}} {{.Architecture}}/{{.Os}}'"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/environment.log",
+      "elapsed_seconds": 1.977
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-fund"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/install.log",
+      "elapsed_seconds": 1.496
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/repository.log",
+      "elapsed_seconds": 0.16
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/python-tests.log",
+      "elapsed_seconds": 0.681
+    },
+    {
+      "argv": [
+        "python3",
+        "scripts/plan.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/plan-python.log",
+      "elapsed_seconds": 0.072
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "mkdir -p dist/ci && go test -race -count=1 -json ./... > dist/ci/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/engine-tests.jsonl",
+      "elapsed_seconds": 25.458
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "dist/ci/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/discovery.log",
+      "elapsed_seconds": 0.027
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "tests/engineering/engine-tests.test.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/discovery-regression.log",
+      "elapsed_seconds": 2.283
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "./tests",
+        "-run",
+        "^TestDecoyIsolation",
+        "-count=1",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/focused.log",
+      "elapsed_seconds": 17.812
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "./tests",
+        "-run",
+        "^TestDecoy(Records|Never|Bounds|Rejects|Fails|Observations)",
+        "-count=1",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/handler-anchors.log",
+      "elapsed_seconds": 0.774
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-count=1",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/standard-tests.log",
+      "elapsed_seconds": 25.149
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "c13_formatting=$(gofmt -l cmd internal tests); test -z \"$c13_formatting\""
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/format.log",
+      "elapsed_seconds": 0.044
+    },
+    {
+      "argv": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/vet.log",
+      "elapsed_seconds": 0.248
+    },
+    {
+      "argv": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "dist/engine/miragemesh",
+        "./cmd/miragemesh"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/build.log",
+      "elapsed_seconds": 1.087
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/check.log",
+      "elapsed_seconds": 14.017
+    },
+    {
+      "argv": [
+        "./node_modules/.bin/playwright",
+        "test",
+        "--config",
+        "/tmp/opencode/c12/playwright.local.config.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/browser-alt-port.log",
+      "elapsed_seconds": 1.872
+    },
+    {
+      "argv": [
+        "go",
+        "test",
+        "-c",
+        "-o",
+        "dist/ci/c13-tests",
+        "./tests"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/network-build.log",
+      "elapsed_seconds": 1.108
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "cd tests && strace -f -e trace=network,execve -o ../docs/evidence/C13/network.trace ../dist/ci/c13-tests -test.run \"^TestDecoy(Records|Never|Bounds|Rejects|Fails|Observations)\" -test.count=1"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/network-tests.log",
+      "elapsed_seconds": 0.78
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "podman --version && test \"$(podman --version | awk '{print $3}')\" = \"4.9.3\" && test \"$(podman info --format '{{.Host.Security.Rootless}}')\" = \"true\" && test \"$(podman image inspect docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 --format '{{.Digest}}')\" = \"sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62\" && podman run --rm --network=none --memory=67108864 --memory-swap=67108864 docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 sh -c 'test \"$(cat /sys/fs/cgroup/memory.max)\" = 67108864'"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/workflow-provider.log",
+      "elapsed_seconds": 3.359
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "prepare:web"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/prepare.log.gz",
+      "elapsed_seconds": 0.233,
+      "note": "Raw npm output preserved byte-for-byte as gzip because the captured bytes end with a blank line."
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "package:web"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/package.log",
+      "elapsed_seconds": 0.419
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "cd dist/release && sha256sum --check SHA256SUMS.txt"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/package-checksums.log",
+      "elapsed_seconds": 0.006
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "validate:plan"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/plan.log",
+      "elapsed_seconds": 0.227
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "plan",
+        "--",
+        "next"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/next-task.log",
+      "elapsed_seconds": 0.275
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C13/verify-clone.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/clone.log",
+      "elapsed_seconds": 34.772
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "go test -race -count=1 -json ./... > dist/ci/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/final-race.jsonl",
+      "elapsed_seconds": 22.44
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "dist/ci/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/final-discovery.log",
+      "elapsed_seconds": 0.025
+    },
+    {
+      "argv": [
+        "bash",
+        "-c",
+        "c13_formatting=$(gofmt -l cmd internal tests); test -z \"$c12_formatting\""
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/final-format.log",
+      "elapsed_seconds": 0.012
+    },
+    {
+      "argv": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/final-vet.log",
+      "elapsed_seconds": 0.109
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "validate:plan"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/final-plan.log",
+      "elapsed_seconds": 0.141
+    },
+    {
+      "argv": [
+        "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/.bin/npm",
+        "run",
+        "plan",
+        "--",
+        "next"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/final-next-task.log",
+      "elapsed_seconds": 0.14
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/evidence/C13/verify-source.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/final-source-verify.log",
+      "elapsed_seconds": 0.046
+    },
+    {
+      "argv": [
+        "python3",
+        "/tmp/opencode/c13/diff.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C13/final-diff.log.gz",
+      "elapsed_seconds": 0.06,
+      "note": "Raw diff output preserved byte-for-byte as gzip because the captured diff contains context lines that end with a space."
+    }
+  ],
+  "results": {
+    "go_top_level_tests": 85,
+    "discovery_suites": 4,
+    "required_test_anchors": 68,
+    "node_tests": 45,
+    "browser_tests": 3,
+    "python_integrity_tests": 6,
+    "c13_negative_fixture_rows": 24,
+    "mutation_checks_caught": 13,
+    "network_syscalls_in_handler_tests": 0,
+    "process_executions_in_handler_tests": 1,
+    "lint": "Go format and vet; no standalone JavaScript lint script is configured.",
+    "typecheck": "Passed via npm run check.",
+    "build": "Web and engine passed via npm run check; the engine also built directly.",
+    "dependencies": "No dependency or lockfile changes.",
+    "next_task": "C14"
+  },
+  "acceptance_checks": [
+    {
+      "acceptance": "Decoy cannot call Internet or operational private subnets; PID and memory limits hold.",
+      "result": "verified",
+      "evidence": "TestDecoyIsolationDeniesInternetAndPrivateSubnets starts the real C12 handler inside the isolated container and proves three things with the real provider. First the container has no route: the probe reports zero routes in /proc/net/route and every direct outbound attempt answers network is unreachable, for 1.1.1.1:80, 8.8.8.8:53, 10.0.0.1:80, 172.16.0.1:80 and 192.168.0.1:80. Second the decoy itself still works: the probe reaches the C12 handler on the loopback of the container and the observation lands in the durable C05 store on the host. Third the container is unprivileged: the effective and the bounding capability set of the process are both empty, the runtime reports the dropped capabilities, the read-only root filesystem and the privilege protection. The inherited proxy settings of the operator are cleared inside the container, so an egress attempt cannot be tunnelled through them. TestDecoyIsolationEnforcesPIDAndMemoryLimits proves the limits with the real cgroup: pids.max is the policy value, memory.max is the policy value, memory.swap.max is 0, a fork storm is refused with the process limit and an allocation above the limit is killed, which the cgroup memory.events oom_kill counter records, while the decoy keeps serving. The observed results are compared with the versioned fixture tests/fixtures/miragemesh/C13/expected-output.json, so the declared outcomes cannot drift. The engine workflow starts the isolated decoy with --decoy-isolation, verifies the observed and the effective controls, removes the container again and writes the typed outcome only after the removal succeeded."
+    }
+  ],
+  "negative_case_checks": [
+    {
+      "case": "Missing prerequisites, malformed fixtures or unavailable required providers produce an explicit error rather than placeholder success.",
+      "result": "verified",
+      "evidence": "TestDecoyIsolationProviderFailuresAreExplicit drives the provider: a missing runtime binary returns decoy.ErrProviderUnavailable, an image that is not present locally returns the explicit missing image error and a runtime that reports a non rootless host returns the explicit not rootless error. The provider never pulls an image and every run refuses an implicit pull, so a missing image cannot be fetched silently. TestDecoyIsolationPolicyRejectsUnsafeConfiguration covers the twenty-four fixture rows: an empty image, a mutable tag, an empty command, a requested egress posture, a root user, a named root user, a missing memory limit, a missing process limit, a relative mount, a writable artifact, an extra writable mount, an unknown mount role, a duplicate mount target, a proxy setting, an invalid container name, a missing artifact mount, a missing state mount, a wrong artifact target, a wrong state target, a read-only state and an extra mount all return decoy.ErrInvalidPolicy, and no supervisor is returned. The provider checks the host side of the mounts as well: the artifact must be a regular file and the state must be a directory. A runtime that cannot apply the memory limit fails the policy verification instead of reporting the limit as held."
+    },
+    {
+      "case": "Repeat after restart and verify the declared invariant and documented recovery outcome.",
+      "result": "verified",
+      "evidence": "TestDecoyIsolationReconcilesAfterRestart starts a decoy, sends a real C12 request through the first container, then a second supervisor with the same container name starts again: the container of the earlier supervisor is gone, the new container has a different identity and the policy is verified again. After the replacement is stopped the same C05 store is reopened and the observation of the first container is still there, with its path and its sequence, and the store holds exactly the number of observations the fixture declares, so a duplicate would fail the regression. A decoy container is never reused across supervisor restarts; the durable state lives outside the container in the C05 store. TestDecoyIsolationStopsAndRemovesItsContainer proves that the stop removes the container and that a second stop is not an error, so the cleanup leaves no leaked runtime resource behind. TestDecoyIsolationReportsCleanupFailure proves that a removal that fails is reported together with the failure that caused it, so a container that stayed behind is never hidden."
+    },
+    {
+      "case": "No egress by default",
+      "result": "verified",
+      "evidence": "The policy admits only the denied egress posture, so no configuration can ask for outbound access, and the adapter always passes the network none argument, the private namespaces, the dropped capabilities, the privilege protection, the read-only root filesystem, the unprivileged user and the cleared proxy settings. The container of the decoy has no interface and no route, so neither the Internet nor an operational private subnet is reachable. TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime keeps the one new permission limited: the isolation adapter is the only package that may run another program, it may use os/exec for the container runtime and nothing else, and it may not use a network client or a shell."
+    }
+  ],
+  "security_review": {
+    "verification": "The supervisor compares the observed runtime state with the policy before it reports a decoy: the state, the network mode, the requested limits, the read-only root filesystem, the user, the privilege protection and the capability sets. It compares the effective controls as well: the effective and the bounding capability set of the container process must be empty and the control group of the container must carry the process limit and the memory limit of the policy with a swap limit of zero. A mismatch removes the container and reports an explicit failure, so an unverified decoy is never reported.",
+    "atomicity": "One container is started per supervisor. The sequence of reconcile, start, wait and verify is bounded: the supervisor waits for the running state and reports the state it reached when the container leaves it.",
+    "data_bounds": "The decoy handler keeps its C12 bounds inside the container: the request size, the path length and the version 1 event payload limit are unchanged, and the durable store keeps its own quotas. The adapter keeps at most one MiB of the output of a runtime call and drops the rest while the call continues, so a noisy runtime cannot grow the memory of the engine.",
+    "egress": "The container has no network namespace interface, no route and no resolver. The operator proxy settings are cleared inside the container, so a denied attempt cannot be tunnelled. The runtime copies no proxy setting of the host into the container at all: the run arguments carry --http-proxy=false and every proxy variable is explicitly emptied, so a host proxy URL or credential never reaches the decoy process. The decoy package itself still cannot dial out: the C12 anchor is unchanged and still rejects every net/http identifier that is not a handler API.",
+    "privileges": "The container runs with all capabilities dropped, no new privileges, a read-only root filesystem, an unprivileged user and private IPC, UTS, PID and cgroup namespaces. The effective capability set of the process is zero.",
+    "filesystem": "The decoy artifact is mounted read-only at the fixed target /usr/local/bin/decoy and the durable state is mounted writable at the fixed target /var/lib/miragemesh, at the identity of the operator, so the C05 ownership and mode rules keep holding inside and outside the container. A policy accepts exactly these two roles and targets, the provider checks that the artifact is a regular file and the state is a directory, and the engine prepares the state directory and refuses one that is not private to its owner. A policy can therefore never expose an unrelated host path to the decoy.",
+    "known_limits": "The local clock and the private store remain trusted. The container has no inbound path, so the decoy is not published to untrusted peers; that is later workflow work. A rootless runtime without cgroup delegation cannot apply the memory limit and fails the verification instead of reporting the limit as held. The engine workflow verifies one isolated decoy and removes it again; it does not keep a decoy running."
+  },
+  "failed_attempts": [
+    {
+      "expected": true,
+      "phase": "Discovery guard RED",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C13/discovery-red.log",
+      "note": "Removing a C13 anchor was accepted by the old discovery guard; the regression failed. The guard now requires all seven new anchors."
+    },
+    {
+      "expected": true,
+      "phase": "First isolated decoy start",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C13/first-start.log",
+      "note": "The decoy store of the container could not be opened: the test created the store directory with the mode of the umask of the test process while the C05 adapter requires a private directory of the owner. The test now creates the store with the mode the contract requires."
+    },
+    {
+      "expected": true,
+      "phase": "First container start without the user namespace",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C13/first-start.log",
+      "note": "The container ran the decoy as a mapped identity, so the durable store of the host was owned by another identity inside the container and the C05 ownership rule failed. The adapter now keeps the identity of the operator."
+    },
+    {
+      "expected": false,
+      "phase": "Clean-clone run with the observed mTLS race",
+      "exit_code": 1,
+      "output_path": "docs/evidence/C13/clone.log",
+      "note": "The clone verification failed in the unrelated C09 anchor TestMTLSRejectsIssuersWithoutRevocationCoverage with a TCP broken pipe. The rejected collector closes the connection after the handshake, so the write of the payload raced that close. The test helper now treats a closed connection as the rejection it is, thirty consecutive race runs of the anchor and five consecutive runs of the whole package pass, and the clean-clone verification was repeated."
+    }
+  ],
+  "mutation_checks": [
+    {
+      "mutation": "no-memory-limit",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationEnforcesPIDAndMemoryLimits$",
+      "output_path": "docs/evidence/C13/mutation-no-memory-limit.log",
+      "note": "The memory and swap arguments removed make the observed limit differ from the policy; the supervisor refuses the container."
+    },
+    {
+      "mutation": "no-process-limit",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationEnforcesPIDAndMemoryLimits$",
+      "output_path": "docs/evidence/C13/mutation-no-process-limit.log",
+      "note": "The process limit argument removed makes the observed limit differ from the policy; the supervisor refuses the container."
+    },
+    {
+      "mutation": "privileged-container",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationDeniesInternetAndPrivateSubnets$",
+      "output_path": "docs/evidence/C13/mutation-privileged-container.log",
+      "note": "The dropped capabilities and the unprivileged user removed leave a bounding capability set; the effective control check refuses the container."
+    },
+    {
+      "mutation": "no-user-namespace",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationDeniesInternetAndPrivateSubnets$",
+      "output_path": "docs/evidence/C13/mutation-no-user-namespace.log",
+      "note": "The identity of the operator removed makes the durable store of the container unusable, so the decoy exits and the supervisor reports it."
+    },
+    {
+      "mutation": "no-pull-policy",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationAdapterBoundsRuntimeOutput$",
+      "output_path": "docs/evidence/C13/mutation-no-pull-policy.log",
+      "note": "The argument that refuses an implicit pull removed fails the argument vector assertion of the adapter."
+    },
+    {
+      "mutation": "no-cancellation",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationAdapterHonorsCancellation$",
+      "output_path": "docs/evidence/C13/mutation-no-cancellation.log",
+      "note": "The cancellation branch of the runtime call removed reports a killed runtime instead of the cancellation of the caller."
+    },
+    {
+      "mutation": "unbounded-output",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationAdapterBoundsRuntimeOutput$",
+      "output_path": "docs/evidence/C13/mutation-unbounded-output.log",
+      "note": "The bound of the captured output removed lets the noisy runtime grow the memory of the engine; the regression fails."
+    },
+    {
+      "mutation": "no-digest-requirement",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationPolicyRejectsUnsafeConfiguration$",
+      "output_path": "docs/evidence/C13/mutation-no-digest-requirement.log",
+      "note": "The digest requirement of the policy removed accepts a mutable image reference; the regression fails."
+    },
+    {
+      "mutation": "no-mount-roles",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationPolicyRejectsUnsafeConfiguration$",
+      "output_path": "docs/evidence/C13/mutation-no-mount-roles.log",
+      "note": "The role check of the mounts removed accepts a writable artifact and an unknown role; the regression fails."
+    },
+    {
+      "mutation": "no-policy-copy",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationPolicyIsImmutable$",
+      "output_path": "docs/evidence/C13/mutation-no-policy-copy.log",
+      "note": "The defensive copy of the policy removed lets the caller change the mounts of a running supervisor; the regression fails."
+    },
+    {
+      "mutation": "no-effective-verification",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationRejectsWeakRuntimeControls$",
+      "output_path": "docs/evidence/C13/mutation-no-effective-verification.log",
+      "note": "The effective capability and limit checks removed accept a container with weaker controls; the regression fails."
+    },
+    {
+      "mutation": "no-cleanup-report",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationReportsCleanupFailure$",
+      "output_path": "docs/evidence/C13/mutation-no-cleanup-report.log",
+      "note": "The reported cleanup failure removed hides a container that stayed behind; the regression fails."
+    },
+    {
+      "mutation": "incomplete-mounts",
+      "exit_code": 1,
+      "assertion_caught": true,
+      "test": "^TestDecoyIsolationPolicyRejectsUnsafeConfiguration$",
+      "output_path": "docs/evidence/C13/mutation-incomplete-mounts.log",
+      "note": "The completeness of the mounts removed accepts a policy without the artifact or the state; the regression fails."
+    }
+  ],
+  "observed_limitations": [
+    "No decoy surface is published: the container has no network at all, so the decoy address is reachable only from inside its own namespace. Publishing the decoy to untrusted peers with the outbound denial kept is later workflow work.",
+    "The engine workflow verifies one isolated decoy and removes it again; it does not keep a decoy running. A persistent decoy service is later workflow work.",
+    "The memory limit needs a rootless runtime with cgroup delegation. A runtime without it fails the policy verification; the limit is never reported as held because it was requested.",
+    "The provider is the only place that runs another program. It runs the container runtime with a fixed argument vector, without a shell and without a network client, and it never pulls an image.",
+    "The pinned image is not redistributed by MirageMesh. Its digest, platform, provenance and the license of every component are recorded in docs/engineering/toolchain-lock.json; the image contains a GPL-2.0-only busybox component, which the operator accepts by pulling it.",
+    "The decoy host of the tests is a test fixture, not a product listener: it exists so that the real C12 handler runs under the isolation policy and so that the probes measure the isolation from inside the container. The decoy artifact of the engine workflow is supplied by the operator; the decoy service binary is later work.",
+    "The state directory of the workflow must be writable by the operator: a rootless installation cannot write into /var/lib, so the examples use a user owned path and the engine refuses a state path that is not a private directory of the owner.",
+    "Remote GitHub Actions execution is unverified. The local workflow commands, including the new provider and image preparation step, are recorded separately; no push or publication was performed.",
+    "The C12 card and plans/roadmap.json are unchanged. The C12 evidence stays bound to its own historical source; the C12 anchor of the decoy package is extended, not weakened.",
+    "No commit was created: the owner did not request one, and no push or publication is authorized."
+  ],
+  "rollback_or_recovery_observation": "The change adds a new package, a new decoy file and a test fixture. Reverting them removes the isolation and leaves the C12 decoy untouched. A running decoy container is removed by the supervisor; a container left behind by an earlier run is removed by the next start. The durable observations live outside the container in the C05 store, so they survive a restart and must be preserved like any other accepted event.",
+  "delivery": {
+    "delivery_commit_created": false,
+    "push_authorized": false,
+    "publication_authorized": false,
+    "local_commit_authorized": false,
+    "commit_subject": null,
+    "commit_identity": "No commit was created. The owner did not request one; the delivery stays in the working tree."
+  },
+  "verification_notes": "Commands use the locked local Go 1.27.2 and Node 24.19.0 toolchains with the official checksum database, and every recorded npm command runs the npm 11.9.0 CLI pinned by package.json. The isolation anchors and the discovery regression were written before their implementation. Thirteen deliberate mutations of the isolation sources were caught by behavioural assertions and every source was restored byte-for-byte: the memory limit, the process limit, the privileged container, the user namespace, the pull policy, the cancellation, the bound of the captured output, the digest requirement, the mount roles, the completeness of the mounts, the copy of the policy, the effective control verification and the report of a failed cleanup. The source identity, the evidence and the progress entry publish the same source; the final source inventory and the clean-clone snapshot bind the final source separately. The browser suite was executed on the free port 4180 because an unrelated process of another project holds the repository port 4173 on this host.",
+  "source_file_count": 399,
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C13 isolation policy, negative cases and expectations. The image reference is the pinned upstream Alpine Linux image recorded in docs/engineering/toolchain-lock.json; the probe targets are public addresses and the documentation ranges of the private address space. No credential, customer, host or production data is present.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C13/expected-output.json": "59624921ea0b46f766a821429cb7cbd2314d9fce4256026f9b16bcf4946ac190",
+      "tests/fixtures/miragemesh/C13/invalid.json": "aef721b261af73b2e5a54e19cf4a4de92465cb2e9db6fe9a00dd961b31020a97",
+      "tests/fixtures/miragemesh/C13/positive.json": "00c25b55de6f3333119362e4c5a9447930dea45c2790a211777250cee8045aa0"
+    }
+  },
+  "evidence_log_encoding": "Selected raw terminal logs are gzip compressed to preserve their original output bytes while satisfying git diff --check.",
+  "changed_paths": [
+    ".github/workflows/runtime.yml",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/browser-alt-port.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/build.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/candidate-diff-stat.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/check.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/clone.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/commands.jsonl",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/discovery-red.log.gz",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/discovery-regression.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/discovery.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/engine-tests.jsonl",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/engine-tests.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/environment.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/final-diff.log.gz",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/final-discovery.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/final-format.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/final-next-task.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/final-plan.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/final-race.jsonl",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/final-race.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/final-source-verify.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/final-vet.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/first-start.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/focused.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/format.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/handler-anchors.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/install.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-incomplete-mounts.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-no-cancellation.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-no-cleanup-report.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-no-digest-requirement.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-no-effective-verification.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-no-memory-limit.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-no-mount-roles.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-no-policy-copy.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-no-process-limit.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-no-pull-policy.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-no-user-namespace.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-privileged-container.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/mutation-unbounded-output.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/network-build.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/network-tests.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/network.trace",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/next-task.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/package-checksums.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/package.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/plan-python.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/plan.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/prepare.log.gz",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/python-tests.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/repository.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/source-files.json",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/standard-tests.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/verify-clone.py",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/verify-source.py",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/vet.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/docs/evidence/C13/workflow-provider.log",
+    "/home/amirreza/Desktop/Projects/Miragemesh/internal/podman/podman.go",
+    "/home/amirreza/Desktop/Projects/Miragemesh/tests/decoyhost/main.go",
+    "/home/amirreza/Desktop/Projects/Miragemesh/tests/fixtures/miragemesh/C13/expected-output.json",
+    "/home/amirreza/Desktop/Projects/Miragemesh/tests/fixtures/miragemesh/C13/invalid.json",
+    "/home/amirreza/Desktop/Projects/Miragemesh/tests/fixtures/miragemesh/C13/positive.json",
+    "apps/web/src/generated/project.json",
+    "cmd/miragemesh/isolation.go",
+    "cmd/miragemesh/main.go",
+    "cmd/miragemesh/main_test.go",
+    "docs/ROADMAP_FA.md",
+    "docs/agents/SESSION_HANDOFF.json",
+    "docs/architecture/DECOY_ISOLATION.md",
+    "docs/engineering/CLONE_TO_RUN.md",
+    "docs/engineering/ENGINE_TESTS.md",
+    "docs/engineering/toolchain-lock.json",
+    "docs/evidence/C13.json",
+    "docs/product/REFERENCE_WORKFLOW.md",
+    "internal/decoy/isolation.go",
+    "plans/progress.json",
+    "plans/project-state.json",
+    "scripts/verify-engine-tests.mjs",
+    "tests/decoy_test.go",
+    "tests/egress_test.go",
+    "tests/egress_workflow_test.go",
+    "tests/engineering/engine-tests.test.mjs",
+    "tests/mtls_test.go"
+  ],
+  "local_clone_verification": {
+    "passed": true,
+    "proof": "Staged working tree in a temporary index, git diff --cached --check, then npm run test:clone: real git clone, npm run setup, go vet, the race engine suite with the discovery guard, the engine event validation and the unified web and Go runtime startup. The isolated decoy anchors run inside the clone as well.",
+    "output_path": "docs/evidence/C13/clone.log",
+    "delivery_commit": false,
+    "remote_runner": false
+  }
+}

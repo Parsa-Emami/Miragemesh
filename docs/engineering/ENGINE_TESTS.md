@@ -232,3 +232,52 @@ requests and expectations; the marker value exists only to prove that request
 content is never echoed or recorded. C12 adds no listener, no container and no
 network provider, so these are local component proofs and not isolation,
 egress-denial or remote-runner results.
+
+## C13 required anchors
+
+C13 requires `TestDecoyIsolationDeniesInternetAndPrivateSubnets`,
+`TestDecoyIsolationEnforcesPIDAndMemoryLimits`,
+`TestDecoyIsolationReconcilesAfterRestart`,
+`TestDecoyIsolationProviderFailuresAreExplicit`,
+`TestDecoyIsolationPolicyRejectsUnsafeConfiguration`,
+`TestDecoyIsolationStopsAndRemovesItsContainer`,
+`TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime`,
+`TestDecoyIsolationRejectsWeakRuntimeControls`,
+`TestDecoyIsolationReportsCleanupFailure`,
+`TestDecoyIsolationPolicyIsImmutable`,
+`TestDecoyIsolationAdapterBoundsRuntimeOutput`,
+`TestDecoyIsolationAdapterHonorsCancellation`,
+`TestDecoyIsolationWorkflowReportsTypedOutcome` and
+`TestDecoyIsolationWorkflowReportsMissingPrerequisites` in `tests`.
+
+The isolation anchors need the real rootless container provider and the
+pinned image of `docs/engineering/toolchain-lock.json`. The provider is
+Podman 4.9.3 and the image is
+`docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62`;
+a missing provider, a runtime that is not rootless and a missing image are
+explicit failures, never a skipped test. The runtime must be able to apply the
+memory limit: a rootless runtime without cgroup delegation fails the
+verification instead of reporting the limit as held.
+
+The decoy inside the container is the real C12 handler, served by the test only
+host `tests/decoyhost`. The host is a test fixture and not a product listener:
+it exists so that the C12 handler itself runs under the isolation policy and so
+that the probes measure the isolation from inside the container. The probes
+cover the outbound attempt to the Internet and to the private address space,
+the process limit, the memory limit, the effective capabilities, the cgroup
+limits and the route table.
+
+The isolation adapter is the only package that may run another program. Its
+import set and the identifiers it takes from `os`, `os/exec` and `syscall` are
+checked separately: it may resolve the runtime, run it, read the temporary
+directory and the bookkeeping of the container it started, and nothing else.
+It may not use a network client or a shell. The C12 rules of the decoy
+package itself are unchanged: the handler still cannot egress, run a command
+or read a file.
+
+The workflow regressions run the engine binary with `--decoy-isolation` and
+compare its typed outcome, so the isolation is proved through the supported
+engine workflow and not only through the package. The expected outcomes of
+the integration run are read from the versioned fixture
+`tests/fixtures/miragemesh/C13/expected-output.json` and compared with the
+observed results, so the fixture cannot drift.

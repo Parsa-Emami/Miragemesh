@@ -1,0 +1,5 @@
+--- FAIL: TestDecoyIsolationAdapterHonorsCancellation (2.10s)
+    egress_workflow_test.go:241: the cancelled call reported a result
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	2.107s
+FAIL

@@ -1,0 +1,5 @@
+# github.com/Parsa-Emami/Miragemesh/internal/decoy
+internal/decoy/isolation.go:419:4: undefined: artifacts
+internal/decoy/isolation.go:421:4: undefined: states
+FAIL	github.com/Parsa-Emami/Miragemesh/tests [build failed]
+FAIL

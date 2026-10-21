@@ -1,0 +1,27 @@
+1570861 execve("../dist/ci/c13-tests", ["../dist/ci/c13-tests", "-test.run", "^TestDecoy(Records|Never|Bounds|"..., "-test.count=1"], 0x7ffdb778b2c0 /* 86 vars */) = 0
+1570861 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570861 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570861 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570861 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570861 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570861 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570868 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570868 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570868 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570868 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570868 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570868 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570866 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570866 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570868 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570861 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570861 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570861 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=1570861, si_uid=1000} ---
+1570868 +++ exited with 0 +++
+1570865 +++ exited with 0 +++
+1570869 +++ exited with 0 +++
+1570867 +++ exited with 0 +++
+1570866 +++ exited with 0 +++
+1570863 +++ exited with 0 +++
+1570864 +++ exited with 0 +++
+1570861 +++ exited with 0 +++

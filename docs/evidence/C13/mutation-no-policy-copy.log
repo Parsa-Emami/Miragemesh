@@ -1,0 +1,5 @@
+--- FAIL: TestDecoyIsolationPolicyIsImmutable (0.43s)
+    egress_workflow_test.go:161: the mounts of the supervisor changed: [{Source:/etc Target:/usr/local/bin/decoy Role:artifact ReadOnly:false} {Source:/tmp/TestDecoyIsolationPolicyIsImmutable2334537934/001 Target:/var/lib/miragemesh Role:state ReadOnly:false}]
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.437s
+FAIL

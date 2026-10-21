@@ -1,0 +1,23 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Expected outcomes for the repository-authored synthetic C13 isolation fixtures. The image identity is the pinned upstream image recorded in docs/engineering/toolchain-lock.json. No credential, customer, host or production data is present.",
+  "accepted_interactions": 1,
+  "egress_attempts": 5,
+  "rejected_cases": 24,
+  "observed": {
+    "network_mode": "none",
+    "capabilities": "0000000000000000",
+    "routes": 0,
+    "pids_max": 32,
+    "memory_max": 67108864,
+    "memory_swap_max": 0,
+    "process_limit_held": true,
+    "memory_limit_held": true,
+    "recorded_observations": 1,
+    "recorded_path": "/health",
+    "container_removed_on_stop": true,
+    "stale_container_reconciled": true
+  },
+  "not_claimed": "The decoy publishes no inbound surface in C13: the container has no network at all, so the decoy address is reachable only from inside its own namespace. Publishing the decoy to untrusted peers is later workflow work. No container isolation of a published decoy, no remote runner result and no product readiness is claimed here."
+}

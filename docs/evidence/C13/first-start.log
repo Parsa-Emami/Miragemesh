@@ -1,0 +1,8 @@
+# The first isolated decoy start failed with the store of the test process.
+$ go test ./tests -run ^TestDecoyIsolationDeniesInternetAndPrivateSubnets$
+    egress_test.go: starting the isolated decoy: decoy: the provider did not honour the isolation policy: the container exited before it served
+# The container output showed that the decoy could not open its durable store:
+container output: store: storage recovery required
+host store mode: 755
+# The C05 adapter requires a private directory of the owner (0700). The test created the
+# store with the mode of the umask of the test process, so the container could not open it.

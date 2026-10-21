@@ -1,0 +1,5 @@
+--- FAIL: TestDecoyIsolationReportsCleanupFailure (0.42s)
+    egress_workflow_test.go:127: the cleanup failure is hidden: decoy: the provider did not honour the isolation policy: the root filesystem is writable
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.425s
+FAIL

@@ -16,10 +16,11 @@
     "local mTLS collector identity guard: TLS 1.3-only mandatory client verification, operator fingerprint-to-sensor scope mapping, locally delivered signed CRL with fail-closed staleness; no authenticated ingest endpoint yet",
     "internal signed versioned desired state: strict typed document, Ed25519 signature over the exact payload bytes with a local operator key separate from the mTLS trust material, monotonic per-sensor revision and typed rejection that never replaces the active configuration; process state only, no HTTP/CLI/UI",
     "internal durable applied configuration via sensor.Applier and the existing C05 store: exact signed bytes and acceptance time, persisted monotonic revision, replay, bounded history and crash convergence; external settings consumers remain pending",
-    "internal metadata-only HTTP decoy: bounded requests, fixed non-echoing answers, path-only observations recorded as version 1 events under the separate decoy-01 identity through C04 validation and C05 storage; no published listener, container isolation or egress denial"
+    "internal metadata-only HTTP decoy: bounded requests, fixed non-echoing answers, path-only observations recorded as version 1 events under the separate decoy-01 identity through C04 validation and C05 storage; no published listener, container isolation or egress denial",
+    "internal decoy isolation: a rootless container with no network, no capabilities, no host namespace, a read-only root filesystem and hard process and memory limits, applied through a limited container provider and verified against the observed and the effective runtime controls, started by the engine workflow with --decoy-isolation and a typed outcome; no published decoy surface and no inbound path"
   ],
-  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation and a metadata-only HTTP decoy implemented; spool/batch consumers, authenticated ingest, decoy isolation and full workflow pending",
-  "next_task": "C13",
+  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation, a metadata-only HTTP decoy, its rootless container isolation and the engine workflow that starts it implemented; spool/batch consumers, authenticated ingest, a published decoy surface and the full workflow pending",
+  "next_task": "C14",
   "next_command": "npm run plan -- next",
   "full_product_endpoint": "C30 locally usable; C40 full published OSS v1"
 }

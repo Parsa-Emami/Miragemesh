@@ -14,6 +14,7 @@ import (
 	"os"
 	"path/filepath"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -340,14 +341,23 @@ func c09Dial(t *testing.T, address string, config *tls.Config, payload []byte) e
 		return err
 	}
 	if payload != nil {
-		if _, err := tlsConn.Write(payload); err != nil {
+		// A rejected collector closes the connection after the handshake, so
+		// the write of the payload can fail without the connection itself
+		// having failed. The verdict is observed on the server side.
+		if _, err := tlsConn.Write(payload); err != nil && !closedByPeer(err) {
 			return err
 		}
-		if err := tlsConn.CloseWrite(); err != nil {
+		if err := tlsConn.CloseWrite(); err != nil && !closedByPeer(err) {
 			return err
 		}
 	}
 	return nil
+}
+
+// closedByPeer reports the error of a connection that the peer closed.
+func closedByPeer(err error) bool {
+	return errors.Is(err, syscall.EPIPE) || errors.Is(err, syscall.ECONNRESET) ||
+		errors.Is(err, syscall.ENOTCONN) || errors.Is(err, io.EOF)
 }
 
 func c09SensorEvents(t *testing.T) [][]byte {

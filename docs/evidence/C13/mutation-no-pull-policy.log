@@ -1,0 +1,55 @@
+--- FAIL: TestDecoyIsolationAdapterBoundsRuntimeOutput (0.35s)
+    egress_workflow_test.go:213: the runtime call is missing --pull=never: exec
+        stub
+        true
+        run
+        --detach
+        --name=miragemesh-stub
+        --userns=keep-id
+        --network=none
+        --ipc=none
+        --uts=private
+        --pid=private
+        --cgroupns=private
+        --pids-limit=32
+        --memory=67108864
+        --memory-swap=67108864
+        --cap-drop=ALL
+        --security-opt=no-new-privileges
+        --read-only
+        --user=1000:1000
+        --env
+        http_proxy=
+        --env
+        https_proxy=
+        --env
+        HTTP_PROXY=
+        --env
+        HTTPS_PROXY=
+        --env
+        no_proxy=
+        --env
+        NO_PROXY=
+        --env
+        MIRAGEMESH_DECOY_STATE=/var/lib/miragemesh
+        --env
+        MIRAGEMESH_DECOY_LISTEN=127.0.0.1:8080
+        --volume
+        /tmp/miragemesh-c13-host-2050666952/decoyhost:/usr/local/bin/decoy:ro
+        --volume
+        /tmp/TestDecoyIsolationAdapterBoundsRuntimeOutput2524324311/002:/var/lib/miragemesh:rw
+        docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
+        /usr/local/bin/decoy
+        --store
+        /var/lib/miragemesh
+        --listen
+        127.0.0.1:8080
+        --sensor-id
+        decoy-01
+        --max-request-bytes
+        1024
+        --max-path-bytes
+        256
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.357s
+FAIL

@@ -1,0 +1,17 @@
+apps/web/src/lib/runtime-config.mjs: OK
+LICENSE: OK
+NOTICE: OK
+ops/web/brand.json: OK
+ops/web/nginx.conf.template: OK
+ops/web/runtime-config.json: OK
+ops/web/service.systemd: OK
+README.md: OK
+release.json: OK
+scripts/serve-web.mjs: OK
+web/assets/index-Bt6bl3tN.js: OK
+web/assets/index-Dudyu7vU.css: OK
+web/icon.svg: OK
+web/index.html: OK
+web/manifest.webmanifest: OK
+web/robots.txt: OK
+web/runtime-config.json: OK

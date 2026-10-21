@@ -166,7 +166,7 @@
       "id": "C13",
       "title": "feat(isolation): enforce decoy egress and runtime limits",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Decoy cannot call Internet or operational private subnets; PID and memory limits hold."
       ],

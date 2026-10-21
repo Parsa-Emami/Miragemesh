@@ -21,6 +21,31 @@ The same clone/setup/start sequence must prepare and supervise the actual Go eng
 
 Local resources: rootless Podman for isolated decoys. Hardware target: 2 vCPU / 2048 MiB RAM / 10240 MiB free disk plus real dataset/provider/backup space. These are unmeasured targets until C28. Full engine support initially targets Linux x86_64; other hosts require their own actual C30/C33 evidence. Rootless workloads need Linux or a tested Linux/WSL2 host.
 
+The isolated decoy of C13 runs in a rootless container and needs the pinned image of `docs/engineering/toolchain-lock.json` in the local image store:
+
+```sh
+podman pull docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
+```
+
+The provider never pulls an image itself, so the operator prepares it once. The rootless runtime must be able to apply the memory limit; a runtime without cgroup delegation fails the isolation verification instead of reporting the limit as held.
+
+The engine starts the isolated decoy and reports the typed outcome:
+
+```sh
+miragemesh --decoy-isolation \
+  --decoy-image docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 \
+  --decoy-artifact "$HOME/.local/lib/miragemesh/decoy" \
+  --decoy-state "$HOME/.local/state/miragemesh" \
+  --decoy-memory-bytes 67108864 --decoy-pids-limit 32
+```
+
+The command verifies one isolated decoy: it starts the container, verifies the
+isolation, reports the typed outcome and removes the container again. The state
+directory is created when it is missing and must be a private directory of the
+operator (mode `0700`), because the durable store of the decoy requires it. The
+decoy artifact is mounted read-only and receives the paths of its own namespace
+through the environment. See `docs/architecture/DECOY_ISOLATION.md`.
+
 `local-demo` uses synthetic fixtures and isolated development providers; `local-private` requires real identity/permission, provider durability, revocation and restore evidence before sensitive use. A development provider mode never becomes a production vault/gateway by relabeling it.
 
 ## Checks

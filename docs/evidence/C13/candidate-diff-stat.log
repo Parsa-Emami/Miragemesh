@@ -1,0 +1,84 @@
+ .github/workflows/runtime.yml                      |   8 +
+ apps/web/src/generated/project.json                |   2 +-
+ cmd/miragemesh/isolation.go                        | 223 +++++
+ cmd/miragemesh/main.go                             |  23 +
+ cmd/miragemesh/main_test.go                        |  66 ++
+ docs/ROADMAP_FA.md                                 |   2 +
+ docs/agents/SESSION_HANDOFF.json                   | 156 ++--
+ docs/architecture/DECOY_ISOLATION.md               | 166 ++++
+ docs/engineering/CLONE_TO_RUN.md                   |  25 +
+ docs/engineering/ENGINE_TESTS.md                   |  49 +
+ docs/engineering/toolchain-lock.json               | 154 +++-
+ docs/evidence/C13.json                             | 692 ++++++++++++++
+ docs/evidence/C13/browser-alt-port.log             |   8 +
+ docs/evidence/C13/build.log                        |   0
+ docs/evidence/C13/candidate-diff-stat.log          |  84 ++
+ docs/evidence/C13/check.log                        |  94 ++
+ docs/evidence/C13/clone.log                        |   0
+ docs/evidence/C13/commands.jsonl                   |  24 +
+ docs/evidence/C13/discovery-red.log.gz             | Bin 0 -> 1079 bytes
+ docs/evidence/C13/discovery-regression.log         |  22 +
+ docs/evidence/C13/discovery.log                    |   1 +
+ docs/evidence/C13/engine-tests.jsonl               | 997 +++++++++++++++++++++
+ docs/evidence/C13/engine-tests.log                 |   0
+ docs/evidence/C13/environment.log                  |  11 +
+ docs/evidence/C13/final-diff.log.gz                | Bin 0 -> 15455 bytes
+ docs/evidence/C13/final-discovery.log              |   1 +
+ docs/evidence/C13/final-format.log                 |   0
+ docs/evidence/C13/final-next-task.log              | 104 +++
+ docs/evidence/C13/final-plan.log                   |   5 +
+ docs/evidence/C13/final-race.jsonl                 | 997 +++++++++++++++++++++
+ docs/evidence/C13/final-race.log                   |   0
+ docs/evidence/C13/final-source-verify.log          |   1 +
+ docs/evidence/C13/final-vet.log                    |   0
+ docs/evidence/C13/first-start.log                  |   8 +
+ docs/evidence/C13/focused.log                      |  34 +
+ docs/evidence/C13/format.log                       |   0
+ docs/evidence/C13/handler-anchors.log              |  16 +
+ docs/evidence/C13/install.log                      |   2 +
+ docs/evidence/C13/mutation-incomplete-mounts.log   |   8 +
+ docs/evidence/C13/mutation-no-cancellation.log     |   5 +
+ docs/evidence/C13/mutation-no-cleanup-report.log   |   5 +
+ .../C13/mutation-no-digest-requirement.log         |   6 +
+ .../C13/mutation-no-effective-verification.log     |  10 +
+ docs/evidence/C13/mutation-no-memory-limit.log     |   5 +
+ docs/evidence/C13/mutation-no-mount-roles.log      |   5 +
+ docs/evidence/C13/mutation-no-policy-copy.log      |   5 +
+ docs/evidence/C13/mutation-no-process-limit.log    |   5 +
+ docs/evidence/C13/mutation-no-pull-policy.log      |  55 ++
+ docs/evidence/C13/mutation-no-user-namespace.log   |   5 +
+ .../evidence/C13/mutation-privileged-container.log |   5 +
+ docs/evidence/C13/mutation-unbounded-output.log    |   5 +
+ docs/evidence/C13/network-build.log                |   0
+ docs/evidence/C13/network-tests.log                |   1 +
+ docs/evidence/C13/network.trace                    |  27 +
+ docs/evidence/C13/next-task.log                    | 104 +++
+ docs/evidence/C13/package-checksums.log            |  17 +
+ docs/evidence/C13/package.log                      |   5 +
+ docs/evidence/C13/plan-python.log                  |   1 +
+ docs/evidence/C13/plan.log                         |   5 +
+ docs/evidence/C13/prepare.log.gz                   | Bin 0 -> 97 bytes
+ docs/evidence/C13/python-tests.log                 |  11 +
+ docs/evidence/C13/repository.log                   |   2 +
+ docs/evidence/C13/source-files.json                | 404 +++++++++
+ docs/evidence/C13/standard-tests.log               |  11 +
+ docs/evidence/C13/verify-clone.py                  |  27 +
+ docs/evidence/C13/verify-source.py                 |  24 +
+ docs/evidence/C13/vet.log                          |   0
+ docs/evidence/C13/workflow-provider.log            |   1 +
+ docs/product/REFERENCE_WORKFLOW.md                 |  14 +
+ internal/decoy/isolation.go                        | 491 ++++++++++
+ internal/podman/podman.go                          | 499 +++++++++++
+ plans/progress.json                                |  10 +-
+ plans/project-state.json                           |   7 +-
+ scripts/verify-engine-tests.mjs                    |   2 +-
+ tests/decoy_test.go                                |   2 +
+ tests/decoyhost/main.go                            | 308 +++++++
+ tests/egress_test.go                               | 709 +++++++++++++++
+ tests/egress_workflow_test.go                      | 429 +++++++++
+ tests/engineering/engine-tests.test.mjs            |  14 +-
+ tests/fixtures/miragemesh/C13/expected-output.json |  23 +
+ tests/fixtures/miragemesh/C13/invalid.json         | 175 ++++
+ tests/fixtures/miragemesh/C13/positive.json        |  35 +
+ tests/mtls_test.go                                 |  14 +-
+ 83 files changed, 7378 insertions(+), 93 deletions(-)

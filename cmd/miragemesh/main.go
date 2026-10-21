@@ -89,6 +89,14 @@ func main() {
 	address := flag.String("listen", "127.0.0.1:0", "loopback listen address")
 	showVersion := flag.Bool("version", false, "print runtime version and exit")
 	validate := flag.Bool("validate-event", false, "validate one v1 event from stdin without accepting or storing it")
+	isolation := flag.Bool("decoy-isolation", false, "start the isolated decoy container and report the verified isolation state")
+	image := flag.String("decoy-image", "", "digest pinned image of the isolated decoy")
+	artifact := flag.String("decoy-artifact", "", "host path of the decoy process, mounted read-only")
+	state := flag.String("decoy-state", "", "host path of the durable state of the decoy, mounted writable")
+	memory := flag.Int64("decoy-memory-bytes", 0, "hard memory limit of the isolated decoy")
+	processes := flag.Int("decoy-pids-limit", 0, "hard process limit of the isolated decoy")
+	decoyName := flag.String("decoy-name", "miragemesh-decoy", "name of the isolated decoy container")
+	decoyListen := flag.String("decoy-listen", "127.0.0.1:8080", "address the decoy binds inside its own namespace")
 	flag.Parse()
 	validationFlag := false
 	flag.Visit(func(f *flag.Flag) {
@@ -114,6 +122,21 @@ func main() {
 			os.Exit(1)
 		}
 		return
+	}
+	if *isolation {
+		// The runtime calls of the workflow follow the signals of the
+		// operator, so an interrupted command rolls its container back.
+		ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+		defer stop()
+		os.Exit(runIsolation(ctx, isolationOptions{
+			Image:       *image,
+			Artifact:    *artifact,
+			State:       *state,
+			MemoryBytes: *memory,
+			PidsLimit:   *processes,
+			Name:        *decoyName,
+			Listen:      *decoyListen,
+		}))
 	}
 	if flag.NArg() != 0 {
 		fmt.Fprintln(os.Stderr, "unexpected engine arguments")

@@ -1,0 +1,5 @@
+--- FAIL: TestDecoyIsolationEnforcesPIDAndMemoryLimits (2.13s)
+    egress_test.go:356: starting the isolated decoy: decoy: the provider did not honour the isolation policy: the memory limit is 0
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	2.138s
+FAIL

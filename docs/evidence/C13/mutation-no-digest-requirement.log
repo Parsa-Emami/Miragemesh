@@ -1,0 +1,6 @@
+--- FAIL: TestDecoyIsolationPolicyRejectsUnsafeConfiguration (0.32s)
+    egress_test.go:533: mutable-image error = <nil>, want decoy: invalid isolation policy
+    egress_test.go:536: mutable-image returned a supervisor
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.322s
+FAIL

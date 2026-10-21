@@ -1,0 +1,10 @@
+--- FAIL: TestDecoyIsolationRejectsWeakRuntimeControls (0.41s)
+    egress_workflow_test.go:103: partial-capability-drop error = <nil>, want decoy: the provider did not honour the isolation policy
+    egress_workflow_test.go:106: partial-capability-drop left the container running
+    egress_workflow_test.go:103: limits-not-observed error = <nil>, want decoy: the provider did not honour the isolation policy
+    egress_workflow_test.go:106: limits-not-observed left the container running
+    egress_workflow_test.go:103: effective-process-limit error = <nil>, want decoy: the provider did not honour the isolation policy
+    egress_workflow_test.go:106: effective-process-limit left the container running
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/tests	0.413s
+FAIL

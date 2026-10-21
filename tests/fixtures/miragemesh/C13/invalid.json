@@ -1,0 +1,175 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C13 negative cases: an incomplete policy, unsafe mounts, a mutable image reference, a missing provider, a provider that is not rootless and a pinned image that is not present locally. No credential, customer, host or production data is present.",
+  "cases": [
+    {
+      "name": "empty-image",
+      "kind": "policy",
+      "field": "image",
+      "value": "",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "mutable-image",
+      "kind": "policy",
+      "field": "image",
+      "value": "docker.io/library/alpine:latest",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "empty-command",
+      "kind": "policy",
+      "field": "command",
+      "value": "",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "egress-requested",
+      "kind": "policy",
+      "field": "egress",
+      "value": "allowed",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "root-user",
+      "kind": "policy",
+      "field": "user",
+      "value": "0:0",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "named-root-user",
+      "kind": "policy",
+      "field": "user",
+      "value": "root",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "no-memory-limit",
+      "kind": "policy",
+      "field": "memory_bytes",
+      "value": 0,
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "no-process-limit",
+      "kind": "policy",
+      "field": "pids_limit",
+      "value": 0,
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "relative-mount",
+      "kind": "policy",
+      "field": "mount",
+      "value": "relative/path",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "writable-artifact",
+      "kind": "policy",
+      "field": "writable_artifact",
+      "value": "/etc",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "extra-writable-mount",
+      "kind": "policy",
+      "field": "extra_state_mount",
+      "value": "/home/operator",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "unknown-mount-role",
+      "kind": "policy",
+      "field": "unknown_role",
+      "value": "/etc",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "duplicate-mount-target",
+      "kind": "policy",
+      "field": "duplicate_target",
+      "value": "/usr/local/bin/decoy",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "proxy-environment",
+      "kind": "policy",
+      "field": "proxy_env",
+      "value": "http_proxy",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "invalid-container-name",
+      "kind": "policy",
+      "field": "name",
+      "value": "not a valid name",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "missing-runtime",
+      "kind": "provider",
+      "field": "binary",
+      "value": "/nonexistent/podman",
+      "expected_error": "decoy: the container provider is unavailable"
+    },
+    {
+      "name": "missing-image",
+      "kind": "provider",
+      "field": "image",
+      "value": "docker.io/library/alpine@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "expected_error": "podman: the pinned image is not present locally"
+    },
+    {
+      "name": "not-rootless",
+      "kind": "provider",
+      "field": "stub",
+      "value": "",
+      "expected_error": "podman: the container runtime is not rootless"
+    },
+    {
+      "name": "missing-artifact-mount",
+      "kind": "policy",
+      "field": "drop_artifact",
+      "value": "",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "missing-state-mount",
+      "kind": "policy",
+      "field": "drop_state",
+      "value": "",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "wrong-artifact-target",
+      "kind": "policy",
+      "field": "artifact_target",
+      "value": "/usr/local/bin/other",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "wrong-state-target",
+      "kind": "policy",
+      "field": "state_target",
+      "value": "/var/lib/other",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "read-only-state",
+      "kind": "policy",
+      "field": "read_only_state",
+      "value": "",
+      "expected_error": "decoy: invalid isolation policy"
+    },
+    {
+      "name": "extra-mount",
+      "kind": "policy",
+      "field": "extra_mount",
+      "value": "/etc",
+      "expected_error": "decoy: invalid isolation policy"
+    }
+  ]
+}

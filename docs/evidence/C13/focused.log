@@ -1,0 +1,34 @@
+=== RUN   TestDecoyIsolationDeniesInternetAndPrivateSubnets
+--- PASS: TestDecoyIsolationDeniesInternetAndPrivateSubnets (3.58s)
+=== RUN   TestDecoyIsolationEnforcesPIDAndMemoryLimits
+--- PASS: TestDecoyIsolationEnforcesPIDAndMemoryLimits (2.89s)
+=== RUN   TestDecoyIsolationReconcilesAfterRestart
+--- PASS: TestDecoyIsolationReconcilesAfterRestart (3.89s)
+=== RUN   TestDecoyIsolationProviderFailuresAreExplicit
+--- PASS: TestDecoyIsolationProviderFailuresAreExplicit (1.27s)
+=== RUN   TestDecoyIsolationPolicyRejectsUnsafeConfiguration
+--- PASS: TestDecoyIsolationPolicyRejectsUnsafeConfiguration (0.00s)
+=== RUN   TestDecoyIsolationStopsAndRemovesItsContainer
+--- PASS: TestDecoyIsolationStopsAndRemovesItsContainer (1.93s)
+=== RUN   TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime
+--- PASS: TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime (0.00s)
+=== RUN   TestDecoyIsolationRejectsWeakRuntimeControls
+--- PASS: TestDecoyIsolationRejectsWeakRuntimeControls (0.00s)
+=== RUN   TestDecoyIsolationReportsCleanupFailure
+--- PASS: TestDecoyIsolationReportsCleanupFailure (0.00s)
+=== RUN   TestDecoyIsolationPolicyIsImmutable
+--- PASS: TestDecoyIsolationPolicyIsImmutable (0.00s)
+=== RUN   TestDecoyIsolationAdapterBoundsRuntimeOutput
+--- PASS: TestDecoyIsolationAdapterBoundsRuntimeOutput (0.03s)
+=== RUN   TestDecoyIsolationAdapterHonorsCancellation
+--- PASS: TestDecoyIsolationAdapterHonorsCancellation (0.10s)
+=== RUN   TestDecoyIsolationWorkflowReportsTypedOutcome
+--- PASS: TestDecoyIsolationWorkflowReportsTypedOutcome (2.20s)
+=== RUN   TestDecoyIsolationWorkflowReportsMissingPrerequisites
+--- PASS: TestDecoyIsolationWorkflowReportsMissingPrerequisites (0.00s)
+=== RUN   TestDecoyIsolationAdapterRollsBackAnUncertainStart
+--- PASS: TestDecoyIsolationAdapterRollsBackAnUncertainStart (0.00s)
+=== RUN   TestDecoyIsolationWorkflowRemovesItsContainerOnSignal
+--- PASS: TestDecoyIsolationWorkflowRemovesItsContainerOnSignal (1.61s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/tests	17.510s

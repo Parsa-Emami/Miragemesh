@@ -2,11 +2,15 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"io"
 	"net"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -81,5 +85,67 @@ func TestRejectsUnsafeAndOccupiedAddresses(t *testing.T) {
 	defer listener.Close()
 	if err := serve(context.Background(), listener.Addr().String(), io.Discard); err == nil {
 		t.Fatal("occupied port accepted")
+	}
+}
+
+// TestIsolationWorkflowRefusesIncompleteConfiguration proves that the
+// supported engine workflow of the isolated decoy refuses an incomplete or
+// unsafe configuration before any container is created.
+func TestIsolationWorkflowRefusesIncompleteConfiguration(t *testing.T) {
+	cases := []isolationOptions{
+		{},
+		{Image: "docker.io/library/alpine:latest", Artifact: "/opt/decoy", State: "/var/lib/miragemesh", MemoryBytes: 1, PidsLimit: 1},
+		{Image: "docker.io/library/alpine@sha256:0000000000000000000000000000000000000000000000000000000000000000", Artifact: "/opt/decoy", State: "/var/lib/miragemesh", MemoryBytes: 67108864, PidsLimit: 32},
+	}
+	for index, options := range cases {
+		if _, err := isolationPolicy(options); err == nil {
+			t.Errorf("case %d was accepted", index)
+		}
+	}
+	// A state path that is not a private directory of the owner is refused.
+	directory := t.TempDir()
+	if err := os.Chmod(directory, 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := prepareStateDirectory(directory); err == nil {
+		t.Error("a state directory that is not private was accepted")
+	}
+	if err := os.Chmod(directory, 0700); err != nil {
+		t.Fatal(err)
+	}
+	if err := prepareStateDirectory(directory); err != nil {
+		t.Errorf("a private state directory was refused: %v", err)
+	}
+	created := filepath.Join(t.TempDir(), "state")
+	if err := prepareStateDirectory(created); err != nil {
+		t.Errorf("a missing state directory was not created: %v", err)
+	}
+}
+
+// c13FailingWriter refuses every write, like a closed output pipe.
+type c13FailingWriter struct{}
+
+func (c13FailingWriter) Write(data []byte) (int, error) {
+	return 0, errors.New("the output is closed")
+}
+
+// TestIsolationOutcomeReportsAnUndeliveredResult proves that a typed outcome
+// that cannot be delivered is an error: a caller must never read a silent
+// success as a verified isolation.
+func TestIsolationOutcomeReportsAnUndeliveredResult(t *testing.T) {
+	outcome := isolationOutcome{Scope: "decoy-isolation", Status: "verified"}
+	if err := writeOutcome(c13FailingWriter{}, outcome); err == nil {
+		t.Fatal("the undelivered outcome reported no error")
+	}
+	var buffer bytes.Buffer
+	if err := writeOutcome(&buffer, outcome); err != nil {
+		t.Fatalf("the delivered outcome reported %v", err)
+	}
+	var decoded isolationOutcome
+	if err := json.Unmarshal(buffer.Bytes(), &decoded); err != nil {
+		t.Fatal(err)
+	}
+	if decoded.Scope != "decoy-isolation" || decoded.Status != "verified" {
+		t.Fatalf("the delivered outcome drifted: %+v", decoded)
 	}
 }
