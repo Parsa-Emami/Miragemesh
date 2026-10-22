@@ -4,7 +4,7 @@
   "status": "verified",
   "base_commit": "6093bc088fa199eaa885bf0101c882ccba81a91a",
   "final_commit": "fcde7e930a5b196aee620b82cf665bbef9d47427",
-  "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+  "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
   "evidence": "docs/evidence/C19.json",
   "summary": "C19 adds explainable per-event interactions, explicit-policy per-sensor rate signals referencing committed C18 records, and separate health findings from validated durable C15 spool gaps. The existing project-segments CLI derives typed outcomes and reproduces the same alerts after restart; missing/incomplete index coverage remains visible. No schema/API/UI/dependency changes or remote Actions claims.",
   "changed_paths": [
@@ -30,85 +30,85 @@
       "argv": "go test -race -count=1 -json ./...",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/engine-tests.jsonl",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "node scripts/verify-engine-tests.mjs docs/evidence/C19/engine-tests.jsonl",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/discovery.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "go vet ./...",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/vet.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "$(go env GOROOT)/bin/gofmt -l cmd internal tests; test -z output",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/format.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "go build -trimpath -o /tmp/miragemesh-c19-engine ./cmd/miragemesh",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/go-build.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "npm run validate:plan (npm 11.9.0)",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/validate-plan.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "npm run check (npm 11.9.0)",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/final-check.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "python3 scripts/validate_repo.py",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/repo-contracts.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/python-tests.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "python3 scripts/plan.py validate",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/plan-consistency.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "playwright test --config docs/evidence/C19/playwright.config.mjs (loopback port 4174)",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/browser.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "npm run package:web (npm 11.9.0)",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/package.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "Podman 4.9.3 rootless; pinned Alpine digest and network-none memory cgroup check",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/provider.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     },
     {
       "argv": "python3 scripts/verify_ci_source.py on clean implementation commit",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/source-integrity.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7"
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
     }
   ],
   "blockers": [],

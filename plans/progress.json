@@ -172,7 +172,7 @@
       "evidence": [
         "docs/evidence/C19.json"
       ],
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "notes": "C19 local implementation and workflow-equivalent verification passed on the recorded implementation commit; GitHub-hosted Actions and publication were not executed."
     },
     {

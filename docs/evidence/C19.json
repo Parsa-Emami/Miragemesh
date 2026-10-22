@@ -6,8 +6,8 @@
   "date": "2026-10-22",
   "base_commit": "6093bc088fa199eaa885bf0101c882ccba81a91a",
   "implementation_commit": "fcde7e930a5b196aee620b82cf665bbef9d47427",
-  "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
-  "source_identity_algorithm": "SHA-256 over sorted tracked source path + NUL + raw file SHA-256, excluding docs/evidence/, plans/progress.json and docs/agents/SESSION_HANDOFF.json; verified against the clean implementation commit.",
+  "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
+  "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes), over tracked and non-ignored untracked source, excluding docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt; every recorded command is bound to this identity.",
   "scope": "C19 explainable interaction and configurable per-sensor HTTP request rate signals in the existing local --project-segments workflow. Alerts reference exact C18 indexed source records; durable C15 gaps appear as separate sensor_health findings; incomplete C18 coverage remains explicit. No schema, migration, API, UI or dependency added.",
   "fixtures": {
     "license": "Apache-2.0",
@@ -65,98 +65,98 @@
       "command": "go test -race -count=1 -json ./...",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/engine-tests.jsonl",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "c6d8f75b5d676ddf527b30fe7727684b8ee5d085fc0524f5a85a24ff0a474496"
     },
     {
       "command": "node scripts/verify-engine-tests.mjs docs/evidence/C19/engine-tests.jsonl",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/discovery.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "1f7a3b844d4269d76647e5fb4c5d62ac626a12cb3d4de775848ecf4616dd8f86"
     },
     {
       "command": "go vet ./...",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/vet.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "command": "$(go env GOROOT)/bin/gofmt -l cmd internal tests; test -z output",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/format.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "command": "go build -trimpath -o /tmp/miragemesh-c19-engine ./cmd/miragemesh",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/go-build.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     },
     {
       "command": "npm run validate:plan (npm 11.9.0)",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/validate-plan.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "bbe7c0c8988c2df98f4c8d9f5e981c0fdcbc6965252577a3d0eace7e36cd67a5"
     },
     {
       "command": "npm run check (npm 11.9.0)",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/final-check.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "e6feab1ae30b130e83d21ecb004b8ad693844546f15d808ce92bedf503ef2867"
     },
     {
       "command": "python3 scripts/validate_repo.py",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/repo-contracts.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "fc35939aaea01ca83a0b54dd4f5b130ebb691675cfec1c1b8b661be8214eb9bf"
     },
     {
       "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/python-tests.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "75344ef5c194084bcbbeaac6021f2862e423125d72141fc2cec62b9658c79ff5"
     },
     {
       "command": "python3 scripts/plan.py validate",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/plan-consistency.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "80db941735ead06893f77b7665ee16dc48e94576f81377fc2591985f0778233d"
     },
     {
       "command": "playwright test --config docs/evidence/C19/playwright.config.mjs (loopback port 4174)",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/browser.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "df0daa05223a7d60f84fc09f6e5bd30a8360cfef06d4cad43afd5ae2e8db6b78"
     },
     {
       "command": "npm run package:web (npm 11.9.0)",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/package.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "08622119b0ee127bf0fd56ade76787c97c74143ad01abe795c6449115355aa0b"
     },
     {
       "command": "Podman 4.9.3 rootless; pinned Alpine digest and network-none memory cgroup check",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/provider.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "394a4bde493779ee5b9c9b1ffaef5547f8843f46c408a87924f90f228ce591a5"
     },
     {
       "command": "python3 scripts/verify_ci_source.py on clean implementation commit",
       "exit_code": 0,
       "output_path": "docs/evidence/C19/source-integrity.log",
-      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
       "stored_output_sha256": "7bfaf95159f464ed15318410605629a74ad43bf210fc6080c5dd301a5a889708"
     }
   ],
@@ -172,5 +172,6 @@
     "docs/architecture/ALERT_RULES.md",
     "scripts/verify-engine-tests.mjs",
     "tests/engineering/engine-tests.test.mjs"
-  ]
+  ],
+  "source_manifest": "docs/evidence/C19/source-files.json"
 }
