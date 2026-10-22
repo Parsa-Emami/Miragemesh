@@ -7,7 +7,15 @@ import { validateRuntimeConfig } from '../apps/web/src/lib/runtime-config.mjs';
 
 const repository = fileURLToPath(new URL('../', import.meta.url));
 
-export async function startLocal({ host = '127.0.0.1', port = 4173, root = resolve(repository, 'dist/web'), configPath = resolve(repository, 'ops/web/runtime-config.json'), engineBinary = resolve(repository, 'dist/engine/miragemesh'), signal } = {}) {
+const sensorStatusFlags = [
+  ['directory', 'sensor-status-dir'], ['maxOperations', 'sensor-status-max-operations'], ['maxBytes', 'sensor-status-max-bytes'],
+  ['maxManifestBytes', 'sensor-status-max-manifest-bytes'], ['publicKeyPath', 'sensor-config-public-key'], ['maxSensors', 'sensor-config-max-sensors'],
+  ['minHeartbeatSeconds', 'sensor-config-min-heartbeat-seconds'], ['maxHeartbeatSeconds', 'sensor-config-max-heartbeat-seconds'],
+  ['minSpoolLimitEvents', 'sensor-config-min-spool-limit-events'], ['maxSpoolLimitEvents', 'sensor-config-max-spool-limit-events'],
+  ['minEventBatchLimit', 'sensor-config-min-event-batch-limit'], ['maxEventBatchLimit', 'sensor-config-max-event-batch-limit'],
+];
+
+export async function startLocal({ host = '127.0.0.1', port = 4173, root = resolve(repository, 'dist/web'), configPath = resolve(repository, 'ops/web/runtime-config.json'), engineBinary = resolve(repository, 'dist/engine/miragemesh'), sensorStatus, signal } = {}) {
   if (!['127.0.0.1', '::1'].includes(host)) throw new Error('Bind to loopback.');
   if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('Invalid port.');
   const config = JSON.parse(await readFile(configPath, 'utf8'));
@@ -19,7 +27,12 @@ export async function startLocal({ host = '127.0.0.1', port = 4173, root = resol
   validateRuntimeConfig(config, brand.slug);
   let server;
   if (signal?.aborted) throw new Error('Launch cancelled.');
-  const child = spawn(engineBinary, ['--listen', '127.0.0.1:0'], { cwd: repository, stdio: ['pipe', 'pipe', 'pipe'], shell: false });
+  const engineArgs = sensorStatus ? sensorStatusFlags.map(([key, name]) => {
+    const value = sensorStatus[key];
+    if (!['string', 'number'].includes(typeof value) || String(value) === '' || String(value).startsWith('--')) throw new Error('Invalid sensor status option.');
+    return `--${name}=${value}`;
+  }) : [];
+  const child = spawn(engineBinary, ['--listen', '127.0.0.1:0', ...engineArgs], { cwd: repository, stdio: ['pipe', 'pipe', 'pipe'], shell: false });
   let finish;
   const closed = new Promise(resolve => { finish = resolve; });
   let shutdown;
@@ -91,14 +104,17 @@ if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1]
   for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => controller.abort());
   try {
     const options = { host: '127.0.0.1', port: '4173', root: 'dist/web', config: 'ops/web/runtime-config.json' };
+    const sensorStatus = {};
     const args = process.argv.slice(2);
     for (let i = 0; i < args.length; i += 2) {
       const key = args[i].slice(2);
-      if (!args[i].startsWith('--') || !Object.hasOwn(options, key) || !args[i + 1]) throw new Error('Usage: npm start [--host loopback] [--port number] [--root path] [--config path]');
-      options[key] = args[i + 1];
+      if (!args[i].startsWith('--') || !args[i + 1]) throw new Error('Usage: npm start [--host loopback] [--port number] [--root path] [--config path] [sensor status options]');
+      if (Object.hasOwn(options, key)) options[key] = args[i + 1];
+      else if (sensorStatusFlags.some(([, name]) => name === key)) sensorStatus[key] = args[i + 1];
+      else throw new Error('Unknown startup option.');
     }
     if (!/^\d+$/.test(options.port)) throw new Error('Invalid port.');
-    const running = await startLocal({ host: options.host, port: Number(options.port), root: resolve(options.root), configPath: resolve(options.config), signal: controller.signal });
+    const running = await startLocal({ host: options.host, port: Number(options.port), root: resolve(options.root), configPath: resolve(options.config), sensorStatus: Object.keys(sensorStatus).length ? Object.fromEntries(sensorStatusFlags.map(([key, name]) => [key, sensorStatus[name]])) : undefined, signal: controller.signal });
     console.log(JSON.stringify({ service: 'miragemesh-local', host: options.host, port: running.server.address().port, enginePid: running.child.pid, engineAddress: running.engineAddress, coreReady: false }));
     const result = await running.closed;
     if (result.error) console.error(result.error.message);

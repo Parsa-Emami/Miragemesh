@@ -16,8 +16,11 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/Parsa-Emami/Miragemesh/internal/config"
 	"github.com/Parsa-Emami/Miragemesh/internal/contracts"
 	"github.com/Parsa-Emami/Miragemesh/internal/events"
+	"github.com/Parsa-Emami/Miragemesh/internal/sensor"
+	"github.com/Parsa-Emami/Miragemesh/internal/sensorview"
 	"github.com/Parsa-Emami/Miragemesh/internal/storage"
 )
 
@@ -27,7 +30,20 @@ func health() map[string]any {
 	return map[string]any{"status": "ok", "scope": "engine-runtime", "version": version, "toolchain": runtime.Version(), "coreReady": false}
 }
 
-func serve(ctx context.Context, address string, ready io.Writer) error {
+type sensorStatusReader interface {
+	Snapshot(context.Context, time.Time) (sensorview.Snapshot, error)
+}
+
+type localSensorStatus struct {
+	store   *storage.Store
+	applier *sensor.Applier
+}
+
+func (s *localSensorStatus) Snapshot(ctx context.Context, now time.Time) (sensorview.Snapshot, error) {
+	return sensorview.BuildSnapshot(ctx, s.store, s.applier, now)
+}
+
+func serve(ctx context.Context, address string, ready io.Writer, sensorStatus sensorStatusReader) error {
 	host, port, err := net.SplitHostPort(address)
 	number, portErr := strconv.Atoi(port)
 	if err != nil || portErr != nil || number < 0 || number > 65535 || (host != "127.0.0.1" && host != "::1") {
@@ -46,6 +62,29 @@ func serve(ctx context.Context, address string, ready io.Writer) error {
 			w.Header().Set("X-Content-Type-Options", "nosniff")
 			w.Header().Set("Content-Type", "application/json")
 			if r.URL.Path != "/healthz" {
+				if r.URL.Path == "/api/v1/sensors" {
+					if r.Method != http.MethodGet {
+						w.Header().Set("Allow", http.MethodGet)
+						w.WriteHeader(http.StatusMethodNotAllowed)
+						io.WriteString(w, `{"error":"method_not_allowed"}`)
+						return
+					}
+					if sensorStatus == nil {
+						w.WriteHeader(http.StatusServiceUnavailable)
+						io.WriteString(w, `{"error":"sensor_status_unavailable"}`)
+						return
+					}
+					snapshot, err := sensorStatus.Snapshot(r.Context(), time.Now().UTC())
+					if err != nil {
+						w.WriteHeader(http.StatusServiceUnavailable)
+						io.WriteString(w, `{"error":"sensor_status_unavailable"}`)
+						return
+					}
+					if err := json.NewEncoder(w).Encode(snapshot); err != nil {
+						return
+					}
+					return
+				}
 				w.WriteHeader(http.StatusNotFound)
 				io.WriteString(w, `{"error":"not_found"}`)
 				return
@@ -110,10 +149,23 @@ func main() {
 	segmentsMaxBytes := flag.Int64("segments-max-bytes", 0, "maximum bytes per segment for --project-segments")
 	alertsRateLimit := flag.Int("alerts-rate-limit", 0, "required HTTP request count for --project-segments alert derivation")
 	alertsWindowSeconds := flag.Int("alerts-window-seconds", 0, "required whole-second rate window for --project-segments alert derivation")
+	sensorStatusDir := flag.String("sensor-status-dir", "", "existing or new C05 directory for read-only sensor status")
+	sensorStatusMaxOperations := flag.Int("sensor-status-max-operations", 0, "explicit C05 operation limit for sensor status")
+	sensorStatusMaxBytes := flag.Int64("sensor-status-max-bytes", 0, "explicit C05 byte limit for sensor status")
+	sensorStatusMaxManifestBytes := flag.Int64("sensor-status-max-manifest-bytes", 0, "explicit C05 manifest byte limit for sensor status")
+	sensorConfigPublicKey := flag.String("sensor-config-public-key", "", "raw 32-byte Ed25519 public key file for applied sensor configuration")
+	sensorConfigMaxSensors := flag.Int("sensor-config-max-sensors", 0, "explicit C10 sensor limit for status verification")
+	sensorConfigMinHeartbeat := flag.Int("sensor-config-min-heartbeat-seconds", 0, "explicit C10 minimum heartbeat setting")
+	sensorConfigMaxHeartbeat := flag.Int("sensor-config-max-heartbeat-seconds", 0, "explicit C10 maximum heartbeat setting")
+	sensorConfigMinSpool := flag.Int("sensor-config-min-spool-limit-events", 0, "explicit C10 minimum spool limit")
+	sensorConfigMaxSpool := flag.Int("sensor-config-max-spool-limit-events", 0, "explicit C10 maximum spool limit")
+	sensorConfigMinBatch := flag.Int("sensor-config-min-event-batch-limit", 0, "explicit C10 minimum event batch limit")
+	sensorConfigMaxBatch := flag.Int("sensor-config-max-event-batch-limit", 0, "explicit C10 maximum event batch limit")
 	flag.Parse()
 	validationFlag := false
 	projectConfig := false
 	alertsConfig := false
+	sensorStatusConfigured := false
 	flag.Visit(func(f *flag.Flag) {
 		if f.Name == "validate-event" {
 			validationFlag = true
@@ -125,6 +177,10 @@ func main() {
 		case "alerts-rate-limit", "alerts-window-seconds":
 			projectConfig = true
 			alertsConfig = true
+		case "sensor-status-dir", "sensor-status-max-operations", "sensor-status-max-bytes", "sensor-status-max-manifest-bytes",
+			"sensor-config-public-key", "sensor-config-max-sensors", "sensor-config-min-heartbeat-seconds", "sensor-config-max-heartbeat-seconds",
+			"sensor-config-min-spool-limit-events", "sensor-config-max-spool-limit-events", "sensor-config-min-event-batch-limit", "sensor-config-max-event-batch-limit":
+			sensorStatusConfigured = true
 		}
 	})
 	if validationFlag {
@@ -151,7 +207,7 @@ func main() {
 		os.Exit(2)
 	}
 	if *projectMode {
-		if *isolation || *showVersion {
+		if *isolation || *showVersion || sensorStatusConfigured {
 			fmt.Fprintln(os.Stderr, "--project-segments cannot be combined with another engine mode")
 			os.Exit(2)
 		}
@@ -180,6 +236,10 @@ func main() {
 		}))
 	}
 	if *isolation {
+		if sensorStatusConfigured {
+			fmt.Fprintln(os.Stderr, "sensor status configuration cannot be combined with decoy isolation")
+			os.Exit(2)
+		}
 		// The runtime calls of the workflow follow the signals of the
 		// operator, so an interrupted command rolls its container back.
 		ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
@@ -199,14 +259,38 @@ func main() {
 		os.Exit(2)
 	}
 	if *showVersion {
+		if sensorStatusConfigured {
+			fmt.Fprintln(os.Stderr, "sensor status configuration cannot be combined with --version")
+			os.Exit(2)
+		}
 		json.NewEncoder(os.Stdout).Encode(health())
 		return
+	}
+	var sensorStatus *localSensorStatus
+	if sensorStatusConfigured {
+		var err error
+		sensorStatus, err = openSensorStatus(sensorStatusOptions{
+			directory:     *sensorStatusDir,
+			limits:        storage.Limits{MaxOperations: *sensorStatusMaxOperations, MaxBytes: *sensorStatusMaxBytes, MaxManifestBytes: *sensorStatusMaxManifestBytes},
+			publicKeyPath: *sensorConfigPublicKey,
+			maxSensors:    *sensorConfigMaxSensors,
+			bounds: config.Bounds{
+				MinHeartbeatSeconds: *sensorConfigMinHeartbeat, MaxHeartbeatSeconds: *sensorConfigMaxHeartbeat,
+				MinSpoolLimitEvents: *sensorConfigMinSpool, MaxSpoolLimitEvents: *sensorConfigMaxSpool,
+				MinEventBatchLimit: *sensorConfigMinBatch, MaxEventBatchLimit: *sensorConfigMaxBatch,
+			},
+		})
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "invalid sensor status configuration")
+			os.Exit(2)
+		}
+		defer sensorStatus.store.Close()
 	}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	// The supervisor owns stdin; EOF also stops the engine after supervisor death.
 	go func() { io.Copy(io.Discard, os.Stdin); stop() }()
-	if err := serve(ctx, *address, os.Stdout); err != nil {
+	if err := serve(ctx, *address, os.Stdout, sensorStatus); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}

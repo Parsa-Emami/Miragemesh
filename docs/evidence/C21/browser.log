@@ -1,0 +1,22 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 test:browser
+> playwright test
+
+[WebServer] (node:736574) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:736587) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 2 workers
+
+(node:736608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:736609) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 apps/web/tests/sensors.spec.ts:7:1 › sensor page displays offline, stale config and durable drops from the engine response (250ms)
+  ✓  2 tests/browser/workspace.spec.ts:2:1 › workspace, local preview, navigation and roadmap filters work (296ms)
+  ✓  3 apps/web/tests/sensors.spec.ts:22:1 › sensor page rejects an invalid versioned response and explains unavailable state (96ms)
+  ✓  4 tests/browser/workspace.spec.ts:25:1 › runtime failure remains explicit and the workspace is keyboard accessible at 360px (116ms)
+  ✓  5 tests/browser/workspace.spec.ts:37:1 › configuration failure blocks workspace startup (91ms)
+
+  5 passed (1.5s)

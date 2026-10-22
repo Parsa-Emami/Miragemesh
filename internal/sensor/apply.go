@@ -142,23 +142,36 @@ func (a *Applier) SameStore(store *storage.Store) bool {
 	return a != nil && a.store == store
 }
 
-// Active rebuilds the observed applied state from the current durable snapshot.
-// Storage failures are explicit errors rather than a missing or stale cache hit.
-func (a *Applier) Active(ctx context.Context, sensorID string) (config.Applied, bool, error) {
-	if a == nil || !contracts.ValidSensorID(sensorID) {
-		return config.Applied{}, false, config.ErrInvalidInput
+// ActiveAll rebuilds every observed applied configuration from one durable snapshot.
+func (a *Applier) ActiveAll(ctx context.Context) (map[string]config.Applied, error) {
+	if a == nil || a.store == nil {
+		return nil, config.ErrInvalidInput
 	}
 	records, err := a.store.Records(ctx)
 	if err != nil {
-		return config.Applied{}, false, err
+		return nil, err
 	}
 	latest, err := a.project(ctx, records)
 	if err != nil {
+		return nil, err
+	}
+	result := make(map[string]config.Applied, len(latest))
+	for sensorID, record := range latest {
+		result[sensorID] = applied(record)
+	}
+	return result, nil
+}
+
+// Active rebuilds the observed applied state from the current durable snapshot.
+// Storage failures are explicit errors rather than a missing or stale cache hit.
+func (a *Applier) Active(ctx context.Context, sensorID string) (config.Applied, bool, error) {
+	if !contracts.ValidSensorID(sensorID) {
+		return config.Applied{}, false, config.ErrInvalidInput
+	}
+	all, err := a.ActiveAll(ctx)
+	if err != nil {
 		return config.Applied{}, false, err
 	}
-	record, ok := latest[sensorID]
-	if !ok {
-		return config.Applied{}, false, nil
-	}
-	return applied(record), true, nil
+	result, ok := all[sensorID]
+	return result, ok, nil
 }

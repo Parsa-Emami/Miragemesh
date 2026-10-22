@@ -1,0 +1,17 @@
+ok  	github.com/Parsa-Emami/Miragemesh/cmd/miragemesh	(cached)
+?   	github.com/Parsa-Emami/Miragemesh/internal/alerts	[no test files]
+?   	github.com/Parsa-Emami/Miragemesh/internal/collector	[no test files]
+?   	github.com/Parsa-Emami/Miragemesh/internal/config	[no test files]
+ok  	github.com/Parsa-Emami/Miragemesh/internal/contracts	(cached)
+?   	github.com/Parsa-Emami/Miragemesh/internal/decoy	[no test files]
+?   	github.com/Parsa-Emami/Miragemesh/internal/enrollment	[no test files]
+ok  	github.com/Parsa-Emami/Miragemesh/internal/events	(cached)
+?   	github.com/Parsa-Emami/Miragemesh/internal/incidents	[no test files]
+?   	github.com/Parsa-Emami/Miragemesh/internal/pki	[no test files]
+?   	github.com/Parsa-Emami/Miragemesh/internal/podman	[no test files]
+?   	github.com/Parsa-Emami/Miragemesh/internal/sensor	[no test files]
+?   	github.com/Parsa-Emami/Miragemesh/internal/sensorview	[no test files]
+?   	github.com/Parsa-Emami/Miragemesh/internal/spool	[no test files]
+ok  	github.com/Parsa-Emami/Miragemesh/internal/storage	(cached)
+ok  	github.com/Parsa-Emami/Miragemesh/tests	23.499s
+?   	github.com/Parsa-Emami/Miragemesh/tests/decoyhost	[no test files]

@@ -1,0 +1,140 @@
+{
+  "commit_id": "C21",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "date": "2026-10-22",
+  "base_commit": "6e55933608fe65ce475040e61fa888943d39f624",
+  "implementation_commit": null,
+  "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
+  "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes), over tracked and non-ignored untracked source. docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded; each command is bound to the same local input tree.",
+  "scope": "Read-only local GET /api/v1/sensors over verified C05 records and C10 applied configuration; exact GET proxy and accessible Sensors page show recent-event offline state (5-minute threshold), missing/expired applied configuration and durable spool gap count. Storage quotas and C10 verifier bounds are explicit local CLI options; no secret or policy is sent to the browser. No browser write path or persistence mutation was added.",
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic sensor events, applied config and durable gap; no customer or live sensor data.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C21/positive.json": "bca2be661c8d0e9c4a0236b4b5b952338c8728b36d804cc243626ef1b1631c65",
+      "tests/fixtures/miragemesh/C21/expected-output.json": "fd3292ecdfee84890924b9b547dd5607ce92298d2242dcb1c04371fe842c9c10",
+      "tests/fixtures/miragemesh/C21/invalid.json": "1c65613a0dccc04f8b586df66753bd0f7da30e27de50e7b39fa40614766bb9a5"
+    }
+  },
+  "results": {
+    "positive": "Real temporary C05 storage and C10 Ed25519 verification returned exact expected snapshot for expired/offline config with one durable gap, current config with recent event, missing config, and event at exactly the 5-minute threshold. Test confirmed API read left the durable manifest unchanged.",
+    "negative": "Invalid method/path and incomplete CLI policy are rejected; storage/config recovery errors produce explicit unavailable responses; malformed versioned UI payload is rejected; exact proxy does not forward other paths or methods. Recovery test corrupts stored object and verifies fail-closed behavior.",
+    "compatibility": "Full Go suite passed, including existing durable storage, replay, quota, spool overflow and ACK recovery regressions. API contains no write operation and sensorview uses no network imports.",
+    "discovery": "npm check passed plan validation, production web/engine build, TypeScript typecheck and 55 Node tests; go test ./... passed; browser suite passed 5/5; go vet ./... passed."
+  },
+  "security_review": [
+    "The endpoint is exact GET and returns typed state only; all failures are generic and do not expose key material or storage paths.",
+    "Runtime requires explicit C05 storage quotas and C10 public key plus verifier bounds; the browser receives none of these values.",
+    "Web proxy binds to the local engine and validates response schema/size; browser uses no-store, credentials omit and a bounded request timeout.",
+    "No schema, migration, .env, Dockerfile, dependency, remote endpoint, or egress behavior was added."
+  ],
+  "limits": [
+    "GitHub-hosted Actions were not triggered; hosted CI and hardware/provider conditions were not measured.",
+    "No commit, push, publication, deployment or release claim is made. C30 remains the full local workflow gate.",
+    "Offline means no accepted event newer than five minutes; it does not assert live network connectivity."
+  ],
+  "delivery": {
+    "commit_created": false,
+    "commit": null,
+    "push_performed": false,
+    "publication_performed": false
+  },
+  "remote_actions_executed": false,
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0 via pinned npx CLI",
+    "go": "1.27.2 linux/amd64; GOSUMDB=sum.golang.org; GOPROXY=https://proxy.golang.org|direct",
+    "provider": "No provider path used; C05 temporary local filesystem store",
+    "browser": "Playwright headless, loopback 127.0.0.1:4175 (4173 already occupied)",
+    "platform": "Linux amd64"
+  },
+  "hardware": "Not measured; local development host. Engine 2 vCPU / 2048 MiB RAM / 10240 MiB disk target remains C28 work.",
+  "test_counts": {
+    "node_tests_passed": 55,
+    "go_test_packages_passed": 5,
+    "browser_tests_passed": 5
+  },
+  "commands": [
+    {
+      "command": "npx --yes npm@11.9.0 run check",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C21/npm-check.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
+      "stored_output_sha256": "c9efd9dce9b66756ec4b50aad6eea793f8a1bc70366ca0ed76bde84cea3622d3"
+    },
+    {
+      "command": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct go test ./...",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C21/go-test.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
+      "stored_output_sha256": "113b053262610a1cc310a928f9c97207d16cf65cc743fb8850456dde792276c2"
+    },
+    {
+      "command": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct go vet ./...",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C21/go-vet.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "WEB_TEST_PORT=4175 npx --yes npm@11.9.0 run test:browser",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C21/browser.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
+      "stored_output_sha256": "24e2764238474c5110093cd408860f45e37b78917739fc06c3728649c447298a"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C21/diff-check.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "python3 docs/evidence/C21/source-manifest.py",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C21/source-manifest.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
+      "stored_output_sha256": "b0b495f5a0ffe960697d221c47093e8b26bcd4816c2e8cc035309a537ee14935"
+    }
+  ],
+  "changed_paths": [
+    "apps/web/src/lib/sensor-status.mjs",
+    "apps/web/src/main.tsx",
+    "apps/web/src/pages/Sensors.tsx",
+    "apps/web/src/styles.css",
+    "apps/web/tests/sensors.spec.ts",
+    "cmd/miragemesh/main.go",
+    "cmd/miragemesh/main_test.go",
+    "cmd/miragemesh/sensor_status.go",
+    "docs/ROADMAP_FA.md",
+    "docs/agents/SESSION_HANDOFF.json",
+    "docs/architecture/SENSOR_STATUS.md",
+    "docs/engineering/CLONE_TO_RUN.md",
+    "docs/evidence/C21/browser.log",
+    "docs/evidence/C21/diff-check.log",
+    "docs/evidence/C21/go-test.log",
+    "docs/evidence/C21/go-vet.log",
+    "docs/evidence/C21/npm-check.log",
+    "docs/evidence/C21/source-files.json",
+    "docs/evidence/C21/source-manifest.log",
+    "docs/evidence/C21/source-manifest.py",
+    "docs/evidence/C21/tool-versions.log",
+    "docs/product/REFERENCE_WORKFLOW.md",
+    "internal/sensor/apply.go",
+    "internal/sensorview/status.go",
+    "plans/progress.json",
+    "playwright.config.ts",
+    "scripts/serve-web.mjs",
+    "scripts/start-local.mjs",
+    "tests/fixtures/miragemesh/C21/expected-output.json",
+    "tests/fixtures/miragemesh/C21/invalid.json",
+    "tests/fixtures/miragemesh/C21/positive.json",
+    "tests/sensor_status_test.go",
+    "tests/web/local-launch.test.mjs",
+    "tests/web/sensor-status.test.mjs"
+  ],
+  "source_manifest": "docs/evidence/C21/source-files.json"
+}

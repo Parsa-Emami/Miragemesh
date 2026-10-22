@@ -186,10 +186,12 @@
     },
     {
       "id": "C21",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C21.json"
+      ],
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
+      "notes": "C21 locally verified: read-only GET /api/v1/sensors projects real C05 records and C10-verified applied config; the local web proxy and accessible Sensors page show 5-minute stored-event status, missing/expired config and durable gap counts. Explicit storage quotas and verifier bounds are required. npm check, full Go tests, Go vet and browser tests passed. No commit, push, hosted Actions, deployment or release claim."
     },
     {
       "id": "C22",

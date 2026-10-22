@@ -1,0 +1,11 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored malformed API responses used to verify browser boundary validation.",
+  "cases": [
+    { "name": "unsupported_schema", "response": { "schema_version": "2", "offline_after_seconds": 300, "sensors": [] } },
+    { "name": "invalid_config_status", "response": { "schema_version": "1", "offline_after_seconds": 300, "sensors": [{ "sensor_id": "sensor-01", "last_event_at": null, "offline": false, "config_status": "trusted", "dropped_event_count": 0 }] } },
+    { "name": "negative_drop_count", "response": { "schema_version": "1", "offline_after_seconds": 300, "sensors": [{ "sensor_id": "sensor-01", "last_event_at": null, "offline": false, "config_status": "missing", "dropped_event_count": -1 }] } },
+    { "name": "invalid_sensor_id", "response": { "schema_version": "1", "offline_after_seconds": 300, "sensors": [{ "sensor_id": "", "last_event_at": null, "offline": true, "config_status": "missing", "dropped_event_count": 0 }] } }
+  ]
+}

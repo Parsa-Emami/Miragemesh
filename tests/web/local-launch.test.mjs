@@ -4,6 +4,7 @@ import { access, mkdtemp, mkdir, writeFile, rm, readFile } from 'node:fs/promise
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import http from 'node:http';
+import { generateKeyPairSync } from 'node:crypto';
 import { once } from 'node:events';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -29,6 +30,12 @@ test('real launcher serves engine health, preserves disabled admission, stops an
     const health = await (await fetch(base + '/api/engine/health')).json();
     assert.deepEqual(health, { status: 'ok', scope: 'engine-runtime', version: '0.0.1', toolchain: 'go1.27.2', coreReady: false });
     assert.equal((await fetch(base + '/api/v1/unimplemented')).status, 503);
+    const sensors = await fetch(base + '/api/v1/sensors');
+    assert.equal(sensors.status, 503);
+    assert.deepEqual(await sensors.json(), { error: 'sensor_status_unavailable' });
+    const rejectedWrite = await fetch(base + '/api/v1/sensors', { method: 'POST' });
+    assert.equal(rejectedWrite.status, 405);
+    assert.equal(rejectedWrite.headers.get('allow'), 'GET');
     assert.equal((await fetch(base + '/api/engine/health', { method: 'POST' })).status, 405);
     assert.equal((await (await fetch(base + '/runtime-config.json')).json()).engineEnabled, false);
     assert.equal((await (await fetch(base + '/readyz')).json()).engineReady, false);
@@ -37,6 +44,52 @@ test('real launcher serves engine health, preserves disabled admission, stops an
     assert.throws(() => process.kill(running.child.pid, 0), /ESRCH/);
     await assert.rejects(fetch(base + '/healthz'));
   }
+});
+
+test('local web proxy validates the exact read-only sensor response', async t => {
+  const { createWebServer } = await import('../../scripts/serve-web.mjs');
+  const fixture = JSON.parse(await readFile(new URL('../fixtures/miragemesh/C21/expected-output.json', import.meta.url), 'utf8'));
+  const snapshot = { schema_version: fixture.schema_version, offline_after_seconds: fixture.offline_after_seconds, sensors: fixture.sensors };
+  for (const body of [JSON.stringify(snapshot), '{"schema_version":"2"}']) {
+    const upstream = http.createServer((req, res) => { assert.equal(req.method, 'GET'); assert.equal(req.url, '/api/v1/sensors'); res.end(body); });
+    upstream.listen(0, '127.0.0.1'); await once(upstream, 'listening');
+    const options = await workspace(t);
+    const web = createWebServer({ root: options.root, config, projectId: 'miragemesh', engineAddress: `127.0.0.1:${upstream.address().port}` });
+    web.listen(0, '127.0.0.1'); await once(web, 'listening');
+    try {
+      const response = await fetch(`http://127.0.0.1:${web.address().port}/api/v1/sensors`);
+      if (body === JSON.stringify(snapshot)) {
+        assert.equal(response.status, 200);
+        assert.deepEqual(await response.json(), snapshot);
+      } else {
+        assert.equal(response.status, 503);
+        assert.deepEqual(await response.json(), { error: 'sensor_status_unavailable' });
+      }
+    } finally {
+      web.closeAllConnections(); upstream.closeAllConnections();
+      await Promise.all([new Promise(resolve => web.close(resolve)), new Promise(resolve => upstream.close(resolve))]);
+    }
+  }
+});
+
+test('engine serves an empty C05-backed snapshot when explicit local policy is supplied', async t => {
+  const { startLocal } = await import('../../scripts/start-local.mjs');
+  const options = await workspace(t);
+  const { publicKey } = generateKeyPairSync('ed25519');
+  const keyPath = join(options.root, 'operator-public.key');
+  await writeFile(keyPath, publicKey.export({ format: 'der', type: 'spki' }).subarray(-32), { mode: 0o600 });
+  const sensorStatus = {
+    directory: join(options.root, 'sensor-state'), maxOperations: 32, maxBytes: 524288, maxManifestBytes: 32768,
+    publicKeyPath: keyPath, maxSensors: 5,
+    minHeartbeatSeconds: 5, maxHeartbeatSeconds: 3600,
+    minSpoolLimitEvents: 1, maxSpoolLimitEvents: 12800,
+    minEventBatchLimit: 1, maxEventBatchLimit: 12800,
+  };
+  const running = await cli(t, { ...options, sensorStatus });
+  const base = `http://127.0.0.1:${running.ready.port}`;
+  const response = await fetch(base + '/api/v1/sensors');
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), { schema_version: '1', offline_after_seconds: 300, sensors: [] });
 });
 
 test('engine crash stops the web listener with a failing outcome', async t => {
@@ -97,7 +150,16 @@ test('synthetic C03 fixtures are versioned and cannot claim product readiness', 
 });
 
 async function cli(t, options) {
-  const child = spawn(process.execPath, ['scripts/start-local.mjs', '--port', '0', '--root', options.root, '--config', options.configPath], { stdio: ['ignore', 'pipe', 'pipe'] });
+  const args = ['scripts/start-local.mjs', '--port', '0', '--root', options.root, '--config', options.configPath];
+  const sensorFlags = {
+    directory: 'sensor-status-dir', maxOperations: 'sensor-status-max-operations', maxBytes: 'sensor-status-max-bytes',
+    maxManifestBytes: 'sensor-status-max-manifest-bytes', publicKeyPath: 'sensor-config-public-key', maxSensors: 'sensor-config-max-sensors',
+    minHeartbeatSeconds: 'sensor-config-min-heartbeat-seconds', maxHeartbeatSeconds: 'sensor-config-max-heartbeat-seconds',
+    minSpoolLimitEvents: 'sensor-config-min-spool-limit-events', maxSpoolLimitEvents: 'sensor-config-max-spool-limit-events',
+    minEventBatchLimit: 'sensor-config-min-event-batch-limit', maxEventBatchLimit: 'sensor-config-max-event-batch-limit',
+  };
+  for (const [key, value] of Object.entries(options.sensorStatus ?? {})) args.push(`--${sensorFlags[key]}`, String(value));
+  const child = spawn(process.execPath, args, { stdio: ['ignore', 'pipe', 'pipe'] });
   const exit = once(child, 'exit');
   t.after(async () => { if (child.exitCode === null && child.signalCode === null) { child.kill('SIGTERM'); await exit; } });
   const ready = await new Promise((accept, reject) => {

@@ -1,136 +1,84 @@
 {
   "project": "MirageMesh",
-  "last_task": "C20",
+  "last_task": "C21",
   "status": "verified",
-  "base_commit": "ab2591920d3138aa7c552bd171b6c605a1f7a707",
-  "final_commit": "f3561ef9ef266ec3f36b33e34054725616eec0d5",
-  "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c",
-  "evidence": "docs/evidence/C20.json",
-  "summary": "C20 adds append-only incident triage on the existing C05 store: strict status/reason input, digest-only idempotency keys, typed replay/conflict outcomes, ordered restart-durable history and forged-history rejection. Triage is neutral to C07 sequence and skipped by C17/C18 projection; real tests prove observed event records, immutable segment bytes and the rebuilt index are unchanged. No HTTP endpoint, CLI, UI, schema, migration, .env, Dockerfile, dependency or egress added. The source is committed locally as f3561ef9ef266ec3f36b33e34054725616eec0d5; it was not pushed, published or run on hosted Actions.",
+  "base_commit": "6e55933608fe65ce475040e61fa888943d39f624",
+  "final_commit": null,
+  "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
+  "evidence": "docs/evidence/C21.json",
+  "summary": "C21 locally verified: read-only local sensor snapshot from durable C05 records and C10-verified applied config; explicit local policy/storage bounds; exact GET proxy; accessible Sensors view for offline, stale config and durable spool gaps. npm check, full Go tests, Go vet and browser tests passed. No commit or remote publication.",
   "changed_paths": [
-    "internal/contracts/incident.go",
-    "internal/incidents/service.go",
-    "internal/storage/adapter.go",
-    "internal/events/segments.go",
-    "internal/sensor/event.go",
-    "tests/triage_test.go",
-    "tests/rotation_test.go",
-    "tests/fixtures/miragemesh/C20/positive.json",
-    "tests/fixtures/miragemesh/C20/expected-output.json",
-    "tests/fixtures/miragemesh/C20/negative.json",
-    "scripts/verify-engine-tests.mjs",
-    "tests/engineering/engine-tests.test.mjs",
-    "docs/architecture/INCIDENT_TRIAGE.md",
-    "docs/engineering/ENGINE_TESTS.md",
-    "docs/product/REFERENCE_WORKFLOW.md",
+    "apps/web/src/lib/sensor-status.mjs",
+    "apps/web/src/main.tsx",
+    "apps/web/src/pages/Sensors.tsx",
+    "apps/web/src/styles.css",
+    "apps/web/tests/sensors.spec.ts",
+    "cmd/miragemesh/main.go",
+    "cmd/miragemesh/main_test.go",
+    "cmd/miragemesh/sensor_status.go",
     "docs/ROADMAP_FA.md",
-    "docs/evidence/C20.json",
-    "docs/evidence/C20/",
+    "docs/agents/SESSION_HANDOFF.json",
+    "docs/architecture/SENSOR_STATUS.md",
+    "docs/engineering/CLONE_TO_RUN.md",
+    "docs/evidence/C21/browser.log",
+    "docs/evidence/C21/diff-check.log",
+    "docs/evidence/C21/go-test.log",
+    "docs/evidence/C21/go-vet.log",
+    "docs/evidence/C21/npm-check.log",
+    "docs/evidence/C21/source-files.json",
+    "docs/evidence/C21/source-manifest.log",
+    "docs/evidence/C21/source-manifest.py",
+    "docs/evidence/C21/tool-versions.log",
+    "docs/product/REFERENCE_WORKFLOW.md",
+    "internal/sensor/apply.go",
+    "internal/sensorview/status.go",
     "plans/progress.json",
-    "docs/agents/SESSION_HANDOFF.json"
+    "playwright.config.ts",
+    "scripts/serve-web.mjs",
+    "scripts/start-local.mjs",
+    "tests/fixtures/miragemesh/C21/expected-output.json",
+    "tests/fixtures/miragemesh/C21/invalid.json",
+    "tests/fixtures/miragemesh/C21/positive.json",
+    "tests/sensor_status_test.go",
+    "tests/web/local-launch.test.mjs",
+    "tests/web/sensor-status.test.mjs"
   ],
   "commands": [
     {
-      "argv": "$(go env GOROOT)/bin/gofmt -l cmd internal tests; test -z output",
+      "argv": "npx --yes npm@11.9.0 run check",
       "exit_code": 0,
-      "output_path": "docs/evidence/C20/format.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
+      "output_path": "docs/evidence/C21/npm-check.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
     },
     {
-      "argv": "go vet ./...",
+      "argv": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct go test ./...",
       "exit_code": 0,
-      "output_path": "docs/evidence/C20/vet.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
+      "output_path": "docs/evidence/C21/go-test.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
     },
     {
-      "argv": "go build -trimpath -o /tmp/miragemesh-c20-engine ./cmd/miragemesh",
+      "argv": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct go vet ./...",
       "exit_code": 0,
-      "output_path": "docs/evidence/C20/go-build.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
+      "output_path": "docs/evidence/C21/go-vet.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
     },
     {
-      "argv": "go test -race -count=1 -json ./...",
+      "argv": "WEB_TEST_PORT=4175 npx --yes npm@11.9.0 run test:browser",
       "exit_code": 0,
-      "output_path": "docs/evidence/C20/engine-tests.jsonl",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "node scripts/verify-engine-tests.mjs docs/evidence/C20/engine-tests.jsonl",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/discovery.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "npm run validate:plan (npm 11.9.0)",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/validate-plan.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "npm run check (npm 11.9.0)",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/final-check.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "python3 scripts/validate_repo.py",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/repo-contracts.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/python-tests.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "python3 scripts/plan.py validate",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/plan-consistency.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "playwright test --config docs/evidence/C20/playwright.config.mjs (loopback 4175)",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/browser.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "npm run package:web (npm 11.9.0)",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/package.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "npm run test:clone (npm 11.9.0; real temporary clone, setup, vet/race/discovery and source integrity)",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/clone.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "python3 docs/evidence/C20/source-manifest.py",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/source-manifest.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "sha256sum tests/fixtures/miragemesh/C20/*.json",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/fixture-hashes.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
-    },
-    {
-      "argv": "node --version; npx npm@11.9.0 --version; go version; podman version; rootless probe",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C20/tool-versions.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
+      "output_path": "docs/evidence/C21/browser.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
     },
     {
       "argv": "git diff --check",
       "exit_code": 0,
-      "output_path": "docs/evidence/C20/diff-check.log",
-      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
+      "output_path": "docs/evidence/C21/diff-check.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
+    },
+    {
+      "argv": "python3 docs/evidence/C21/source-manifest.py",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C21/source-manifest.log",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
     }
   ],
   "blockers": [],

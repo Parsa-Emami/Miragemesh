@@ -14,14 +14,22 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/Parsa-Emami/Miragemesh/internal/sensorview"
 )
+
+type failingSensorStatus struct{}
+
+func (failingSensorStatus) Snapshot(context.Context, time.Time) (sensorview.Snapshot, error) {
+	return sensorview.Snapshot{}, errors.New("private storage detail")
+}
 
 func TestLifecycle(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	reader, writer := io.Pipe()
 	done := make(chan error, 1)
-	go func() { done <- serve(ctx, "127.0.0.1:0", writer); writer.Close() }()
+	go func() { done <- serve(ctx, "127.0.0.1:0", writer, nil); writer.Close() }()
 	var ready struct{ Address string }
 	if err := json.NewDecoder(bufio.NewReader(reader)).Decode(&ready); err != nil {
 		t.Fatal(err)
@@ -39,7 +47,30 @@ func TestLifecycle(t *testing.T) {
 	if response.StatusCode != 200 || result["scope"] != "engine-runtime" || result["coreReady"] != false || result["version"] != "0.0.1" || result["toolchain"] != "go1.27.2" {
 		t.Fatalf("invalid health: %v", result)
 	}
-	for _, path := range []string{"/api/v1/sensors", "/healthz/extra"} {
+	response, err = client.Get("http://" + ready.Address + "/api/v1/sensors")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var unavailable map[string]string
+	if err = json.NewDecoder(response.Body).Decode(&unavailable); err != nil {
+		t.Fatal(err)
+	}
+	response.Body.Close()
+	if response.StatusCode != http.StatusServiceUnavailable || unavailable["error"] != "sensor_status_unavailable" {
+		t.Fatalf("unconfigured sensor status should fail explicitly: %d %+v", response.StatusCode, unavailable)
+	}
+	for _, method := range []string{http.MethodPost, http.MethodHead} {
+		request, _ := http.NewRequest(method, "http://"+ready.Address+"/api/v1/sensors", nil)
+		response, err = client.Do(request)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if response.StatusCode != http.StatusMethodNotAllowed || response.Header.Get("Allow") != http.MethodGet {
+			t.Fatalf("sensor endpoint accepted %s or advertised a write method", method)
+		}
+		response.Body.Close()
+	}
+	for _, path := range []string{"/api/v1/sensors/", "/healthz/extra"} {
 		response, err := client.Get("http://" + ready.Address + path)
 		if err != nil {
 			t.Fatal(err)
@@ -74,7 +105,7 @@ func TestLifecycle(t *testing.T) {
 
 func TestRejectsUnsafeAndOccupiedAddresses(t *testing.T) {
 	for _, address := range []string{"0.0.0.0:0", "example.invalid:80", "[::]:0", "127.0.0.1:bad"} {
-		if err := serve(context.Background(), address, io.Discard); err == nil {
+		if err := serve(context.Background(), address, io.Discard, nil); err == nil {
 			t.Fatalf("accepted %s", address)
 		}
 	}
@@ -83,8 +114,39 @@ func TestRejectsUnsafeAndOccupiedAddresses(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer listener.Close()
-	if err := serve(context.Background(), listener.Addr().String(), io.Discard); err == nil {
+	if err := serve(context.Background(), listener.Addr().String(), io.Discard, nil); err == nil {
 		t.Fatal("occupied port accepted")
+	}
+}
+
+func TestSensorStatusProviderFailureDoesNotLeakDetails(t *testing.T) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	reader, writer := io.Pipe()
+	done := make(chan error, 1)
+	go func() { done <- serve(ctx, "127.0.0.1:0", writer, failingSensorStatus{}); writer.Close() }()
+	var ready struct{ Address string }
+	if err := json.NewDecoder(bufio.NewReader(reader)).Decode(&ready); err != nil {
+		t.Fatal(err)
+	}
+	response, err := http.Get("http://" + ready.Address + "/api/v1/sensors")
+	if err != nil {
+		t.Fatal(err)
+	}
+	body, err := io.ReadAll(response.Body)
+	response.Body.Close()
+	if err != nil || response.StatusCode != http.StatusServiceUnavailable || string(body) != `{"error":"sensor_status_unavailable"}` || strings.Contains(string(body), "private storage detail") {
+		t.Fatalf("provider failure was not safely bounded: %d %s %v", response.StatusCode, body, err)
+	}
+	cancel()
+	if err = <-done; err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSensorStatusRequiresCompleteLocalPolicy(t *testing.T) {
+	if status, err := openSensorStatus(sensorStatusOptions{directory: t.TempDir()}); err == nil || status != nil {
+		t.Fatalf("partial sensor status policy was accepted: %+v %v", status, err)
 	}
 }
 

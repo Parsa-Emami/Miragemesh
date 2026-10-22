@@ -3,6 +3,7 @@ import { readFile, realpath, stat } from 'node:fs/promises';
 import { resolve, relative, extname, isAbsolute } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { validateRuntimeConfig, validateHealth } from '../apps/web/src/lib/runtime-config.mjs';
+import { validateSensorSnapshot } from '../apps/web/src/lib/sensor-status.mjs';
 
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
 const csp = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'";
@@ -24,6 +25,23 @@ export function readEngineHealth(address, signal) {
   });
 }
 
+export function readEngineSensors(address, signal) {
+  if (!/^127\.0\.0\.1:[1-9]\d{0,4}$/.test(address) || Number(address.split(':')[1]) > 65535) return Promise.reject(new Error('Invalid loopback engine address.'));
+  return new Promise((accept, reject) => {
+    const request = http.get(`http://${address}/api/v1/sensors`, { agent: false, signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(2000)]) : AbortSignal.timeout(2000) }, response => {
+      if (response.statusCode !== 200) { response.destroy(); reject(new Error('Sensor status unavailable.')); return; }
+      let body = '';
+      response.on('data', chunk => {
+        body += chunk.toString('utf8');
+        if (Buffer.byteLength(body) > 1048576) response.destroy(new Error('Sensor status exceeds the response limit.'));
+      });
+      response.on('error', reject);
+      response.on('end', () => { try { accept(validateSensorSnapshot(JSON.parse(body))); } catch (error) { reject(error); } });
+    });
+    request.on('error', reject);
+  });
+}
+
 export function createWebServer({ root, config, projectId, engineAddress }) {
   const valid = validateRuntimeConfig(config, projectId);
   const publicRoot = resolve(root);
@@ -39,7 +57,7 @@ export function createWebServer({ root, config, projectId, engineAddress }) {
       res.writeHead(status, { 'Content-Type': type, 'Content-Length': Buffer.byteLength(body) });
       res.end(req.method === 'HEAD' ? undefined : body);
     };
-    if (!['GET', 'HEAD'].includes(req.method ?? '')) { res.setHeader('Allow', 'GET, HEAD'); send(405, '{"error":"method_not_allowed"}'); return; }
+    if (!['GET', 'HEAD'].includes(req.method ?? '')) { res.setHeader('Allow', (req.url ?? '').split('?')[0] === '/api/v1/sensors' ? 'GET' : 'GET, HEAD'); send(405, '{"error":"method_not_allowed"}'); return; }
     let path;
     try {
       path = decodeURIComponent((req.url ?? '/').split('?')[0]);
@@ -54,6 +72,13 @@ export function createWebServer({ root, config, projectId, engineAddress }) {
     if (path === '/api/engine/health' && engineAddress) {
       try { send(200, JSON.stringify(await readEngineHealth(engineAddress))); }
       catch { send(503, '{"error":"engine_unavailable"}'); }
+      return;
+    }
+    if (path === '/api/v1/sensors') {
+      if (req.method !== 'GET') { res.setHeader('Allow', 'GET'); send(405, '{"error":"method_not_allowed"}'); return; }
+      if (!engineAddress) { send(503, '{"error":"sensor_status_unavailable"}'); return; }
+      try { send(200, JSON.stringify(await readEngineSensors(engineAddress))); }
+      catch { send(503, '{"error":"sensor_status_unavailable"}'); }
       return;
     }
     if (path === '/api' || path.startsWith('/api/')) { send(503, '{"error":"engine_not_integrated"}'); return; }

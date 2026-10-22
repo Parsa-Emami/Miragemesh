@@ -132,3 +132,14 @@ last entry as the current label, and survives restart. A triage record is not an
 event: the next sensor sequence continues and C17/C18 projection skips it. C20
 adds no HTTP endpoint, CLI, UI, schema, migration or dependency. See
 `docs/architecture/INCIDENT_TRIAGE.md`.
+
+C21 adds a read-only `GET /api/v1/sensors` loopback view over committed C05
+records: the highest accepted event sequence supplies last activity, C15 gap
+records supply dropped-event counts, and C11 verifies applied configuration
+before the UI reports it as current or expired. No event body or gap metadata
+is exposed. Offline means no stored event within five minutes (or no stored
+event); it is a last-event heuristic, not a live heartbeat. The endpoint is
+disabled unless the local engine receives explicit C05 quotas, a raw Ed25519
+public-key file and explicit C10 verifier bounds. It never writes to the
+store; enrollment, ingest and configuration application still have no browser
+write surface. See `docs/architecture/SENSOR_STATUS.md`.

@@ -1,0 +1,13 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Expected status derived from the C21 synthetic records using a fixed snapshot time.",
+  "schema_version": "1",
+  "offline_after_seconds": 300,
+  "sensors": [
+    { "sensor_id": "sensor-01", "last_event_at": "2026-11-21T00:00:00Z", "offline": true, "config_status": "expired", "dropped_event_count": 1 },
+    { "sensor_id": "sensor-02", "last_event_at": "2026-11-21T00:04:30Z", "offline": false, "config_status": "current", "dropped_event_count": 0 },
+    { "sensor_id": "sensor-03", "last_event_at": "2026-11-21T00:04:30Z", "offline": false, "config_status": "missing", "dropped_event_count": 0 },
+    { "sensor_id": "sensor-04", "last_event_at": "2026-11-21T00:00:01Z", "offline": false, "config_status": "missing", "dropped_event_count": 0 }
+  ]
+}
