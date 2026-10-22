@@ -168,10 +168,12 @@
     },
     {
       "id": "C19",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C19.json"
+      ],
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "notes": "C19 local implementation and workflow-equivalent verification passed on the recorded implementation commit; GitHub-hosted Actions and publication were not executed."
     },
     {
       "id": "C20",

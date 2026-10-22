@@ -1,0 +1,176 @@
+{
+  "commit_id": "C19",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "date": "2026-10-22",
+  "base_commit": "6093bc088fa199eaa885bf0101c882ccba81a91a",
+  "implementation_commit": "fcde7e930a5b196aee620b82cf665bbef9d47427",
+  "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+  "source_identity_algorithm": "SHA-256 over sorted tracked source path + NUL + raw file SHA-256, excluding docs/evidence/, plans/progress.json and docs/agents/SESSION_HANDOFF.json; verified against the clean implementation commit.",
+  "scope": "C19 explainable interaction and configurable per-sensor HTTP request rate signals in the existing local --project-segments workflow. Alerts reference exact C18 indexed source records; durable C15 gaps appear as separate sensor_health findings; incomplete C18 coverage remains explicit. No schema, migration, API, UI or dependency added.",
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic events, expected alert references and negative input cases; no customer or sensor data.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C19/positive.json": "3f27090049e5f28cb692630c87ebf262f0e634d3a9b8cdf99d1ec2493efca5f3",
+      "tests/fixtures/miragemesh/C19/expected-output.json": "b0d4b940c4c362af0578ee738184b33d427aea6a154fc3e8b38e08a4e54e7f0b",
+      "tests/fixtures/miragemesh/C19/negative.json": "c62d612b2908a063895772e3981f8855a1b3b134531c768efee597eceaa27050"
+    }
+  },
+  "results": {
+    "positive": "Four synthetic valid HTTP request events yield four interaction findings. Three sensor-01 events over the explicit 5-second window meet the fixture-supplied count limit 3 and reference their C18 segment, record, sequence and digest. The separate sensor-02 health finding comes from durable gap records only.",
+    "negative": "Zero/missing rate policy is rejected; malformed event source and digest-tampered source reference return typed errors. The versioned negative fixture is consumed by tests.",
+    "durability": "The real child-process --project-segments workflow produced alerts, exited, reopened persistent segments and reproduced identical alert JSON/references; C05 inputs and receipts were byte-for-byte unchanged.",
+    "coverage": "C18 index completeness is carried as coverage_complete. Missing event identities lower coverage and are never converted into a clean/no-alert assertion. No sensor-offline inference is made.",
+    "discovery": "Six Go suites and 129 required engine test anchors accepted by the workflow discovery guard; Go race suite passed.",
+    "security": "Alert derivation is local/read-only, validates source event identity and SHA-256 digest against C18 references, validates durable gap records and their operation IDs, copies no raw request path/content into alerts, and introduces no network/process execution API."
+  },
+  "security_review": [
+    "Caller-provided positive rate limit and whole-second window are mandatory when alert derivation is requested; no hidden product default is selected.",
+    "Source bytes are decoded and checked against indexed sensor/event/sequence, digest, payload length, segment and record references before findings are returned.",
+    "Durable spool gaps are decoded and operation-ID checked. Missing index records and incomplete coverage do not become sensor-health or attack claims.",
+    "No database, HTTP, UI, environment, Dockerfile, dependency or sibling-repository changes were made; no raw path is emitted in alert output."
+  ],
+  "limits": [
+    "GitHub-hosted Actions were not triggered; local workflow-equivalent commands passed.",
+    "Local source-integrity validation proves the committed tree identity, not runtime behavior.",
+    "No deployment, publication or product-readiness claim is made."
+  ],
+  "delivery": {
+    "commit_created": true,
+    "commit": "fcde7e930a5b196aee620b82cf665bbef9d47427",
+    "push_performed": false,
+    "publication_performed": false
+  },
+  "remote_actions_executed": false,
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0 via npx pinned CLI",
+    "go": "1.27.2 linux/amd64; GOSUMDB=sum.golang.org; GOPROXY=https://proxy.golang.org|direct",
+    "provider": "rootless Podman 4.9.3; pinned Alpine image digest verified",
+    "browser": "Chromium headless, 3 tests on loopback 127.0.0.1:4174 because port 4173 was already used by another local project"
+  },
+  "test_counts": {
+    "required_engine_anchors": 129,
+    "go_test_and_subtest_pass_events": 396,
+    "go_top_level_pass_events": 150,
+    "go_subtest_pass_events": 246,
+    "node_tests_passed": 51,
+    "browser_tests_passed": 3,
+    "python_integrity_tests_passed": 6
+  },
+  "commands": [
+    {
+      "command": "go test -race -count=1 -json ./...",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/engine-tests.jsonl",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "c6d8f75b5d676ddf527b30fe7727684b8ee5d085fc0524f5a85a24ff0a474496"
+    },
+    {
+      "command": "node scripts/verify-engine-tests.mjs docs/evidence/C19/engine-tests.jsonl",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/discovery.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "1f7a3b844d4269d76647e5fb4c5d62ac626a12cb3d4de775848ecf4616dd8f86"
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/vet.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "$(go env GOROOT)/bin/gofmt -l cmd internal tests; test -z output",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/format.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "go build -trimpath -o /tmp/miragemesh-c19-engine ./cmd/miragemesh",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/go-build.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "npm run validate:plan (npm 11.9.0)",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/validate-plan.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "bbe7c0c8988c2df98f4c8d9f5e981c0fdcbc6965252577a3d0eace7e36cd67a5"
+    },
+    {
+      "command": "npm run check (npm 11.9.0)",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/final-check.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "e6feab1ae30b130e83d21ecb004b8ad693844546f15d808ce92bedf503ef2867"
+    },
+    {
+      "command": "python3 scripts/validate_repo.py",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/repo-contracts.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "fc35939aaea01ca83a0b54dd4f5b130ebb691675cfec1c1b8b661be8214eb9bf"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/python-tests.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "75344ef5c194084bcbbeaac6021f2862e423125d72141fc2cec62b9658c79ff5"
+    },
+    {
+      "command": "python3 scripts/plan.py validate",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/plan-consistency.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "80db941735ead06893f77b7665ee16dc48e94576f81377fc2591985f0778233d"
+    },
+    {
+      "command": "playwright test --config docs/evidence/C19/playwright.config.mjs (loopback port 4174)",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/browser.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "df0daa05223a7d60f84fc09f6e5bd30a8360cfef06d4cad43afd5ae2e8db6b78"
+    },
+    {
+      "command": "npm run package:web (npm 11.9.0)",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/package.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "08622119b0ee127bf0fd56ade76787c97c74143ad01abe795c6449115355aa0b"
+    },
+    {
+      "command": "Podman 4.9.3 rootless; pinned Alpine digest and network-none memory cgroup check",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/provider.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "394a4bde493779ee5b9c9b1ffaef5547f8843f46c408a87924f90f228ce591a5"
+    },
+    {
+      "command": "python3 scripts/verify_ci_source.py on clean implementation commit",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C19/source-integrity.log",
+      "source_identity": "sha256:369361b88a1a77a43e081e247b370573828cb75a3ff926fd358b771103ec52c7",
+      "stored_output_sha256": "7bfaf95159f464ed15318410605629a74ad43bf210fc6080c5dd301a5a889708"
+    }
+  ],
+  "changed_paths": [
+    "cmd/miragemesh/main.go",
+    "cmd/miragemesh/segments.go",
+    "cmd/miragemesh/segments_test.go",
+    "internal/alerts/rules.go",
+    "tests/alerts_test.go",
+    "tests/fixtures/miragemesh/C19/positive.json",
+    "tests/fixtures/miragemesh/C19/expected-output.json",
+    "tests/fixtures/miragemesh/C19/negative.json",
+    "docs/architecture/ALERT_RULES.md",
+    "scripts/verify-engine-tests.mjs",
+    "tests/engineering/engine-tests.test.mjs"
+  ]
+}
