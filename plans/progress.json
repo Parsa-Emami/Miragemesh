@@ -195,10 +195,12 @@
     },
     {
       "id": "C22",
-      "status": "in_progress",
-      "evidence": [],
-      "source_identity": null,
-      "notes": "Local C22 implementation and targeted checks complete; full Go and rootless provider verification will be performed by GitHub Actions before marking verified."
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C22.json"
+      ],
+      "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
+      "notes": "C22 verified at implementation commit 6b24d2bdd5138b52c2a93e22093d01f4c9fc4648: source-backed segment replay and trace, same-origin loopback append-only triage, immutable source checks, keyboard/table access at 360px and lost-response/restart recovery. All four hosted workflows passed, including full Go race/153 required anchors, 64 Node tests, 11 browser tests and real clean-clone smoke. Local provider failures are retained as an environment limitation; full C30/C40 readiness is not claimed."
     },
     {
       "id": "C23",

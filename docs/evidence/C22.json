@@ -1,9 +1,9 @@
 {
   "commit_id": "C22",
   "project": "MirageMesh",
-  "passed": false,
+  "passed": true,
   "planning_template": false,
-  "status": "implemented_pending_hosted_verification",
+  "status": "verified",
   "date": "2026-10-22",
   "base_commit": "a8ffdc6074c2c934ff79d75891d42d80d32b6d17",
   "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
@@ -129,6 +129,35 @@
       "source_identity": "sha256:fc94c2b27987926334b79e203e89f043bac69240dec52b9a6768b82edfe6dac8",
       "output_path": "docs/evidence/C22/repository-contracts.log",
       "stored_output_sha256": "696bcc625891517b5ca3ded03f0e340d5a5832a63f6d0deee80bd9d6ed9b4ceb"
+    },
+    {
+      "command": [
+        "GitHub Actions",
+        "engine-runtime",
+        "go test -race -count=1 -json ./... and required test discovery"
+      ],
+      "exit_code": 0,
+      "source_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+      "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
+      "run_id": 39845107224,
+      "job_id": 120056207428,
+      "output_path": "docs/evidence/C22/engine-ci.log",
+      "stored_output_sha256": "33a624799b7f850a6db240941da8a0e3f32a9f3b390e5df1dfccb95cf956b2e8"
+    },
+    {
+      "command": [
+        "GitHub Actions",
+        "web-foundation",
+        "npm test; npm run test:browser; npm run test:clone; npm run package:web"
+      ],
+      "exit_code": 0,
+      "source_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+      "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
+      "run_id": 39845107292,
+      "job_id": 120056208845,
+      "output_path": "docs/evidence/C22/web-ci-excerpt.log",
+      "stored_output_sha256": "77e48c3a4b8d386b4635d1a151cfa272200004925700c9ef7dbcebc9ae13d374",
+      "stored_output_scope": "Exact verification excerpts; complete log is retained by the linked GitHub Actions job."
     }
   ],
   "failed_local_attempts": [
@@ -154,10 +183,12 @@
   ],
   "results": {
     "browser": "11 passed, including 5 C22 workflows. Real engine and C05/segment stores exercise keyboard/table replay at 360px, inert HTML, durable history after restart and exactly-once same-key retry after discarding an actual committed response.",
-    "engine": "Targeted uncached Go race tests pass; go vet ./... passes. Full local Go suite has 14 pre-existing provider-dependent failures because Podman is unavailable; no tests were skipped or disabled.",
+    "engine": "Hosted engine-runtime passed the full uncached Go race suite and all 8 required engine suites / 153 required anchors with the pinned rootless Podman prerequisites. Local targeted Go race/vet checks passed; the failed local full-suite attempt is retained separately as an environment limitation.",
     "web": "npm run check passes TypeScript, production web/engine builds, plan validation and 64 Node tests.",
     "integrity": "Repository contract validator and 6 Python integrity regressions pass.",
-    "source": "Source digests agree with exact immutable bytes and retained C05 authority. Tests reject tampering after Open and after index rebuild."
+    "source": "Source digests agree with exact immutable bytes and retained C05 authority. Tests reject tampering after Open and after index rebuild.",
+    "clone": "Hosted web-foundation completed a real clean staged-tree Git clone, setup, Go vet/race/discovery, event validation, unified web/engine startup and packaging. This is the existing clone smoke contract, not the full C30 workflow.",
+    "hosted": "All four workflows succeeded on the exact implementation commit: contracts, plan-consistency, engine-runtime and web-foundation."
   },
   "environment": {
     "node": "24.19.0",
@@ -165,19 +196,75 @@
     "go": "go1.27.2 linux/amd64",
     "playwright": "1.64.1",
     "local_browser": "Chromium 153.0.8010.0 via existing executable override; hosted CI will install locked Playwright Chromium",
-    "provider": "C22 uses local temporary filesystem adapters only. Rootless Podman is unavailable on this host; unchanged CI supplies the locked provider."
+    "provider": "C22 uses local temporary filesystem adapters only. Rootless Podman is unavailable on this host; unchanged CI supplies the locked provider.",
+    "hosted": "GitHub Actions ubuntu-24.04 with pinned Node 24.19.0, npm 11.9.0, Go 1.27.2, rootless Podman 4.9.3, pinned Alpine image and Playwright-installed Chromium."
   },
   "limits": [
     "Full C30/C40 workflow and release readiness are not certified.",
     "Single-host local operator interface, no remote/multi-user authentication.",
     "Replay view has explicit 256 indexed event and 1 MiB response bounds; it fails unavailable without truncating evidence.",
-    "Pending browser retry state lasts while the page is mounted.",
-    "Hosted verification is pending."
+    "Pending browser retry state lasts while the page is mounted."
   ],
-  "remote_actions_executed": false,
+  "remote_actions_executed": true,
   "delivery": {
-    "commit_created": false,
-    "push_performed": false,
+    "commit_created": true,
+    "commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+    "push_performed": true,
+    "branch": "main",
     "publication_performed": false
+  },
+  "implementation_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+  "hosted_actions": {
+    "source_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+    "all_passed": true,
+    "runs": [
+      {
+        "name": "engine-runtime",
+        "run_id": 39845107224,
+        "status": "completed",
+        "conclusion": "success",
+        "source_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39845107224",
+        "created_at": "2026-10-22T20:00:49Z",
+        "updated_at": "2026-10-22T20:02:49Z"
+      },
+      {
+        "name": "plan-consistency",
+        "run_id": 39845107061,
+        "status": "completed",
+        "conclusion": "success",
+        "source_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39845107061",
+        "created_at": "2026-10-22T20:00:49Z",
+        "updated_at": "2026-10-22T20:01:00Z"
+      },
+      {
+        "name": "contracts",
+        "run_id": 39845107097,
+        "status": "completed",
+        "conclusion": "success",
+        "source_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39845107097",
+        "created_at": "2026-10-22T20:00:49Z",
+        "updated_at": "2026-10-22T20:01:01Z"
+      },
+      {
+        "name": "web-foundation",
+        "run_id": 39845107292,
+        "status": "completed",
+        "conclusion": "success",
+        "source_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39845107292",
+        "created_at": "2026-10-22T20:00:49Z",
+        "updated_at": "2026-10-22T20:03:22Z"
+      }
+    ]
+  },
+  "test_counts": {
+    "node_passed": 64,
+    "browser_passed": 11,
+    "required_engine_suites": 8,
+    "required_engine_anchors": 153,
+    "python_integrity_passed": 6
   }
 }

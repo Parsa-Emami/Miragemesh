@@ -1,0 +1,7 @@
+2026-10-22T20:01:51.1566426Z ℹ tests 64
+2026-10-22T20:02:19.5781395Z   11 passed (9.7s)
+2026-10-22T20:02:19.6150936Z ##[group]Run npx --yes --package=npm@11.9.0 --call 'npm run test:clone'
+2026-10-22T20:02:19.6151514Z [36;1mnpx --yes --package=npm@11.9.0 --call 'npm run test:clone'[0m
+2026-10-22T20:02:20.5388642Z {"schema_version": 1, "passed": true, "scope": "Source integrity only; runtime results belong to this commit's CI jobs", "commit": "d15ece7cbf54157e3db548f889866ed8bf333446", "git_tree": "7b339571fa01279bf7714d64989e0376688ac5d9", "current_source_identity": "sha256:6dc0a9c109bc3112ce5c3b9c78b138f04a60baf3f7913061d1503493b21384a7", "historical_manifest": {"commit": "09ea1d6f0216e4d2a567e7db256c062094ca3764", "verified_files": 291}, "historical_evidence": {"commit": "7e839b9591db5f5856a77a148aaf4d88b21ba547", "source_identity": "sha256:70cabd1f8cb58f9f1e05da9864196ba98e947dfab6c3eafe91ba4fc0aa021176"}, "runtime_tests_certified": false, "core_tasks_certified": []}
+2026-10-22T20:03:17.5083273Z Verified 8 engine suites and 153 required test anchors.
+2026-10-22T20:03:17.6424642Z {"passed":true,"stagedTree":"7b339571fa01279bf7714d64989e0376688ac5d9","proof":"real git clone -> npm run setup -> Go vet/race tests and discovery guard -> local event validation -> unified web and Go runtime startup","coreReady":false}

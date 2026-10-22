@@ -1,18 +1,69 @@
 {
   "project": "MirageMesh",
   "last_task": "C22",
-  "status": "in_progress",
+  "status": "verified",
   "base_commit": "a8ffdc6074c2c934ff79d75891d42d80d32b6d17",
-  "summary": "Implement C22 source-backed local incident replay, trace and durable triage. Targeted Go race, Node and real engine browser tests pass. Full local Go attempt requires unavailable rootless Podman; hosted verification pending.",
+  "implementation_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+  "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
   "evidence": "docs/evidence/C22.json",
-  "next_task": "C22",
+  "summary": "C22 implemented, pushed to main and verified by all four hosted workflows. Actual segment replay, source trace, local same-origin append-only triage, keyboard/table workflow at 360px, restart persistence and lost committed response retry passed. Full Go race suite and all 153 required test anchors passed with the pinned provider on GitHub Actions.",
+  "hosted_actions": [
+    {
+      "name": "engine-runtime",
+      "run_id": 39845107224,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39845107224",
+      "created_at": "2026-10-22T20:00:49Z",
+      "updated_at": "2026-10-22T20:02:49Z"
+    },
+    {
+      "name": "plan-consistency",
+      "run_id": 39845107061,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39845107061",
+      "created_at": "2026-10-22T20:00:49Z",
+      "updated_at": "2026-10-22T20:01:00Z"
+    },
+    {
+      "name": "contracts",
+      "run_id": 39845107097,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39845107097",
+      "created_at": "2026-10-22T20:00:49Z",
+      "updated_at": "2026-10-22T20:01:01Z"
+    },
+    {
+      "name": "web-foundation",
+      "run_id": 39845107292,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39845107292",
+      "created_at": "2026-10-22T20:00:49Z",
+      "updated_at": "2026-10-22T20:03:22Z"
+    }
+  ],
+  "next_task": "C23",
   "next_command": "npm run plan -- next",
-  "blockers": [
-    "Local runtime has no Podman; existing isolation suite must be verified by the unchanged GitHub Actions workflows."
+  "blockers": [],
+  "scope_limits": [
+    "C30 full clone-to-value/restart/restore and C40 release gates remain pending.",
+    "Single-host local operator boundary; no remote/multi-user authentication.",
+    "Bounded replay: at most 256 indexed events and 1 MiB snapshot; unavailable on excess without truncating evidence.",
+    "Local environment has no Podman; full-suite local failure is recorded and hosted full-suite success is authoritative."
   ],
   "delivery": {
-    "commit_created": false,
-    "push_performed": false,
+    "commit_created": true,
+    "implementation_commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+    "push_performed": true,
+    "branch": "main",
     "publication_performed": false
-  }
+  },
+  "verification_binding": "C22 proof retains the exact implementation source and commit. This handoff/progress update records completed hosted results; it does not relabel historical test output as a newer source."
 }

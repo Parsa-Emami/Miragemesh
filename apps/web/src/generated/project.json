@@ -276,7 +276,7 @@
       "id": "C22",
       "title": "feat(ui): render incident replay and triage",
       "stage": "domain",
-      "status": "in_progress",
+      "status": "verified",
       "acceptance": [
         "Events are escaped and every alert can be traced to source segment."
       ],
