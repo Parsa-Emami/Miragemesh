@@ -498,7 +498,7 @@ func TestTriageHasNoNetworkImports(t *testing.T) {
 	}
 	allowed := map[string]bool{
 		"bytes": true, "context": true, "crypto/sha256": true, "encoding/hex": true,
-		"encoding/json": true, "errors": true, "strconv": true, "time": true,
+		"encoding/json": true, "errors": true, "time": true,
 		"unicode/utf8": true,
 		"github.com/Parsa-Emami/Miragemesh/internal/contracts": true,
 		"github.com/Parsa-Emami/Miragemesh/internal/storage":   true,

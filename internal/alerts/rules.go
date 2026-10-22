@@ -82,7 +82,6 @@ type Outcome struct {
 type decodedSource struct {
 	ref      SourceRef
 	observed time.Time
-	identity string
 }
 
 func Evaluate(ctx context.Context, sources []Source, health []SensorHealth, policy Policy, coverageComplete bool) (Outcome, error) {
@@ -101,7 +100,7 @@ func Evaluate(ctx context.Context, sources []Source, health []SensorHealth, poli
 		SensorHealth:     []Alert{},
 	}
 	decoded := make([]decodedSource, 0, len(sources))
-	seen := make(map[string]SourceRef, len(sources))
+	seen := make(map[[2]string]SourceRef, len(sources))
 	for _, source := range sources {
 		if err := ctx.Err(); err != nil {
 			return Outcome{}, err
@@ -122,7 +121,7 @@ func Evaluate(ctx context.Context, sources []Source, health []SensorHealth, poli
 		if err != nil {
 			return Outcome{}, ErrInvalidSource
 		}
-		key := event.SensorID + "\x00" + event.EventID
+		key := [2]string{event.SensorID, event.EventID}
 		ref := SourceRef{
 			SensorID: source.Ref.SensorID,
 			EventID:  source.Ref.EventID,
@@ -138,7 +137,7 @@ func Evaluate(ctx context.Context, sources []Source, health []SensorHealth, poli
 			continue
 		}
 		seen[key] = ref
-		decoded = append(decoded, decodedSource{ref: ref, observed: observed, identity: key})
+		decoded = append(decoded, decodedSource{ref: ref, observed: observed})
 	}
 	sort.Slice(decoded, func(i, j int) bool {
 		if decoded[i].ref.SensorID != decoded[j].ref.SensorID {

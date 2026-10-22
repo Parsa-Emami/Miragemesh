@@ -1,0 +1,272 @@
+{
+  "commit_id": "C01-C21-review",
+  "project": "MirageMesh",
+  "date": "2026-10-22",
+  "base_commit": "dd25ec81c1c16e1cf3a77b14dcb8bfc6d4857eb9",
+  "implementation_commit": null,
+  "passed": true,
+  "planning_template": false,
+  "scope": "Owner-authorized remediation of review.md findings 1-10 through C21. C22 remains planned. No delivery commit, push, publication or full-product claim.",
+  "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4",
+  "source_identity_algorithm": "SHA-256 of sorted relative path + NUL + raw SHA-256(file bytes), over tracked and non-ignored untracked source; docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded. Input inventory was checked before and after every final command.",
+  "source_manifest": "docs/evidence/C01-C21-review/source-files.json",
+  "commands": [
+    {
+      "name": "npm-check",
+      "argv": [
+        "npx",
+        "--offline",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/npm-check.log",
+      "stored_output_sha256": "5d450bf51b7dd6af6ff6c16a2300dbc143014a4a4dbec804e33f22bc13c226f0",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+    },
+    {
+      "name": "go-vet",
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/go-vet.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+    },
+    {
+      "name": "go-test",
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/go-test.jsonl",
+      "stored_output_sha256": "3c0642800946bfa66bb77bbe04f815ecada693ded40330d3176e2c576146e441",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+    },
+    {
+      "name": "discovery",
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "docs/evidence/C01-C21-review/go-test.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/discovery.log",
+      "stored_output_sha256": "a8491cb27c1cda538771f8e8b7444d9885031ca21107e7ae44a92910fb7f3f9a",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+    },
+    {
+      "name": "browser",
+      "argv": [
+        "npx",
+        "--offline",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run test:browser"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/browser.log",
+      "stored_output_sha256": "2cd766e9957e60edc6edfaeede48cde06eb67429ccdb6317d6a1378819774cfd",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4",
+      "stderr_path": "docs/evidence/C01-C21-review/browser.stderr.log",
+      "stderr_sha256": "6521706e2c381b8bf305d02a82789b2783630d24169f499858258fff8f091de2"
+    },
+    {
+      "name": "repository-contracts",
+      "argv": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/repository-contracts.log",
+      "stored_output_sha256": "b3d27cff658786abf7f122e95ac47ebcb741f5b52e75851c0ae6c6277656947a",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+    },
+    {
+      "name": "python-tests",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/python-tests.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4",
+      "stderr_path": "docs/evidence/C01-C21-review/python-tests.stderr.log",
+      "stderr_sha256": "46b3066b81c49585af409ebe80a0e0e6247f469d0724ba46abd64a04b9997a8b"
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/diff-check.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+    },
+    {
+      "name": "clone",
+      "argv": [
+        "npx",
+        "--offline",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/clone.log",
+      "stored_output_sha256": "1eec9b7cc085b1a61d7beefaef244f4acbf6fcdc03f130bc9e671a00bbf4371a",
+      "index_scope": "Temporary GIT_INDEX_FILE; no task files staged in the real index.",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+    }
+  ],
+  "test_counts": {
+    "go_top_level_passed": 171,
+    "go_subtests_passed": 260,
+    "go_failures": 0,
+    "required_test_anchors": 147,
+    "node_tests_passed": 60,
+    "browser_tests_passed": 6,
+    "python_tests_passed": 6
+  },
+  "findings": {
+    "1": "resolved and verified locally",
+    "2": "resolved and verified locally",
+    "3": "resolved and verified locally",
+    "4": "resolved and verified locally",
+    "5": "resolved and verified locally",
+    "6": "resolved and verified locally",
+    "7": "resolved and verified locally",
+    "8": "resolved and verified locally",
+    "9": "resolved and verified locally",
+    "10": "resolved and verified locally"
+  },
+  "results": {
+    "ownership": "Real rootless Podman name collision preserves the original run; a different installation cannot reconcile it. Uncertain-start test waits for actual subprocess container creation and verifies run-scoped ID cleanup. Unlabeled/foreign reconciliation fails closed.",
+    "segments": "Accepted multiline payloads preserve indexed byte count/digest across projection, alert generation, reopen and replay. Maximum encoded payload, explicit quota, malformed frame and torn-tail preservation regressions pass. The former two-trailing-newline negative fixture is now explicitly tested as a valid payload.",
+    "identity": "Independent opaque pairs containing NUL remain distinct in index and alerts.",
+    "http": "Default engine returns typed 503. Raw HTTP tests reject foreign Host and Origin at both listeners before local status access.",
+    "ui": "Last successful snapshot remains visibly stale through an outage and recovers; 360px regression passes.",
+    "discovery": "C21 snapshot/provider/policy and remediation anchors are mandatory; missing/skipped anchors fail the guard.",
+    "docs": "Current metadata selects C22, historical C20/C21 proof stays bound to its old source, OpenAPI JSON/YAML match, and current append/rate/HTTP/format semantics are documented.",
+    "unicode": "Shared contracts.ValidUnicodeEscapes replaces the config and incident copies; full negative contract/config/triage suites pass."
+  },
+  "environment": {
+    "tools": "docs/evidence/C01-C21-review/tool-versions.json",
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "go": "1.27.2 linux/amd64",
+    "podman": "4.9.3 rootless",
+    "image": "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
+    "filesystem": "ext4 (/dev/nvme0n1p2)",
+    "hardware": "Development host; no capacity benchmark or C28 target certification."
+  },
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic fixtures and regression inputs; no real customer traffic or credentials.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C01/expected-output.json": "6563cfe200ae660f1608419cd25ec9caa4224831c66898dd0a691e3cbd36056b",
+      "tests/fixtures/miragemesh/C01/invalid.json": "33eefcf744547e4b9fd2530caef29f0763adfb609d2bc0183b00992636d30876",
+      "tests/fixtures/miragemesh/C01/positive.json": "b91f21e1a45f24f2c43af88b9ffca84c3f42338de02b22ed1fdee6c7b3d79bba",
+      "tests/fixtures/miragemesh/C02/expected-output.json": "a1c8493d7edc7ce45a0868ed71915683eb85f040dabc5d843c26a5a693f45714",
+      "tests/fixtures/miragemesh/C02/invalid.json": "18940f074bc6820e43f5f3c5eb3429ae8d85a8abb059c9b6d6c6d0a3397d1f7e",
+      "tests/fixtures/miragemesh/C02/positive.json": "39fbe47717e0ee5df53c18ac5841d165aa54a977bf72afa06c8a80fc8a3fcfbc",
+      "tests/fixtures/miragemesh/C03/expected-output.json": "57fe284c127971c703ac2e40f987a7d9e4f51499c961a25c301a797d39c37f19",
+      "tests/fixtures/miragemesh/C03/invalid.json": "99c970842df4ae91df4e29c83d8d1e1bc44c465b762485173c21e88e069dd079",
+      "tests/fixtures/miragemesh/C03/positive.json": "e8f4d7818cb2f45033ebedb658f867d4aceeb530afdff023a3fafe73c8eeaa94",
+      "tests/fixtures/miragemesh/C04/expected-output.json": "1217f19c5f1fcaa1836af2965113825bb90ef05f806f5e824be2adb718daeb21",
+      "tests/fixtures/miragemesh/C04/invalid.json": "38c164e5b51f9b17c9de2017ea34e035364331744b0ca8b1a9bb605a8e2ca518",
+      "tests/fixtures/miragemesh/C04/positive.json": "fccd401aa272bc5a8930eeb61d3678922597ba7471d07f07488218b0e388da0a",
+      "tests/fixtures/miragemesh/C04/valid-event.txt": "a391f2daf6fd4283c0e78a795476413fbd525cae0f3b4ec81a83f81c4f9c0444",
+      "tests/fixtures/miragemesh/C05/expected-output.json": "fdea61065303093041ca48253f9229d33afe1fc1b03c7dc817decd524414d6f7",
+      "tests/fixtures/miragemesh/C05/invalid.json": "0d84c081f6f63cfc1e753b8ff5785074ed6e0745855f24d2c1fc7716714b43ab",
+      "tests/fixtures/miragemesh/C05/positive.json": "b0d5a4767079e0b1d732803432ea2a8a517d8a7d185cdddfb6f7f9ae9f62803a",
+      "tests/fixtures/miragemesh/C07/expected-output.json": "1b6f6b829e2b1f50507ee26c91661d479cf9e6cd33c7caba5f7776e8635d51b8",
+      "tests/fixtures/miragemesh/C07/invalid.json": "abce98eb682add4f130051152773f1232a5f6b6ae0ed852a247488a07d111451",
+      "tests/fixtures/miragemesh/C07/positive.json": "5a7796a8285ea7e9bf374da9bcc726e51fbaaef2e07083fd02e587eefaacc528",
+      "tests/fixtures/miragemesh/C08/expected-output.json": "7b9497b5ec55aa8339dea4678a447691d55c0d85e30d4647fe653e2de4ae311f",
+      "tests/fixtures/miragemesh/C08/invalid.json": "882351b2d20b496b447590a7019c4d7913d8c633a537e17a3d101e323aa11688",
+      "tests/fixtures/miragemesh/C08/positive.json": "505207a53309ba4d0c803411d87178e9115ef117d71191451d8386ce0515cb33",
+      "tests/fixtures/miragemesh/C09/expected-output.json": "bd0d9468c5f733aebe6ed45b6e627ccb99fec6c22c5b88d5f4d8d02f3c9a3638",
+      "tests/fixtures/miragemesh/C09/invalid.json": "8d8bcb3d78046fac275785e13d8aadaaa7e6bd0563739573047f01531aeb7b68",
+      "tests/fixtures/miragemesh/C09/positive.json": "1b35be54e5aa4ec35973c488826b7d18845210ab2ed40f5b4632c2ed5b46ef90",
+      "tests/fixtures/miragemesh/C10/expected-output.json": "b17d08e4e40979310848c393704d8c886c8794026b14ec21ff6718013c7c38ca",
+      "tests/fixtures/miragemesh/C10/invalid.json": "26b870e0ed5e846a7cc380edfa2352a3762f7ba309289d9ae5905d99e3ac06ed",
+      "tests/fixtures/miragemesh/C10/positive.json": "5a3eddcb79fde38531583938c350d4e6a38d009666a131fa02ae5e3a89e67e7e",
+      "tests/fixtures/miragemesh/C11/expected-output.json": "f7e8655fa69b89f9dad367845a8288b74bb3c0ff9c879c0bc9c5104485e543bd",
+      "tests/fixtures/miragemesh/C11/invalid.json": "26b870e0ed5e846a7cc380edfa2352a3762f7ba309289d9ae5905d99e3ac06ed",
+      "tests/fixtures/miragemesh/C11/positive.json": "e7d831a32379a8076e19a41efdabb476df949c73429bb05af4879035eaa34516",
+      "tests/fixtures/miragemesh/C12/expected-output.json": "3372548273d5ca4ab0181bff8c61ca0bfdfd14671d52408fe212912cc5ec5ff2",
+      "tests/fixtures/miragemesh/C12/invalid.json": "82ee3bb1938c9266b9eb355a8c6c1baacb7ae484a9848177668071b5f19bc69a",
+      "tests/fixtures/miragemesh/C12/positive.json": "e49fefe5a02df51daf4b60dbb54254ddf5e89b579c2bf4e06908fcf65b2b9205",
+      "tests/fixtures/miragemesh/C13/expected-output.json": "59624921ea0b46f766a821429cb7cbd2314d9fce4256026f9b16bcf4946ac190",
+      "tests/fixtures/miragemesh/C13/invalid.json": "aef721b261af73b2e5a54e19cf4a4de92465cb2e9db6fe9a00dd961b31020a97",
+      "tests/fixtures/miragemesh/C13/positive.json": "00c25b55de6f3333119362e4c5a9447930dea45c2790a211777250cee8045aa0",
+      "tests/fixtures/miragemesh/C14/expected-output.json": "ea6c8d87ee7ed5e64d887880bf33a73a60f8ea8ab637096c3c4c97ed2494dc73",
+      "tests/fixtures/miragemesh/C14/invalid.json": "913e1800c443352aa845e7834cfebb1a7185db381b460499bad6a1e25b8a967f",
+      "tests/fixtures/miragemesh/C14/positive.json": "ebd2e7d095408d9fe4881fb70f0655647797dce5d5fa4806d6c055a5251a41b4",
+      "tests/fixtures/miragemesh/C15/expected-output.json": "9540721e17397f98362c3ab19fd8681885e022b5072c44d6f871f7994e30b03f",
+      "tests/fixtures/miragemesh/C15/invalid.json": "0e6b51a31ec05d6e72a2601278b36c3f6bd991b6a986acff3228848742ece842",
+      "tests/fixtures/miragemesh/C15/positive.json": "4f566c59c2a7d64f33fece5d3d61e5620210d8711574de5a9c5c8f649fd17ca6",
+      "tests/fixtures/miragemesh/C16/expected-output.json": "a0b629fc904d679511e9d81cd0aa9afe497b47f8ab5719c7e2a6a74a629f3f0c",
+      "tests/fixtures/miragemesh/C16/invalid.json": "722956be77657ec175fbc69a0f08e6ef3299d9660b44c687a42b2e4b490a1c05",
+      "tests/fixtures/miragemesh/C16/positive.json": "3aeb60a29224a2858764ce67c6a6b9454fdbb6f532e64ecce45149b8183f7a6c",
+      "tests/fixtures/miragemesh/C17/crash.json": "577a3fd8d09cf1883842a3b074e5f43600937057ef7cc6d49b4bab164459309f",
+      "tests/fixtures/miragemesh/C17/expected-output.json": "d146510d87d804b1e0d0193fc15c1cc6dfbd8928ef4d054923bc547473e71eb8",
+      "tests/fixtures/miragemesh/C17/invalid.json": "7083a9ac5d1af3701b8d232238dae6e33f535f5a206560a30f7c2b04b2bac6b0",
+      "tests/fixtures/miragemesh/C17/positive.json": "6259878eb9415b22c0a91cc68dd807f8dcebea80fbd32269e796ada0b75309db",
+      "tests/fixtures/miragemesh/C18/expected-output.json": "4794c8fecc80c205bcdcb03953079918c745f232977755a3c1c14c018336d8a0",
+      "tests/fixtures/miragemesh/C18/negative.json": "c4546e4f33652f174a5fd1bd36ab0e430371c0e41e2cda68de310668d692968e",
+      "tests/fixtures/miragemesh/C18/positive.json": "eff5df031d544b759ac60d0a75893ed9cee57f5a3036455f3c4c39eafe065199",
+      "tests/fixtures/miragemesh/C19/expected-output.json": "b0d4b940c4c362af0578ee738184b33d427aea6a154fc3e8b38e08a4e54e7f0b",
+      "tests/fixtures/miragemesh/C19/negative.json": "c62d612b2908a063895772e3981f8855a1b3b134531c768efee597eceaa27050",
+      "tests/fixtures/miragemesh/C19/positive.json": "3f27090049e5f28cb692630c87ebf262f0e634d3a9b8cdf99d1ec2493efca5f3",
+      "tests/fixtures/miragemesh/C20/expected-output.json": "38947960180a9d5a6de7a067c67d15f315bcf3c0e3b9ef9284c16fb77de6a836",
+      "tests/fixtures/miragemesh/C20/negative.json": "ca2433a7c709bb64d9c64200332d4d00c161ea7d4e26cf5d4938119a939dfe0f",
+      "tests/fixtures/miragemesh/C20/positive.json": "94f68134ed6ce4897eacb402879dae9b09d59c076c167cfa669916bdd3df3074",
+      "tests/fixtures/miragemesh/C21/expected-output.json": "fd3292ecdfee84890924b9b547dd5607ce92298d2242dcb1c04371fe842c9c10",
+      "tests/fixtures/miragemesh/C21/invalid.json": "1c65613a0dccc04f8b586df66753bd0f7da30e27de50e7b39fa40614766bb9a5",
+      "tests/fixtures/miragemesh/C21/positive.json": "bca2be661c8d0e9c4a0236b4b5b952338c8728b36d804cc243626ef1b1631c65"
+    }
+  },
+  "local_clone_verification": {
+    "passed": true,
+    "snapshot_commit": "adb9decce172f02b95d0fd9bfb2f0c8ff0ce9d17",
+    "git_tree": "411ad14da49009a1ef6ef374bc8988a2202b83a3",
+    "git_source_integrity_identity": "sha256:14890af707e8ebceb19ef4e24b3dcb7548a97c9559bd0af1c4eaadb8eb8e4037",
+    "project_source_identity_matches": true,
+    "scope": "Existing local clone/setup/vet/race/discovery/validation/startup workflow. A temporary index and snapshot were used; the real index and HEAD were unchanged. This is not C30 full-workflow proof or a delivery commit."
+  },
+  "limits": [
+    "After an encoded multiline frame is written, use this compatible reader; older readers fail closed. Existing segment bytes are never rewritten.",
+    "The old minimum byte quota remains valid; use at least 10927 bytes per segment to fit the largest encoded frame.",
+    "Unlabeled legacy containers require explicit operator inspection; no automatic ownership inference or deletion.",
+    "Loopback Host/Origin checks are not remote authentication; local-private/full-product readiness remains unproven.",
+    "Hosted Actions, full C30 clean-host/restart/restore, full screen-reader coverage, physical power loss and a real browser DNS-rebinding exploit were not certified."
+  ],
+  "delivery": {
+    "commit_created": false,
+    "push_performed": false,
+    "publication_performed": false
+  },
+  "remote_actions_executed": false
+}

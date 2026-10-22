@@ -516,3 +516,36 @@ func TestSegmentProjectionStateIsUnknownWhenTheWriterCannotReport(t *testing.T) 
 		t.Fatalf("unknown state reported as known: %+v", outcome)
 	}
 }
+
+func TestSegmentProjectionPreservesMultilineSources(t *testing.T) {
+	var pretty bytes.Buffer
+	if err := json.Indent(&pretty, []byte(c17CLIEvents(t)[0]), "", "  "); err != nil {
+		t.Fatal(err)
+	}
+	raw := bytes.TrimSuffix(pretty.Bytes(), []byte{'\n'})
+	directory := filepath.Join(t.TempDir(), "store")
+	store, err := storage.Open(directory, c17CLIStorageLimits)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = sensor.Accept(context.Background(), store, raw); err != nil {
+		t.Fatal(err)
+	}
+	if err = store.Close(); err != nil {
+		t.Fatal(err)
+	}
+	options := segmentProjectionOptions{StorageDir: directory, SegmentsDir: filepath.Join(t.TempDir(), "segments"), StorageLimits: c17CLIStorageLimits, SegmentLimits: c17CLISegmentLimits, AlertsRequested: true, AlertsRateLimit: 1, AlertsWindowSeconds: 5}
+	sum := sha256.Sum256(raw)
+	for attempt := 0; attempt < 2; attempt++ {
+		out, err := projectSegments(context.Background(), options)
+		if err != nil || out.Alerts == nil || len(out.Alerts.Interactions) != 1 {
+			t.Fatalf("projection %d: %+v %v", attempt, out, err)
+		}
+		if out.Alerts.Interactions[0].Sources[0].Digest != hex.EncodeToString(sum[:]) {
+			t.Fatal("alert lost exact multiline payload identity")
+		}
+		if attempt == 1 && (out.Appended != 0 || out.AlreadyProjected != 1) {
+			t.Fatalf("reprojection duplicated event: %+v", out)
+		}
+	}
+}

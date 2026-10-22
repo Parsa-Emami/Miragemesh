@@ -61,6 +61,20 @@ func serve(ctx context.Context, address string, ready io.Writer, sensorStatus se
 			w.Header().Set("Cache-Control", "no-store")
 			w.Header().Set("X-Content-Type-Options", "nosniff")
 			w.Header().Set("Content-Type", "application/json")
+			host, rawPort, hostErr := net.SplitHostPort(r.Host)
+			if hostErr != nil && listener.Addr().(*net.TCPAddr).Port == 80 {
+				host, rawPort, hostErr = r.Host, "80", nil
+				if host == "[::1]" {
+					host = "::1"
+				}
+			}
+			origins := r.Header.Values("Origin")
+			if hostErr != nil || (host != "127.0.0.1" && host != "::1" && host != "localhost") || rawPort != strconv.Itoa(listener.Addr().(*net.TCPAddr).Port) ||
+				(len(origins) != 0 && (len(origins) != 1 || origins[0] != "http://"+r.Host)) {
+				w.WriteHeader(http.StatusForbidden)
+				io.WriteString(w, `{"error":"forbidden_origin"}`)
+				return
+			}
 			if r.URL.Path != "/healthz" {
 				if r.URL.Path == "/api/v1/sensors" {
 					if r.Method != http.MethodGet {
@@ -266,10 +280,9 @@ func main() {
 		json.NewEncoder(os.Stdout).Encode(health())
 		return
 	}
-	var sensorStatus *localSensorStatus
+	var sensorStatus sensorStatusReader
 	if sensorStatusConfigured {
-		var err error
-		sensorStatus, err = openSensorStatus(sensorStatusOptions{
+		local, err := openSensorStatus(sensorStatusOptions{
 			directory:     *sensorStatusDir,
 			limits:        storage.Limits{MaxOperations: *sensorStatusMaxOperations, MaxBytes: *sensorStatusMaxBytes, MaxManifestBytes: *sensorStatusMaxManifestBytes},
 			publicKeyPath: *sensorConfigPublicKey,
@@ -284,7 +297,8 @@ func main() {
 			fmt.Fprintln(os.Stderr, "invalid sensor status configuration")
 			os.Exit(2)
 		}
-		defer sensorStatus.store.Close()
+		defer local.store.Close()
+		sensorStatus = local
 	}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()

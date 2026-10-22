@@ -318,7 +318,7 @@ func Parse(payload []byte) (Document, error) {
 	if len(payload) == 0 || len(payload) > contracts.MaxInputBytes {
 		return Document{}, ErrInvalidInput
 	}
-	if !utf8.Valid(payload) || !json.Valid(payload) || !validEscapes(payload) {
+	if !utf8.Valid(payload) || !json.Valid(payload) || !contracts.ValidUnicodeEscapes(payload) {
 		return Document{}, ErrInvalidInput
 	}
 	fields, err := members(payload, documentFields)
@@ -484,40 +484,4 @@ func parseSettings(raw json.RawMessage) (Settings, error) {
 		*entry.target = int(value)
 	}
 	return settings, nil
-}
-
-// validEscapes rejects unpaired UTF-16 escapes before decoding so two
-// distinct malformed sensor identifiers cannot collapse into one value.
-func validEscapes(data []byte) bool {
-	for i := 0; i < len(data); i++ {
-		if data[i] != '\\' {
-			continue
-		}
-		i++
-		if i >= len(data) {
-			return false
-		}
-		if data[i] != 'u' {
-			continue
-		}
-		if i+4 >= len(data) {
-			return false
-		}
-		unit, _ := strconv.ParseUint(string(data[i+1:i+5]), 16, 16)
-		i += 4
-		if unit >= 0xdc00 && unit <= 0xdfff {
-			return false
-		}
-		if unit >= 0xd800 && unit <= 0xdbff {
-			if i+6 >= len(data) || data[i+1] != '\\' || data[i+2] != 'u' || i+7 > len(data) {
-				return false
-			}
-			low, _ := strconv.ParseUint(string(data[i+3:i+7]), 16, 16)
-			if low < 0xdc00 || low > 0xdfff {
-				return false
-			}
-			i += 6
-		}
-	}
-	return true
 }

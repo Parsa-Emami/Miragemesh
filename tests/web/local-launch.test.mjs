@@ -240,3 +240,49 @@ test('startup rejects forged non-loopback handshakes and unsafe health destinati
   await writeFile(engineBinary, `#!${process.execPath}\nconsole.log(JSON.stringify({service:'miragemesh-engine', pid:process.pid, address:'example.invalid:80'})); process.stdin.resume();`, { mode: 0o700 });
   await assert.rejects(startLocal({ ...options, engineBinary }), /Invalid engine startup/);
 });
+
+test('default engine returns a typed disabled sensor response directly', async t => {
+  const { startLocal } = await import('../../scripts/start-local.mjs');
+  const running = await startLocal(await workspace(t));
+  t.after(() => running.close());
+  const response = await fetch(`http://${running.engineAddress}/api/v1/sensors`);
+  assert.equal(response.status, 503);
+  assert.deepEqual(await response.json(), { error: 'sensor_status_unavailable' });
+});
+
+test('web and engine reject foreign Host and Origin before serving local data', async t => {
+  const { startLocal } = await import('../../scripts/start-local.mjs');
+  const running = await startLocal(await workspace(t));
+  t.after(() => running.close());
+  for (const address of [`127.0.0.1:${running.server.address().port}`, running.engineAddress]) {
+    for (const headers of [{ Host: 'attacker.example' }, { Host: '127.0.0.1.attacker.example' }, { Origin: 'http://attacker.example' }, { Origin: 'null' }, { Origin: 'http://localhost:9999' }]) {
+      const response = await new Promise((resolve, reject) => {
+        http.get(`http://${address}/api/v1/sensors`, { headers, agent: false }, response => {
+          let body = ''; response.on('data', chunk => { body += chunk; });
+          response.on('end', () => resolve({ status: response.statusCode, body }));
+          response.on('error', reject);
+        }).on('error', reject);
+      });
+      assert.equal(response.status, 403, JSON.stringify({ address, headers }));
+      assert.deepEqual(JSON.parse(response.body), { error: 'forbidden_origin' });
+    }
+    const response = await fetch(`http://${address}/healthz`, { headers: { Origin: `http://${address}` } });
+    assert.equal(response.status, 200);
+  }
+});
+
+test('sensor responses conform to the published local API schema', async t => {
+  const { default: Ajv } = await import('ajv/dist/2020.js');
+  const { default: formats } = await import('ajv-formats');
+  const api = JSON.parse(await readFile(new URL('../../contracts/openapi.v1.json', import.meta.url), 'utf8'));
+  const schema = api.paths['/sensors']?.get?.responses['200']?.content['application/json']?.schema;
+  assert.ok(schema, 'the implemented sensor collection must have a response schema');
+  const ajv = new Ajv({ strict: true }); formats(ajv);
+  const validate = ajv.compile(schema);
+  const fixture = JSON.parse(await readFile(new URL('../fixtures/miragemesh/C21/expected-output.json', import.meta.url)));
+  const snapshot = { schema_version: fixture.schema_version, offline_after_seconds: fixture.offline_after_seconds, sensors: fixture.sensors };
+  assert.equal(validate(snapshot), true, JSON.stringify(validate.errors));
+  for (const patch of [{ schema_version: '2' }, { sensors: [{ ...snapshot.sensors[0], dropped_event_count: -1 }] }, { sensors: [{ ...snapshot.sensors[0], config_status: 'trusted' }] }]) {
+    assert.equal(validate({ ...snapshot, ...patch }), false);
+  }
+});

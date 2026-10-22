@@ -42,7 +42,7 @@ func DecodeIncidentTriage(ctx context.Context, raw []byte) (IncidentTriageRecord
 		return IncidentTriageRecord{}, err
 	}
 	var record IncidentTriageRecord
-	if len(raw) > MaxStoredInputBytes || !utf8.Valid(raw) || !json.Valid(raw) || !validEscapes(raw) {
+	if len(raw) > MaxStoredInputBytes || !utf8.Valid(raw) || !json.Valid(raw) || !ValidUnicodeEscapes(raw) {
 		return IncidentTriageRecord{}, invalid
 	}
 	if json.Unmarshal(raw, &record) != nil {

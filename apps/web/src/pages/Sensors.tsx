@@ -15,6 +15,7 @@ export default function Sensors() {
   const [snapshot, setSnapshot] = useState<SensorSnapshot | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [updatedAt, setUpdatedAt] = useState<string | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -25,11 +26,13 @@ export default function Sensors() {
           credentials: 'omit',
           signal: AbortSignal.any([controller.signal, AbortSignal.timeout(2000)]),
         });
-        if (!response.ok) throw new Error('Sensor status is unavailable. Configure local storage and its verification policy.');
-        const value = validateSensorSnapshot(await response.json()) as SensorSnapshot;
-        if (!controller.signal.aborted) { setSnapshot(value); setError(''); }
-      } catch {
-        if (!controller.signal.aborted) { setError('Sensor status is unavailable. Configure local storage and its verification policy.'); setSnapshot(null); }
+        if (!response.ok) throw new Error(response.status === 503 ? 'Sensor status is unavailable. Check the local engine and its storage or verification policy.' : response.status === 403 ? 'Sensor status access was denied.' : 'Sensor status request failed.');
+        let value: SensorSnapshot;
+        try { value = validateSensorSnapshot(await response.json()) as SensorSnapshot; }
+        catch { throw new Error('Sensor status is unavailable because the engine response is invalid.'); }
+        if (!controller.signal.aborted) { setSnapshot(value); setUpdatedAt(new Date().toISOString()); setError(''); }
+      } catch (reason) {
+        if (!controller.signal.aborted) setError(reason instanceof Error && reason.name === 'Error' ? reason.message : 'Sensor status is unavailable. The local engine could not be reached; retrying automatically.');
       } finally {
         if (!controller.signal.aborted) setLoading(false);
       }
@@ -40,12 +43,14 @@ export default function Sensors() {
   }, []);
 
   if (loading) return <section className="panel" aria-live="polite"><h2>Loading sensor status…</h2></section>;
-  if (error) return <section className="panel"><h2>Sensor status unavailable</h2><p role="alert" className="error">{error}</p></section>;
+  if (error && !snapshot) return <section className="panel"><h2>Sensor status unavailable</h2><p role="alert" className="error">{error}</p></section>;
   const sensors = snapshot?.sensors ?? [];
   const offline = sensors.filter(sensor => sensor.offline).length;
   const stale = sensors.filter(sensor => sensor.config_status !== 'current').length;
   const dropped = sensors.reduce((total, sensor) => total + sensor.dropped_event_count, 0);
   return <section aria-label="Sensor summary">
+    {error && <p role="alert" className="error">Displayed sensor data is stale. {error} Retrying automatically.</p>}
+    {updatedAt && <p className="muted">Last updated: <time dateTime={updatedAt}>{updatedAt}</time>{error ? ' · Stale snapshot' : ''}</p>}
     <div className="sensor-metrics">
       <article className="panel"><span className="eyebrow">Offline</span><strong>{offline}</strong><p>Last event older than {Math.round((snapshot?.offline_after_seconds ?? 300) / 60)} minutes</p></article>
       <article className="panel"><span className="eyebrow">Stale configuration</span><strong>{stale}</strong><p>Missing or expired applied configuration</p></article>

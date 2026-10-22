@@ -21,6 +21,149 @@
     }
   ],
   "paths": {
+    "/sensors": {
+      "get": {
+        "summary": "Read the local sensor status snapshot",
+        "operationId": "miragemesh_get_sensors",
+        "tags": [
+          "MirageMesh"
+        ],
+        "description": "Implemented opt-in read-only loopback projection. No bearer authentication or event metadata. The engine requires explicit local storage and verification policy. Host must name loopback on the listener port; an Origin, when present, must match the HTTP request authority. This is not a remote or multi-user API.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Complete read-only local snapshot. Offline is a five-minute stored-event heuristic, not a live connection claim.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "schema_version",
+                    "offline_after_seconds",
+                    "sensors"
+                  ],
+                  "properties": {
+                    "schema_version": {
+                      "type": "string",
+                      "const": "1"
+                    },
+                    "offline_after_seconds": {
+                      "type": "integer",
+                      "const": 300
+                    },
+                    "sensors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "sensor_id",
+                          "last_event_at",
+                          "offline",
+                          "config_status",
+                          "dropped_event_count"
+                        ],
+                        "properties": {
+                          "sensor_id": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "last_event_at": {
+                            "type": [
+                              "string",
+                              "null"
+                            ],
+                            "format": "date-time"
+                          },
+                          "offline": {
+                            "type": "boolean"
+                          },
+                          "config_status": {
+                            "type": "string",
+                            "enum": [
+                              "missing",
+                              "expired",
+                              "current"
+                            ]
+                          },
+                          "dropped_event_count": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden_origin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "const": "forbidden_origin"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "method_not_allowed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "const": "method_not_allowed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "sensor_status_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "const": "sensor_status_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/sensors/enrollment-tokens": {
       "post": {
         "summary": "Create one-time sensor enrollment token",

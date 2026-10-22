@@ -99,8 +99,9 @@ or UI; C23 owns deletion/retention and C30 remains the end-to-end gate. See
 
 C18 makes event projection repeatable without a durable checkpoint file:
 `events.Open` rebuilds a derived index from the complete records of the committed
-segments, and `Append`/`AppendRecords` consult it before writing. An event already
-indexed is counted in `already_projected` and is not appended again; the same
+segments. `AppendRecords` skips an already indexed event and counts it in
+`already_projected`. Direct `Append` permits exact duplicates and counts them
+in the index; both APIs reject conflicting identities before writing; the same
 sensor/event identity with different bytes or sequence is a typed
 `ErrIndexConflict` before any file changes. Reopening the writer after index loss
 is the rebuild path. The `--project-segments` outcome now reports
@@ -112,7 +113,7 @@ schema or dependency. See `docs/architecture/EVENT_INDEX.md`.
 
 C19 adds read-only, explainable findings to the existing one-shot
 `--project-segments` workflow. An explicit per-sensor rate count and window
-produce a rate signal when three or more synthetic HTTP requests fall inside the
+produce a rate signal when the configured request count is reached inside the
 window; each accepted event also yields an interaction finding. Every signal
 references the committed C18 segment, record, sequence and digest. Durable spool
 gaps produce separate sensor-health findings. Missing or incomplete index
@@ -143,3 +144,10 @@ disabled unless the local engine receives explicit C05 quotas, a raw Ed25519
 public-key file and explicit C10 verifier bounds. It never writes to the
 store; enrollment, ingest and configuration application still have no browser
 write surface. See `docs/architecture/SENSOR_STATUS.md`.
+
+The C01–C21 review remediation preserves legacy segment reads and adds canonical
+base64 JSON-string frames for multiline accepted payloads without changing their
+indexed bytes/digests. Identity maps use tuples. Container cleanup checks the
+installation and run markers; foreign or unlabeled containers are preserved.
+Local HTTP rejects foreign Host/Origin, and sensor refresh failures retain an
+explicitly stale snapshot. These are fixes to existing cards; C22 remains next.

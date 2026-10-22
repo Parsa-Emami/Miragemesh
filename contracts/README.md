@@ -1,6 +1,6 @@
 # MirageMesh local event contract v1 (C04)
 
-`input.schema.json` and `result.schema.json` define Draft 2020-12 documents for a **local, stateless event validator**. The shared Go package `internal/contracts` implements the boundary. A valid document is not an enrolled/authenticated sensor, accepted collector observation, durable write, deduplicated event or completed product workflow. HTTP still exposes C03 health only; browser file preview remains a local structural preview.
+`input.schema.json` and `result.schema.json` define Draft 2020-12 documents for a **local, stateless event validator**. The shared Go package `internal/contracts` implements the boundary. A valid document is not an enrolled/authenticated sensor, accepted collector observation, durable write, deduplicated event or completed product workflow. HTTP exposes runtime health and the opt-in C21 read-only local sensor status collection; browser file preview remains a local structural preview. The sensor API is documented in `openapi.v1.json` and `docs/architecture/SENSOR_STATUS.md`; it does not add event admission.
 
 ## Run and reuse
 

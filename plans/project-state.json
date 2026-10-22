@@ -1,6 +1,6 @@
 {
   "project": "MirageMesh",
-  "reviewed_commit": "d2023f5cb8168237e8d8779d892fc0b912e12fe8",
+  "reviewed_commit": "dd25ec81c1c16e1cf3a77b14dcb8bfc6d4857eb9",
   "readiness": "WEB_FOUNDATION",
   "core_ready": false,
   "implemented": [
@@ -22,10 +22,18 @@
     "internal C05-backed spool overflow policy: drop-new with durable append-only gap markers, stable typed retries and restart-rebuilt per-sensor loss counters; gaps remain explicit loss history",
     "internal collector batch delivery with exact C04 bytes, whole-batch validation, durable append-only spool.ack records, lost-ACK replay without duplicate observations and unacknowledged-only spool capacity; no transport, public endpoint, CLI, UI or authentication claim",
     "internal immutable event segment log with bounded record/byte rotation, stable positive ordinals, sealed files, explicit incomplete-tail Offset/Bytes/Digest metadata, typed recovery, C16 projection that skips gaps, ACKs, enrollment and configuration, and a one-shot --project-segments engine command with typed outcomes that report the durable segment state of a failed projection; no retention, index or deduplication checkpoint",
-    "internal derived event index rebuilt from committed segments at Open: Append/AppendRecords deduplicate exact repeats, reject a conflicting identity with typed ErrIndexConflict before bytes change, and report index records, sensors, duplicates, exclusive missing segment ordinal ranges and incomplete-tail coverage without claiming missing events as ingested"
+    "internal derived event index rebuilt from committed segments at Open: AppendRecords deduplicates exact repeats; direct Append counts exact duplicate writes and both paths reject a conflicting identity with typed ErrIndexConflict before bytes change, and report index records, sensors, duplicates, exclusive missing segment ordinal ranges and incomplete-tail coverage without claiming missing events as ingested",
+    "Read-only explainable interaction, rate and durable-loss findings during --project-segments, with explicit operator rate policy and exact segment source references; no incident UI",
+    "Internal append-only C05 incident triage with strict status/reason input, hashed idempotency keys and restart-durable history; no HTTP write surface",
+    "Opt-in loopback GET /api/v1/sensors with C05-backed event age, verified applied configuration and gap counts; Sensors UI retains an explicitly stale snapshot during a temporary failure",
+    "Review remediation: container ownership and run-scoped rollback, multiline event frames with exact payload digests and legacy frame reads, opaque identity tuples, typed disabled sensor response, loopback Host/Origin checks and required C21 test discovery"
   ],
-  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation, a metadata-only HTTP decoy, its rootless container isolation, the engine workflow that starts it, bounded internal spool with durable overflow gap markers, loss counters, durable collector batch acknowledgements, immutable event segment rotation with explicit incomplete-tail recovery, a derived event index rebuilt from committed segments with deduplication and typed identity conflicts, and a one-shot --project-segments engine workflow with typed outcomes, failed-projection segment-state reporting and zero-ordinal rejection implemented; retention, alerts, authenticated ingest, a published decoy surface and the full workflow pending",
-  "next_task": "C19",
+  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation, a metadata-only HTTP decoy, its rootless container isolation, the engine workflow that starts it, bounded internal spool with durable overflow gap markers, loss counters, durable collector batch acknowledgements, immutable event segment rotation with explicit incomplete-tail recovery, a derived event index rebuilt from committed segments with deduplication and typed identity conflicts, and a one-shot --project-segments engine workflow with typed outcomes, failed-projection segment-state reporting and zero-ordinal rejection implemented; explainable alerts, internal append-only triage and opt-in read-only sensor health implemented; retention, authenticated ingest, a published decoy surface and the full workflow pending",
+  "next_task": "C22",
   "next_command": "npm run plan -- next",
-  "full_product_endpoint": "C30 locally usable; C40 full published OSS v1"
+  "full_product_endpoint": "C30 locally usable; C40 full published OSS v1",
+  "review_remediation": {
+    "scope": "Owner-requested fixes for review.md findings 1-10; no C22 implementation or release claim",
+    "evidence": "docs/evidence/C01-C21-review.json"
+  }
 }

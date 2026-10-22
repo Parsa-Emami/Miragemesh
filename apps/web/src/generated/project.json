@@ -240,7 +240,7 @@
       "id": "C19",
       "title": "feat(alerts): derive explainable rate and interaction alerts",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Alert references source events and distinguishes sensor-health problems from attacks."
       ],
@@ -252,7 +252,7 @@
       "id": "C20",
       "title": "feat(triage): persist incident rationale and status",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Triage cannot silently alter observed source event content."
       ],
@@ -264,7 +264,7 @@
       "id": "C21",
       "title": "feat(ui): show sensor health and spool pressure",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Offline sensor, stale applied config and dropped-event count are visible."
       ],

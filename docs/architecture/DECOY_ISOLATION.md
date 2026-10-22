@@ -103,8 +103,8 @@ held because it was requested.
 ## The reconciliation
 
 A decoy container is never reused across supervisor restarts. A supervisor
-removes the container of an earlier run, starts a fresh one and verifies it
-again. The durable state of the decoy lives outside the container, in the C05
+removes a container of an earlier run only after its installation ownership
+marker matches, starts a fresh one and verifies it again. The durable state of the decoy lives outside the container, in the C05
 store, so the observations of the earlier container survive the restart.
 
 `Supervisor.Stop` removes the container and the resources it owns. Removing a
@@ -164,3 +164,26 @@ The command vector follows the Podman run documentation
 (<https://docs.podman.io/en/v4.9.3/markdown/podman-run.1.html>) and the
 image is pulled with the digest form of the runtime pull
 (<https://docs.podman.io/en/v4.9.3/markdown/podman-pull.1.html>).
+
+## Ownership and safe rollback (C01–C21 review remediation)
+
+Every new container carries `io.miragemesh.owner` and `io.miragemesh.run` labels.
+The owner is SHA-256 of the container name, configured user and state-mount
+source, separated by NUL bytes. The run token is 16 cryptographically random
+bytes rendered as hex. Labels are local ownership markers, not authentication
+against a same-UID attacker.
+
+Reconciliation checks the owner before removing the inspected immutable ID.
+A name belonging to another installation, including an unlabeled legacy
+container, returns typed `ErrOwnershipConflict` without removal. The operator
+must inspect and explicitly resolve an unlabeled legacy container; the engine
+never guesses ownership or deletes it automatically.
+
+An uncertain start inspects using a separate bounded cleanup context. Rollback
+requires both owner and this exact run token, then removes only the inspected
+ID. A competing run that loses a name collision cannot delete the winner.
+Real-provider regressions exercise these collisions and preserve the original
+running container. The cancellation regression also checks that a container
+was actually created before cancellation and that cleanup uses its ID.
+
+Official API: [Podman 4.9.3 run labels](https://docs.podman.io/en/v4.9.3/markdown/podman-run.1.html).

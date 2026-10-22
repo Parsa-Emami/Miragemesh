@@ -599,6 +599,8 @@ func c13Value(t *testing.T, raw json.RawMessage) string {
 // rules and never gains that permission.
 func TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime(t *testing.T) {
 	allowed := []string{
+		"crypto/rand",
+		"encoding/hex",
 		"bytes",
 		"context",
 		"encoding/json",

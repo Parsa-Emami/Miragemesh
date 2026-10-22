@@ -507,3 +507,26 @@ rebuilt index entries, and the next per-sensor sequence remain unchanged. The
 network-import anchor parses `internal/incidents/*.go` with an exact standard
 library/storage allowlist. These are local process/filesystem proofs; no HTTP
 endpoint, remote Actions, retention, full workflow or release claim follows.
+
+## C21 and review remediation anchors
+
+The discovery guard now requires `TestSensorSnapshotReflectsDurableEventsConfigAndSpoolLoss`,
+`TestSensorStatusProviderFailureDoesNotLeakDetails` and
+`TestSensorStatusRequiresCompleteLocalPolicy`; guard regressions reject their
+absence or skip. It also requires the multiline projection/alert workflow,
+opaque identity separation, unowned reconciliation rejection, encoded quota/torn
+tail recovery and real Podman installation/run collision regressions in
+`tests/review_regression_test.go`, `tests/egress_workflow_test.go` and
+`cmd/miragemesh/segments_test.go`.
+
+Node launcher tests exercise the default binary's typed 503 and actual raw HTTP
+Host/Origin rejection at both engine and web listeners. The response schema is
+checked against the published OpenAPI collection route. Browser tests retain a
+stale table at 360px during an outage and verify recovery. The Unicode escape
+rule is shared through `contracts.ValidUnicodeEscapes`; domain-specific parsers
+remain separate and their negative suites still run.
+
+The full current Go suite includes C13 and requires the locked rootless Podman
+provider and pinned image; the earlier C06-only prerequisite description above
+is historical. These tests use real local storage/provider boundaries. No remote
+runner, release, physical power-loss or clean-host full-product proof is implied.

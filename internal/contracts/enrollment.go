@@ -36,7 +36,7 @@ func DecodeEnrollment(ctx context.Context, raw []byte) (EnrollmentRecord, *Valid
 	if len(raw) > MaxInputBytes {
 		return r, &ValidationError{Code: InputTooLarge}
 	}
-	if !utf8.Valid(raw) || !json.Valid(raw) || !validEscapes(raw) {
+	if !utf8.Valid(raw) || !json.Valid(raw) || !ValidUnicodeEscapes(raw) {
 		return r, &ValidationError{Code: InvalidJSON}
 	}
 	if json.Unmarshal(raw, &r) != nil {

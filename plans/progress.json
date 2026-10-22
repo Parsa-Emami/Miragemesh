@@ -191,7 +191,7 @@
         "docs/evidence/C21.json"
       ],
       "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
-      "notes": "C21 locally verified: read-only GET /api/v1/sensors projects real C05 records and C10-verified applied config; the local web proxy and accessible Sensors page show 5-minute stored-event status, missing/expired config and durable gap counts. Explicit storage quotas and verifier bounds are required. npm check, full Go tests, Go vet and browser tests passed. Committed locally as 188439d9456c1ed07f27cb40bd0f9d4f85d7f1e6; no push, hosted Actions, deployment or release claim."
+      "notes": "C21 locally verified: read-only GET /api/v1/sensors projects real C05 records and C10-verified applied config; the local web proxy and accessible Sensors page show 5-minute stored-event status, missing/expired config and durable gap counts. Explicit storage quotas and verifier bounds are required. npm check, full Go tests, Go vet and browser tests passed. Committed locally as 188439d9456c1ed07f27cb40bd0f9d4f85d7f1e6; no push, hosted Actions, deployment or release claim. Owner-requested C01-C21 review remediation is recorded separately in docs/evidence/C01-C21-review.json; original C21 evidence and source identity remain historical."
     },
     {
       "id": "C22",
@@ -331,7 +331,8 @@
   "existing_source_review": {
     "base_commit": "021556a23a2d091f613167215636a50971ce302e",
     "backend": null,
-    "backend_tests": "not_implemented"
+    "backend_tests": "not_implemented",
+    "scope": "Historical web-foundation snapshot at base_commit; current capabilities are in plans/project-state.json and source-bound C-card evidence."
   },
   "roadmap_contract": "clone-to-run-oss-v1",
   "current_core_ready": false

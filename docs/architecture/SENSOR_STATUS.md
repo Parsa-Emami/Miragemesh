@@ -59,3 +59,28 @@ rejects malformed or oversized upstream JSON, and contacts only the verified
 loopback engine address. The browser validates the schema before rendering it.
 The UI refreshes the snapshot every five seconds. Enrollment, ingest and
 configuration writes remain outside C21.
+
+## HTTP authority and refresh failures
+
+Both the engine and local web server accept only `127.0.0.1`, `localhost` or
+`[::1]` on their listener port. An absent Origin is allowed for the local proxy
+and operator tools; a present Origin must exactly match `http://` plus the
+request authority. Foreign hosts, foreign origins and opaque `null` origins
+return 403 with `{"error":"forbidden_origin"}` before reading local state.
+This is a loopback boundary, not remote authentication or multi-user access.
+DNS-rebinding browser exploitation has not been certified; the negative tests
+exercise actual HTTP Host/Origin rejection at both listeners.
+
+The implemented collection route and typed 200/403/405/503 responses are recorded
+in both OpenAPI representations. Other planned routes do not become implemented
+because they appear there. The disabled default engine returns a typed 503;
+an absent provider is not passed as a typed nil pointer into the reader interface.
+
+After a successful refresh, the UI keeps the last valid snapshot and its receipt
+time if a later refresh fails. An alert marks the entire displayed snapshot as
+stale and automatic retries continue. Initial unavailability, access denial,
+invalid JSON/schema and network failure produce explicit errors. Recovery
+replaces the snapshot, updates the receipt time and clears the stale alert.
+The retained values are never asserted to be current during a failed refresh.
+The refresh effect remains cancellation-safe, following the
+[React effect cleanup contract](https://react.dev/reference/react/useEffect).

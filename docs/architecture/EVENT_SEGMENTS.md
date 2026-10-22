@@ -112,7 +112,8 @@ implicitly.
 An append validates the complete event before creating or changing any file:
 
 1. Accept at most one trailing framing newline and reject empty payloads,
-   internal newlines, payloads over 8192 bytes and invalid C04 events.
+   payloads over 8192 bytes and invalid C04 events. Internal newlines are
+   preserved by the encoded-frame extension below.
 2. Create the first active file with `O_EXCL`, sync the directory, then append
    exactly one payload plus `\n`.
 3. Sync the active file before returning success.
@@ -154,8 +155,8 @@ not an event and not a sequence gap. A torn record may be retried only by the
 caller after accounting for the explicit incomplete marker.
 
 Open also treats a sealed file with a tail, an incomplete file without a tail,
-an incomplete tail over 8192 bytes, a blank line, a malformed complete record or
-a complete record over 8192 bytes as `ErrRecovery`. Recovery is fail-closed and
+an incomplete tail above its frame bound, a blank line, a malformed complete
+record or an over-bound decoded payload as `ErrRecovery`. Recovery is fail-closed and
 preserves evidence; there is no automatic destructive repair, import or truncate
 command.
 
@@ -221,3 +222,42 @@ Official references: [Go os.Root](https://pkg.go.dev/os#Root),
 [Linux flock](https://man7.org/linux/man-pages/man2/flock.2.html),
 [Linux rename](https://man7.org/linux/man-pages/man2/rename.2.html),
 [Linux fsync](https://man7.org/linux/man-pages/man2/fsync.2.html).
+
+## Compatible multiline frames (C01–C21 review remediation)
+
+The reader still accepts every existing object JSONL frame. Existing segment
+bytes are never rewritten. Input normalization retains the established rule of
+removing at most one trailing framing LF; the remaining payload, including
+internal newlines and other whitespace, is the indexed evidence.
+
+When that payload contains LF, the writer stores one canonical JSON string
+containing the base64 encoding of its exact bytes, followed by the framing LF.
+Go's `encoding/json` maps `[]byte` to this representation. A top-level string
+cannot be a C04 event, so it is unambiguous beside legacy object frames. The
+reader requires canonical base64 JSON, decodes it, enforces the 8192-byte payload
+limit and applies the ordinary C04 validator. The index `Digest` and `Bytes`
+refer to decoded payload bytes, never to the encoded string. Direct append,
+projection, restart/rebuild, deduplication and alert references share that rule.
+
+The largest encoded frame is 10,926 bytes plus one framing LF. The existing
+minimum segment quota of 8193 bytes remains accepted for compatibility; use at
+least 10,927 bytes to accommodate every encoded payload. A frame that exceeds
+the explicitly configured segment byte quota returns `ErrQuota` before file
+creation or rotation. Encoded bytes count toward rotation and disk bounds.
+
+A torn string frame is preserved without decoding as incomplete evidence;
+Offset/Bytes/Digest describe the raw tail. Its maximum tail bound is 10,926
+bytes; a legacy object tail remains bounded by 8192 bytes. Only complete frames
+become events. Recovery keeps valid preceding events and the exact torn bytes.
+
+This is an additive file-adapter encoding extension, not a database schema or
+migration. Older readers remain usable for directories containing only legacy
+object frames. After a string frame is written, downgrade to a reader without
+this extension is unsupported and fails closed. Preserve the accepted source
+store and segment bytes and use the compatible reader; never truncate or
+re-serialize accepted history to force a downgrade.
+
+Regressions cover accepted pretty JSON through projection and alerts, index
+rebuild/replay, the maximum encoded payload, quota rejection, malformed encoded
+frames and preservation of a torn encoded tail alongside a valid record.
+Reference: [Go JSON byte encoding](https://pkg.go.dev/encoding/json#Marshal).

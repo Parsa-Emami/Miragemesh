@@ -1,0 +1,15 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 test:browser
+> playwright test
+
+
+Running 6 tests using 2 workers
+
+  ✓  1 apps/web/tests/sensors.spec.ts:7:1 › sensor page displays offline, stale config and durable drops from the engine response (236ms)
+  ✓  2 tests/browser/workspace.spec.ts:2:1 › workspace, local preview, navigation and roadmap filters work (303ms)
+  ✓  3 apps/web/tests/sensors.spec.ts:22:1 › sensor page rejects an invalid versioned response and explains unavailable state (98ms)
+  ✓  4 tests/browser/workspace.spec.ts:25:1 › runtime failure remains explicit and the workspace is keyboard accessible at 360px (118ms)
+  ✓  5 apps/web/tests/sensors.spec.ts:28:1 › sensor page keeps last snapshot explicitly stale during an outage and recovers (176ms)
+  ✓  6 tests/browser/workspace.spec.ts:37:1 › configuration failure blocks workspace startup (119ms)
+
+  6 passed (1.5s)

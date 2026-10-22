@@ -24,3 +24,25 @@ test('sensor page rejects an invalid versioned response and explains unavailable
   await page.goto('/#sensors');
   await expect(page.getByRole('alert')).toContainText('Sensor status is unavailable');
 });
+
+test('sensor page keeps last snapshot explicitly stale during an outage and recovers', async ({ page }) => {
+  await page.clock.install();
+  let unavailable = false;
+  await page.route('**/api/v1/sensors', route => unavailable
+    ? route.fulfill({ status: 503, json: { error: 'sensor_status_unavailable' } })
+    : route.fulfill({ json: snapshot }));
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.goto('/#sensors');
+  await expect(page.getByRole('table')).toBeVisible();
+  await expect(page.getByText('Last updated:', { exact: false })).toBeVisible();
+  unavailable = true;
+  await page.clock.fastForward(5000);
+  await expect(page.getByRole('alert')).toContainText('stale');
+  await expect(page.getByRole('table')).toBeVisible();
+  await expect(page.getByRole('row', { name: /sensor-01/ })).toContainText('1');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  unavailable = false;
+  await page.clock.fastForward(5000);
+  await expect(page.getByRole('alert')).toHaveCount(0);
+  await expect(page.getByRole('table')).toBeVisible();
+});

@@ -2,6 +2,8 @@ package decoy
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"strconv"
@@ -43,7 +45,8 @@ var (
 	// ErrProviderUnavailable reports a missing or unusable container provider.
 	ErrProviderUnavailable = errors.New("decoy: the container provider is unavailable")
 	// ErrUnknownContainer reports a container the provider does not know.
-	ErrUnknownContainer = errors.New("decoy: unknown container")
+	ErrUnknownContainer  = errors.New("decoy: unknown container")
+	ErrOwnershipConflict = errors.New("decoy: container ownership conflict")
 )
 
 // MountRole names the role of one host path inside the decoy container. The
@@ -99,8 +102,19 @@ type Policy struct {
 	Egress EgressPolicy `json:"egress"`
 }
 
-// copy returns a policy that owns its own command and mounts. A caller
-// cannot change a validated policy through the value it passed in.
+// Owner identifies this local installation across supervisor restarts. It is
+// an ownership marker, not authorization against a same-UID attacker.
+func (p Policy) Owner(name string) string {
+	for _, mount := range p.Mounts {
+		if mount.Role == MountState {
+			sum := sha256.Sum256([]byte(name + "\x00" + p.User + "\x00" + mount.Source))
+			return hex.EncodeToString(sum[:])
+		}
+	}
+	return ""
+}
+
+// copy owns the slices and map so callers cannot mutate validated policy.
 func (p Policy) copy() Policy {
 	duplicate := p
 	duplicate.Command = append([]string(nil), p.Command...)
@@ -123,6 +137,8 @@ type Container struct {
 // Runtime is the observed state of a decoy container. It carries the effective
 // controls of the running container, not only the requested configuration.
 type Runtime struct {
+	Owner               string `json:"owner"`
+	RunID               string `json:"run_id"`
 	ID                  string `json:"id"`
 	State               string `json:"state"`
 	NetworkMode         string `json:"network_mode"`
@@ -306,6 +322,9 @@ func (s *Supervisor) reconcile(ctx context.Context) error {
 	}
 	if leftover.ID == "" {
 		return nil
+	}
+	if leftover.Owner != s.policy.Owner(s.name) {
+		return ErrOwnershipConflict
 	}
 	return s.provider.Stop(ctx, leftover.ID)
 }

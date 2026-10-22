@@ -357,42 +357,68 @@ func c13Engine(t *testing.T) string {
 
 // TestDecoyIsolationAdapterRollsBackAnUncertainStart proves that a start call
 // that was cancelled after the runtime created the detached container removes
-// that container by its known name.
+// that container only after verifying its ownership and run token.
 func TestDecoyIsolationAdapterRollsBackAnUncertainStart(t *testing.T) {
 	directory := t.TempDir()
 	marker := filepath.Join(directory, "container")
-	runtime := filepath.Join(directory, "podman")
-	script := "#!/bin/sh\n" +
-		"if [ \"$1\" = \"info\" ]; then echo true; exit 0; fi\n" +
-		"if [ \"$1\" = \"image\" ]; then exit 0; fi\n" +
-		"if [ \"$1\" = \"rm\" ]; then rm -f " + marker + "; exit 0; fi\n" +
-		"touch " + marker + "\n" +
-		"sleep 60\n"
-	if err := os.WriteFile(runtime, []byte(script), 0700); err != nil {
+	runtimePath := filepath.Join(directory, "podman")
+	// The subprocess models an uncertain runtime call, including the labels that
+	// inspection must return before cleanup can remove this run's immutable ID.
+	script := `#!/usr/bin/python3
+import json,sys,time,pathlib
+marker=pathlib.Path(` + strconv.Quote(marker) + `)
+args=sys.argv[1:]
+if args[0]=='info': print('true')
+elif args[0]=='image': pass
+elif args[0]=='run':
+ labels=dict(arg[len('--label='):].split('=',1) for arg in args if arg.startswith('--label='))
+ marker.write_text(json.dumps(labels))
+ time.sleep(60)
+elif args[0]=='inspect':
+ if not marker.exists(): print('no such container');sys.exit(1)
+ print(json.dumps([{'Id':'owned-run-id','State':{'Status':'created'},'Config':{'Labels':json.loads(marker.read_text())}}]))
+elif args[0]=='rm':
+ if args[-1]!='owned-run-id': sys.exit(2)
+ marker.unlink()
+else: sys.exit(1)
+`
+	if err := os.WriteFile(runtimePath, []byte(script), 0700); err != nil {
 		t.Fatal(err)
 	}
-	provider, err := podman.New(runtime)
+	provider, err := podman.New(runtimePath)
 	if err != nil {
 		t.Fatal(err)
 	}
+	f, _, _ := c13Files(t)
+	policy := c13Policy(t, f, c13Store(t), c13HostBinary(t))
 	ctx, cancel := context.WithCancel(context.Background())
-	go func() {
-		time.Sleep(200 * time.Millisecond)
-		cancel()
-	}()
-	_, err = provider.Start(ctx, "miragemesh-uncertain", decoy.Policy{
-		Image:       "docker.io/library/alpine@sha256:0000000000000000000000000000000000000000000000000000000000000000",
-		Command:     []string{"/usr/local/bin/decoy"},
-		MemoryBytes: 67108864,
-		PidsLimit:   32,
-		User:        strconv.Itoa(os.Getuid()) + ":" + strconv.Itoa(os.Getgid()),
-		Egress:      decoy.EgressDenied,
-	})
-	if err == nil {
-		t.Fatal("the cancelled start reported a container")
+	defer cancel()
+	done := make(chan error, 1)
+	go func() { _, err := provider.Start(ctx, "miragemesh-uncertain", policy); done <- err }()
+	deadline := time.After(5 * time.Second)
+	for {
+		if _, err := os.Stat(marker); err == nil {
+			break
+		}
+		select {
+		case err := <-done:
+			t.Fatalf("start ended before container creation: %v", err)
+		case <-deadline:
+			t.Fatal("runtime did not create container")
+		case <-time.After(10 * time.Millisecond):
+		}
 	}
-	if _, statErr := os.Stat(marker); statErr == nil {
-		t.Fatal("the cancelled start left the container behind")
+	cancel()
+	select {
+	case err := <-done:
+		if !errors.Is(err, context.Canceled) {
+			t.Fatalf("cancellation: %v", err)
+		}
+	case <-time.After(5 * time.Second):
+		t.Fatal("rollback did not finish")
+	}
+	if _, err := os.Stat(marker); !errors.Is(err, os.ErrNotExist) {
+		t.Fatalf("owned uncertain run survived: %v", err)
 	}
 }
 
@@ -425,5 +451,39 @@ func TestDecoyIsolationWorkflowRemovesItsContainerOnSignal(t *testing.T) {
 	provider := c13Provider(t)
 	if _, err := provider.Inspect(context.Background(), "miragemesh-decoy-signal"); !errors.Is(err, decoy.ErrUnknownContainer) {
 		t.Fatalf("the interrupted workflow left its container behind: %v", err)
+	}
+}
+
+func TestDecoyIsolationPreservesContainersOnOwnershipConflict(t *testing.T) {
+	f, _, _ := c13Files(t)
+	provider := c13Provider(t)
+	policy := c13Policy(t, f, c13Store(t), c13HostBinary(t))
+	name := c13Name(t)
+	supervisor := c13Supervisor(t, provider, policy, name)
+	container, err := supervisor.Start(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { _ = provider.Stop(context.Background(), container.ID) })
+	// A second run must not roll back the first run after a Podman name collision.
+	if _, err = provider.Start(context.Background(), name, policy); !errors.Is(err, decoy.ErrOwnershipConflict) {
+		t.Fatalf("name collision: %v", err)
+	}
+	runtime, err := provider.Inspect(context.Background(), container.ID)
+	if err != nil || runtime.State != decoy.StateRunning {
+		t.Fatalf("existing run removed: %+v %v", runtime, err)
+	}
+	foreignPolicy := policy
+	foreignPolicy.Mounts = append([]decoy.Mount(nil), policy.Mounts...)
+	foreignPolicy.Mounts[1].Source = c13Store(t)
+	other, err := decoy.NewSupervisor(provider, foreignPolicy, name)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err = other.Start(context.Background()); !errors.Is(err, decoy.ErrOwnershipConflict) {
+		t.Fatalf("foreign installation: %v", err)
+	}
+	if _, err = provider.Inspect(context.Background(), container.ID); err != nil {
+		t.Fatal("foreign reconciliation removed the first run", err)
 	}
 }

@@ -46,7 +46,7 @@ export function createWebServer({ root, config, projectId, engineAddress }) {
   const valid = validateRuntimeConfig(config, projectId);
   const publicRoot = resolve(root);
   const within = path => { const diff = relative(publicRoot, path); return diff !== '..' && !diff.startsWith('../') && !isAbsolute(diff); };
-  return http.createServer({ requestTimeout: 15000, headersTimeout: 10000, keepAliveTimeout: 5000, maxHeaderSize: 16384 }, async (req, res) => {
+  const server = http.createServer({ requestTimeout: 15000, headersTimeout: 10000, keepAliveTimeout: 5000, maxHeaderSize: 16384 }, async (req, res) => {
     res.setHeader('Content-Security-Policy', csp);
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Referrer-Policy', 'no-referrer');
@@ -57,6 +57,12 @@ export function createWebServer({ root, config, projectId, engineAddress }) {
       res.writeHead(status, { 'Content-Type': type, 'Content-Length': Buffer.byteLength(body) });
       res.end(req.method === 'HEAD' ? undefined : body);
     };
+    const authority = req.headers.host;
+    const port = server.address()?.port;
+    const allowed = typeof authority === 'string' && ['127.0.0.1', 'localhost', '[::1]'].some(host => authority === `${host}:${port}` || port === 80 && authority === host);
+    if (!allowed || req.headers.origin !== undefined && req.headers.origin !== `http://${authority}`) {
+      send(403, '{"error":"forbidden_origin"}'); return;
+    }
     if (!['GET', 'HEAD'].includes(req.method ?? '')) { res.setHeader('Allow', (req.url ?? '').split('?')[0] === '/api/v1/sensors' ? 'GET' : 'GET, HEAD'); send(405, '{"error":"method_not_allowed"}'); return; }
     let path;
     try {
@@ -93,6 +99,7 @@ export function createWebServer({ root, config, projectId, engineAddress }) {
       res.end(req.method === 'HEAD' ? undefined : bytes);
     } catch { send(404, '{"error":"not_found"}'); }
   });
+  return server;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {

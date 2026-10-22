@@ -29,11 +29,6 @@
       "error": "invalid event"
     },
     {
-      "name": "two_trailing_newlines",
-      "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}\n\n",
-      "error": "invalid event"
-    },
-    {
       "name": "gap_record_is_not_an_event",
       "raw": "{\"schema_version\":\"1\",\"kind\":\"spool.gap\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-03\",\"sequence\":3,\"input_digest\":\"0000000000000000000000000000000000000000000000000000000000000000\"}",
       "error": "invalid event"

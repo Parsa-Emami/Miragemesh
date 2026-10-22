@@ -1,0 +1,86 @@
+[
+  {
+    "argv": [
+      "node",
+      "--version"
+    ],
+    "exit_code": 0,
+    "stdout": "v24.19.0",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "node",
+      "/home/amirreza/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+      "--version"
+    ],
+    "exit_code": 0,
+    "stdout": "11.9.0",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+      "version"
+    ],
+    "exit_code": 0,
+    "stdout": "go version go1.27.2 linux/amd64",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "podman",
+      "--version"
+    ],
+    "exit_code": 0,
+    "stdout": "podman version 4.9.3",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "podman",
+      "info",
+      "--format",
+      "{{.Host.Security.Rootless}}"
+    ],
+    "exit_code": 0,
+    "stdout": "true",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "podman",
+      "image",
+      "inspect",
+      "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
+      "--format",
+      "{{.Digest}} {{.Architecture}}/{{.Os}}"
+    ],
+    "exit_code": 0,
+    "stdout": "sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 amd64/linux",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "uname",
+      "-s",
+      "-m"
+    ],
+    "exit_code": 0,
+    "stdout": "Linux x86_64",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "findmnt",
+      "-T",
+      "/tmp",
+      "-n",
+      "-o",
+      "FSTYPE,SOURCE,TARGET"
+    ],
+    "exit_code": 0,
+    "stdout": "ext4   /dev/nvme0n1p2 /",
+    "stderr": ""
+  }
+]

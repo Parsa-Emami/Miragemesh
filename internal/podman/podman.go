@@ -14,6 +14,8 @@ package podman
 import (
 	"bytes"
 	"context"
+	"crypto/rand"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -91,16 +93,23 @@ func (p *Provider) Start(ctx context.Context, name string, policy decoy.Policy) 
 	if err := checkMountSources(policy); err != nil {
 		return decoy.Container{}, err
 	}
-	output, code, err := p.run(ctx, runArgs(name, policy)...)
+	runID := make([]byte, 16)
+	if _, err := rand.Read(runID); err != nil {
+		return decoy.Container{}, err
+	}
+	runToken := hex.EncodeToString(runID)
+	args := runArgs(name, policy)
+	args = append([]string{"run", "--label=io.miragemesh.owner=" + policy.Owner(name), "--label=io.miragemesh.run=" + runToken}, args[1:]...)
+	output, code, err := p.run(ctx, args...)
 	if err != nil || code != 0 {
 		// The runtime creates a detached container before it reports the
 		// identifier. An uncertain result may leave that container behind, so
-		// it is removed by its known name and both failures are reported.
-		return decoy.Container{}, p.rollback(ctx, name, startFailure(output, code, err))
+		// its ownership and run token are checked before removing its immutable ID.
+		return decoy.Container{}, p.rollback(name, policy.Owner(name), runToken, startFailure(output, code, err))
 	}
 	id := strings.TrimSpace(output)
 	if id == "" {
-		return decoy.Container{}, p.rollback(ctx, name, fmt.Errorf("%w: the container runtime returned no container", decoy.ErrProviderUnavailable))
+		return decoy.Container{}, p.rollback(name, policy.Owner(name), runToken, fmt.Errorf("%w: the container runtime returned no container", decoy.ErrProviderUnavailable))
 	}
 	return decoy.Container{ID: id, Name: name}, nil
 }
@@ -114,12 +123,23 @@ func startFailure(output string, code int, err error) error {
 }
 
 // rollback removes a container that a start call may have left behind. The
-// removal runs on its own bounded context, so it also works when the call was
+// removal verifies this run token and uses the inspected ID on its own
+// bounded context, so it also works when the call was
 // cancelled.
-func (p *Provider) rollback(ctx context.Context, name string, cause error) error {
+func (p *Provider) rollback(name, owner, runToken string, cause error) error {
 	cleanup, cancel := context.WithTimeout(context.Background(), cleanupTimeout)
 	defer cancel()
-	output, code, err := p.run(cleanup, "rm", "--force", "--ignore", name)
+	state, err := p.Inspect(cleanup, name)
+	if errors.Is(err, decoy.ErrUnknownContainer) {
+		return cause
+	}
+	if err != nil {
+		return errors.Join(cause, err)
+	}
+	if state.ID == "" || state.Owner != owner || state.RunID != runToken {
+		return errors.Join(cause, decoy.ErrOwnershipConflict)
+	}
+	output, code, err := p.run(cleanup, "rm", "--force", "--ignore", state.ID)
 	if err != nil {
 		return errors.Join(cause, fmt.Errorf("decoy: the container %s could not be removed: %w", name, err))
 	}
@@ -155,6 +175,8 @@ func (p *Provider) Inspect(ctx context.Context, id string) (decoy.Runtime, error
 	}
 	state := inspected[0]
 	runtime := decoy.Runtime{
+		Owner:             state.Config.Labels["io.miragemesh.owner"],
+		RunID:             state.Config.Labels["io.miragemesh.run"],
 		ID:                state.ID,
 		State:             state.State.Status,
 		NetworkMode:       state.HostConfig.NetworkMode,
@@ -497,6 +519,7 @@ type containerState struct {
 		SecurityOpt    []string `json:"SecurityOpt"`
 	} `json:"HostConfig"`
 	Config struct {
-		User string `json:"User"`
+		User   string            `json:"User"`
+		Labels map[string]string `json:"Labels"`
 	} `json:"Config"`
 }

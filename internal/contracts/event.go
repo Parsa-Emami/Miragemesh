@@ -154,7 +154,7 @@ var timestamp = regexp.MustCompile(`^[0-9]{4}-[0-9]{2}-[0-9]{2}T([01][0-9]|2[0-3
 
 // encoding/json replaces unpaired UTF-16 escapes with U+FFFD; reject them
 // before decoding so distinct malformed sensor IDs cannot become one value.
-func validEscapes(data []byte) bool {
+func ValidUnicodeEscapes(data []byte) bool {
 	for i := 0; i < len(data); i++ {
 		if data[i] != '\\' {
 			continue
@@ -190,7 +190,7 @@ func DecodeEvent(ctx context.Context, data []byte) (Event, *ValidationError) {
 	if len(data) > MaxInputBytes {
 		return event, &ValidationError{Code: InputTooLarge}
 	}
-	if !utf8.Valid(data) || !json.Valid(data) || !validEscapes(data) {
+	if !utf8.Valid(data) || !json.Valid(data) || !ValidUnicodeEscapes(data) {
 		return event, &ValidationError{Code: InvalidJSON}
 	}
 	fields, failure := object(ctx, data, []string{"schema_version", "sensor_id", "event_id", "sequence", "observed_at", "kind", "metadata"}, "")

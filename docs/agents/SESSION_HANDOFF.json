@@ -1,114 +1,247 @@
 {
   "project": "MirageMesh",
   "last_task": "C21",
+  "session_scope": "Owner-authorized C01-C21 review remediation; no C22 implementation.",
   "status": "verified",
-  "base_commit": "6e55933608fe65ce475040e61fa888943d39f624",
-  "final_commit": "188439d9456c1ed07f27cb40bd0f9d4f85d7f1e6",
-  "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
-  "evidence": "docs/evidence/C21.json",
-  "summary": "C21 locally verified: read-only local sensor snapshot from durable C05 records and C10-verified applied config; explicit local policy/storage bounds; exact GET proxy; accessible Sensors view for offline, stale config and durable spool gaps. npm check, full Go tests, Go vet and browser tests passed. Committed locally as 188439d9456c1ed07f27cb40bd0f9d4f85d7f1e6; no push or remote publication.",
+  "base_commit": "dd25ec81c1c16e1cf3a77b14dcb8bfc6d4857eb9",
+  "final_commit": null,
+  "working_tree_changes": true,
+  "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4",
+  "evidence": "docs/evidence/C01-C21-review.json",
+  "summary": "All ten review findings remediated and verified locally: container ownership/run cleanup, multiline segment frames, opaque identity tuples, disabled API 503, loopback authority checks, stale UI, C21 discovery, current metadata/API docs and shared Unicode validation.",
   "changed_paths": [
-    "apps/web/src/lib/sensor-status.mjs",
-    "apps/web/src/main.tsx",
+    "apps/web/src/generated/project.json",
     "apps/web/src/pages/Sensors.tsx",
-    "apps/web/src/styles.css",
     "apps/web/tests/sensors.spec.ts",
     "cmd/miragemesh/main.go",
-    "cmd/miragemesh/main_test.go",
-    "cmd/miragemesh/sensor_status.go",
+    "cmd/miragemesh/segments_test.go",
+    "contracts/README.md",
+    "contracts/openapi.v1.json",
+    "contracts/openapi.v1.yaml",
     "docs/ROADMAP_FA.md",
     "docs/agents/SESSION_HANDOFF.json",
+    "docs/architecture/DECOY_ISOLATION.md",
+    "docs/architecture/EVENT_INDEX.md",
+    "docs/architecture/EVENT_SEGMENTS.md",
     "docs/architecture/SENSOR_STATUS.md",
-    "docs/engineering/CLONE_TO_RUN.md",
-    "docs/evidence/C21/browser.log",
-    "docs/evidence/C21/diff-check.log",
-    "docs/evidence/C21/go-test.log",
-    "docs/evidence/C21/go-vet.log",
-    "docs/evidence/C21/npm-check.log",
-    "docs/evidence/C21/source-files.json",
-    "docs/evidence/C21/source-manifest.log",
-    "docs/evidence/C21/source-manifest.py",
-    "docs/evidence/C21/tool-versions.log",
+    "docs/engineering/ENGINE_TESTS.md",
+    "docs/evidence/C01-C21-review.json",
+    "docs/evidence/C01-C21-review/browser.log",
+    "docs/evidence/C01-C21-review/browser.stderr.log",
+    "docs/evidence/C01-C21-review/clone.log",
+    "docs/evidence/C01-C21-review/commands.json",
+    "docs/evidence/C01-C21-review/diff-check.log",
+    "docs/evidence/C01-C21-review/discovery.log",
+    "docs/evidence/C01-C21-review/go-test.jsonl",
+    "docs/evidence/C01-C21-review/go-vet.log",
+    "docs/evidence/C01-C21-review/npm-check.log",
+    "docs/evidence/C01-C21-review/python-tests.log",
+    "docs/evidence/C01-C21-review/python-tests.stderr.log",
+    "docs/evidence/C01-C21-review/repository-contracts.log",
+    "docs/evidence/C01-C21-review/source-files.json",
+    "docs/evidence/C01-C21-review/tool-versions.json",
     "docs/product/REFERENCE_WORKFLOW.md",
-    "internal/sensor/apply.go",
-    "internal/sensorview/status.go",
+    "internal/alerts/rules.go",
+    "internal/config/sign.go",
+    "internal/contracts/enrollment.go",
+    "internal/contracts/event.go",
+    "internal/contracts/incident.go",
+    "internal/decoy/isolation.go",
+    "internal/events/framing_test.go",
+    "internal/events/index.go",
+    "internal/events/segments.go",
+    "internal/incidents/service.go",
+    "internal/podman/podman.go",
     "plans/progress.json",
-    "playwright.config.ts",
+    "plans/project-state.json",
+    "plans/requirements.json",
     "scripts/serve-web.mjs",
-    "scripts/start-local.mjs",
-    "tests/fixtures/miragemesh/C21/expected-output.json",
-    "tests/fixtures/miragemesh/C21/invalid.json",
-    "tests/fixtures/miragemesh/C21/positive.json",
-    "tests/sensor_status_test.go",
-    "tests/web/local-launch.test.mjs",
-    "tests/web/sensor-status.test.mjs"
+    "scripts/verify-engine-tests.mjs",
+    "spec/02_API_CONTRACT.md",
+    "tests/egress_test.go",
+    "tests/egress_workflow_test.go",
+    "tests/engineering/engine-tests.test.mjs",
+    "tests/fixtures/miragemesh/C17/invalid.json",
+    "tests/review_regression_test.go",
+    "tests/rotation_test.go",
+    "tests/triage_test.go",
+    "tests/web/local-launch.test.mjs"
   ],
   "commands": [
     {
-      "argv": "npx --yes npm@11.9.0 run check",
+      "name": "npm-check",
+      "argv": [
+        "npx",
+        "--offline",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run check"
+      ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C21/npm-check.log",
-      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
+      "output_path": "docs/evidence/C01-C21-review/npm-check.log",
+      "stored_output_sha256": "5d450bf51b7dd6af6ff6c16a2300dbc143014a4a4dbec804e33f22bc13c226f0",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
     },
     {
-      "argv": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct go test ./...",
+      "name": "go-vet",
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "vet",
+        "./..."
+      ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C21/go-test.log",
-      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
+      "output_path": "docs/evidence/C01-C21-review/go-vet.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
     },
     {
-      "argv": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct go vet ./...",
+      "name": "go-test",
+      "argv": [
+        "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C21/go-vet.log",
-      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
+      "output_path": "docs/evidence/C01-C21-review/go-test.jsonl",
+      "stored_output_sha256": "3c0642800946bfa66bb77bbe04f815ecada693ded40330d3176e2c576146e441",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
     },
     {
-      "argv": "WEB_TEST_PORT=4175 npx --yes npm@11.9.0 run test:browser",
+      "name": "discovery",
+      "argv": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "docs/evidence/C01-C21-review/go-test.jsonl"
+      ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C21/browser.log",
-      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
+      "output_path": "docs/evidence/C01-C21-review/discovery.log",
+      "stored_output_sha256": "a8491cb27c1cda538771f8e8b7444d9885031ca21107e7ae44a92910fb7f3f9a",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
     },
     {
-      "argv": "git diff --check",
+      "name": "browser",
+      "argv": [
+        "npx",
+        "--offline",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run test:browser"
+      ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C21/diff-check.log",
-      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
+      "output_path": "docs/evidence/C01-C21-review/browser.log",
+      "stored_output_sha256": "2cd766e9957e60edc6edfaeede48cde06eb67429ccdb6317d6a1378819774cfd",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4",
+      "stderr_path": "docs/evidence/C01-C21-review/browser.stderr.log",
+      "stderr_sha256": "6521706e2c381b8bf305d02a82789b2783630d24169f499858258fff8f091de2"
     },
     {
-      "argv": "python3 docs/evidence/C21/source-manifest.py",
+      "name": "repository-contracts",
+      "argv": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
       "exit_code": 0,
-      "output_path": "docs/evidence/C21/source-manifest.log",
-      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32"
+      "output_path": "docs/evidence/C01-C21-review/repository-contracts.log",
+      "stored_output_sha256": "b3d27cff658786abf7f122e95ac47ebcb741f5b52e75851c0ae6c6277656947a",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+    },
+    {
+      "name": "python-tests",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/python-tests.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4",
+      "stderr_path": "docs/evidence/C01-C21-review/python-tests.stderr.log",
+      "stderr_sha256": "46b3066b81c49585af409ebe80a0e0e6247f469d0724ba46abd64a04b9997a8b"
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/diff-check.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+    },
+    {
+      "name": "clone",
+      "argv": [
+        "npx",
+        "--offline",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C01-C21-review/clone.log",
+      "stored_output_sha256": "1eec9b7cc085b1a61d7beefaef244f4acbf6fcdc03f130bc9e671a00bbf4371a",
+      "index_scope": "Temporary GIT_INDEX_FILE; no task files staged in the real index.",
+      "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
     }
   ],
   "blockers": [],
-  "scope_limits": [
-    "GitHub-hosted Actions were not triggered. Local workflow-equivalent commands, including the temporary-clone source-integrity path, passed.",
-    "C20 source snapshot f3561ef9ef266ec3f36b33e34054725616eec0d5 was committed locally; no push was performed. GitHub-hosted Actions were not triggered. The recorded source identity covers that input tree; verify_ci_source.py was exercised on the temporary clone and is run on the committed checkout after this evidence is committed.",
-    "The source identity excludes docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt. Build regeneration of apps/web/src/generated/project.json is a derived output; it was restored to the recorded input state after verification.",
-    "The OpenAPI triage path is a request-shape contract only. No HTTP endpoint, CLI, UI, retention, export, replication or remote synchronisation is implemented.",
-    "The shared C05 record cap is 16,384 bytes. Some OpenAPI-maximum multi-byte labels are rejected explicitly rather than truncated; raising that bound is a later storage design change.",
-    "No deployment, publication, remote verification or product-readiness claim is made. C30 remains the full local workflow gate."
-  ],
-  "next_task": "C21",
+  "next_task": "C22",
   "next_command": "npm run plan -- next",
-  "future_card_note": "C20 triage is verified and committed locally. C21 owns health presentation, C22 owns the user-facing segment/incident trace, and C23 owns retention/deletion; C20 keeps these scopes unchanged.",
-  "delivery": {
-    "commit_created": true,
-    "commit": "f3561ef9ef266ec3f36b33e34054725616eec0d5",
-    "push_performed": false,
-    "publication_performed": false
-  },
+  "scope_limits": [
+    "After an encoded multiline frame is written, use this compatible reader; older readers fail closed. Existing segment bytes are never rewritten.",
+    "The old minimum byte quota remains valid; use at least 10927 bytes per segment to fit the largest encoded frame.",
+    "Unlabeled legacy containers require explicit operator inspection; no automatic ownership inference or deletion.",
+    "Loopback Host/Origin checks are not remote authentication; local-private/full-product readiness remains unproven.",
+    "Hosted Actions, full C30 clean-host/restart/restore, full screen-reader coverage, physical power loss and a real browser DNS-rebinding exploit were not certified."
+  ],
+  "historical_verification": [
+    {
+      "card": "C21",
+      "implementation_commit": "188439d9456c1ed07f27cb40bd0f9d4f85d7f1e6",
+      "evidence": "docs/evidence/C21.json",
+      "scope": "Original source-bound C21 proof, not rerun or relabeled as the remediation source."
+    },
+    {
+      "card": "C20",
+      "evidence": "docs/evidence/C20.json",
+      "local_clone_verification": {
+        "passed": true,
+        "candidate_tree": "2699b7af788a97f17b12fec47c15a652faf14757",
+        "snapshot_commit": "42b7c0430ac8c03301565e0238eaddaa1ac38deb",
+        "git_source_integrity_identity": "sha256:10975e15ca13d0c24a3b27367a92961a495f020b54a053cb0001820a99e102ef",
+        "output_path": "docs/evidence/C20/clone.log",
+        "remote_runner": false,
+        "delivery_commit": false,
+        "runtime_tests_certified": false,
+        "binding": "Temporary local snapshot of the staged C20 source passed clean-clone setup, Go vet/race/discovery, event validation and local runtime startup. It does not certify hosted Actions or product readiness."
+      },
+      "scope": "Historical C20 clone evidence retained only as history; current clone proof is in the review evidence."
+    }
+  ],
   "local_clone_verification": {
     "passed": true,
-    "candidate_tree": "2699b7af788a97f17b12fec47c15a652faf14757",
-    "snapshot_commit": "42b7c0430ac8c03301565e0238eaddaa1ac38deb",
-    "git_source_integrity_identity": "sha256:10975e15ca13d0c24a3b27367a92961a495f020b54a053cb0001820a99e102ef",
-    "output_path": "docs/evidence/C20/clone.log",
-    "remote_runner": false,
-    "delivery_commit": false,
-    "runtime_tests_certified": false,
-    "binding": "Temporary local snapshot of the staged C20 source passed clean-clone setup, Go vet/race/discovery, event validation and local runtime startup. It does not certify hosted Actions or product readiness."
+    "snapshot_commit": "adb9decce172f02b95d0fd9bfb2f0c8ff0ce9d17",
+    "git_tree": "411ad14da49009a1ef6ef374bc8988a2202b83a3",
+    "git_source_integrity_identity": "sha256:14890af707e8ebceb19ef4e24b3dcb7548a97c9559bd0af1c4eaadb8eb8e4037",
+    "project_source_identity_matches": true,
+    "scope": "Existing local clone/setup/vet/race/discovery/validation/startup workflow. A temporary index and snapshot were used; the real index and HEAD were unchanged. This is not C30 full-workflow proof or a delivery commit."
+  },
+  "delivery": {
+    "commit_created": false,
+    "push_performed": false,
+    "publication_performed": false
   },
   "remote_actions_executed": false
 }

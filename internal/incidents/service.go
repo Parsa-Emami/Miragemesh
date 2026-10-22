@@ -9,7 +9,6 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
-	"strconv"
 	"time"
 	"unicode/utf8"
 
@@ -212,7 +211,7 @@ func decodeBody(ctx context.Context, raw []byte) (string, string, error) {
 	if err := ctx.Err(); err != nil {
 		return "", "", err
 	}
-	if len(raw) == 0 || len(raw) > contracts.MaxStoredInputBytes || !utf8.Valid(raw) || !json.Valid(raw) || !validEscapes(raw) {
+	if len(raw) == 0 || len(raw) > contracts.MaxStoredInputBytes || !utf8.Valid(raw) || !json.Valid(raw) || !contracts.ValidUnicodeEscapes(raw) {
 		return "", "", ErrInvalidInput
 	}
 	decoder := json.NewDecoder(bytes.NewReader(raw))
@@ -255,34 +254,4 @@ func decodeBody(ctx context.Context, raw []byte) (string, string, error) {
 func validText(value string, max int) bool {
 	count := utf8.RuneCountInString(value)
 	return utf8.ValidString(value) && count >= 1 && count <= max
-}
-
-// validEscapes mirrors the C04 rule: encoding/json replaces unpaired UTF-16
-// surrogates with U+FFFD, which would silently change the persisted reason.
-func validEscapes(data []byte) bool {
-	for i := 0; i < len(data); i++ {
-		if data[i] != '\\' {
-			continue
-		}
-		i++
-		if data[i] != 'u' {
-			continue
-		}
-		unit, _ := strconv.ParseUint(string(data[i+1:i+5]), 16, 16)
-		i += 4
-		if unit >= 0xdc00 && unit <= 0xdfff {
-			return false
-		}
-		if unit >= 0xd800 && unit <= 0xdbff {
-			if i+6 >= len(data) || data[i+1] != '\\' || data[i+2] != 'u' {
-				return false
-			}
-			low, _ := strconv.ParseUint(string(data[i+3:i+7]), 16, 16)
-			if low < 0xdc00 || low > 0xdfff {
-				return false
-			}
-			i += 6
-		}
-	}
-	return true
 }

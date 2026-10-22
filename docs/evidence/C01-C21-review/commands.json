@@ -1,0 +1,114 @@
+[
+  {
+    "name": "npm-check",
+    "argv": [
+      "npx",
+      "--offline",
+      "--package=npm@11.9.0",
+      "--call",
+      "npm run check"
+    ],
+    "exit_code": 0,
+    "output_path": "docs/evidence/C01-C21-review/npm-check.log",
+    "stored_output_sha256": "5d450bf51b7dd6af6ff6c16a2300dbc143014a4a4dbec804e33f22bc13c226f0",
+    "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+  },
+  {
+    "name": "go-vet",
+    "argv": [
+      "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+      "vet",
+      "./..."
+    ],
+    "exit_code": 0,
+    "output_path": "docs/evidence/C01-C21-review/go-vet.log",
+    "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+  },
+  {
+    "name": "go-test",
+    "argv": [
+      "/home/amirreza/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64/bin/go",
+      "test",
+      "-race",
+      "-count=1",
+      "-json",
+      "./..."
+    ],
+    "exit_code": 0,
+    "output_path": "docs/evidence/C01-C21-review/go-test.jsonl",
+    "stored_output_sha256": "3c0642800946bfa66bb77bbe04f815ecada693ded40330d3176e2c576146e441",
+    "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+  },
+  {
+    "name": "discovery",
+    "argv": [
+      "node",
+      "scripts/verify-engine-tests.mjs",
+      "docs/evidence/C01-C21-review/go-test.jsonl"
+    ],
+    "exit_code": 0,
+    "output_path": "docs/evidence/C01-C21-review/discovery.log",
+    "stored_output_sha256": "a8491cb27c1cda538771f8e8b7444d9885031ca21107e7ae44a92910fb7f3f9a",
+    "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+  },
+  {
+    "name": "browser",
+    "argv": [
+      "npx",
+      "--offline",
+      "--package=npm@11.9.0",
+      "--call",
+      "npm run test:browser"
+    ],
+    "exit_code": 0,
+    "output_path": "docs/evidence/C01-C21-review/browser.log",
+    "stored_output_sha256": "2cd766e9957e60edc6edfaeede48cde06eb67429ccdb6317d6a1378819774cfd",
+    "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4",
+    "stderr_path": "docs/evidence/C01-C21-review/browser.stderr.log",
+    "stderr_sha256": "6521706e2c381b8bf305d02a82789b2783630d24169f499858258fff8f091de2"
+  },
+  {
+    "name": "repository-contracts",
+    "argv": [
+      "python3",
+      "scripts/validate_repo.py"
+    ],
+    "exit_code": 0,
+    "output_path": "docs/evidence/C01-C21-review/repository-contracts.log",
+    "stored_output_sha256": "b3d27cff658786abf7f122e95ac47ebcb741f5b52e75851c0ae6c6277656947a",
+    "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+  },
+  {
+    "name": "python-tests",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/engineering",
+      "-p",
+      "test_*.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "output_path": "docs/evidence/C01-C21-review/python-tests.log",
+    "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4",
+    "stderr_path": "docs/evidence/C01-C21-review/python-tests.stderr.log",
+    "stderr_sha256": "46b3066b81c49585af409ebe80a0e0e6247f469d0724ba46abd64a04b9997a8b"
+  },
+  {
+    "name": "diff-check",
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "output_path": "docs/evidence/C01-C21-review/diff-check.log",
+    "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4"
+  }
+]

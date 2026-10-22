@@ -9,6 +9,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -140,7 +141,7 @@ type Writer struct {
 	poisoned  bool
 
 	indexEntries []Entry
-	byEvent      map[string]int
+	byEvent      map[[2]string]int
 	duplicates   int64
 }
 
@@ -319,8 +320,8 @@ func (w *Writer) load(entry parsedEntry) (*segment, []Entry, error) {
 		if index < 0 {
 			break
 		}
-		payload := data[offset : offset+index]
-		if len(payload) == 0 || len(payload) > contracts.MaxInputBytes {
+		payload, decodeErr := decodeFrame(data[offset : offset+index])
+		if decodeErr != nil {
 			return nil, nil, ErrRecovery
 		}
 		event, failure := contracts.DecodeEvent(context.Background(), payload)
@@ -343,7 +344,7 @@ func (w *Writer) load(entry parsedEntry) (*segment, []Entry, error) {
 	switch entry.kind {
 	case kindActive:
 		if len(tail) > 0 {
-			if len(tail) > contracts.MaxInputBytes {
+			if len(tail) > frameLimit(tail) {
 				return nil, nil, ErrRecovery
 			}
 			seg.incomplete = &Incomplete{Offset: int64(offset), Bytes: int64(len(tail)), Digest: digest(tail)}
@@ -353,7 +354,7 @@ func (w *Writer) load(entry parsedEntry) (*segment, []Entry, error) {
 			return nil, nil, ErrRecovery
 		}
 	case kindIncomplete:
-		if len(tail) == 0 || len(tail) > contracts.MaxInputBytes {
+		if len(tail) == 0 || len(tail) > frameLimit(tail) {
 			return nil, nil, ErrRecovery
 		}
 		seg.incomplete = &Incomplete{Offset: int64(offset), Bytes: int64(len(tail)), Digest: digest(tail)}
@@ -399,7 +400,7 @@ func openWithOps(directory string, limits Limits, configure func(*Writer)) (*Wri
 	w := &Writer{
 		root:    root,
 		limits:  limits,
-		byEvent: make(map[string]int),
+		byEvent: make(map[[2]string]int),
 	}
 	w.ops = fileOps{
 		write:  func(f *os.File, b []byte) (int, error) { return f.Write(b) },
@@ -522,6 +523,36 @@ func (w *Writer) available(ctx context.Context) error {
 	return nil
 }
 
+// A JSON string is a base64-encoded exact payload; legacy object frames stay unchanged.
+// https://pkg.go.dev/encoding/json#Marshal documents the []byte representation.
+func frameLimit(frame []byte) int {
+	if len(frame) > 0 && frame[0] == '"' {
+		return 2 + 4*((contracts.MaxInputBytes+2)/3)
+	}
+	return contracts.MaxInputBytes
+}
+
+func decodeFrame(frame []byte) ([]byte, error) {
+	if len(frame) == 0 || len(frame) > frameLimit(frame) {
+		return nil, ErrRecovery
+	}
+	payload := frame
+	if frame[0] == '"' {
+		payload = nil // Do not let byte-slice decoding overwrite the frame being checked.
+		if json.Unmarshal(frame, &payload) != nil {
+			return nil, ErrRecovery
+		}
+		canonical, _ := json.Marshal(payload)
+		if !bytes.Equal(canonical, frame) || bytes.IndexByte(payload, '\n') < 0 {
+			return nil, ErrRecovery
+		}
+	}
+	if len(payload) == 0 || len(payload) > contracts.MaxInputBytes {
+		return nil, ErrRecovery
+	}
+	return payload, nil
+}
+
 func normalizeEvent(ctx context.Context, raw []byte) ([]byte, contracts.Event, error) {
 	if ctx == nil {
 		return nil, contracts.Event{}, ErrInvalidInput
@@ -533,7 +564,7 @@ func normalizeEvent(ctx context.Context, raw []byte) ([]byte, contracts.Event, e
 	if len(payload) > 0 && payload[len(payload)-1] == '\n' {
 		payload = payload[:len(payload)-1]
 	}
-	if len(payload) == 0 || len(payload) > contracts.MaxInputBytes || bytes.IndexByte(payload, '\n') >= 0 {
+	if len(payload) == 0 || len(payload) > contracts.MaxInputBytes {
 		return nil, contracts.Event{}, ErrInvalidEvent
 	}
 	event, failure := contracts.DecodeEvent(ctx, payload)
@@ -581,9 +612,13 @@ func (w *Writer) appendNormalizedLocked(payload []byte, event contracts.Event) (
 	if err := w.checkIndexEntry(candidate); err != nil {
 		return Ref{}, err
 	}
-	line := make([]byte, len(payload)+1)
-	copy(line, payload)
-	line[len(payload)] = '\n'
+	frame := payload
+	if bytes.IndexByte(payload, '\n') >= 0 {
+		frame, _ = json.Marshal(payload)
+	}
+	line := make([]byte, len(frame)+1)
+	copy(line, frame)
+	line[len(frame)] = '\n'
 	if int64(len(line)) > w.limits.MaxBytesPerSegment {
 		return Ref{}, ErrQuota
 	}

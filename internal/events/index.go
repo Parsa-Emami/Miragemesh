@@ -43,11 +43,11 @@ type Index struct {
 	Complete     bool
 
 	entries []Entry
-	byEvent map[string]int
+	byEvent map[[2]string]int
 }
 
-func eventKey(sensorID, eventID string) string {
-	return sensorID + "\x00" + eventID
+func eventKey(sensorID, eventID string) [2]string {
+	return [2]string{sensorID, eventID}
 }
 
 // Entries returns an owned copy of the indexed records in storage order:
@@ -160,7 +160,7 @@ func (w *Writer) snapshotIndex() Index {
 		}
 	}
 	snapshot.Complete = len(snapshot.Missing) == 0 && len(snapshot.Incomplete) == 0
-	snapshot.byEvent = make(map[string]int, len(snapshot.entries))
+	snapshot.byEvent = make(map[[2]string]int, len(snapshot.entries))
 	for position, entry := range snapshot.entries {
 		snapshot.byEvent[eventKey(entry.SensorID, entry.EventID)] = position
 	}

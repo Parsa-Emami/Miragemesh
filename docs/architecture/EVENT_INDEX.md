@@ -144,3 +144,12 @@ index coverage after segment loss and keeps C05 receipts unchanged. The discover
 guard requires these anchors. Fixtures under `tests/fixtures/miragemesh/C18/`
 are repository-authored Apache-2.0 synthetic data. Exact commands, exits and
 source identity live in `docs/evidence/C18.json`.
+
+## Opaque identities and multiline payloads
+
+In-memory identity maps use a two-string tuple, not delimiter concatenation.
+NUL and other valid opaque identifier characters cannot merge distinct sensor
+and event identities. Rebuild and alert derivation preserve the same tuple
+semantics. Multiline string frames are decoded by the segment reader before
+indexing, so source digests refer to the exact normalized C04 payload. See the
+compatible multiline frame extension in `EVENT_SEGMENTS.md`.
