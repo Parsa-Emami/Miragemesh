@@ -1,0 +1,11 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored expected C19 rule outcomes derived from the paired positive fixture.",
+  "interaction_event_ids": ["event-01", "event-02", "event-03", "event-04"],
+  "rate_alert_sensor_id": "sensor-01",
+  "rate_alert_event_ids": ["event-01", "event-02", "event-03"],
+  "health_alert_sensor_id": "sensor-02",
+  "health_alert_gap_sequences": [8, 9],
+  "coverage_complete": true
+}

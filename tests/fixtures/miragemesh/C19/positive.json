@@ -1,0 +1,15 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C19 events and spool loss facts; no real sensor or traffic data.",
+  "policy": { "rate_limit": 3, "window_seconds": 5 },
+  "events": [
+    { "segment": "segment-00000000000000000001.sealed.jsonl", "record": 1, "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/login\"}}" },
+    { "segment": "segment-00000000000000000001.sealed.jsonl", "record": 2, "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-02\",\"sequence\":2,\"observed_at\":\"2026-01-01T00:00:02Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/admin\"}}" },
+    { "segment": "segment-00000000000000000002.active.jsonl", "record": 1, "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-03\",\"sequence\":3,\"observed_at\":\"2026-01-01T00:00:04Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/login\"}}" },
+    { "segment": "segment-00000000000000000002.active.jsonl", "record": 2, "raw": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-02\",\"event_id\":\"event-04\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:03Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}" }
+  ],
+  "health": [
+    { "sensor_id": "sensor-02", "dropped_event_count": 2, "gap_sequences": [8, 9] }
+  ]
+}

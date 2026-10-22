@@ -17,6 +17,7 @@ import (
 
 	"github.com/Parsa-Emami/Miragemesh/internal/contracts"
 	"github.com/Parsa-Emami/Miragemesh/internal/events"
+	"github.com/Parsa-Emami/Miragemesh/internal/sensor"
 	"github.com/Parsa-Emami/Miragemesh/internal/storage"
 )
 
@@ -83,7 +84,7 @@ func c17CLIStore(t *testing.T, directory string, events []string) []storage.Reco
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := store.Commit(ctx, "gap-01", gap); err != nil {
+	if _, err := store.Commit(ctx, sensor.GapOperationID("sensor-01", 99), gap); err != nil {
 		t.Fatal(err)
 	}
 	records, err := store.Records(ctx)
@@ -116,6 +117,40 @@ type c17CLIResult struct {
 	exitCode int
 	stdout   string
 	stderr   string
+}
+
+func c19CLIRun(t *testing.T, storageDir, segmentDir string, rateLimit, windowSeconds int) c17CLIResult {
+	t.Helper()
+	command := exec.Command(os.Args[0], "-test.run=^TestSegmentProjectionCLIHelper$", "-test.timeout=20s")
+	command.Env = append(os.Environ(),
+		"MIRAGEMESH_C17_PROJECT_HELPER=1",
+		"MIRAGEMESH_C17_STORAGE="+storageDir,
+		"MIRAGEMESH_C17_SEGMENTS="+segmentDir,
+		"MIRAGEMESH_C17_STORAGE_MAX_OPERATIONS="+strconv.Itoa(c17CLIStorageLimits.MaxOperations),
+		"MIRAGEMESH_C17_STORAGE_MAX_BYTES="+strconv.FormatInt(c17CLIStorageLimits.MaxBytes, 10),
+		"MIRAGEMESH_C17_STORAGE_MAX_MANIFEST_BYTES="+strconv.FormatInt(c17CLIStorageLimits.MaxManifestBytes, 10),
+		"MIRAGEMESH_C17_SEGMENT_MAX_COUNT="+strconv.Itoa(c17CLISegmentLimits.MaxSegments),
+		"MIRAGEMESH_C17_SEGMENT_MAX_RECORDS="+strconv.FormatInt(c17CLISegmentLimits.MaxRecordsPerSegment, 10),
+		"MIRAGEMESH_C17_SEGMENT_MAX_BYTES="+strconv.FormatInt(c17CLISegmentLimits.MaxBytesPerSegment, 10),
+		"MIRAGEMESH_C19_RATE_LIMIT="+strconv.Itoa(rateLimit),
+		"MIRAGEMESH_C19_WINDOW_SECONDS="+strconv.Itoa(windowSeconds),
+	)
+	var stdout, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &stdout, &stderr
+	err := command.Run()
+	exitCode := 0
+	if err != nil {
+		var exit *exec.ExitError
+		if !errors.As(err, &exit) {
+			t.Fatalf("segment projection helper failed: %v", err)
+		}
+		exitCode = exit.ExitCode()
+	}
+	var outcome segmentProjectionOutcome
+	if err := json.NewDecoder(bytes.NewReader(stdout.Bytes())).Decode(&outcome); err != nil {
+		t.Fatalf("decode projection outcome: %v\nstdout: %s\nstderr: %s", err, stdout.String(), stderr.String())
+	}
+	return c17CLIResult{outcome: outcome, exitCode: exitCode, stdout: stdout.String(), stderr: stderr.String()}
 }
 
 func c17CLIRun(t *testing.T, storageDir, segmentDir string) c17CLIResult {
@@ -172,7 +207,58 @@ func TestSegmentProjectionCLIHelper(t *testing.T) {
 		"--segments-max-records", os.Getenv("MIRAGEMESH_C17_SEGMENT_MAX_RECORDS"),
 		"--segments-max-bytes", os.Getenv("MIRAGEMESH_C17_SEGMENT_MAX_BYTES"),
 	}
+	if rate := os.Getenv("MIRAGEMESH_C19_RATE_LIMIT"); rate != "" {
+		os.Args = append(os.Args, "--alerts-rate-limit", rate)
+	}
+	if window := os.Getenv("MIRAGEMESH_C19_WINDOW_SECONDS"); window != "" {
+		os.Args = append(os.Args, "--alerts-window-seconds", window)
+	}
 	main()
+}
+
+func TestSegmentProjectionWorkflowDerivesAndRebuildsAlerts(t *testing.T) {
+	base := t.TempDir()
+	storageDir, segmentsDir := filepath.Join(base, "storage"), filepath.Join(base, "segments")
+	before := c17CLIStore(t, storageDir, c17CLIEvents(t)[:3])
+	first := c19CLIRun(t, storageDir, segmentsDir, 3, 5)
+	if first.exitCode != 0 || first.outcome.Alerts == nil {
+		t.Fatalf("first projection = %+v exit=%d stderr=%s", first.outcome, first.exitCode, first.stderr)
+	}
+	want := *first.outcome.Alerts
+	if !want.CoverageComplete || len(want.Interactions) != 3 || len(want.Rates) != 1 || len(want.SensorHealth) != 1 {
+		t.Fatalf("unexpected alerts: %+v", want)
+	}
+	if want.Rates[0].SensorID != "sensor-01" || len(want.Rates[0].Sources) != 3 || want.SensorHealth[0].Count != 1 {
+		t.Fatalf("unexpected rate/health evidence: %+v", want)
+	}
+	afterRestart := c19CLIRun(t, storageDir, segmentsDir, 3, 5)
+	if afterRestart.exitCode != 0 || afterRestart.outcome.Appended != 0 || afterRestart.outcome.AlreadyProjected != 3 || afterRestart.outcome.Alerts == nil {
+		t.Fatalf("rebuild = %+v exit=%d", afterRestart.outcome, afterRestart.exitCode)
+	}
+	got, _ := json.Marshal(afterRestart.outcome.Alerts)
+	wantJSON, _ := json.Marshal(&want)
+	if !bytes.Equal(got, wantJSON) {
+		t.Fatalf("alerts changed after restart: got %s want %s", got, wantJSON)
+	}
+	after := c17CLIReadRecords(t, storageDir)
+	if len(after) != len(before) {
+		t.Fatalf("C05 records changed: before=%d after=%d", len(before), len(after))
+	}
+	for index := range before {
+		if !bytes.Equal(before[index].Input, after[index].Input) || before[index].Receipt != after[index].Receipt {
+			t.Fatalf("C05 record %d changed", index)
+		}
+	}
+}
+
+func TestSegmentProjectionRejectsIncompleteAlertPolicy(t *testing.T) {
+	base := t.TempDir()
+	storageDir := filepath.Join(base, "storage")
+	c17CLIStore(t, storageDir, c17CLIEvents(t)[:1])
+	result := c19CLIRun(t, storageDir, filepath.Join(base, "segments"), 3, 0)
+	if result.exitCode != 2 || result.outcome.ErrorKind != "invalid_input" || result.outcome.Alerts != nil {
+		t.Fatalf("incomplete policy result = %+v exit=%d", result.outcome, result.exitCode)
+	}
 }
 
 func TestSegmentProjectionWorkflowProjectsC05Snapshot(t *testing.T) {

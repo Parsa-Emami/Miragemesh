@@ -108,9 +108,12 @@ func main() {
 	segmentsMaxCount := flag.Int("segments-max-count", 0, "maximum immutable segments for --project-segments")
 	segmentsMaxRecords := flag.Int64("segments-max-records", 0, "maximum records per segment for --project-segments")
 	segmentsMaxBytes := flag.Int64("segments-max-bytes", 0, "maximum bytes per segment for --project-segments")
+	alertsRateLimit := flag.Int("alerts-rate-limit", 0, "required HTTP request count for --project-segments alert derivation")
+	alertsWindowSeconds := flag.Int("alerts-window-seconds", 0, "required whole-second rate window for --project-segments alert derivation")
 	flag.Parse()
 	validationFlag := false
 	projectConfig := false
+	alertsConfig := false
 	flag.Visit(func(f *flag.Flag) {
 		if f.Name == "validate-event" {
 			validationFlag = true
@@ -119,6 +122,9 @@ func main() {
 		case "storage-dir", "segments-dir", "storage-max-operations", "storage-max-bytes",
 			"storage-max-manifest-bytes", "segments-max-count", "segments-max-records", "segments-max-bytes":
 			projectConfig = true
+		case "alerts-rate-limit", "alerts-window-seconds":
+			projectConfig = true
+			alertsConfig = true
 		}
 	})
 	if validationFlag {
@@ -168,6 +174,9 @@ func main() {
 				MaxRecordsPerSegment: *segmentsMaxRecords,
 				MaxBytesPerSegment:   *segmentsMaxBytes,
 			},
+			AlertsRequested:     alertsConfig,
+			AlertsRateLimit:     *alertsRateLimit,
+			AlertsWindowSeconds: *alertsWindowSeconds,
 		}))
 	}
 	if *isolation {

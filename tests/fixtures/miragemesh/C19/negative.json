@@ -1,0 +1,11 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored C19 malformed policy and source cases.",
+  "cases": [
+    { "name": "zero-rate-limit", "rate_limit": 0, "window_seconds": 5, "expected_error": "invalid_policy" },
+    { "name": "zero-window", "rate_limit": 3, "window_seconds": 0, "expected_error": "invalid_policy" },
+    { "name": "malformed-event", "rate_limit": 3, "window_seconds": 5, "raw": "{not-json", "expected_error": "invalid_source" },
+    { "name": "tampered-reference", "rate_limit": 3, "window_seconds": 5, "event_id": "event-01", "reference_digest": "0000000000000000000000000000000000000000000000000000000000000000", "expected_error": "source_conflict" }
+  ]
+}
