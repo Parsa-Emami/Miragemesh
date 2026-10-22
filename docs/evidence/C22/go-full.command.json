@@ -1,0 +1,19 @@
+{
+  "name": "go-full",
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./..."
+  ],
+  "exit_code": 1,
+  "started_at": "2026-10-22T19:56:48.122726+00:00",
+  "duration_seconds": 12.098,
+  "source_identity": "sha256:fc94c2b27987926334b79e203e89f043bac69240dec52b9a6768b82edfe6dac8",
+  "output_path": "docs/evidence/C22/go-full.log.gz",
+  "stored_output_sha256": "2aa7fe930b960237176b6784c25775f68e4213735c25e619fc2d7effe5da9cab",
+  "uncompressed_output_sha256": "9547196a4b2e78a86ed88a988ca21eddcc5e071d8da386db843178c486a5dc89",
+  "compression": "gzip"
+}

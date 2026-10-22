@@ -150,4 +150,12 @@ base64 JSON-string frames for multiline accepted payloads without changing their
 indexed bytes/digests. Identity maps use tuples. Container cleanup checks the
 installation and run markers; foreign or unlabeled containers are preserved.
 Local HTTP rejects foreign Host/Origin, and sensor refresh failures retain an
-explicitly stale snapshot. These are fixes to existing cards; C22 remains next.
+explicitly stale snapshot. These are fixes to existing cards; the C22 local view builds on those boundaries.
+
+C22 implements the local incident inspection and status/reason portion of step 4.
+The Incidents page reads segment frames and their exact source digests through
+`GET /api/v1/incidents`, and appends triage through the same-origin local
+`POST /api/v1/incidents/{incident}/triage` boundary. Every displayed finding has
+segment/record/sequence/digest sources; incomplete coverage stays explicit. It
+does not perform retention, ingest, enrollment or the full clone-to-value
+scenario. See `docs/architecture/INCIDENT_REPLAY.md`.

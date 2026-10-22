@@ -4,6 +4,7 @@ import { resolve, relative, extname, isAbsolute } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { validateRuntimeConfig, validateHealth } from '../apps/web/src/lib/runtime-config.mjs';
 import { validateSensorSnapshot } from '../apps/web/src/lib/sensor-status.mjs';
+import { validateIncidentSnapshot, validateTriageResult } from '../apps/web/src/lib/incidents.mjs';
 
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
 const csp = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'";
@@ -42,6 +43,31 @@ export function readEngineSensors(address, signal) {
   });
 }
 
+export function requestEngineIncidents(address, { id, body, key, signal } = {}) {
+  if (!/^127\.0\.0\.1:[1-9]\d{0,4}$/.test(address) || Number(address.split(':')[1]) > 65535 || id !== undefined && !/^incident-[a-f0-9]{64}$/.test(id)) return Promise.reject(new Error('Invalid local incident request.'));
+  return new Promise((accept, reject) => {
+    const path = id ? `/api/v1/incidents/${id}/triage` : '/api/v1/incidents';
+    const headers = id ? { 'Content-Type': 'application/json', 'Content-Length': body.length, 'Idempotency-Key': key, Origin: `http://${address}` } : {};
+    const request = http.request(`http://${address}${path}`, { method: id ? 'POST' : 'GET', headers, agent: false, signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(2000)]) : AbortSignal.timeout(2000) }, response => {
+      const chunks = [];
+      let size = 0;
+      response.on('data', chunk => { size += chunk.length; if (size > 1048576) response.destroy(new Error('Incident response exceeds limit.')); else chunks.push(chunk); });
+      response.on('error', reject);
+      response.on('end', () => {
+        try {
+          const value = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+          if (!id && response.statusCode === 200) accept({ status: 200, value: validateIncidentSnapshot(value) });
+          else if (id && response.statusCode === 202) accept({ status: 202, value: validateTriageResult(value, id) });
+          else if ([403, 404, 409, 413, 415, 422, 503].includes(response.statusCode) && ['incidents_unavailable', 'triage_unavailable', 'incident_not_found', 'idempotency_conflict', 'invalid_triage', 'request_too_large', 'json_required', 'forbidden_origin'].includes(value.error)) accept({ status: response.statusCode, value: { error: value.error } });
+          else reject(new Error('Invalid incident response.'));
+        } catch (error) { reject(error); }
+      });
+    });
+    request.on('error', reject);
+    request.end(id ? body : undefined);
+  });
+}
+
 export function createWebServer({ root, config, projectId, engineAddress }) {
   const valid = validateRuntimeConfig(config, projectId);
   const publicRoot = resolve(root);
@@ -63,12 +89,35 @@ export function createWebServer({ root, config, projectId, engineAddress }) {
     if (!allowed || req.headers.origin !== undefined && req.headers.origin !== `http://${authority}`) {
       send(403, '{"error":"forbidden_origin"}'); return;
     }
-    if (!['GET', 'HEAD'].includes(req.method ?? '')) { res.setHeader('Allow', (req.url ?? '').split('?')[0] === '/api/v1/sensors' ? 'GET' : 'GET, HEAD'); send(405, '{"error":"method_not_allowed"}'); return; }
+    const triagePath = /^\/api\/v1\/incidents\/(incident-[a-f0-9]{64})\/triage$/.exec((req.url ?? '').split('?')[0]);
+    if (!['GET', 'HEAD'].includes(req.method ?? '') && !(req.method === 'POST' && triagePath)) { res.setHeader('Allow', (req.url ?? '').split('?')[0] === '/api/v1/sensors' || (req.url ?? '').split('?')[0] === '/api/v1/incidents' ? 'GET' : triagePath ? 'POST' : 'GET, HEAD'); send(405, '{"error":"method_not_allowed"}'); return; }
     let path;
     try {
       path = decodeURIComponent((req.url ?? '/').split('?')[0]);
       if (!path.startsWith('/') || path.includes('\\') || path.includes('\0') || path.split('/').some(part => part.startsWith('.'))) throw new Error();
     } catch { send(400, '{"error":"invalid_path"}'); return; }
+    if (path === '/api/v1/incidents' || triagePath) {
+      const method = triagePath ? 'POST' : 'GET';
+      if (req.method !== method) { res.setHeader('Allow', method); send(405, '{"error":"method_not_allowed"}'); return; }
+      if (!engineAddress) { send(503, '{"error":"incidents_unavailable"}'); return; }
+      const controller = new AbortController();
+      res.once('close', () => controller.abort());
+      try {
+        let body;
+        if (triagePath) {
+          if (req.headers.origin !== `http://${authority}`) { send(403, '{"error":"forbidden_origin"}'); return; }
+          if ((req.headers['content-type'] ?? '').split(';')[0].trim().toLowerCase() !== 'application/json') { send(415, '{"error":"json_required"}'); return; }
+          if (typeof req.headers['idempotency-key'] !== 'string' || req.headers['idempotency-key'].length < 16 || req.headers['idempotency-key'].length > 128) { send(422, '{"error":"invalid_triage"}'); return; }
+          const chunks = [];
+          let size = 0;
+          for await (const chunk of req) { size += chunk.length; if (size > 16384) { send(413, '{"error":"request_too_large"}'); req.resume(); return; } chunks.push(chunk); }
+          body = Buffer.concat(chunks);
+        }
+        const result = await requestEngineIncidents(engineAddress, { id: triagePath?.[1], body, key: req.headers['idempotency-key'], signal: controller.signal });
+        send(result.status, JSON.stringify(result.value));
+      } catch { if (!res.destroyed) send(503, JSON.stringify({ error: triagePath ? 'triage_unavailable' : 'incidents_unavailable' })); }
+      return;
+    }
     if (path === '/healthz') { send(200, '{"status":"ok","scope":"web-shell"}'); return; }
     if (path === '/readyz') {
       try { await stat(resolve(publicRoot, 'index.html')); send(200, '{"status":"ready","scope":"web-shell","engineReady":false}'); }

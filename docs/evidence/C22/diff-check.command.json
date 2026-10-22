@@ -1,0 +1,14 @@
+{
+  "name": "diff-check",
+  "command": [
+    "git",
+    "diff",
+    "--check"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-22T19:56:49.055861+00:00",
+  "duration_seconds": 0.008,
+  "source_identity": "sha256:fc94c2b27987926334b79e203e89f043bac69240dec52b9a6768b82edfe6dac8",
+  "output_path": "docs/evidence/C22/diff-check.log",
+  "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

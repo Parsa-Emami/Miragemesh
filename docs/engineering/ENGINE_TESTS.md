@@ -530,3 +530,20 @@ The full current Go suite includes C13 and requires the locked rootless Podman
 provider and pinned image; the earlier C06-only prerequisite description above
 is historical. These tests use real local storage/provider boundaries. No remote
 runner, release, physical power-loss or clean-host full-product proof is implied.
+
+## C22 required anchors
+
+The `internal/incidentview` suite requires
+`TestReplayViewReadsSegmentsAndPersistsTriageAcrossRestart`,
+`TestReplayViewFailsClosedOnChangedSegmentAndCancellation` and
+`TestReplayViewRejectsOverBoundWithoutDroppingEvidence`. The runtime suite
+requires `TestIncidentsDisabledIsExplicit` and
+`TestIncidentHTTPGuardsAndDurableWrite`. The discovery guard rejects missing
+or skipped anchors. The existing C20 no-network-import boundary remains
+unchanged; replay composition lives in its separate incidentview package.
+
+`apps/web/tests/incidents.spec.ts` adds real engine/store browser workflows
+for source trace, keyboard access at 360px, inert HTML, restart durability and
+committed-write/lost-response recovery. It also covers empty, invalid,
+interrupted, disabled and stale states. No Podman provider is invoked by C22;
+the full pre-existing engine suite still requires its locked rootless provider.

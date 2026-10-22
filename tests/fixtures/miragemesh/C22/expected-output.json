@@ -1,0 +1,11 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Hand-derived C22 expectations for three events within a 60-second window.",
+  "incidents": 4,
+  "interactions": 3,
+  "rates": 1,
+  "first_source_segment": "segment-00000000000000000001",
+  "first_source_record": 1,
+  "triage": {"status":"investigating","reason":"Synthetic review <script>globalThis.c22Sentinel=2</script>"}
+}

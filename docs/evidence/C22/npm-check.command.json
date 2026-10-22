@@ -1,0 +1,14 @@
+{
+  "name": "npm-check",
+  "command": [
+    "npm",
+    "run",
+    "check"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-22T19:57:43.591726+00:00",
+  "duration_seconds": 15.789,
+  "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
+  "output_path": "docs/evidence/C22/npm-check.log",
+  "stored_output_sha256": "6e44d6670a0f6e9d099ce2466ddce02460b380dcf2e14e830829e7abee4b0cdb"
+}

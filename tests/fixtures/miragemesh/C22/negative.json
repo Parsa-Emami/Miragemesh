@@ -1,0 +1,7 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored failure cases; synthetic paths and HTML sentinels.",
+  "invalid_bodies": ["{}", "null", "{\"status\":\"investigating\",\"reason\":\"\"}", "{\"status\":\"x\",\"status\":\"y\",\"reason\":\"z\"}", "{\"status\":\"x\",\"reason\":\"z\",\"source\":\"forged\"}"],
+  "states": ["empty", "invalid_response", "interrupted_read", "ambiguous_write", "unavailable_engine", "incomplete_coverage", "missing_segment", "tampered_segment", "forged_incident", "foreign_origin", "response_limit"]
+}

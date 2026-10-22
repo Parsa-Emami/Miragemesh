@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"runtime"
 	"strconv"
 	"syscall"
@@ -19,6 +20,7 @@ import (
 	"github.com/Parsa-Emami/Miragemesh/internal/config"
 	"github.com/Parsa-Emami/Miragemesh/internal/contracts"
 	"github.com/Parsa-Emami/Miragemesh/internal/events"
+	"github.com/Parsa-Emami/Miragemesh/internal/incidentview"
 	"github.com/Parsa-Emami/Miragemesh/internal/sensor"
 	"github.com/Parsa-Emami/Miragemesh/internal/sensorview"
 	"github.com/Parsa-Emami/Miragemesh/internal/storage"
@@ -43,7 +45,11 @@ func (s *localSensorStatus) Snapshot(ctx context.Context, now time.Time) (sensor
 	return sensorview.BuildSnapshot(ctx, s.store, s.applier, now)
 }
 
-func serve(ctx context.Context, address string, ready io.Writer, sensorStatus sensorStatusReader) error {
+func serve(ctx context.Context, address string, ready io.Writer, sensorStatus sensorStatusReader, incidentViews ...*incidentview.View) error {
+	var incidentView *incidentview.View
+	if len(incidentViews) > 0 {
+		incidentView = incidentViews[0]
+	}
 	host, port, err := net.SplitHostPort(address)
 	number, portErr := strconv.Atoi(port)
 	if err != nil || portErr != nil || number < 0 || number > 65535 || (host != "127.0.0.1" && host != "::1") {
@@ -73,6 +79,9 @@ func serve(ctx context.Context, address string, ready io.Writer, sensorStatus se
 				(len(origins) != 0 && (len(origins) != 1 || origins[0] != "http://"+r.Host)) {
 				w.WriteHeader(http.StatusForbidden)
 				io.WriteString(w, `{"error":"forbidden_origin"}`)
+				return
+			}
+			if serveIncidents(w, r, incidentView) {
 				return
 			}
 			if r.URL.Path != "/healthz" {
@@ -141,6 +150,7 @@ func serve(ctx context.Context, address string, ready io.Writer, sensorStatus se
 }
 
 func main() {
+	incidentOptions := incidentFlags()
 	address := flag.String("listen", "127.0.0.1:0", "loopback listen address")
 	showVersion := flag.Bool("version", false, "print runtime version and exit")
 	validate := flag.Bool("validate-event", false, "validate one v1 event from stdin without accepting or storing it")
@@ -176,6 +186,11 @@ func main() {
 	sensorConfigMinBatch := flag.Int("sensor-config-min-event-batch-limit", 0, "explicit C10 minimum event batch limit")
 	sensorConfigMaxBatch := flag.Int("sensor-config-max-event-batch-limit", 0, "explicit C10 maximum event batch limit")
 	flag.Parse()
+	hasIncidents := incidentConfigured()
+	if hasIncidents && (*projectMode || *isolation || *showVersion || *validate) {
+		fmt.Fprintln(os.Stderr, "incident configuration requires the local HTTP runtime")
+		os.Exit(2)
+	}
 	validationFlag := false
 	projectConfig := false
 	alertsConfig := false
@@ -281,6 +296,7 @@ func main() {
 		return
 	}
 	var sensorStatus sensorStatusReader
+	var sharedStore *storage.Store
 	if sensorStatusConfigured {
 		local, err := openSensorStatus(sensorStatusOptions{
 			directory:     *sensorStatusDir,
@@ -299,12 +315,31 @@ func main() {
 		}
 		defer local.store.Close()
 		sensorStatus = local
+		if hasIncidents {
+			statePath, stateErr := filepath.Abs(incidentOptions.StateDir)
+			sensorPath, sensorErr := filepath.Abs(*sensorStatusDir)
+			if stateErr != nil || sensorErr != nil || statePath != sensorPath || incidentOptions.StorageLimits != (storage.Limits{MaxOperations: *sensorStatusMaxOperations, MaxBytes: *sensorStatusMaxBytes, MaxManifestBytes: *sensorStatusMaxManifestBytes}) {
+				fmt.Fprintln(os.Stderr, "sensor and incident views must share the same local store and quotas")
+				os.Exit(2)
+			}
+			sharedStore = local.store
+		}
+	}
+	var incidentView *incidentview.View
+	if hasIncidents {
+		view, closeView, err := openIncidentView(*incidentOptions, sharedStore)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "invalid local incident configuration")
+			os.Exit(2)
+		}
+		defer closeView()
+		incidentView = view
 	}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	// The supervisor owns stdin; EOF also stops the engine after supervisor death.
 	go func() { io.Copy(io.Discard, os.Stdin); stop() }()
-	if err := serve(ctx, *address, os.Stdout, sensorStatus); err != nil {
+	if err := serve(ctx, *address, os.Stdout, sensorStatus, incidentView); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}

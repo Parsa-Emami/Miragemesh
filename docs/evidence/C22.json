@@ -1,0 +1,183 @@
+{
+  "commit_id": "C22",
+  "project": "MirageMesh",
+  "passed": false,
+  "planning_template": false,
+  "status": "implemented_pending_hosted_verification",
+  "date": "2026-10-22",
+  "base_commit": "a8ffdc6074c2c934ff79d75891d42d80d32b6d17",
+  "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
+  "source_identity_algorithm": "SHA-256 of sorted path + NUL + raw SHA-256 bytes over tracked/nonignored source, excluding docs/evidence/, SHA256SUMS.txt, plans/progress.json and docs/agents/SESSION_HANDOFF.json. Each local command retains its actual source identity.",
+  "scope": "C22: actual segment replay and source tracing, explicit coverage, local same-origin HTTP triage using C20/C05, accessible browser workflow and durable restart/lost-response recovery.",
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic fixtures and test-only seeder, no live traffic or customer data.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C22/expected-output.json": "910d4c54e031a1ffed7af6c7570e0a577e719a9cf469ab1305ca7f08a79ad50a",
+      "tests/fixtures/miragemesh/C22/negative.json": "caa28fb2549eb5250fd3216836413224aed14867257496f95f39eda16af8aed1",
+      "tests/fixtures/miragemesh/C22/positive.json": "a7e857e338f35093767921729ae32ff7c7929302001625b8361957f369fcf1e1",
+      "tests/fixtures/miragemesh/C22/seed.go": "5016acb95ded09d5d7ef1333c4bbe63cccf50ad8ff55c33cd3a48bed37bf0b3a"
+    }
+  },
+  "commands": [
+    {
+      "name": "browser",
+      "command": [
+        "npm",
+        "run",
+        "test:browser",
+        "--",
+        "--workers=1"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-22T19:57:43.596767+00:00",
+      "duration_seconds": 5.237,
+      "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
+      "output_path": "docs/evidence/C22/browser.log",
+      "stored_output_sha256": "ff597430a680e269a83abfb4ca4f6aba10ab4d6ae22d6825824fc78dc739c70e"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-22T19:56:49.055861+00:00",
+      "duration_seconds": 0.008,
+      "source_identity": "sha256:fc94c2b27987926334b79e203e89f043bac69240dec52b9a6768b82edfe6dac8",
+      "output_path": "docs/evidence/C22/diff-check.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "go-targeted",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "./cmd/miragemesh",
+        "./internal/events",
+        "./internal/incidentview",
+        "./internal/incidents"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-22T19:57:43.596764+00:00",
+      "duration_seconds": 11.769,
+      "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
+      "output_path": "docs/evidence/C22/go-targeted.log",
+      "stored_output_sha256": "f062832fb9679dc48643f9c78e5527ca4851192f44ef38b7aca845cf43beab2a"
+    },
+    {
+      "name": "go-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-22T19:57:55.401823+00:00",
+      "duration_seconds": 0.114,
+      "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
+      "output_path": "docs/evidence/C22/go-vet.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "npm-check",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-22T19:57:43.591726+00:00",
+      "duration_seconds": 15.789,
+      "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
+      "output_path": "docs/evidence/C22/npm-check.log",
+      "stored_output_sha256": "6e44d6670a0f6e9d099ce2466ddce02460b380dcf2e14e830829e7abee4b0cdb"
+    },
+    {
+      "name": "python-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-22T19:56:48.350904+00:00",
+      "duration_seconds": 0.648,
+      "source_identity": "sha256:fc94c2b27987926334b79e203e89f043bac69240dec52b9a6768b82edfe6dac8",
+      "output_path": "docs/evidence/C22/python-tests.log",
+      "stored_output_sha256": "c76a71830727fd3130a89534a8eeda62d125f5d2d3aba1f99b7d8d1063e19d7b"
+    },
+    {
+      "name": "repository-contracts",
+      "command": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-22T19:56:48.120158+00:00",
+      "duration_seconds": 0.137,
+      "source_identity": "sha256:fc94c2b27987926334b79e203e89f043bac69240dec52b9a6768b82edfe6dac8",
+      "output_path": "docs/evidence/C22/repository-contracts.log",
+      "stored_output_sha256": "696bcc625891517b5ca3ded03f0e340d5a5832a63f6d0deee80bd9d6ed9b4ceb"
+    }
+  ],
+  "failed_local_attempts": [
+    {
+      "name": "go-full",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 1,
+      "started_at": "2026-10-22T19:56:48.122726+00:00",
+      "duration_seconds": 12.098,
+      "source_identity": "sha256:fc94c2b27987926334b79e203e89f043bac69240dec52b9a6768b82edfe6dac8",
+      "output_path": "docs/evidence/C22/go-full.log.gz",
+      "stored_output_sha256": "2aa7fe930b960237176b6784c25775f68e4213735c25e619fc2d7effe5da9cab",
+      "uncompressed_output_sha256": "9547196a4b2e78a86ed88a988ca21eddcc5e071d8da386db843178c486a5dc89",
+      "compression": "gzip"
+    }
+  ],
+  "results": {
+    "browser": "11 passed, including 5 C22 workflows. Real engine and C05/segment stores exercise keyboard/table replay at 360px, inert HTML, durable history after restart and exactly-once same-key retry after discarding an actual committed response.",
+    "engine": "Targeted uncached Go race tests pass; go vet ./... passes. Full local Go suite has 14 pre-existing provider-dependent failures because Podman is unavailable; no tests were skipped or disabled.",
+    "web": "npm run check passes TypeScript, production web/engine builds, plan validation and 64 Node tests.",
+    "integrity": "Repository contract validator and 6 Python integrity regressions pass.",
+    "source": "Source digests agree with exact immutable bytes and retained C05 authority. Tests reject tampering after Open and after index rebuild."
+  },
+  "environment": {
+    "node": "24.19.0",
+    "npm": "11.9.0",
+    "go": "go1.27.2 linux/amd64",
+    "playwright": "1.64.1",
+    "local_browser": "Chromium 153.0.8010.0 via existing executable override; hosted CI will install locked Playwright Chromium",
+    "provider": "C22 uses local temporary filesystem adapters only. Rootless Podman is unavailable on this host; unchanged CI supplies the locked provider."
+  },
+  "limits": [
+    "Full C30/C40 workflow and release readiness are not certified.",
+    "Single-host local operator interface, no remote/multi-user authentication.",
+    "Replay view has explicit 256 indexed event and 1 MiB response bounds; it fails unavailable without truncating evidence.",
+    "Pending browser retry state lasts while the page is mounted.",
+    "Hosted verification is pending."
+  ],
+  "remote_actions_executed": false,
+  "delivery": {
+    "commit_created": false,
+    "push_performed": false,
+    "publication_performed": false
+  }
+}

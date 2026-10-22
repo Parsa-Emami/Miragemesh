@@ -1,6 +1,6 @@
 # MirageMesh local event contract v1 (C04)
 
-`input.schema.json` and `result.schema.json` define Draft 2020-12 documents for a **local, stateless event validator**. The shared Go package `internal/contracts` implements the boundary. A valid document is not an enrolled/authenticated sensor, accepted collector observation, durable write, deduplicated event or completed product workflow. HTTP exposes runtime health and the opt-in C21 read-only local sensor status collection; browser file preview remains a local structural preview. The sensor API is documented in `openapi.v1.json` and `docs/architecture/SENSOR_STATUS.md`; it does not add event admission.
+`input.schema.json` and `result.schema.json` define Draft 2020-12 documents for a **local, stateless event validator**. The shared Go package `internal/contracts` implements the boundary. A valid document is not an enrolled/authenticated sensor, accepted collector observation, durable write, deduplicated event or completed product workflow. HTTP exposes runtime health, the opt-in C21 sensor status collection and the opt-in C22 local incident replay/triage view; browser file preview remains a local structural preview. The sensor API is documented in `openapi.v1.json` and `docs/architecture/SENSOR_STATUS.md`; it does not add event admission.
 
 ## Run and reuse
 
@@ -58,3 +58,5 @@ C04 fixture manifests record repository authorship and Apache-2.0 licensing unde
 `npm test` collects tests/contracts/*.test.mjs alongside the existing web tests. Tests run the built actual Go binary and execute both schemas using pinned development-only Ajv 8.20.0 and ajv-formats 3.0.1. `npm run test:contracts` builds that binary first. Go tests run with `go test ./...`; fuzz seeds and a bounded fuzz campaign cover hostile bytes. This is local validation proof, not the provider/durable workflow integration CI reserved for C06.
 
 Official references: [Go JSON decoding and its default replacement/matching behavior](https://pkg.go.dev/encoding/json), [Go context](https://pkg.go.dev/context), [Ajv Draft 2020-12](https://ajv.js.org/json-schema.html#draft-2020-12), [format validation](https://ajv.js.org/guide/formats.html). The schemas are local resources; tests do not fetch remote schema references.
+
+C22 adds the source-backed local `GET /api/v1/incidents` snapshot and implements the existing triage body contract over loopback. Its exact local Origin checks, response bounds, durable idempotency and limitations are documented in `docs/architecture/INCIDENT_REPLAY.md` and OpenAPI. Event admission and remote multi-user management remain unavailable.

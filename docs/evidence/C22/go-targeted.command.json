@@ -1,0 +1,19 @@
+{
+  "name": "go-targeted",
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "./cmd/miragemesh",
+    "./internal/events",
+    "./internal/incidentview",
+    "./internal/incidents"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-22T19:57:43.596764+00:00",
+  "duration_seconds": 11.769,
+  "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
+  "output_path": "docs/evidence/C22/go-targeted.log",
+  "stored_output_sha256": "f062832fb9679dc48643f9c78e5527ca4851192f44ef38b7aca845cf43beab2a"
+}

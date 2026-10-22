@@ -1,0 +1,28 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 test:browser
+> playwright test --workers=1
+
+[WebServer] (node:31) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:44) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 11 tests using 1 worker
+
+(node:64) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 apps/web/tests/incidents.spec.ts:23:1 › real incident replay escapes source bytes and keyboard triage survives engine restart (913ms)
+  ✓   2 apps/web/tests/incidents.spec.ts:65:1 › a committed but interrupted triage retries the same key without duplicating history (401ms)
+  ✓   3 apps/web/tests/incidents.spec.ts:89:1 › empty coverage and interrupted reads are explicit and retain a stale snapshot at 360px (229ms)
+  ✓   4 apps/web/tests/incidents.spec.ts:106:1 › incidents explains the disabled engine at 360px without egress (106ms)
+  ✓   5 apps/web/tests/incidents.spec.ts:117:1 › incidents rejects an invalid response without presenting it as empty (134ms)
+  ✓   6 apps/web/tests/sensors.spec.ts:7:1 › sensor page displays offline, stale config and durable drops from the engine response (220ms)
+  ✓   7 apps/web/tests/sensors.spec.ts:22:1 › sensor page rejects an invalid versioned response and explains unavailable state (134ms)
+  ✓   8 apps/web/tests/sensors.spec.ts:28:1 › sensor page keeps last snapshot explicitly stale during an outage and recovers (210ms)
+  ✓   9 tests/browser/workspace.spec.ts:2:1 › workspace, local preview, navigation and roadmap filters work (279ms)
+  ✓  10 tests/browser/workspace.spec.ts:25:1 › runtime failure remains explicit and the workspace is keyboard accessible at 360px (140ms)
+  ✓  11 tests/browser/workspace.spec.ts:37:1 › configuration failure blocks workspace startup (102ms)
+
+  11 passed (4.3s)

@@ -1,0 +1,12 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C22 events; no live traffic, credentials or customer data.",
+  "rate_limit": 2,
+  "window_seconds": 60,
+  "source_events": [
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-22\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-10-22T10:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/<img src=x onerror=globalThis.c22Sentinel=1>\"}}",
+    "{\n  \"schema_version\":\"1\",\"sensor_id\":\"sensor-22\",\"event_id\":\"event-02\",\"sequence\":2,\"observed_at\":\"2026-10-22T10:00:10Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/second\"}\n}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-22\",\"event_id\":\"event-03\",\"sequence\":3,\"observed_at\":\"2026-10-22T10:00:20Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/third\"}}"
+  ]
+}

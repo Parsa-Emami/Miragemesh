@@ -195,10 +195,10 @@
     },
     {
       "id": "C22",
-      "status": "planned",
+      "status": "in_progress",
       "evidence": [],
       "source_identity": null,
-      "notes": ""
+      "notes": "Local C22 implementation and targeted checks complete; full Go and rootless provider verification will be performed by GitHub Actions before marking verified."
     },
     {
       "id": "C23",
