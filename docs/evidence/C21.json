@@ -5,7 +5,7 @@
   "planning_template": false,
   "date": "2026-10-22",
   "base_commit": "6e55933608fe65ce475040e61fa888943d39f624",
-  "implementation_commit": null,
+  "implementation_commit": "188439d9456c1ed07f27cb40bd0f9d4f85d7f1e6",
   "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
   "source_identity_algorithm": "SHA-256 of sorted UTF-8 relative path + NUL + raw SHA-256(file bytes), over tracked and non-ignored untracked source. docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded; each command is bound to the same local input tree.",
   "scope": "Read-only local GET /api/v1/sensors over verified C05 records and C10 applied configuration; exact GET proxy and accessible Sensors page show recent-event offline state (5-minute threshold), missing/expired applied configuration and durable spool gap count. Storage quotas and C10 verifier bounds are explicit local CLI options; no secret or policy is sent to the browser. No browser write path or persistence mutation was added.",
@@ -32,12 +32,12 @@
   ],
   "limits": [
     "GitHub-hosted Actions were not triggered; hosted CI and hardware/provider conditions were not measured.",
-    "No commit, push, publication, deployment or release claim is made. C30 remains the full local workflow gate.",
-    "Offline means no accepted event newer than five minutes; it does not assert live network connectivity."
+    "Offline means no accepted event newer than five minutes; it does not assert live network connectivity.",
+    "Implementation is committed locally as 188439d9456c1ed07f27cb40bd0f9d4f85d7f1e6; it was not pushed. GitHub-hosted Actions were not triggered."
   ],
   "delivery": {
-    "commit_created": false,
-    "commit": null,
+    "commit_created": true,
+    "commit": "188439d9456c1ed07f27cb40bd0f9d4f85d7f1e6",
     "push_performed": false,
     "publication_performed": false
   },

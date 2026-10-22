@@ -3,10 +3,10 @@
   "last_task": "C21",
   "status": "verified",
   "base_commit": "6e55933608fe65ce475040e61fa888943d39f624",
-  "final_commit": null,
+  "final_commit": "188439d9456c1ed07f27cb40bd0f9d4f85d7f1e6",
   "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
   "evidence": "docs/evidence/C21.json",
-  "summary": "C21 locally verified: read-only local sensor snapshot from durable C05 records and C10-verified applied config; explicit local policy/storage bounds; exact GET proxy; accessible Sensors view for offline, stale config and durable spool gaps. npm check, full Go tests, Go vet and browser tests passed. No commit or remote publication.",
+  "summary": "C21 locally verified: read-only local sensor snapshot from durable C05 records and C10-verified applied config; explicit local policy/storage bounds; exact GET proxy; accessible Sensors view for offline, stale config and durable spool gaps. npm check, full Go tests, Go vet and browser tests passed. Committed locally as 188439d9456c1ed07f27cb40bd0f9d4f85d7f1e6; no push or remote publication.",
   "changed_paths": [
     "apps/web/src/lib/sensor-status.mjs",
     "apps/web/src/main.tsx",
