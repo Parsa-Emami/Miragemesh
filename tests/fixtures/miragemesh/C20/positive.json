@@ -1,0 +1,34 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C20 source events and incident triage requests; no customer or sensor data.",
+  "limits": {
+    "max_operations": 16,
+    "max_bytes": 131072,
+    "max_manifest_bytes": 65536
+  },
+  "source_events": [
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}\n",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-02\",\"sequence\":2,\"observed_at\":\"2026-01-01T00:00:01Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/ready\"}}\n"
+  ],
+  "triage": [
+    {
+      "name": "initial",
+      "incident_id": "incident-01",
+      "idempotency_key": "triage-key-000001",
+      "body": {
+        "status": "investigating",
+        "reason": "Traffic to /admin reviewed; مؤقتاً مشکوک نیست. <script>alert(1)</script>\nSecond line."
+      }
+    },
+    {
+      "name": "follow-up",
+      "incident_id": "incident-01",
+      "idempotency_key": "triage-key-000002",
+      "body": {
+        "status": "resolved",
+        "reason": "Synthetic review complete. No source event was changed."
+      }
+    }
+  ]
+}

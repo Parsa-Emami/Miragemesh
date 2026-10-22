@@ -468,3 +468,42 @@ network imports: the anchor parses `internal/events/index.go` with an exact
 `errors`-only allowlist. These remain local process/filesystem proofs; no
 remote runner, consensus, physical power-loss, retention or release claim
 follows.
+
+## C19 required anchors
+
+C19 adds `TestAlertsReferenceInteractionsAndSeparateRateFromSensorHealth`,
+`TestAlertsRejectMissingPolicyMalformedSourceAndTamperedReference`,
+`TestAlertsNegativeFixtureCases` and
+`TestAlertsRetainIncompleteCoverageAndHonorCancellation` to the `tests` package.
+`cmd/miragemesh` adds `TestSegmentProjectionWorkflowDerivesAndRebuildsAlerts`
+and `TestSegmentProjectionRejectsIncompleteAlertPolicy`. The tests consume the
+versioned C19 fixtures, require an explicit rate policy, validate every source
+reference against the committed C18 index, keep durable spool gaps separate
+from rate signals, and reproduce identical findings after reopening the
+segments. See `docs/architecture/ALERT_RULES.md`.
+
+## C20 required anchors
+
+C20 requires `TestTriagePersistsStatusAndReasonWithoutAlteringSourceEvent`,
+`TestTriageRejectsInvalidRequestsBeforeDurableChange`,
+`TestTriageReplaysAfterRestartAndRejectsKeyReuse`,
+`TestTriageHistoryFailsClosedOnForgedRecord`,
+`TestTriageAcceptsMaximumASCIIAndRejectsUnstorableMultibyte`,
+`TestTriageNegativeFixtureCases`, `TestTriageHasNoNetworkImports` and
+`TestIncidentTriageRecordValidation` in the `tests` package. The
+`internal/incidents` package must complete even though its acceptance tests live
+in `tests/`; the discovery guard also requires that package to be present.
+
+The tests use the real C05 files and C17/C18 segment writer. They prove that
+triage appends only a canonical `incident.triage` record, replays an identical
+request after restart without a new generation, rejects key reuse with a
+different body, and rejects forged operation IDs as `storage.ErrRecovery`.
+Malformed, duplicate, unknown, non-string, oversized, unpaired-surrogate and
+over-bound request cases are rejected before the manifest or any event record
+changes. A maximum-size ASCII label round-trips; a 4096-code-point field that
+would exceed the 16,384-byte C05 record bound is rejected explicitly, never
+truncated. The source event's C05 bytes, stable receipt and segment files, the
+rebuilt index entries, and the next per-sensor sequence remain unchanged. The
+network-import anchor parses `internal/incidents/*.go` with an exact standard
+library/storage allowlist. These are local process/filesystem proofs; no HTTP
+endpoint, remote Actions, retention, full workflow or release claim follows.

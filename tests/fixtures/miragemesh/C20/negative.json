@@ -1,0 +1,77 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored C20 malformed and hostile triage request cases.",
+  "cases": [
+    {
+      "name": "malformed-json",
+      "body_raw": "{not-json",
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "missing-status",
+      "body_raw": "{\"reason\":\"why\"}",
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "missing-reason",
+      "body_raw": "{\"status\":\"open\"}",
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "empty-status",
+      "body_raw": "{\"status\":\"\",\"reason\":\"why\"}",
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "empty-reason",
+      "body_raw": "{\"status\":\"open\",\"reason\":\"\"}",
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "unknown-event-field",
+      "body_raw": "{\"status\":\"open\",\"reason\":\"why\",\"sensor_id\":\"sensor-01\"}",
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "unknown-raw-event-field",
+      "body_raw": "{\"status\":\"open\",\"reason\":\"why\",\"event\":{\"raw\":\"{}\"}}",
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "duplicate-status",
+      "body_raw": "{\"status\":\"open\",\"status\":\"closed\",\"reason\":\"why\"}",
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "non-string-status",
+      "body_raw": "{\"status\":5,\"reason\":\"why\"}",
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "unpaired-surrogate",
+      "body_raw": "{\"status\":\"open\",\"reason\":\"\\ud800\"}",
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "too-many-status-runes",
+      "status_repeat": 4097,
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "too-many-reason-runes",
+      "reason_repeat": 4097,
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "short-idempotency-key",
+      "idempotency_key": "short",
+      "expected_error": "invalid_input"
+    },
+    {
+      "name": "invalid-incident-id",
+      "incident_repeat": 256,
+      "expected_error": "invalid_input"
+    }
+  ]
+}

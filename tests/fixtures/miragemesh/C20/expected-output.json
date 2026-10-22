@@ -1,0 +1,20 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored expected C20 triage entries and immutable source-event outcome.",
+  "record_count": 2,
+  "source_event_count": 2,
+  "source_unchanged": true,
+  "entries": [
+    {
+      "incident_id": "incident-01",
+      "status": "investigating",
+      "reason": "Traffic to /admin reviewed; مؤقتاً مشکوک نیست. <script>alert(1)</script>\nSecond line."
+    },
+    {
+      "incident_id": "incident-01",
+      "status": "resolved",
+      "reason": "Synthetic review complete. No source event was changed."
+    }
+  ]
+}

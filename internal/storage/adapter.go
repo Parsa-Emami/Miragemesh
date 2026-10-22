@@ -50,6 +50,7 @@ type Record struct {
 	Ack        *contracts.SpoolAckRecord
 	Enrollment *contracts.EnrollmentRecord
 	Config     *contracts.AppliedConfig
+	Incident   *contracts.IncidentTriageRecord
 }
 
 type entry struct {
@@ -391,6 +392,10 @@ func decodeRecord(ctx context.Context, raw []byte) (Record, error) {
 	ack, err := contracts.DecodeSpoolAck(ctx, raw)
 	if err == nil {
 		return Record{Input: raw, Ack: &ack}, nil
+	}
+	incident, err := contracts.DecodeIncidentTriage(ctx, raw)
+	if err == nil {
+		return Record{Input: raw, Incident: &incident}, nil
 	}
 	if ctx.Err() != nil {
 		return Record{}, ctx.Err()

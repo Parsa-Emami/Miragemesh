@@ -802,6 +802,22 @@ func TestSegmentProjectionSkipsNonEventRecords(t *testing.T) {
 	if _, err := queue.Enqueue(context.Background(), []byte(f.Events[3])); err != nil {
 		t.Fatal(err)
 	}
+	incident := contracts.IncidentTriageRecord{
+		SchemaVersion: contracts.SchemaVersion,
+		Kind:          contracts.IncidentTriage,
+		IncidentID:    "incident-01",
+		Status:        "investigating",
+		Reason:        "synthetic triage label",
+		KeyDigest:     strings.Repeat("a", 64),
+		TriagedAt:     "2026-01-01T00:00:00Z",
+	}
+	incidentRaw, err := json.Marshal(incident)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := store.Commit(context.Background(), "incident-triage/test", incidentRaw); err != nil {
+		t.Fatal(err)
+	}
 	records, err := store.Records(context.Background())
 	if err != nil {
 		t.Fatal(err)
@@ -812,8 +828,8 @@ func TestSegmentProjectionSkipsNonEventRecords(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if projection.Appended != 3 || projection.Skipped != 4 {
-		t.Fatalf("projection = %+v, want appended 3 skipped 4", projection)
+	if projection.Appended != 3 || projection.Skipped != 5 {
+		t.Fatalf("projection = %+v, want appended 3 skipped 5", projection)
 	}
 	payloads := c17RecordPayloads(t, directory)
 	want := [][]byte{
@@ -830,7 +846,7 @@ func TestSegmentProjectionSkipsNonEventRecords(t *testing.T) {
 		}
 	}
 	for _, payload := range payloads {
-		if bytes.Contains(payload, []byte("spool.gap")) || bytes.Contains(payload, []byte("spool.ack")) || bytes.Contains(payload, []byte("config.applied")) {
+		if bytes.Contains(payload, []byte("spool.gap")) || bytes.Contains(payload, []byte("spool.ack")) || bytes.Contains(payload, []byte("config.applied")) || bytes.Contains(payload, []byte("incident.triage")) {
 			t.Fatalf("non-event record was segmented: %s", payload)
 		}
 	}

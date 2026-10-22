@@ -109,3 +109,26 @@ tails and exclusive missing ordinal ranges. Missing evidence is still not proof
 that an event was never ingested: C15 gaps, C23 retention and deleted segments
 remain explicit coverage facts. C18 opens no listener and adds no command, UI,
 schema or dependency. See `docs/architecture/EVENT_INDEX.md`.
+
+C19 adds read-only, explainable findings to the existing one-shot
+`--project-segments` workflow. An explicit per-sensor rate count and window
+produce a rate signal when three or more synthetic HTTP requests fall inside the
+window; each accepted event also yields an interaction finding. Every signal
+references the committed C18 segment, record, sequence and digest. Durable spool
+gaps produce separate sensor-health findings. Missing or incomplete index
+coverage remains visible and is never reported as a clean scan. C19 adds no
+listener, endpoint, UI, schema or dependency. See `docs/architecture/ALERT_RULES.md`.
+
+C20 persists append-only incident triage labels through the same C05 store used
+for events and internal records. A request carries only the opaque incident ID,
+a mandatory idempotency key and a body with exactly `status` and `reason`;
+unknown, duplicate, malformed or over-bound input is rejected before writing.
+The durable record stores the status, reason, UTC triage time and only a SHA-256
+digest of the key. It contains no observed event bytes or source reference, so
+triage cannot alter the source event. A repeated key and identical request
+replays the original receipt without a new generation, while key reuse with a
+different status or reason is a typed conflict. History is ordered, with the
+last entry as the current label, and survives restart. A triage record is not an
+event: the next sensor sequence continues and C17/C18 projection skips it. C20
+adds no HTTP endpoint, CLI, UI, schema, migration or dependency. See
+`docs/architecture/INCIDENT_TRIAGE.md`.
