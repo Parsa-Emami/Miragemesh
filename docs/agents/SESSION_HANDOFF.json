@@ -4,11 +4,11 @@
   "session_scope": "Owner-authorized C01-C21 review remediation; no C22 implementation.",
   "status": "verified",
   "base_commit": "dd25ec81c1c16e1cf3a77b14dcb8bfc6d4857eb9",
-  "final_commit": null,
-  "working_tree_changes": true,
+  "final_commit": "ddca871ad8265c92d4fed642d7f1718f3dad8964",
+  "working_tree_changes": false,
   "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4",
   "evidence": "docs/evidence/C01-C21-review.json",
-  "summary": "All ten review findings remediated and verified locally: container ownership/run cleanup, multiline segment frames, opaque identity tuples, disabled API 503, loopback authority checks, stale UI, C21 discovery, current metadata/API docs and shared Unicode validation.",
+  "summary": "All ten review findings remediated and verified locally: container ownership/run cleanup, multiline segment frames, opaque identity tuples, disabled API 503, loopback authority checks, stale UI, C21 discovery, current metadata/API docs and shared Unicode validation. Committed locally as ddca871ad8265c92d4fed642d7f1718f3dad8964; no push or publication.",
   "changed_paths": [
     "apps/web/src/generated/project.json",
     "apps/web/src/pages/Sensors.tsx",
@@ -239,7 +239,8 @@
     "scope": "Existing local clone/setup/vet/race/discovery/validation/startup workflow. A temporary index and snapshot were used; the real index and HEAD were unchanged. This is not C30 full-workflow proof or a delivery commit."
   },
   "delivery": {
-    "commit_created": false,
+    "commit_created": true,
+    "commit": "ddca871ad8265c92d4fed642d7f1718f3dad8964",
     "push_performed": false,
     "publication_performed": false
   },

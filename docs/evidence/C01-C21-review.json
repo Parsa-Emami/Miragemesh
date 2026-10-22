@@ -3,10 +3,10 @@
   "project": "MirageMesh",
   "date": "2026-10-22",
   "base_commit": "dd25ec81c1c16e1cf3a77b14dcb8bfc6d4857eb9",
-  "implementation_commit": null,
+  "implementation_commit": "ddca871ad8265c92d4fed642d7f1718f3dad8964",
   "passed": true,
   "planning_template": false,
-  "scope": "Owner-authorized remediation of review.md findings 1-10 through C21. C22 remains planned. No delivery commit, push, publication or full-product claim.",
+  "scope": "Owner-authorized remediation of review.md findings 1-10 through C21, committed locally. C22 remains planned. No push, publication or full-product claim.",
   "source_identity": "sha256:e1104323158f30c44057f7824c09b238d9f44b6858c3723c20f1f9cfe53f66b4",
   "source_identity_algorithm": "SHA-256 of sorted relative path + NUL + raw SHA-256(file bytes), over tracked and non-ignored untracked source; docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt excluded. Input inventory was checked before and after every final command.",
   "source_manifest": "docs/evidence/C01-C21-review/source-files.json",
@@ -264,9 +264,11 @@
     "Hosted Actions, full C30 clean-host/restart/restore, full screen-reader coverage, physical power loss and a real browser DNS-rebinding exploit were not certified."
   ],
   "delivery": {
-    "commit_created": false,
+    "commit_created": true,
+    "commit": "ddca871ad8265c92d4fed642d7f1718f3dad8964",
     "push_performed": false,
     "publication_performed": false
   },
-  "remote_actions_executed": false
+  "remote_actions_executed": false,
+  "commit_binding": "The implementation commit matches the recorded 462-file source manifest. Recorded command evidence remains bound to that source; delivery metadata is excluded from the source identity."
 }
