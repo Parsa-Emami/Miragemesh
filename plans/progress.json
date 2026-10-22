@@ -159,10 +159,12 @@
     },
     {
       "id": "C18",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C18.json"
+      ],
+      "source_identity": "sha256:5e27d023224d96e6a0795057ab7da187ebf57eaa81c0367b87d2ecf182838a4b",
+      "notes": "C18 verified locally: Open rebuilds a derived in-memory index from the complete records of the committed segments, with no durable index file. Append and AppendRecords deduplicate an already-indexed sensor/event identity, tolerate and count exact repetitions, and return typed ErrIndexConflict before any write when the same identity has different bytes or sequence; reopening after index loss rebuilds the view. Index coverage reports stable segment IDs/ordinals, records, sensors, duplicates, exclusive missing ordinal ranges and incomplete tails; absence is never reported as proof of non-ingestion. The --project-segments workflow reports already_projected and index coverage with deduplicated:true and error_kind conflict, and a repeated run leaves segment bytes unchanged. C17 segment format and C16 authority are preserved; no new command, schema, migration, dependency, HTTP/UI surface or egress."
     },
     {
       "id": "C19",

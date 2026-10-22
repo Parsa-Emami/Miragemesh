@@ -1,0 +1,22 @@
+=== RUN   TestSegmentProjectionCLIHelper
+--- PASS: TestSegmentProjectionCLIHelper (0.00s)
+=== RUN   TestSegmentProjectionWorkflowProjectsC05Snapshot
+--- PASS: TestSegmentProjectionWorkflowProjectsC05Snapshot (1.19s)
+=== RUN   TestSegmentProjectionWorkflowDeduplicatesAndReportsIndexCoverage
+--- PASS: TestSegmentProjectionWorkflowDeduplicatesAndReportsIndexCoverage (3.33s)
+=== RUN   TestSegmentProjectionWorkflowReportsIncompleteTail
+--- PASS: TestSegmentProjectionWorkflowReportsIncompleteTail (1.13s)
+=== RUN   TestSegmentProjectionWorkflowReportsTypedFailure
+=== RUN   TestSegmentProjectionWorkflowReportsTypedFailure/invalid_configuration
+=== RUN   TestSegmentProjectionWorkflowReportsTypedFailure/overlapping_directories
+=== RUN   TestSegmentProjectionWorkflowReportsTypedFailure/recovery_required
+--- PASS: TestSegmentProjectionWorkflowReportsTypedFailure (0.20s)
+    --- PASS: TestSegmentProjectionWorkflowReportsTypedFailure/invalid_configuration (0.02s)
+    --- PASS: TestSegmentProjectionWorkflowReportsTypedFailure/overlapping_directories (0.08s)
+    --- PASS: TestSegmentProjectionWorkflowReportsTypedFailure/recovery_required (0.09s)
+=== RUN   TestSegmentProjectionWorkflowReportsPartialQuotaState
+--- PASS: TestSegmentProjectionWorkflowReportsPartialQuotaState (0.14s)
+=== RUN   TestSegmentProjectionStateIsUnknownWhenTheWriterCannotReport
+--- PASS: TestSegmentProjectionStateIsUnknownWhenTheWriterCannotReport (0.00s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/cmd/miragemesh	7.013s

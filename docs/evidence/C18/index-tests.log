@@ -1,0 +1,20 @@
+=== RUN   TestIndexRebuildsFromCommittedSegments
+--- PASS: TestIndexRebuildsFromCommittedSegments (0.07s)
+=== RUN   TestIndexLossRebuildDoesNotClaimMissingEvents
+--- PASS: TestIndexLossRebuildDoesNotClaimMissingEvents (0.21s)
+=== RUN   TestIndexRejectsModifiedSegmentByte
+=== RUN   TestIndexRejectsModifiedSegmentByte/modified_invalid_byte
+=== RUN   TestIndexRejectsModifiedSegmentByte/modified_valid_event
+--- PASS: TestIndexRejectsModifiedSegmentByte (0.29s)
+    --- PASS: TestIndexRejectsModifiedSegmentByte/modified_invalid_byte (0.08s)
+    --- PASS: TestIndexRejectsModifiedSegmentByte/modified_valid_event (0.21s)
+=== RUN   TestIndexProjectionDeduplicatesAcrossRestart
+--- PASS: TestIndexProjectionDeduplicatesAcrossRestart (0.11s)
+=== RUN   TestIndexExcludesIncompleteTail
+--- PASS: TestIndexExcludesIncompleteTail (0.04s)
+=== RUN   TestIndexConflictsAreTypedAndFailClosed
+--- PASS: TestIndexConflictsAreTypedAndFailClosed (0.02s)
+=== RUN   TestIndexHasNoNetworkImports
+--- PASS: TestIndexHasNoNetworkImports (0.00s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/tests	1.763s

@@ -1,0 +1,4 @@
+PASS
+PASS
+PASS
+C18 index, segment and --project-segments tests passed under strace; zero network syscalls observed

@@ -1,0 +1,51 @@
+191673 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191673 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191678 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191678 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191724 +++ exited with 0 +++
+191729 +++ killed by SIGKILL +++
+191728 +++ killed by SIGKILL +++
+191727 +++ killed by SIGKILL +++
+191726 +++ killed by SIGKILL +++
+191725 +++ killed by SIGKILL +++
+191673 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=191725, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+191673 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191730 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191730, si_uid=1000} ---
+191734 +++ killed by SIGKILL +++
+191732 +++ killed by SIGKILL +++
+191731 +++ killed by SIGKILL +++
+191733 +++ killed by SIGKILL +++
+191730 +++ killed by SIGKILL +++
+191678 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=191730, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+191678 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191739 +++ killed by SIGKILL +++
+191738 +++ killed by SIGKILL +++
+191737 +++ killed by SIGKILL +++
+191740 +++ killed by SIGKILL +++
+191736 +++ killed by SIGKILL +++
+191678 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=191736, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+191679 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191743 +++ killed by SIGKILL +++
+191745 +++ killed by SIGKILL +++
+191742 +++ killed by SIGKILL +++
+191744 +++ killed by SIGKILL +++
+191741 +++ killed by SIGKILL +++
+191673 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=191741, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+191673 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191746 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191746, si_uid=1000} ---
+191750 +++ killed by SIGKILL +++
+191749 +++ killed by SIGKILL +++
+191747 +++ killed by SIGKILL +++
+191748 +++ killed by SIGKILL +++
+191746 +++ killed by SIGKILL +++
+191678 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=191746, si_uid=1000, si_status=SIGKILL, si_utime=0, si_stime=0} ---
+191673 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191673 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191673 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191673 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191673, si_uid=1000} ---
+191679 +++ exited with 0 +++
+191678 +++ exited with 0 +++
+191677 +++ exited with 0 +++
+191675 +++ exited with 0 +++
+191676 +++ exited with 0 +++
+191673 +++ exited with 0 +++

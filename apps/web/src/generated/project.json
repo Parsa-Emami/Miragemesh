@@ -228,7 +228,7 @@
       "id": "C18",
       "title": "feat(index): rebuild event indexes and dedup checkpoints",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Index loss rebuilds from committed segments without claiming missing events as ingested."
       ],

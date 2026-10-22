@@ -1,0 +1,31 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C18 index negative cases. No real credentials, identities or traffic are included.",
+  "cases": [
+    {
+      "name": "modified_invalid_byte",
+      "expect": "recovery required"
+    },
+    {
+      "name": "modified_valid_event",
+      "expect": "event index conflict"
+    },
+    {
+      "name": "conflicting_identity",
+      "expect": "event index conflict"
+    },
+    {
+      "name": "exact_duplicate",
+      "expect": "tolerated"
+    },
+    {
+      "name": "missing_segment",
+      "expect": "incomplete coverage without claimed ingestion"
+    },
+    {
+      "name": "incomplete_tail",
+      "expect": "excluded from the index"
+    }
+  ]
+}

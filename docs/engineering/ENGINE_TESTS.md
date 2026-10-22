@@ -49,11 +49,11 @@ module. Existing files and fixtures remain unchanged by C06.
 
 | Package | Existing tests | Required execution anchor |
 | --- | --- | --- |
-| `cmd/miragemesh` | `main_test.go`: real loopback health, shutdown, unsafe/occupied address rejection; `segments_test.go`: real child-process projection through the engine flags, exact incomplete metadata, typed failures, unchanged C05 receipts, failed-projection segment state and unknown-state marker | `TestLifecycle`, `TestSegmentProjectionWorkflowProjectsC05Snapshot`, `TestSegmentProjectionWorkflowReportsIncompleteTail`, `TestSegmentProjectionWorkflowReportsTypedFailure`, `TestSegmentProjectionWorkflowReportsPartialQuotaState`, `TestSegmentProjectionStateIsUnknownWhenTheWriterCannotReport` |
+| `cmd/miragemesh` | `main_test.go`: real loopback health, shutdown, unsafe/occupied address rejection; `segments_test.go`: real child-process projection through the engine flags, exact incomplete metadata, typed failures, unchanged C05 receipts, failed-projection segment state, unknown-state marker and C18 deduplication/index coverage | `TestLifecycle`, `TestSegmentProjectionWorkflowProjectsC05Snapshot`, `TestSegmentProjectionWorkflowDeduplicatesAndReportsIndexCoverage`, `TestSegmentProjectionWorkflowReportsIncompleteTail`, `TestSegmentProjectionWorkflowReportsTypedFailure`, `TestSegmentProjectionWorkflowReportsPartialQuotaState`, `TestSegmentProjectionStateIsUnknownWhenTheWriterCannotReport` |
 | `internal/contracts` | `event_test.go`: v1/legacy fixtures, malformed inputs, exact numbers, limits, read failure and cancellation | `TestValidAndIncompatibleFixtures` |
 | `internal/storage` | `recovery_test.go`: injected filesystem failures, actual SIGKILL, reopen/replay and orphan handling | `TestStorageSIGKILLAtPublicationBoundaries`, `TestStorageSyscallFailuresPreserveRecoverableState` |
 | `internal/events` | `segments_recovery_test.go`: actual child-process SIGKILL at rotation boundaries, incomplete-tail preservation and injected syscall failures | `TestSegmentsSIGKILLAtRotationBoundaries`, `TestSegmentsSyscallFailuresPreserveRecoverableState`, `TestSegmentsRecoverIncompleteFinalRecord`, `TestSegmentsIncompleteTailKeepsRawBytesAndOffset` |
-| `tests` | `storage_test.go`: real adapter, exact bytes, quotas, locking, concurrency, corruption and hostile metadata; `event_test.go`: persistent per-sensor sequence, exact retry and invalid input; `rotation_test.go`: immutable rotation, incomplete tails, projection and no-network checks | `TestStorageExactBytesReplayAndReopen`, `TestSensorSequenceReplayAndRestart`, `TestSensorRejectsInvalidAndConflictingEvents`, `TestSegmentRotationAcrossRecordAndByteBounds`, `TestSegmentProjectionSkipsNonEventRecords` |
+| `tests` | `storage_test.go`: real adapter, exact bytes, quotas, locking, concurrency, corruption and hostile metadata; `event_test.go`: persistent per-sensor sequence, exact retry and invalid input; `rotation_test.go`: immutable rotation, incomplete tails, projection and no-network checks; `rebuild_test.go`: derived index rebuild, deduplication, conflicts, segment loss and incomplete tails | `TestStorageExactBytesReplayAndReopen`, `TestSensorSequenceReplayAndRestart`, `TestSensorRejectsInvalidAndConflictingEvents`, `TestSegmentRotationAcrossRecordAndByteBounds`, `TestSegmentProjectionSkipsNonEventRecords`, `TestIndexRebuildsFromCommittedSegments` |
 
 The guard reads Go's JSON events and requires a `run` followed by `pass` for each
 anchor, completed required packages, and no failure or unfinished package. Empty
@@ -424,8 +424,47 @@ metadata, and returns exit `2`/`error_kind:"invalid_input"` and
 exit `1`/`error_kind:"recovery"` for typed failures. A quota failure after one
 durable append reports that sealed segment, and the same result is compared with
 the segment directory on disk. When the writer cannot report a snapshot, the
-outcome marks the segment state as unknown instead of empty. The outcome always
-states `deduplicated:false` and `atomic_with_c16:false`; repetition is not
-deduplicated.
+outcome marks the segment state as unknown instead of empty. Historical C17
+outcomes stated `deduplicated:false`; C18 changes that contract and is verified
+separately below.
 These are local process/filesystem proofs; no remote Actions, physical power
 loss, capacity, C23 retention, C30 workflow or release claim follows.
+
+## C18 required anchors
+
+C18 keeps the C17 anchors and adds `TestIndexRebuildsFromCommittedSegments`,
+`TestIndexLossRebuildDoesNotClaimMissingEvents`,
+`TestIndexRejectsModifiedSegmentByte`,
+`TestIndexProjectionDeduplicatesAcrossRestart`,
+`TestIndexExcludesIncompleteTail`, `TestIndexConflictsAreTypedAndFailClosed` and
+`TestIndexHasNoNetworkImports` to the `tests` package. `cmd/miragemesh` also
+requires `TestSegmentProjectionWorkflowDeduplicatesAndReportsIndexCoverage`.
+
+The rebuild tests append real synthetic events into temporary segment
+directories, reopen the writer to force an index rebuild, and compare every
+entry's sensor/event/sequence, segment ID, record number, digest and byte length
+with `tests/fixtures/miragemesh/C18/expected-output.json`. Removing one sealed
+segment must produce an exclusive missing-ordinal range and must not claim the
+removed identities as ingested; projecting the C05 snapshot afterwards must
+append exactly the absent events, count the present ones as already projected,
+and leave the ordinal gap explicit. Truncating an active file must exclude the
+torn tail from the index.
+
+Conflict coverage runs both directions. A conflicting direct `Append` returns
+`ErrIndexConflict` without changing segment bytes, an exact duplicate is
+tolerated and counted, and reopening a directory whose committed records contain
+the same identity with different bytes returns `ErrIndexConflict` instead of a
+trusted index. A one-byte modification that keeps the event valid must be caught
+when `AppendRecords` compares the rebuilt digest with C05; a one-byte
+modification that makes the record invalid fails `Open` with `ErrRecovery`.
+
+The workflow test runs `--project-segments` twice in real child processes. The
+second run appends nothing, reports all records as `already_projected`, and
+leaves segment bytes unchanged. After deleting a middle sealed segment it
+reports `index_complete:false`, the missing ordinal range and
+`index_records` covering only the present segment. The outcome states
+`deduplicated:true` and still `atomic_with_c16:false`. The index accepts no
+network imports: the anchor parses `internal/events/index.go` with an exact
+`errors`-only allowlist. These remain local process/filesystem proofs; no
+remote runner, consensus, physical power-loss, retention or release claim
+follows.

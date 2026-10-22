@@ -81,10 +81,10 @@ rename and directory sync before starting the next. A crash at rotation leaves
 complete records readable. A torn final tail is preserved byte-for-byte as an
 explicit `.incomplete.jsonl` file with Offset, Bytes and SHA-256 Digest; it is
 never treated as an event or as an event sequence gap. `AppendRecords` skips C15
-gaps, C16 acknowledgements, enrollment and applied configuration, and deliberately
-provides no durable deduplication; C18 owns the projection index/checkpoint.
-Segment failure cannot rewrite C16 receipts or ACKs, and no atomicity between the
-two writes is claimed.
+gaps, C16 acknowledgements, enrollment and applied configuration. C17's original
+no-deduplication behavior is historical; C18 now rebuilds a projection index from
+the committed segments. Segment failure cannot rewrite C16 receipts or ACKs, and
+no atomicity between the two writes is claimed.
 
 The engine also exposes a one-shot `--project-segments` command with explicit
 C05/segment directories and mandatory limits. It requires an existing C05 store,
@@ -96,3 +96,16 @@ unknown when no trustworthy snapshot exists. It opens no
 listener and does not execute the whole scenario. C17 adds no retention command
 or UI; C23 owns deletion/retention and C30 remains the end-to-end gate. See
 `docs/architecture/EVENT_SEGMENTS.md`.
+
+C18 makes event projection repeatable without a durable checkpoint file:
+`events.Open` rebuilds a derived index from the complete records of the committed
+segments, and `Append`/`AppendRecords` consult it before writing. An event already
+indexed is counted in `already_projected` and is not appended again; the same
+sensor/event identity with different bytes or sequence is a typed
+`ErrIndexConflict` before any file changes. Reopening the writer after index loss
+is the rebuild path. The `--project-segments` outcome now reports
+`deduplicated:true`, index record/sensor coverage, duplicate counts, incomplete
+tails and exclusive missing ordinal ranges. Missing evidence is still not proof
+that an event was never ingested: C15 gaps, C23 retention and deleted segments
+remain explicit coverage facts. C18 opens no listener and adds no command, UI,
+schema or dependency. See `docs/architecture/EVENT_INDEX.md`.

@@ -82,11 +82,15 @@ type Segment struct {
 	Incomplete *Incomplete
 }
 
-// Projection reports how many storage records became events and how many
-// non-event storage records were intentionally skipped.
+// Projection reports how many storage records became events, how many were
+// already indexed, and how many non-event storage records were intentionally
+// skipped. Rebuilt is the index snapshot captured before any append.
 type Projection struct {
-	Appended int
-	Skipped  int
+	Appended         int
+	Skipped          int
+	AlreadyProjected int
+	IndexKnown       bool
+	Rebuilt          Index
 }
 
 type segmentKind uint8
@@ -134,6 +138,10 @@ type Writer struct {
 	exhausted bool
 	closed    bool
 	poisoned  bool
+
+	indexEntries []Entry
+	byEvent      map[string]int
+	duplicates   int64
 }
 
 type parsedEntry struct {
@@ -292,10 +300,10 @@ func (w *Writer) entries(names []string) ([]parsedEntry, error) {
 	return result, nil
 }
 
-func (w *Writer) load(entry parsedEntry) (*segment, error) {
+func (w *Writer) load(entry parsedEntry) (*segment, []Entry, error) {
 	data, err := w.readFile(entry.name, w.limits.MaxBytesPerSegment)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 	seg := &segment{
 		id:     segmentID(entry.number),
@@ -304,6 +312,7 @@ func (w *Writer) load(entry parsedEntry) (*segment, error) {
 		kind:   entry.kind,
 		bytes:  int64(len(data)),
 	}
+	var entries []Entry
 	offset := 0
 	for offset < len(data) {
 		index := bytes.IndexByte(data[offset:], '\n')
@@ -312,12 +321,22 @@ func (w *Writer) load(entry parsedEntry) (*segment, error) {
 		}
 		payload := data[offset : offset+index]
 		if len(payload) == 0 || len(payload) > contracts.MaxInputBytes {
-			return nil, ErrRecovery
+			return nil, nil, ErrRecovery
 		}
-		if _, failure := contracts.DecodeEvent(context.Background(), payload); failure != nil {
-			return nil, ErrRecovery
+		event, failure := contracts.DecodeEvent(context.Background(), payload)
+		if failure != nil {
+			return nil, nil, ErrRecovery
 		}
 		seg.records++
+		entries = append(entries, Entry{
+			SensorID: event.SensorID,
+			EventID:  event.EventID,
+			Sequence: event.Sequence,
+			Segment:  seg.id,
+			Record:   seg.records,
+			Digest:   digest(payload),
+			Bytes:    int64(len(payload)),
+		})
 		offset += index + 1
 	}
 	tail := data[offset:]
@@ -325,26 +344,26 @@ func (w *Writer) load(entry parsedEntry) (*segment, error) {
 	case kindActive:
 		if len(tail) > 0 {
 			if len(tail) > contracts.MaxInputBytes {
-				return nil, ErrRecovery
+				return nil, nil, ErrRecovery
 			}
 			seg.incomplete = &Incomplete{Offset: int64(offset), Bytes: int64(len(tail)), Digest: digest(tail)}
 		}
 	case kindSealed:
 		if len(tail) != 0 || seg.records == 0 {
-			return nil, ErrRecovery
+			return nil, nil, ErrRecovery
 		}
 	case kindIncomplete:
 		if len(tail) == 0 || len(tail) > contracts.MaxInputBytes {
-			return nil, ErrRecovery
+			return nil, nil, ErrRecovery
 		}
 		seg.incomplete = &Incomplete{Offset: int64(offset), Bytes: int64(len(tail)), Digest: digest(tail)}
 	default:
-		return nil, ErrRecovery
+		return nil, nil, ErrRecovery
 	}
 	if seg.records > w.limits.MaxRecordsPerSegment {
-		return nil, ErrRecovery
+		return nil, nil, ErrRecovery
 	}
-	return seg, nil
+	return seg, entries, nil
 }
 
 // Open locks and recovers a segment directory. An active file with a torn tail
@@ -377,7 +396,11 @@ func openWithOps(directory string, limits Limits, configure func(*Writer)) (*Wri
 	if err != nil {
 		return nil, ErrIO
 	}
-	w := &Writer{root: root, limits: limits}
+	w := &Writer{
+		root:    root,
+		limits:  limits,
+		byEvent: make(map[string]int),
+	}
 	w.ops = fileOps{
 		write:  func(f *os.File, b []byte) (int, error) { return f.Write(b) },
 		sync:   func(f *os.File) error { return f.Sync() },
@@ -417,8 +440,11 @@ func openWithOps(directory string, limits Limits, configure func(*Writer)) (*Wri
 
 	var active *segment
 	for _, entry := range entries {
-		seg, err := w.load(entry)
+		seg, records, err := w.load(entry)
 		if err != nil {
+			return nil, err
+		}
+		if err := w.indexRecords(records); err != nil {
 			return nil, err
 		}
 		if entry.kind == kindActive {
@@ -524,7 +550,8 @@ func normalizeEvent(ctx context.Context, raw []byte) ([]byte, contracts.Event, e
 }
 
 // Append validates the whole event before creating or changing a file. It
-// returns only after the record and its framing newline are synced.
+// returns only after the record and its framing newline are synced. A record
+// that conflicts with the rebuilt index is rejected before bytes change.
 func (w *Writer) Append(ctx context.Context, raw []byte) (Ref, error) {
 	if w == nil {
 		return Ref{}, ErrInvalidInput
@@ -536,6 +563,22 @@ func (w *Writer) Append(ctx context.Context, raw []byte) (Ref, error) {
 	}
 	payload, event, err := normalizeEvent(ctx, raw)
 	if err != nil {
+		return Ref{}, err
+	}
+	return w.appendNormalizedLocked(payload, event)
+}
+
+// appendNormalizedLocked is the single append path for direct appends and
+// projections. The caller holds w.mu and has already validated the payload.
+func (w *Writer) appendNormalizedLocked(payload []byte, event contracts.Event) (Ref, error) {
+	candidate := Entry{
+		SensorID: event.SensorID,
+		EventID:  event.EventID,
+		Sequence: event.Sequence,
+		Digest:   digest(payload),
+		Bytes:    int64(len(payload)),
+	}
+	if err := w.checkIndexEntry(candidate); err != nil {
 		return Ref{}, err
 	}
 	line := make([]byte, len(payload)+1)
@@ -570,15 +613,19 @@ func (w *Writer) Append(ctx context.Context, raw []byte) (Ref, error) {
 	}
 	seg.records++
 	seg.bytes += int64(len(line))
-	return Ref{
+	ref := Ref{
 		Segment:  seg.id,
 		Record:   seg.records,
 		SensorID: event.SensorID,
 		EventID:  event.EventID,
 		Sequence: event.Sequence,
-		Digest:   digest(payload),
-		Bytes:    int64(len(payload)),
-	}, nil
+		Digest:   candidate.Digest,
+		Bytes:    candidate.Bytes,
+	}
+	candidate.Segment = ref.Segment
+	candidate.Record = ref.Record
+	w.recordIndexEntry(candidate)
+	return ref, nil
 }
 
 func (w *Writer) sealLocked() error {
@@ -654,8 +701,9 @@ func (w *Writer) createNextLocked() error {
 
 // AppendRecords projects storage records into the event log. Configuration,
 // enrollment, gap and acknowledgement records are deliberately skipped; a
-// blank record that is none of those is ambiguous and fails recovery. It does
-// not deduplicate: callers must supply records not already projected.
+// blank record that is none of those is ambiguous and fails recovery. The index
+// rebuilt at Open is the deduplication checkpoint: an event that is already
+// committed is counted as already projected instead of being written again.
 func (w *Writer) AppendRecords(ctx context.Context, records []storage.Record) (Projection, error) {
 	if w == nil || ctx == nil {
 		return Projection{}, ErrInvalidInput
@@ -664,20 +712,12 @@ func (w *Writer) AppendRecords(ctx context.Context, records []storage.Record) (P
 		return Projection{}, err
 	}
 	w.mu.Lock()
-	if w.closed {
-		w.mu.Unlock()
-		return Projection{}, ErrClosed
+	defer w.mu.Unlock()
+	if err := w.available(ctx); err != nil {
+		return Projection{}, err
 	}
-	if w.poisoned {
-		w.mu.Unlock()
-		return Projection{}, ErrRecovery
-	}
-	w.mu.Unlock()
-	var projection Projection
+	projection := Projection{IndexKnown: true, Rebuilt: w.snapshotIndex()}
 	for _, record := range records {
-		if ctx == nil {
-			return projection, ErrInvalidInput
-		}
 		if err := ctx.Err(); err != nil {
 			return projection, err
 		}
@@ -692,7 +732,18 @@ func (w *Writer) AppendRecords(ctx context.Context, records []storage.Record) (P
 		if nonEvent {
 			return projection, ErrRecovery
 		}
-		if _, err := w.Append(ctx, record.Input); err != nil {
+		payload, event, err := normalizeEvent(ctx, record.Input)
+		if err != nil {
+			return projection, err
+		}
+		if existing, ok := w.indexEntry(event.SensorID, event.EventID); ok {
+			if existing.Digest != digest(payload) || existing.Sequence != event.Sequence {
+				return projection, ErrIndexConflict
+			}
+			projection.AlreadyProjected++
+			continue
+		}
+		if _, err := w.appendNormalizedLocked(payload, event); err != nil {
 			return projection, err
 		}
 		projection.Appended++

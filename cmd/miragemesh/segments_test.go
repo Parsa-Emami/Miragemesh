@@ -196,8 +196,12 @@ func TestSegmentProjectionWorkflowProjectsC05Snapshot(t *testing.T) {
 	if !outcome.SegmentsKnown {
 		t.Fatalf("projection reported an unknown segment state: %+v", outcome)
 	}
-	if outcome.Deduplicated || outcome.AtomicWithC16 {
-		t.Fatalf("projection overstated guarantees: %+v", outcome)
+	if !outcome.Deduplicated || outcome.AtomicWithC16 {
+		t.Fatalf("projection guarantees = %+v", outcome)
+	}
+	if !outcome.IndexKnown || outcome.IndexRecords != 0 || outcome.IndexSensors != 0 || !outcome.IndexComplete ||
+		outcome.IndexDuplicates != 0 || outcome.IndexIncompleteSegments != 0 || len(outcome.IndexMissingOrdinals) != 0 || outcome.AlreadyProjected != 0 {
+		t.Fatalf("first projection index state = %+v", outcome)
 	}
 
 	after := c17CLIReadRecords(t, storageDir)
@@ -228,6 +232,43 @@ func TestSegmentProjectionWorkflowProjectsC05Snapshot(t *testing.T) {
 	}
 }
 
+func TestSegmentProjectionWorkflowDeduplicatesAndReportsIndexCoverage(t *testing.T) {
+	base := t.TempDir()
+	storageDir := filepath.Join(base, "storage")
+	segmentsDir := filepath.Join(base, "segments")
+	c17CLIStore(t, storageDir, c17CLIEvents(t))
+
+	first := c17CLIRun(t, storageDir, segmentsDir)
+	if first.exitCode != 0 || first.outcome.Appended != 5 || first.outcome.AlreadyProjected != 0 || first.outcome.Skipped != 1 {
+		t.Fatalf("first projection = %+v exit = %d", first.outcome, first.exitCode)
+	}
+	if !first.outcome.IndexKnown || first.outcome.IndexRecords != 0 || first.outcome.Segments != 3 {
+		t.Fatalf("first projection index = %+v", first.outcome)
+	}
+
+	second := c17CLIRun(t, storageDir, segmentsDir)
+	if second.exitCode != 0 || second.outcome.Appended != 0 || second.outcome.AlreadyProjected != 5 || second.outcome.Skipped != 1 {
+		t.Fatalf("deduplicated projection = %+v exit = %d", second.outcome, second.exitCode)
+	}
+	if !second.outcome.IndexKnown || second.outcome.IndexRecords != 5 || second.outcome.IndexSensors != 2 ||
+		!second.outcome.IndexComplete || second.outcome.IndexDuplicates != 0 || second.outcome.Segments != 3 {
+		t.Fatalf("second projection index = %+v", second.outcome)
+	}
+
+	sealed := filepath.Join(segmentsDir, "segment-00000000000000000002.sealed.jsonl")
+	if err := os.Remove(sealed); err != nil {
+		t.Fatal(err)
+	}
+	third := c17CLIRun(t, storageDir, segmentsDir)
+	if third.exitCode != 0 || third.outcome.Appended != 2 || third.outcome.AlreadyProjected != 3 {
+		t.Fatalf("projection after segment loss = %+v exit = %d", third.outcome, third.exitCode)
+	}
+	if third.outcome.IndexComplete || third.outcome.IndexRecords != 3 || len(third.outcome.IndexMissingOrdinals) != 1 ||
+		third.outcome.IndexMissingOrdinals[0] != (segmentProjectionOrdinalGap{After: 1, Before: 3}) {
+		t.Fatalf("index coverage after segment loss = %+v", third.outcome)
+	}
+}
+
 func TestSegmentProjectionWorkflowReportsIncompleteTail(t *testing.T) {
 	fixtureEvents := c17CLIEvents(t)[:2]
 	base := t.TempDir()
@@ -249,8 +290,12 @@ func TestSegmentProjectionWorkflowReportsIncompleteTail(t *testing.T) {
 		t.Fatalf("projection exit = %d\nstdout: %s\nstderr: %s", result.exitCode, result.stdout, result.stderr)
 	}
 	outcome := result.outcome
-	if outcome.Status != "projected" || outcome.Appended != 2 || outcome.Skipped != 1 || outcome.IncompleteSegments != 1 || len(outcome.Incomplete) != 1 {
+	if outcome.Status != "projected" || outcome.Appended != 1 || outcome.AlreadyProjected != 1 || outcome.Skipped != 1 ||
+		outcome.IncompleteSegments != 1 || len(outcome.Incomplete) != 1 {
 		t.Fatalf("projection counts = %+v", outcome)
+	}
+	if !outcome.IndexKnown || outcome.IndexRecords != 1 || outcome.IndexIncompleteSegments != 1 || outcome.IndexComplete {
+		t.Fatalf("index state with incomplete tail = %+v", outcome)
 	}
 	digest := sha256.Sum256(tail)
 	want := segmentProjectionIncomplete{

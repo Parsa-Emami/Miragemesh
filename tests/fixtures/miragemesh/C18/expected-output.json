@@ -1,0 +1,106 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored expected C18 rebuilt-index semantics for the synthetic events in positive.json.",
+  "bounds_provenance": "Expected counts use the small test-policy limits in positive.json; they are not product capacity claims.",
+  "full_index": {
+    "records": 5,
+    "sensors": 2,
+    "segment_ids": [
+      "segment-00000000000000000001",
+      "segment-00000000000000000002",
+      "segment-00000000000000000003"
+    ],
+    "first_ordinal": 1,
+    "last_ordinal": 3,
+    "complete": true,
+    "duplicates": 0,
+    "entries": [
+      {
+        "sensor_id": "sensor-01",
+        "event_id": "event-01",
+        "sequence": 1,
+        "segment": "segment-00000000000000000001",
+        "record": 1,
+        "digest": "a42a3ad519ef4c4531209370572f022d6e9097d23d76867f8c2d385387d8c451",
+        "bytes": 170
+      },
+      {
+        "sensor_id": "sensor-01",
+        "event_id": "event-02",
+        "sequence": 2,
+        "segment": "segment-00000000000000000001",
+        "record": 2,
+        "digest": "6a52b8a120207dd94b5068e7a9737680686b1e82e4c42939cae6ac8798af0bc0",
+        "bytes": 169
+      },
+      {
+        "sensor_id": "sensor-01",
+        "event_id": "event-03",
+        "sequence": 3,
+        "segment": "segment-00000000000000000002",
+        "record": 1,
+        "digest": "e20570490df05fc1fe7bfd76206bd40f40740b22c41d758ead2f271bdbd4ac9d",
+        "bytes": 168
+      },
+      {
+        "sensor_id": "sensor-02",
+        "event_id": "event-01",
+        "sequence": 1,
+        "segment": "segment-00000000000000000002",
+        "record": 2,
+        "digest": "c40e3bf5cb207bd70f55d1cfdd462df92ab900a4a462272c4f52b172cc7becf4",
+        "bytes": 170
+      },
+      {
+        "sensor_id": "sensor-02",
+        "event_id": "event-02",
+        "sequence": 2,
+        "segment": "segment-00000000000000000003",
+        "record": 1,
+        "digest": "02926baa5d38772153d24d08894809d2d65e1acb6a3cf07b6e00bf08603452ad",
+        "bytes": 169
+      }
+    ]
+  },
+  "after_segment_loss": {
+    "removed_segment": "segment-00000000000000000002",
+    "records": 3,
+    "sensors": 2,
+    "segment_ids": [
+      "segment-00000000000000000001",
+      "segment-00000000000000000003"
+    ],
+    "first_ordinal": 1,
+    "last_ordinal": 3,
+    "missing": [
+      {
+        "after": 1,
+        "before": 3
+      }
+    ],
+    "complete": false,
+    "absent": [
+      {
+        "sensor_id": "sensor-01",
+        "event_id": "event-03"
+      },
+      {
+        "sensor_id": "sensor-02",
+        "event_id": "event-01"
+      }
+    ],
+    "projection": {
+      "appended": 2,
+      "already_projected": 3,
+      "skipped": 0
+    }
+  },
+  "incomplete_tail": {
+    "records": 2,
+    "complete": false,
+    "incomplete_segment": "segment-00000000000000000002",
+    "absent_sensor_id": "sensor-01",
+    "absent_event_id": "event-03"
+  }
+}

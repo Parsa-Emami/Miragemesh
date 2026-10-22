@@ -11,9 +11,12 @@ configuration and enrollment. C16 remains authoritative for whole-batch
 validation and durable ACK publication. `AppendRecords` reads an already-owned
 C05 snapshot and projects only validated event records; it does not rewrite C16
 receipts or ACKs, and no atomicity between a C16 commit and a segment append is
-claimed. A segment failure is a separate typed outcome. The caller can retry the
-unprojected records after reopening; C17 deliberately provides no deduplication
-checkpoint. C18 owns index and checkpoint ownership.
+claimed. A segment failure is a separate typed outcome. C17's original behavior
+appended every supplied record, including repeats; that no-deduplication behavior
+is historical. C18 rebuilds a derived index from the committed segments and uses
+it as the projection checkpoint. The C18 contract lives in
+`docs/architecture/EVENT_INDEX.md`; this document remains the segment-format and
+crash-recovery contract.
 
 ## Interface
 
@@ -21,6 +24,7 @@ checkpoint. C18 owns index and checkpoint ownership.
 func Open(directory string, limits Limits) (*Writer, error)
 func (w *Writer) Append(ctx context.Context, raw []byte) (Ref, error)
 func (w *Writer) AppendRecords(ctx context.Context, records []storage.Record) (Projection, error)
+func (w *Writer) Index() (Index, error)
 func (w *Writer) Segments() ([]Segment, error)
 func (w *Writer) Close() error
 ```
@@ -28,8 +32,10 @@ func (w *Writer) Close() error
 `Ref` reports the stable segment ID, one-based record number, sensor/event
 identity, sequence, SHA-256 digest of the stored payload and its byte length.
 `Segment` reports the stable ID, complete-record count, file bytes, whether it is
-sealed, and optional `Incomplete` metadata. `Projection` reports appended event
-records and intentionally skipped non-event records.
+sealed, and optional `Incomplete` metadata. `Index` is the derived snapshot
+described in `docs/architecture/EVENT_INDEX.md`. `Projection` reports appended
+event records, already-indexed records and intentionally skipped non-event
+records, plus the index snapshot captured before the call.
 
 Limits are mandatory and have no product default or unlimited mode:
 `MaxSegments > 0`, `MaxRecordsPerSegment > 0`, and
@@ -62,13 +68,19 @@ corrupt its inventory. The command opens the C05 store, reads its owned snapshot
 opens the segment writer, appends only event records and exits. It does not write
 a C05 receipt or ACK.
 
-The JSON outcome has `scope`, `status`, `appended`, `skipped`, `segments`,
-`segments_known`, `incomplete_segments`, exact `incomplete` Offset/Bytes/Digest
-metadata, `deduplicated:false` and `atomic_with_c16:false`. On failure it adds
-`error` and `error_kind`. Exit `0` means projection completed, `2` means invalid
+The JSON outcome has `scope`, `status`, `appended`, `skipped`,
+`already_projected`, `segments`, `segments_known`, `incomplete_segments`, exact
+`incomplete` Offset/Bytes/Digest metadata, `deduplicated:true`,
+`atomic_with_c16:false`, and the C18 index coverage fields `index_known`,
+`index_records`, `index_sensors`, `index_complete`, `index_duplicates`,
+`index_incomplete_segments` and optional `index_missing_ordinals`. On failure it
+adds `error` and `error_kind`; a C18 identity conflict uses
+`error_kind:"conflict"`. Exit `0` means projection completed, `2` means invalid
 configuration or limits and `1` means a runtime, storage or segment failure. A
-repeated invocation projects the same events again because C17 has no checkpoint;
-C18 owns deduplication.
+repeated invocation is deduplicated: records already in the rebuilt index are
+counted in `already_projected` and are not written again. Historical C17 output
+reported `deduplicated:false`; current evidence for the deduplicating workflow is
+in `docs/evidence/C18.json`.
 
 A failed projection still reports the durable state that exists. When the append
 fails after some records were written, the command snapshots the segment writer
@@ -155,20 +167,22 @@ that is none of those, or an ambiguous record carrying both an event and a
 non-event marker, returns `ErrRecovery` without writing. Skipping is not loss:
 the non-event bytes remain in C05 and are owned by C15/C16/C08/C11.
 
-Projection does not provide durable deduplication. Calling it twice appends the
-same event twice. C18 owns the index/checkpoint that lets a caller supply only
-unprojected records. The segment directory must not be used as C16 authority and
-C16 must not dual-write segments.
+Projection deduplicates through the C18 index rebuilt at `Open`. An exact repeat
+of a committed identity is skipped and counted; the same identity with different
+bytes or sequence is `ErrIndexConflict` before any write. The segment directory
+must not be used as C16 authority and C16 must not dual-write segments. See
+`docs/architecture/EVENT_INDEX.md` for coverage semantics and the rule that
+absence is never proof of non-ingestion.
 
 ## Errors and recovery
 
 `errors.Is` distinguishes `ErrLocked`, `ErrQuota`, `ErrRecovery`,
-`ErrInvalidInput`, `ErrInvalidEvent`, `ErrIO` and `ErrClosed`, plus standard
-context errors. A context cancelled before filesystem work leaves the writer
-usable. An I/O or unknown directory-sync failure poisons the handle; close and
-reopen to recover. A complete record written before a reported `ErrIO` may still
+`ErrIndexConflict`, `ErrInvalidInput`, `ErrInvalidEvent`, `ErrIO` and `ErrClosed`,
+plus standard context errors. A context cancelled before filesystem work leaves
+the writer usable. An I/O or unknown directory-sync failure poisons the handle;
+close and reopen to recover. A complete record written before a reported `ErrIO` may still
 be present, so callers must resolve the outcome by reopening and using the
-C18-owned projection checkpoint, not by assuming the append did not happen.
+rebuilt C18 index, not by assuming the append did not happen.
 
 C17 is a cooperating single-writer local Linux/ext4 profile. `flock` is advisory,
 not authorization. Same-UID/root/mount-replacement attackers are outside this
@@ -190,15 +204,17 @@ incomplete metadata, typed failures, unchanged C05 receipts, rejection of
 overlapping storage/segment directories, the durable segment state of a failed
 quota projection and the unknown-state marker when the writer cannot report. Both the package tests and the
 projection workflow test pass under a network-syscall trace with no socket,
-connect, bind or listen calls observed. The discovery guard requires these
+connect, bind or listen calls observed. C18 adds `tests/rebuild_test.go` and the
+deduplicating projection workflow anchor. The discovery guard requires these
 anchors. Fixtures under `tests/fixtures/miragemesh/C17/` are repository-authored
 Apache-2.0 synthetic data. Exact command output and source identity live in
-`docs/evidence/C17.json`.
+`docs/evidence/C17.json`; the C18 contract is verified separately in
+`docs/evidence/C18.json`.
 
-Future cards: C18 builds index/checkpoints without changing segment IDs; C19
-alerts may reference segment/source IDs; C22 traces a source to its segment;
+Future cards: C18 rebuilt the derived index without changing segment IDs; C19
+alerts may reference indexed source IDs; C22 traces a source to its segment;
 C23 performs retention with audit metadata; C30 is the clean-host workflow,
-restart and restore gate. No C18-C30 capability is asserted by C17.
+restart and restore gate. No C19-C30 capability is asserted here.
 
 Official references: [Go os.Root](https://pkg.go.dev/os#Root),
 [Go File.Sync](https://pkg.go.dev/os#File.Sync),

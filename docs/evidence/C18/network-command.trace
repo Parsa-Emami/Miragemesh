@@ -1,0 +1,146 @@
+191767 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191767 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191774 +++ exited with 0 +++
+191772 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191779 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191775, si_uid=1000} ---
+191779 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191775, si_uid=1000} ---
+191782 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191775, si_uid=1000} ---
+191782 +++ exited with 0 +++
+191781 +++ exited with 0 +++
+191780 +++ exited with 0 +++
+191779 +++ exited with 0 +++
+191778 +++ exited with 0 +++
+191777 +++ exited with 0 +++
+191776 +++ exited with 0 +++
+191775 +++ exited with 0 +++
+191767 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=191775, si_uid=1000, si_status=0, si_utime=0, si_stime=1 /* 0.01 s */} ---
+191767 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191767 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191767 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191772 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191787 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191783, si_uid=1000} ---
+191787 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191783, si_uid=1000} ---
+191787 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191783, si_uid=1000} ---
+191790 +++ exited with 0 +++
+191789 +++ exited with 0 +++
+191788 +++ exited with 0 +++
+191787 +++ exited with 0 +++
+191786 +++ exited with 0 +++
+191785 +++ exited with 0 +++
+191784 +++ exited with 0 +++
+191783 +++ exited with 0 +++
+191767 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=191783, si_uid=1000, si_status=0, si_utime=0, si_stime=1 /* 0.01 s */} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191795 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191792, si_uid=1000} ---
+191795 +++ exited with 0 +++
+191798 +++ exited with 0 +++
+191799 +++ exited with 0 +++
+191797 +++ exited with 0 +++
+191796 +++ exited with 0 +++
+191794 +++ exited with 0 +++
+191793 +++ exited with 0 +++
+191792 +++ exited with 0 +++
+191769 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=191792, si_uid=1000, si_status=0, si_utime=0, si_stime=1 /* 0.01 s */} ---
+191767 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191807 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191800, si_uid=1000} ---
+191805 +++ exited with 0 +++
+191801 +++ exited with 0 +++
+191804 +++ exited with 0 +++
+191803 +++ exited with 0 +++
+191802 +++ exited with 0 +++
+191808 +++ exited with 0 +++
+191806 +++ exited with 0 +++
+191807 +++ exited with 0 +++
+191800 +++ exited with 0 +++
+191769 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=191800, si_uid=1000, si_status=0, si_utime=0, si_stime=2 /* 0.02 s */} ---
+191772 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191770 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191837 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191830, si_uid=1000} ---
+191837 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191830, si_uid=1000} ---
+191837 +++ exited with 0 +++
+191831 +++ exited with 0 +++
+191832 +++ exited with 0 +++
+191835 +++ exited with 0 +++
+191836 +++ exited with 0 +++
+191834 +++ exited with 0 +++
+191833 +++ exited with 0 +++
+191830 +++ exited with 0 +++
+191769 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=191830, si_uid=1000, si_status=0, si_utime=0, si_stime=2 /* 0.02 s */} ---
+191770 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191770 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191844 ???( <unfinished ...>
+191844 +++ exited with 2 +++
+191842 +++ exited with 2 +++
+191841 +++ exited with 2 +++
+191840 +++ exited with 2 +++
+191839 +++ exited with 2 +++
+191843 +++ exited with 2 +++
+191838 +++ exited with 2 +++
+191768 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=191838, si_uid=1000, si_status=2, si_utime=0, si_stime=0} ---
+191771 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191771 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191771 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191845 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191845, si_uid=1000} ---
+191845 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191845, si_uid=1000} ---
+191852 +++ exited with 2 +++
+191851 +++ exited with 2 +++
+191850 +++ exited with 2 +++
+191849 +++ exited with 2 +++
+191848 +++ exited with 2 +++
+191847 +++ exited with 2 +++
+191846 +++ exited with 2 +++
+191845 +++ exited with 2 +++
+191770 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=191845, si_uid=1000, si_status=2, si_utime=0, si_stime=0} ---
+191771 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191770 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191770 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191770 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191860 +++ exited with 1 +++
+191862 +++ exited with 1 +++
+191861 +++ exited with 1 +++
+191859 +++ exited with 1 +++
+191858 +++ exited with 1 +++
+191857 +++ exited with 1 +++
+191856 +++ exited with 1 +++
+191855 +++ exited with 1 +++
+191854 +++ exited with 1 +++
+191769 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=191854, si_uid=1000, si_status=1, si_utime=0, si_stime=0} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191770 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191771 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191770 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191770 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191771 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191867 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191864, si_uid=1000} ---
+191871 +++ exited with 1 +++
+191870 +++ exited with 1 +++
+191869 +++ exited with 1 +++
+191865 +++ exited with 1 +++
+191868 +++ exited with 1 +++
+191867 +++ exited with 1 +++
+191866 +++ exited with 1 +++
+191864 +++ exited with 1 +++
+191769 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=191864, si_uid=1000, si_status=1, si_utime=0, si_stime=0} ---
+191769 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191770 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191770 --- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=191767, si_uid=1000} ---
+191773 +++ exited with 0 +++
+191772 +++ exited with 0 +++
+191769 +++ exited with 0 +++
+191771 +++ exited with 0 +++
+191768 +++ exited with 0 +++
+191770 +++ exited with 0 +++
+191767 +++ exited with 0 +++

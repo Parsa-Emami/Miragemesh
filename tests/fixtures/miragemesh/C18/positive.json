@@ -1,0 +1,18 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C18 index rebuild events. No real sensor, customer or traffic data is included.",
+  "bounds_provenance": "Small test policy values, not product defaults or measured capacity.",
+  "limits": {
+    "max_segments": 8,
+    "max_records_per_segment": 2,
+    "max_bytes_per_segment": 8193
+  },
+  "events": [
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-02\",\"sequence\":2,\"observed_at\":\"2026-01-01T00:00:01Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/ready\"}}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-03\",\"sequence\":3,\"observed_at\":\"2026-01-01T00:00:02Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/next\"}}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-02\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/health\"}}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-02\",\"event_id\":\"event-02\",\"sequence\":2,\"observed_at\":\"2026-01-01T00:00:01Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/ready\"}}"
+  ]
+}
