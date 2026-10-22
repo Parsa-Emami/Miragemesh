@@ -1,0 +1,5 @@
+v24.19.0
+npm 11.9.0
+go version go1.27.2 linux/amd64
+podman version 4.9.3
+rootless=true

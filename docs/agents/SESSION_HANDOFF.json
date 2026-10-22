@@ -1,146 +1,166 @@
 {
   "project": "MirageMesh",
-  "last_task": "C19",
+  "last_task": "C20",
   "status": "verified",
-  "base_commit": "6093bc088fa199eaa885bf0101c882ccba81a91a",
-  "final_commit": "fcde7e930a5b196aee620b82cf665bbef9d47427",
-  "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
-  "evidence": "docs/evidence/C19.json",
-  "summary": "C19 adds explainable per-event interactions, explicit-policy per-sensor rate signals referencing committed C18 records, and separate health findings from validated durable C15 spool gaps. The existing project-segments CLI derives typed outcomes and reproduces the same alerts after restart; missing/incomplete index coverage remains visible. No schema/API/UI/dependency changes or remote Actions claims.",
+  "base_commit": "ab2591920d3138aa7c552bd171b6c605a1f7a707",
+  "final_commit": "f3561ef9ef266ec3f36b33e34054725616eec0d5",
+  "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c",
+  "evidence": "docs/evidence/C20.json",
+  "summary": "C20 adds append-only incident triage on the existing C05 store: strict status/reason input, digest-only idempotency keys, typed replay/conflict outcomes, ordered restart-durable history and forged-history rejection. Triage is neutral to C07 sequence and skipped by C17/C18 projection; real tests prove observed event records, immutable segment bytes and the rebuilt index are unchanged. No HTTP endpoint, CLI, UI, schema, migration, .env, Dockerfile, dependency or egress added. The source is committed locally as f3561ef9ef266ec3f36b33e34054725616eec0d5; it was not pushed, published or run on hosted Actions.",
   "changed_paths": [
-    "cmd/miragemesh/main.go",
-    "cmd/miragemesh/segments.go",
-    "cmd/miragemesh/segments_test.go",
-    "internal/alerts/rules.go",
-    "tests/alerts_test.go",
-    "tests/fixtures/miragemesh/C19/positive.json",
-    "tests/fixtures/miragemesh/C19/expected-output.json",
-    "tests/fixtures/miragemesh/C19/negative.json",
-    "docs/architecture/ALERT_RULES.md",
+    "internal/contracts/incident.go",
+    "internal/incidents/service.go",
+    "internal/storage/adapter.go",
+    "internal/events/segments.go",
+    "internal/sensor/event.go",
+    "tests/triage_test.go",
+    "tests/rotation_test.go",
+    "tests/fixtures/miragemesh/C20/positive.json",
+    "tests/fixtures/miragemesh/C20/expected-output.json",
+    "tests/fixtures/miragemesh/C20/negative.json",
     "scripts/verify-engine-tests.mjs",
     "tests/engineering/engine-tests.test.mjs",
-    "docs/architecture/ALERT_RULES.md",
-    "docs/evidence/C19.json",
-    "docs/evidence/C19/",
+    "docs/architecture/INCIDENT_TRIAGE.md",
+    "docs/engineering/ENGINE_TESTS.md",
+    "docs/product/REFERENCE_WORKFLOW.md",
+    "docs/ROADMAP_FA.md",
+    "docs/evidence/C20.json",
+    "docs/evidence/C20/",
     "plans/progress.json",
     "docs/agents/SESSION_HANDOFF.json"
   ],
   "commands": [
     {
-      "argv": "go test -race -count=1 -json ./...",
+      "argv": "$(go env GOROOT)/bin/gofmt -l cmd internal tests; test -z output",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/engine-tests.jsonl",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
-    },
-    {
-      "argv": "node scripts/verify-engine-tests.mjs docs/evidence/C19/engine-tests.jsonl",
-      "exit_code": 0,
-      "output_path": "docs/evidence/C19/discovery.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/format.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
       "argv": "go vet ./...",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/vet.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/vet.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
-      "argv": "$(go env GOROOT)/bin/gofmt -l cmd internal tests; test -z output",
+      "argv": "go build -trimpath -o /tmp/miragemesh-c20-engine ./cmd/miragemesh",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/format.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/go-build.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
-      "argv": "go build -trimpath -o /tmp/miragemesh-c19-engine ./cmd/miragemesh",
+      "argv": "go test -race -count=1 -json ./...",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/go-build.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/engine-tests.jsonl",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
+    },
+    {
+      "argv": "node scripts/verify-engine-tests.mjs docs/evidence/C20/engine-tests.jsonl",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C20/discovery.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
       "argv": "npm run validate:plan (npm 11.9.0)",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/validate-plan.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/validate-plan.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
       "argv": "npm run check (npm 11.9.0)",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/final-check.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/final-check.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
       "argv": "python3 scripts/validate_repo.py",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/repo-contracts.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/repo-contracts.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
       "argv": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/python-tests.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/python-tests.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
       "argv": "python3 scripts/plan.py validate",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/plan-consistency.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/plan-consistency.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
-      "argv": "playwright test --config docs/evidence/C19/playwright.config.mjs (loopback port 4174)",
+      "argv": "playwright test --config docs/evidence/C20/playwright.config.mjs (loopback 4175)",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/browser.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/browser.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
       "argv": "npm run package:web (npm 11.9.0)",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/package.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/package.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
-      "argv": "Podman 4.9.3 rootless; pinned Alpine digest and network-none memory cgroup check",
+      "argv": "npm run test:clone (npm 11.9.0; real temporary clone, setup, vet/race/discovery and source integrity)",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/provider.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/clone.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     },
     {
-      "argv": "python3 scripts/verify_ci_source.py on clean implementation commit",
+      "argv": "python3 docs/evidence/C20/source-manifest.py",
       "exit_code": 0,
-      "output_path": "docs/evidence/C19/source-integrity.log",
-      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3"
+      "output_path": "docs/evidence/C20/source-manifest.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
+    },
+    {
+      "argv": "sha256sum tests/fixtures/miragemesh/C20/*.json",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C20/fixture-hashes.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
+    },
+    {
+      "argv": "node --version; npx npm@11.9.0 --version; go version; podman version; rootless probe",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C20/tool-versions.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
+    },
+    {
+      "argv": "git diff --check",
+      "exit_code": 0,
+      "output_path": "docs/evidence/C20/diff-check.log",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c"
     }
   ],
   "blockers": [],
   "scope_limits": [
-    "Only local process and filesystem behavior is proven; physical power loss, kernel/filesystem corruption and remote-runner behavior are not certified.",
-    "The index is O(records) memory bounded indirectly by the mandatory segment record/segment limits; no measured capacity claim is made (C28).",
-    "Deleting the lowest or highest present segment creates no internal ordinal gap and is indistinguishable from a short history; C23 must preserve an ordinal high-water mark.",
-    "Absence from the index never proves non-ingestion. C15 gaps, C23 retention and missing segments remain separate evidence.",
-    "Exact duplicate records are tolerated and counted for backward compatibility with stores projected before C18; they are not removed from disk.",
-    "Sequence collisions with different event IDs are not part of the identity conflict rule; C04/C07 validation and C05 authority remain responsible for sequence semantics.",
-    "No retention, alerting, trace viewer, authenticated ingest, published decoy surface, HTTP API or UI is added; C30 remains the clean-host workflow/restart/restore gate.",
-    "Browser regression ran on 127.0.0.1:4199 with a temporary Playwright config inside docs/evidence/C18 because canonical loopback ports were occupied; the same three browser tests passed."
+    "GitHub-hosted Actions were not triggered. Local workflow-equivalent commands, including the temporary-clone source-integrity path, passed.",
+    "C20 source snapshot f3561ef9ef266ec3f36b33e34054725616eec0d5 was committed locally; no push was performed. GitHub-hosted Actions were not triggered. The recorded source identity covers that input tree; verify_ci_source.py was exercised on the temporary clone and is run on the committed checkout after this evidence is committed.",
+    "The source identity excludes docs/evidence/, plans/progress.json, docs/agents/SESSION_HANDOFF.json and SHA256SUMS.txt. Build regeneration of apps/web/src/generated/project.json is a derived output; it was restored to the recorded input state after verification.",
+    "The OpenAPI triage path is a request-shape contract only. No HTTP endpoint, CLI, UI, retention, export, replication or remote synchronisation is implemented.",
+    "The shared C05 record cap is 16,384 bytes. Some OpenAPI-maximum multi-byte labels are rejected explicitly rather than truncated; raising that bound is a later storage design change.",
+    "No deployment, publication, remote verification or product-readiness claim is made. C30 remains the full local workflow gate."
   ],
-  "next_task": "C20",
+  "next_task": "C21",
   "next_command": "npm run plan -- next",
-  "future_card_note": "C20 owns triage, C21 owns health presentation, and C22 owns user-facing segment tracing; C19 keeps these scopes unchanged.",
+  "future_card_note": "C20 triage is verified and committed locally. C21 owns health presentation, C22 owns the user-facing segment/incident trace, and C23 owns retention/deletion; C20 keeps these scopes unchanged.",
   "delivery": {
     "commit_created": true,
-    "commit": "fcde7e930a5b196aee620b82cf665bbef9d47427",
+    "commit": "f3561ef9ef266ec3f36b33e34054725616eec0d5",
     "push_performed": false,
     "publication_performed": false
   },
   "local_clone_verification": {
     "passed": true,
-    "candidate_tree": "d1d9678abf9fd355b5f9e9e479e4e634106895cd",
-    "snapshot_commit": "9abb1516c44b72e7f6fe02e223a0813496ec0f8d",
-    "git_source_integrity_identity": "sha256:510f2c61f5d81e37a73d6cb8a827564070bc27f6e940170a7e6d356f72966ee4",
-    "output_path": "docs/evidence/C18/clone-final.log",
+    "candidate_tree": "2699b7af788a97f17b12fec47c15a652faf14757",
+    "snapshot_commit": "42b7c0430ac8c03301565e0238eaddaa1ac38deb",
+    "git_source_integrity_identity": "sha256:10975e15ca13d0c24a3b27367a92961a495f020b54a053cb0001820a99e102ef",
+    "output_path": "docs/evidence/C20/clone.log",
     "remote_runner": false,
     "delivery_commit": false,
     "runtime_tests_certified": false,
-    "binding": "Temporary local snapshot of the final C18 source passed clean-clone setup, Go vet/race/discovery, event validation, the deduplicating index regressions and local runtime startup. It does not certify hosted Actions or product readiness."
+    "binding": "Temporary local snapshot of the staged C20 source passed clean-clone setup, Go vet/race/discovery, event validation and local runtime startup. It does not certify hosted Actions or product readiness."
   },
   "remote_actions_executed": false
 }

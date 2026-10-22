@@ -177,10 +177,12 @@
     },
     {
       "id": "C20",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C20.json"
+      ],
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c",
+      "notes": "C20 verified locally and committed as f3561ef9ef266ec3f36b33e34054725616eec0d5 without pushing: append-only incident triage uses the existing C05 store with strict status/reason input, digest-only idempotency keys, typed replay/conflict outcomes, ordered restart-durable history and forged-history rejection. Triage records are neutral to C07 sequence and skipped by C17/C18 projection; real tests prove observed event records, immutable segment bytes and the rebuilt index are unchanged. No HTTP endpoint, CLI, UI, schema, migration, .env, Dockerfile, dependency or egress added. GitHub-hosted Actions were not run."
     },
     {
       "id": "C21",
