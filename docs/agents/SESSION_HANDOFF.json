@@ -3,7 +3,7 @@
   "last_task": "C18",
   "status": "verified",
   "base_commit": "d2023f5cb8168237e8d8779d892fc0b912e12fe8",
-  "final_commit": null,
+  "final_commit": "dad01584ce4f54c4fc85b15bee5da5a0daba73a7",
   "source_identity": "sha256:5e27d023224d96e6a0795057ab7da187ebf57eaa81c0367b87d2ecf182838a4b",
   "evidence": "docs/evidence/C18.json",
   "summary": "derived in-memory event index rebuilt from committed C17 segments at Open; Append and AppendRecords deduplicate already-indexed sensor/event identities, tolerate and count exact repeats, and return typed ErrIndexConflict before bytes change when the same identity has different bytes or sequence; coverage reports records, sensors, duplicates, stable segment IDs/ordinals, exclusive missing ordinal ranges and incomplete tails, and absence is never proof of non-ingestion; the --project-segments workflow reports already_projected and index coverage with deduplicated:true and leaves segment bytes unchanged on repetition; no durable index file, new command, schema, migration, dependency, HTTP/UI surface, egress, retention or full-product readiness claim",
@@ -419,7 +419,8 @@
   "next_command": "npm run plan -- next",
   "future_card_note": "C19 may read the C18 index snapshot for alerting, but must not treat a missing index entry as proof that an event was never ingested; C15 gaps, C23 retention and missing segments remain explicit coverage facts. C18 adds no HTTP/UI, retention, authenticated ingest or alert evaluation, and C30 remains the clean-host workflow/restart/restore gate.",
   "delivery": {
-    "commit_created": false,
+    "commit_created": true,
+    "commit": "dad01584ce4f54c4fc85b15bee5da5a0daba73a7",
     "push_performed": false,
     "publication_performed": false
   },

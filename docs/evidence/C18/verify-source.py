@@ -54,10 +54,13 @@ assert project_state["next_task"] == "C19"
 web = json.loads((root / "apps/web/src/generated/project.json").read_text())
 web_state = next(task for task in web["tasks"] if task["id"] == "C18")
 assert web_state["status"] == "verified"
-assert proof["delivery"] == {
-    "commit_created": False,
-    "push_performed": False,
-    "publication_performed": False,
-}
+head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+assert proof["delivery"]["push_performed"] is False
+assert proof["delivery"]["publication_performed"] is False
+if proof["delivery"]["commit_created"]:
+    feature_commit = proof["delivery"]["commit"]
+    subprocess.run(["git", "merge-base", "--is-ancestor", feature_commit, head], cwd=root, check=True)
+else:
+    assert "commit" not in proof["delivery"]
 assert proof["remote_actions_executed"] is False
 print(f"{identity}; {len(files)} source files, {len(proof['commands'])} commands verified")

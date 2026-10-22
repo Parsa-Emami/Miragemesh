@@ -87,6 +87,11 @@ status_lines = subprocess.check_output(
     ["git", "status", "--porcelain=v1", "-uall"], cwd=root, text=True
 ).splitlines()
 changed_paths = sorted({line[3:] for line in status_lines if len(line) > 3})
+head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+if not changed_paths:
+    changed_paths = sorted(filter(None, subprocess.check_output(
+        ["git", "show", "--pretty=format:", "--name-only", head], cwd=root, text=True
+    ).splitlines()))
 assert "docs/evidence/C18.json" in changed_paths
 assert "docs/evidence/C18/build-evidence.py" in changed_paths
 assert "internal/events/index.go" in changed_paths
@@ -138,7 +143,12 @@ evidence = {
         "Browser regression ran on 127.0.0.1:4199 with a temporary Playwright config inside docs/evidence/C18 because canonical loopback ports were occupied; the same three browser tests passed.",
     ],
     "rollback": "Close the writer and keep the committed segment files and the C05/C16 authority store. Do not delete or rewrite a segment to clear an index conflict; repair the conflicting evidence or restore a compatible copy. The next Open rebuilds the index from whatever complete records exist, and any missing segment ordinal remains an explicit coverage fact.",
-    "delivery": {"commit_created": False, "push_performed": False, "publication_performed": False},
+    "delivery": {
+        "commit_created": head != "d2023f5cb8168237e8d8779d892fc0b912e12fe8",
+        **({"commit": head} if head != "d2023f5cb8168237e8d8779d892fc0b912e12fe8" else {}),
+        "push_performed": False,
+        "publication_performed": False,
+    },
     "remote_actions_executed": False,
     "environment": {
         "node": environment["node"],

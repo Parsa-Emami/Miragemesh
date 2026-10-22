@@ -51,7 +51,8 @@
   ],
   "rollback": "Close the writer and keep the committed segment files and the C05/C16 authority store. Do not delete or rewrite a segment to clear an index conflict; repair the conflicting evidence or restore a compatible copy. The next Open rebuilds the index from whatever complete records exist, and any missing segment ordinal remains an explicit coverage fact.",
   "delivery": {
-    "commit_created": false,
+    "commit_created": true,
+    "commit": "dad01584ce4f54c4fc85b15bee5da5a0daba73a7",
     "push_performed": false,
     "publication_performed": false
   },
