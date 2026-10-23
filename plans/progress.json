@@ -204,10 +204,12 @@
     },
     {
       "id": "C23",
-      "status": "in_progress",
-      "evidence": [],
-      "source_identity": null,
-      "notes": "C23 implementation and targeted local checks complete; final source-bound checks and hosted CI pending."
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C23.json"
+      ],
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "notes": "C23 verified on f7176844785e07c03fef6d7558a0ea04de95c584: explicit sealed-segment expiration, durable audit before deletion, idempotent restart recovery, retired identity protection, rebuilt live index and accessible retention coverage. All four hosted workflows passed, including full Go race/162 required anchors, 68 Node tests, 12 browser tests and real clean-clone smoke. Local C13 failures match the unmodified C22 baseline and are retained; no full C30/C40 readiness claim."
     },
     {
       "id": "C24",

@@ -1,0 +1,333 @@
+﻿2026-10-23T02:40:25.8215449Z Current runner version: '2.338.0'
+2026-10-23T02:40:25.8249064Z ##[group]Runner Image Provisioner
+2026-10-23T02:40:25.8250406Z Hosted Compute Agent
+2026-10-23T02:40:25.8251424Z Version: 20261012.601
+2026-10-23T02:40:25.8252453Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-23T02:40:25.8254031Z Build Date: 2026-10-12T17:48:21Z
+2026-10-23T02:40:25.8255299Z Worker ID: {ff8e0711-0acf-4dee-926d-1dac6beba452}
+2026-10-23T02:40:25.8257229Z Region: eastus
+2026-10-23T02:40:25.8258140Z Cloud: Azure
+2026-10-23T02:40:25.8259002Z ##[endgroup]
+2026-10-23T02:40:25.8261460Z ##[group]Operating System
+2026-10-23T02:40:25.8262463Z Ubuntu
+2026-10-23T02:40:25.8263422Z 24.04.5
+2026-10-23T02:40:25.8264569Z LTS
+2026-10-23T02:40:25.8265544Z ##[endgroup]
+2026-10-23T02:40:25.8266462Z ##[group]Runner Image
+2026-10-23T02:40:25.8267464Z Image: ubuntu-24.04
+2026-10-23T02:40:25.8268467Z Version: 20261012.334.1
+2026-10-23T02:40:25.8270486Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-23T02:40:25.8273513Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-23T02:40:25.8275397Z ##[endgroup]
+2026-10-23T02:40:25.8277336Z ##[group]GITHUB_TOKEN Permissions
+2026-10-23T02:40:25.8280300Z Contents: read
+2026-10-23T02:40:25.8281276Z Metadata: read
+2026-10-23T02:40:25.8282137Z ##[endgroup]
+2026-10-23T02:40:25.8285462Z Secret source: Actions
+2026-10-23T02:40:25.8287049Z Cache mode: write
+2026-10-23T02:40:25.8288596Z Prepare workflow directory
+2026-10-23T02:40:25.8841940Z Prepare all required actions
+2026-10-23T02:40:25.8912443Z Getting action download info
+2026-10-23T02:40:26.0871898Z Download action repository 'actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+2026-10-23T02:40:26.1843404Z Download action repository 'actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38' (SHA:249970729cb0ef3589644e2896645e5dc5ba9c38)
+2026-10-23T02:40:26.2618556Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-23T02:40:26.4761280Z Complete job name: verify
+2026-10-23T02:40:26.5634623Z ##[group]Run actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+2026-10-23T02:40:26.5635757Z with:
+2026-10-23T02:40:26.5636203Z   persist-credentials: false
+2026-10-23T02:40:26.5636745Z   repository: Parsa-Emami/Miragemesh
+2026-10-23T02:40:26.5640480Z   token: ***
+2026-10-23T02:40:26.5640907Z   ssh-strict: true
+2026-10-23T02:40:26.5641339Z   ssh-user: git
+2026-10-23T02:40:26.5641752Z   clean: true
+2026-10-23T02:40:26.5642193Z   sparse-checkout-cone-mode: true
+2026-10-23T02:40:26.5642705Z   fetch-depth: 1
+2026-10-23T02:40:26.5643139Z   fetch-tags: false
+2026-10-23T02:40:26.5643571Z   show-progress: true
+2026-10-23T02:40:26.5644421Z   lfs: false
+2026-10-23T02:40:26.5644839Z   submodules: false
+2026-10-23T02:40:26.5645289Z   set-safe-directory: true
+2026-10-23T02:40:26.5645790Z   allow-unsafe-pr-checkout: false
+2026-10-23T02:40:26.5646615Z env:
+2026-10-23T02:40:26.5647029Z   GOTOOLCHAIN: go1.27.2
+2026-10-23T02:40:26.5647509Z   GOSUMDB: sum.golang.org
+2026-10-23T02:40:26.5648067Z   GOPROXY: https://proxy.golang.org|direct
+2026-10-23T02:40:26.5648632Z ##[endgroup]
+2026-10-23T02:40:26.6632518Z Syncing repository: Parsa-Emami/Miragemesh
+2026-10-23T02:40:26.6635735Z ##[group]Getting Git version info
+2026-10-23T02:40:26.6636922Z Working directory is '/home/runner/work/Miragemesh/Miragemesh'
+2026-10-23T02:40:26.6638583Z [command]/usr/bin/git version
+2026-10-23T02:40:26.6696961Z git version 2.55.0
+2026-10-23T02:40:26.6720260Z ##[endgroup]
+2026-10-23T02:40:26.6735158Z Temporarily overriding HOME='/home/runner/work/_temp/a8a7cd13-cbef-4ab6-8a32-ad9836eb8573' before making global git config changes
+2026-10-23T02:40:26.6737519Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T02:40:26.6740975Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Miragemesh/Miragemesh
+2026-10-23T02:40:26.6796008Z Deleting the contents of '/home/runner/work/Miragemesh/Miragemesh'
+2026-10-23T02:40:26.6815896Z ##[group]Determining repository object format
+2026-10-23T02:40:26.6817805Z ##[endgroup]
+2026-10-23T02:40:26.6819957Z ##[group]Initializing the repository
+2026-10-23T02:40:26.6821363Z [command]/usr/bin/git init /home/runner/work/Miragemesh/Miragemesh
+2026-10-23T02:40:26.6923134Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-23T02:40:26.6924702Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-23T02:40:26.6925682Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-23T02:40:26.6926399Z hint: call:
+2026-10-23T02:40:26.6926803Z hint:
+2026-10-23T02:40:26.6927314Z hint: 	git config --global init.defaultBranch <name>
+2026-10-23T02:40:26.6927931Z hint:
+2026-10-23T02:40:26.6928509Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-23T02:40:26.6929447Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-23T02:40:26.6930172Z hint:
+2026-10-23T02:40:26.6930590Z hint: 	git branch -m <name>
+2026-10-23T02:40:26.6931051Z hint:
+2026-10-23T02:40:26.6931666Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-23T02:40:26.6935884Z Initialized empty Git repository in /home/runner/work/Miragemesh/Miragemesh/.git/
+2026-10-23T02:40:26.6947487Z [command]/usr/bin/git remote add origin https://github.com/Parsa-Emami/Miragemesh
+2026-10-23T02:40:26.6995767Z ##[endgroup]
+2026-10-23T02:40:26.6996961Z ##[group]Disabling automatic garbage collection
+2026-10-23T02:40:26.7000234Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-23T02:40:26.7032365Z ##[endgroup]
+2026-10-23T02:40:26.7033214Z ##[group]Setting up auth
+2026-10-23T02:40:26.7034605Z Removing SSH command configuration
+2026-10-23T02:40:26.7041244Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T02:40:26.7075309Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T02:40:26.7451293Z Removing HTTP extra header
+2026-10-23T02:40:26.7458991Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T02:40:26.7502028Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T02:40:26.7732743Z Removing includeIf entries pointing to credentials config files
+2026-10-23T02:40:26.7741564Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T02:40:26.7772675Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T02:40:26.8017700Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-23T02:40:26.8067244Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path /home/runner/work/_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:26.8109016Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:26.8155459Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:26.8197392Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:26.8236125Z ##[endgroup]
+2026-10-23T02:40:26.8236873Z ##[group]Fetching the repository
+2026-10-23T02:40:26.8248934Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f7176844785e07c03fef6d7558a0ea04de95c584:refs/remotes/origin/main
+2026-10-23T02:40:27.4708668Z From https://github.com/Parsa-Emami/Miragemesh
+2026-10-23T02:40:27.4712291Z  * [new ref]         f7176844785e07c03fef6d7558a0ea04de95c584 -> origin/main
+2026-10-23T02:40:27.4722110Z [command]/usr/bin/git branch --list --remote origin/main
+2026-10-23T02:40:27.4750777Z   origin/main
+2026-10-23T02:40:27.4761797Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-10-23T02:40:27.4788342Z f7176844785e07c03fef6d7558a0ea04de95c584
+2026-10-23T02:40:27.4802175Z ##[endgroup]
+2026-10-23T02:40:27.4803534Z ##[group]Determining the checkout info
+2026-10-23T02:40:27.4805370Z ##[endgroup]
+2026-10-23T02:40:27.4808431Z [command]/usr/bin/git sparse-checkout disable
+2026-10-23T02:40:27.4866209Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-23T02:40:27.4898717Z ##[group]Checking out the ref
+2026-10-23T02:40:27.4902850Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-23T02:40:27.5595451Z Switched to a new branch 'main'
+2026-10-23T02:40:27.5600126Z branch 'main' set up to track 'origin/main'.
+2026-10-23T02:40:27.5608515Z ##[endgroup]
+2026-10-23T02:40:27.5653200Z [command]/usr/bin/git log -1 --format=%H
+2026-10-23T02:40:27.5681212Z f7176844785e07c03fef6d7558a0ea04de95c584
+2026-10-23T02:40:27.5691128Z ##[group]Removing auth
+2026-10-23T02:40:27.5691867Z Removing SSH command configuration
+2026-10-23T02:40:27.5695314Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T02:40:27.5728451Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T02:40:27.5948974Z Removing HTTP extra header
+2026-10-23T02:40:27.5953679Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T02:40:27.5988292Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T02:40:27.6209528Z Removing includeIf entries pointing to credentials config files
+2026-10-23T02:40:27.6212027Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T02:40:27.6251135Z includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path
+2026-10-23T02:40:27.6252559Z includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path
+2026-10-23T02:40:27.6253992Z includeif.gitdir:/github/workspace/.git.path
+2026-10-23T02:40:27.6255444Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-23T02:40:27.6261814Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path
+2026-10-23T02:40:27.6287707Z /home/runner/work/_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:27.6298329Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path /home/runner/work/_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:27.6336581Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path
+2026-10-23T02:40:27.6364494Z /home/runner/work/_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:27.6375321Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:27.6412255Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-23T02:40:27.6439750Z /github/runner_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:27.6450977Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:27.6492713Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-23T02:40:27.6517584Z /github/runner_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:27.6528193Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config
+2026-10-23T02:40:27.6566851Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T02:40:27.6857986Z Removing credentials config '/home/runner/work/_temp/git-credentials-fb8b3f2c-77cb-48c6-9512-2894ba074dc7.config'
+2026-10-23T02:40:27.6861730Z ##[endgroup]
+2026-10-23T02:40:27.7091593Z ##[group]Run actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+2026-10-23T02:40:27.7092501Z with:
+2026-10-23T02:40:27.7092939Z   node-version-file: .nvmrc
+2026-10-23T02:40:27.7093484Z   check-latest: false
+2026-10-23T02:40:27.7098627Z   token: ***
+2026-10-23T02:40:27.7099113Z   package-manager-cache: true
+2026-10-23T02:40:27.7099657Z env:
+2026-10-23T02:40:27.7100061Z   GOTOOLCHAIN: go1.27.2
+2026-10-23T02:40:27.7100560Z   GOSUMDB: sum.golang.org
+2026-10-23T02:40:27.7101130Z   GOPROXY: https://proxy.golang.org|direct
+2026-10-23T02:40:27.7101781Z ##[endgroup]
+2026-10-23T02:40:27.8424361Z Node version file is not JSON file
+2026-10-23T02:40:27.8426061Z Resolved .nvmrc as 24.19.0
+2026-10-23T02:40:27.8450205Z Attempting to download 24.19.0...
+2026-10-23T02:40:28.2600583Z Acquiring 24.19.0 - x64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-linux-x64.tar.gz
+2026-10-23T02:40:28.6813512Z Extracting ...
+2026-10-23T02:40:28.6950690Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/f392af3c-b1d6-4d84-b757-4683e65f7a83 -f /home/runner/work/_temp/b3479e20-97d7-49c9-a810-ed22d19bd174
+2026-10-23T02:40:29.9365661Z Adding to the cache ...
+2026-10-23T02:40:31.9164614Z ##[group]Environment details
+2026-10-23T02:40:32.1511074Z node: v24.19.0
+2026-10-23T02:40:32.1511510Z npm: 11.17.0
+2026-10-23T02:40:32.1511849Z yarn: 1.22.22
+2026-10-23T02:40:32.1519372Z ##[endgroup]
+2026-10-23T02:40:32.1520639Z Detected npm as the package manager from package.json's packageManager field. Auto caching has been enabled for npm. If you want to disable it, set package-manager-cache input to false
+2026-10-23T02:40:32.1536727Z [command]/opt/hostedtoolcache/node/24.19.0/x64/bin/npm config get cache
+2026-10-23T02:40:32.2471651Z /home/runner/.npm
+2026-10-23T02:40:32.3162942Z Cache hit for: node-cache-Linux-x64-npm-86f82bfb2d56395e67325e28b7c78d76c2b2b746f8eb7729ee9bd0b2c28b53ea
+2026-10-23T02:40:32.7140082Z Received 47706416 of 47706416 (100.0%), 135.0 MBs/sec
+2026-10-23T02:40:32.7140919Z Cache Size: ~45 MB (47706416 B)
+2026-10-23T02:40:32.7182870Z [command]/usr/bin/tar -xf /home/runner/work/_temp/c3c9e685-ceb2-4b6a-b401-2d9efd679ead/cache.tzst -P -C /home/runner/work/Miragemesh/Miragemesh --use-compress-program unzstd
+2026-10-23T02:40:32.9297569Z Cache restored successfully
+2026-10-23T02:40:32.9330030Z Cache restored from key: node-cache-Linux-x64-npm-86f82bfb2d56395e67325e28b7c78d76c2b2b746f8eb7729ee9bd0b2c28b53ea
+2026-10-23T02:40:32.9538495Z ##[group]Run go version
+2026-10-23T02:40:32.9538832Z [36;1mgo version[0m
+2026-10-23T02:40:32.9539103Z [36;1mtest "$(go env GOVERSION)" = go1.27.2[0m
+2026-10-23T02:40:32.9803213Z shell: /usr/bin/bash -e {0}
+2026-10-23T02:40:32.9803507Z env:
+2026-10-23T02:40:32.9804027Z   GOTOOLCHAIN: go1.27.2
+2026-10-23T02:40:32.9804323Z   GOSUMDB: sum.golang.org
+2026-10-23T02:40:32.9804954Z   GOPROXY: https://proxy.golang.org|direct
+2026-10-23T02:40:32.9805276Z ##[endgroup]
+2026-10-23T02:40:33.0301166Z go: downloading go1.27.2 (linux/amd64)
+2026-10-23T02:40:36.8850523Z go version go1.27.2 linux/amd64
+2026-10-23T02:40:36.8965449Z ##[group]Run podman --version
+2026-10-23T02:40:36.8965820Z [36;1mpodman --version[0m
+2026-10-23T02:40:36.8966210Z [36;1mtest "$(podman --version | awk '{print $3}')" = "4.9.3"[0m
+2026-10-23T02:40:36.8966680Z [36;1mtest "$(podman info --format '{{.Host.Security.Rootless}}')" = "true"[0m
+2026-10-23T02:40:36.8967349Z [36;1mpodman pull docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62[0m
+2026-10-23T02:40:36.8968571Z [36;1mtest "$(podman image inspect docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 --format '{{.Digest}}')" = "sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62"[0m
+2026-10-23T02:40:36.8970170Z [36;1mpodman run --rm --network=none --memory=67108864 --memory-swap=67108864 docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 sh -c 'test "$(cat /sys/fs/cgroup/memory.max)" = 67108864'[0m
+2026-10-23T02:40:36.9035653Z shell: /usr/bin/bash -e {0}
+2026-10-23T02:40:36.9035924Z env:
+2026-10-23T02:40:36.9036130Z   GOTOOLCHAIN: go1.27.2
+2026-10-23T02:40:36.9036373Z   GOSUMDB: sum.golang.org
+2026-10-23T02:40:36.9036649Z   GOPROXY: https://proxy.golang.org|direct
+2026-10-23T02:40:36.9036951Z ##[endgroup]
+2026-10-23T02:40:36.9260563Z podman version 4.9.3
+2026-10-23T02:40:41.3142145Z Trying to pull docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62...
+2026-10-23T02:40:41.5613596Z Getting image source signatures
+2026-10-23T02:40:41.5615492Z Copying blob sha256:1074353eec0db2c1d81d5af2671e56e00cf5738486f5762609ea33d606f88612
+2026-10-23T02:40:41.7242281Z Copying config sha256:e7b39c54cdeca0d2aae83114bb605753a5f5bc511fe8be7590e38f6d9f915dad
+2026-10-23T02:40:41.7258508Z Writing manifest to image destination
+2026-10-23T02:40:41.7331815Z e7b39c54cdeca0d2aae83114bb605753a5f5bc511fe8be7590e38f6d9f915dad
+2026-10-23T02:40:41.9235394Z ##[group]Run formatting=$("$(go env GOROOT)/bin/gofmt" -l cmd internal tests)
+2026-10-23T02:40:41.9235978Z [36;1mformatting=$("$(go env GOROOT)/bin/gofmt" -l cmd internal tests)[0m
+2026-10-23T02:40:41.9236374Z [36;1mtest -z "$formatting"[0m
+2026-10-23T02:40:41.9236622Z [36;1mgo vet ./...[0m
+2026-10-23T02:40:41.9236857Z [36;1mmkdir -p dist/engine dist/ci[0m
+2026-10-23T02:40:41.9237253Z [36;1mgo build -trimpath -o dist/engine/miragemesh ./cmd/miragemesh[0m
+2026-10-23T02:40:41.9299552Z shell: /usr/bin/bash -e {0}
+2026-10-23T02:40:41.9299816Z env:
+2026-10-23T02:40:41.9300016Z   GOTOOLCHAIN: go1.27.2
+2026-10-23T02:40:41.9300262Z   GOSUMDB: sum.golang.org
+2026-10-23T02:40:41.9300555Z   GOPROXY: https://proxy.golang.org|direct
+2026-10-23T02:40:41.9300849Z ##[endgroup]
+2026-10-23T02:41:09.0701217Z ##[group]Run node --test tests/engineering/engine-tests.test.mjs
+2026-10-23T02:41:09.0701743Z [36;1mnode --test tests/engineering/engine-tests.test.mjs[0m
+2026-10-23T02:41:09.0764582Z shell: /usr/bin/bash -e {0}
+2026-10-23T02:41:09.0764839Z env:
+2026-10-23T02:41:09.0765038Z   GOTOOLCHAIN: go1.27.2
+2026-10-23T02:41:09.0765283Z   GOSUMDB: sum.golang.org
+2026-10-23T02:41:09.0765567Z   GOPROXY: https://proxy.golang.org|direct
+2026-10-23T02:41:09.0765866Z ##[endgroup]
+2026-10-23T02:41:14.5255791Z ✔ requires source-backed C22 replay, durable HTTP triage and fail-closed replay limits (190.757701ms)
+2026-10-23T02:41:14.5276055Z ✔ accepts executed engine, contract and real recovery suites with interleaved output (31.498294ms)
+2026-10-23T02:41:14.5277817Z ✔ rejects empty discovery and package-only success without executed tests (58.967637ms)
+2026-10-23T02:41:14.5279091Z ✔ rejects a missing required suite or anchor (61.625783ms)
+2026-10-23T02:41:14.5280431Z ✔ requires persistent sensor sequence and invalid-event regression anchors (62.557724ms)
+2026-10-23T02:41:14.5284968Z ✔ rejects a skipped anchor or a pass with no run (62.449655ms)
+2026-10-23T02:41:14.5286085Z ✔ rejects failures in any package and unfinished package results (121.597709ms)
+2026-10-23T02:41:14.5287174Z ✔ rejects malformed JSON events and missing input (119.420896ms)
+2026-10-23T02:41:14.5288596Z ✔ requires enrollment validation, durable consumption, scope, clock, concurrency and crash anchors (272.487714ms)
+2026-10-23T02:41:14.5290586Z ✔ requires mTLS acceptance, transport denial, typed verdicts, issuer-bound revocation, revoked replay and configuration anchors (180.233364ms)
+2026-10-23T02:41:14.5293144Z ✔ requires signed desired state, unsigned rejection, stale rejection and exact-byte signature anchors (393.869252ms)
+2026-10-23T02:41:14.5295658Z ✔ requires durable apply, real crash/recovery, shared-writer serialization and rejection anchors (299.924132ms)
+2026-10-23T02:41:14.5297599Z ✔ requires decoy observation, echo, request bound, prerequisite, restart and no-execution anchors (206.582184ms)
+2026-10-23T02:41:14.5299290Z ✔ requires decoy isolation control, cleanup, immutability, runtime bound, cancellation and workflow anchors (261.990352ms)
+2026-10-23T02:41:14.5301132Z ✔ requires decoy egress, runtime limit, reconciliation, provider and adapter anchors (204.253408ms)
+2026-10-23T02:41:14.5302946Z ✔ requires bounded spool persistence, rejection, concurrency, configuration and recovery anchors (251.179534ms)
+2026-10-23T02:41:14.5304674Z ✔ requires durable overflow markers, replay, quota and gap-aware sequence anchors (150.38978ms)
+2026-10-23T02:41:14.5305984Z ✔ requires durable batch acknowledgement, lost-ACK replay, capacity, rejection and real recovery anchors (330.373965ms)
+2026-10-23T02:41:14.5307033Z ✔ requires immutable segment rotation, explicit incomplete tails, crash recovery and projection anchors (745.968037ms)
+2026-10-23T02:41:14.5307965Z ✔ requires derived index rebuild, dedup, conflict, loss and incomplete-tail anchors (244.715427ms)
+2026-10-23T02:41:14.5308736Z ✔ requires C19 explainable rules and durable alert projection anchors (178.502627ms)
+2026-10-23T02:41:14.5309641Z ✔ requires C20 append-only triage, strict requests, restart replay and forged-history anchors (268.864343ms)
+2026-10-23T02:41:14.5310482Z ✔ requires C21 snapshot and status boundary anchors even when other suites pass (179.819779ms)
+2026-10-23T02:41:14.5311117Z ✔ requires the review remediation boundaries (206.580151ms)
+2026-10-23T02:41:14.5311792Z ✔ requires C23 expiration, audit, real crash recovery and resurrection prevention (273.147394ms)
+2026-10-23T02:41:14.5404664Z ℹ tests 25
+2026-10-23T02:41:14.5405134Z ℹ suites 0
+2026-10-23T02:41:14.5405550Z ℹ pass 25
+2026-10-23T02:41:14.5407617Z ℹ fail 0
+2026-10-23T02:41:14.5408006Z ℹ cancelled 0
+2026-10-23T02:41:14.5408364Z ℹ skipped 0
+2026-10-23T02:41:14.5408583Z ℹ todo 0
+2026-10-23T02:41:14.5408841Z ℹ duration_ms 5426.126346
+2026-10-23T02:41:14.5503405Z ##[group]Run go test -race -count=1 -json ./... > dist/ci/engine-tests.jsonl
+2026-10-23T02:41:14.5504268Z [36;1mgo test -race -count=1 -json ./... > dist/ci/engine-tests.jsonl[0m
+2026-10-23T02:41:14.5565686Z shell: /usr/bin/bash -e {0}
+2026-10-23T02:41:14.5565942Z env:
+2026-10-23T02:41:14.5566146Z   GOTOOLCHAIN: go1.27.2
+2026-10-23T02:41:14.5566386Z   GOSUMDB: sum.golang.org
+2026-10-23T02:41:14.5566668Z   GOPROXY: https://proxy.golang.org|direct
+2026-10-23T02:41:14.5566952Z ##[endgroup]
+2026-10-23T02:41:57.1406997Z ##[group]Run node scripts/verify-engine-tests.mjs dist/ci/engine-tests.jsonl
+2026-10-23T02:41:57.1407600Z [36;1mnode scripts/verify-engine-tests.mjs dist/ci/engine-tests.jsonl[0m
+2026-10-23T02:41:57.1469994Z shell: /usr/bin/bash -e {0}
+2026-10-23T02:41:57.1470247Z env:
+2026-10-23T02:41:57.1470442Z   GOTOOLCHAIN: go1.27.2
+2026-10-23T02:41:57.1470677Z   GOSUMDB: sum.golang.org
+2026-10-23T02:41:57.1470961Z   GOPROXY: https://proxy.golang.org|direct
+2026-10-23T02:41:57.1471248Z ##[endgroup]
+2026-10-23T02:41:57.1871750Z Verified 8 engine suites and 162 required test anchors.
+2026-10-23T02:41:57.1987292Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-23T02:41:57.1987725Z with:
+2026-10-23T02:41:57.1988064Z   name: engine-tests-f7176844785e07c03fef6d7558a0ea04de95c584-39890839430
+2026-10-23T02:41:57.1988478Z   path: dist/ci/engine-tests.jsonl
+2026-10-23T02:41:57.1988750Z   if-no-files-found: error
+2026-10-23T02:41:57.1988984Z   retention-days: 14
+2026-10-23T02:41:57.1989214Z   compression-level: 6
+2026-10-23T02:41:57.1989434Z   overwrite: false
+2026-10-23T02:41:57.1989646Z   include-hidden-files: false
+2026-10-23T02:41:57.1989880Z env:
+2026-10-23T02:41:57.1990066Z   GOTOOLCHAIN: go1.27.2
+2026-10-23T02:41:57.1990283Z   GOSUMDB: sum.golang.org
+2026-10-23T02:41:57.1990545Z   GOPROXY: https://proxy.golang.org|direct
+2026-10-23T02:41:57.1990829Z ##[endgroup]
+2026-10-23T02:41:57.3573011Z (node:14599) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-23T02:41:57.3574868Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-23T02:41:57.3654904Z With the provided path, there will be 1 file uploaded
+2026-10-23T02:41:57.3704696Z Artifact name is valid!
+2026-10-23T02:41:57.3711234Z Root directory input is valid!
+2026-10-23T02:41:57.5663605Z Beginning upload of artifact content to blob storage
+2026-10-23T02:41:57.5913214Z (node:14599) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-23T02:41:57.6455649Z Uploaded bytes 33080
+2026-10-23T02:41:57.6635671Z Finished uploading artifact content to blob storage!
+2026-10-23T02:41:57.6636850Z SHA256 digest of uploaded artifact zip is 783b8c2d45d2d6493a9ca29367aac6928781000e086b545c5a8d6c5a1bb927a4
+2026-10-23T02:41:57.6639362Z Finalizing artifact upload
+2026-10-23T02:41:58.0791911Z Artifact engine-tests-f7176844785e07c03fef6d7558a0ea04de95c584-39890839430.zip successfully finalized. Artifact ID 12474063361
+2026-10-23T02:41:58.0794896Z Artifact engine-tests-f7176844785e07c03fef6d7558a0ea04de95c584-39890839430 has been successfully uploaded! Final size is 33080 bytes. Artifact ID is 12474063361
+2026-10-23T02:41:58.0800249Z Artifact download URL: https://github.com/Parsa-Emami/Miragemesh/actions/runs/39890839430/artifacts/12474063361
+2026-10-23T02:41:58.1014049Z Post job cleanup.
+2026-10-23T02:41:58.2175563Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-86f82bfb2d56395e67325e28b7c78d76c2b2b746f8eb7729ee9bd0b2c28b53ea, not saving cache.
+2026-10-23T02:41:58.2307106Z Post job cleanup.
+2026-10-23T02:41:58.3153682Z [command]/usr/bin/git version
+2026-10-23T02:41:58.3196559Z git version 2.55.0
+2026-10-23T02:41:58.3237434Z Temporarily overriding HOME='/home/runner/work/_temp/1cc4af2a-7169-4e69-a4fa-1f1df700a02d' before making global git config changes
+2026-10-23T02:41:58.3239155Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T02:41:58.3244522Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Miragemesh/Miragemesh
+2026-10-23T02:41:58.3275934Z Removing SSH command configuration
+2026-10-23T02:41:58.3282909Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T02:41:58.3320054Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T02:41:58.3561224Z Removing HTTP extra header
+2026-10-23T02:41:58.3568417Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T02:41:58.3603397Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T02:41:58.3867858Z Removing includeIf entries pointing to credentials config files
+2026-10-23T02:41:58.3876622Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T02:41:58.3910458Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T02:41:58.4378644Z Cleaning up orphan processes
+2026-10-23T02:41:58.4702952Z Terminate orphan process: pid (2592) (catatonit)
+2026-10-23T02:41:58.4796633Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

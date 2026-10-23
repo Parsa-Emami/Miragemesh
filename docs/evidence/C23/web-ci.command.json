@@ -1,0 +1,16 @@
+{
+  "name": "web-ci",
+  "command": [
+    "GitHub Actions",
+    "web-foundation",
+    "npm test; npm run test:browser; npm run test:clone; npm run package:web"
+  ],
+  "exit_code": 0,
+  "source_commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+  "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+  "run_id": 39890839386,
+  "job_id": 120209949126,
+  "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39890839386",
+  "output_path": "docs/evidence/C23/web-ci.log",
+  "stored_output_sha256": "a84c6f842d22e43b257329123eb518a80270be74741b2fdbb394bb63b482fcd2"
+}

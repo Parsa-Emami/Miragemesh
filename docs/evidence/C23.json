@@ -1,9 +1,9 @@
 {
   "commit_id": "C23",
   "project": "MirageMesh",
-  "passed": false,
+  "passed": true,
   "planning_template": false,
-  "status": "implemented_pending_hosted_verification",
+  "status": "verified",
   "date": "2026-10-23",
   "base_commit": "ecbc76c11f6f1460e5cb732afb82b5893cf75809",
   "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
@@ -147,6 +147,38 @@
       "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
       "output_path": "docs/evidence/C23/retention.log",
       "stored_output_sha256": "4b385a663c8054e0ba5175f6d2af6129c5a7231b8085a964d4934b17452c6779"
+    },
+    {
+      "name": "engine-ci",
+      "command": [
+        "GitHub Actions",
+        "engine-runtime",
+        "go test -race -count=1 -json ./... and required-test discovery"
+      ],
+      "exit_code": 0,
+      "source_commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "run_id": 39890839430,
+      "job_id": 120209949246,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39890839430",
+      "output_path": "docs/evidence/C23/engine-ci.log",
+      "stored_output_sha256": "222d9e05ab5d6c13a87af74024832aab81daf06cc5bf24fa9e0289b23a68e558"
+    },
+    {
+      "name": "web-ci",
+      "command": [
+        "GitHub Actions",
+        "web-foundation",
+        "npm test; npm run test:browser; npm run test:clone; npm run package:web"
+      ],
+      "exit_code": 0,
+      "source_commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "run_id": 39890839386,
+      "job_id": 120209949126,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39890839386",
+      "output_path": "docs/evidence/C23/web-ci.log",
+      "stored_output_sha256": "a84c6f842d22e43b257329123eb518a80270be74741b2fdbb394bb63b482fcd2"
     }
   ],
   "failed_local_attempts": [
@@ -216,7 +248,9 @@
     "recovery": "Seven real SIGKILL boundaries and eight syscall failures passed with exact restart outcomes. Corrupt/linked audit and changed pending bytes/metadata fail closed.",
     "index": "Retained sources are removed from the live index, explicit leading/trailing/whole-log gaps survive reopening, surviving duplicates move to real frames and projection cannot resurrect expired identities.",
     "integrity": "Repository contract validator, six Python integrity regressions, gofmt, Go vet and diff checks passed.",
-    "hosted": "Pending; no hosted success is claimed yet."
+    "hosted": "All four workflows passed on the exact implementation commit: contracts, plan-consistency, engine-runtime and web-foundation.",
+    "engine": "Hosted full uncached Go race suite and all 8 required suites / 162 required test anchors passed with pinned rootless Podman. Local source-bound targeted race/vet checks passed. The identical baseline/current local C13 failures remain preserved separately.",
+    "clone": "Hosted clean staged-tree git clone, setup, full Go race/discovery, event validation, supervised startup and packaging passed. This existing clone smoke is not the full C30 restore/workflow gate."
   },
   "environment": {
     "node": "v24.19.0",
@@ -225,7 +259,8 @@
     "playwright": "1.64.1",
     "local_browser": "Chromium 153.0.8010.0 via WEB_TEST_CHROMIUM override; hosted CI installs its locked Playwright browser.",
     "provider": "C23 uses temporary local filesystem adapters. Local rootless Podman is unavailable; unchanged hosted CI supplies pinned prerequisites.",
-    "hardware": "Functional checks on ephemeral Linux amd64; C28 capacity target remains unmeasured."
+    "hardware": "Functional checks on ephemeral Linux amd64; C28 capacity target remains unmeasured.",
+    "hosted": "GitHub Actions ubuntu-24.04, Node 24.19.0, npm 11.9.0, Go 1.27.2, rootless Podman 4.9.3 and locked Alpine digest, Playwright-installed Chromium."
   },
   "limits": [
     "Segment copies only: C05 originals, receipts, acknowledgements, triage and quota remain unchanged; not secure full-data erasure.",
@@ -234,10 +269,12 @@
     "Process crash/syscall recovery tested; no physical power-loss certification.",
     "Keep audit and compatible reader with segment backups; full restore/C30/C40 remain separate gates."
   ],
-  "remote_actions_executed": false,
+  "remote_actions_executed": true,
   "delivery": {
-    "commit_created": false,
-    "push_performed": false,
+    "commit_created": true,
+    "commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+    "push_performed": true,
+    "branch": "main",
     "publication_performed": false
   },
   "test_counts": {
@@ -246,5 +283,52 @@
     "required_engine_suites": 8,
     "required_engine_anchors": 162,
     "python_integrity_passed": 6
+  },
+  "implementation_commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+  "hosted_actions": {
+    "source_commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+    "all_passed": true,
+    "runs": [
+      {
+        "name": "plan-consistency",
+        "run_id": 39890839421,
+        "status": "completed",
+        "conclusion": "success",
+        "source_commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39890839421",
+        "created_at": "2026-10-23T02:40:21Z",
+        "updated_at": "2026-10-23T02:40:29Z"
+      },
+      {
+        "name": "contracts",
+        "run_id": 39890839368,
+        "status": "completed",
+        "conclusion": "success",
+        "source_commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39890839368",
+        "created_at": "2026-10-23T02:40:21Z",
+        "updated_at": "2026-10-23T02:40:30Z"
+      },
+      {
+        "name": "engine-runtime",
+        "run_id": 39890839430,
+        "status": "completed",
+        "conclusion": "success",
+        "source_commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39890839430",
+        "created_at": "2026-10-23T02:40:21Z",
+        "updated_at": "2026-10-23T02:42:00Z"
+      },
+      {
+        "name": "web-foundation",
+        "run_id": 39890839386,
+        "status": "completed",
+        "conclusion": "success",
+        "source_commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39890839386",
+        "created_at": "2026-10-23T02:40:21Z",
+        "updated_at": "2026-10-23T02:43:01Z"
+      }
+    ]
   }
 }
