@@ -1,0 +1,21 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C24 inputs. Cryptographic material is generated only for temporary tests; no real credentials or traffic.",
+  "now": "2026-01-01T00:00:00Z",
+  "sensor_id": "sensor-24",
+  "lifetime_seconds": 86400,
+  "overlap_seconds": 3600,
+  "recovery_ttl_seconds": 900,
+  "source_event": {
+    "schema_version": "1",
+    "sensor_id": "sensor-24",
+    "event_id": "event-24-01",
+    "sequence": 1,
+    "observed_at": "2026-01-01T00:00:00Z",
+    "kind": "http.request",
+    "metadata": {
+      "path": "/synthetic/certificate-rotation"
+    }
+  }
+}

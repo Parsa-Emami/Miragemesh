@@ -1,0 +1,278 @@
+{
+  "commit_id": "C24",
+  "project": "MirageMesh",
+  "passed": false,
+  "planning_template": false,
+  "status": "implemented_pending_hosted_verification",
+  "date": "2026-10-23",
+  "base_commit": "8c067a8624ca0499e4a0cb7264e003ac79b6b3d1",
+  "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+  "source_identity_algorithm": "SHA-256 of sorted path + NUL + raw SHA-256 bytes over tracked/nonignored source, excluding docs/evidence/, SHA256SUMS.txt, plans/progress.json and docs/agents/SESSION_HANDOFF.json. Inventory and command logs retain the exact implementation snapshot; later status metadata does not relabel it.",
+  "scope": "C24 sensor client leaf rotation under the C09 issuer: real TLS overlap cutoff, durable revision and retirement, atomic C08 token-backed offline recovery through C05, trusted local operator CLI and read-only accessible certificate status.",
+  "architecture": {
+    "domain": "pki.Rotator validates CSR proof and fixed client-only issuance, reads authoritative bounded history and uses crypto.Signer only for new issuance.",
+    "durability": "Existing C05 Store.Update publishes the new certificate and recovery token claim in one durable record; ordinary enrollment consumption honors that same claim.",
+    "authorization": "C09 chain/expiry/issuer-bound CRL checks precede managed rotation authorization. Managed retired fingerprints override static scopes and fail at the exact deadline; subsequent Allows calls re-evaluate existing transcripts.",
+    "adapters": "Strict standalone local actions, public-issuer-only HTTP status and validated same-origin browser proxy/UI.",
+    "packaging": "Observed server-validator dependency packaging defect fixed and tested by starting the web package in an isolated directory."
+  },
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C24 fixtures. Cryptographic material is generated for temporary tests, with crash-helper secrets passed through stdin; no real credentials or traffic.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C24/expected-output.json": "55558a49c930828d0921dd3bc139b513a3d159742d442810ef3f3929fb65922b",
+      "tests/fixtures/miragemesh/C24/material.go": "62b8c5e5ffbbdcb010a01823be91ac4642598ffc7902696e74e1b7eb28bce5d4",
+      "tests/fixtures/miragemesh/C24/negative.json": "1574af3e11b2534381295abd62282cf9eac735f1a6e527933d7ccd71261d3c33",
+      "tests/fixtures/miragemesh/C24/positive.json": "373e847e26f973ea92acf03c31dd121ea48c34de1ea92cd77a67b7640eb38ed4",
+      "tests/fixtures/miragemesh/C24/seed/main.go": "8fbef84f987aa8bd65642d571242b62e343bc625a153e9d26bcf51c810565779"
+    }
+  },
+  "commands": [
+    {
+      "name": "browser",
+      "command": [
+        "npm",
+        "run",
+        "test:browser",
+        "--",
+        "--workers=1"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T03:44:03.669825+00:00",
+      "duration_seconds": 13.363,
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "output_path": "docs/evidence/C24/browser.log",
+      "stored_output_sha256": "ca0f3bb1ff551b3874b8cf84a1f3919301e03a9b800460e78ae441c610fc8b7a"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T03:42:36.944018+00:00",
+      "duration_seconds": 0.044,
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "output_path": "docs/evidence/C24/diff-check.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "formatting",
+      "command": [
+        "gofmt",
+        "-l",
+        "cmd",
+        "internal",
+        "tests"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T03:44:05.050303+00:00",
+      "duration_seconds": 0.055,
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "output_path": "docs/evidence/C24/formatting.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "go-targeted",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "./internal/contracts",
+        "./internal/events",
+        "./internal/storage",
+        "./cmd/miragemesh",
+        "./internal/incidentview"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T03:42:36.756771+00:00",
+      "duration_seconds": 11.526,
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "output_path": "docs/evidence/C24/go-targeted.log",
+      "stored_output_sha256": "3be3835ac1d5fb7d66b3939848ef53b9f46b5015b5487deabdc4e6215ccb862c"
+    },
+    {
+      "name": "go-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T03:42:36.754812+00:00",
+      "duration_seconds": 1.226,
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "output_path": "docs/evidence/C24/go-vet.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "npm-check",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T03:42:36.754235+00:00",
+      "duration_seconds": 25.829,
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "output_path": "docs/evidence/C24/npm-check.log",
+      "stored_output_sha256": "af612770040adef916ba314f082ded290dd5f6c78c1a1c099cf5562f82a4ace2"
+    },
+    {
+      "name": "python-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T03:42:36.960505+00:00",
+      "duration_seconds": 1.432,
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "output_path": "docs/evidence/C24/python-tests.log",
+      "stored_output_sha256": "386ed0f95e94da53194de7dc5558891aec36860e7b39b0b5b2987013e1a43aaf"
+    },
+    {
+      "name": "repository-contracts",
+      "command": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T03:42:36.991826+00:00",
+      "duration_seconds": 0.492,
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "output_path": "docs/evidence/C24/repository-contracts.log",
+      "stored_output_sha256": "93ba3476f1761e2f94fd369b7bab4e3bca048d7dfec9fcd372ba61836c5f3e1b"
+    },
+    {
+      "name": "rotation",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "./tests",
+        "-run",
+        "^TestCertificateRotation|^TestMTLS|^TestEnrollment|^TestRetention"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T03:42:36.757883+00:00",
+      "duration_seconds": 8.558,
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "output_path": "docs/evidence/C24/rotation.log",
+      "stored_output_sha256": "91f6ff2dc4dd6e77f71f56e8a8790c373327a91bd926cbd0e5540af667593e90"
+    }
+  ],
+  "failed_local_attempts": [
+    {
+      "name": "baseline-go-full",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "source_commit": "8c067a8624ca0499e4a0cb7264e003ac79b6b3d1",
+      "exit_code": 1,
+      "started_at": "2026-10-23T03:42:49.570406+00:00",
+      "duration_seconds": 14.464,
+      "output_path": "docs/evidence/C24/baseline-go-full.log.gz",
+      "stored_output_sha256": "ceff56166748c59bc7ed22f082a8f8fc02cb547708c40e54058ec78a8ecb3bb9",
+      "uncompressed_output_sha256": "d0b6afc57673b06f3ac9b4ee09a3806b2ed020a1c13913da32870113c1965395",
+      "compression": "gzip"
+    },
+    {
+      "name": "go-full",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 1,
+      "started_at": "2026-10-23T03:42:36.763593+00:00",
+      "duration_seconds": 15.339,
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "output_path": "docs/evidence/C24/go-full.log.gz",
+      "stored_output_sha256": "a5ac9dfc2223db767768513aea670097824b03c7260fae28e92ffeb599a44c38",
+      "uncompressed_output_sha256": "e904e8026f0ccffcab5512c34ec726cf8615c037cf3a4655704e8a3c88d9d73c",
+      "compression": "gzip"
+    }
+  ],
+  "local_failure_comparison": {
+    "same_failures_on_unmodified_base": true,
+    "failed_test_count": 14,
+    "tests": [
+      "TestDecoyIsolationAdapterBoundsRuntimeOutput",
+      "TestDecoyIsolationAdapterRollsBackAnUncertainStart",
+      "TestDecoyIsolationDeniesInternetAndPrivateSubnets",
+      "TestDecoyIsolationEnforcesPIDAndMemoryLimits",
+      "TestDecoyIsolationPolicyIsImmutable",
+      "TestDecoyIsolationPolicyRejectsUnsafeConfiguration",
+      "TestDecoyIsolationPreservesContainersOnOwnershipConflict",
+      "TestDecoyIsolationProviderFailuresAreExplicit",
+      "TestDecoyIsolationReconcilesAfterRestart",
+      "TestDecoyIsolationRejectsWeakRuntimeControls",
+      "TestDecoyIsolationReportsCleanupFailure",
+      "TestDecoyIsolationStopsAndRemovesItsContainer",
+      "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
+      "TestDecoyIsolationWorkflowReportsTypedOutcome"
+    ],
+    "explanation": "The same 14 C13 provider, isolation-policy and stub-output failures occur on unmodified C23. Rootless Podman is unavailable locally. No check was skipped or weakened; unchanged hosted CI must run the full suite with the pinned provider before verification."
+  },
+  "results": {
+    "tls": "Real TLS 1.3 handshakes accept both credentials before the cutoff, reject the old identity exactly at it, accept the new credential and retain the verdict after restart. Existing connection transcripts fail subsequent Allows checks.",
+    "recovery": "A fresh matching CSR and scoped, unexpired unused token recover an offline sensor after missed overlap. Cross-service concurrent enrollment consumption cannot also claim the token. Exact retries retain certificate bytes and receipt.",
+    "negative": "Invalid CSR signatures, signer mismatch, stale revision, active overlap, wrong-sensor/expired/consumed token, signer delay/cancellation, forged history and quota fail explicitly before accepted state changes.",
+    "crash": "Five real SIGKILL publication boundaries and nine syscall failures preserve atomic certificate/token recovery and exact lost-acknowledgement replay.",
+    "web": "75 Node tests, TypeScript and production builds passed. Isolated web package startup passed with all runtime validators.",
+    "browser": "15 browser tests passed, including actual local recovery, status, restart, inert identifiers, stale/invalid reads and keyboard details at 360px.",
+    "integrity": "Go vet, empty gofmt output, repository contract validator, six Python integrity regressions and diff checks passed.",
+    "hosted": "Pending; no hosted success is claimed."
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "npm": "11.9.0",
+    "go": "go version go1.27.2 linux/amd64",
+    "playwright": "1.64.1",
+    "local_browser": "Chromium 153.0.8010.0 via WEB_TEST_CHROMIUM override; hosted CI installs its locked Playwright browser.",
+    "provider": "C24 itself uses temporary files and in-process TLS; local rootless Podman unavailable. Unchanged hosted CI supplies pinned provider prerequisites.",
+    "hardware": "Functional checks on ephemeral Linux amd64; C28 target capacity remains unmeasured."
+  },
+  "limits": [
+    "Sensor client leaves under one existing C09 issuer; CA migration and listener certificate rotation are separate.",
+    "Enable pki.Options.Rotation on the C09 guard; applications call Allows before each protected action. No background forced socket termination is claimed.",
+    "Trusted local operator, authoritative wall clock and latest C05 history; no independent anti-rollback clock/checkpoint or distributed storage.",
+    "Private CA keys and raw tokens are never persisted in C05 or exposed by the status API. Tokens are deliberately delivered to exclusive 0600 files in private 0700 operator directories.",
+    "Internal records are bounded to 8 KiB, public status to 1 MiB and state to explicit C05 quotas; no history truncation or capacity claim.",
+    "No public enrollment/ingest, full restore/power-loss, C30 workflow or C40 release certification."
+  ],
+  "remote_actions_executed": false,
+  "delivery": {
+    "commit_created": false,
+    "push_performed": false,
+    "publication_performed": false
+  },
+  "test_counts": {
+    "node_passed": 75,
+    "browser_passed": 15,
+    "required_engine_suites": 8,
+    "required_engine_anchors": 174,
+    "python_integrity_passed": 6
+  }
+}

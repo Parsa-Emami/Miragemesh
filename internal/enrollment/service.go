@@ -137,6 +137,9 @@ func (s *Service) Consume(ctx context.Context, token, sensorID string) (Enrollme
 	seenIssue := false
 	receipt, err := s.store.CommitOnceChecked(ctx, "enrollment/consume/"+tokenHash, raw, func(r storage.Record) error {
 		if r.Receipt.Generation != 0 {
+			if r.Rotation != nil && r.Rotation.TokenHash == tokenHash {
+				return ErrReplay
+			}
 			if r.Receipt.OperationID == issueID {
 				if r.Enrollment == nil || *r.Enrollment != issue {
 					return storage.ErrRecovery

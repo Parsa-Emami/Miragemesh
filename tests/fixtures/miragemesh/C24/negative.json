@@ -1,0 +1,37 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C24 inputs. Cryptographic material is generated only for temporary tests; no real credentials or traffic.",
+  "cases": [
+    "malformed_csr",
+    "invalid_csr_signature",
+    "wrong_signer",
+    "stale_revision",
+    "overlap_exceeds_lifetime",
+    "parallel_rotation",
+    "wrong_sensor_token",
+    "expired_token",
+    "reused_token",
+    "forged_history",
+    "missing_prerequisite",
+    "canceled"
+  ],
+  "crash_phases": [
+    "object_synced",
+    "object_published",
+    "manifest_synced",
+    "manifest_published",
+    "before_ack"
+  ],
+  "faults": [
+    "object_write",
+    "short_write",
+    "object_sync",
+    "object_rename",
+    "object_directory_sync",
+    "manifest_write",
+    "manifest_sync",
+    "manifest_rename",
+    "manifest_directory_sync"
+  ]
+}

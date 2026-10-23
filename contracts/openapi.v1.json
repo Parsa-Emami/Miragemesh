@@ -916,6 +916,49 @@
           }
         }
       }
+    },
+    "/certificates": {
+      "get": {
+        "summary": "Read local sensor certificate rotation status",
+        "operationId": "miragemesh_get_certificates",
+        "tags": [
+          "MirageMesh"
+        ],
+        "description": "Opt-in read-only loopback status from the durable C05 certificate ledger. Requires explicit public issuer, directory, quotas and rotation policy; no CA private key is loaded. Host and optional Origin must match the local listener. No issuance, token or mutation endpoint exists.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Read-only local certificate lifecycle snapshot, bounded to 1 MiB. Rotation status does not certify CRL freshness or a live connection.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocalCertificateSnapshot"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "certificate_status_unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "const": "certificate_status_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1382,6 +1425,88 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 1024
+          }
+        }
+      },
+      "LocalCertificateStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sensor_id",
+          "revision",
+          "fingerprint",
+          "not_after",
+          "status",
+          "recovery_available"
+        ],
+        "properties": {
+          "sensor_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "fingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "previous_fingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "overlap_until": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "not_after": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "current",
+              "overlap",
+              "expired"
+            ]
+          },
+          "recovery_available": {
+            "type": "boolean"
+          }
+        }
+      },
+      "LocalCertificateSnapshot": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_version",
+          "issuer_fingerprint",
+          "observed_at",
+          "sensors"
+        ],
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "1"
+          },
+          "issuer_fingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sensors": {
+            "type": "array",
+            "maxItems": 8192,
+            "items": {
+              "$ref": "#/components/schemas/LocalCertificateStatus"
+            }
           }
         }
       }

@@ -6,7 +6,7 @@ const output = 'dist/release';
 await rm(output, { recursive: true, force: true }); await mkdir(output, { recursive: true });
 await cp('dist/web', output + '/web', { recursive: true });
 await cp('scripts/serve-web.mjs', output + '/scripts/serve-web.mjs');
-await cp('apps/web/src/lib/runtime-config.mjs', output + '/apps/web/src/lib/runtime-config.mjs');
+await cp('apps/web/src/lib', output + '/apps/web/src/lib', { recursive: true });
 await cp('ops/web', output + '/ops/web', { recursive: true });
 await cp('LICENSE', output + '/LICENSE');
 await cp('NOTICE', output + '/NOTICE');

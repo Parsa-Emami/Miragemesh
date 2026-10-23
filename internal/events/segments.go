@@ -795,7 +795,7 @@ func (w *Writer) AppendRecords(ctx context.Context, records []storage.Record) (P
 		if err := ctx.Err(); err != nil {
 			return projection, err
 		}
-		nonEvent := record.Gap != nil || record.Ack != nil || record.Enrollment != nil || record.Config != nil || record.Incident != nil
+		nonEvent := record.Gap != nil || record.Ack != nil || record.Enrollment != nil || record.Config != nil || record.Incident != nil || record.Rotation != nil
 		if record.Event.SchemaVersion == "" {
 			if nonEvent {
 				projection.Skipped++

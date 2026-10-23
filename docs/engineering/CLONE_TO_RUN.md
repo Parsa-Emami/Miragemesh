@@ -63,3 +63,7 @@ The current test:clone performs a real local Git clone of the staged/committed s
 ## C23 local retention
 
 The engine provides explicit standalone `--expire-segments` preview, with deletion only when `--retention-apply` is supplied. Stop the supervisor to release its segment lock. Supply the existing private directory, past cutoff, reason, idempotency key and actual segment limits. See [EVENT_RETENTION.md](../architecture/EVENT_RETENTION.md). It expires segment copies only; C05 data and quota remain unchanged.
+
+## Certificate rotation and status
+
+C24 provides standalone `--rotate-certificates` operator actions and opt-in read-only `--certificate-status`. The supervisor accepts the complete `--rotation-*` status policy, with no issuer private key. Open `#certificates` to inspect actual sensor revisions, cutoff and recovery. Stop the supervisor before operator mutations of its locked C05 store. Commands, secure file handling and the offline provisioning path are in [CERTIFICATE_ROTATION.md](../architecture/CERTIFICATE_ROTATION.md).

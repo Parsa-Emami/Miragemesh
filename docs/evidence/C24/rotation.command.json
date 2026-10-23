@@ -1,0 +1,18 @@
+{
+  "name": "rotation",
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "./tests",
+    "-run",
+    "^TestCertificateRotation|^TestMTLS|^TestEnrollment|^TestRetention"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-23T03:42:36.757883+00:00",
+  "duration_seconds": 8.558,
+  "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+  "output_path": "docs/evidence/C24/rotation.log",
+  "stored_output_sha256": "91f6ff2dc4dd6e77f71f56e8a8790c373327a91bd926cbd0e5540af667593e90"
+}

@@ -1,0 +1,12 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C24 inputs. Cryptographic material is generated only for temporary tests; no real credentials or traffic.",
+  "overlap_until": "2026-01-01T01:00:00Z",
+  "initial_revision": 1,
+  "rotated_revision": 2,
+  "recovered_revision": 3,
+  "old_allowed_before_cutoff": true,
+  "old_allowed_at_cutoff": false,
+  "new_allowed_after_cutoff": true
+}

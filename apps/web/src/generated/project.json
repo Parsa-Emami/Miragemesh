@@ -300,7 +300,7 @@
       "id": "C24",
       "title": "feat(rotation): rotate certificates with overlap window",
       "stage": "domain",
-      "status": "planned",
+      "status": "in_progress",
       "acceptance": [
         "Old cert fails after documented overlap; offline sensor has recovery path."
       ],

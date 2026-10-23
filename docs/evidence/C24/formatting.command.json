@@ -1,0 +1,16 @@
+{
+  "name": "formatting",
+  "command": [
+    "gofmt",
+    "-l",
+    "cmd",
+    "internal",
+    "tests"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-23T03:44:05.050303+00:00",
+  "duration_seconds": 0.055,
+  "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+  "output_path": "docs/evidence/C24/formatting.log",
+  "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

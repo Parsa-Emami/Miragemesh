@@ -72,8 +72,7 @@ fix for RFC 5280 issuer-blind CRL matching ([RFC 5280 section 5](https://www.rfc
 the revocation authority is a single issuer, keyed by the fingerprint of the
 anchor that signed the CRL, and the accepted client-issuer set equals that
 authority's population. Anchors without CRL coverage remain in the trust
-pool only for listener chain verification and future multi-CRL work
-(C24); until an issuer's own CRL is delivered, the guard refuses to
+pool only for listener chain verification. Multi-issuer CRL support remains separate from C24, which rotates sensor leaf certificates within the existing authority. Until an issuer's own CRL is delivered, the guard refuses to
 authenticate anything that issuer signed rather than accepting a collector
 whose revocation it could never enforce. Fail-closed chain shape plus
 issuer-keyed membership keeps every accepted collector inside the one
@@ -146,3 +145,7 @@ Official standard-library sources:
 [Certificate.Verify](https://pkg.go.dev/crypto/x509#Certificate.Verify),
 [RFC 5280 (X.509 PKI certificate and CRL profile)](https://www.rfc-editor.org/rfc/rfc5280.html).
 Implementation is checked against the repository-locked Go 1.27.2 source.
+
+## C24 managed leaf certificates
+
+`Options.Rotation` enables the C05-backed sensor certificate ledger. C09 chain, expiry and issuer-bound CRL checks run first; managed fingerprints then use the current durable rotation policy, overriding static scope mappings. Old credentials fail at the overlap deadline and on subsequent `Allows` calls, including across restart. Managed TLS configurations use the authoritative policy clock; session tickets remain disabled. The default unconfigured C09 constructor retains its existing behavior. See [CERTIFICATE_ROTATION.md](CERTIFICATE_ROTATION.md).

@@ -163,3 +163,7 @@ scenario. See `docs/architecture/INCIDENT_REPLAY.md`.
 ## Explicit segment retention
 
 C23 adds standalone preview/apply retention of complete sealed segments with a durable audit, restart convergence and no projection resurrection. Run it while the supervisor is stopped. Incident coverage identifies deliberately expired sources separately from unprojected events and spool loss. C05 copies remain unchanged; see [EVENT_RETENTION.md](../architecture/EVENT_RETENTION.md) for actual scope, bounds and commands.
+
+## Sensor certificate lifecycle
+
+C24 adds durable client leaf rotation under the C09 issuer, explicit overlap cutoff and atomic token-backed offline recovery. The operator CLI handles signing and private token delivery; the Certificates page reads lifecycle state without loading signing keys. Configure `pki.Options.Rotation` to enforce the ledger at the existing mTLS boundary. See [CERTIFICATE_ROTATION.md](../architecture/CERTIFICATE_ROTATION.md) for scope, policy, provisioning and recovery.

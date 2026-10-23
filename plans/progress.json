@@ -213,10 +213,10 @@
     },
     {
       "id": "C24",
-      "status": "planned",
+      "status": "in_progress",
       "evidence": [],
       "source_identity": null,
-      "notes": ""
+      "notes": "C24 implementation and targeted checks complete: durable sensor certificate rotation, exact overlap cutoff, atomic scoped-token offline recovery, operator CLI and read-only Certificates UI. Final source-bound checks and hosted CI pending."
     },
     {
       "id": "C25",

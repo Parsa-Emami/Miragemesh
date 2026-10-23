@@ -108,3 +108,7 @@ Official standard-library sources: [secure random bytes](https://pkg.go.dev/cryp
 [strict Base64 decoding](https://pkg.go.dev/encoding/base64#Encoding.Strict),
 [UTC timestamps](https://pkg.go.dev/time#Time.Format).
 Implementation is checked against the repository-locked Go 1.27.2 source.
+
+## C24 recovery claim
+
+A `certificate.recover` record can atomically claim an issued enrollment token while publishing the replacement client certificate in the same C05 commit. Ordinary enrollment consumption recognizes that claim under the shared writer lock; recovery and consumption cannot both win. Scope, original issue, expiry and replay are checked. See [CERTIFICATE_ROTATION.md](CERTIFICATE_ROTATION.md).

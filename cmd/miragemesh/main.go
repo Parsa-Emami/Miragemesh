@@ -46,10 +46,14 @@ func (s *localSensorStatus) Snapshot(ctx context.Context, now time.Time) (sensor
 }
 
 func serve(ctx context.Context, address string, ready io.Writer, sensorStatus sensorStatusReader, incidentViews ...*incidentview.View) error {
-	var incidentView *incidentview.View
+	var view *incidentview.View
 	if len(incidentViews) > 0 {
-		incidentView = incidentViews[0]
+		view = incidentViews[0]
 	}
+	return serveViews(ctx, address, ready, sensorStatus, view, nil)
+}
+
+func serveViews(ctx context.Context, address string, ready io.Writer, sensorStatus sensorStatusReader, incidentView *incidentview.View, certificates certificateStatusReader) error {
 	host, port, err := net.SplitHostPort(address)
 	number, portErr := strconv.Atoi(port)
 	if err != nil || portErr != nil || number < 0 || number > 65535 || (host != "127.0.0.1" && host != "::1") {
@@ -79,6 +83,27 @@ func serve(ctx context.Context, address string, ready io.Writer, sensorStatus se
 				(len(origins) != 0 && (len(origins) != 1 || origins[0] != "http://"+r.Host)) {
 				w.WriteHeader(http.StatusForbidden)
 				io.WriteString(w, `{"error":"forbidden_origin"}`)
+				return
+			}
+			if r.URL.Path == "/api/v1/certificates" {
+				if r.Method != http.MethodGet {
+					w.Header().Set("Allow", http.MethodGet)
+					w.WriteHeader(http.StatusMethodNotAllowed)
+					io.WriteString(w, `{"error":"method_not_allowed"}`)
+					return
+				}
+				if certificates == nil {
+					w.WriteHeader(http.StatusServiceUnavailable)
+					io.WriteString(w, `{"error":"certificate_status_unavailable"}`)
+					return
+				}
+				snapshot, err := certificates.Snapshot(r.Context())
+				if err != nil {
+					w.WriteHeader(http.StatusServiceUnavailable)
+					io.WriteString(w, `{"error":"certificate_status_unavailable"}`)
+					return
+				}
+				json.NewEncoder(w).Encode(snapshot)
 				return
 			}
 			if serveIncidents(w, r, incidentView) {
@@ -150,6 +175,7 @@ func serve(ctx context.Context, address string, ready io.Writer, sensorStatus se
 }
 
 func main() {
+	certificates := certificateFlags()
 	retentionOptions := retentionFlags()
 	incidentOptions := incidentFlags()
 	address := flag.String("listen", "127.0.0.1:0", "loopback listen address")
@@ -187,8 +213,15 @@ func main() {
 	sensorConfigMinBatch := flag.Int("sensor-config-min-event-batch-limit", 0, "explicit C10 minimum event batch limit")
 	sensorConfigMaxBatch := flag.Int("sensor-config-max-event-batch-limit", 0, "explicit C10 maximum event batch limit")
 	flag.Parse()
+	if certificateConfigured() && !certificates.HTTPStatus {
+		os.Exit(runCertificateAction(*certificates))
+	}
 	if retentionConfigured() {
 		os.Exit(runRetention(retentionOptions))
+	}
+	if certificates.HTTPStatus && (!validCertificateStatusOptions(*certificates) || *projectMode || *isolation || *showVersion || *validate) {
+		fmt.Fprintln(os.Stderr, "certificate status requires a complete read-only local HTTP configuration")
+		os.Exit(2)
 	}
 	hasIncidents := incidentConfigured()
 	if hasIncidents && (*projectMode || *isolation || *showVersion || *validate) {
@@ -319,6 +352,7 @@ func main() {
 		}
 		defer local.store.Close()
 		sensorStatus = local
+		sharedStore = local.store
 		if hasIncidents {
 			statePath, stateErr := filepath.Abs(incidentOptions.StateDir)
 			sensorPath, sensorErr := filepath.Abs(*sensorStatusDir)
@@ -328,6 +362,25 @@ func main() {
 			}
 			sharedStore = local.store
 		}
+	}
+	var certificateView certificateStatusReader
+	if certificates.HTTPStatus {
+		if sharedStore != nil && !sameCertificateStore(*certificates, *sensorStatusDir, storage.Limits{MaxOperations: *sensorStatusMaxOperations, MaxBytes: *sensorStatusMaxBytes, MaxManifestBytes: *sensorStatusMaxManifestBytes}) {
+			fmt.Fprintln(os.Stderr, "sensor and certificate views must share the same local store and quotas")
+			os.Exit(2)
+		}
+		if hasIncidents && !sameCertificateStore(*certificates, incidentOptions.StateDir, incidentOptions.StorageLimits) {
+			fmt.Fprintln(os.Stderr, "incident and certificate views must share the same local store and quotas")
+			os.Exit(2)
+		}
+		view, store, closeView, err := openCertificateLedger(context.Background(), *certificates, sharedStore, false)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "invalid local certificate status configuration")
+			os.Exit(2)
+		}
+		defer closeView()
+		certificateView = view
+		sharedStore = store
 	}
 	var incidentView *incidentview.View
 	if hasIncidents {
@@ -343,7 +396,7 @@ func main() {
 	defer stop()
 	// The supervisor owns stdin; EOF also stops the engine after supervisor death.
 	go func() { io.Copy(io.Discard, os.Stdin); stop() }()
-	if err := serve(ctx, *address, os.Stdout, sensorStatus, incidentView); err != nil {
+	if err := serveViews(ctx, *address, os.Stdout, sensorStatus, incidentView, certificateView); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}

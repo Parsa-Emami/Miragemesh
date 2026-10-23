@@ -58,7 +58,7 @@ func sequenceCheck() func(storage.Record) error {
 		return previous
 	}
 	return func(record storage.Record) error {
-		if record.Enrollment != nil || record.Config != nil || record.Incident != nil {
+		if record.Enrollment != nil || record.Config != nil || record.Incident != nil || record.Rotation != nil {
 			return nil
 		}
 		if record.Gap != nil {

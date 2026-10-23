@@ -51,6 +51,7 @@ type Record struct {
 	Enrollment *contracts.EnrollmentRecord
 	Config     *contracts.AppliedConfig
 	Incident   *contracts.IncidentTriageRecord
+	Rotation   *contracts.CertificateRotationRecord
 }
 
 type entry struct {
@@ -396,6 +397,10 @@ func decodeRecord(ctx context.Context, raw []byte) (Record, error) {
 	incident, err := contracts.DecodeIncidentTriage(ctx, raw)
 	if err == nil {
 		return Record{Input: raw, Incident: &incident}, nil
+	}
+	rotation, err := contracts.DecodeCertificateRotation(ctx, raw)
+	if err == nil {
+		return Record{Input: raw, Rotation: &rotation}, nil
 	}
 	if ctx.Err() != nil {
 		return Record{}, ctx.Err()

@@ -3,24 +3,36 @@ package tests
 import (
 	"bytes"
 	"context"
+	"crypto"
 	"crypto/sha256"
+	"crypto/tls"
+	"crypto/x509"
 	"encoding/hex"
 	"encoding/json"
+	"encoding/pem"
 	"errors"
 	"fmt"
 	"go/parser"
 	"go/token"
+	"io"
+	"net"
 	"os"
 	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
+	"time"
 
 	"github.com/Parsa-Emami/Miragemesh/internal/contracts"
+	"github.com/Parsa-Emami/Miragemesh/internal/enrollment"
 	"github.com/Parsa-Emami/Miragemesh/internal/events"
+	"github.com/Parsa-Emami/Miragemesh/internal/pki"
+	"github.com/Parsa-Emami/Miragemesh/internal/sensor"
 	"github.com/Parsa-Emami/Miragemesh/internal/spool"
 	"github.com/Parsa-Emami/Miragemesh/internal/storage"
+	c24fixture "github.com/Parsa-Emami/Miragemesh/tests/fixtures/miragemesh/C24"
 )
 
 type c17SegmentExpect struct {
@@ -982,4 +994,601 @@ func mustRead(t *testing.T, path string) []byte {
 		t.Fatal(err)
 	}
 	return raw
+}
+
+type c24Inputs struct {
+	FixtureVersion  int             `json:"fixture_version"`
+	License         string          `json:"license"`
+	Provenance      string          `json:"provenance"`
+	Now             string          `json:"now"`
+	SensorID        string          `json:"sensor_id"`
+	LifetimeSeconds int64           `json:"lifetime_seconds"`
+	OverlapSeconds  int64           `json:"overlap_seconds"`
+	SourceEvent     json.RawMessage `json:"source_event"`
+}
+
+func c24Input(t *testing.T) c24Inputs {
+	t.Helper()
+	var f c24Inputs
+	for _, name := range []string{"positive", "negative", "expected-output"} {
+		raw, err := os.ReadFile("fixtures/miragemesh/C24/" + name + ".json")
+		var meta c24Inputs
+		if err != nil || json.Unmarshal(raw, &meta) != nil || meta.FixtureVersion != 1 || meta.License != "Apache-2.0" || meta.Provenance == "" {
+			t.Fatal("missing or malformed C24 fixture", name, err)
+		}
+		if name == "positive" {
+			f = meta
+			if f.SensorID == "" || f.LifetimeSeconds != 86400 || f.OverlapSeconds != 3600 || len(f.SourceEvent) == 0 {
+				t.Fatal("invalid positive C24 inputs")
+			}
+		}
+		if name == "negative" {
+			var negative struct {
+				Cases, CrashPhases, Faults []string
+				Crash                      []string `json:"crash_phases"`
+			}
+			if json.Unmarshal(raw, &negative) != nil || len(negative.Cases) != 12 || len(negative.Crash) != 5 || len(negative.Faults) != 9 {
+				t.Fatal("invalid C24 negative fixture")
+			}
+		}
+		if name == "expected-output" {
+			var expected struct {
+				Until     string `json:"overlap_until"`
+				Initial   uint64 `json:"initial_revision"`
+				Rotated   uint64 `json:"rotated_revision"`
+				Recovered uint64 `json:"recovered_revision"`
+			}
+			if json.Unmarshal(raw, &expected) != nil || expected.Until != "2026-01-01T01:00:00Z" || expected.Initial != 1 || expected.Rotated != 2 || expected.Recovered != 3 {
+				t.Fatal("invalid C24 expected outcomes")
+			}
+		}
+	}
+	return f
+}
+
+func c24Signer(t *testing.T, key string) crypto.Signer {
+	t.Helper()
+	block, _ := pem.Decode([]byte(key))
+	if block == nil {
+		t.Fatal("missing temporary signer")
+	}
+	parsed, err := x509.ParsePKCS8PrivateKey(block.Bytes)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return parsed.(crypto.Signer)
+}
+
+func c24Rotator(t *testing.T, store *storage.Store, m c24fixture.Material, clock func() time.Time) *pki.Rotator {
+	t.Helper()
+	r, err := pki.NewRotator(context.Background(), store, pki.RotationOptions{IssuerCertificatePEM: m.Authority, MaxSensors: 16, MaxLifetime: 24 * time.Hour, MaxOverlap: time.Hour, MaxRecoveryTTL: 15 * time.Minute, Clock: clock})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return r
+}
+
+func c24Guard(t *testing.T, m c24fixture.Material, r *pki.Rotator, clock func() time.Time) *pki.Guard {
+	t.Helper()
+	block, _ := pem.Decode([]byte(m.Initial))
+	sum := sha256.Sum256(block.Bytes)
+	g, err := pki.New(pki.Options{Anchors: []string{m.Authority}, ServerCertificatePEM: m.Server, ServerKeyPEM: m.ServerKey, RevocationListPEM: m.CRL, Scopes: map[string][]string{hex.EncodeToString(sum[:]): {"sensor-24"}}, MaxAnchors: 1, MaxScopes: 16, MaxScopesPerIdentity: 1, Clock: clock, Rotation: r})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return g
+}
+
+func c24Handshake(t *testing.T, m c24fixture.Material, g *pki.Guard, cert, key string, clock func() time.Time) (tls.ConnectionState, error) {
+	t.Helper()
+	server, client := net.Pipe()
+	defer server.Close()
+	defer client.Close()
+	pair, err := tls.X509KeyPair([]byte(cert), []byte(key))
+	if err != nil {
+		t.Fatal(err)
+	}
+	pool := x509.NewCertPool()
+	pool.AppendCertsFromPEM([]byte(m.Authority))
+	type result struct {
+		state tls.ConnectionState
+		err   error
+	}
+	finished := make(chan result, 1)
+	go func() {
+		defer server.Close()
+		conn := tls.Server(server, g.TLSConfig())
+		conn.SetDeadline(time.Now().Add(3 * time.Second))
+		_, err := g.Authenticate(conn)
+		state := conn.ConnectionState()
+		if err == nil {
+			_, err = conn.Write([]byte{1})
+		}
+		finished <- result{state, err}
+	}()
+	conn := tls.Client(client, &tls.Config{RootCAs: pool, ServerName: "127.0.0.1", Certificates: []tls.Certificate{pair}, MinVersion: tls.VersionTLS13, Time: clock})
+	conn.SetDeadline(time.Now().Add(3 * time.Second))
+	handshakeErr := conn.Handshake()
+	if handshakeErr == nil {
+		var b [1]byte
+		_, handshakeErr = conn.Read(b[:])
+	}
+	got := <-finished
+	if got.err == nil && handshakeErr != nil {
+		t.Fatal("client failed despite server success", handshakeErr)
+	}
+	return got.state, got.err
+}
+
+func TestCertificateRotationOverlapUsesRealTLSAndSurvivesRestart(t *testing.T) {
+	f := c24Input(t)
+	now, _ := time.Parse(time.RFC3339, f.Now)
+	clock := func() time.Time { return now }
+	m := c24fixture.Generate(now, f.SensorID)
+	ctx := context.Background()
+	path := storePath(t)
+	store := openStore(t, path, storage.Limits{MaxOperations: 128, MaxBytes: 2097152, MaxManifestBytes: 131072})
+	r := c24Rotator(t, store, m, clock)
+	registered, err := r.Register(ctx, pki.RegisterCertificate{SensorID: f.SensorID, CertificatePEM: m.Initial, IdempotencyKey: "c24-register-synthetic-key"})
+	if err != nil || registered.Revision != 1 {
+		t.Fatal(registered, err)
+	}
+	guard := c24Guard(t, m, r, clock)
+	oldState, err := c24Handshake(t, m, guard, m.Initial, m.InitialKey, clock)
+	if err != nil {
+		t.Fatal("initial TLS failed", err)
+	}
+	if err := guard.Allows(oldState, f.SensorID); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := sensor.Accept(ctx, store, f.SourceEvent); err != nil {
+		t.Fatal("rotation record broke sensor sequence", err)
+	}
+	request := pki.RotateCertificate{SensorID: f.SensorID, ExpectedRevision: 1, CSRPEM: m.CSR, Lifetime: time.Duration(f.LifetimeSeconds) * time.Second, Overlap: time.Duration(f.OverlapSeconds) * time.Second, IdempotencyKey: "c24-rotate-synthetic-key"}
+	rotated, err := r.Rotate(ctx, request, c24Signer(t, m.AuthorityKey))
+	if err != nil || rotated.Revision != 2 || rotated.OverlapUntil != "2026-01-01T01:00:00Z" {
+		t.Fatal(rotated, err)
+	}
+	if _, err := c24Handshake(t, m, guard, m.Initial, m.InitialKey, clock); err != nil {
+		t.Fatal("old cert rejected during overlap", err)
+	}
+	if _, err := c24Handshake(t, m, guard, rotated.CertificatePEM, m.Key, clock); err != nil {
+		t.Fatal("new cert rejected during overlap", err)
+	}
+	now = now.Add(time.Hour - time.Nanosecond)
+	if _, err := c24Handshake(t, m, guard, m.Initial, m.InitialKey, clock); err != nil {
+		t.Fatal("old cert rejected before cutoff", err)
+	}
+	now = now.Add(time.Nanosecond)
+	if _, err := c24Handshake(t, m, guard, m.Initial, m.InitialKey, clock); !errors.Is(err, pki.ErrRetired) {
+		t.Fatal("old certificate survived cutoff", err)
+	}
+	if err := guard.Allows(oldState, f.SensorID); !errors.Is(err, pki.ErrRetired) {
+		t.Fatal("existing connection transcript bypassed cutoff", err)
+	}
+	if _, err := c24Handshake(t, m, guard, rotated.CertificatePEM, m.Key, clock); err != nil {
+		t.Fatal(err)
+	}
+	if err := store.Close(); err != nil {
+		t.Fatal(err)
+	}
+	store = openStore(t, path, storage.Limits{MaxOperations: 128, MaxBytes: 2097152, MaxManifestBytes: 131072})
+	r = c24Rotator(t, store, m, clock)
+	guard = c24Guard(t, m, r, clock)
+	if _, err := c24Handshake(t, m, guard, m.Initial, m.InitialKey, clock); !errors.Is(err, pki.ErrRetired) {
+		t.Fatal("restart resurrected retired cert", err)
+	}
+	replay, err := r.Rotate(ctx, request, c24Signer(t, m.AuthorityKey))
+	if err != nil || !replay.Replayed || replay.Receipt != rotated.Receipt || replay.CertificatePEM != rotated.CertificatePEM {
+		t.Fatal("retry reissued certificate", replay, err)
+	}
+	writer := c17Open(t, c17Dir(t), events.Limits{MaxSegments: 4, MaxRecordsPerSegment: 4, MaxBytesPerSegment: 32768})
+	records, _ := store.Records(ctx)
+	projected, err := writer.AppendRecords(ctx, records)
+	if err != nil || projected.Appended != 1 || projected.Skipped != 2 {
+		t.Fatal("rotation was treated as an event", projected, err)
+	}
+}
+
+func TestCertificateRotationOfflineRecoveryConsumesScopedTokenAtomically(t *testing.T) {
+	f := c24Input(t)
+	now, _ := time.Parse(time.RFC3339, f.Now)
+	clock := func() time.Time { return now }
+	m := c24fixture.Generate(now, f.SensorID)
+	ctx := context.Background()
+	store := openStore(t, storePath(t), storage.Limits{MaxOperations: 128, MaxBytes: 2097152, MaxManifestBytes: 131072})
+	r := c24Rotator(t, store, m, clock)
+	signer := c24Signer(t, m.AuthorityKey)
+	if _, err := r.Register(ctx, pki.RegisterCertificate{SensorID: f.SensorID, CertificatePEM: m.Initial, IdempotencyKey: "c24-register-synthetic-key"}); err != nil {
+		t.Fatal(err)
+	}
+	rotated, err := r.Rotate(ctx, pki.RotateCertificate{SensorID: f.SensorID, ExpectedRevision: 1, CSRPEM: m.CSR, Lifetime: 24 * time.Hour, Overlap: time.Hour, IdempotencyKey: "c24-rotate-synthetic-key"}, signer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	now = now.Add(2 * time.Hour)
+	tokens, err := enrollment.New(store, 15*time.Minute, clock)
+	if err != nil {
+		t.Fatal(err)
+	}
+	token, err := tokens.Issue(ctx, f.SensorID, 15*time.Minute)
+	if err != nil {
+		t.Fatal(err)
+	}
+	request := pki.RecoverCertificate{RotateCertificate: pki.RotateCertificate{SensorID: f.SensorID, ExpectedRevision: 2, CSRPEM: m.RecoveryCSR, Lifetime: 24 * time.Hour, IdempotencyKey: "c24-recover-synthetic-key"}, Token: token.Token}
+	recovered, err := r.Recover(ctx, request, signer)
+	if err != nil || recovered.Revision != 3 {
+		t.Fatal(recovered, err)
+	}
+	if _, err := tokens.Consume(ctx, token.Token, f.SensorID); !errors.Is(err, enrollment.ErrReplay) {
+		t.Fatal("recovery did not atomically consume enrollment token", err)
+	}
+	replay, err := r.Recover(ctx, request, signer)
+	if err != nil || !replay.Replayed || replay.Receipt != recovered.Receipt || replay.CertificatePEM != recovered.CertificatePEM {
+		t.Fatal("recovery retry lost result", replay, err)
+	}
+	request.IdempotencyKey = "c24-another-recovery-key"
+	request.ExpectedRevision = 3
+	request.CSRPEM, _ = c24fixture.NewCSR(f.SensorID)
+	if _, err := r.Recover(ctx, request, signer); !errors.Is(err, pki.ErrRecoveryTokenUsed) {
+		t.Fatal("token accepted twice", err)
+	}
+	guard := c24Guard(t, m, r, clock)
+	for _, pair := range [][2]string{{m.Initial, m.InitialKey}, {rotated.CertificatePEM, m.Key}} {
+		if _, err := c24Handshake(t, m, guard, pair[0], pair[1], clock); !errors.Is(err, pki.ErrRetired) {
+			t.Fatal("recovery retained old credential", err)
+		}
+	}
+	if _, err := c24Handshake(t, m, guard, recovered.CertificatePEM, m.RecoveryKey, clock); err != nil {
+		t.Fatal("offline sensor cannot reconnect", err)
+	}
+	records, _ := store.Records(ctx)
+	for _, record := range records {
+		if bytes.Contains(record.Input, []byte(token.Token)) || bytes.Contains(record.Input, []byte("PRIVATE KEY")) {
+			t.Fatal("secret persisted in rotation state")
+		}
+	}
+}
+
+type c24TestSigner struct {
+	crypto.Signer
+	before func()
+}
+
+func (s c24TestSigner) Sign(random io.Reader, digest []byte, opts crypto.SignerOpts) ([]byte, error) {
+	if s.before != nil {
+		s.before()
+	}
+	return s.Signer.Sign(random, digest, opts)
+}
+
+func TestCertificateRotationRejectsInvalidCSRPolicyAndStaleIntent(t *testing.T) {
+	f := c24Input(t)
+	at, _ := time.Parse(time.RFC3339, f.Now)
+	m := c24fixture.Generate(at, f.SensorID)
+	ctx := context.Background()
+	store := openStore(t, storePath(t), storage.Limits{MaxOperations: 128, MaxBytes: 2097152, MaxManifestBytes: 131072})
+	clock := func() time.Time { return at }
+	r := c24Rotator(t, store, m, clock)
+	signer := c24Signer(t, m.AuthorityKey)
+	if _, err := r.Register(ctx, pki.RegisterCertificate{SensorID: f.SensorID, CertificatePEM: m.Initial, IdempotencyKey: "c24-register-synthetic-key"}); err != nil {
+		t.Fatal(err)
+	}
+	baseline, _ := store.Records(ctx)
+	request := pki.RotateCertificate{SensorID: f.SensorID, ExpectedRevision: 1, CSRPEM: m.CSR, Lifetime: 24 * time.Hour, Overlap: time.Hour, IdempotencyKey: "c24-rotate-synthetic-key"}
+	for _, scenario := range []string{"malformed_csr", "invalid_csr_signature", "wrong_signer", "stale_revision", "overlap_exceeds_lifetime", "missing_prerequisite", "canceled"} {
+		t.Run(scenario, func(t *testing.T) {
+			candidate := request
+			sign := signer
+			runctx := ctx
+			expected := pki.ErrInvalidInput
+			switch scenario {
+			case "malformed_csr":
+				candidate.CSRPEM = "not a CSR"
+			case "invalid_csr_signature":
+				block, _ := pem.Decode([]byte(m.CSR))
+				block.Bytes[len(block.Bytes)-1] ^= 1
+				candidate.CSRPEM = string(pem.EncodeToMemory(block))
+			case "wrong_signer":
+				sign = c24Signer(t, m.InitialKey)
+				expected = pki.ErrSigner
+			case "stale_revision":
+				candidate.ExpectedRevision = 2
+				expected = pki.ErrRotationConflict
+			case "overlap_exceeds_lifetime":
+				candidate.Lifetime = time.Hour
+			case "missing_prerequisite":
+				sign = nil
+				expected = pki.ErrSigner
+			case "canceled":
+				var cancel context.CancelFunc
+				runctx, cancel = context.WithCancel(ctx)
+				cancel()
+				expected = context.Canceled
+			}
+			if _, err := r.Rotate(runctx, candidate, sign); !errors.Is(err, expected) {
+				t.Fatalf("%s: %v want %v", scenario, err, expected)
+			}
+			records, _ := store.Records(ctx)
+			if len(records) != len(baseline) {
+				t.Fatal("rejected request changed durable history")
+			}
+		})
+	}
+	rotated, err := r.Rotate(ctx, request, signer)
+	if err != nil {
+		t.Fatal(err)
+	}
+	nextCSR, _ := c24fixture.NewCSR(f.SensorID)
+	request.ExpectedRevision = 2
+	request.CSRPEM = nextCSR
+	request.IdempotencyKey = "c24-another-rotate-key"
+	if _, err := r.Rotate(ctx, request, signer); !errors.Is(err, pki.ErrRotationBusy) {
+		t.Fatal("more than two simultaneous credentials admitted", err)
+	}
+	snapshot, err := r.Snapshot(ctx)
+	if err != nil || len(snapshot.Sensors) != 1 || snapshot.Sensors[0].Fingerprint != rotated.Fingerprint || snapshot.Sensors[0].Status != "overlap" {
+		t.Fatal(snapshot, err)
+	}
+	snapshot.Sensors[0].Fingerprint = "forged"
+	again, _ := r.Snapshot(ctx)
+	if again.Sensors[0].Fingerprint != rotated.Fingerprint {
+		t.Fatal("snapshot aliases policy")
+	}
+}
+
+func TestCertificateRotationRecoverySerializesWithEnrollmentConsumption(t *testing.T) {
+	f := c24Input(t)
+	now, _ := time.Parse(time.RFC3339, f.Now)
+	m := c24fixture.Generate(now, f.SensorID)
+	ctx := context.Background()
+	clock := func() time.Time { return now }
+	store := openStore(t, storePath(t), storage.Limits{MaxOperations: 128, MaxBytes: 2097152, MaxManifestBytes: 131072})
+	r := c24Rotator(t, store, m, clock)
+	signer := c24Signer(t, m.AuthorityKey)
+	if _, err := r.Register(ctx, pki.RegisterCertificate{SensorID: f.SensorID, CertificatePEM: m.Initial, IdempotencyKey: "c24-race-register-key"}); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := r.Rotate(ctx, pki.RotateCertificate{SensorID: f.SensorID, ExpectedRevision: 1, CSRPEM: m.CSR, Lifetime: 24 * time.Hour, Overlap: time.Hour, IdempotencyKey: "c24-race-rotate-key"}, signer); err != nil {
+		t.Fatal(err)
+	}
+	now = now.Add(2 * time.Hour)
+	tokens, _ := enrollment.New(store, 15*time.Minute, clock)
+	token, err := tokens.Issue(ctx, f.SensorID, 15*time.Minute)
+	if err != nil {
+		t.Fatal(err)
+	}
+	gate := make(chan struct{})
+	recoveryResult := make(chan error, 1)
+	consumptionResult := make(chan error, 1)
+	go func() {
+		<-gate
+		_, err := r.Recover(ctx, pki.RecoverCertificate{RotateCertificate: pki.RotateCertificate{SensorID: f.SensorID, ExpectedRevision: 2, CSRPEM: m.RecoveryCSR, Lifetime: 24 * time.Hour, IdempotencyKey: "c24-race-recover-key"}, Token: token.Token}, signer)
+		recoveryResult <- err
+	}()
+	go func() { <-gate; _, err := tokens.Consume(ctx, token.Token, f.SensorID); consumptionResult <- err }()
+	close(gate)
+	recoveryErr, consumptionErr := <-recoveryResult, <-consumptionResult
+	if recoveryErr == nil {
+		if !errors.Is(consumptionErr, enrollment.ErrReplay) {
+			t.Fatal("recovery and enrollment both consumed token", consumptionErr)
+		}
+	} else if !errors.Is(recoveryErr, pki.ErrRecoveryTokenUsed) || consumptionErr != nil {
+		t.Fatal("invalid cross-service race result", recoveryErr, consumptionErr)
+	}
+	records, err := store.Records(ctx)
+	if err != nil || len(records) != 4 {
+		t.Fatal("token race split publication", len(records), err)
+	}
+	if _, err := r.Snapshot(ctx); err != nil {
+		t.Fatal("token race corrupted history", err)
+	}
+}
+
+func TestCertificateRotationRecoveryRejectsCrossScopeExpiryAndLateSigner(t *testing.T) {
+	f := c24Input(t)
+	base, _ := time.Parse(time.RFC3339, f.Now)
+	ctx := context.Background()
+	for _, scenario := range []string{"wrong_sensor_token", "expired_token", "consumed_token", "late_signer", "canceled_signer"} {
+		t.Run(scenario, func(t *testing.T) {
+			now := base
+			m := c24fixture.Generate(now, f.SensorID)
+			store := openStore(t, storePath(t), storage.Limits{MaxOperations: 128, MaxBytes: 2097152, MaxManifestBytes: 131072})
+			clock := func() time.Time { return now }
+			r := c24Rotator(t, store, m, clock)
+			signer := c24Signer(t, m.AuthorityKey)
+			if _, err := r.Register(ctx, pki.RegisterCertificate{SensorID: f.SensorID, CertificatePEM: m.Initial, IdempotencyKey: "c24-register-synthetic-key"}); err != nil {
+				t.Fatal(err)
+			}
+			if _, err := r.Rotate(ctx, pki.RotateCertificate{SensorID: f.SensorID, ExpectedRevision: 1, CSRPEM: m.CSR, Lifetime: 24 * time.Hour, Overlap: time.Hour, IdempotencyKey: "c24-rotate-synthetic-key"}, signer); err != nil {
+				t.Fatal(err)
+			}
+			now = now.Add(2 * time.Hour)
+			tokens, _ := enrollment.New(store, 15*time.Minute, clock)
+			scope := f.SensorID
+			if scenario == "wrong_sensor_token" {
+				scope = "another-sensor"
+			}
+			token, err := tokens.Issue(ctx, scope, time.Minute)
+			if err != nil {
+				t.Fatal(err)
+			}
+			expected := pki.ErrRecoveryToken
+			runctx := ctx
+			sign := crypto.Signer(signer)
+			if scenario == "consumed_token" {
+				if _, err := tokens.Consume(ctx, token.Token, f.SensorID); err != nil {
+					t.Fatal(err)
+				}
+				expected = pki.ErrRecoveryTokenUsed
+			}
+			if scenario == "expired_token" {
+				now = now.Add(time.Minute)
+			}
+			if scenario == "late_signer" {
+				sign = c24TestSigner{Signer: signer, before: func() { now = now.Add(time.Minute) }}
+			}
+			if scenario == "canceled_signer" {
+				var cancel context.CancelFunc
+				runctx, cancel = context.WithCancel(ctx)
+				sign = c24TestSigner{Signer: signer, before: cancel}
+				expected = context.Canceled
+			}
+			records, _ := store.Records(ctx)
+			request := pki.RecoverCertificate{RotateCertificate: pki.RotateCertificate{SensorID: f.SensorID, ExpectedRevision: 2, CSRPEM: m.RecoveryCSR, Lifetime: 24 * time.Hour, IdempotencyKey: "c24-recover-synthetic-key"}, Token: token.Token}
+			if _, err := r.Recover(runctx, request, sign); !errors.Is(err, expected) {
+				t.Fatalf("%s: %v want %v", scenario, err, expected)
+			}
+			after, _ := store.Records(ctx)
+			if len(after) != len(records) {
+				t.Fatal("rejected recovery consumed token or issued credential")
+			}
+		})
+	}
+}
+
+func TestCertificateRotationConcurrentReplayAndForgedHistory(t *testing.T) {
+	f := c24Input(t)
+	now, _ := time.Parse(time.RFC3339, f.Now)
+	m := c24fixture.Generate(now, f.SensorID)
+	clock := func() time.Time { return now }
+	ctx := context.Background()
+	path := storePath(t)
+	store := openStore(t, path, storage.Limits{MaxOperations: 128, MaxBytes: 2097152, MaxManifestBytes: 131072})
+	r := c24Rotator(t, store, m, clock)
+	if _, err := r.Register(ctx, pki.RegisterCertificate{SensorID: f.SensorID, CertificatePEM: m.Initial, IdempotencyKey: "c24-register-synthetic-key"}); err != nil {
+		t.Fatal(err)
+	}
+	request := pki.RotateCertificate{SensorID: f.SensorID, ExpectedRevision: 1, CSRPEM: m.CSR, Lifetime: 24 * time.Hour, Overlap: time.Hour, IdempotencyKey: "c24-rotate-synthetic-key"}
+	other := c24Rotator(t, store, m, clock)
+	signer := c24Signer(t, m.AuthorityKey)
+	var wg sync.WaitGroup
+	results := make(chan pki.CertificateResult, 8)
+	failures := make(chan error, 8)
+	for i := range 8 {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			service := r
+			if i%2 == 1 {
+				service = other
+			}
+			result, err := service.Rotate(ctx, request, signer)
+			results <- result
+			failures <- err
+		}()
+	}
+	wg.Wait()
+	close(results)
+	close(failures)
+	for err := range failures {
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	issued := 0
+	var certificate string
+	for result := range results {
+		if !result.Replayed {
+			issued++
+		}
+		if certificate != "" && certificate != result.CertificatePEM {
+			t.Fatal("retries generated different certificates")
+		}
+		certificate = result.CertificatePEM
+	}
+	if issued != 1 {
+		t.Fatal("concurrent requests reissued credential", issued)
+	}
+	records, _ := store.Records(ctx)
+	if len(records) != 2 {
+		t.Fatal("concurrent generation count", len(records))
+	}
+	request.CSRPEM = m.RecoveryCSR
+	if _, err := r.Rotate(ctx, request, signer); !errors.Is(err, pki.ErrRotationConflict) {
+		t.Fatal("same-key changed CSR accepted", err)
+	}
+	forged := *records[1].Rotation
+	forged.Revision = 3
+	forged.PreviousFingerprint = fingerprintDERForC24(t, certificate)
+	forged.AcceptedAt = "2026-01-01T02:00:00Z"
+	forged.OverlapUntil = "2026-01-01T03:00:00Z"
+	forged.KeyDigest = strings.Repeat("b", 64)
+	forged.RequestDigest = contracts.CertificateIntentDigest(forged)
+	raw, _ := json.Marshal(forged)
+	if _, err := store.Commit(ctx, "certificate/"+forged.KeyDigest, raw); err != nil {
+		t.Fatal("could not set up semantically forged fixture", err)
+	}
+	if _, err := r.Snapshot(ctx); !errors.Is(err, storage.ErrRecovery) {
+		t.Fatal("forged certificate history was trusted", err)
+	}
+}
+
+func fingerprintDERForC24(t *testing.T, text string) string {
+	t.Helper()
+	block, _ := pem.Decode([]byte(text))
+	if block == nil {
+		t.Fatal("invalid certificate")
+	}
+	sum := sha256.Sum256(block.Bytes)
+	return hex.EncodeToString(sum[:])
+}
+
+func TestCertificateRotationBoundsAndNoEgress(t *testing.T) {
+	ctx := context.Background()
+	now := time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC)
+	clock := func() time.Time { return now }
+	m := c24fixture.Generate(now, "sensor-24")
+	dir := storePath(t)
+	store := openStore(t, dir, storage.Limits{MaxOperations: 2, MaxBytes: 1048576, MaxManifestBytes: 65536})
+	options := pki.RotationOptions{IssuerCertificatePEM: m.Authority, MaxSensors: 1, MaxLifetime: 24 * time.Hour, MaxOverlap: time.Hour, MaxRecoveryTTL: 15 * time.Minute, Clock: clock}
+	if _, err := pki.NewRotator(ctx, nil, options); !errors.Is(err, pki.ErrInvalidInput) {
+		t.Fatal("missing store accepted", err)
+	}
+	bad := options
+	bad.MaxOverlap = bad.MaxLifetime
+	if _, err := pki.NewRotator(ctx, store, bad); !errors.Is(err, pki.ErrInvalidInput) {
+		t.Fatal("incoherent policy accepted", err)
+	}
+	r, err := pki.NewRotator(ctx, store, options)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := r.Register(ctx, pki.RegisterCertificate{SensorID: "sensor-24", CertificatePEM: m.Initial, IdempotencyKey: "c24-bounds-register-key"}); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := r.Register(ctx, pki.RegisterCertificate{SensorID: "other", CertificatePEM: m.Initial, IdempotencyKey: "c24-bounds-another-key"}); !errors.Is(err, storage.ErrQuota) {
+		t.Fatal("sensor limit ignored", err)
+	}
+	if _, err := r.Rotate(ctx, pki.RotateCertificate{SensorID: "sensor-24", ExpectedRevision: 1, CSRPEM: m.CSR, Lifetime: 24 * time.Hour, Overlap: time.Hour, IdempotencyKey: "c24-bounds-rotate-key"}, c24Signer(t, m.AuthorityKey)); err != nil {
+		t.Fatal(err)
+	}
+	now = now.Add(2 * time.Hour)
+	csr, _ := c24fixture.NewCSR("sensor-24")
+	before := c09ManifestDigest(t, dir)
+	if _, err := r.Rotate(ctx, pki.RotateCertificate{SensorID: "sensor-24", ExpectedRevision: 2, CSRPEM: csr, Lifetime: 24 * time.Hour, Overlap: time.Hour, IdempotencyKey: "c24-bounds-over-quota"}, c24Signer(t, m.AuthorityKey)); !errors.Is(err, storage.ErrQuota) {
+		t.Fatal("storage quota ignored", err)
+	}
+	if c09ManifestDigest(t, dir) != before {
+		t.Fatal("quota changed active credential")
+	}
+	files, err := filepath.Glob("../internal/pki/*.go")
+	if err != nil || len(files) == 0 {
+		t.Fatal("missing PKI source", err)
+	}
+	for _, file := range files {
+		if strings.HasSuffix(file, "_test.go") {
+			continue
+		}
+		parsed, err := parser.ParseFile(token.NewFileSet(), file, nil, parser.ImportsOnly)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, spec := range parsed.Imports {
+			path, _ := strconv.Unquote(spec.Path.Value)
+			if path == "net" || strings.HasPrefix(path, "net/") || path == "os/exec" {
+				t.Fatal("PKI attempts external transport or process execution", path)
+			}
+		}
+	}
 }

@@ -1,0 +1,19 @@
+{
+  "name": "baseline-go-full",
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./..."
+  ],
+  "source_commit": "8c067a8624ca0499e4a0cb7264e003ac79b6b3d1",
+  "exit_code": 1,
+  "started_at": "2026-10-23T03:42:49.570406+00:00",
+  "duration_seconds": 14.464,
+  "output_path": "docs/evidence/C24/baseline-go-full.log.gz",
+  "stored_output_sha256": "ceff56166748c59bc7ed22f082a8f8fc02cb547708c40e54058ec78a8ecb3bb9",
+  "uncompressed_output_sha256": "d0b6afc57673b06f3ac9b4ee09a3806b2ed020a1c13913da32870113c1965395",
+  "compression": "gzip"
+}

@@ -36,6 +36,7 @@ var (
 // against the configured anchors and rechecked against the authoritative
 // clock on every verdict.
 type Options struct {
+	Rotation             *Rotator
 	Anchors              []string
 	ServerCertificatePEM string
 	ServerKeyPEM         string
@@ -60,11 +61,12 @@ type Identity struct {
 // trust state. Guard values are immutable after New; TLSConfig shares the
 // immutable certificate pool with every generated listener configuration.
 type Guard struct {
-	clock   func() time.Time
-	pool    *x509.CertPool
-	anchors map[string]*x509.Certificate
-	server  tls.Certificate
-	crl     *x509.RevocationList
+	rotation *Rotator
+	clock    func() time.Time
+	pool     *x509.CertPool
+	anchors  map[string]*x509.Certificate
+	server   tls.Certificate
+	crl      *x509.RevocationList
 	// authority is the SHA-256 fingerprint of the configured anchor that
 	// signed the CRL: the only issuer whose population the single local
 	// CRL can revoke, so it is the only issuer whose clients authenticate.
@@ -129,9 +131,14 @@ func New(options Options) (*Guard, error) {
 	if err != nil {
 		return nil, ErrInvalidInput
 	}
+	serverTime := time.Time{}
+	if options.Rotation != nil {
+		serverTime = now
+	}
 	if _, err := serverLeaf.Verify(x509.VerifyOptions{
-		Roots:     pool,
-		KeyUsages: []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
+		Roots:       pool,
+		CurrentTime: serverTime,
+		KeyUsages:   []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
 	}); err != nil {
 		return nil, ErrInvalidInput
 	}
@@ -206,7 +213,11 @@ func New(options Options) (*Guard, error) {
 		}
 		revoked[serialText(entry.SerialNumber)] = true
 	}
+	if options.Rotation != nil && options.Rotation.issuerFingerprint != authority {
+		return nil, ErrInvalidInput
+	}
 	return &Guard{
+		rotation:  options.Rotation,
 		clock:     options.Clock,
 		pool:      pool,
 		anchors:   anchors,
@@ -222,7 +233,7 @@ func New(options Options) (*Guard, error) {
 // verified client certificates, TLS 1.3 only and no session reuse: every
 // connection re-runs the authoritative verdict through VerifyConnection.
 func (g *Guard) TLSConfig() *tls.Config {
-	return &tls.Config{
+	config := &tls.Config{
 		Certificates:           []tls.Certificate{g.server},
 		ClientCAs:              g.pool,
 		ClientAuth:             tls.RequireAndVerifyClientCert,
@@ -233,6 +244,10 @@ func (g *Guard) TLSConfig() *tls.Config {
 			return err
 		},
 	}
+	if g.rotation != nil {
+		config.Time = g.clock
+	}
+	return config
 }
 
 // Authenticate handshakes one connection and returns its authoritative
@@ -315,6 +330,15 @@ func (g *Guard) Verify(state tls.ConnectionState) (Identity, error) {
 		}
 	}
 	list := g.scopes[fingerprintOf(leaf.Raw)]
+	if g.rotation != nil {
+		managedScopes, managed, err := g.rotation.authorize(fingerprintOf(leaf.Raw), now)
+		if err != nil {
+			return Identity{}, err
+		}
+		if managed {
+			list = managedScopes
+		}
+	}
 	allowed := make([]string, len(list))
 	copy(allowed, list)
 	return Identity{

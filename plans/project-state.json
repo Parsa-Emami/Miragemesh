@@ -1,6 +1,6 @@
 {
   "project": "MirageMesh",
-  "reviewed_commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+  "reviewed_commit": "8c067a8624ca0499e4a0cb7264e003ac79b6b3d1",
   "readiness": "WEB_FOUNDATION",
   "core_ready": false,
   "implemented": [
@@ -28,9 +28,10 @@
     "Opt-in loopback GET /api/v1/sensors with C05-backed event age, verified applied configuration and gap counts; Sensors UI retains an explicitly stale snapshot during a temporary failure",
     "Review remediation: container ownership and run-scoped rollback, multiline event frames with exact payload digests and legacy frame reads, opaque identity tuples, typed disabled sensor response, loopback Host/Origin checks and required C21 test discovery",
     "C22 opt-in local incident replay and append-only triage: exact segment source digests cross-checked against retained C05 events, keyboard/table replay, inert metadata, explicit coverage and same-key lost-response recovery; all four hosted workflows passed on 6b24d2bdd5138b52c2a93e22093d01f4c9fc4648.",
-    "C23 explicit standalone event segment retention with durable bounded audit, idempotent recovery, retired identity protection, rebuilt indexes and accessible incident coverage; all four hosted workflows passed on f7176844785e07c03fef6d7558a0ea04de95c584."
+    "C23 explicit standalone event segment retention with durable bounded audit, idempotent recovery, retired identity protection, rebuilt indexes and accessible incident coverage; all four hosted workflows passed on f7176844785e07c03fef6d7558a0ea04de95c584.",
+    "C24 durable sensor client certificate rotation under the C09 issuer, exact overlap cutoff, atomic CSR/token offline recovery through C05/C08, operator CLI and accessible read-only certificate status; hosted verification pending."
   ],
-  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation, a metadata-only HTTP decoy, its rootless container isolation, the engine workflow that starts it, bounded internal spool with durable overflow gap markers, loss counters, durable collector batch acknowledgements, immutable event segment rotation with explicit incomplete-tail recovery, a derived event index rebuilt from committed segments with deduplication and typed identity conflicts, and a one-shot --project-segments engine workflow with typed outcomes, failed-projection segment-state reporting and zero-ordinal rejection implemented; explainable alerts, internal append-only triage and opt-in read-only sensor health implemented; authenticated ingest, a published decoy surface and the full workflow pending; C22 local source-backed incident replay and durable triage HTTP/UI implemented, verified by all four hosted workflows; C23 retention verified by all four hosted workflows",
+  "engine": "Go runtime health, local event validation, durable sensor event acceptance, internal enrollment, mTLS identity, signed desired state, durable applied-config reconciliation, a metadata-only HTTP decoy, its rootless container isolation, the engine workflow that starts it, bounded internal spool with durable overflow gap markers, loss counters, durable collector batch acknowledgements, immutable event segment rotation with explicit incomplete-tail recovery, a derived event index rebuilt from committed segments with deduplication and typed identity conflicts, and a one-shot --project-segments engine workflow with typed outcomes, failed-projection segment-state reporting and zero-ordinal rejection implemented; explainable alerts, internal append-only triage and opt-in read-only sensor health implemented; authenticated ingest, a published decoy surface and the full workflow pending; C22 local source-backed incident replay and durable triage HTTP/UI implemented, verified by all four hosted workflows; C23 retention verified by all four hosted workflows; C24 sensor leaf rotation and offline recovery implemented, hosted verification pending",
   "next_task": "C24",
   "next_command": "npm run plan -- next",
   "full_product_endpoint": "C30 locally usable; C40 full published OSS v1",

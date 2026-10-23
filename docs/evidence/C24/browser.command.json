@@ -1,0 +1,16 @@
+{
+  "name": "browser",
+  "command": [
+    "npm",
+    "run",
+    "test:browser",
+    "--",
+    "--workers=1"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-23T03:44:03.669825+00:00",
+  "duration_seconds": 13.363,
+  "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+  "output_path": "docs/evidence/C24/browser.log",
+  "stored_output_sha256": "ca0f3bb1ff551b3874b8cf84a1f3919301e03a9b800460e78ae441c610fc8b7a"
+}
