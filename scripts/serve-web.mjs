@@ -1,3 +1,4 @@
+import { validateUpdateSnapshot } from '../apps/web/src/lib/updates.mjs';
 import http from 'node:http';
 import { validateCertificateSnapshot } from '../apps/web/src/lib/certificates.mjs';
 import { readFile, realpath, stat } from 'node:fs/promises';
@@ -58,6 +59,20 @@ export function readEngineCertificates(address, signal) {
   });
 }
 
+export function readEngineUpdates(address, signal) {
+  if (!/^127\.0\.0\.1:[1-9]\d{0,4}$/.test(address) || Number(address.split(':')[1]) > 65535) return Promise.reject(new Error('Invalid loopback engine address.'));
+  return new Promise((accept, reject) => {
+    const request = http.get(`http://${address}/api/v1/updates`, { agent: false, signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(2000)]) : AbortSignal.timeout(2000) }, response => {
+      if (response.statusCode !== 200) { response.destroy(); reject(new Error('Update status unavailable.')); return; }
+      const chunks = []; let size = 0;
+      response.on('data', chunk => { size += chunk.length; if (size > 1048576) response.destroy(new Error('Update response exceeds limit.')); else chunks.push(chunk); });
+      response.on('error', reject);
+      response.on('end', () => { try { accept(validateUpdateSnapshot(JSON.parse(Buffer.concat(chunks).toString('utf8')))); } catch (error) { reject(error); } });
+    });
+    request.on('error', reject);
+  });
+}
+
 export function requestEngineIncidents(address, { id, body, key, signal } = {}) {
   if (!/^127\.0\.0\.1:[1-9]\d{0,4}$/.test(address) || Number(address.split(':')[1]) > 65535 || id !== undefined && !/^incident-[a-f0-9]{64}$/.test(id)) return Promise.reject(new Error('Invalid local incident request.'));
   return new Promise((accept, reject) => {
@@ -105,7 +120,7 @@ export function createWebServer({ root, config, projectId, engineAddress }) {
       send(403, '{"error":"forbidden_origin"}'); return;
     }
     const triagePath = /^\/api\/v1\/incidents\/(incident-[a-f0-9]{64})\/triage$/.exec((req.url ?? '').split('?')[0]);
-    if (!['GET', 'HEAD'].includes(req.method ?? '') && !(req.method === 'POST' && triagePath)) { res.setHeader('Allow', (req.url ?? '').split('?')[0] === '/api/v1/sensors' || (req.url ?? '').split('?')[0] === '/api/v1/certificates' || (req.url ?? '').split('?')[0] === '/api/v1/incidents' ? 'GET' : triagePath ? 'POST' : 'GET, HEAD'); send(405, '{"error":"method_not_allowed"}'); return; }
+    if (!['GET', 'HEAD'].includes(req.method ?? '') && !(req.method === 'POST' && triagePath)) { res.setHeader('Allow', (req.url ?? '').split('?')[0] === '/api/v1/sensors' || (req.url ?? '').split('?')[0] === '/api/v1/certificates' || (req.url ?? '').split('?')[0] === '/api/v1/updates' || (req.url ?? '').split('?')[0] === '/api/v1/incidents' ? 'GET' : triagePath ? 'POST' : 'GET, HEAD'); send(405, '{"error":"method_not_allowed"}'); return; }
     let path;
     try {
       path = decodeURIComponent((req.url ?? '/').split('?')[0]);
@@ -150,6 +165,14 @@ export function createWebServer({ root, config, projectId, engineAddress }) {
       const controller = new AbortController(); res.once('close', () => controller.abort());
       try { send(200, JSON.stringify(await readEngineCertificates(engineAddress, controller.signal))); }
       catch { if (!res.destroyed) send(503, '{"error":"certificate_status_unavailable"}'); }
+      return;
+    }
+    if (path === '/api/v1/updates') {
+      if (req.method !== 'GET') { res.setHeader('Allow', 'GET'); send(405, '{"error":"method_not_allowed"}'); return; }
+      if (!engineAddress) { send(503, '{"error":"update_status_unavailable"}'); return; }
+      const controller = new AbortController(); res.once('close', () => controller.abort());
+      try { send(200, JSON.stringify(await readEngineUpdates(engineAddress, controller.signal))); }
+      catch { if (!res.destroyed) send(503, '{"error":"update_status_unavailable"}'); }
       return;
     }
     if (path === '/api/v1/sensors') {

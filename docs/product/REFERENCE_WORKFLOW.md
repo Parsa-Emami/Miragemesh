@@ -167,3 +167,7 @@ C23 adds standalone preview/apply retention of complete sealed segments with a d
 ## Sensor certificate lifecycle
 
 C24 adds durable client leaf rotation under the C09 issuer, explicit overlap cutoff and atomic token-backed offline recovery. The operator CLI handles signing and private token delivery; the Certificates page reads lifecycle state without loading signing keys. Configure `pki.Options.Rotation` to enforce the ledger at the existing mTLS boundary. See [CERTIFICATE_ROTATION.md](../architecture/CERTIFICATE_ROTATION.md) for scope, policy, provisioning and recovery.
+
+## Signed sensor update authority
+
+C25 adds durable publisher-signed sensor release metadata, exact local candidate file verification, permanent revocation floors and scoped one-time rollback authority signed by a separate recovery key. Operator actions and the read-only Updates page use the same C05 state. Verification does not install an update. See [SENSOR_UPDATES.md](../architecture/SENSOR_UPDATES.md).

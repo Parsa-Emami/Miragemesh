@@ -1,0 +1,9 @@
+{
+  "schema_version": "1",
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic sensor update bytes and ephemeral test signing keys; no production executable.",
+  "sensor_id": "sensor-25",
+  "now": "2026-01-01T00:00:00Z",
+  "platform": "linux/amd64",
+  "event": "{\"schema_version\":\"1\",\"event_id\":\"c25-event\",\"sensor_id\":\"sensor-25\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/update-check\"}}"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "npm-check",
+  "command": [
+    "npm",
+    "run",
+    "check"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-23T13:32:04.760487+00:00",
+  "duration_seconds": 22.556,
+  "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+  "environment": {
+    "WEB_TEST_CHROMIUM": "/tmp/miragemesh-browser/chrome-headless-shell-linux64/chrome-headless-shell"
+  },
+  "output_path": "docs/evidence/C25/npm-check.log",
+  "stored_output_sha256": "15a84f06a48931bfce8e3060c9f40c6801638125413c0953a8f6527229f644f1"
+}

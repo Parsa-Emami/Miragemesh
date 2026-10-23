@@ -959,6 +959,49 @@
           }
         }
       }
+    },
+    "/updates": {
+      "get": {
+        "operationId": "getUpdateStatus",
+        "summary": "Read durable local signed sensor update verification",
+        "tags": [
+          "MirageMesh"
+        ],
+        "security": [],
+        "description": "Opt-in loopback C05 projection with explicit public trust keys and quotas. Host/Origin must match the local listener. Verification does not confirm installation. No update upload, signing, download or installation surface. GET only, bounded to 1 MiB.",
+        "responses": {
+          "200": {
+            "description": "Signed authority, revocation and last local file verification. Expiry and superseded evidence remain explicit.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSnapshot"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Disabled, unavailable or invalid local authority; no private error details.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "error"
+                  ],
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "const": "update_status_unavailable"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1506,6 +1549,163 @@
             "maxItems": 8192,
             "items": {
               "$ref": "#/components/schemas/LocalCertificateStatus"
+            }
+          }
+        }
+      },
+      "UpdateRelease": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "version",
+          "sha256",
+          "length"
+        ],
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "length": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 67108864
+          }
+        }
+      },
+      "UpdateSensorStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sensor_id",
+          "revision",
+          "issued_at",
+          "expires_at",
+          "metadata_digest",
+          "revoked_versions",
+          "releases",
+          "version",
+          "high_water_version",
+          "verified_revision",
+          "recovery",
+          "status"
+        ],
+        "properties": {
+          "sensor_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "metadata_digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "revoked_versions": {
+            "type": "array",
+            "maxItems": 64,
+            "uniqueItems": true,
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "releases": {
+            "type": "array",
+            "maxItems": 16,
+            "items": {
+              "$ref": "#/components/schemas/UpdateRelease"
+            }
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "high_water_version": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "verified_revision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "verified_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "recovery": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "verified",
+              "no_candidate",
+              "expired",
+              "revoked",
+              "authority_changed"
+            ]
+          }
+        }
+      },
+      "UpdateSnapshot": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_version",
+          "platform",
+          "publisher_fingerprint",
+          "recovery_fingerprint",
+          "observed_at",
+          "sensors"
+        ],
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "1"
+          },
+          "platform": {
+            "type": "string",
+            "pattern": "^[a-z0-9]{1,16}/[a-z0-9]{1,16}$"
+          },
+          "publisher_fingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "recovery_fingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sensors": {
+            "type": "array",
+            "maxItems": 8192,
+            "items": {
+              "$ref": "#/components/schemas/UpdateSensorStatus"
             }
           }
         }

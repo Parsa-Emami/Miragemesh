@@ -1,0 +1,137 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 check
+> npm run validate:plan && npm run build && npm test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 validate:plan
+> node scripts/roadmap.mjs validate
+
+Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 build
+> npm run prepare:web && npm run typecheck && vite build --config apps/web/vite.config.ts && npm run build:engine
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 prepare:web
+> node scripts/generate-web-data.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 typecheck
+> tsc -p tsconfig.json
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 26 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.78 kB │ gzip:  0.47 kB
+dist/web/assets/index-D0FjDMz9.css    7.23 kB │ gzip:  2.30 kB
+dist/web/assets/index-BmnOXbIs.js   274.56 kB │ gzip: 83.69 kB
+
+✓ built in 192ms
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 build:engine
+> node scripts/build-engine.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 test
+> node --test tests/web/*.test.mjs tests/contracts/*.test.mjs tests/engineering/*.test.mjs
+
+✔ CLI accepts the exact v1 fixture and reports validation without acceptance authority (39.423253ms)
+✔ real schemas and Go reject every incompatible structural fixture (793.309386ms)
+✔ identifier, exact numeric, timestamp and UTF-8 byte boundaries agree with the Go validator (213.581859ms)
+✔ invalid CLI combinations fail usage without launching a server (21.632128ms)
+✔ result schema rejects contradictory authority, errors and incomplete-input digests (9.929194ms)
+✔ an actual stdin read failure returns only a typed error and no partial digest (7.550402ms)
+✔ an open stdin expires and either termination signal returns a redacted cancellation (2229.696311ms)
+✔ certificate CLI issues a private scoped token, recovers and replays the same signed certificate (710.817403ms)
+✔ certificate CLI rejects unsafe key inputs, missing prerequisites and mixed runtime modes (359.296756ms)
+✔ requires source-backed C22 replay, durable HTTP triage and fail-closed replay limits (930.398137ms)
+✔ accepts executed engine, contract and real recovery suites with interleaved output (128.773506ms)
+✔ rejects empty discovery and package-only success without executed tests (238.03898ms)
+✔ rejects a missing required suite or anchor (186.200467ms)
+✔ requires persistent sensor sequence and invalid-event regression anchors (176.307566ms)
+✔ rejects a skipped anchor or a pass with no run (185.431736ms)
+✔ rejects failures in any package and unfinished package results (420.461094ms)
+✔ rejects malformed JSON events and missing input (453.883841ms)
+✔ requires enrollment validation, durable consumption, scope, clock, concurrency and crash anchors (953.249695ms)
+✔ requires mTLS acceptance, transport denial, typed verdicts, issuer-bound revocation, revoked replay and configuration anchors (623.217318ms)
+✔ requires signed desired state, unsigned rejection, stale rejection and exact-byte signature anchors (1364.405673ms)
+✔ requires durable apply, real crash/recovery, shared-writer serialization and rejection anchors (887.84734ms)
+✔ requires decoy observation, echo, request bound, prerequisite, restart and no-execution anchors (637.097588ms)
+✔ requires decoy isolation control, cleanup, immutability, runtime bound, cancellation and workflow anchors (843.102777ms)
+✔ requires decoy egress, runtime limit, reconciliation, provider and adapter anchors (682.536931ms)
+✔ requires bounded spool persistence, rejection, concurrency, configuration and recovery anchors (698.672251ms)
+✔ requires durable overflow markers, replay, quota and gap-aware sequence anchors (417.490954ms)
+✔ requires durable batch acknowledgement, lost-ACK replay, capacity, rejection and real recovery anchors (897.746751ms)
+✔ requires immutable segment rotation, explicit incomplete tails, crash recovery and projection anchors (2183.194529ms)
+✔ requires derived index rebuild, dedup, conflict, loss and incomplete-tail anchors (664.987126ms)
+✔ requires C19 explainable rules and durable alert projection anchors (568.90548ms)
+✔ requires C20 append-only triage, strict requests, restart replay and forged-history anchors (739.296096ms)
+✔ requires C21 snapshot and status boundary anchors even when other suites pass (536.013977ms)
+✔ requires the review remediation boundaries (577.594804ms)
+✔ requires C23 expiration, audit, real crash recovery and resurrection prevention (822.792655ms)
+✔ requires C24 real TLS cutoff, atomic offline recovery and fail-closed certificate boundaries (1059.321703ms)
+✔ requires C25 signed authority, artifact integrity, anti-rollback and real recovery boundaries (1349.188983ms)
+✔ retention CLI previews, applies and replays without rewriting C05 (641.852435ms)
+✔ retention CLI rejects missing storage and mixed or incomplete modes (47.836197ms)
+✔ update CLI persists revocation and exact scoped recovery across independent processes (387.358487ms)
+✔ update CLI rejects unrelated flags, unsafe files and missing trust prerequisites before mutation (256.226683ms)
+✔ certificate boundary rejects inconsistent dates, scope duplication, status and secret fields (6.008671ms)
+✔ certificate proxy accepts a bounded snapshot and refuses redirects, malformed, oversized and unavailable upstreams (165.002287ms)
+✔ published certificate schema and nanosecond overlap boundaries agree with engine semantics (94.982183ms)
+✔ public configuration fails closed on engine flags, external endpoints, unknown keys and project mismatch (1.897887ms)
+✔ preview rejects hostile structure, excessive UTF-8 size and excessive complexity (2.529754ms)
+✔ HTTP isolation, cache rules, health semantics, methods, traversal and symlink containment (156.766577ms)
+✔ generated project and runtime identity agree with exactly forty original product tasks (3.50082ms)
+✔ incident retention metadata is explicit and cannot claim complete coverage (4.041879ms)
+✔ published incident response schema validates sources and rejects missing trace fields (145.178642ms)
+✔ incident boundary rejects broken source links and inconsistent coverage before rendering (1.874821ms)
+✔ incident proxy rejects redirect, malformed, oversized and unavailable upstreams without egress (190.475104ms)
+✔ real launcher serves engine health, preserves disabled admission, stops and restarts (277.947736ms)
+✔ local web proxy validates the exact read-only sensor response (34.604665ms)
+✔ engine serves an empty C05-backed snapshot when explicit local policy is supplied (296.674352ms)
+✔ engine crash stops the web listener with a failing outcome (25.538985ms)
+✔ occupied web port remains owned by its server and launch cleans up its engine (24.793814ms)
+✔ missing engine and invalid configuration fail before a successful launch (19.652327ms)
+✔ health boundary rejects malformed, oversized, redirected, unavailable and stalled upstreams (2040.588895ms)
+✔ synthetic C03 fixtures are versioned and cannot claim product readiness (2.090416ms)
+✔ CLI SIGINT and SIGTERM release both listeners; supervisor death closes engine stdin (426.344129ms)
+✔ unresponsive startup times out and cancellation terminates only the owned child (10119.860404ms)
+# example.invalid/synthetic/cmd/miragemesh
+cmd/miragemesh/main.go:2:15: undefined: missing
+✔ failed Go compilation preserves the previous binary and removes staging output (53.765455ms)
+✔ startup rejects forged non-loopback handshakes and unsafe health destinations (104.061317ms)
+✔ default engine returns a typed disabled sensor response directly (19.989722ms)
+✔ web and engine reject foreign Host and Origin before serving local data (38.530531ms)
+✔ sensor responses conform to the published local API schema (119.91223ms)
+✔ setup validates toolchain/options and stops at the first failed install (2.851182ms)
+✔ setup rejects missing tools, wrong pins and a non-rootless provider before building (0.804666ms)
+✔ roadmap rejects absent resources, escaping paths and unproved completion (39.859694ms)
+✔ web package starts from an isolated directory with every server validator dependency (412.911451ms)
+✔ accepts the repository reference scenario and its licensed fixtures (10.764452ms)
+✔ rejects missing workflow requirements and fixture provenance (17.363951ms)
+✔ rejects fixture metadata without provenance or license (9.919372ms)
+✔ rejects escaping paths, unsupported versions and false engine success claims (8.329439ms)
+✔ accepts exact versioned resources, an explicitly optional missing tool and synthetic fixtures (26.642984ms)
+✔ rejects floating resources, missing official metadata and mismatched integrity (26.239201ms)
+✔ rejects unavailable required resources and fixture escapes or checksum changes (23.022846ms)
+✔ validates the versioned sensor snapshot and rejects malformed sensor states (9.949004ms)
+✔ update snapshot rejects misleading authority, duplicate releases, private fields and expiry boundary truncation (3.712975ms)
+✔ update proxy confines requests, validates actual response bytes and refuses redirects or oversized data (38.383837ms)
+✔ update read-only API contract matches both published formats (6.140237ms)
+ℹ tests 81
+ℹ suites 0
+ℹ pass 81
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19396.327052

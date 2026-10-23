@@ -1,0 +1,42 @@
+{
+  "schema_version": "1",
+  "cases": [
+    "modified_metadata",
+    "modified_artifact",
+    "missing_signature",
+    "wrong_signer",
+    "revoked_version",
+    "stale_authority",
+    "same_revision_conflict",
+    "expired_authority",
+    "rollback_without_grant",
+    "wrong_recovery_signer",
+    "expired_grant",
+    "replayed_grant",
+    "cross_sensor_grant",
+    "changed_release_identity",
+    "omitted_revocation",
+    "forged_history",
+    "quota",
+    "cancelled",
+    "no_egress"
+  ],
+  "crash_phases": [
+    "object_synced",
+    "object_published",
+    "manifest_synced",
+    "manifest_published",
+    "before_ack"
+  ],
+  "faults": [
+    "object_write",
+    "short_write",
+    "object_sync",
+    "object_rename",
+    "object_directory_sync",
+    "manifest_write",
+    "manifest_sync",
+    "manifest_rename",
+    "manifest_directory_sync"
+  ]
+}

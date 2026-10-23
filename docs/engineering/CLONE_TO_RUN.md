@@ -67,3 +67,7 @@ The engine provides explicit standalone `--expire-segments` preview, with deleti
 ## Certificate rotation and status
 
 C24 provides standalone `--rotate-certificates` operator actions and opt-in read-only `--certificate-status`. The supervisor accepts the complete `--rotation-*` status policy, with no issuer private key. Open `#certificates` to inspect actual sensor revisions, cutoff and recovery. Stop the supervisor before operator mutations of its locked C05 store. Commands, secure file handling and the offline provisioning path are in [CERTIFICATE_ROTATION.md](../architecture/CERTIFICATE_ROTATION.md).
+
+## C25 local update verification
+
+Stop the supervisor for `--verify-update` operator actions. Accept signed metadata, verify a local candidate and restart with the complete `--update-*` common options to read the Updates tab. No private signing key, automatic download or installation is involved. [SENSOR_UPDATES.md](../architecture/SENSOR_UPDATES.md) documents exact signed formats, key provisioning, limits, recovery and commands.

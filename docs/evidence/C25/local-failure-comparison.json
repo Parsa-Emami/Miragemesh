@@ -1,0 +1,21 @@
+{
+  "same_failures_on_unmodified_base": true,
+  "failed_test_count": 14,
+  "tests": [
+    "TestDecoyIsolationAdapterBoundsRuntimeOutput",
+    "TestDecoyIsolationAdapterRollsBackAnUncertainStart",
+    "TestDecoyIsolationDeniesInternetAndPrivateSubnets",
+    "TestDecoyIsolationEnforcesPIDAndMemoryLimits",
+    "TestDecoyIsolationPolicyIsImmutable",
+    "TestDecoyIsolationPolicyRejectsUnsafeConfiguration",
+    "TestDecoyIsolationPreservesContainersOnOwnershipConflict",
+    "TestDecoyIsolationProviderFailuresAreExplicit",
+    "TestDecoyIsolationReconcilesAfterRestart",
+    "TestDecoyIsolationRejectsWeakRuntimeControls",
+    "TestDecoyIsolationReportsCleanupFailure",
+    "TestDecoyIsolationStopsAndRemovesItsContainer",
+    "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
+    "TestDecoyIsolationWorkflowReportsTypedOutcome"
+  ],
+  "explanation": "The local environment has no Podman; the same C13 provider and adapter-assumption failures reproduce on untouched C24. No C25 failure remains. Full hosted verification is pending."
+}

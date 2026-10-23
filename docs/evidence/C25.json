@@ -1,0 +1,372 @@
+{
+  "commit_id": "C25",
+  "project": "MirageMesh",
+  "passed": false,
+  "planning_template": false,
+  "status": "in_progress",
+  "date": "2026-10-23",
+  "base_commit": "84d078142db8fdff4c05b67091e6893c0bc99079",
+  "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+  "source_identity_algorithm": "sorted path + NUL + raw SHA-256 over tracked/nonignored source, excluding docs/evidence/, SHA256SUMS.txt, plans/progress.json and docs/agents/SESSION_HANDOFF.json",
+  "implementation_commit": null,
+  "scope": "Signed per-sensor update metadata, exact local artifact verification, durable revision/revocation/high-water floors, separate scoped expiring single-use recovery authority, strict operator CLI and read-only local Updates API/UI. No installer or executable activation.",
+  "architecture": {
+    "domain": "Ed25519 publisher and distinct offline recovery authority; strict versioned canonical documents and immutable release number-to-digest/length identities.",
+    "storage": "Existing C05 Store.Update serializes metadata and candidate/recovery decisions against full verified history. Consuming a grant and recording its target decision are one record.",
+    "adapters": "CLI regular local files and typed outcomes; public-only loopback HTTP and bounded validated browser proxy; UI displays actual C05 authority and explicitly stale evidence."
+  },
+  "dependencies": {
+    "C24": "docs/evidence/C24.json; verified on implementation 24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e"
+  },
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic sensor events, non-executable release byte fixtures and ephemeral Ed25519 material; crash helper keys pass through stdin only.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C25/expected-output.json": "fa4fdd2969709d67b970ba94872be36604ea34355b33a855f8c3ff91be3a3166",
+      "tests/fixtures/miragemesh/C25/material.go": "515830529da890276a9adcefdcb091806bf6db2bfa843cba6787ae4907c53935",
+      "tests/fixtures/miragemesh/C25/negative.json": "7d3fee7ff04c3435f564d7834fe85e4133768bc97a0b256aa1b69bc02f1c607d",
+      "tests/fixtures/miragemesh/C25/positive.json": "ac43934ab662b70fcbdc2355e65fd377b2b801230820c128a15ee35c215ea372",
+      "tests/fixtures/miragemesh/C25/seed/main.go": "305ea1756539b6dde9c49f3df4ab2befc7f1797485044d693bc53e30df56d2b2"
+    }
+  },
+  "commands": [
+    {
+      "name": "browser",
+      "command": [
+        "npm",
+        "run",
+        "test:browser",
+        "--",
+        "--workers=1"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T13:34:06.170546+00:00",
+      "duration_seconds": 10.443,
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "environment": {
+        "WEB_TEST_CHROMIUM": "/tmp/miragemesh-browser/chrome-headless-shell-linux64/chrome-headless-shell"
+      },
+      "output_path": "docs/evidence/C25/browser.log",
+      "stored_output_sha256": "483897d714671152a0bbebed1e09d66c9d4f9442ed1105b850e070e6539d67aa"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T13:26:08.285465+00:00",
+      "duration_seconds": 0.069,
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "output_path": "docs/evidence/C25/diff-check.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "environment",
+      "command": [
+        "python3",
+        "docs/evidence/C25/environment-probe.py"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T13:34:45.103267+00:00",
+      "duration_seconds": 0.642,
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "environment": {
+        "WEB_TEST_CHROMIUM": "/tmp/miragemesh-browser/chrome-headless-shell-linux64/chrome-headless-shell"
+      },
+      "output_path": "docs/evidence/C25/environment.log",
+      "stored_output_sha256": "2f137ccd9ceaca5499a041e7874d053e93f925813a517e5af984f8943bd0af09"
+    },
+    {
+      "name": "formatting",
+      "command": [
+        "gofmt",
+        "-l",
+        "cmd",
+        "internal",
+        "tests"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T13:26:08.382484+00:00",
+      "duration_seconds": 0.957,
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "output_path": "docs/evidence/C25/formatting.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "go-targeted",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "./internal/contracts",
+        "./internal/events",
+        "./internal/storage",
+        "./cmd/miragemesh",
+        "./internal/incidentview"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T13:31:29.842440+00:00",
+      "duration_seconds": 10.315,
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "output_path": "docs/evidence/C25/go-targeted.log",
+      "stored_output_sha256": "3b94dc1470a8604e915314a9a9bbe781957a73acab48f17d94fc98872667fdea"
+    },
+    {
+      "name": "go-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T13:26:07.851727+00:00",
+      "duration_seconds": 26.955,
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "output_path": "docs/evidence/C25/go-vet.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "npm-check",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T13:32:04.760487+00:00",
+      "duration_seconds": 22.556,
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "environment": {
+        "WEB_TEST_CHROMIUM": "/tmp/miragemesh-browser/chrome-headless-shell-linux64/chrome-headless-shell"
+      },
+      "output_path": "docs/evidence/C25/npm-check.log",
+      "stored_output_sha256": "15a84f06a48931bfce8e3060c9f40c6801638125413c0953a8f6527229f644f1"
+    },
+    {
+      "name": "python-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T13:26:08.027196+00:00",
+      "duration_seconds": 5.537,
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "output_path": "docs/evidence/C25/python-tests.log",
+      "stored_output_sha256": "f401462b4691d7cfb9917cf0cad43b3dbb051269b0649b6878b4bb82de035d70"
+    },
+    {
+      "name": "repository-contracts",
+      "command": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T13:26:08.071997+00:00",
+      "duration_seconds": 0.468,
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "output_path": "docs/evidence/C25/repository-contracts.log",
+      "stored_output_sha256": "632d36bcbace35884a2a3d91c876101cd0f05d962148d2385becf92f0164592a"
+    },
+    {
+      "name": "update-and-regressions",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "./tests",
+        "-run",
+        "^TestUpdate|^TestCertificateRotation|^TestMTLS|^TestEnrollment|^TestRetention"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T13:26:08.132740+00:00",
+      "duration_seconds": 88.967,
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "output_path": "docs/evidence/C25/update-and-regressions.log",
+      "stored_output_sha256": "8474f19192c9b339ab2422cc8f3a130f3c1c24ab3cefe149926c4faa5d1a1a77"
+    }
+  ],
+  "failed_local_attempts": [
+    {
+      "name": "baseline-go-full",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "source_commit": "84d078142db8fdff4c05b67091e6893c0bc99079",
+      "exit_code": 1,
+      "started_at": "2026-10-23T13:33:37.429908+00:00",
+      "duration_seconds": 12.402,
+      "output_path": "docs/evidence/C25/baseline-go-full.log.gz",
+      "stored_output_sha256": "eb07832a32f5b681bd3d93e4306bd9ec00fc2e783695eb1d608e791349526a96",
+      "uncompressed_output_sha256": "bb61a88a6c99f7078a5c550bb64721569ab6fc49899206ea7cdc840abcd997cb",
+      "compression": "gzip"
+    },
+    {
+      "name": "go-full",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 1,
+      "started_at": "2026-10-23T13:32:37.978818+00:00",
+      "duration_seconds": 16.384,
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "environment": {
+        "WEB_TEST_CHROMIUM": "/tmp/miragemesh-browser/chrome-headless-shell-linux64/chrome-headless-shell"
+      },
+      "output_path": "docs/evidence/C25/go-full.log.gz",
+      "stored_output_sha256": "2c6397d698eea2f103019714f86c4f250a410ac78080e7c2c75d629bac14ceda",
+      "uncompressed_output_sha256": "f69d019e44d5a6bf406e2ccef5087cb31e2b92487df05fc46cb69f2b9dc8fd9b",
+      "compression": "gzip"
+    }
+  ],
+  "parallel_attempts": [
+    {
+      "name": "npm-check-parallel-attempt",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "command_exit_code": null,
+      "wrapper_exit_code": 1,
+      "output_path": "docs/evidence/C25/npm-check-parallel-attempt.log.gz",
+      "stored_output_sha256": "211783de1ae0a7de4b17f1d3f3836b4d14a01c55f4bb6afc0097af585b2325ca",
+      "uncompressed_output_sha256": "4ebcf8daeb3bbab9c08013629ce6a6bd66456fdd32e0e4eef702c97c56ec39c6",
+      "notes": "Initial overlapping checks exhausted local resources and hit existing child/launch deadlines. Checks were stopped or failed. Moving logs before runner shutdown also prevented its exit-record write. No passing claim; sequential reruns have separate exact exits.",
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082"
+    },
+    {
+      "name": "go-targeted-parallel-attempt",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "./internal/contracts",
+        "./internal/events",
+        "./internal/storage",
+        "./cmd/miragemesh",
+        "./internal/incidentview"
+      ],
+      "command_exit_code": null,
+      "wrapper_exit_code": 1,
+      "output_path": "docs/evidence/C25/go-targeted-parallel-attempt.log.gz",
+      "stored_output_sha256": "4114e5bc783a2ac4555313754e8ed68d8f34a5cf62f0628172dd6baca0c971d3",
+      "uncompressed_output_sha256": "65a2281dd6f76fbc4ecbec898534db0f6f9d51a7b22902290cf3e2f2d1405d7a",
+      "notes": "Initial overlapping checks exhausted local resources and hit existing child/launch deadlines. Checks were stopped or failed. Moving logs before runner shutdown also prevented its exit-record write. No passing claim; sequential reruns have separate exact exits.",
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082"
+    },
+    {
+      "name": "go-full-parallel-attempt",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "command_exit_code": null,
+      "wrapper_exit_code": 1,
+      "output_path": "docs/evidence/C25/go-full-parallel-attempt.log.gz",
+      "stored_output_sha256": "68f6b30d7f32a5199d1d730787e0a007c54e607ca5c927ae69ec767e199d4e3e",
+      "uncompressed_output_sha256": "2b041ea05cae28205839eeacde444dddad940d4284caea2038546f60ee9597e6",
+      "notes": "Initial overlapping checks exhausted local resources and hit existing child/launch deadlines. Checks were stopped or failed. Moving logs before runner shutdown also prevented its exit-record write. No passing claim; sequential reruns have separate exact exits.",
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082"
+    },
+    {
+      "name": "baseline-go-full-parallel-attempt",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "command_exit_code": null,
+      "wrapper_exit_code": 1,
+      "output_path": "docs/evidence/C25/baseline-go-full-parallel-attempt.log.gz",
+      "stored_output_sha256": "b78f398cc1ed212a7ead611fe110bc44ebc85538ef273b60d38377a76e9f5786",
+      "uncompressed_output_sha256": "8f0d8e1d46f10c280984625e089552b0da689e5fa888ed7088334bf2899daff2",
+      "notes": "Initial overlapping checks exhausted local resources and hit existing child/launch deadlines. Checks were stopped or failed. Moving logs before runner shutdown also prevented its exit-record write. No passing claim; sequential reruns have separate exact exits.",
+      "source_commit": "84d078142db8fdff4c05b67091e6893c0bc99079"
+    }
+  ],
+  "local_failure_comparison": {
+    "same_failures_on_unmodified_base": true,
+    "failed_test_count": 14,
+    "tests": [
+      "TestDecoyIsolationAdapterBoundsRuntimeOutput",
+      "TestDecoyIsolationAdapterRollsBackAnUncertainStart",
+      "TestDecoyIsolationDeniesInternetAndPrivateSubnets",
+      "TestDecoyIsolationEnforcesPIDAndMemoryLimits",
+      "TestDecoyIsolationPolicyIsImmutable",
+      "TestDecoyIsolationPolicyRejectsUnsafeConfiguration",
+      "TestDecoyIsolationPreservesContainersOnOwnershipConflict",
+      "TestDecoyIsolationProviderFailuresAreExplicit",
+      "TestDecoyIsolationReconcilesAfterRestart",
+      "TestDecoyIsolationRejectsWeakRuntimeControls",
+      "TestDecoyIsolationReportsCleanupFailure",
+      "TestDecoyIsolationStopsAndRemovesItsContainer",
+      "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
+      "TestDecoyIsolationWorkflowReportsTypedOutcome"
+    ],
+    "explanation": "The local environment has no Podman; the same C13 provider and adapter-assumption failures reproduce on untouched C24. No C25 failure remains. Full hosted verification is pending."
+  },
+  "environment": {
+    "os": "Linux-6.18.55-x86_64-with-glibc2.39",
+    "architecture": "x86_64",
+    "node": "v24.19.0",
+    "npm": "11.9.0",
+    "go": "go version go1.27.2 linux/amd64",
+    "go_archive_sha256": "ecbadb99091a3f46e31f5f934b068b1864eafa7995211b39eaddf76996045fe5",
+    "go_checksum_source": "https://go.dev/dl/?mode=json&include=all",
+    "browser": "Google Chrome for Testing 153.0.8010.0",
+    "browser_override": "WEB_TEST_CHROMIUM=/tmp/miragemesh-browser/chrome-headless-shell-linux64/chrome-headless-shell",
+    "browser_archive_sha256": "04a078aac97aa131780c25119ec3ce3f27e46f50a32d4f3ce9f3e6b2b846df65",
+    "browser_source": "https://storage.googleapis.com/chrome-for-testing-public/153.0.8010.0/linux64/chrome-headless-shell-linux64.zip",
+    "podman_available": false,
+    "hardware_target_measured": false,
+    "new_dependencies": []
+  },
+  "results": {
+    "positive": "Publisher-signed authority and exact candidate file verification survive restart, coexist with C07 sequences and C17/C18 projection, and replay only the latest exact decision without another generation.",
+    "negative": "Missing/wrong-role/wrong-key signatures, one changed metadata or artifact byte, absent/revoked targets, expired/stale/conflicting metadata, changing an existing release identity and removing a prior revocation fail before accepted state changes.",
+    "recovery": "A distinct recovery key signs the exact sensor/current authority/from/to/platform/digest/length and expiry/reason. Revocation cannot be overridden, the high-water mark remains, replay after a later decision or grant expiry fails.",
+    "crash": "Both metadata authority and recovery verification passed five real SIGKILL publication boundaries and nine syscall faults each: 10 kills and 18 faults. Reopen/retry converges without partial grant consumption, lost floors or duplicate publication.",
+    "local_checks": "81 Node tests, TypeScript and production engine/web builds, relevant uncached Go race suites, go vet, empty gofmt output, six Python regressions and repository/diff validation passed.",
+    "browser": "18 browser tests passed with explicit local Chromium 153.0.8010.0 headless-shell override: actual C05-backed CLI/status/revocation/recovery/two restarts, keyboard details at 360px, inert metadata and stale/invalid reads. Screenshot visually inspected.",
+    "discovery": "15 C25 required anchors added to the existing eight-suite guard, for 189 total. Guard mutation regression passed; full hosted execution remains pending.",
+    "hosted": "Pending; in_progress and passed=false until the exact pushed source passes all four workflows."
+  },
+  "scope_limits": [
+    "Trusted local operator, authoritative wall clock and latest C05 history; no external anti-rollback checkpoint or trusted hardware clock.",
+    "Pinned single publisher and separate recovery key; no TUF protocol, threshold signatures, remote download or automated signing-key migration.",
+    "Verification records exact file digest and length at check time, not installed/running software. Callers supply bounded local readers and must control their blocking behavior.",
+    "Append-only bounded state; at most 8 KiB metadata, 2 KiB recovery grant, 16 offered releases, 64 cumulative revocations, 64 MiB configured artifact bound and 1 MiB public status.",
+    "No database schema, migration, .env, Dockerfile, lockfile or required-provider change. C28 measurements, full C30 restart/restore and C40 release remain pending."
+  ]
+}

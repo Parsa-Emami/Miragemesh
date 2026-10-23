@@ -1,0 +1,18 @@
+{
+  "name": "update-and-regressions",
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "./tests",
+    "-run",
+    "^TestUpdate|^TestCertificateRotation|^TestMTLS|^TestEnrollment|^TestRetention"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-23T13:26:08.132740+00:00",
+  "duration_seconds": 88.967,
+  "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+  "output_path": "docs/evidence/C25/update-and-regressions.log",
+  "stored_output_sha256": "8474f19192c9b339ab2422cc8f3a130f3c1c24ab3cefe149926c4faa5d1a1a77"
+}

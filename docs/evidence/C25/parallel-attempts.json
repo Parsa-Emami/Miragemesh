@@ -1,0 +1,74 @@
+[
+  {
+    "name": "npm-check-parallel-attempt",
+    "command": [
+      "npm",
+      "run",
+      "check"
+    ],
+    "command_exit_code": null,
+    "wrapper_exit_code": 1,
+    "output_path": "docs/evidence/C25/npm-check-parallel-attempt.log.gz",
+    "stored_output_sha256": "211783de1ae0a7de4b17f1d3f3836b4d14a01c55f4bb6afc0097af585b2325ca",
+    "uncompressed_output_sha256": "4ebcf8daeb3bbab9c08013629ce6a6bd66456fdd32e0e4eef702c97c56ec39c6",
+    "notes": "Initial overlapping checks exhausted local resources and hit existing child/launch deadlines. Checks were stopped or failed. Moving logs before runner shutdown also prevented its exit-record write. No passing claim; sequential reruns have separate exact exits.",
+    "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082"
+  },
+  {
+    "name": "go-targeted-parallel-attempt",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-count=1",
+      "./internal/contracts",
+      "./internal/events",
+      "./internal/storage",
+      "./cmd/miragemesh",
+      "./internal/incidentview"
+    ],
+    "command_exit_code": null,
+    "wrapper_exit_code": 1,
+    "output_path": "docs/evidence/C25/go-targeted-parallel-attempt.log.gz",
+    "stored_output_sha256": "4114e5bc783a2ac4555313754e8ed68d8f34a5cf62f0628172dd6baca0c971d3",
+    "uncompressed_output_sha256": "65a2281dd6f76fbc4ecbec898534db0f6f9d51a7b22902290cf3e2f2d1405d7a",
+    "notes": "Initial overlapping checks exhausted local resources and hit existing child/launch deadlines. Checks were stopped or failed. Moving logs before runner shutdown also prevented its exit-record write. No passing claim; sequential reruns have separate exact exits.",
+    "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082"
+  },
+  {
+    "name": "go-full-parallel-attempt",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-count=1",
+      "-json",
+      "./..."
+    ],
+    "command_exit_code": null,
+    "wrapper_exit_code": 1,
+    "output_path": "docs/evidence/C25/go-full-parallel-attempt.log.gz",
+    "stored_output_sha256": "68f6b30d7f32a5199d1d730787e0a007c54e607ca5c927ae69ec767e199d4e3e",
+    "uncompressed_output_sha256": "2b041ea05cae28205839eeacde444dddad940d4284caea2038546f60ee9597e6",
+    "notes": "Initial overlapping checks exhausted local resources and hit existing child/launch deadlines. Checks were stopped or failed. Moving logs before runner shutdown also prevented its exit-record write. No passing claim; sequential reruns have separate exact exits.",
+    "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082"
+  },
+  {
+    "name": "baseline-go-full-parallel-attempt",
+    "command": [
+      "go",
+      "test",
+      "-race",
+      "-count=1",
+      "-json",
+      "./..."
+    ],
+    "command_exit_code": null,
+    "wrapper_exit_code": 1,
+    "output_path": "docs/evidence/C25/baseline-go-full-parallel-attempt.log.gz",
+    "stored_output_sha256": "b78f398cc1ed212a7ead611fe110bc44ebc85538ef273b60d38377a76e9f5786",
+    "uncompressed_output_sha256": "8f0d8e1d46f10c280984625e089552b0da689e5fa888ed7088334bf2899daff2",
+    "notes": "Initial overlapping checks exhausted local resources and hit existing child/launch deadlines. Checks were stopped or failed. Moving logs before runner shutdown also prevented its exit-record write. No passing claim; sequential reruns have separate exact exits.",
+    "source_commit": "84d078142db8fdff4c05b67091e6893c0bc99079"
+  }
+]

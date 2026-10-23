@@ -1,0 +1,22 @@
+{
+  "name": "go-full",
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "-json",
+    "./..."
+  ],
+  "exit_code": 1,
+  "started_at": "2026-10-23T13:32:37.978818+00:00",
+  "duration_seconds": 16.384,
+  "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+  "environment": {
+    "WEB_TEST_CHROMIUM": "/tmp/miragemesh-browser/chrome-headless-shell-linux64/chrome-headless-shell"
+  },
+  "output_path": "docs/evidence/C25/go-full.log.gz",
+  "stored_output_sha256": "2c6397d698eea2f103019714f86c4f250a410ac78080e7c2c75d629bac14ceda",
+  "uncompressed_output_sha256": "f69d019e44d5a6bf406e2ccef5087cb31e2b92487df05fc46cb69f2b9dc8fd9b",
+  "compression": "gzip"
+}

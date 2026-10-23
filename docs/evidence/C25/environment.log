@@ -1,0 +1,16 @@
+{
+  "os": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "architecture": "x86_64",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "go": "go version go1.27.2 linux/amd64",
+  "go_archive_sha256": "ecbadb99091a3f46e31f5f934b068b1864eafa7995211b39eaddf76996045fe5",
+  "go_checksum_source": "https://go.dev/dl/?mode=json&include=all",
+  "browser": "Google Chrome for Testing 153.0.8010.0",
+  "browser_override": "WEB_TEST_CHROMIUM=/tmp/miragemesh-browser/chrome-headless-shell-linux64/chrome-headless-shell",
+  "browser_archive_sha256": "04a078aac97aa131780c25119ec3ce3f27e46f50a32d4f3ce9f3e6b2b846df65",
+  "browser_source": "https://storage.googleapis.com/chrome-for-testing-public/153.0.8010.0/linux64/chrome-headless-shell-linux64.zip",
+  "podman_available": false,
+  "hardware_target_measured": false,
+  "new_dependencies": []
+}

@@ -222,10 +222,12 @@
     },
     {
       "id": "C25",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "in_progress",
+      "evidence": [
+        "docs/evidence/C25.json"
+      ],
+      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+      "notes": "C25 implemented with source-bound local checks: 81 Node, 18 browser, relevant race suites, 10 real kills/18 syscall faults. Full local suite reproduces the same 14 C13 failures on untouched C24; all four hosted workflows pending. No verified or release claim yet."
     },
     {
       "id": "C26",

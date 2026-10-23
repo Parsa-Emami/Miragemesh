@@ -1,70 +1,46 @@
 {
   "project": "MirageMesh",
-  "last_task": "C24",
-  "status": "verified",
-  "base_commit": "8c067a8624ca0499e4a0cb7264e003ac79b6b3d1",
-  "implementation_commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
-  "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
-  "evidence": "docs/evidence/C24.json",
-  "summary": "C24 implemented, pushed to main and verified by all four hosted workflows. Sensor leaf rotation enforces an exact overlap deadline at C09, with persisted revision/retirement and atomic C08-token offline recovery in C05. Real TLS, restart, cross-service token races, five SIGKILL phases, nine syscall faults, operator CLI, read-only API/UI and isolated web package startup passed. Full hosted Go race and 174 required anchors passed.",
-  "hosted_actions": [
-    {
-      "name": "plan-consistency",
-      "run_id": 39896825910,
-      "status": "completed",
-      "conclusion": "success",
-      "source_commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39896825910",
-      "created_at": "2026-10-23T03:46:51Z",
-      "updated_at": "2026-10-23T03:47:01Z"
-    },
-    {
-      "name": "contracts",
-      "run_id": 39896825812,
-      "status": "completed",
-      "conclusion": "success",
-      "source_commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39896825812",
-      "created_at": "2026-10-23T03:46:51Z",
-      "updated_at": "2026-10-23T03:47:03Z"
-    },
-    {
-      "name": "engine-runtime",
-      "run_id": 39896826150,
-      "status": "completed",
-      "conclusion": "success",
-      "source_commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39896826150",
-      "created_at": "2026-10-23T03:46:51Z",
-      "updated_at": "2026-10-23T03:48:44Z"
-    },
-    {
-      "name": "web-foundation",
-      "run_id": 39896825919,
-      "status": "completed",
-      "conclusion": "success",
-      "source_commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39896825919",
-      "created_at": "2026-10-23T03:46:51Z",
-      "updated_at": "2026-10-23T03:49:29Z"
-    }
-  ],
+  "last_task": "C25",
+  "status": "in_progress",
+  "base_commit": "84d078142db8fdff4c05b67091e6893c0bc99079",
+  "implementation_commit": null,
+  "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+  "evidence": "docs/evidence/C25.json",
+  "summary": "Signed per-sensor update metadata, exact local artifact verification, durable revision/revocation/high-water floors, separate scoped expiring single-use recovery authority, strict operator CLI and read-only local Updates API/UI. No installer or executable activation. Local checks passed; exact source awaits hosted verification.",
   "next_task": "C25",
-  "next_command": "npm run plan -- next",
+  "next_command": "Complete all four hosted workflow checks and retain source-bound evidence before marking verified.",
   "blockers": [],
   "scope_limits": [
-    "Sensor client leaves under one existing C09 issuer; CA migration and listener certificate rotation are separate.",
-    "Enable pki.Options.Rotation on the C09 guard; applications call Allows before each protected action. No background forced socket termination is claimed.",
-    "Trusted local operator, authoritative wall clock and latest C05 history; no independent anti-rollback clock/checkpoint or distributed storage.",
-    "Private CA keys and raw tokens are never persisted in C05 or exposed by the status API. Tokens are deliberately delivered to exclusive 0600 files in private 0700 operator directories.",
-    "Internal records are bounded to 8 KiB, public status to 1 MiB and state to explicit C05 quotas; no history truncation or capacity claim.",
-    "No public enrollment/ingest, full restore/power-loss, C30 workflow or C40 release certification."
+    "Trusted local operator, authoritative wall clock and latest C05 history; no external anti-rollback checkpoint or trusted hardware clock.",
+    "Pinned single publisher and separate recovery key; no TUF protocol, threshold signatures, remote download or automated signing-key migration.",
+    "Verification records exact file digest and length at check time, not installed/running software. Callers supply bounded local readers and must control their blocking behavior.",
+    "Append-only bounded state; at most 8 KiB metadata, 2 KiB recovery grant, 16 offered releases, 64 cumulative revocations, 64 MiB configured artifact bound and 1 MiB public status.",
+    "No database schema, migration, .env, Dockerfile, lockfile or required-provider change. C28 measurements, full C30 restart/restore and C40 release remain pending."
   ],
-  "local_environment": "The same 14 C13 failures reproduced on unmodified C23; the hosted full suite passed with pinned Podman.",
+  "local_environment": {
+    "same_failures_on_unmodified_base": true,
+    "failed_test_count": 14,
+    "tests": [
+      "TestDecoyIsolationAdapterBoundsRuntimeOutput",
+      "TestDecoyIsolationAdapterRollsBackAnUncertainStart",
+      "TestDecoyIsolationDeniesInternetAndPrivateSubnets",
+      "TestDecoyIsolationEnforcesPIDAndMemoryLimits",
+      "TestDecoyIsolationPolicyIsImmutable",
+      "TestDecoyIsolationPolicyRejectsUnsafeConfiguration",
+      "TestDecoyIsolationPreservesContainersOnOwnershipConflict",
+      "TestDecoyIsolationProviderFailuresAreExplicit",
+      "TestDecoyIsolationReconcilesAfterRestart",
+      "TestDecoyIsolationRejectsWeakRuntimeControls",
+      "TestDecoyIsolationReportsCleanupFailure",
+      "TestDecoyIsolationStopsAndRemovesItsContainer",
+      "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
+      "TestDecoyIsolationWorkflowReportsTypedOutcome"
+    ],
+    "explanation": "The local environment has no Podman; the same C13 provider and adapter-assumption failures reproduce on untouched C24. No C25 failure remains. Full hosted verification is pending."
+  },
   "delivery": {
-    "commit_created": true,
-    "commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
-    "push_performed": true,
+    "commit_created": false,
+    "push_performed": false,
     "branch": "main",
     "publication_performed": false
   }

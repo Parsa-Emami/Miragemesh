@@ -53,7 +53,11 @@ func serve(ctx context.Context, address string, ready io.Writer, sensorStatus se
 	return serveViews(ctx, address, ready, sensorStatus, view, nil)
 }
 
-func serveViews(ctx context.Context, address string, ready io.Writer, sensorStatus sensorStatusReader, incidentView *incidentview.View, certificates certificateStatusReader) error {
+func serveViews(ctx context.Context, address string, ready io.Writer, sensorStatus sensorStatusReader, incidentView *incidentview.View, certificates certificateStatusReader, updateViews ...updateStatusReader) error {
+	var updates updateStatusReader
+	if len(updateViews) > 0 {
+		updates = updateViews[0]
+	}
 	host, port, err := net.SplitHostPort(address)
 	number, portErr := strconv.Atoi(port)
 	if err != nil || portErr != nil || number < 0 || number > 65535 || (host != "127.0.0.1" && host != "::1") {
@@ -83,6 +87,27 @@ func serveViews(ctx context.Context, address string, ready io.Writer, sensorStat
 				(len(origins) != 0 && (len(origins) != 1 || origins[0] != "http://"+r.Host)) {
 				w.WriteHeader(http.StatusForbidden)
 				io.WriteString(w, `{"error":"forbidden_origin"}`)
+				return
+			}
+			if r.URL.Path == "/api/v1/updates" {
+				if r.Method != http.MethodGet {
+					w.Header().Set("Allow", http.MethodGet)
+					w.WriteHeader(http.StatusMethodNotAllowed)
+					io.WriteString(w, `{"error":"method_not_allowed"}`)
+					return
+				}
+				if updates == nil {
+					w.WriteHeader(http.StatusServiceUnavailable)
+					io.WriteString(w, `{"error":"update_status_unavailable"}`)
+					return
+				}
+				snapshot, err := updates.Snapshot(r.Context())
+				if err != nil {
+					w.WriteHeader(http.StatusServiceUnavailable)
+					io.WriteString(w, `{"error":"update_status_unavailable"}`)
+					return
+				}
+				json.NewEncoder(w).Encode(snapshot)
 				return
 			}
 			if r.URL.Path == "/api/v1/certificates" {
@@ -175,6 +200,7 @@ func serveViews(ctx context.Context, address string, ready io.Writer, sensorStat
 }
 
 func main() {
+	updates := updateFlags()
 	certificates := certificateFlags()
 	retentionOptions := retentionFlags()
 	incidentOptions := incidentFlags()
@@ -213,6 +239,13 @@ func main() {
 	sensorConfigMinBatch := flag.Int("sensor-config-min-event-batch-limit", 0, "explicit C10 minimum event batch limit")
 	sensorConfigMaxBatch := flag.Int("sensor-config-max-event-batch-limit", 0, "explicit C10 maximum event batch limit")
 	flag.Parse()
+	if updateConfigured() && !updates.HTTPStatus {
+		os.Exit(runUpdateAction(*updates))
+	}
+	if updates.HTTPStatus && (!validUpdateFlags("", true) || updates.Enabled || *projectMode || *isolation || *showVersion || *validate) {
+		fmt.Fprintln(os.Stderr, "update status requires a complete read-only local HTTP configuration")
+		os.Exit(2)
+	}
 	if certificateConfigured() && !certificates.HTTPStatus {
 		os.Exit(runCertificateAction(*certificates))
 	}
@@ -382,6 +415,21 @@ func main() {
 		certificateView = view
 		sharedStore = store
 	}
+	var updateView updateStatusReader
+	if updates.HTTPStatus {
+		if sensorStatusConfigured && !sameUpdateStore(*updates, *sensorStatusDir, storage.Limits{MaxOperations: *sensorStatusMaxOperations, MaxBytes: *sensorStatusMaxBytes, MaxManifestBytes: *sensorStatusMaxManifestBytes}) || certificates.HTTPStatus && !sameUpdateStore(*updates, certificates.StateDir, certificates.Limits) || hasIncidents && !sameUpdateStore(*updates, incidentOptions.StateDir, incidentOptions.StorageLimits) {
+			fmt.Fprintln(os.Stderr, "update views must share the same local store and quotas")
+			os.Exit(2)
+		}
+		view, store, closeView, err := openUpdateVerifier(context.Background(), *updates, sharedStore, false)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "invalid local update status configuration")
+			os.Exit(2)
+		}
+		defer closeView()
+		updateView = view
+		sharedStore = store
+	}
 	var incidentView *incidentview.View
 	if hasIncidents {
 		view, closeView, err := openIncidentView(*incidentOptions, sharedStore)
@@ -396,7 +444,7 @@ func main() {
 	defer stop()
 	// The supervisor owns stdin; EOF also stops the engine after supervisor death.
 	go func() { io.Copy(io.Discard, os.Stdin); stop() }()
-	if err := serveViews(ctx, *address, os.Stdout, sensorStatus, incidentView, certificateView); err != nil {
+	if err := serveViews(ctx, *address, os.Stdout, sensorStatus, incidentView, certificateView, updateView); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
