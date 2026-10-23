@@ -1,0 +1,250 @@
+{
+  "commit_id": "C23",
+  "project": "MirageMesh",
+  "passed": false,
+  "planning_template": false,
+  "status": "implemented_pending_hosted_verification",
+  "date": "2026-10-23",
+  "base_commit": "ecbc76c11f6f1460e5cb732afb82b5893cf75809",
+  "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+  "source_identity_algorithm": "SHA-256 of sorted path + NUL + raw SHA-256 bytes over tracked/nonignored source, excluding docs/evidence/, SHA256SUMS.txt, plans/progress.json and docs/agents/SESSION_HANDOFF.json. The source inventory and commands bind the exact implementation snapshot; later status-only changes do not relabel it.",
+  "scope": "C23 explicit sealed segment expiration with durable audit, updated live index, retained source identity protection, restart convergence, typed standalone preview/apply and accessible incident coverage.",
+  "fixtures": {
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C23 inputs and test-only seeder; no live traffic or customer data.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C23/expected-output.json": "f9fb3ae6b8d92b23fce86af2f3948da465c4832274e36eb9c97b5fa4b18e68de",
+      "tests/fixtures/miragemesh/C23/negative.json": "d031ac386e9719e1ad6a982809900faabf521b5f4e64e6317c5196218ebde9c2",
+      "tests/fixtures/miragemesh/C23/positive.json": "e6f778e6a0f5e8e00b3b183a5fb20b4bf194029010427cbaede2d5190f2b9021",
+      "tests/fixtures/miragemesh/C23/seed.go": "166cef3bb0ea03077876f0c0608b045cf23a76c0e59461c3cd35469e19e20073"
+    }
+  },
+  "commands": [
+    {
+      "name": "browser",
+      "command": [
+        "npm",
+        "run",
+        "test:browser",
+        "--",
+        "--workers=1"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T02:37:15.101964+00:00",
+      "duration_seconds": 6.757,
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "output_path": "docs/evidence/C23/browser.log",
+      "stored_output_sha256": "e959c9978e8f793524590a5413589f0ad895eb3f297e835cf3c63d79c54453c2"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T02:36:33.418148+00:00",
+      "duration_seconds": 0.04,
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "output_path": "docs/evidence/C23/diff-check.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "go-targeted",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "./cmd/miragemesh",
+        "./internal/events",
+        "./internal/incidentview",
+        "./internal/incidents"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T02:36:33.412754+00:00",
+      "duration_seconds": 14.942,
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "output_path": "docs/evidence/C23/go-targeted.log",
+      "stored_output_sha256": "7293fbcc3fb99c0e76fbea2768182676e5ecd97b901c89f6e02b4898d7762321"
+    },
+    {
+      "name": "go-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T02:36:33.195415+00:00",
+      "duration_seconds": 6.503,
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "output_path": "docs/evidence/C23/go-vet.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "npm-check",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T02:36:33.217819+00:00",
+      "duration_seconds": 25.227,
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "output_path": "docs/evidence/C23/npm-check.log",
+      "stored_output_sha256": "9c8788a5a2ec8ad6c047e1d7b417dc327090a03b8ff2d44051f8ff91c0d7fabd"
+    },
+    {
+      "name": "python-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T02:36:33.396208+00:00",
+      "duration_seconds": 1.569,
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "output_path": "docs/evidence/C23/python-tests.log",
+      "stored_output_sha256": "04c791da3706c92fd560fe18a5e8205505b1ebe4b2539c61f051ad26a4abf56e"
+    },
+    {
+      "name": "repository-contracts",
+      "command": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T02:36:33.206060+00:00",
+      "duration_seconds": 0.217,
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "output_path": "docs/evidence/C23/repository-contracts.log",
+      "stored_output_sha256": "dec1dcf00b252b304bc2308acdf4d1e95965581a73019c970235737084b7dd9e"
+    },
+    {
+      "name": "retention",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "./tests",
+        "-run",
+        "^TestRetention|^TestSegmentRotationHasNoNetworkImports"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T02:36:33.192345+00:00",
+      "duration_seconds": 2.801,
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "output_path": "docs/evidence/C23/retention.log",
+      "stored_output_sha256": "4b385a663c8054e0ba5175f6d2af6129c5a7231b8085a964d4934b17452c6779"
+    }
+  ],
+  "failed_local_attempts": [
+    {
+      "name": "baseline-go-full",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "source_commit": "ecbc76c11f6f1460e5cb732afb82b5893cf75809",
+      "exit_code": 1,
+      "started_at": "2026-10-23T02:37:49.297011+00:00",
+      "duration_seconds": 11.927,
+      "output_path": "docs/evidence/C23/baseline-go-full.log.gz",
+      "stored_output_sha256": "0a6faa961a7da668e3290290b21b15e3251d1028610dc6b1804659f41b437503",
+      "uncompressed_output_sha256": "fd7838c152e8ea70a50b587bb8746f912fdd72b8b06d1aa651ea0eb331299f26",
+      "compression": "gzip"
+    },
+    {
+      "name": "go-full",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 1,
+      "started_at": "2026-10-23T02:36:33.210339+00:00",
+      "duration_seconds": 16.398,
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "output_path": "docs/evidence/C23/go-full.log.gz",
+      "stored_output_sha256": "b6f1c4c1041eddc0310e86d7a266587d2fcd37c83ef1a4427445a6c2275cc6d2",
+      "uncompressed_output_sha256": "07bf74ee2035d2bfab2bda92368166cea5b118adf9b3799be77b284257eed245",
+      "compression": "gzip"
+    }
+  ],
+  "local_failure_comparison": {
+    "same_failures_on_unmodified_base": true,
+    "failed_test_count": 14,
+    "tests": [
+      "TestDecoyIsolationAdapterBoundsRuntimeOutput",
+      "TestDecoyIsolationAdapterRollsBackAnUncertainStart",
+      "TestDecoyIsolationDeniesInternetAndPrivateSubnets",
+      "TestDecoyIsolationEnforcesPIDAndMemoryLimits",
+      "TestDecoyIsolationPolicyIsImmutable",
+      "TestDecoyIsolationPolicyRejectsUnsafeConfiguration",
+      "TestDecoyIsolationPreservesContainersOnOwnershipConflict",
+      "TestDecoyIsolationProviderFailuresAreExplicit",
+      "TestDecoyIsolationReconcilesAfterRestart",
+      "TestDecoyIsolationRejectsWeakRuntimeControls",
+      "TestDecoyIsolationReportsCleanupFailure",
+      "TestDecoyIsolationStopsAndRemovesItsContainer",
+      "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
+      "TestDecoyIsolationWorkflowReportsTypedOutcome"
+    ],
+    "explanation": "Local C13 container prerequisites are unavailable. The same 14 provider, isolation-policy and stub-output failures occur on the unmodified C22 base. No check was skipped or weakened; unchanged hosted CI must execute the full suite with pinned rootless Podman before C23 can be verified."
+  },
+  "results": {
+    "web": "68 Node tests, TypeScript and production web/engine build passed.",
+    "browser": "12 browser tests passed, including real C23 retention, projection, restart and inert accessible audit at 360px.",
+    "recovery": "Seven real SIGKILL boundaries and eight syscall failures passed with exact restart outcomes. Corrupt/linked audit and changed pending bytes/metadata fail closed.",
+    "index": "Retained sources are removed from the live index, explicit leading/trailing/whole-log gaps survive reopening, surviving duplicates move to real frames and projection cannot resurrect expired identities.",
+    "integrity": "Repository contract validator, six Python integrity regressions, gofmt, Go vet and diff checks passed.",
+    "hosted": "Pending; no hosted success is claimed yet."
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "npm": "11.9.0",
+    "go": "go version go1.27.2 linux/amd64",
+    "playwright": "1.64.1",
+    "local_browser": "Chromium 153.0.8010.0 via WEB_TEST_CHROMIUM override; hosted CI installs its locked Playwright browser.",
+    "provider": "C23 uses temporary local filesystem adapters. Local rootless Podman is unavailable; unchanged hosted CI supplies pinned prerequisites.",
+    "hardware": "Functional checks on ephemeral Linux amd64; C28 capacity target remains unmeasured."
+  },
+  "limits": [
+    "Segment copies only: C05 originals, receipts, acknowledgements, triage and quota remain unchanged; not secure full-data erasure.",
+    "Single trusted local writer and private directory; no remote retention API or scheduled deletion.",
+    "Audit bounded to 4 MiB and 1024 decisions; no compaction, quota fails before deletion.",
+    "Process crash/syscall recovery tested; no physical power-loss certification.",
+    "Keep audit and compatible reader with segment backups; full restore/C30/C40 remain separate gates."
+  ],
+  "remote_actions_executed": false,
+  "delivery": {
+    "commit_created": false,
+    "push_performed": false,
+    "publication_performed": false
+  },
+  "test_counts": {
+    "node_passed": 68,
+    "browser_passed": 12,
+    "required_engine_suites": 8,
+    "required_engine_anchors": 162,
+    "python_integrity_passed": 6
+  }
+}

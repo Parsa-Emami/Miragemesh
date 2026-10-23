@@ -13,6 +13,17 @@ function snapshot() {
   return { schema_version: '1', coverage: { complete: true, incomplete_segments: 0, missing_ordinals: [] }, unprojected_events: 0, rate_limit: 2, window_seconds: 60, incidents: [{ id: 'incident-' + 'b'.repeat(64), finding: { class: 'interaction', sensor_id: 'sensor-22', explanation: 'Synthetic observation.', sources: [structuredClone(source)] }, events: [{ source, event: { schema_version: '1', sensor_id: 'sensor-22', event_id: 'event-01', sequence: 1, observed_at: '2026-10-22T10:00:00Z', kind: 'http.request', metadata: { path: '/<img src=x onerror=globalThis.c22Sentinel=1>' } } }], history: [] }] };
 }
 
+test('incident retention metadata is explicit and cannot claim complete coverage', () => {
+  const value = snapshot();
+  value.retained_events = 4;
+  value.coverage.complete = false;
+  value.coverage.retention_gaps = [{ segment: 'segment-00000000000000000001', records: 2, bytes: 400, digest: 'a'.repeat(64), before: '2026-01-05T00:00:00Z', expired_at: '2026-01-06T00:00:00Z', reason: 'Synthetic retention' }];
+  assert.equal(validateIncidentSnapshot(value), value);
+  for (const change of [v => { v.coverage.complete = true; }, v => { v.retained_events = -1; }, v => { v.coverage.retention_gaps[0].digest = 'forged'; }, v => { v.coverage.retention_gaps.push(structuredClone(v.coverage.retention_gaps[0])); }]) {
+    const invalid = structuredClone(value); change(invalid); assert.throws(() => validateIncidentSnapshot(invalid), /invalid/);
+  }
+});
+
 test('published incident response schema validates sources and rejects missing trace fields', () => {
   const spec = JSON.parse(readFileSync(new URL('../../contracts/openapi.v1.json', import.meta.url), 'utf8'));
   function expand(value) {

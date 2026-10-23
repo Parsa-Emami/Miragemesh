@@ -40,6 +40,8 @@ type Index struct {
 	Missing      []OrdinalRange
 	Incomplete   []Segment
 	Duplicates   int64
+	Retention    []RetentionGap
+	retired      map[[2]string]RetainedEvent
 	Complete     bool
 
 	entries []Entry
@@ -95,6 +97,9 @@ func (w *Writer) indexEntry(sensorID, eventID string) (Entry, bool) {
 // make the index ambiguous. An exact repeat is tolerated for compatibility
 // with stores that were projected twice before C18.
 func (w *Writer) checkIndexEntry(candidate Entry) error {
+	if old, ok := w.retired[eventKey(candidate.SensorID, candidate.EventID)]; ok && (old.Digest != candidate.Digest || old.Sequence != candidate.Sequence) {
+		return ErrIndexConflict
+	}
 	existing, ok := w.indexEntry(candidate.SensorID, candidate.EventID)
 	if !ok {
 		return nil
@@ -159,7 +164,14 @@ func (w *Writer) snapshotIndex() Index {
 			}
 		}
 	}
-	snapshot.Complete = len(snapshot.Missing) == 0 && len(snapshot.Incomplete) == 0
+	for _, op := range w.retention.Operations {
+		snapshot.Retention = append(snapshot.Retention, cloneRetention(op.Segments)...)
+	}
+	snapshot.retired = make(map[[2]string]RetainedEvent, len(w.retired))
+	for k, v := range w.retired {
+		snapshot.retired[k] = v
+	}
+	snapshot.Complete = len(snapshot.Missing) == 0 && len(snapshot.Incomplete) == 0 && len(snapshot.Retention) == 0
 	snapshot.byEvent = make(map[[2]string]int, len(snapshot.entries))
 	for position, entry := range snapshot.entries {
 		snapshot.byEvent[eventKey(entry.SensorID, entry.EventID)] = position
@@ -177,4 +189,9 @@ func (w *Writer) indexRecords(entries []Entry) error {
 		w.recordIndexEntry(entry)
 	}
 	return nil
+}
+
+func (i Index) Retained(sensorID, eventID string) (RetainedEvent, bool) {
+	event, ok := i.retired[eventKey(sensorID, eventID)]
+	return event, ok
 }

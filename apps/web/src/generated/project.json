@@ -288,7 +288,7 @@
       "id": "C23",
       "title": "feat(retention): expire event segments with audit",
       "stage": "domain",
-      "status": "planned",
+      "status": "in_progress",
       "acceptance": [
         "Deletion updates indexes and retains explicit retention gap metadata."
       ],

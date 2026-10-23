@@ -150,6 +150,7 @@ func serve(ctx context.Context, address string, ready io.Writer, sensorStatus se
 }
 
 func main() {
+	retentionOptions := retentionFlags()
 	incidentOptions := incidentFlags()
 	address := flag.String("listen", "127.0.0.1:0", "loopback listen address")
 	showVersion := flag.Bool("version", false, "print runtime version and exit")
@@ -186,6 +187,9 @@ func main() {
 	sensorConfigMinBatch := flag.Int("sensor-config-min-event-batch-limit", 0, "explicit C10 minimum event batch limit")
 	sensorConfigMaxBatch := flag.Int("sensor-config-max-event-batch-limit", 0, "explicit C10 maximum event batch limit")
 	flag.Parse()
+	if retentionConfigured() {
+		os.Exit(runRetention(retentionOptions))
+	}
 	hasIncidents := incidentConfigured()
 	if hasIncidents && (*projectMode || *isolation || *showVersion || *validate) {
 		fmt.Fprintln(os.Stderr, "incident configuration requires the local HTTP runtime")

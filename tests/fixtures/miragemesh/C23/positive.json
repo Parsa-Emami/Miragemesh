@@ -1,0 +1,16 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C23 inputs; no live traffic or credentials.",
+  "source_events": [
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-23\",\"event_id\":\"event-01\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/1\"}}",
+    "{\n  \"schema_version\": \"1\",\n  \"sensor_id\": \"sensor-23\",\n  \"event_id\": \"event-02\",\n  \"sequence\": 2,\n  \"observed_at\": \"2026-01-02T00:00:00Z\",\n  \"kind\": \"http.request\",\n  \"metadata\": {\n    \"path\": \"/synthetic/2\"\n  }\n}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-23\",\"event_id\":\"event-03\",\"sequence\":3,\"observed_at\":\"2026-01-03T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/3\"}}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-23\",\"event_id\":\"event-04\",\"sequence\":4,\"observed_at\":\"2026-01-04T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/4\"}}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-23\",\"event_id\":\"event-05\",\"sequence\":5,\"observed_at\":\"2026-01-05T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/5\"}}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-23\",\"event_id\":\"event-06\",\"sequence\":6,\"observed_at\":\"2026-01-10T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/6\"}}"
+  ],
+  "before": "2026-01-05T00:00:00Z",
+  "reason": "Synthetic local retention",
+  "idempotency_key": "c23-synthetic-key-01"
+}

@@ -1,0 +1,10 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C23 inputs; no live traffic or credentials.",
+  "expired_segments": 2,
+  "expired_events": 4,
+  "live_events": 2,
+  "projection_retained": 4,
+  "projection_already": 2
+}

@@ -90,6 +90,7 @@ type Projection struct {
 	Appended         int
 	Skipped          int
 	AlreadyProjected int
+	Retained         int
 	IndexKnown       bool
 	Rebuilt          Index
 }
@@ -120,6 +121,7 @@ type segment struct {
 
 // fileOps are filesystem operations kept replaceable for syscall-failure tests.
 type fileOps struct {
+	remove func(string) error
 	write  func(*os.File, []byte) (int, error)
 	sync   func(*os.File) error
 	rename func(string, string) error
@@ -143,6 +145,8 @@ type Writer struct {
 	indexEntries []Entry
 	byEvent      map[[2]string]int
 	duplicates   int64
+	retention    retentionState
+	retired      map[[2]string]RetainedEvent
 }
 
 type parsedEntry struct {
@@ -260,11 +264,11 @@ func (w *Writer) names() ([]string, error) {
 		return nil, ErrIO
 	}
 	defer f.Close()
-	names, err := f.Readdirnames(w.limits.MaxSegments + 2)
+	names, err := f.Readdirnames(w.limits.MaxSegments + 4)
 	if err != nil && !errors.Is(err, io.EOF) {
 		return nil, ErrIO
 	}
-	if len(names) > w.limits.MaxSegments+1 {
+	if len(names) > w.limits.MaxSegments+3 {
 		return nil, ErrRecovery
 	}
 	return names, nil
@@ -280,6 +284,12 @@ func (w *Writer) entries(names []string) ([]parsedEntry, error) {
 		}
 		if name == lockName {
 			if !private(info, 0600) || info.Size() != 0 {
+				return nil, ErrRecovery
+			}
+			continue
+		}
+		if name == retentionName || name == retentionStage {
+			if !private(info, 0600) || info.Size() < 0 || info.Size() > retentionMaxBytes {
 				return nil, ErrRecovery
 			}
 			continue
@@ -403,6 +413,7 @@ func openWithOps(directory string, limits Limits, configure func(*Writer)) (*Wri
 		byEvent: make(map[[2]string]int),
 	}
 	w.ops = fileOps{
+		remove: root.Remove,
 		write:  func(f *os.File, b []byte) (int, error) { return f.Write(b) },
 		sync:   func(f *os.File) error { return f.Sync() },
 		rename: root.Rename,
@@ -439,6 +450,22 @@ func openWithOps(directory string, limits Limits, configure func(*Writer)) (*Wri
 		return nil, err
 	}
 
+	if err := w.loadRetention(names); err != nil {
+		return nil, err
+	}
+	if err := w.finishRetention(entries); err != nil {
+		return nil, err
+	}
+	if len(w.retention.Operations) > 0 {
+		names, err = w.names()
+		if err != nil {
+			return nil, err
+		}
+		entries, err = w.entries(names)
+		if err != nil {
+			return nil, err
+		}
+	}
 	var active *segment
 	for _, entry := range entries {
 		seg, records, err := w.load(entry)
@@ -493,6 +520,13 @@ func openWithOps(directory string, limits Limits, configure func(*Writer)) (*Wri
 	for _, seg := range w.segments {
 		if seg.number > maximum {
 			maximum = seg.number
+		}
+	}
+	for _, op := range w.retention.Operations {
+		for _, gap := range op.Segments {
+			if gap.Ordinal > maximum {
+				maximum = gap.Ordinal
+			}
 		}
 	}
 	w.next = 1
@@ -611,6 +645,11 @@ func (w *Writer) appendNormalizedLocked(payload []byte, event contracts.Event) (
 	}
 	if err := w.checkIndexEntry(candidate); err != nil {
 		return Ref{}, err
+	}
+	if _, retired := w.retired[eventKey(event.SensorID, event.EventID)]; retired {
+		if _, live := w.indexEntry(event.SensorID, event.EventID); !live {
+			return Ref{}, ErrRetained
+		}
 	}
 	frame := payload
 	if bytes.IndexByte(payload, '\n') >= 0 {
@@ -776,6 +815,13 @@ func (w *Writer) AppendRecords(ctx context.Context, records []storage.Record) (P
 				return projection, ErrIndexConflict
 			}
 			projection.AlreadyProjected++
+			continue
+		}
+		if old, ok := w.retired[eventKey(event.SensorID, event.EventID)]; ok {
+			if old.Digest != digest(payload) || old.Sequence != event.Sequence {
+				return projection, ErrIndexConflict
+			}
+			projection.Retained++
 			continue
 		}
 		if _, err := w.appendNormalizedLocked(payload, event); err != nil {

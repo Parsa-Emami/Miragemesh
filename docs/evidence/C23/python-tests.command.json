@@ -1,0 +1,20 @@
+{
+  "name": "python-tests",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/engineering",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-23T02:36:33.396208+00:00",
+  "duration_seconds": 1.569,
+  "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+  "output_path": "docs/evidence/C23/python-tests.log",
+  "stored_output_sha256": "04c791da3706c92fd560fe18a5e8205505b1ebe4b2539c61f051ad26a4abf56e"
+}

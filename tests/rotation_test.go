@@ -907,7 +907,7 @@ func TestSegmentRotationHasNoNetworkImports(t *testing.T) {
 		"bytes": true, "context": true, "crypto/sha256": true, "encoding/hex": true, "encoding/json": true,
 		"errors": true, "fmt": true, "io": true, "math": true, "os": true,
 		"path/filepath": true, "sort": true, "strconv": true, "strings": true,
-		"sync": true, "syscall": true,
+		"sync": true, "syscall": true, "time": true, "unicode/utf8": true,
 		"github.com/Parsa-Emami/Miragemesh/internal/contracts": true,
 		"github.com/Parsa-Emami/Miragemesh/internal/storage":   true,
 	}

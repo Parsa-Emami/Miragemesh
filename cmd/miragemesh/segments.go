@@ -56,6 +56,8 @@ type segmentProjectionOutcome struct {
 	Status                  string                        `json:"status"`
 	Appended                int                           `json:"appended"`
 	Skipped                 int                           `json:"skipped"`
+	Retained                int                           `json:"retained"`
+	RetentionGaps           []events.RetentionGap         `json:"retention_gaps,omitempty"`
 	AlreadyProjected        int                           `json:"already_projected"`
 	Segments                int                           `json:"segments"`
 	SegmentsKnown           bool                          `json:"segments_known"`
@@ -134,8 +136,10 @@ func projectSegments(ctx context.Context, options segmentProjectionOptions) (out
 	outcome.Appended = projection.Appended
 	outcome.Skipped = projection.Skipped
 	outcome.AlreadyProjected = projection.AlreadyProjected
+	outcome.Retained = projection.Retained
 	outcome.IndexKnown = projection.IndexKnown
 	if projection.IndexKnown {
+		outcome.RetentionGaps = projection.Rebuilt.Retention
 		outcome.IndexRecords = projection.Rebuilt.Records
 		outcome.IndexSensors = projection.Rebuilt.Sensors
 		outcome.IndexComplete = projection.Rebuilt.Complete
@@ -196,6 +200,9 @@ func deriveAlerts(ctx context.Context, records []storage.Record, index events.In
 			}
 			entry, exists := index.Lookup(event.SensorID, event.EventID)
 			if !exists {
+				if retired, ok := index.Retained(event.SensorID, event.EventID); ok && (retired.Sequence != event.Sequence || retired.Digest != segmentDigest(raw)) {
+					return alerts.Outcome{}, events.ErrIndexConflict
+				}
 				coverageComplete = false
 				continue
 			}
@@ -328,7 +335,7 @@ func segmentProjectionErrorKind(err error) string {
 		return "deadline_exceeded"
 	case errors.Is(err, storage.ErrInvalidInput), errors.Is(err, events.ErrInvalidInput):
 		return "invalid_input"
-	case errors.Is(err, events.ErrIndexConflict):
+	case errors.Is(err, events.ErrIndexConflict), errors.Is(err, events.ErrRetentionConflict):
 		return "conflict"
 	case errors.Is(err, events.ErrInvalidEvent):
 		return "invalid_event"

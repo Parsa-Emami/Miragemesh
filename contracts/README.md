@@ -60,3 +60,5 @@ C04 fixture manifests record repository authorship and Apache-2.0 licensing unde
 Official references: [Go JSON decoding and its default replacement/matching behavior](https://pkg.go.dev/encoding/json), [Go context](https://pkg.go.dev/context), [Ajv Draft 2020-12](https://ajv.js.org/json-schema.html#draft-2020-12), [format validation](https://ajv.js.org/guide/formats.html). The schemas are local resources; tests do not fetch remote schema references.
 
 C22 adds the source-backed local `GET /api/v1/incidents` snapshot and implements the existing triage body contract over loopback. Its exact local Origin checks, response bounds, durable idempotency and limitations are documented in `docs/architecture/INCIDENT_REPLAY.md` and OpenAPI. Event admission and remote multi-user management remain unavailable.
+
+C23 adds optional `retained_events` and `coverage.retention_gaps` to local incident snapshots. Retention summaries include segment identity, counts, hash, cutoff, decision time and reason. Any retention gaps mean incomplete coverage; this adds no HTTP deletion endpoint.

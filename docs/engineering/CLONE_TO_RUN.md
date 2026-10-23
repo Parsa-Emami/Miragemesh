@@ -59,3 +59,7 @@ npm run doctor
 ```
 
 The current test:clone performs a real local Git clone of the staged/committed source, runs setup, Go vet and uncached race tests with required-test discovery, then verifies unified startup, actual Go runtime health and disabled domain admission. C30 must extend it to the full tests/scenarios/clone-to-value.json workflow and real engine readiness. Current lifecycle checks cannot certify domain functionality. See ENGINE_TESTS.md for engine test discovery and ENGINE_LAUNCH.md for lifecycle tests. See each C task for future engine commands and prerequisites. Optional hosting/package operations remain in WEB_RUNBOOK.md.
+
+## C23 local retention
+
+The engine provides explicit standalone `--expire-segments` preview, with deletion only when `--retention-apply` is supplied. Stop the supervisor to release its segment lock. Supply the existing private directory, past cutoff, reason, idempotency key and actual segment limits. See [EVENT_RETENTION.md](../architecture/EVENT_RETENTION.md). It expires segment copies only; C05 data and quota remain unchanged.

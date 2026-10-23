@@ -46,13 +46,25 @@ type MissingOrdinal struct {
 	Before uint64 `json:"before"`
 }
 
+type RetentionSummary struct {
+	Segment   string `json:"segment"`
+	Records   int64  `json:"records"`
+	Bytes     int64  `json:"bytes"`
+	Digest    string `json:"digest"`
+	Before    string `json:"before"`
+	ExpiredAt string `json:"expired_at"`
+	Reason    string `json:"reason"`
+}
+
 type Coverage struct {
-	Complete           bool             `json:"complete"`
-	Missing            []MissingOrdinal `json:"missing_ordinals"`
-	IncompleteSegments int              `json:"incomplete_segments"`
+	Retention          []RetentionSummary `json:"retention_gaps,omitempty"`
+	Complete           bool               `json:"complete"`
+	Missing            []MissingOrdinal   `json:"missing_ordinals"`
+	IncompleteSegments int                `json:"incomplete_segments"`
 }
 
 type ViewSnapshot struct {
+	RetainedEvents    int              `json:"retained_events,omitempty"`
 	SchemaVersion     string           `json:"schema_version"`
 	Coverage          Coverage         `json:"coverage"`
 	UnprojectedEvents int              `json:"unprojected_events"`
@@ -108,12 +120,24 @@ func (v *View) snapshot(ctx context.Context) (ViewSnapshot, error) {
 	for _, gap := range index.Missing {
 		result.Coverage.Missing = append(result.Coverage.Missing, MissingOrdinal{After: gap.After, Before: gap.Before})
 	}
+	for _, gap := range index.Retention {
+		result.Coverage.Retention = append(result.Coverage.Retention, RetentionSummary{Segment: gap.Segment, Records: gap.Records, Bytes: gap.Bytes, Digest: gap.Digest, Before: gap.Before, ExpiredAt: gap.ExpiredAt, Reason: gap.Reason})
+	}
 	for _, record := range records {
 		if record.Event.SchemaVersion == "" {
 			continue
 		}
 		if entry, exists := index.Lookup(record.Event.SensorID, record.Event.EventID); !exists {
-			result.UnprojectedEvents++
+			if retired, ok := index.Retained(record.Event.SensorID, record.Event.EventID); ok {
+				raw := bytes.TrimSuffix(record.Input, []byte{'\n'})
+				sum := sha256.Sum256(raw)
+				if retired.Sequence != record.Event.Sequence || retired.Digest != hex.EncodeToString(sum[:]) {
+					return ViewSnapshot{}, events.ErrIndexConflict
+				}
+				result.RetainedEvents++
+			} else {
+				result.UnprojectedEvents++
+			}
 			result.Coverage.Complete = false
 		} else {
 			raw := bytes.TrimSuffix(record.Input, []byte{'\n'})

@@ -2,7 +2,8 @@ openapi: 3.2.0
 info:
   title: MirageMesh API
   version: 1.0.0
-  description: Canonical implementation-start HTTP contract. Source code must conform to this contract; changes require compatibility review.
+  description: Canonical implementation-start HTTP contract. Source code must conform
+    to this contract; changes require compatibility review.
 servers:
 - url: /api/v1
 tags:
@@ -16,12 +17,16 @@ paths:
       operationId: miragemesh_get_sensors
       tags:
       - MirageMesh
-      description: Implemented opt-in read-only loopback projection. No bearer authentication or event metadata. The engine requires explicit local storage and verification
-        policy. Host must name loopback on the listener port; an Origin, when present, must match the HTTP request authority. This is not a remote or multi-user API.
+      description: Implemented opt-in read-only loopback projection. No bearer authentication
+        or event metadata. The engine requires explicit local storage and verification
+        policy. Host must name loopback on the listener port; an Origin, when present,
+        must match the HTTP request authority. This is not a remote or multi-user
+        API.
       security: []
       responses:
         '200':
-          description: Complete read-only local snapshot. Offline is a five-minute stored-event heuristic, not a live connection claim.
+          description: Complete read-only local snapshot. Offline is a five-minute
+            stored-event heuristic, not a live connection claim.
           content:
             application/json:
               schema:
@@ -407,7 +412,9 @@ paths:
       - MirageMesh
       responses:
         '202':
-          description: Status and reason are committed to the C05 append-only store. OperationResult.data contains replayed:boolean; resource_id is the incident ID.
+          description: Status and reason are committed to the C05 append-only store.
+            OperationResult.data contains replayed:boolean; resource_id is the incident
+            ID.
           content:
             application/json:
               schema:
@@ -541,9 +548,12 @@ paths:
       - $ref: '#/components/parameters/IdempotencyKey'
       - $ref: '#/components/parameters/RequestId'
       security: []
-      description: C22 opt-in loopback mutation. Requires same HTTP Origin and Host/listener port, application/json and Idempotency-Key. The ID must name a finding
-        derived from the currently available segment sources. Body remains exactly the C20 status/reason contract. A retry with the same key and body returns its
-        original durable result; conflict is explicit. Not a remote or multi-user authenticated surface.
+      description: C22 opt-in loopback mutation. Requires same HTTP Origin and Host/listener
+        port, application/json and Idempotency-Key. The ID must name a finding derived
+        from the currently available segment sources. Body remains exactly the C20
+        status/reason contract. A retry with the same key and body returns its original
+        durable result; conflict is explicit. Not a remote or multi-user authenticated
+        surface.
   /incidents:
     get:
       summary: Replay local source-backed incident findings
@@ -551,9 +561,12 @@ paths:
       tags:
       - MirageMesh
       security: []
-      description: C22 opt-in single-host loopback view. Reads exact immutable segment frames and C05 triage history. Requires explicit local storage, segment limits
-        and operator rate policy. At most 256 indexed events and 1 MiB response; exceeding either returns unavailable without truncating or deleting evidence. Missing
-        coverage and unprojected events remain explicit. No event admission or remote authenticated management API.
+      description: C22 opt-in single-host loopback view. Reads exact immutable segment
+        frames and C05 triage history. Requires explicit local storage, segment limits
+        and operator rate policy. At most 256 indexed events and 1 MiB response; exceeding
+        either returns unavailable without truncating or deleting evidence. Missing
+        coverage and unprojected events remain explicit. No event admission or remote
+        authenticated management API.
       responses:
         '200':
           description: Verified local source trace and durable triage history.
@@ -617,7 +630,8 @@ components:
         type: string
         minLength: 16
         maxLength: 128
-      description: Unique command key. Same key + same principal + same semantic request must replay the original result.
+      description: Unique command key. Same key + same principal + same semantic request
+        must replay the original result.
     RequestId:
       name: X-Request-ID
       in: header
@@ -821,6 +835,11 @@ components:
               type: integer
               minimum: 0
               maximum: 9007199254740991
+            retention_gaps:
+              type: array
+              maxItems: 16384
+              items:
+                $ref: '#/components/schemas/RetentionSummary'
         unprojected_events:
           type: integer
           minimum: 0
@@ -907,6 +926,45 @@ components:
                 items:
                   $ref: '#/components/schemas/LocalTriageLabel'
           maxItems: 512
+        retained_events:
+          type: integer
+          minimum: 0
+    RetentionSummary:
+      type: object
+      additionalProperties: false
+      required:
+      - segment
+      - records
+      - bytes
+      - digest
+      - before
+      - expired_at
+      - reason
+      properties:
+        segment:
+          type: string
+          pattern: ^segment-[0-9]{20}$
+          not:
+            const: segment-00000000000000000000
+        records:
+          type: integer
+          minimum: 1
+        bytes:
+          type: integer
+          minimum: 1
+        digest:
+          type: string
+          pattern: ^[a-f0-9]{64}$
+        before:
+          type: string
+          format: date-time
+        expired_at:
+          type: string
+          format: date-time
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 1024
   responses:
     ErrorResponse:
       description: Stable API error envelope.

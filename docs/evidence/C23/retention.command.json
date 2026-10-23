@@ -1,0 +1,18 @@
+{
+  "name": "retention",
+  "command": [
+    "go",
+    "test",
+    "-race",
+    "-count=1",
+    "./tests",
+    "-run",
+    "^TestRetention|^TestSegmentRotationHasNoNetworkImports"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-23T02:36:33.192345+00:00",
+  "duration_seconds": 2.801,
+  "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+  "output_path": "docs/evidence/C23/retention.log",
+  "stored_output_sha256": "4b385a663c8054e0ba5175f6d2af6129c5a7231b8085a964d4934b17452c6779"
+}

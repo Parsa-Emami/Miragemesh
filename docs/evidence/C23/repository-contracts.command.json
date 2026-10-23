@@ -1,0 +1,13 @@
+{
+  "name": "repository-contracts",
+  "command": [
+    "python3",
+    "scripts/validate_repo.py"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-23T02:36:33.206060+00:00",
+  "duration_seconds": 0.217,
+  "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+  "output_path": "docs/evidence/C23/repository-contracts.log",
+  "stored_output_sha256": "dec1dcf00b252b304bc2308acdf4d1e95965581a73019c970235737084b7dd9e"
+}

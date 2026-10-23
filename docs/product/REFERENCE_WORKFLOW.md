@@ -159,3 +159,7 @@ The Incidents page reads segment frames and their exact source digests through
 segment/record/sequence/digest sources; incomplete coverage stays explicit. It
 does not perform retention, ingest, enrollment or the full clone-to-value
 scenario. See `docs/architecture/INCIDENT_REPLAY.md`.
+
+## Explicit segment retention
+
+C23 adds standalone preview/apply retention of complete sealed segments with a durable audit, restart convergence and no projection resurrection. Run it while the supervisor is stopped. Incident coverage identifies deliberately expired sources separately from unprojected events and spool loss. C05 copies remain unchanged; see [EVENT_RETENTION.md](../architecture/EVENT_RETENTION.md) for actual scope, bounds and commands.

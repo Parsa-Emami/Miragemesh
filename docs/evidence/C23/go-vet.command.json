@@ -1,0 +1,14 @@
+{
+  "name": "go-vet",
+  "command": [
+    "go",
+    "vet",
+    "./..."
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-23T02:36:33.195415+00:00",
+  "duration_seconds": 6.503,
+  "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+  "output_path": "docs/evidence/C23/go-vet.log",
+  "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

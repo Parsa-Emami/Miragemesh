@@ -1207,6 +1207,13 @@
                 "type": "integer",
                 "minimum": 0,
                 "maximum": 9007199254740991
+              },
+              "retention_gaps": {
+                "type": "array",
+                "maxItems": 16384,
+                "items": {
+                  "$ref": "#/components/schemas/RetentionSummary"
+                }
               }
             }
           },
@@ -1324,6 +1331,57 @@
               }
             },
             "maxItems": 512
+          },
+          "retained_events": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      },
+      "RetentionSummary": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "segment",
+          "records",
+          "bytes",
+          "digest",
+          "before",
+          "expired_at",
+          "reason"
+        ],
+        "properties": {
+          "segment": {
+            "type": "string",
+            "pattern": "^segment-[0-9]{20}$",
+            "not": {
+              "const": "segment-00000000000000000000"
+            }
+          },
+          "records": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "before": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expired_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
           }
         }
       }

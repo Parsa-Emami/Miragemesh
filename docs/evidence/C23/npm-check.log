@@ -1,0 +1,124 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 check
+> npm run validate:plan && npm run build && npm test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 validate:plan
+> node scripts/roadmap.mjs validate
+
+Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 build
+> npm run prepare:web && npm run typecheck && vite build --config apps/web/vite.config.ts && npm run build:engine
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 prepare:web
+> node scripts/generate-web-data.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 typecheck
+> tsc -p tsconfig.json
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 22 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.78 kB │ gzip:  0.47 kB
+dist/web/assets/index-DS7dV-uI.css    7.04 kB │ gzip:  2.25 kB
+dist/web/assets/index-C8K6bZ-2.js   261.48 kB │ gzip: 81.00 kB
+
+✓ built in 548ms
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 build:engine
+> node scripts/build-engine.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 test
+> node --test tests/web/*.test.mjs tests/contracts/*.test.mjs tests/engineering/*.test.mjs
+
+✔ CLI accepts the exact v1 fixture and reports validation without acceptance authority (27.747155ms)
+✔ real schemas and Go reject every incompatible structural fixture (761.800615ms)
+✔ identifier, exact numeric, timestamp and UTF-8 byte boundaries agree with the Go validator (362.454497ms)
+✔ invalid CLI combinations fail usage without launching a server (29.142496ms)
+✔ result schema rejects contradictory authority, errors and incomplete-input digests (6.088884ms)
+✔ an actual stdin read failure returns only a typed error and no partial digest (7.053693ms)
+✔ an open stdin expires and either termination signal returns a redacted cancellation (2232.644223ms)
+✔ requires source-backed C22 replay, durable HTTP triage and fail-closed replay limits (927.913437ms)
+✔ accepts executed engine, contract and real recovery suites with interleaved output (198.830505ms)
+✔ rejects empty discovery and package-only success without executed tests (218.229262ms)
+✔ rejects a missing required suite or anchor (189.615496ms)
+✔ requires persistent sensor sequence and invalid-event regression anchors (258.006862ms)
+✔ rejects a skipped anchor or a pass with no run (240.329617ms)
+✔ rejects failures in any package and unfinished package results (345.389838ms)
+✔ rejects malformed JSON events and missing input (441.996605ms)
+✔ requires enrollment validation, durable consumption, scope, clock, concurrency and crash anchors (917.347391ms)
+✔ requires mTLS acceptance, transport denial, typed verdicts, issuer-bound revocation, revoked replay and configuration anchors (513.758914ms)
+✔ requires signed desired state, unsigned rejection, stale rejection and exact-byte signature anchors (1185.266393ms)
+✔ requires durable apply, real crash/recovery, shared-writer serialization and rejection anchors (831.063899ms)
+✔ requires decoy observation, echo, request bound, prerequisite, restart and no-execution anchors (858.539356ms)
+✔ requires decoy isolation control, cleanup, immutability, runtime bound, cancellation and workflow anchors (949.848364ms)
+✔ requires decoy egress, runtime limit, reconciliation, provider and adapter anchors (639.139856ms)
+✔ requires bounded spool persistence, rejection, concurrency, configuration and recovery anchors (1100.340833ms)
+✔ requires durable overflow markers, replay, quota and gap-aware sequence anchors (429.829732ms)
+✔ requires durable batch acknowledgement, lost-ACK replay, capacity, rejection and real recovery anchors (1203.112012ms)
+✔ requires immutable segment rotation, explicit incomplete tails, crash recovery and projection anchors (2403.628435ms)
+✔ requires derived index rebuild, dedup, conflict, loss and incomplete-tail anchors (641.822916ms)
+✔ requires C19 explainable rules and durable alert projection anchors (507.980366ms)
+✔ requires C20 append-only triage, strict requests, restart replay and forged-history anchors (806.110035ms)
+✔ requires C21 snapshot and status boundary anchors even when other suites pass (574.17585ms)
+✔ requires the review remediation boundaries (603.9869ms)
+✔ requires C23 expiration, audit, real crash recovery and resurrection prevention (819.092408ms)
+✔ retention CLI previews, applies and replays without rewriting C05 (359.574087ms)
+✔ retention CLI rejects missing storage and mixed or incomplete modes (89.758535ms)
+✔ public configuration fails closed on engine flags, external endpoints, unknown keys and project mismatch (1.859358ms)
+✔ preview rejects hostile structure, excessive UTF-8 size and excessive complexity (3.061843ms)
+✔ HTTP isolation, cache rules, health semantics, methods, traversal and symlink containment (219.779827ms)
+✔ generated project and runtime identity agree with exactly forty original product tasks (4.532568ms)
+✔ incident retention metadata is explicit and cannot claim complete coverage (5.521236ms)
+✔ published incident response schema validates sources and rejects missing trace fields (184.89353ms)
+✔ incident boundary rejects broken source links and inconsistent coverage before rendering (5.102444ms)
+✔ incident proxy rejects redirect, malformed, oversized and unavailable upstreams without egress (235.421906ms)
+✔ real launcher serves engine health, preserves disabled admission, stops and restarts (388.654021ms)
+✔ local web proxy validates the exact read-only sensor response (80.738866ms)
+✔ engine serves an empty C05-backed snapshot when explicit local policy is supplied (297.033077ms)
+✔ engine crash stops the web listener with a failing outcome (41.050218ms)
+✔ occupied web port remains owned by its server and launch cleans up its engine (42.133371ms)
+✔ missing engine and invalid configuration fail before a successful launch (47.41521ms)
+✔ health boundary rejects malformed, oversized, redirected, unavailable and stalled upstreams (2045.980264ms)
+✔ synthetic C03 fixtures are versioned and cannot claim product readiness (2.340218ms)
+✔ CLI SIGINT and SIGTERM release both listeners; supervisor death closes engine stdin (468.474389ms)
+✔ unresponsive startup times out and cancellation terminates only the owned child (10123.212019ms)
+# example.invalid/synthetic/cmd/miragemesh
+cmd/miragemesh/main.go:2:15: undefined: missing
+✔ failed Go compilation preserves the previous binary and removes staging output (70.209251ms)
+✔ startup rejects forged non-loopback handshakes and unsafe health destinations (123.202645ms)
+✔ default engine returns a typed disabled sensor response directly (19.062304ms)
+✔ web and engine reject foreign Host and Origin before serving local data (31.312271ms)
+✔ sensor responses conform to the published local API schema (107.092682ms)
+✔ setup validates toolchain/options and stops at the first failed install (7.313019ms)
+✔ setup rejects missing tools, wrong pins and a non-rootless provider before building (1.012733ms)
+✔ roadmap rejects absent resources, escaping paths and unproved completion (46.052502ms)
+✔ accepts the repository reference scenario and its licensed fixtures (26.523995ms)
+✔ rejects missing workflow requirements and fixture provenance (35.141413ms)
+✔ rejects fixture metadata without provenance or license (26.375433ms)
+✔ rejects escaping paths, unsupported versions and false engine success claims (21.903248ms)
+✔ accepts exact versioned resources, an explicitly optional missing tool and synthetic fixtures (31.18719ms)
+✔ rejects floating resources, missing official metadata and mismatched integrity (110.498141ms)
+✔ rejects unavailable required resources and fixture escapes or checksum changes (50.638668ms)
+✔ validates the versioned sensor snapshot and rejects malformed sensor states (29.43486ms)
+ℹ tests 68
+ℹ suites 0
+ℹ pass 68
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18011.951977

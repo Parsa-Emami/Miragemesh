@@ -547,3 +547,5 @@ for source trace, keyboard access at 360px, inert HTML, restart durability and
 committed-write/lost-response recovery. It also covers empty, invalid,
 interrupted, disabled and stale states. No Podman provider is invoked by C22;
 the full pre-existing engine suite still requires its locked rootless provider.
+
+C23 requires two public retention integration anchors and seven internal recovery anchors (162 required anchors across eight suites). Coverage includes seven real SIGKILL boundaries, eight syscall faults, audit integrity, whole-log ordinal high water, concurrent replay, quota, owned snapshots and protected incomplete/mixed/duplicate sources. Node CLI tests and a real browser test cover preview/apply, typed rejection, non-resurrection, restart, keyboard audit and inert metadata. Provider-dependent full-suite failures must remain explicit when Podman is unavailable.

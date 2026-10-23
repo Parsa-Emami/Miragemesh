@@ -104,3 +104,7 @@ launches the actual supervised engine, navigates and saves by keyboard at
 write response and proves same-key retry produces one history entry. Synthetic
 HTML sentinels remain inert and the browser makes no external request. Separate
 negative tests exercise disabled, invalid, empty, interrupted and stale states.
+
+## C23 retention coverage
+
+Optional `retained_events` and `coverage.retention_gaps` distinguish intentional source expiration from unprojected C05 events. The UI presents an accessible inert audit of segment counts, hashes, cutoff, reason and time. Coverage stays incomplete after expiration; C05 copies and triage are unchanged. See [EVENT_RETENTION.md](EVENT_RETENTION.md).

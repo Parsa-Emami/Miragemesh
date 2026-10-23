@@ -204,10 +204,10 @@
     },
     {
       "id": "C23",
-      "status": "planned",
+      "status": "in_progress",
       "evidence": [],
       "source_identity": null,
-      "notes": ""
+      "notes": "C23 implementation and targeted local checks complete; final source-bound checks and hosted CI pending."
     },
     {
       "id": "C24",

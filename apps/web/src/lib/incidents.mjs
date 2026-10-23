@@ -12,7 +12,16 @@ export function validateIncidentSnapshot(value) {
       !integer(value.unprojected_events) || !object(value.coverage) || typeof value.coverage.complete !== 'boolean' ||
       !integer(value.coverage.incomplete_segments) || !Array.isArray(value.coverage.missing_ordinals) || !Array.isArray(value.incidents) || value.incidents.length > 512) fail();
   for (const gap of value.coverage.missing_ordinals) if (!object(gap) || !integer(gap.after, 1) || !integer(gap.before, 1) || gap.before <= gap.after + 1) fail();
-  if (value.coverage.complete && (value.unprojected_events || value.coverage.incomplete_segments || value.coverage.missing_ordinals.length)) fail();
+  if (value.retained_events !== undefined && !integer(value.retained_events)) fail();
+  const retention = value.coverage.retention_gaps === undefined ? [] : value.coverage.retention_gaps;
+  if (!Array.isArray(retention) || retention.length > 16384) fail();
+  const retired = new Set();
+  for (const gap of retention) {
+    if (!object(gap) || !segmentID.test(gap.segment) || /^segment-0{20}$/.test(gap.segment) || retired.has(gap.segment) || !integer(gap.records, 1) || !integer(gap.bytes, 1) || !digest.test(gap.digest) || !date(gap.before) || !date(gap.expired_at) || Date.parse(gap.before) >= Date.parse(gap.expired_at) || !text(gap.reason, 1024) || !gap.reason.trim()) fail();
+    retired.add(gap.segment);
+  }
+  if (value.retained_events && !retention.length) fail();
+  if (value.coverage.complete && (value.retained_events || retention.length || value.unprojected_events || value.coverage.incomplete_segments || value.coverage.missing_ordinals.length)) fail();
   const ids = new Set();
   const identities = new Map();
   for (const incident of value.incidents) {

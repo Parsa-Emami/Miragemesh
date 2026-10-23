@@ -261,3 +261,7 @@ Regressions cover accepted pretty JSON through projection and alerts, index
 rebuild/replay, the maximum encoded payload, quota rejection, malformed encoded
 frames and preservation of a torn encoded tail alongside a valid record.
 Reference: [Go JSON byte encoding](https://pkg.go.dev/encoding/json#Marshal).
+
+## C23 retention integration
+
+Complete sealed segments can expire through the explicit offline retention workflow. Active, mixed-age and incomplete segments are protected. The audit commits before deletion, recovery finishes its decision, and future ordinals include retired high water. See [EVENT_RETENTION.md](EVENT_RETENTION.md).

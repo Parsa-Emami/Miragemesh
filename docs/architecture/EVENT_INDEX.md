@@ -153,3 +153,7 @@ and event identities. Rebuild and alert derivation preserve the same tuple
 semantics. Multiline string frames are decoded by the segment reader before
 indexing, so source digests refer to the exact normalized C04 payload. See the
 compatible multiline frame extension in `EVENT_SEGMENTS.md`.
+
+## C23 retained identities
+
+The rebuilt live index excludes expired files and retains explicit audit gaps, including leading/trailing/whole-log gaps. Any retention gap makes coverage incomplete. Exact retired identities cannot be resurrected by C05 projection; different bytes or sequences conflict. Surviving duplicate references rebuild to their actual remaining frame. See [EVENT_RETENTION.md](EVENT_RETENTION.md).
