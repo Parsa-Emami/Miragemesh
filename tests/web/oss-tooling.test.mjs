@@ -45,5 +45,12 @@ test('roadmap rejects absent resources, escaping paths and unproved completion',
   const unsafeFixture = structuredClone(values); unsafeFixture[0].commits[6].resources.fixture.path = '../escape'; assert.ok(validate(...unsafeFixture).some(e => e.includes('unsafe')));
   const pending = values[1].commits.findIndex(t => t.status !== 'verified');
   assert.ok(pending >= 0, 'a pending unverified task must exist while the roadmap is incomplete');
-  const fake = structuredClone(values); fake[1].commits[pending].status = 'verified'; assert.ok(validate(...fake).some(e => e.includes('unproved')));
+  for (const proof of [
+    { source_identity: null, evidence: ['docs/evidence/synthetic.json'] },
+    { source_identity: 'sha256:' + 'a'.repeat(64), evidence: [] },
+  ]) {
+    const fake = structuredClone(values);
+    Object.assign(fake[1].commits[pending], proof, { status: 'verified' });
+    assert.ok(validate(...fake).some(e => e.includes('unproved')));
+  }
 });

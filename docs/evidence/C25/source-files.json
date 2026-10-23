@@ -1,5 +1,5 @@
 {
-  "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+  "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
   "algorithm": "sorted path + NUL + raw SHA-256 over tracked/nonignored source, excluding docs/evidence/, SHA256SUMS.txt, plans/progress.json and docs/agents/SESSION_HANDOFF.json",
   "files": {
     ".agents/SKILLS_AUDIT.md": "d4964430cf549d12cec42e6c7f5a08372f201474f7f8ae2353a8245f2540a1e0",
@@ -518,7 +518,7 @@
     "tests/web/foundation.test.mjs": "e25d40f1309d2664481066362e6645678ad04957ddf17439c62fae60830707c3",
     "tests/web/incidents.test.mjs": "ee331a723441452307ba9cf6250cc4c6667bcfc227d0ac7d5d373a068ea1bb0e",
     "tests/web/local-launch.test.mjs": "78ba2247d6ef0344e4ba4db151a727d09588e9e84181a4eff98c6aa05a031356",
-    "tests/web/oss-tooling.test.mjs": "b6c87a8cb53e944698e8933c787a0122c6f302d7ce3d83d344006223a23d5f2e",
+    "tests/web/oss-tooling.test.mjs": "071351f02354c04938dc9198bb4521b948da53a25cfcbcee9f3b62a5d36cb752",
     "tests/web/package.test.mjs": "875508312a45c8937959a590cb32d355ac7001d21e4ad51417ca9ae16550a79b",
     "tests/web/reference-contract.test.mjs": "d2ebab43ebe93c6b71a910ba5f43f05ffee23162e6d177b8fd633c6acaa6f0d2",
     "tests/web/resource-contract.test.mjs": "be41d46a67141daa82b73731cc76ee81da6e648d69a756bb7609e7fbdd554f84",

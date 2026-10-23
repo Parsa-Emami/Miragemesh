@@ -1,0 +1,17 @@
+{
+  "name": "npm-check-roadmap-fix",
+  "command": [
+    "npm",
+    "run",
+    "check"
+  ],
+  "exit_code": 0,
+  "started_at": "2026-10-23T13:41:36.449818+00:00",
+  "duration_seconds": 51.669,
+  "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
+  "environment": {
+    "WEB_TEST_CHROMIUM": "/tmp/miragemesh-browser/chrome-headless-shell-linux64/chrome-headless-shell"
+  },
+  "output_path": "docs/evidence/C25/npm-check-roadmap-fix.log",
+  "stored_output_sha256": "c96af6b5ee7adbca8a753eaa428f1ccac513f6ef3d2624a18ebffd31de585333"
+}

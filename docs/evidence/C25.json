@@ -6,9 +6,9 @@
   "status": "in_progress",
   "date": "2026-10-23",
   "base_commit": "84d078142db8fdff4c05b67091e6893c0bc99079",
-  "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+  "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
   "source_identity_algorithm": "sorted path + NUL + raw SHA-256 over tracked/nonignored source, excluding docs/evidence/, SHA256SUMS.txt, plans/progress.json and docs/agents/SESSION_HANDOFF.json",
-  "implementation_commit": null,
+  "implementation_commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
   "scope": "Signed per-sensor update metadata, exact local artifact verification, durable revision/revocation/high-water floors, separate scoped expiring single-use recovery authority, strict operator CLI and read-only local Updates API/UI. No installer or executable activation.",
   "architecture": {
     "domain": "Ed25519 publisher and distinct offline recovery authority; strict versioned canonical documents and immutable release number-to-digest/length identities.",
@@ -196,6 +196,23 @@
       "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
       "output_path": "docs/evidence/C25/update-and-regressions.log",
       "stored_output_sha256": "8474f19192c9b339ab2422cc8f3a130f3c1c24ab3cefe149926c4faa5d1a1a77"
+    },
+    {
+      "name": "npm-check-roadmap-fix",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-23T13:41:36.449818+00:00",
+      "duration_seconds": 51.669,
+      "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
+      "environment": {
+        "WEB_TEST_CHROMIUM": "/tmp/miragemesh-browser/chrome-headless-shell-linux64/chrome-headless-shell"
+      },
+      "output_path": "docs/evidence/C25/npm-check-roadmap-fix.log",
+      "stored_output_sha256": "c96af6b5ee7adbca8a753eaa428f1ccac513f6ef3d2624a18ebffd31de585333"
     }
   ],
   "failed_local_attempts": [
@@ -360,7 +377,7 @@
     "local_checks": "81 Node tests, TypeScript and production engine/web builds, relevant uncached Go race suites, go vet, empty gofmt output, six Python regressions and repository/diff validation passed.",
     "browser": "18 browser tests passed with explicit local Chromium 153.0.8010.0 headless-shell override: actual C05-backed CLI/status/revocation/recovery/two restarts, keyboard details at 360px, inert metadata and stale/invalid reads. Screenshot visually inspected.",
     "discovery": "15 C25 required anchors added to the existing eight-suite guard, for 189 total. Guard mutation regression passed; full hosted execution remains pending.",
-    "hosted": "Pending; in_progress and passed=false until the exact pushed source passes all four workflows."
+    "hosted": "Initial engine, contracts and plan jobs passed; web found the roadmap fixture assumption. The test fix awaits all four hosted jobs on its exact new source."
   },
   "scope_limits": [
     "Trusted local operator, authoritative wall clock and latest C05 history; no external anti-rollback checkpoint or trusted hardware clock.",
@@ -368,5 +385,73 @@
     "Verification records exact file digest and length at check time, not installed/running software. Callers supply bounded local readers and must control their blocking behavior.",
     "Append-only bounded state; at most 8 KiB metadata, 2 KiB recovery grant, 16 offered releases, 64 cumulative revocations, 64 MiB configured artifact bound and 1 MiB public status.",
     "No database schema, migration, .env, Dockerfile, lockfile or required-provider change. C28 measurements, full C30 restart/restore and C40 release remain pending."
+  ],
+  "implementation_source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+  "verification_fix_commit": null,
+  "initial_hosted_runs": [
+    {
+      "name": "plan-consistency",
+      "run_id": 39962755957,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39962755957",
+      "created_at": "2026-10-23T13:37:29Z",
+      "updated_at": "2026-10-23T13:37:39Z"
+    },
+    {
+      "name": "contracts",
+      "run_id": 39962755903,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39962755903",
+      "created_at": "2026-10-23T13:37:29Z",
+      "updated_at": "2026-10-23T13:37:39Z"
+    },
+    {
+      "name": "web-foundation",
+      "run_id": 39962755882,
+      "status": "completed",
+      "conclusion": "failure",
+      "source_commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39962755882",
+      "created_at": "2026-10-23T13:37:29Z",
+      "updated_at": "2026-10-23T13:38:44Z"
+    },
+    {
+      "name": "engine-runtime",
+      "run_id": 39962755868,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39962755868",
+      "created_at": "2026-10-23T13:37:29Z",
+      "updated_at": "2026-10-23T13:39:20Z"
+    }
+  ],
+  "verification_remediation": {
+    "problem": "The existing unproved-completion test assumed every pending task lacked source/evidence references. It failed once in_progress C25 acquired those references, although its proof was still pending.",
+    "fix": "Construct both missing-source and missing-evidence negative cases explicitly. Production roadmap validation and evidence-content checks remain unchanged.",
+    "red_log": "docs/evidence/C25/roadmap-fixture-red.log.gz",
+    "green_log": "docs/evidence/C25/roadmap-fixture-green.log",
+    "runtime_source_changed": false,
+    "initial_ci_engine": "Full Go race with pinned rootless Podman and all 189 anchors passed on cf8e3cd; initial web job failed only the roadmap test and was not treated as verified."
+  },
+  "initial_hosted_logs": [
+    {
+      "path": "docs/evidence/C25/engine-initial-ci.log.gz",
+      "sha256": "d6c2d3bb8dc12e1907b0b495fece5502e9877a624eed9283a4dd8075699f5dd8",
+      "source_commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
+      "uncompressed_sha256": "53eca2d9c7602598f705d6c33b3fc1b11d9bed72d2d0ef50cbfcd2a403078eea",
+      "compression": "gzip"
+    },
+    {
+      "path": "docs/evidence/C25/web-initial-ci-failed.log.gz",
+      "sha256": "cf7d555c85fab99a5628a345e8bcb9da4ed4f0e6c7463a8f8825ea2a8c3fceb1",
+      "source_commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
+      "uncompressed_sha256": "c500863cb300d64db98d7f5af084854d228e1191d8068a4e87356e5c19a111e1",
+      "compression": "gzip"
+    }
   ]
 }

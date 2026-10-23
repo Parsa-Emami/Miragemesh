@@ -3,10 +3,10 @@
   "last_task": "C25",
   "status": "in_progress",
   "base_commit": "84d078142db8fdff4c05b67091e6893c0bc99079",
-  "implementation_commit": null,
-  "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
+  "implementation_commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
+  "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
   "evidence": "docs/evidence/C25.json",
-  "summary": "Signed per-sensor update metadata, exact local artifact verification, durable revision/revocation/high-water floors, separate scoped expiring single-use recovery authority, strict operator CLI and read-only local Updates API/UI. No installer or executable activation. Local checks passed; exact source awaits hosted verification.",
+  "summary": "Signed per-sensor update metadata, exact local artifact verification, durable revision/revocation/high-water floors, separate scoped expiring single-use recovery authority, strict operator CLI and read-only local Updates API/UI. No installer or executable activation. Initial hosted full engine passed; roadmap test fixture corrected after initial web failure. Exact fix source awaits all four workflows.",
   "next_task": "C25",
   "next_command": "Complete all four hosted workflow checks and retain source-bound evidence before marking verified.",
   "blockers": [],
@@ -39,9 +39,10 @@
     "explanation": "The local environment has no Podman; the same C13 provider and adapter-assumption failures reproduce on untouched C24. No C25 failure remains. Full hosted verification is pending."
   },
   "delivery": {
-    "commit_created": false,
-    "push_performed": false,
+    "commit_created": true,
+    "push_performed": true,
     "branch": "main",
-    "publication_performed": false
+    "publication_performed": false,
+    "commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc"
   }
 }

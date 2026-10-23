@@ -226,8 +226,8 @@
       "evidence": [
         "docs/evidence/C25.json"
       ],
-      "source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
-      "notes": "C25 implemented with source-bound local checks: 81 Node, 18 browser, relevant race suites, 10 real kills/18 syscall faults. Full local suite reproduces the same 14 C13 failures on untouched C24; all four hosted workflows pending. No verified or release claim yet."
+      "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
+      "notes": "C25 implemented on cf8e3cd. Hosted engine with Podman passed all 189 anchors; web exposed an assumption in the old roadmap unproved-completion fixture after evidence references were populated. Explicit missing-source/missing-evidence fixtures pass red/green. Full hosted verification of this test fix is pending."
     },
     {
       "id": "C26",
