@@ -1,9 +1,9 @@
 {
   "commit_id": "C25",
   "project": "MirageMesh",
-  "passed": false,
+  "passed": true,
   "planning_template": false,
-  "status": "in_progress",
+  "status": "verified",
   "date": "2026-10-23",
   "base_commit": "84d078142db8fdff4c05b67091e6893c0bc99079",
   "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
@@ -213,6 +213,40 @@
       },
       "output_path": "docs/evidence/C25/npm-check-roadmap-fix.log",
       "stored_output_sha256": "c96af6b5ee7adbca8a753eaa428f1ccac513f6ef3d2624a18ebffd31de585333"
+    },
+    {
+      "name": "engine-ci",
+      "command": [
+        "GitHub Actions",
+        "engine-runtime",
+        "go test -race -count=1 -json ./...; require 189 anchors"
+      ],
+      "exit_code": 0,
+      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+      "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
+      "run_id": 39963709775,
+      "job_id": 120447968627,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709775",
+      "output_path": "docs/evidence/C25/engine-ci.log.gz",
+      "stored_output_sha256": "d35af929236a4564906042b6b4f79657e8748a4c4d3cc4ad57688887e4b854d0",
+      "compression": "gzip"
+    },
+    {
+      "name": "web-ci",
+      "command": [
+        "GitHub Actions",
+        "web-foundation",
+        "npm test; npm run test:browser; npm run test:clone; npm run package:web"
+      ],
+      "exit_code": 0,
+      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+      "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
+      "run_id": 39963709694,
+      "job_id": 120447969312,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709694",
+      "output_path": "docs/evidence/C25/web-ci.log.gz",
+      "stored_output_sha256": "f1ff0ac66852a5286f0de00ab1ad95999644f36b20a2d6c2ac77ac68787ae550",
+      "compression": "gzip"
     }
   ],
   "failed_local_attempts": [
@@ -351,7 +385,7 @@
       "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
       "TestDecoyIsolationWorkflowReportsTypedOutcome"
     ],
-    "explanation": "The local environment has no Podman; the same C13 provider and adapter-assumption failures reproduce on untouched C24. No C25 failure remains. Full hosted verification is pending."
+    "explanation": "The same 14 C13 provider/adapter-assumption failures reproduce on unmodified C24 without local Podman. Hosted full Go race passed with the pinned rootless provider; no checks were disabled."
   },
   "environment": {
     "os": "Linux-6.18.55-x86_64-with-glibc2.39",
@@ -375,9 +409,11 @@
     "recovery": "A distinct recovery key signs the exact sensor/current authority/from/to/platform/digest/length and expiry/reason. Revocation cannot be overridden, the high-water mark remains, replay after a later decision or grant expiry fails.",
     "crash": "Both metadata authority and recovery verification passed five real SIGKILL publication boundaries and nine syscall faults each: 10 kills and 18 faults. Reopen/retry converges without partial grant consumption, lost floors or duplicate publication.",
     "local_checks": "81 Node tests, TypeScript and production engine/web builds, relevant uncached Go race suites, go vet, empty gofmt output, six Python regressions and repository/diff validation passed.",
-    "browser": "18 browser tests passed with explicit local Chromium 153.0.8010.0 headless-shell override: actual C05-backed CLI/status/revocation/recovery/two restarts, keyboard details at 360px, inert metadata and stale/invalid reads. Screenshot visually inspected.",
-    "discovery": "15 C25 required anchors added to the existing eight-suite guard, for 189 total. Guard mutation regression passed; full hosted execution remains pending.",
-    "hosted": "Initial engine, contracts and plan jobs passed; web found the roadmap fixture assumption. The test fix awaits all four hosted jobs on its exact new source."
+    "browser": "18 hosted browser tests passed, plus 18 local tests with the explicit Chromium 153 headless-shell override. Actual authority, revocation, scoped recovery, two restarts, keyboard/360px, inert strings and stale/invalid reads passed.",
+    "discovery": "All 189 required test anchors executed successfully in hosted full Go race. Removing any of the 15 C25 anchors is rejected by the guard regression.",
+    "hosted": "All four workflows passed on e3dafe27202d7616530305f9bba616b3a2e31ecc. The initial failed roadmap fixture and exact remediation remain retained.",
+    "engine": "Hosted full uncached Go race suite passed with Go 1.27.2 and pinned rootless Podman 4.9.3; all eight required suites and 189 required anchors executed.",
+    "web": "81 Node tests, TypeScript and production engine/web builds passed on the corrected roadmap fixture. Hosted clean clone/setup/start smoke and isolated web package startup passed."
   },
   "scope_limits": [
     "Trusted local operator, authoritative wall clock and latest C05 history; no external anti-rollback checkpoint or trusted hardware clock.",
@@ -387,7 +423,7 @@
     "No database schema, migration, .env, Dockerfile, lockfile or required-provider change. C28 measurements, full C30 restart/restore and C40 release remain pending."
   ],
   "implementation_source_identity": "sha256:be744d03ab48b489a2a3ff96d80826455f4b9832ad0158f804e6979df8f4c082",
-  "verification_fix_commit": null,
+  "verification_fix_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
   "initial_hosted_runs": [
     {
       "name": "plan-consistency",
@@ -452,6 +488,50 @@
       "source_commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
       "uncompressed_sha256": "c500863cb300d64db98d7f5af084854d228e1191d8068a4e87356e5c19a111e1",
       "compression": "gzip"
+    }
+  ],
+  "verified_on_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+  "verified_tree": "477dd6125f9a13af6664f7a8e9b35c8f5114249a",
+  "hosted_actions": [
+    {
+      "name": "plan-consistency",
+      "run_id": 39963709733,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709733",
+      "created_at": "2026-10-23T13:44:25Z",
+      "updated_at": "2026-10-23T13:44:33Z"
+    },
+    {
+      "name": "contracts",
+      "run_id": 39963709944,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709944",
+      "created_at": "2026-10-23T13:44:25Z",
+      "updated_at": "2026-10-23T13:44:36Z"
+    },
+    {
+      "name": "engine-runtime",
+      "run_id": 39963709775,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709775",
+      "created_at": "2026-10-23T13:44:25Z",
+      "updated_at": "2026-10-23T13:46:21Z"
+    },
+    {
+      "name": "web-foundation",
+      "run_id": 39963709694,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709694",
+      "created_at": "2026-10-23T13:44:25Z",
+      "updated_at": "2026-10-23T13:46:39Z"
     }
   ]
 }

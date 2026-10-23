@@ -312,7 +312,7 @@
       "id": "C25",
       "title": "feat(update): verify signed sensor update metadata",
       "stage": "domain",
-      "status": "in_progress",
+      "status": "verified",
       "acceptance": [
         "Wrong signer, revoked version and rollback outside explicit recovery policy are rejected."
       ],

@@ -222,12 +222,12 @@
     },
     {
       "id": "C25",
-      "status": "in_progress",
+      "status": "verified",
       "evidence": [
         "docs/evidence/C25.json"
       ],
       "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
-      "notes": "C25 implemented on cf8e3cd. Hosted engine with Podman passed all 189 anchors; web exposed an assumption in the old roadmap unproved-completion fixture after evidence references were populated. Explicit missing-source/missing-evidence fixtures pass red/green. Full hosted verification of this test fix is pending."
+      "notes": "C25 implemented on cf8e3cd and verified with roadmap fixture remediation e3dafe2. All four hosted workflows passed: full Go race with pinned rootless Podman, 189 required anchors, 81 Node tests, 18 browser tests, clean-clone smoke and web packaging. Wrong/missing signatures, modified bytes, expired/stale authority, permanent revocation, rollback policy, one-use recovery, restart, 10 real kills and 18 faults passed. Original failed CI and local baseline failures are retained. C28/C30/C40 remain pending."
     },
     {
       "id": "C26",

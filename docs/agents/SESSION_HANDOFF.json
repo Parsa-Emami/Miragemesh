@@ -1,14 +1,58 @@
 {
   "project": "MirageMesh",
   "last_task": "C25",
-  "status": "in_progress",
+  "status": "verified",
   "base_commit": "84d078142db8fdff4c05b67091e6893c0bc99079",
   "implementation_commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
+  "verification_fix_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+  "verified_on_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
   "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
   "evidence": "docs/evidence/C25.json",
-  "summary": "Signed per-sensor update metadata, exact local artifact verification, durable revision/revocation/high-water floors, separate scoped expiring single-use recovery authority, strict operator CLI and read-only local Updates API/UI. No installer or executable activation. Initial hosted full engine passed; roadmap test fixture corrected after initial web failure. Exact fix source awaits all four workflows.",
-  "next_task": "C25",
-  "next_command": "Complete all four hosted workflow checks and retain source-bound evidence before marking verified.",
+  "summary": "C25 implemented and verified on main. Signed authority, exact local file hashes, persistent revocation/revision/high-water floors and independently signed scoped one-use recovery use C05. Strict CLI, read-only API/UI, actual restart, 10 kills and 18 faults passed. A roadmap test fixture assumption found by initial CI was reproduced and fixed without changing production validation. All four corrected hosted workflows passed with 189 engine anchors, 81 Node and 18 browser tests.",
+  "hosted_actions": [
+    {
+      "name": "plan-consistency",
+      "run_id": 39963709733,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709733",
+      "created_at": "2026-10-23T13:44:25Z",
+      "updated_at": "2026-10-23T13:44:33Z"
+    },
+    {
+      "name": "contracts",
+      "run_id": 39963709944,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709944",
+      "created_at": "2026-10-23T13:44:25Z",
+      "updated_at": "2026-10-23T13:44:36Z"
+    },
+    {
+      "name": "engine-runtime",
+      "run_id": 39963709775,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709775",
+      "created_at": "2026-10-23T13:44:25Z",
+      "updated_at": "2026-10-23T13:46:21Z"
+    },
+    {
+      "name": "web-foundation",
+      "run_id": 39963709694,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709694",
+      "created_at": "2026-10-23T13:44:25Z",
+      "updated_at": "2026-10-23T13:46:39Z"
+    }
+  ],
+  "next_task": "C26",
+  "next_command": "npm run plan -- next",
   "blockers": [],
   "scope_limits": [
     "Trusted local operator, authoritative wall clock and latest C05 history; no external anti-rollback checkpoint or trusted hardware clock.",
@@ -36,13 +80,13 @@
       "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
       "TestDecoyIsolationWorkflowReportsTypedOutcome"
     ],
-    "explanation": "The local environment has no Podman; the same C13 provider and adapter-assumption failures reproduce on untouched C24. No C25 failure remains. Full hosted verification is pending."
+    "explanation": "The same 14 C13 provider/adapter-assumption failures reproduce on unmodified C24 without local Podman. Hosted full Go race passed with the pinned rootless provider; no checks were disabled."
   },
   "delivery": {
     "commit_created": true,
+    "commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
     "push_performed": true,
     "branch": "main",
-    "publication_performed": false,
-    "commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc"
+    "publication_performed": false
   }
 }
