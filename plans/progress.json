@@ -213,10 +213,12 @@
     },
     {
       "id": "C24",
-      "status": "in_progress",
-      "evidence": [],
-      "source_identity": null,
-      "notes": "C24 implementation and targeted checks complete: durable sensor certificate rotation, exact overlap cutoff, atomic scoped-token offline recovery, operator CLI and read-only Certificates UI. Final source-bound checks and hosted CI pending."
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C24.json"
+      ],
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "notes": "C24 verified on 24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e: real TLS cutoff/restart, durable client leaf revision/retirement, atomic C08 token-backed offline recovery through C05, signer/CSR/scope/replay rejection, operator CLI and accessible read-only certificate status. All four hosted workflows passed, including full Go race/174 required anchors, 75 Node tests, 15 browser tests and clean-clone smoke. Isolated web package startup regression passed. The 14 local C13 failures reproduce on unmodified C23 and are retained. C30/C40 remain pending."
     },
     {
       "id": "C25",

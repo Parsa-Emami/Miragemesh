@@ -1,0 +1,16 @@
+{
+  "name": "engine-ci",
+  "command": [
+    "GitHub Actions",
+    "engine-runtime",
+    "go test -race -count=1 -json ./... and required-test discovery"
+  ],
+  "exit_code": 0,
+  "source_commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
+  "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+  "run_id": 39896826150,
+  "job_id": 120229097966,
+  "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39896826150",
+  "output_path": "docs/evidence/C24/engine-ci.log",
+  "stored_output_sha256": "67e89591279782aa84f15eb3310aeeef367bcd4a31869bc6c905cd16292c17c0"
+}

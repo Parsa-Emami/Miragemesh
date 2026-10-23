@@ -1,21 +1,71 @@
 {
   "project": "MirageMesh",
   "last_task": "C24",
-  "status": "in_progress",
+  "status": "verified",
   "base_commit": "8c067a8624ca0499e4a0cb7264e003ac79b6b3d1",
-  "summary": "C24 implemented and targeted checks passed; final source-bound verification and hosted CI pending. New pki rotator uses existing C05 atomic updates; no private keys or raw recovery tokens persisted.",
-  "next_task": "C24",
+  "implementation_commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
+  "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+  "evidence": "docs/evidence/C24.json",
+  "summary": "C24 implemented, pushed to main and verified by all four hosted workflows. Sensor leaf rotation enforces an exact overlap deadline at C09, with persisted revision/retirement and atomic C08-token offline recovery in C05. Real TLS, restart, cross-service token races, five SIGKILL phases, nine syscall faults, operator CLI, read-only API/UI and isolated web package startup passed. Full hosted Go race and 174 required anchors passed.",
+  "hosted_actions": [
+    {
+      "name": "plan-consistency",
+      "run_id": 39896825910,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39896825910",
+      "created_at": "2026-10-23T03:46:51Z",
+      "updated_at": "2026-10-23T03:47:01Z"
+    },
+    {
+      "name": "contracts",
+      "run_id": 39896825812,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39896825812",
+      "created_at": "2026-10-23T03:46:51Z",
+      "updated_at": "2026-10-23T03:47:03Z"
+    },
+    {
+      "name": "engine-runtime",
+      "run_id": 39896826150,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39896826150",
+      "created_at": "2026-10-23T03:46:51Z",
+      "updated_at": "2026-10-23T03:48:44Z"
+    },
+    {
+      "name": "web-foundation",
+      "run_id": 39896825919,
+      "status": "completed",
+      "conclusion": "success",
+      "source_commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39896825919",
+      "created_at": "2026-10-23T03:46:51Z",
+      "updated_at": "2026-10-23T03:49:29Z"
+    }
+  ],
+  "next_task": "C25",
   "next_command": "npm run plan -- next",
   "blockers": [],
   "scope_limits": [
-    "Sensor client leaf rotation under one existing C09 issuer; configure Options.Rotation on the guard.",
-    "No CA migration, listener rotation, public enrollment/ingest or complete C30 workflow.",
-    "Trusted local operator, authoritative clock and latest C05 store; C28 capacity remains unmeasured.",
-    "Local Podman unavailable; unchanged hosted CI must verify the complete provider-dependent suite."
+    "Sensor client leaves under one existing C09 issuer; CA migration and listener certificate rotation are separate.",
+    "Enable pki.Options.Rotation on the C09 guard; applications call Allows before each protected action. No background forced socket termination is claimed.",
+    "Trusted local operator, authoritative wall clock and latest C05 history; no independent anti-rollback clock/checkpoint or distributed storage.",
+    "Private CA keys and raw tokens are never persisted in C05 or exposed by the status API. Tokens are deliberately delivered to exclusive 0600 files in private 0700 operator directories.",
+    "Internal records are bounded to 8 KiB, public status to 1 MiB and state to explicit C05 quotas; no history truncation or capacity claim.",
+    "No public enrollment/ingest, full restore/power-loss, C30 workflow or C40 release certification."
   ],
+  "local_environment": "The same 14 C13 failures reproduced on unmodified C23; the hosted full suite passed with pinned Podman.",
   "delivery": {
-    "commit_created": false,
-    "push_performed": false,
+    "commit_created": true,
+    "commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
+    "push_performed": true,
+    "branch": "main",
     "publication_performed": false
   }
 }
