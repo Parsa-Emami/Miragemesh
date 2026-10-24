@@ -1,0 +1,82 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C27 security probes. No real credentials, customer data or exploit payloads are included.",
+  "headers": {
+    "content_security_policy": [
+      "default-src 'none'",
+      "script-src 'self'",
+      "connect-src 'self'",
+      "frame-ancestors 'none'",
+      "object-src 'none'",
+      "base-uri 'none'"
+    ],
+    "forbidden_content_security_policy": [
+      "script-src 'self' 'unsafe-inline'",
+      "default-src *"
+    ],
+    "x_content_type_options": "nosniff",
+    "x_frame_options": "DENY",
+    "referrer_policy": "no-referrer",
+    "cache_control": "no-store",
+    "runtime_config_keys": ["apiBasePath", "engineEnabled", "maxPreviewBytes", "projectId"]
+  },
+  "disabled": [
+    { "path": "/api/v1/incidents", "status": 503, "error": "incidents_unavailable" },
+    { "path": "/api/v1/sensors", "status": 503, "error": "sensor_status_unavailable" },
+    { "path": "/api/v1/certificates", "status": 503, "error": "certificate_status_unavailable" },
+    { "path": "/api/v1/updates", "status": 503, "error": "update_status_unavailable" }
+  ],
+  "origin": {
+    "status": 403,
+    "error": "forbidden_origin",
+    "headers": [
+      { "Host": "attacker.example" },
+      { "Host": "127.0.0.1.attacker.example" },
+      { "Origin": "http://attacker.example" },
+      { "Origin": "null" }
+    ]
+  },
+  "confinement": {
+    "paths": [
+      "/assets/../../etc/passwd",
+      "/assets/%2e%2e/%2e%2e/etc/passwd",
+      "/assets/..%5c..%5cetc%5cpasswd",
+      "/ops/web/runtime-config.json",
+      "/.env",
+      "/package.json"
+    ],
+    "forbidden_content": ["root:x:", "PRIVATE_SENTINEL"]
+  },
+  "triage": {
+    "max_body_bytes": 16384,
+    "unknown_object": "incident-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "malformed_object": "incident-not-hex",
+    "valid": {
+      "status": "investigating",
+      "reason": "Synthetic C27 triage \"><svg onload=globalThis.c27Sentinel=5></svg>",
+      "key": "synthetic-c27-valid-key-0001"
+    },
+    "cases": [
+      { "name": "missing_origin", "origin": null, "key": "synthetic-c27-key-0002", "status": 403, "error": "forbidden_origin" },
+      { "name": "foreign_origin", "origin": "http://attacker.example", "key": "synthetic-c27-key-0003", "status": 403, "error": "forbidden_origin" },
+      { "name": "wrong_media", "content_type": "text/plain", "key": "synthetic-c27-key-0004", "status": 415, "error": "json_required" },
+      { "name": "missing_key", "key": null, "status": 422, "error": "invalid_triage" },
+      { "name": "short_key", "key": "short", "status": 422, "error": "invalid_triage" },
+      { "name": "oversized_body", "key": "synthetic-c27-key-0005", "body_bytes": 16385, "status": 413, "error": "request_too_large" },
+      { "name": "read_triage", "method": "GET", "key": null, "status": 405, "error": "method_not_allowed" },
+      { "name": "unknown_object", "object": "unknown", "key": "synthetic-c27-key-0006", "status": 404, "error": "incident_not_found" },
+      { "name": "malformed_object", "object": "malformed", "method": "POST", "key": "synthetic-c27-key-0007", "status": 405, "error": "method_not_allowed" },
+      { "name": "forged_field", "key": "synthetic-c27-key-0008", "body": { "status": "investigating", "reason": "Synthetic C27 rejected case.", "source": "forged" }, "status": 422, "error": "invalid_triage" }
+    ]
+  },
+  "xss": {
+    "sentinel": "c27Sentinel"
+  },
+  "import": {
+    "filename": "<img src=x onerror=globalThis.c27Sentinel=2>.json",
+    "document": "{\"<script>globalThis.c27Sentinel=3</script>\":\"value\"}",
+    "forbidden_document": "{\"__proto__\":{\"polluted\":true}}",
+    "oversize_bytes": 1048577
+  }
+}

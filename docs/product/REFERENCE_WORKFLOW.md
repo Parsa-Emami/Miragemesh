@@ -172,6 +172,20 @@ C24 adds durable client leaf rotation under the C09 issuer, explicit overlap cut
 
 C25 adds durable publisher-signed sensor release metadata, exact local candidate file verification, permanent revocation floors and scoped one-time rollback authority signed by a separate recovery key. Operator actions and the read-only Updates page use the same C05 state. Verification does not install an update. See [SENSOR_UPDATES.md](../architecture/SENSOR_UPDATES.md).
 
+## Security validation for the local profile
+
+C27 audits every enabled local surface and records the executable proof in
+[tests/release/security-matrix.md](../../tests/release/security-matrix.md) and
+the boundary assumptions in
+[THREAT_MODEL.md](../security/THREAT_MODEL.md). It adds no product surface: the
+new browser regressions exercise the existing shell, JSON import and incident
+triage boundaries (CSP, forbidden Host/Origin, request bounds, object IDs and
+stored-content inertness), while mTLS identity, provider ownership, storage and
+signed authority remain proved by their C09-C25 anchors. The matrix records no
+critical or high finding in the local profile and states the limits: one trusted
+local operator, no public ingress or multi-tenant authorization, and no C30/C40
+claim.
+
 ## Integrated offline, duplicate-delivery and restart path
 
 C26 exercises the sensor-side portion of steps 3 and 4 as one scenario through

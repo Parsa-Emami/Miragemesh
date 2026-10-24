@@ -324,7 +324,7 @@
       "id": "C26",
       "title": "test(resilience): replay crash offline and isolation scenarios",
       "stage": "domain",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Bounded spool, duplicate batches, collector restart and egress tests pass together."
       ],
