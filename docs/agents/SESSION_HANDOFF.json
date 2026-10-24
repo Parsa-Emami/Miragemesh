@@ -3,8 +3,8 @@
   "last_task": "C26",
   "status": "verified",
   "base_commit": "6b35c8bd9baa688ab73ba49ee9d93122d4d59fcc",
-  "implementation_commit": null,
-  "verified_on_commit": null,
+  "implementation_commit": "3d40a1ca59d9c9bbaa2300918789ed4b9e2cde3a",
+  "verified_on_commit": "3d40a1ca59d9c9bbaa2300918789ed4b9e2cde3a",
   "source_identity": "sha256:0b0efc54dcda3be76557383a9893f39fd11727208f87695e795d0a4c629bc9ba",
   "evidence": "docs/evidence/C26.json",
   "summary": "C26 composes the existing C14/C16 boundaries into one fixture-driven resilience scenario: a signed-bounded offline spool drops beyond its limit with one durable gap and loss summary, duplicate batch delivery returns identical receipts without duplicate observations, a real store restart preserves revision, receipts, acknowledgements and loss accounting, and delivery continues across the explicit gap. Seven typed negative batches leave the store unchanged, and the composed path imports no network capability. The real rootless-container egress anchor and the C14/C16 SIGKILL anchors ran in the same 192-anchor required suite. Full Go race, npm check and contracts checks passed locally.",
@@ -31,8 +31,8 @@
     "notes": "The machine's go env sets GOSUMDB=off, so engine-spawning Node tests require the documented GOSUMDB=sum.golang.org GOTOOLCHAIN=go1.27.2 environment. The failed first npm check is retained in docs/evidence/C26/npm-check-missing-env.log; the same command passed with the documented environment."
   },
   "delivery": {
-    "commit_created": false,
-    "commit": null,
+    "commit_created": true,
+    "commit": "3d40a1ca59d9c9bbaa2300918789ed4b9e2cde3a",
     "push_performed": false,
     "branch": "main",
     "publication_performed": false

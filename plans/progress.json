@@ -236,7 +236,7 @@
         "docs/evidence/C26.json"
       ],
       "source_identity": "sha256:0b0efc54dcda3be76557383a9893f39fd11727208f87695e795d0a4c629bc9ba",
-      "notes": "C26 verified locally on base 6b35c8bd9baa688ab73ba49ee9d93122d4d59fcc: one integrated scenario proves signed-bounded offline spool with durable gap/loss accounting, duplicate batch replay idempotency, real store restart convergence, continued delivery across the gap, typed negative batches and a no-network import boundary over the composed path. Existing C13 rootless-container egress and C14/C16 SIGKILL anchors ran in the same required suite (192 anchors). Full Go race/219 top-level tests, npm check with 82 Node tests and 6 Python tests passed with the documented Go toolchain environment. No browser run, hosted Actions, commit push, release or C30/C40 claim."
+      "notes": "C26 verified locally on base 6b35c8bd9baa688ab73ba49ee9d93122d4d59fcc and committed as 3d40a1ca59d9c9bbaa2300918789ed4b9e2cde3a without pushing: one integrated scenario proves signed-bounded offline spool with durable gap/loss accounting, duplicate batch replay idempotency, real store restart convergence, continued delivery across the gap, typed negative batches and a no-network import boundary over the composed path. Existing C13 rootless-container egress and C14/C16 SIGKILL anchors ran in the same required suite (192 anchors). Full Go race/219 top-level tests, npm check with 82 Node tests and 6 Python tests passed with the documented Go toolchain environment. No browser run, hosted Actions, commit push, release or C30/C40 claim."
     },
     {
       "id": "C27",

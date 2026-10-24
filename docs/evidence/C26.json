@@ -9,7 +9,7 @@
   "base_commit": "6b35c8bd9baa688ab73ba49ee9d93122d4d59fcc",
   "source_identity": "sha256:0b0efc54dcda3be76557383a9893f39fd11727208f87695e795d0a4c629bc9ba",
   "source_identity_algorithm": "sorted path + NUL + raw SHA-256 over tracked/nonignored source, excluding docs/evidence/, SHA256SUMS.txt, plans/progress.json and docs/agents/SESSION_HANDOFF.json",
-  "implementation_commit": null,
+  "implementation_commit": "3d40a1ca59d9c9bbaa2300918789ed4b9e2cde3a",
   "dependencies": {
     "C25": "docs/evidence/C25.json; verified on e3dafe27202d7616530305f9bba616b3a2e31ecc"
   },
@@ -117,6 +117,14 @@
       "output_path": "docs/evidence/C26/python-tests.log",
       "stored_output_sha256": "820a61684ea4b10e32766f7b4c04708d87e0c5191157ef42897fdb644a2043eb",
       "observed": "Ran 6 tests; OK."
+    },
+    {
+      "name": "source-integrity",
+      "command": ["python3", "scripts/verify_ci_source.py"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C26/source-integrity.log",
+      "stored_output_sha256": "8c6292e26d64b0ec69470201ce1d004acdb3c36ca87f375c06fdbda7c592faac",
+      "observed": "Clean-tree source integrity passed on implementation commit 3d40a1ca59d9c9bbaa2300918789ed4b9e2cde3a (git tree eca02065c6930325453c9b58dd726acf0cf93ee9); historical oss-roadmap evidence still matches its own source. Runtime results remain this commit's CI job scope."
     },
     {
       "name": "diff-check",
