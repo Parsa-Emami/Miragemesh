@@ -1,0 +1,34 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C26 expectations for the integrated offline spool, duplicate batch and restart scenario.",
+  "accepted_offline_sequences": [
+    1,
+    2,
+    3
+  ],
+  "dropped_sequence": 4,
+  "loss": {
+    "count": 1,
+    "gaps": [
+      {
+        "from": 4,
+        "through": 4
+      }
+    ]
+  },
+  "acknowledged_sequences": [
+    1,
+    2,
+    3,
+    5,
+    6
+  ],
+  "restart_revision": 1,
+  "final_counts": {
+    "config": 1,
+    "event": 5,
+    "ack": 5,
+    "gap": 1
+  }
+}

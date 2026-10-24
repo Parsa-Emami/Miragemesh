@@ -1,0 +1,3 @@
+Verified 8 engine suites and 192 required test anchors.
+go_test_exit=0
+guard_exit=0

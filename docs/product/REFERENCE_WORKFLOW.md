@@ -171,3 +171,15 @@ C24 adds durable client leaf rotation under the C09 issuer, explicit overlap cut
 ## Signed sensor update authority
 
 C25 adds durable publisher-signed sensor release metadata, exact local candidate file verification, permanent revocation floors and scoped one-time rollback authority signed by a separate recovery key. Operator actions and the read-only Updates page use the same C05 state. Verification does not install an update. See [SENSOR_UPDATES.md](../architecture/SENSOR_UPDATES.md).
+
+## Integrated offline, duplicate-delivery and restart path
+
+C26 exercises the sensor-side portion of steps 3 and 4 as one scenario through
+the existing C14/C16 boundaries: a bounded offline spool drops beyond its
+signed limit with an explicit gap, reconnection delivers batches, an identical
+redelivery is idempotent, and a real store restart preserves the applied
+revision, receipts, acknowledgements and loss accounting before delivery
+continues across the gap. The composed path is checked to import no network
+capability; the real container egress denial and crash recovery remain the
+C13/C14/C16 proofs. C26 adds no product surface and does not execute the whole
+reference workflow; C30 remains the local end-to-end gate.

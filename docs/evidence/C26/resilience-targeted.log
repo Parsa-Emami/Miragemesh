@@ -1,0 +1,9 @@
+=== RUN   TestResilienceOfflineSpoolDuplicateBatchesAndRestart
+--- PASS: TestResilienceOfflineSpoolDuplicateBatchesAndRestart (0.37s)
+=== RUN   TestResilienceRejectsUnconfiguredAndMalformedBatches
+--- PASS: TestResilienceRejectsUnconfiguredAndMalformedBatches (0.09s)
+=== RUN   TestResilienceDeliveryPathHasNoEgress
+--- PASS: TestResilienceDeliveryPathHasNoEgress (0.00s)
+PASS
+ok  	github.com/Parsa-Emami/Miragemesh/tests	1.476s
+test_exit=0

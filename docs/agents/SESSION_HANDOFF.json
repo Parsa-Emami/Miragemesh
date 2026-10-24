@@ -1,91 +1,39 @@
 {
   "project": "MirageMesh",
-  "last_task": "C25",
+  "last_task": "C26",
   "status": "verified",
-  "base_commit": "84d078142db8fdff4c05b67091e6893c0bc99079",
-  "implementation_commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
-  "verification_fix_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
-  "verified_on_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
-  "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
-  "evidence": "docs/evidence/C25.json",
-  "summary": "C25 implemented and verified on main. Signed authority, exact local file hashes, persistent revocation/revision/high-water floors and independently signed scoped one-use recovery use C05. Strict CLI, read-only API/UI, actual restart, 10 kills and 18 faults passed. A roadmap test fixture assumption found by initial CI was reproduced and fixed without changing production validation. All four corrected hosted workflows passed with 189 engine anchors, 81 Node and 18 browser tests.",
-  "hosted_actions": [
-    {
-      "name": "plan-consistency",
-      "run_id": 39963709733,
-      "status": "completed",
-      "conclusion": "success",
-      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709733",
-      "created_at": "2026-10-23T13:44:25Z",
-      "updated_at": "2026-10-23T13:44:33Z"
-    },
-    {
-      "name": "contracts",
-      "run_id": 39963709944,
-      "status": "completed",
-      "conclusion": "success",
-      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709944",
-      "created_at": "2026-10-23T13:44:25Z",
-      "updated_at": "2026-10-23T13:44:36Z"
-    },
-    {
-      "name": "engine-runtime",
-      "run_id": 39963709775,
-      "status": "completed",
-      "conclusion": "success",
-      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709775",
-      "created_at": "2026-10-23T13:44:25Z",
-      "updated_at": "2026-10-23T13:46:21Z"
-    },
-    {
-      "name": "web-foundation",
-      "run_id": 39963709694,
-      "status": "completed",
-      "conclusion": "success",
-      "source_commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/39963709694",
-      "created_at": "2026-10-23T13:44:25Z",
-      "updated_at": "2026-10-23T13:46:39Z"
-    }
-  ],
-  "next_task": "C26",
+  "base_commit": "6b35c8bd9baa688ab73ba49ee9d93122d4d59fcc",
+  "implementation_commit": null,
+  "verified_on_commit": null,
+  "source_identity": "sha256:0b0efc54dcda3be76557383a9893f39fd11727208f87695e795d0a4c629bc9ba",
+  "evidence": "docs/evidence/C26.json",
+  "summary": "C26 composes the existing C14/C16 boundaries into one fixture-driven resilience scenario: a signed-bounded offline spool drops beyond its limit with one durable gap and loss summary, duplicate batch delivery returns identical receipts without duplicate observations, a real store restart preserves revision, receipts, acknowledgements and loss accounting, and delivery continues across the explicit gap. Seven typed negative batches leave the store unchanged, and the composed path imports no network capability. The real rootless-container egress anchor and the C14/C16 SIGKILL anchors ran in the same 192-anchor required suite. Full Go race, npm check and contracts checks passed locally.",
+  "hosted_actions": [],
+  "hosted_actions_note": "Not run for this source. No push or publication occurred; remote workflow status is unverified.",
+  "next_task": "C27",
   "next_command": "npm run plan -- next",
   "blockers": [],
   "scope_limits": [
-    "Trusted local operator, authoritative wall clock and latest C05 history; no external anti-rollback checkpoint or trusted hardware clock.",
-    "Pinned single publisher and separate recovery key; no TUF protocol, threshold signatures, remote download or automated signing-key migration.",
-    "Verification records exact file digest and length at check time, not installed/running software. Callers supply bounded local readers and must control their blocking behavior.",
-    "Append-only bounded state; at most 8 KiB metadata, 2 KiB recovery grant, 16 offered releases, 64 cumulative revocations, 64 MiB configured artifact bound and 1 MiB public status.",
-    "No database schema, migration, .env, Dockerfile, lockfile or required-provider change. C28 measurements, full C30 restart/restore and C40 release remain pending."
+    "Local Linux process and filesystem proofs only; no physical power-loss, multi-host or consensus claim.",
+    "Container egress and crash recovery remain the existing C13/C14/C16 anchors; C26 does not duplicate them.",
+    "Fixture bounds (spool_limit_events=3, event_batch_limit=2) are test policy, not product defaults or measured capacity.",
+    "No browser run because no web source changed; web regressions remain with the unchanged workflow.",
+    "No production code, schema, migration, .env, Dockerfile, dependency or storage format changed.",
+    "C28 measurements, full C30 restart/restore and C40 release remain pending."
   ],
   "local_environment": {
-    "same_failures_on_unmodified_base": true,
-    "failed_test_count": 14,
-    "tests": [
-      "TestDecoyIsolationAdapterBoundsRuntimeOutput",
-      "TestDecoyIsolationAdapterRollsBackAnUncertainStart",
-      "TestDecoyIsolationDeniesInternetAndPrivateSubnets",
-      "TestDecoyIsolationEnforcesPIDAndMemoryLimits",
-      "TestDecoyIsolationPolicyIsImmutable",
-      "TestDecoyIsolationPolicyRejectsUnsafeConfiguration",
-      "TestDecoyIsolationPreservesContainersOnOwnershipConflict",
-      "TestDecoyIsolationProviderFailuresAreExplicit",
-      "TestDecoyIsolationReconcilesAfterRestart",
-      "TestDecoyIsolationRejectsWeakRuntimeControls",
-      "TestDecoyIsolationReportsCleanupFailure",
-      "TestDecoyIsolationStopsAndRemovesItsContainer",
-      "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
-      "TestDecoyIsolationWorkflowReportsTypedOutcome"
-    ],
-    "explanation": "The same 14 C13 provider/adapter-assumption failures reproduce on unmodified C24 without local Podman. Hosted full Go race passed with the pinned rootless provider; no checks were disabled."
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "npm_lock": "11.9.0",
+    "go": "go1.27.2",
+    "podman": "4.9.3 rootless",
+    "pinned_image": "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
+    "notes": "The machine's go env sets GOSUMDB=off, so engine-spawning Node tests require the documented GOSUMDB=sum.golang.org GOTOOLCHAIN=go1.27.2 environment. The failed first npm check is retained in docs/evidence/C26/npm-check-missing-env.log; the same command passed with the documented environment."
   },
   "delivery": {
-    "commit_created": true,
-    "commit": "cf8e3cd9566dc3fa24fa0b1f7c00a1b1271d1ebc",
-    "push_performed": true,
+    "commit_created": false,
+    "commit": null,
+    "push_performed": false,
     "branch": "main",
     "publication_performed": false
   }

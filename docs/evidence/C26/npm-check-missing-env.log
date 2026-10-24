@@ -1,0 +1,242 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 check
+> npm run validate:plan && npm run build && npm test
+
+
+> @parsa-emami/miragemesh-web@0.0.1 validate:plan
+> node scripts/roadmap.mjs validate
+
+Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred.
+
+> @parsa-emami/miragemesh-web@0.0.1 build
+> npm run prepare:web && npm run typecheck && vite build --config apps/web/vite.config.ts && npm run build:engine
+
+
+> @parsa-emami/miragemesh-web@0.0.1 prepare:web
+> node scripts/generate-web-data.mjs
+
+
+> @parsa-emami/miragemesh-web@0.0.1 typecheck
+> tsc -p tsconfig.json
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 26 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.78 kB │ gzip:  0.46 kB
+dist/web/assets/index-D0FjDMz9.css    7.23 kB │ gzip:  2.30 kB
+dist/web/assets/index-aslgj8Wr.js   274.56 kB │ gzip: 83.68 kB
+
+✓ built in 158ms
+
+> @parsa-emami/miragemesh-web@0.0.1 build:engine
+> node scripts/build-engine.mjs
+
+
+> @parsa-emami/miragemesh-web@0.0.1 test
+> node --test tests/web/*.test.mjs tests/contracts/*.test.mjs tests/engineering/*.test.mjs
+
+✔ CLI accepts the exact v1 fixture and reports validation without acceptance authority (12.910206ms)
+✔ real schemas and Go reject every incompatible structural fixture (373.135377ms)
+✔ identifier, exact numeric, timestamp and UTF-8 byte boundaries agree with the Go validator (100.606671ms)
+✔ invalid CLI combinations fail usage without launching a server (13.700602ms)
+✔ result schema rejects contradictory authority, errors and incomplete-input digests (5.03234ms)
+✔ an actual stdin read failure returns only a typed error and no partial digest (5.094957ms)
+✔ an open stdin expires and either termination signal returns a redacted cancellation (2215.419217ms)
+✖ certificate CLI issues a private scoped token, recovers and replays the same signed certificate (10.377755ms)
+✖ certificate CLI rejects unsafe key inputs, missing prerequisites and mixed runtime modes (9.375573ms)
+✔ requires source-backed C22 replay, durable HTTP triage and fail-closed replay limits (377.356112ms)
+✔ accepts executed engine, contract and real recovery suites with interleaved output (51.877095ms)
+✔ rejects empty discovery and package-only success without executed tests (99.022822ms)
+✔ rejects a missing required suite or anchor (108.633154ms)
+✔ requires persistent sensor sequence and invalid-event regression anchors (99.699495ms)
+✔ rejects a skipped anchor or a pass with no run (101.920945ms)
+✔ rejects failures in any package and unfinished package results (206.53412ms)
+✔ rejects malformed JSON events and missing input (196.698417ms)
+✔ requires enrollment validation, durable consumption, scope, clock, concurrency and crash anchors (456.371679ms)
+✔ requires mTLS acceptance, transport denial, typed verdicts, issuer-bound revocation, revoked replay and configuration anchors (308.159583ms)
+✔ requires signed desired state, unsigned rejection, stale rejection and exact-byte signature anchors (641.570864ms)
+✔ requires durable apply, real crash/recovery, shared-writer serialization and rejection anchors (507.924315ms)
+✔ requires decoy observation, echo, request bound, prerequisite, restart and no-execution anchors (347.96088ms)
+✔ requires decoy isolation control, cleanup, immutability, runtime bound, cancellation and workflow anchors (440.610956ms)
+✔ requires decoy egress, runtime limit, reconciliation, provider and adapter anchors (353.816447ms)
+✔ requires bounded spool persistence, rejection, concurrency, configuration and recovery anchors (427.033342ms)
+✔ requires durable overflow markers, replay, quota and gap-aware sequence anchors (256.711607ms)
+✔ requires durable batch acknowledgement, lost-ACK replay, capacity, rejection and real recovery anchors (549.237595ms)
+✔ requires immutable segment rotation, explicit incomplete tails, crash recovery and projection anchors (1245.637781ms)
+✔ requires derived index rebuild, dedup, conflict, loss and incomplete-tail anchors (396.382516ms)
+✔ requires C19 explainable rules and durable alert projection anchors (285.256777ms)
+✔ requires C20 append-only triage, strict requests, restart replay and forged-history anchors (452.049488ms)
+✔ requires C21 snapshot and status boundary anchors even when other suites pass (300.913784ms)
+✔ requires the review remediation boundaries (342.771702ms)
+✔ requires C23 expiration, audit, real crash recovery and resurrection prevention (447.429978ms)
+✔ requires C24 real TLS cutoff, atomic offline recovery and fail-closed certificate boundaries (599.621114ms)
+✔ requires C26 integrated offline spool, duplicate batch, restart and no-egress boundaries (159.524995ms)
+✔ requires C25 signed authority, artifact integrity, anti-rollback and real recovery boundaries (723.936718ms)
+✖ retention CLI previews, applies and replays without rewriting C05 (11.002262ms)
+✔ retention CLI rejects missing storage and mixed or incomplete modes (52.207913ms)
+✖ update CLI persists revocation and exact scoped recovery across independent processes (11.170987ms)
+✖ update CLI rejects unrelated flags, unsafe files and missing trust prerequisites before mutation (7.756549ms)
+✔ certificate boundary rejects inconsistent dates, scope duplication, status and secret fields (2.886993ms)
+✔ certificate proxy accepts a bounded snapshot and refuses redirects, malformed, oversized and unavailable upstreams (80.316779ms)
+✔ published certificate schema and nanosecond overlap boundaries agree with engine semantics (51.882946ms)
+✔ public configuration fails closed on engine flags, external endpoints, unknown keys and project mismatch (1.586012ms)
+✔ preview rejects hostile structure, excessive UTF-8 size and excessive complexity (1.898126ms)
+✔ HTTP isolation, cache rules, health semantics, methods, traversal and symlink containment (106.80549ms)
+✔ generated project and runtime identity agree with exactly forty original product tasks (1.920908ms)
+✔ incident retention metadata is explicit and cannot claim complete coverage (2.664157ms)
+✔ published incident response schema validates sources and rejects missing trace fields (83.987637ms)
+✔ incident boundary rejects broken source links and inconsistent coverage before rendering (1.303525ms)
+✔ incident proxy rejects redirect, malformed, oversized and unavailable upstreams without egress (78.921974ms)
+✔ real launcher serves engine health, preserves disabled admission, stops and restarts (145.545586ms)
+✔ local web proxy validates the exact read-only sensor response (10.939935ms)
+✔ engine serves an empty C05-backed snapshot when explicit local policy is supplied (113.832887ms)
+✔ engine crash stops the web listener with a failing outcome (9.86622ms)
+✔ occupied web port remains owned by its server and launch cleans up its engine (14.31516ms)
+✔ missing engine and invalid configuration fail before a successful launch (5.470629ms)
+✔ health boundary rejects malformed, oversized, redirected, unavailable and stalled upstreams (2012.594888ms)
+✔ synthetic C03 fixtures are versioned and cannot claim product readiness (1.315728ms)
+✔ CLI SIGINT and SIGTERM release both listeners; supervisor death closes engine stdin (227.488832ms)
+✔ unresponsive startup times out and cancellation terminates only the owned child (10057.11457ms)
+# example.invalid/synthetic/cmd/miragemesh
+cmd/miragemesh/main.go:2:15: undefined: missing
+✔ failed Go compilation preserves the previous binary and removes staging output (43.725747ms)
+✔ startup rejects forged non-loopback handshakes and unsafe health destinations (51.974285ms)
+✔ default engine returns a typed disabled sensor response directly (10.312924ms)
+✔ web and engine reject foreign Host and Origin before serving local data (17.671369ms)
+✔ sensor responses conform to the published local API schema (58.953452ms)
+✔ setup validates toolchain/options and stops at the first failed install (1.807266ms)
+✔ setup rejects missing tools, wrong pins and a non-rootless provider before building (0.608256ms)
+✔ roadmap rejects absent resources, escaping paths and unproved completion (32.680927ms)
+✔ web package starts from an isolated directory with every server validator dependency (175.472418ms)
+✔ accepts the repository reference scenario and its licensed fixtures (9.349705ms)
+✔ rejects missing workflow requirements and fixture provenance (9.953072ms)
+✔ rejects fixture metadata without provenance or license (4.923737ms)
+✔ rejects escaping paths, unsupported versions and false engine success claims (7.772539ms)
+✔ accepts exact versioned resources, an explicitly optional missing tool and synthetic fixtures (16.00132ms)
+✔ rejects floating resources, missing official metadata and mismatched integrity (10.261308ms)
+✔ rejects unavailable required resources and fixture escapes or checksum changes (8.528431ms)
+✔ validates the versioned sensor snapshot and rejects malformed sensor states (6.04959ms)
+✔ update snapshot rejects misleading authority, duplicate releases, private fields and expiry boundary truncation (3.053674ms)
+✔ update proxy confines requests, validates actual response bytes and refuses redirects or oversized data (36.673735ms)
+✔ update read-only API contract matches both published formats (3.163048ms)
+ℹ tests 82
+ℹ suites 0
+ℹ pass 77
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12908.32881
+
+✖ failing tests:
+
+test at tests/engineering/certificate-cli.test.mjs:18:1
+✖ certificate CLI issues a private scoped token, recovers and replays the same signed certificate (10.377755ms)
+  AssertionError [ERR_ASSERTION]: go: golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64: verifying module: checksum database disabled by GOSUMDB=off
+  
+  
+  1 !== 0
+  
+      at seed (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/certificate-cli.test.mjs:15:9)
+      at TestContext.<anonymous> (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/certificate-cli.test.mjs:19:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/engineering/certificate-cli.test.mjs:34:1
+✖ certificate CLI rejects unsafe key inputs, missing prerequisites and mixed runtime modes (9.375573ms)
+  AssertionError [ERR_ASSERTION]: go: golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64: verifying module: checksum database disabled by GOSUMDB=off
+  
+  
+  1 !== 0
+  
+      at seed (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/certificate-cli.test.mjs:15:9)
+      at TestContext.<anonymous> (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/certificate-cli.test.mjs:35:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/engineering/retention-cli.test.mjs:13:1
+✖ retention CLI previews, applies and replays without rewriting C05 (11.002262ms)
+  AssertionError [ERR_ASSERTION]: go: golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64: verifying module: checksum database disabled by GOSUMDB=off
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/retention-cli.test.mjs:17:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/engineering/update-cli.test.mjs:13:1
+✖ update CLI persists revocation and exact scoped recovery across independent processes (11.170987ms)
+  AssertionError [ERR_ASSERTION]: go: golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64: verifying module: checksum database disabled by GOSUMDB=off
+  
+  
+  1 !== 0
+  
+      at seed (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/update-cli.test.mjs:11:245)
+      at TestContext.<anonymous> (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/update-cli.test.mjs:14:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/engineering/update-cli.test.mjs:27:1
+✖ update CLI rejects unrelated flags, unsafe files and missing trust prerequisites before mutation (7.756549ms)
+  AssertionError [ERR_ASSERTION]: go: golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64: verifying module: checksum database disabled by GOSUMDB=off
+  
+  
+  1 !== 0
+  
+      at seed (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/update-cli.test.mjs:11:245)
+      at TestContext.<anonymous> (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/update-cli.test.mjs:28:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+check_exit=1

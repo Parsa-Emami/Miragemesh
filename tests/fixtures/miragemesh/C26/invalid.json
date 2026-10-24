@@ -1,0 +1,77 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C26 invalid batches. Each case is rejected before any durable change.",
+  "sensor_id": "sensor-01",
+  "cases": [
+    {
+      "name": "unconfigured",
+      "sensor_id": "sensor-01",
+      "batch_id": "batch-invalid-unconfigured",
+      "first_sequence": 1,
+      "last_sequence": 2,
+      "event_indexes": [0, 1],
+      "expected_is": "sensor.ErrUnconfigured"
+    },
+    {
+      "name": "empty_batch",
+      "sensor_id": "sensor-01",
+      "batch_id": "batch-invalid-empty",
+      "first_sequence": 2,
+      "last_sequence": 2,
+      "event_indexes": [],
+      "expected_is": "collector.ErrInvalidBatch"
+    },
+    {
+      "name": "batch_over_limit",
+      "sensor_id": "sensor-01",
+      "batch_id": "batch-invalid-limit",
+      "first_sequence": 1,
+      "last_sequence": 3,
+      "event_indexes": [0, 1, 2],
+      "expected_is": "collector.ErrBatchTooLarge"
+    },
+    {
+      "name": "sensor_mismatch",
+      "sensor_id": "sensor-01",
+      "batch_id": "batch-invalid-sensor",
+      "first_sequence": 2,
+      "last_sequence": 2,
+      "raw_events": [
+        "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-02\",\"event_id\":\"event-02\",\"sequence\":2,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/resilience/other\"}}\n"
+      ],
+      "expected_is": "collector.ErrSensorMismatch"
+    },
+    {
+      "name": "sequence_gap",
+      "sensor_id": "sensor-01",
+      "batch_id": "batch-invalid-span",
+      "first_sequence": 2,
+      "last_sequence": 3,
+      "event_indexes": [1],
+      "expected_is": "collector.ErrInvalidBatch"
+    },
+    {
+      "name": "malformed_event",
+      "sensor_id": "sensor-01",
+      "batch_id": "batch-invalid-malformed",
+      "first_sequence": 2,
+      "last_sequence": 2,
+      "raw_events": [
+        "{\"schema_version\":\"1\"}\n"
+      ],
+      "expected_is": "collector.ErrInvalidBatch"
+    },
+    {
+      "name": "conflicting_replay",
+      "sensor_id": "sensor-01",
+      "batch_id": "batch-invalid-conflict",
+      "first_sequence": 1,
+      "last_sequence": 1,
+      "raw_events": [
+        "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-conflict\",\"sequence\":1,\"observed_at\":\"2026-01-01T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/resilience/conflict\"}}\n"
+      ],
+      "expected_is": "storage.ErrConflict"
+    }
+  ]
+}

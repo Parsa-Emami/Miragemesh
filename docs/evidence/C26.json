@@ -1,0 +1,158 @@
+{
+  "commit_id": "C26",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "verified",
+  "date": "2026-10-24",
+  "scope": "Integrated local resilience scenario over the existing offline spool, collector delivery, signed configuration and C05 storage: signed-bounded offline retention with durable gap/loss accounting, duplicate batch replay idempotency, real store restart convergence, delivery continuing across the explicit gap, typed negative batches, and a no-network import boundary over the composed path. Existing C13 container egress and C14/C16 SIGKILL anchors run in the same required suite.",
+  "base_commit": "6b35c8bd9baa688ab73ba49ee9d93122d4d59fcc",
+  "source_identity": "sha256:0b0efc54dcda3be76557383a9893f39fd11727208f87695e795d0a4c629bc9ba",
+  "source_identity_algorithm": "sorted path + NUL + raw SHA-256 over tracked/nonignored source, excluding docs/evidence/, SHA256SUMS.txt, plans/progress.json and docs/agents/SESSION_HANDOFF.json",
+  "implementation_commit": null,
+  "dependencies": {
+    "C25": "docs/evidence/C25.json; verified on e3dafe27202d7616530305f9bba616b3a2e31ecc"
+  },
+  "composition": {
+    "offline_bound": "spool.Store.Enqueue with sensor.AcceptBoundedWithOverflow and the C11 applied signed spool_limit_events=3",
+    "duplicate_batches": "collector.Ingestor.Ingest with exact C04 bytes, C07 identity and append-only C05 spool.ack records",
+    "restart": "storage.Store closed and reopened at the same path; sensor.NewApplier re-projects the applied revision; spool/collector recreated",
+    "egress": "source-level import boundary for internal/spool, internal/collector and internal/sensor; the real rootless-container anchor TestDecoyIsolationDeniesInternetAndPrivateSubnets ran in the same suite",
+    "crash": "existing C14/C16 SIGKILL and syscall anchors ran in the same suite; C26 adds no crash harness"
+  },
+  "fixtures": {
+    "directory": "tests/fixtures/miragemesh/C26/",
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic sensor events, desired state and expectations. Ephemeral in-memory Ed25519 keys only; no real traffic, credentials or customer data.",
+    "bounds_provenance": "spool_limit_events=3 and event_batch_limit=2 are small test policy, not product defaults or capacity measurements.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C26/expected-output.json": "0ae9fadd1fce1526f82e7e5390cebc5490a31a7980c6dbfdf23663b05c67080b",
+      "tests/fixtures/miragemesh/C26/invalid.json": "3e3464c39a1b48ca66e04b09085a6e69365c29f5bb15231dfccd71629e5a2b97",
+      "tests/fixtures/miragemesh/C26/positive.json": "83329ac971b776b03e9892d3b02336e632ba6f47f9457d7f1faa07671e39d7f7"
+    }
+  },
+  "environment": {
+    "os": "Linux 7.0.0-38-generic x86_64 GNU/Linux",
+    "cpu_count": 16,
+    "memory_mib": 31341,
+    "free_disk_mib": 119525,
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "go": "go1.27.2 linux/amd64",
+    "go_toolchain_selection": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct",
+    "container_provider": "podman 4.9.3 rootless=true",
+    "pinned_image": "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 amd64/linux",
+    "hardware_target_measured": false,
+    "output_path": "docs/evidence/C26/environment.log"
+  },
+  "commands": [
+    {
+      "name": "validate-plan",
+      "command": ["npm", "run", "validate:plan"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C26/validate-plan.log",
+      "stored_output_sha256": "2eb85efaea0ebbc245a38e63723724d97698519b89926d266d59eb25af8e26eb",
+      "observed": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred."
+    },
+    {
+      "name": "formatting",
+      "command": ["$(go env GOROOT)/bin/gofmt", "-l", "cmd", "internal", "tests"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C26/formatting.log",
+      "stored_output_sha256": "4d18507cc5d1b4ca479b6b40351105d1bc0478f52650c2df44cc1fd6a46eebf4",
+      "observed": "No unformatted files."
+    },
+    {
+      "name": "go-vet",
+      "command": ["go", "vet", "./..."],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C26/go-vet.log",
+      "stored_output_sha256": "379657899e7681dedd756dbab8c88d30cc8d3f6cb48b3cf4dacb3a757870b054",
+      "observed": "No vet findings."
+    },
+    {
+      "name": "resilience-targeted",
+      "command": ["go", "test", "-race", "-count=1", "./tests", "-run", "^TestResilience", "-v"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C26/resilience-targeted.log",
+      "stored_output_sha256": "9864fd61504a702cdd64b979ac0685ce08dc694b63f9beca0336e043cd11f9da",
+      "observed": "3 C26 anchors passed: TestResilienceOfflineSpoolDuplicateBatchesAndRestart, TestResilienceRejectsUnconfiguredAndMalformedBatches, TestResilienceDeliveryPathHasNoEgress."
+    },
+    {
+      "name": "engine-full",
+      "command": ["go", "test", "-race", "-count=1", "-json", "./..."],
+      "exit_code": 0,
+      "output_path": "dist/ci/engine-tests.jsonl",
+      "observed": "No failing events; 219 top-level tests and 353 subtests passed across 6 test packages; packages without test files are reported as skipped, never ignored."
+    },
+    {
+      "name": "engine-guard",
+      "command": ["node", "scripts/verify-engine-tests.mjs", "dist/ci/engine-tests.jsonl"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C26/engine-guard.log",
+      "stored_output_sha256": "118615420f09daf7ebc176448e624ffc0c748022446d0e2729e4cf90e67094f0",
+      "observed": "Verified 8 engine suites and 192 required test anchors."
+    },
+    {
+      "name": "npm-check",
+      "command": ["npm", "run", "check"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C26/npm-check.log",
+      "stored_output_sha256": "e24237cd4379aebd5d2336f287d098663a321bb0ced53585ac8e564216f03adf",
+      "observed": "Plan validation, typecheck, web build, engine build and 82 Node tests passed with the documented Go toolchain environment."
+    },
+    {
+      "name": "repository-contracts",
+      "command": ["python3", "scripts/validate_repo.py"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C26/repository-contracts.log",
+      "stored_output_sha256": "9096277b347cde6f48bab6903223021828d086a54cbe3b2bd39aef5edeedb16f",
+      "observed": "VALIDATION PASSED; checked 321 JSON files and repository contract invariants."
+    },
+    {
+      "name": "python-tests",
+      "command": ["python3", "-m", "unittest", "discover", "-s", "tests/engineering", "-p", "test_*.py", "-v"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C26/python-tests.log",
+      "stored_output_sha256": "820a61684ea4b10e32766f7b4c04708d87e0c5191157ef42897fdb644a2043eb",
+      "observed": "Ran 6 tests; OK."
+    },
+    {
+      "name": "diff-check",
+      "command": ["git", "diff", "--check"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C26/diff-check.log",
+      "stored_output_sha256": "468d6859daaad06e416104e11ba1f751fbb03802daa9abaf3aaa7ee59a1cc734",
+      "observed": "No whitespace errors."
+    }
+  ],
+  "results": [
+    "Bounded spool: events 1-3 retained, event 4 dropped with typed spool.DroppedError, one durable gap [4,4], exact retry unchanged.",
+    "Duplicate batch: identical event and acknowledgement receipts; event/acknowledgement counts unchanged before and after restart.",
+    "Collector restart: applied revision 1 and payload, receipts, acknowledgements and loss summary survived close/reopen; [3] then [5,6] delivered across the explicit gap.",
+    "Final durable state: 1 config, 5 events, 5 acknowledgements, 1 gap; no loss marker was rewritten or removed.",
+    "Negative cases: unconfigured sensor, empty batch, batch over the applied limit, sensor mismatch, declared-span mismatch, malformed event and conflicting replay returned their typed sentinels with unchanged manifest bytes and record counts.",
+    "Egress: the composed path imports no net/net-*, os/exec, syscall, plugin or C package; TestDecoyIsolationDeniesInternetAndPrivateSubnets passed against the pinned rootless provider and image in the same suite."
+  ],
+  "observed_limitations": [
+    "Local Linux ext4/tmpfs process and filesystem proofs only; no physical power-loss, multi-host or consensus claim.",
+    "Existing C13/C14/C16 anchors provide the container egress and SIGKILL crash evidence; C26 does not duplicate or strengthen them.",
+    "spool_limit_events=3 and event_batch_limit=2 are fixture policy, not product defaults or measured capacity.",
+    "The browser suite was not run because C26 changes no web source; it remains covered by the unchanged web workflow.",
+    "The first npm check attempt, without the documented GOSUMDB=sum.golang.org environment, failed inside Node CLI tests because this machine's go env file sets GOSUMDB=off. That failed output is retained at docs/evidence/C26/npm-check-missing-env.log and is not counted as a passing check; the documented environment passed.",
+    "Hosted GitHub Actions were not run for this source; no push, release or publication occurred.",
+    "Local npm is 11.17.0 while package.json pins packageManager npm@11.9.0; node and Go match their locks.",
+    "The full ordered clone-to-value workflow and clean-host restart/restore remain C30; artifacts and publication remain C40."
+  ],
+  "rollback_or_recovery_observation": "No production data format, schema, migration, .env or Dockerfile changed. The isolated test/docs change can be reverted; the scenario itself proves that accepted bytes, receipts, acknowledgements, revision and loss accounting survive a real store restart.",
+  "negatives_executed": [
+    "unconfigured sensor -> sensor.ErrUnconfigured",
+    "empty batch -> collector.ErrInvalidBatch",
+    "batch over applied event_batch_limit -> collector.ErrBatchTooLarge",
+    "event sensor mismatch -> collector.ErrSensorMismatch",
+    "declared sequence span mismatch -> collector.ErrInvalidBatch",
+    "malformed event bytes -> collector.ErrInvalidBatch",
+    "same-sequence conflicting replay -> storage.ErrConflict"
+  ]
+}

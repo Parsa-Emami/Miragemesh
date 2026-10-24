@@ -555,3 +555,46 @@ C24 adds required real-TLS cutoff/restart, atomic recovery and enrollment-race, 
 ## C25 signed sensor updates
 
 `go test -race -count=1 ./tests ./internal/contracts ./internal/storage ./cmd/miragemesh -run '^TestUpdate'` exercises publisher/recovery signatures, one-byte tampering, artifact digests, revision/expiry/revocation floors, immutable release identities, scoped single-use recovery, quota, cancellation, restart and read-only HTTP. Both metadata and recovery publication run five real SIGKILL phases and nine syscall faults. The discovery guard requires 189 anchors in the same eight suites. Node covers the actual CLI, public response validation and confined proxy; browser tests exercise actual C05-backed status, revocation/recovery, restart, stale reads and keyboard details at 360px. No artifact is executed.
+
+## C26 integrated resilience anchors
+
+C26 composes the existing offline spool, collector delivery and restart
+boundaries into one fixture-driven scenario. It adds no listener, API, UI,
+dependency, storage format or schema change, and it does not re-implement the
+existing per-card crash or isolation harnesses.
+
+The `tests` package requires
+`TestResilienceOfflineSpoolDuplicateBatchesAndRestart`,
+`TestResilienceRejectsUnconfiguredAndMalformedBatches` and
+`TestResilienceDeliveryPathHasNoEgress`, so the discovery guard now requires
+192 anchors across the same eight suites.
+
+The positive scenario uses one signed revision with `spool_limit_events=3` and
+`event_batch_limit=2`. While the sensor is disconnected the spool retains
+events 1-3 and drops event 4 with a typed `spool.DroppedError` and one durable
+gap record; an exact retry is the same drop and writes nothing. After
+reconnection the collector acknowledges batch `[1,2]`, an identical redelivery
+returns the original event and acknowledgement receipts without a second
+observation, and the store is then closed and reopened at the same path. After
+that restart the applied revision and payload, receipts, acknowledgements and
+loss summary must still match, a repeated batch must still be idempotent, and
+`[3]` plus `[5,6]` must deliver across the explicit gap. The expected
+sequences, restart revision and final per-kind record counts are read from
+`tests/fixtures/miragemesh/C26/expected-output.json`, so the fixture cannot
+drift from the test.
+
+The negative fixture covers an unconfigured sensor, an empty batch, a batch
+over the applied limit, a sensor mismatch, a declared sequence span that does
+not match its events, malformed event bytes and a same-sequence conflicting
+replay. Every case must return its typed sentinel and leave the manifest bytes
+and per-kind record counts unchanged.
+
+The no-egress anchor parses the packages this scenario calls
+(`internal/spool`, `internal/collector`, `internal/sensor`) and rejects any
+direct `net`/`net/*`, `os/exec`, `syscall`, `plugin` or `C` import. It proves
+that the composed offline and delivery path has no network capability. The real
+rootless-container proof remains `TestDecoyIsolationDeniesInternetAndPrivateSubnets`,
+which the same required suite runs with the pinned provider and image; the
+existing C14/C16 SIGKILL anchors remain the crash-recovery proof. These are
+local process/filesystem proofs: C26 does not add transport, mTLS, retention,
+C30 usability, C40 release or remote-runner evidence.
