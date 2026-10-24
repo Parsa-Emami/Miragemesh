@@ -1,0 +1,14 @@
+✔ C29 fixtures describe the readiness, redaction and bound contract (7.304242ms)
+✔ real engine and authoritative store report ready, survive restart and reset diagnostics (92.901912ms)
+✔ failures are typed and visible, optional providers degrade, and sentinels never reach logs (183.381357ms)
+✔ optional provider failure degrades while engine recovery returns to ready (14.951851ms)
+✔ standalone web shell reports web-only readiness and does not call an engine (3.954296ms)
+✔ missing index makes the web component itself not ready (4.356133ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 385.032821
