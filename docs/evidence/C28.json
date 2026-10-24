@@ -1,0 +1,322 @@
+{
+  "commit_id": "C28",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "local-verified",
+  "date": "2026-10-24",
+  "scope": "Bounded local target and over-limit workload measurement over the real C05/C11/C16 ingest and C17/C18 segment projection paths, with hardware/OS/source/fixture identities, latency, CPU, RSS, disk, cancellation, saturation and restart checks. The previously unmeasured 20 events/s planning target is reduced to the measured 8 events/s. No retention, multi-day, hosted, release or C30 claim.",
+  "base_commit": "d53f9f076cdebe0769dad201c9a9e6a9df39e45c",
+  "source_identity": "sha256:a5dffe6eb246b9b62d90575e392ffd5d8997505e70829c075c5cce7a6f75a5a7",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation",
+  "implementation_commit": "b0d916500ee4a3891b21c7076fbcaa96aaa4279b",
+  "commit_note": "The implementation and measurement were committed as b0d916500ee4a3891b21c7076fbcaa96aaa4279b after being measured on a dirty tree. scripts/source_identity.py on the clean implementation commit reproduces the recorded identity exactly. The later C28 evidence, progress, project-state and handoff bookkeeping commit is metadata and changes the current tree identity without changing measured behavior; no hosted Actions, deployment or release occurred.",
+  "dependencies": {
+    "C27": "docs/evidence/C27.json; verified locally on aadbb3371b6c8e614ab510babe25ebd9ea8e34c1"
+  },
+  "artifacts": {
+    "measurement": "docs/evidence/performance.json",
+    "measurement_sha256": "7945495bfda663d2bcf75159fbf441847aa38f35a240174a76b10358610bf843",
+    "harness": "scripts/benchmark-local.mjs",
+    "scenario": "tests/scenarios/target-workload.json",
+    "engine_tests": "tests/performance_test.go",
+    "node_regressions": "tests/engineering/performance.test.mjs"
+  },
+  "fixtures": {
+    "directory": "tests/fixtures/miragemesh/C28/",
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C28 sensor events, batch envelopes, negative inputs, desired state and expected counts. No real traffic, identities, credentials, customer data or key material are present; signing keys are generated in memory by the test.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C28/positive.json": "106b1865cd93217700f61fa7f9fb62fdf022ad6f16fb5bcdd0954384fe3059fd",
+      "tests/fixtures/miragemesh/C28/negative.json": "eb30743ff95f05c06acf76dcebd5c7d6a3a4586c6a70a7de913b3aa3db679263",
+      "tests/fixtures/miragemesh/C28/expected-output.json": "14f3e1f76fa88b01c6e87c6309bb2801b8b97328bb70fa4a719140ccd4c288be",
+      "tests/scenarios/target-workload.json": "d4bcdb8125f705073bd5a23a198c284a7e5eafccb1e0c8ae09a719528d7807f9"
+    },
+    "bounds_provenance": "5 sensors, the signed 64-event batch limit and the 8 events/s target are the measured local profile. The 20 events/s rate probe is an over-limit probe, not published capacity. Storage and segment limits are the explicit test bounds, not product defaults."
+  },
+  "environment": {
+    "os": "linux 7.0.0-38-generic",
+    "distribution": "Ubuntu 24.04.5 LTS",
+    "cpu_model": "AMD Ryzen 7 6800H with Radeon Graphics",
+    "cpu_count": 16,
+    "memory_mib": 31341,
+    "free_disk_mib": 119265,
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "go": "go version go1.27.2 linux/amd64",
+    "go_toolchain_selection": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct",
+    "engine_version": "0.0.1",
+    "engine_sha256": "e75ee8be01e0542c44618a126d87e8500781e7d3cbd21ce8435b5b8695ea055d",
+    "test_binary_sha256": "72cdae9287bcf4743d31778a24b60a050edc021e104882caa3314edd0f98b08e",
+    "container_provider": "podman 4.9.3 rootless=true",
+    "hardware_target_measured": true
+  },
+  "measurement": {
+    "constraint_mode": "systemd",
+    "enforced": {
+      "vcpu": 2,
+      "memory_mib": 2048,
+      "cpu": "CPUQuota=200% in an owned user scope",
+      "memory": "MemoryMax=2147483648 MemorySwapMax=0 in the same scope"
+    },
+    "published_limits": {
+      "sensors": 5,
+      "sustained_events_per_second": 8,
+      "steady_window_seconds": 30,
+      "accepted_batch_size": 50,
+      "max_applied_batch_limit": 64,
+      "peak_rss_mib": 96.02,
+      "target_state_bytes": 998590,
+      "segment_bytes": 527080
+    },
+    "target": {
+      "steady": {
+        "planned_events": 240,
+        "completed_events": 240,
+        "elapsed_ms": 29963.03,
+        "events_per_second": 8.009870071617224,
+        "p50_ms": 64.68,
+        "p95_ms": 81.93,
+        "p99_ms": 86.82,
+        "max_ms": 90.84
+      },
+      "backlog": {
+        "planned_events": 500,
+        "completed_events": 500,
+        "batches": 10,
+        "elapsed_ms": 45747.06,
+        "events_per_second": 10.93,
+        "p99_batch_ms": 5674.45
+      },
+      "events": 740,
+      "acks": 740,
+      "wall_ms": 76019.57,
+      "cpu_seconds": 37.5,
+      "peak_rss_mib": 21.13,
+      "disk_bytes": 998590,
+      "disk_files": 1488,
+      "manifest_sha256": "3991450d326d820ed4d7343cb846e0591773b1617203645499837fddc67a64c4",
+      "projection": {
+        "status": "projected",
+        "appended": 740,
+        "skipped_non_events": 745,
+        "segments": 2,
+        "segment_files": 3,
+        "wall_ms": 3638.28,
+        "cpu_seconds": 0.27,
+        "peak_rss_mib": 16.5,
+        "storage_manifest_unchanged": true,
+        "index_before_projection_records": 0,
+        "index_after_restart_records": 740,
+        "index_sensors_after_restart": 5,
+        "deduplicated": true,
+        "alerts_interactions": 740
+      },
+      "restart": {
+        "events": 740,
+        "acks": 740,
+        "applied_revision": 1,
+        "manifest_unchanged": true,
+        "wall_ms": 201.69,
+        "second_projection_appended": 0,
+        "second_projection_already_projected": 740,
+        "segments_unchanged": true,
+        "wall_ms_second_projection": 161.53
+      },
+      "http": {
+        "levels": [
+          { "concurrency": 1, "p99_ms": 1.0836940000008326, "errors": 0 },
+          { "concurrency": 8, "p99_ms": 4.909459000002244, "errors": 0 },
+          { "concurrency": 32, "p99_ms": 26.606245000002673, "errors": 0 },
+          { "concurrency": 64, "p99_ms": 35.74554800000624, "errors": 0 },
+          { "concurrency": 128, "p99_ms": 43.46310799999628, "errors": 0 }
+        ],
+        "saturation_threshold_ms": 2000,
+        "errors_total": 0
+      }
+    },
+    "over_limit": {
+      "rate_probe": {
+        "requested_events_per_second": 20,
+        "planned_events": 200,
+        "completed_events": 171,
+        "observed_events_per_second": 17.040246044435502,
+        "elapsed_ms": 10035.07,
+        "p99_ms": 77.1,
+        "outcome": "saturated; 20 events/s was not sustained and is not published"
+      },
+      "batch_probe": {
+        "batch_size": 65,
+        "applied_limit": 64,
+        "error": "collector: batch exceeds applied event_batch_limit",
+        "matched": true
+      },
+      "storage_probe": {
+        "requested_events": 300,
+        "accepted_events": 148,
+        "acks": 125,
+        "error": "storage quota exceeded",
+        "matched": true
+      },
+      "cancellation": {
+        "error": "context canceled",
+        "matched": true,
+        "events_before_retry": 0,
+        "acks_before_retry": 0,
+        "retry_events": 50,
+        "retry_acks": 50
+      },
+      "wall_ms": 18815.66,
+      "cpu_seconds": 5.41,
+      "peak_rss_mib": 18
+    },
+    "assertions": 38,
+    "assertions_failed": 0
+  },
+  "commands": [
+    {
+      "name": "validate-plan",
+      "command": ["npm", "run", "validate:plan"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/validate-plan.log",
+      "stored_output_sha256": "bbe7c0c8988c2df98f4c8d9f5e981c0fdcbc6965252577a3d0eace7e36cd67a5",
+      "observed": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred."
+    },
+    {
+      "name": "formatting",
+      "command": ["$(go env GOROOT)/bin/gofmt", "-l", "cmd", "internal", "tests"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/formatting.log",
+      "stored_output_sha256": "194ff5bca66278888f0f00be5c7ca523d15098ece958b14952533811089f6106",
+      "observed": "No unformatted files (log contains only EXIT:0)."
+    },
+    {
+      "name": "go-vet",
+      "command": ["go", "vet", "./..."],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/go-vet.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "No vet findings."
+    },
+    {
+      "name": "engine-full",
+      "command": ["go", "test", "-race", "-count=1", "-json", "./..."],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/engine-tests.stderr.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "No failing events; the JSON stream is retained at dist/ci/engine-tests.jsonl and summarized in engine-counts.log."
+    },
+    {
+      "name": "engine-guard",
+      "command": ["node", "scripts/verify-engine-tests.mjs", "dist/ci/engine-tests.jsonl"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/engine-guard.log",
+      "stored_output_sha256": "811a4e2ffc0c3d2e688a384b909701930c19d0814279716fefc05dda3434c94e",
+      "observed": "Verified 8 engine suites and 195 required test anchors, now including the three C28 anchors."
+    },
+    {
+      "name": "engine-counts",
+      "command": ["node", "-e", "count pass events in dist/ci/engine-tests.jsonl"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/engine-counts.log",
+      "stored_output_sha256": "35d1910b98775a784a4b4b35448d8117352995c59f5de7010fcebe50257963e4",
+      "observed": "top_level_pass 222, subtest_pass 353, test_packages 25, fail_events 0."
+    },
+    {
+      "name": "performance-node-tests",
+      "command": ["node", "--test", "tests/engineering/performance.test.mjs"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/performance-node-tests.log",
+      "stored_output_sha256": "42e48bd913bddabfc8f3032055183ee3090bf0f02914c80c3bedbc7e4584dcfc",
+      "observed": "5 tests passed, 0 failed, 0 skipped."
+    },
+    {
+      "name": "npm-check",
+      "command": ["npm", "run", "check"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/npm-check.log",
+      "stored_output_sha256": "634a9ee3676b224211d76d971d7c99e111fc67d2e963a5f4c1f9c10c80120d43",
+      "observed": "Plan validation, typecheck, web build, engine build and 88 Node tests passed with the documented Go toolchain environment."
+    },
+    {
+      "name": "repository-contracts",
+      "command": ["python3", "scripts/validate_repo.py"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/repository-contracts.log",
+      "stored_output_sha256": "85466d919905f4938c7bd3cf46b98db38f382c68e5741db6c17283ac143a60eb",
+      "observed": "VALIDATION PASSED; checked 331 JSON files and repository contract invariants."
+    },
+    {
+      "name": "python-tests",
+      "command": ["python3", "-m", "unittest", "discover", "-s", "tests/engineering", "-p", "test_*.py", "-v"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/python-tests.log",
+      "stored_output_sha256": "46b3066b81c49585af409ebe80a0e0e6247f469d0724ba46abd64a04b9997a8b",
+      "observed": "Ran 6 tests; OK."
+    },
+    {
+      "name": "benchmark",
+      "command": ["node", "scripts/benchmark-local.mjs", "--require-constraints"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/benchmark.log",
+      "stored_output_sha256": "f1e9b35bc6ba3a948f2c2e2bbe87c5baf58e5a00557359d52bb24fb4759b886d",
+      "observed": "38 assertions passed under an enforced 2 vCPU / 2048 MiB systemd user scope; wrote docs/evidence/performance.json."
+    },
+    {
+      "name": "diff-check",
+      "command": ["git", "diff", "--check"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C28/diff-check.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "No whitespace errors."
+    }
+  ],
+  "environment_repro": {
+    "reason": "Retained host-environment failure outside the required command set: the machine's go env sets GOSUMDB=off, so engine-spawning Node suites fail with 'verifying module: checksum database disabled by GOSUMDB=off' unless the documented environment is supplied. The same suite passes in npm-check with GOSUMDB=sum.golang.org.",
+    "command": ["env", "-u", "GOTOOLCHAIN", "-u", "GOSUMDB", "-u", "GOPROXY", "node", "--test", "tests/engineering/update-cli.test.mjs"],
+    "exit_code": 1,
+    "output_path": "docs/evidence/C28/npm-check-missing-env.log",
+    "stored_output_sha256": "15fb986dc7f8885c5deda5f285f04c0b60b7d70c4f53729b1958a53524c26da3"
+  },
+  "results": [
+    "Constrained target: 240/240 steady events in 29.96 s (8.01 events/s) plus a 500-event, 50-per-batch backlog, for 740 events and 740 durable acknowledgements across 5 sensors with 250 ingest calls.",
+    "Ingest resources: 37.5 s CPU over 76.0 s wall, 21.13 MiB peak ingest RSS and 96.02 MiB peak process RSS for the stack, 998590 bytes and 1488 files of durable state for 740 events.",
+    "Steady single-event latency: p50 64.7 ms, p95 81.9 ms, p99 86.8 ms, max 90.8 ms; the batched backlog reached 10.93 events/s with p99 batch time 5.67 s.",
+    "Projection: 740 records appended to 2 segments (3 files, 527080 bytes), 745 non-event records skipped, coverage complete, 740 interactions explained, and the C05 manifest was byte-unchanged.",
+    "Restart: events, acknowledgements and applied revision 1 were unchanged, the manifest digest matched, the second projection appended nothing, reported 740 already-projected records, rebuilt the index to 740 records over 5 sensors and left segment bytes unchanged.",
+    "HTTP latency at concurrency 1/8/32/64/128: p99 1.08/4.91/26.61/35.75/43.46 ms with zero errors, below the 2000 ms saturation threshold.",
+    "Over-limit rate probe: the 20 events/s request completed 171/200 events in 10.04 s (17.04 events/s), so the former 20 events/s planning target is recorded as unsupported and the published capacity is reduced to 8 events/s.",
+    "Typed negatives: a 65-event batch returned the exact applied-limit error without a write; the bounded storage probe accepted 148 of 300 events before the typed 'storage quota exceeded' error; a cancelled batch returned 'context canceled' with 0 events and 0 acknowledgements before retry, then accepted 50/50 on retry.",
+    "Published limits and documentation now report the measured 8 events/s profile instead of the unmeasured 20 events/s target (ops/runtime-requirements.json, ops/deployment-profiles.json, product/project.json, ops/DEPLOYMENT_PREREQUISITES.md, product/PRODUCT_REVIEW_FA.md, docs/engineering/CLONE_TO_RUN.md)."
+  ],
+  "observed_limitations": [
+    "Local Linux single-operator profile only; the 2 vCPU/2048 MiB target is enforced with a user-scope cgroup on the measured host and is not a capacity guarantee for other hardware.",
+    "The workload is a 30-second published-capacity window plus a bounded batch backlog, not a multi-day retention, sustained saturation or unbounded-volume claim.",
+    "The rate probe measured saturation at roughly 17 events/s for the 20 events/s request; it does not prove the absolute maximum throughput of the engine.",
+    "Browser rendering and perceived latency are not measured by C28; C27 covers rendered correctness.",
+    "The benchmark used the repository-authored synthetic fixtures and an ephemeral in-memory signing key; no real traffic, credentials or customer data were used.",
+    "The measurement ran before any commit existed, so docs/evidence/performance.json still describes that dirty-tree condition; the implementation and measurement were committed afterwards as b0d9165, and scripts/source_identity.py on that clean commit reproduces the recorded identity.",
+    "The host's go env sets GOSUMDB=off, so engine-spawning Node suites require GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org; the retained failing log documents that environment issue, not a source failure.",
+    "No hosted GitHub Actions, push, deployment, release or C30/C40 claim is made."
+  ],
+  "negatives_executed": [
+    "malformed scenario metadata (version, license, sensors, rate, backlog, limits, endpoints) rejected",
+    "inconsistent positive fixture sample list rejected",
+    "unknown or duplicate negative case name and expected error rejected",
+    "expected-output count mismatch rejected",
+    "missing C28 fixtures or missing engine build fails before measurement",
+    "required constraint enforcement unavailable fails with an explicit error",
+    "65-event batch over the signed 64 limit returns the typed error without a write",
+    "bounded storage quota returns 'storage quota exceeded' with a readable accepted prefix",
+    "cancellation returns 'context canceled' with no acknowledgment before retry",
+    "restart preserves event/ack counts, applied revision and manifest bytes",
+    "second projection is idempotent and does not rewrite segments",
+    "HTTP saturation sweep records latency and zero errors without crashing",
+    "aborted HTTP requests leave the stack healthy",
+    "harness references loopback targets only and opens no network client",
+    "20 events/s rate probe saturates instead of being published as capacity"
+  ],
+  "rollback_or_recovery_observation": "The change is additive evidence, harness, scenario, fixture and test material plus documented capacity reduction; no stored format, API contract, schema, migration, .env or Dockerfile changed. Reverting the C28 files restores the previous planning target and removes the measurement without touching accepted C05/C16/C17/C18 data. The benchmark operates on disposable copies under dist/ and removes them unless --keep is passed.",
+  "evidence_provenance": "Every command above was executed in this checkout on 2026-10-24 with the pinned Node 24.19.0 and Go 1.27.2 toolchains. docs/evidence/performance.json was produced by the harness itself and carries the same source identity and fixture hashes."
+}

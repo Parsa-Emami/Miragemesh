@@ -249,10 +249,12 @@
   },
     {
       "id": "C28",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C28.json"
+      ],
+      "source_identity": "sha256:a5dffe6eb246b9b62d90575e392ffd5d8997505e70829c075c5cce7a6f75a5a7",
+      "notes": "C28 verified locally on base d53f9f0 and committed as b0d916500ee4a3891b21c7076fbcaa96aaa4279b without pushing: the real C05/C11/C16 ingest and C17/C18 projection paths measured 8.01 events/s sustained for 30 s with 5 sensors, 740 events/acks, a 500-event batched backlog, 21-96 MiB RSS, 998590 state bytes, p99 86.8 ms single-event and 43.5 ms HTTP at concurrency 128, all 38 assertions passed under an enforced 2 vCPU/2048 MiB systemd user scope. The 20 events/s planning target completed only 171/200 events and is reduced to the measured 8 events/s in the published product/ops docs. Typed over-limit batch, storage-quota and cancellation cases and restart idempotency passed; 195 engine anchors, 88 Node tests, 6 Python tests and repository contracts passed. No push, hosted Actions, release or C30/C40 claim."
     },
     {
       "id": "C29",
