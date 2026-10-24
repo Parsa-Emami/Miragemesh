@@ -1,0 +1,61 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Expected C28 counts are derived from the repository-authored synthetic workload and the existing C07/C11/C16/C17/C18 conventions. Receipts and digests are not hard-coded because the test signs with an ephemeral key.",
+  "regression": {
+    "sensors": 5,
+    "events_per_sensor": 3,
+    "batch_size": 3,
+    "batches": 5,
+    "events": 15,
+    "acks": 15,
+    "applied_revision": 1
+  },
+  "target": {
+    "sensors": 5,
+    "steady_events": 240,
+    "backlog_events": 500,
+    "total_events": 740,
+    "total_acks": 740,
+    "configs": 5,
+    "ingest_calls": 250,
+    "per_sensor_sequences": 148,
+    "applied_revision": 1,
+    "segments": 2,
+    "index_records_first_projection": 0,
+    "index_records_after_restart": 740,
+    "index_sensors_after_restart": 5,
+    "skipped_non_events": 745,
+    "appended": 740,
+    "already_projected_after_restart": 740,
+    "appended_after_restart": 0
+  },
+  "over_limit": {
+    "rate_probe": {
+      "events_per_second": 20,
+      "duration_seconds": 10,
+      "planned_events": 200,
+      "completed_max": 199
+    },
+    "batch_probe": {
+      "batch_size": 65,
+      "error": "collector: batch exceeds applied event_batch_limit"
+    },
+    "storage_probe": {
+      "requested_events": 300,
+      "batch_size": 25,
+      "accepted_between": [1, 299],
+      "error": "storage quota exceeded"
+    }
+  },
+  "cancellation": {
+    "batch_size": 50,
+    "error": "context canceled",
+    "acks_before_retry": 0,
+    "retry_events": 50,
+    "retry_acks": 50
+  },
+  "negatives": {
+    "count": 18
+  }
+}

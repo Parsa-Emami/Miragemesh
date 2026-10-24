@@ -1,0 +1,47 @@
+{
+  "status": "passed",
+  "output": "docs/evidence/performance.json",
+  "source_identity": "sha256:a5dffe6eb246b9b62d90575e392ffd5d8997505e70829c075c5cce7a6f75a5a7",
+  "constraints": "systemd",
+  "target": {
+    "steady_events": 240,
+    "steady_events_per_second": 8.009870071617224,
+    "events": 740,
+    "acks": 740,
+    "peak_rss_mib": 21.12890625,
+    "disk_bytes": 998590
+  },
+  "projection": {
+    "appended": 740,
+    "segments": 2,
+    "p99_ms": null
+  },
+  "http": [
+    {
+      "concurrency": 1,
+      "p99_ms": 1.0836940000008326,
+      "errors": 0
+    },
+    {
+      "concurrency": 8,
+      "p99_ms": 4.909459000002244,
+      "errors": 0
+    },
+    {
+      "concurrency": 32,
+      "p99_ms": 26.606245000002673,
+      "errors": 0
+    },
+    {
+      "concurrency": 64,
+      "p99_ms": 35.74554800000624,
+      "errors": 0
+    },
+    {
+      "concurrency": 128,
+      "p99_ms": 43.46310799999628,
+      "errors": 0
+    }
+  ],
+  "assertions": 38
+}

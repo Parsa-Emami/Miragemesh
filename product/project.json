@@ -45,12 +45,12 @@
   ],
   "limits": {
     "sensors": 5,
-    "events_per_second": 20,
+    "events_per_second": 8,
     "spool_max_mib": 100,
     "event_retention_days": 7,
     "payload_max_kib": 8
   },
-  "hardware": "collector هدف 2 vCPU / 2 GiB RAM / 20 GiB SSD؛ sensor روی host مجزا یا segment ایزوله آزمون شود.",
+  "hardware": "collector هدف 2 vCPU / 2 GiB RAM / 20 GiB SSD؛ sensor روی host مجزا یا segment ایزوله آزمون شود. نرخ پایدار ۸ رویداد بر ثانیه با ۵ sensor در C28 اندازه‌گیری شد (docs/evidence/performance.json)؛ هدف ۲۰ رویداد بر ثانیه پشتیبانی نشد و منتشر نمی‌شود.",
   "weeks": "8–12 هفته",
   "risks": [
     "decoy مجاز به تماس خارجی یا دانلود payload نیست",

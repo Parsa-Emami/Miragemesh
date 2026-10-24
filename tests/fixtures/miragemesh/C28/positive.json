@@ -1,0 +1,34 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C28 sensor events, batch envelope and desired state. No real traffic, identities, credentials or customer data are present. The signing key used by tests is generated in memory.",
+  "sensors": ["sensor-01", "sensor-02", "sensor-03", "sensor-04", "sensor-05"],
+  "samples": [
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-sensor-01-000001\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/sensor-01/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-02\",\"event_id\":\"event-sensor-02-000001\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/sensor-02/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"}}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-03\",\"event_id\":\"event-sensor-03-000001\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/sensor-03/cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\"}}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-04\",\"event_id\":\"event-sensor-04-000001\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/sensor-04/dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\"}}",
+    "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-05\",\"event_id\":\"event-sensor-05-000001\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/sensor-05/eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\"}}"
+  ],
+  "batch": {
+    "batch_id": "synthetic-c28-batch-01",
+    "sensor_id": "sensor-01",
+    "first_sequence": 2,
+    "last_sequence": 4,
+    "events": [
+      "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-sensor-01-000002\",\"sequence\":2,\"observed_at\":\"2026-10-24T00:00:01Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/sensor-01/batch-2\"}}",
+      "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-sensor-01-000003\",\"sequence\":3,\"observed_at\":\"2026-10-24T00:00:02Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/sensor-01/batch-3\"}}",
+      "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-sensor-01-000004\",\"sequence\":4,\"observed_at\":\"2026-10-24T00:00:03Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/synthetic/sensor-01/batch-4\"}}"
+    ]
+  },
+  "config_payload": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"revision\":1,\"issued_at\":\"2026-10-24T00:00:00Z\",\"expires_at\":\"2027-10-24T00:00:00Z\",\"settings\":{\"heartbeat_seconds\":30,\"spool_limit_events\":4096,\"event_batch_limit\":64}}",
+  "storage_limits": {
+    "max_operations": 6000,
+    "max_bytes": 16777216,
+    "max_manifest_bytes": 8388608
+  },
+  "expected": {
+    "samples_accepted": 5,
+    "batch_accepted": 3
+  }
+}

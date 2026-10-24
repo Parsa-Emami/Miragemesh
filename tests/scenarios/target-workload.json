@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "fixture_version": 1,
+  "status": "defined",
+  "task": "C28",
+  "title": "Bounded local target and over-limit workload",
+  "profile": "local-linux-single-operator",
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C28 workload. No real traffic, identities, credentials or customer data are present. The scale is a published-capacity window plus a bounded backlog, not a retention or unbounded-volume claim.",
+  "hardware_target": {
+    "vcpu": 2,
+    "memory_mib": 2048,
+    "free_disk_mib": 10240
+  },
+  "published_capacity": {
+    "sensors": 5,
+    "events_per_second": 8
+  },
+  "target": {
+    "sensors": 5,
+    "steady_phase": {
+      "duration_seconds": 30,
+      "events_per_second": 8,
+      "batch_size": 1
+    },
+    "backlog_phase": {
+      "events": 500,
+      "batch_size": 50
+    },
+    "config": {
+      "revision": 1,
+      "issued_at": "2026-10-24T00:00:00Z",
+      "expires_at": "2027-10-24T00:00:00Z",
+      "max_sensors": 5,
+      "settings": {
+        "heartbeat_seconds": 30,
+        "spool_limit_events": 4096,
+        "event_batch_limit": 64
+      },
+      "bounds": {
+        "heartbeat_seconds": { "min": 5, "max": 3600 },
+        "spool_limit_events": { "min": 1, "max": 12800 },
+        "event_batch_limit": { "min": 1, "max": 12800 }
+      }
+    },
+    "event": {
+      "kind": "http.request",
+      "metadata_bytes": 512,
+      "observed_at": "2026-10-24T00:00:00Z"
+    },
+    "storage_limits": {
+      "max_operations": 6000,
+      "max_bytes": 16777216,
+      "max_manifest_bytes": 8388608
+    },
+    "segment_limits": {
+      "max_segments": 16,
+      "max_records_per_segment": 512,
+      "max_bytes_per_segment": 1048576
+    },
+    "alerts": {
+      "rate_limit": 1000000,
+      "window_seconds": 60
+    },
+    "http": {
+      "warmup_requests": 20,
+      "requests_per_level": 200,
+      "levels": [1, 8, 32, 64],
+      "saturation_level": 128,
+      "saturation_p99_ms": 2000,
+      "endpoints": ["/", "/readyz", "/api/engine/health"]
+    },
+    "regression": {
+      "events_per_sensor": 3,
+      "batch_size": 3
+    }
+  },
+  "over_limit": {
+    "rate_probe": {
+      "events_per_second": 20,
+      "duration_seconds": 10,
+      "batch_size": 1
+    },
+    "batch_probe": {
+      "batch_size": 65,
+      "applied_batch_limit": 64,
+      "expected_error": "collector: batch exceeds applied event_batch_limit"
+    },
+    "storage_probe": {
+      "sensors": 1,
+      "events": 300,
+      "batch_size": 25,
+      "storage_limits": {
+        "max_operations": 1000,
+        "max_bytes": 131072,
+        "max_manifest_bytes": 1048576
+      },
+      "expected_error": "storage quota exceeded"
+    },
+    "http_saturation": {
+      "concurrency": 128,
+      "requests": 200
+    }
+  },
+  "cancellation": {
+    "batch_size": 50,
+    "cancel_after_checks": 3,
+    "retry": true
+  },
+  "restart": {
+    "checks": [
+      "applied_revision",
+      "event_count",
+      "ack_count",
+      "projection_idempotent",
+      "store_manifest_unchanged"
+    ]
+  },
+  "fixtures": [
+    "tests/fixtures/miragemesh/C28/positive.json",
+    "tests/fixtures/miragemesh/C28/negative.json",
+    "tests/fixtures/miragemesh/C28/expected-output.json"
+  ],
+  "negative_cases": [
+    "missing engine or web build fails before measurement",
+    "malformed scenario or fixture metadata is rejected",
+    "unavailable required constraint enforcement fails when required",
+    "over-limit batch and storage quota return typed errors without placeholder success",
+    "restart preserves applied revision, event/ACK counts and idempotent projection",
+    "the harness uses loopback targets only and measures no egress"
+  ]
+}

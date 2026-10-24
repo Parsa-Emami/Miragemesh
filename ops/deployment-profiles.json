@@ -22,12 +22,13 @@
   },
   "capacity_targets": {
     "sensors": 5,
-    "events_per_second": 20,
+    "events_per_second": 8,
     "spool_max_mib": 100,
     "event_retention_days": 7,
     "payload_max_kib": 8
   },
-  "measured": false,
+  "measured": true,
+  "measurement": "C28 measured 8.01 events/s sustained for 30 s with 5 sensors under an enforced 2 vCPU / 2048 MiB user scope; the 20 events/s planning target is reduced. See docs/evidence/performance.json.",
   "engine_mode": "embedded-private",
   "web": {
     "artifact": "dist/release",

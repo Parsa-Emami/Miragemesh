@@ -1,0 +1,795 @@
+{
+  "schema_version": 1,
+  "task": "C28",
+  "status": "measured",
+  "measurement_date": "2026-10-24T15:11:00.812Z",
+  "source_identity": "sha256:a5dffe6eb246b9b62d90575e392ffd5d8997505e70829c075c5cce7a6f75a5a7",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/",
+  "base_commit": "d53f9f076cdebe0769dad201c9a9e6a9df39e45c",
+  "working_tree_dirty": true,
+  "working_tree_changes": 15,
+  "environment": {
+    "os": "linux 7.0.0-38-generic",
+    "distribution": "Ubuntu 24.04.5 LTS",
+    "cpu_model": "AMD Ryzen 7 6800H with Radeon Graphics",
+    "cpu_count": 16,
+    "memory_mib": 31341,
+    "free_disk_mib": 119286,
+    "load_average": [
+      2.93,
+      2.16,
+      1.72
+    ],
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "go": "go version go1.27.2 linux/amd64",
+    "engine_version": "0.0.1",
+    "engine_sha256": "e75ee8be01e0542c44618a126d87e8500781e7d3cbd21ce8435b5b8695ea055d",
+    "test_binary_sha256": "72cdae9287bcf4743d31778a24b60a050edc021e104882caa3314edd0f98b08e",
+    "test_binary_build_ms": 392.560563
+  },
+  "constraints": {
+    "requested": "auto",
+    "require_constraints": true,
+    "mode": "systemd",
+    "enforced": {
+      "vcpu": 2,
+      "memory_mib": 2048,
+      "cpu": "CPUQuota=200% in an owned user scope",
+      "memory": "MemoryMax=2147483648 MemorySwapMax=0 in the same scope"
+    },
+    "limitations": [
+      "The 2 vCPU/2048 MiB target is enforced with a user-scope cgroup on the measured host; it is not a capacity guarantee for other hardware."
+    ]
+  },
+  "fixtures": [
+    {
+      "path": "tests/fixtures/miragemesh/C28/positive.json",
+      "sha256": "106b1865cd93217700f61fa7f9fb62fdf022ad6f16fb5bcdd0954384fe3059fd",
+      "license": "Apache-2.0",
+      "provenance": "Repository-authored synthetic C28 sensor events, batch envelope and desired state. No real traffic, identities, credentials or customer data are present. The signing key used by tests is generated in memory."
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C28/negative.json",
+      "sha256": "eb30743ff95f05c06acf76dcebd5c7d6a3a4586c6a70a7de913b3aa3db679263",
+      "license": "Apache-2.0",
+      "provenance": "Repository-authored synthetic C28 negative events and batches. Every input is inert JSON; no credentials, real traffic or customer data are present."
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C28/expected-output.json",
+      "sha256": "14f3e1f76fa88b01c6e87c6309bb2801b8b97328bb70fa4a719140ccd4c288be",
+      "license": "Apache-2.0",
+      "provenance": "Expected C28 counts are derived from the repository-authored synthetic workload and the existing C07/C11/C16/C17/C18 conventions. Receipts and digests are not hard-coded because the test signs with an ephemeral key."
+    }
+  ],
+  "workload": {
+    "scenario": "tests/scenarios/target-workload.json",
+    "scenario_sha256": "d4bcdb8125f705073bd5a23a198c284a7e5eafccb1e0c8ae09a719528d7807f9",
+    "sensors": 5,
+    "steady": {
+      "duration_seconds": 30,
+      "events_per_second": 8,
+      "batch_size": 1
+    },
+    "backlog": {
+      "events": 500,
+      "batch_size": 50
+    },
+    "total_events": 740,
+    "storage_limits": {
+      "max_operations": 6000,
+      "max_bytes": 16777216,
+      "max_manifest_bytes": 8388608
+    },
+    "segment_limits": {
+      "max_segments": 16,
+      "max_records_per_segment": 512,
+      "max_bytes_per_segment": 1048576
+    }
+  },
+  "target": {
+    "ingest": {
+      "steady": {
+        "planned_events": 240,
+        "completed_events": 240,
+        "batches": 240,
+        "elapsed_ms": 29963.03284,
+        "events_per_second": 8.009870071617224,
+        "latency": {
+          "count": 240,
+          "min_ms": 42.631863,
+          "mean_ms": 65.30937326666668,
+          "p50_ms": 64.681076,
+          "p95_ms": 81.928219,
+          "p99_ms": 86.818789,
+          "max_ms": 90.841548
+        }
+      },
+      "backlog": {
+        "planned_events": 500,
+        "completed_events": 500,
+        "batches": 10,
+        "elapsed_ms": 45747.05528,
+        "events_per_second": 10.929665241613778,
+        "latency": {
+          "count": 10,
+          "min_ms": 3331.456195,
+          "mean_ms": 4574.4833217,
+          "p50_ms": 4328.941973,
+          "p95_ms": 5674.449669,
+          "p99_ms": 5674.449669,
+          "max_ms": 5674.449669
+        }
+      },
+      "events": 740,
+      "acks": 740,
+      "configs": 5,
+      "ingest_calls": 250,
+      "applied_revision": 1,
+      "wall_ms": 76019.568469,
+      "cpu_seconds": 37.5,
+      "peak_rss_mib": 21.12890625,
+      "disk_bytes": 998590,
+      "disk_files": 1488,
+      "disk_bytes_per_event": 1349.445945945946,
+      "manifest_sha256": "3991450d326d820ed4d7343cb846e0591773b1617203645499837fddc67a64c4"
+    },
+    "projection": {
+      "outcome": {
+        "scope": "event-segments",
+        "status": "projected",
+        "appended": 740,
+        "skipped": 745,
+        "retained": 0,
+        "already_projected": 0,
+        "segments": 2,
+        "segments_known": true,
+        "incomplete_segments": 0,
+        "index_known": true,
+        "index_records": 0,
+        "index_sensors": 0,
+        "index_complete": true,
+        "index_duplicates": 0,
+        "deduplicated": true,
+        "alerts": {
+          "coverage_complete": true,
+          "interactions": 740,
+          "rates": 0,
+          "sensor_health": 0
+        }
+      },
+      "wall_ms": 3638.2821479999984,
+      "cpu_seconds": 0.27,
+      "peak_rss_mib": 16.49609375,
+      "storage_manifest_unchanged": true,
+      "segment_bytes": 527080,
+      "segment_files": 3
+    },
+    "restart": {
+      "document": {
+        "phase": "restart",
+        "task": "C28",
+        "scenario": "tests/scenarios/target-workload.json",
+        "sensors": 5,
+        "events": 740,
+        "acks": 740,
+        "configs": 5,
+        "ingest_calls": 0,
+        "steady": {
+          "planned_events": 0,
+          "completed_events": 0,
+          "batches": 0,
+          "elapsed_ms": 0,
+          "events_per_second": 0,
+          "latency": {
+            "count": 0,
+            "min_ms": 0,
+            "mean_ms": 0,
+            "p50_ms": 0,
+            "p95_ms": 0,
+            "p99_ms": 0,
+            "max_ms": 0
+          }
+        },
+        "backlog": {
+          "planned_events": 0,
+          "completed_events": 0,
+          "batches": 0,
+          "elapsed_ms": 0,
+          "events_per_second": 0,
+          "latency": {
+            "count": 0,
+            "min_ms": 0,
+            "mean_ms": 0,
+            "p50_ms": 0,
+            "p95_ms": 0,
+            "p99_ms": 0,
+            "max_ms": 0
+          }
+        },
+        "applied_revision": 1,
+        "manifest_sha256": "",
+        "restart": {
+          "events": 740,
+          "acks": 740,
+          "applied_revision": 1,
+          "manifest_sha256": "3991450d326d820ed4d7343cb846e0591773b1617203645499837fddc67a64c4"
+        }
+      },
+      "wall_ms": 201.6937809999945,
+      "cpu_seconds": 0.17,
+      "peak_rss_mib": 16.46484375,
+      "manifest_unchanged": true
+    },
+    "projection_after_restart": {
+      "outcome": {
+        "scope": "event-segments",
+        "status": "projected",
+        "appended": 0,
+        "skipped": 745,
+        "retained": 0,
+        "already_projected": 740,
+        "segments": 2,
+        "segments_known": true,
+        "incomplete_segments": 0,
+        "index_known": true,
+        "index_records": 740,
+        "index_sensors": 5,
+        "index_complete": true,
+        "index_duplicates": 0,
+        "deduplicated": true,
+        "alerts": {
+          "coverage_complete": true,
+          "interactions": 740,
+          "rates": 0,
+          "sensor_health": 0
+        }
+      },
+      "wall_ms": 161.53499700000975,
+      "cpu_seconds": 0.11,
+      "peak_rss_mib": 16.90234375,
+      "segments_unchanged": true
+    },
+    "http": {
+      "levels": [
+        {
+          "concurrency": 1,
+          "requests": 200,
+          "completed": 200,
+          "errors": 0,
+          "statuses": {
+            "200": 200
+          },
+          "elapsed_ms": 110.39923500000441,
+          "requests_per_second": 1811.6067561518157,
+          "latency": {
+            "count": 200,
+            "min_ms": 0.2950609999970766,
+            "mean_ms": 0.5445600149993698,
+            "p50_ms": 0.5074889999959851,
+            "p95_ms": 0.8096420000074431,
+            "p99_ms": 1.0836940000008326,
+            "max_ms": 1.2629719999968074
+          }
+        },
+        {
+          "concurrency": 8,
+          "requests": 200,
+          "completed": 200,
+          "errors": 0,
+          "statuses": {
+            "200": 200
+          },
+          "elapsed_ms": 65.82330899999943,
+          "requests_per_second": 3038.437341398345,
+          "latency": {
+            "count": 200,
+            "min_ms": 1.2018709999974817,
+            "mean_ms": 2.592060715000043,
+            "p50_ms": 2.3741980000049807,
+            "p95_ms": 4.138628000000608,
+            "p99_ms": 4.909459000002244,
+            "max_ms": 5.160768999994616
+          }
+        },
+        {
+          "concurrency": 32,
+          "requests": 200,
+          "completed": 200,
+          "errors": 0,
+          "statuses": {
+            "200": 200
+          },
+          "elapsed_ms": 76.84554999999818,
+          "requests_per_second": 2602.6230536446774,
+          "latency": {
+            "count": 200,
+            "min_ms": 3.5151160000095842,
+            "mean_ms": 11.220385569999635,
+            "p50_ms": 9.053134999994654,
+            "p95_ms": 25.92203200000222,
+            "p99_ms": 26.606245000002673,
+            "max_ms": 26.637771999987308
+          }
+        },
+        {
+          "concurrency": 64,
+          "requests": 200,
+          "completed": 200,
+          "errors": 0,
+          "statuses": {
+            "200": 200
+          },
+          "elapsed_ms": 70.57331600000907,
+          "requests_per_second": 2833.932303818263,
+          "latency": {
+            "count": 200,
+            "min_ms": 9.254243999996106,
+            "mean_ms": 19.72806135499981,
+            "p50_ms": 17.078359000006458,
+            "p95_ms": 34.747239999996964,
+            "p99_ms": 35.74554800000624,
+            "max_ms": 35.80249200000253
+          }
+        },
+        {
+          "concurrency": 128,
+          "requests": 200,
+          "completed": 200,
+          "errors": 0,
+          "statuses": {
+            "200": 200
+          },
+          "elapsed_ms": 64.35824699999648,
+          "requests_per_second": 3107.6048420027805,
+          "latency": {
+            "count": 200,
+            "min_ms": 19.289718999993056,
+            "mean_ms": 31.168796985000082,
+            "p50_ms": 31.76016200000595,
+            "p95_ms": 43.04920100000163,
+            "p99_ms": 43.46310799999628,
+            "max_ms": 43.54160200001206
+          }
+        }
+      ],
+      "cancellation": {
+        "aborted": 10,
+        "healthy_after": true,
+        "restart_ready": true
+      },
+      "stack": {
+        "peak_rss_mib": 98.390625,
+        "cpu_seconds": 0.5800000000000001,
+        "startup_ms": 13.296925999995437,
+        "restart_startup_ms": 3.019709000000148
+      }
+    }
+  },
+  "over_limit": {
+    "rate_probe": {
+      "planned_events": 200,
+      "completed_events": 171,
+      "elapsed_ms": 10035.066369,
+      "events_per_second": 17.040246044435502,
+      "latency": {
+        "count": 171,
+        "min_ms": 39.93059,
+        "mean_ms": 57.54280225730994,
+        "p50_ms": 55.362802,
+        "p95_ms": 75.187571,
+        "p99_ms": 77.095477,
+        "max_ms": 87.585328
+      }
+    },
+    "batch_probe": {
+      "expected": "collector: batch exceeds applied event_batch_limit",
+      "observed": "collector: batch exceeds applied event_batch_limit",
+      "matched": true
+    },
+    "storage_probe": {
+      "requested": 300,
+      "accepted": 148,
+      "acks": 125,
+      "error": "storage quota exceeded",
+      "matched": true
+    },
+    "cancellation": {
+      "error": "context canceled",
+      "matched": true,
+      "events_before_retry": 0,
+      "acks_before_retry": 0,
+      "retry_events": 50,
+      "retry_acks": 50
+    },
+    "wall_ms": 18815.659572000004,
+    "cpu_seconds": 5.41,
+    "peak_rss_mib": 18
+  },
+  "assertions": [
+    {
+      "name": "steady_completed",
+      "passed": true,
+      "observed": 240,
+      "limit": 240
+    },
+    {
+      "name": "steady_rate",
+      "passed": true,
+      "observed": 8.009870071617224,
+      "limit": 8
+    },
+    {
+      "name": "target_events",
+      "passed": true,
+      "observed": 740,
+      "limit": 740
+    },
+    {
+      "name": "target_acks",
+      "passed": true,
+      "observed": 740,
+      "limit": 740
+    },
+    {
+      "name": "target_configs",
+      "passed": true,
+      "observed": 5,
+      "limit": 5
+    },
+    {
+      "name": "target_revision",
+      "passed": true,
+      "observed": 1,
+      "limit": 1
+    },
+    {
+      "name": "rate_probe_saturated",
+      "passed": true,
+      "observed": {
+        "planned_events": 200,
+        "completed_events": 171,
+        "elapsed_ms": 10035.066369,
+        "events_per_second": 17.040246044435502,
+        "latency": {
+          "count": 171,
+          "min_ms": 39.93059,
+          "mean_ms": 57.54280225730994,
+          "p50_ms": 55.362802,
+          "p95_ms": 75.187571,
+          "p99_ms": 77.095477,
+          "max_ms": 87.585328
+        }
+      },
+      "limit": {
+        "events_per_second": 20,
+        "duration_seconds": 10,
+        "batch_size": 1
+      }
+    },
+    {
+      "name": "batch_probe",
+      "passed": true,
+      "observed": "collector: batch exceeds applied event_batch_limit",
+      "limit": "collector: batch exceeds applied event_batch_limit"
+    },
+    {
+      "name": "projection_status",
+      "passed": true,
+      "observed": "projected",
+      "limit": "projected"
+    },
+    {
+      "name": "projection_appended",
+      "passed": true,
+      "observed": 740,
+      "limit": 740
+    },
+    {
+      "name": "projection_skipped",
+      "passed": true,
+      "observed": 745,
+      "limit": 745
+    },
+    {
+      "name": "projection_first_index",
+      "passed": true,
+      "observed": 0,
+      "limit": 0
+    },
+    {
+      "name": "projection_segments",
+      "passed": true,
+      "observed": 2,
+      "limit": 2
+    },
+    {
+      "name": "projection_complete",
+      "passed": true,
+      "observed": true,
+      "limit": true
+    },
+    {
+      "name": "projection_deduplicated",
+      "passed": true,
+      "observed": true,
+      "limit": true
+    },
+    {
+      "name": "projection_storage_unchanged",
+      "passed": true,
+      "observed": true,
+      "limit": true
+    },
+    {
+      "name": "restart_events",
+      "passed": true,
+      "observed": 740,
+      "limit": 740
+    },
+    {
+      "name": "restart_acks",
+      "passed": true,
+      "observed": 740,
+      "limit": 740
+    },
+    {
+      "name": "restart_revision",
+      "passed": true,
+      "observed": 1,
+      "limit": 1
+    },
+    {
+      "name": "restart_manifest",
+      "passed": true,
+      "observed": "3991450d326d820ed4d7343cb846e0591773b1617203645499837fddc67a64c4",
+      "limit": "3991450d326d820ed4d7343cb846e0591773b1617203645499837fddc67a64c4"
+    },
+    {
+      "name": "restart_manifest_unchanged",
+      "passed": true,
+      "observed": true,
+      "limit": true
+    },
+    {
+      "name": "second_projection_appended",
+      "passed": true,
+      "observed": 0,
+      "limit": 0
+    },
+    {
+      "name": "second_projection_already",
+      "passed": true,
+      "observed": 740,
+      "limit": 740
+    },
+    {
+      "name": "second_projection_index",
+      "passed": true,
+      "observed": 740,
+      "limit": 740
+    },
+    {
+      "name": "second_projection_sensors",
+      "passed": true,
+      "observed": 5,
+      "limit": 5
+    },
+    {
+      "name": "second_projection_segments_unchanged",
+      "passed": true,
+      "observed": true,
+      "limit": true
+    },
+    {
+      "name": "cancellation",
+      "passed": true,
+      "observed": {
+        "error": "context canceled",
+        "matched": true,
+        "events_before_retry": 0,
+        "acks_before_retry": 0,
+        "retry_events": 50,
+        "retry_acks": 50
+      },
+      "limit": {
+        "batch_size": 50,
+        "error": "context canceled",
+        "acks_before_retry": 0,
+        "retry_events": 50,
+        "retry_acks": 50
+      }
+    },
+    {
+      "name": "cancellation_retry",
+      "passed": true,
+      "observed": 50,
+      "limit": 50
+    },
+    {
+      "name": "storage_quota",
+      "passed": true,
+      "observed": {
+        "requested": 300,
+        "accepted": 148,
+        "acks": 125,
+        "error": "storage quota exceeded",
+        "matched": true
+      },
+      "limit": {
+        "requested_events": 300,
+        "batch_size": 25,
+        "accepted_between": [
+          1,
+          299
+        ],
+        "error": "storage quota exceeded"
+      }
+    },
+    {
+      "name": "target_rss",
+      "passed": true,
+      "observed": 21.12890625,
+      "limit": 2048
+    },
+    {
+      "name": "projection_rss",
+      "passed": true,
+      "observed": 16.49609375,
+      "limit": 2048
+    },
+    {
+      "name": "stack_rss",
+      "passed": true,
+      "observed": 98.390625,
+      "limit": 2048
+    },
+    {
+      "name": "free_disk",
+      "passed": true,
+      "observed": 119286,
+      "limit": 10240
+    },
+    {
+      "name": "disk_delta",
+      "passed": true,
+      "observed": 1525670,
+      "limit": 10737418240
+    },
+    {
+      "name": "http_target_levels",
+      "passed": true,
+      "observed": [
+        {
+          "concurrency": 1,
+          "errors": 0,
+          "p99_ms": 1.0836940000008326
+        },
+        {
+          "concurrency": 8,
+          "errors": 0,
+          "p99_ms": 4.909459000002244
+        },
+        {
+          "concurrency": 32,
+          "errors": 0,
+          "p99_ms": 26.606245000002673
+        },
+        {
+          "concurrency": 64,
+          "errors": 0,
+          "p99_ms": 35.74554800000624
+        }
+      ],
+      "limit": [
+        1,
+        8,
+        32,
+        64
+      ]
+    },
+    {
+      "name": "http_saturation",
+      "passed": true,
+      "observed": [
+        1,
+        8,
+        32,
+        64,
+        128
+      ],
+      "limit": 128
+    },
+    {
+      "name": "http_cancellation",
+      "passed": true,
+      "observed": {
+        "aborted": 10,
+        "healthy_after": true,
+        "restart_ready": true
+      },
+      "limit": {
+        "aborted": 10,
+        "healthy_after": true
+      }
+    },
+    {
+      "name": "stack_restart",
+      "passed": true,
+      "observed": true,
+      "limit": true
+    }
+  ],
+  "limits_published": {
+    "sustained_events_per_second": 8,
+    "steady_window_seconds": 30,
+    "sensors": 5,
+    "accepted_batch_size": 50,
+    "max_applied_batch_limit": 64,
+    "peak_rss_mib": 98.390625,
+    "target_state_bytes": 998590,
+    "segment_bytes": 527080,
+    "free_disk_mib_at_start": 119286,
+    "http": [
+      {
+        "concurrency": 1,
+        "p50_ms": 0.5074889999959851,
+        "p95_ms": 0.8096420000074431,
+        "p99_ms": 1.0836940000008326,
+        "errors": 0
+      },
+      {
+        "concurrency": 8,
+        "p50_ms": 2.3741980000049807,
+        "p95_ms": 4.138628000000608,
+        "p99_ms": 4.909459000002244,
+        "errors": 0
+      },
+      {
+        "concurrency": 32,
+        "p50_ms": 9.053134999994654,
+        "p95_ms": 25.92203200000222,
+        "p99_ms": 26.606245000002673,
+        "errors": 0
+      },
+      {
+        "concurrency": 64,
+        "p50_ms": 17.078359000006458,
+        "p95_ms": 34.747239999996964,
+        "p99_ms": 35.74554800000624,
+        "errors": 0
+      },
+      {
+        "concurrency": 128,
+        "p50_ms": 31.76016200000595,
+        "p95_ms": 43.04920100000163,
+        "p99_ms": 43.46310799999628,
+        "errors": 0
+      }
+    ],
+    "saturation": {
+      "concurrency": 128,
+      "p99_ms": 43.46310799999628,
+      "errors": 0,
+      "threshold_ms": 2000
+    }
+  },
+  "negatives_executed": [
+    "batch over applied limit returns a typed error without a write",
+    "storage quota saturates with a typed error and a readable accepted prefix",
+    "cancellation returns context.Canceled with no acknowledgement before retry",
+    "restart preserves counts, revision and manifest bytes",
+    "second projection is idempotent and does not rewrite segments",
+    "HTTP saturation sweep records latency and errors without crashing",
+    "aborted HTTP requests leave the stack healthy",
+    "local stack restart returns to readiness",
+    "loopback-only harness guard"
+  ],
+  "observed_limitations": [
+    "Local Linux single-operator profile only; no hosted Actions or release claim.",
+    "The workload is a 30-second published-capacity window plus a bounded batch backlog, not a multi-day retention or unbounded-volume claim.",
+    "Browser rendering and perceived latency are not measured; C27 covers rendered correctness.",
+    "The benchmark used the existing local synthetic fixtures and an ephemeral in-memory signing key; no real traffic or credentials were used.",
+    "The evidence is generated on a dirty working tree because no commit was authorized for this session."
+  ]
+}

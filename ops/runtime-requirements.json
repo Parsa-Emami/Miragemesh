@@ -4,7 +4,7 @@
     "vcpu": 2,
     "ram_mib": 2048,
     "free_disk_mib": 10240,
-    "measurement": "Unmeasured planning target; C28 must verify or reduce it."
+    "measurement": "Measured in C28 on the recorded host under an enforced 2 vCPU / 2048 MiB systemd user scope; see docs/evidence/performance.json. The free-disk figure remains a planning budget."
   },
   "engine_language": "Go",
   "providers": [
@@ -12,11 +12,12 @@
   ],
   "capacity_limits": {
     "sensors": 5,
-    "events_per_second": 20,
+    "events_per_second": 8,
     "spool_max_mib": 100,
     "event_retention_days": 7,
     "payload_max_kib": 8
   },
+  "capacity_measurement": "docs/evidence/performance.json: 8.01 events/s sustained for 30 s with 5 sensors; the former 20 events/s planning target was not sustained under the constrained run and is reduced rather than published.",
   "current_shell_requires": [
     "Git",
     "Node 24.19.0",

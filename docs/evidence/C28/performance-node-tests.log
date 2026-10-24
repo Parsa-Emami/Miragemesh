@@ -1,0 +1,13 @@
+✔ accepts the declared C28 workload and fixture identities (1.22381ms)
+✔ rejects malformed C28 workload metadata and inconsistent counts (1.603668ms)
+✔ percentiles and latency summaries use nearest-rank values (0.235753ms)
+✔ requires a fully enforced 2 vCPU / 2048 MiB scope for the evidence run (0.254238ms)
+✔ accepts a complete measured observation and rejects unproved claims (0.520016ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 75.350047

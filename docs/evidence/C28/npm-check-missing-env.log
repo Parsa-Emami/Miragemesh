@@ -1,0 +1,56 @@
+✖ update CLI persists revocation and exact scoped recovery across independent processes (8.112487ms)
+✖ update CLI rejects unrelated flags, unsafe files and missing trust prerequisites before mutation (6.294815ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 88.566498
+
+✖ failing tests:
+
+test at tests/engineering/update-cli.test.mjs:13:1
+✖ update CLI persists revocation and exact scoped recovery across independent processes (8.112487ms)
+  AssertionError [ERR_ASSERTION]: go: golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64: verifying module: checksum database disabled by GOSUMDB=off
+  
+  
+  1 !== 0
+  
+      at seed (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/update-cli.test.mjs:11:245)
+      at TestContext.<anonymous> (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/update-cli.test.mjs:14:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/engineering/update-cli.test.mjs:27:1
+✖ update CLI rejects unrelated flags, unsafe files and missing trust prerequisites before mutation (6.294815ms)
+  AssertionError [ERR_ASSERTION]: go: golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64: verifying module: checksum database disabled by GOSUMDB=off
+  
+  
+  1 !== 0
+  
+      at seed (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/update-cli.test.mjs:11:245)
+      at TestContext.<anonymous> (file:///home/amirreza/Desktop/Projects/Miragemesh/tests/engineering/update-cli.test.mjs:28:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

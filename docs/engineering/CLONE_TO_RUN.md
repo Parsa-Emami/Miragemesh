@@ -19,7 +19,7 @@ Open http://127.0.0.1:4173. Setup checks Go and rootless Podman, installs the co
 
 The same clone/setup/start sequence must prepare and supervise the actual Go engine and required self-hosted open-source resources by C30. No second undocumented terminal, paid account, sibling clone or owned public domain. C03 supplies local lifecycle/health and C31 supplies verified convenience artifacts plus a documented source-build alternative. Downloads may be needed to prepare resources; user payloads are not sent to a compulsory proprietary service. No global runtime install, system trust change or user data deletion occurs implicitly.
 
-Local resources: rootless Podman for isolated decoys. Hardware target: 2 vCPU / 2048 MiB RAM / 10240 MiB free disk plus real dataset/provider/backup space. These are unmeasured targets until C28. Full engine support initially targets Linux x86_64; other hosts require their own actual C30/C33 evidence. Rootless workloads need Linux or a tested Linux/WSL2 host.
+Local resources: rootless Podman for isolated decoys. Hardware target: 2 vCPU / 2048 MiB RAM / 10240 MiB free disk plus real dataset/provider/backup space. C28 measured a sustained target of 8 events/s with 5 sensors under an enforced 2 vCPU / 2048 MiB user-scope cgroup on the recorded host; the earlier 20 events/s planning number was not sustained and is no longer published. The free-disk figure remains a planning budget, not a measurement. Full engine support initially targets Linux x86_64; other hosts require their own actual C30/C33 evidence. Rootless workloads need Linux or a tested Linux/WSL2 host.
 
 The isolated decoy of C13 runs in a rootless container and needs the pinned image of `docs/engineering/toolchain-lock.json` in the local image store:
 
@@ -59,6 +59,16 @@ npm run doctor
 ```
 
 The current test:clone performs a real local Git clone of the staged/committed source, runs setup, Go vet and uncached race tests with required-test discovery, then verifies unified startup, actual Go runtime health and disabled domain admission. C30 must extend it to the full tests/scenarios/clone-to-value.json workflow and real engine readiness. Current lifecycle checks cannot certify domain functionality. See ENGINE_TESTS.md for engine test discovery and ENGINE_LAUNCH.md for lifecycle tests. See each C task for future engine commands and prerequisites. Optional hosting/package operations remain in WEB_RUNBOOK.md.
+
+## C28 local workload measurement
+
+The target and over-limit workloads run against the real C05/C16 ingest and C17/C18 segment projection paths with synthetic C28 fixtures:
+
+```sh
+node scripts/benchmark-local.mjs --require-constraints
+```
+
+`--require-constraints` refuses to publish measured limits unless a systemd user scope actually enforces 2 vCPU / 2048 MiB (`MemorySwapMax=0`). `--constraint taskset|none` exists for diagnosis and records the weaker enforcement instead of implying it. The command writes `docs/evidence/performance.json` with the host, source, fixture and toolchain identities, the 30-second steady window, the bounded backlog, restart checks, latency percentiles, peak RSS, disk bytes, cancellation and the over-limit results. A rate probe that cannot keep up is recorded as saturation evidence; it is not published as capacity. The workload is a bounded local profile, not a retention or multi-day claim.
 
 ## C23 local retention
 

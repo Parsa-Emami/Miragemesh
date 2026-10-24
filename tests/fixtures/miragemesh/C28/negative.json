@@ -1,0 +1,137 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C28 negative events and batches. Every input is inert JSON; no credentials, real traffic or customer data are present.",
+  "sensor_count": 5,
+  "cases": [
+    {
+      "name": "malformed_json",
+      "kind": "event",
+      "input": "{\"schema_version\":\"1\",",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "unsupported_version",
+      "kind": "event",
+      "input": "{\"schema_version\":\"2\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-negative-version\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/version\"}}",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "missing_sensor_id",
+      "kind": "event",
+      "input": "{\"schema_version\":\"1\",\"event_id\":\"event-negative-no-sensor\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/no-sensor\"}}",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "empty_event_id",
+      "kind": "event",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/empty-event\"}}",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "sequence_zero",
+      "kind": "event",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-negative-zero\",\"sequence\":0,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/zero\"}}",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "invalid_observed_at",
+      "kind": "event",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-negative-time\",\"sequence\":1,\"observed_at\":\"24-10-2026 00:00\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/time\"}}",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "unknown_kind",
+      "kind": "event",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-negative-kind\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"dns.query\",\"metadata\":{\"path\":\"/negative/kind\"}}",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "empty_metadata_path",
+      "kind": "event",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-negative-path\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"\"}}",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "extra_top_level_field",
+      "kind": "event",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-negative-extra\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/extra\"},\"source\":\"forged\"}",
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "oversize_event",
+      "kind": "event",
+      "generate": { "sensor_id": "sensor-01", "first_sequence": 1, "count": 1, "path_bytes": 8200 },
+      "expected_is": "invalid_event"
+    },
+    {
+      "name": "out_of_order_sequence",
+      "kind": "event",
+      "seed": [
+        "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-sensor-01-000001\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/seed-1\"}}"
+      ],
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-sensor-01-000003\",\"sequence\":3,\"observed_at\":\"2026-10-24T00:00:03Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/gap\"}}",
+      "expected_is": "out_of_order"
+    },
+    {
+      "name": "conflicting_sequence",
+      "kind": "event",
+      "seed": [
+        "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-sensor-01-000001\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/seed-1\"}}"
+      ],
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-different-identity\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/conflict\"}}",
+      "expected_is": "conflict"
+    },
+    {
+      "name": "unconfigured_sensor",
+      "kind": "event",
+      "input": "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-99\",\"event_id\":\"event-sensor-99-000001\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/unconfigured\"}}",
+      "expected_is": "unconfigured"
+    },
+    {
+      "name": "non_contiguous_batch",
+      "kind": "batch",
+      "batch": { "batch_id": "negative-non-contiguous", "sensor_id": "sensor-01", "first_sequence": 1, "last_sequence": 3 },
+      "events": [
+        "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-sensor-01-000001\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/contiguous-1\"}}",
+        "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-sensor-01-000003\",\"sequence\":3,\"observed_at\":\"2026-10-24T00:00:03Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/contiguous-3\"}}"
+      ],
+      "expected_is": "invalid_batch"
+    },
+    {
+      "name": "sensor_mismatch",
+      "kind": "batch",
+      "batch": { "batch_id": "negative-sensor-mismatch", "sensor_id": "sensor-01", "first_sequence": 1, "last_sequence": 2 },
+      "events": [
+        "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-sensor-01-000001\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/mismatch-1\"}}",
+        "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-02\",\"event_id\":\"event-sensor-02-000002\",\"sequence\":2,\"observed_at\":\"2026-10-24T00:00:01Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/mismatch-2\"}}"
+      ],
+      "expected_is": "sensor_mismatch"
+    },
+    {
+      "name": "batch_exceeds_applied_limit",
+      "kind": "batch",
+      "batch": { "batch_id": "negative-over-limit", "sensor_id": "sensor-01", "first_sequence": 1, "last_sequence": 65 },
+      "generate": { "sensor_id": "sensor-01", "first_sequence": 1, "count": 65 },
+      "expected_is": "batch_too_large"
+    },
+    {
+      "name": "duplicate_event_id",
+      "kind": "batch",
+      "batch": { "batch_id": "negative-duplicate-id", "sensor_id": "sensor-01", "first_sequence": 1, "last_sequence": 2 },
+      "events": [
+        "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-shared-id\",\"sequence\":1,\"observed_at\":\"2026-10-24T00:00:00Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/duplicate-1\"}}",
+        "{\"schema_version\":\"1\",\"sensor_id\":\"sensor-01\",\"event_id\":\"event-shared-id\",\"sequence\":2,\"observed_at\":\"2026-10-24T00:00:01Z\",\"kind\":\"http.request\",\"metadata\":{\"path\":\"/negative/duplicate-2\"}}"
+      ],
+      "expected_is": "conflict"
+    },
+    {
+      "name": "storage_quota",
+      "kind": "storage_quota",
+      "generate": { "sensor_id": "sensor-01", "first_sequence": 1, "count": 10 },
+      "storage_limits": { "max_operations": 100, "max_bytes": 2048, "max_manifest_bytes": 65536 },
+      "requested_events": 10,
+      "expected_is": "quota"
+    }
+  ]
+}
