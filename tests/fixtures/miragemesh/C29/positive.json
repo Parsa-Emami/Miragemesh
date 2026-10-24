@@ -1,0 +1,72 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C29 readiness metadata. No real credentials, tokens, hosts or customer data are present; the sentinel strings are inert test literals.",
+  "schema_version": 1,
+  "scope": "web-shell",
+  "limits": {
+    "probe_timeout_ms": 1500,
+    "max_log_entries": 32,
+    "max_log_bytes": 8192,
+    "max_message_chars": 256
+  },
+  "components": [
+    "web",
+    "engine",
+    "storage",
+    "provider:certificates",
+    "provider:updates"
+  ],
+  "required_in_full_profile": [
+    "web",
+    "engine",
+    "storage"
+  ],
+  "providers": {
+    "names": [
+      "provider:certificates",
+      "provider:updates"
+    ],
+    "required_when_enabled": true,
+    "optional_support": "serve-web readiness.optionalProviders reports a degraded result instead of not_ready"
+  },
+  "component_names": {
+    "web": "web",
+    "engine": "engine",
+    "storage": "storage",
+    "certificates": "provider:certificates",
+    "updates": "provider:updates"
+  },
+  "storage_surfaces": {
+    "sensors": "/api/v1/sensors",
+    "incidents": "/api/v1/incidents",
+    "certificates": "/api/v1/certificates",
+    "updates": "/api/v1/updates"
+  },
+  "codes": {
+    "engine_unavailable": "engine_unavailable",
+    "storage_unavailable": "storage_unavailable",
+    "certificates_unavailable": "provider_certificates_unavailable",
+    "updates_unavailable": "provider_updates_unavailable",
+    "not_configured": "not_configured"
+  },
+  "sentinels": [
+    "SENTINEL_C29_SECRET",
+    "SENTINEL_C29_TOKEN",
+    "SENTINEL_C29_QUERY"
+  ],
+  "expected_full_profile": {
+    "status": "ready",
+    "http_status": 200,
+    "engineReady": true,
+    "storageReady": true,
+    "providersReady": true
+  },
+  "expected_web_only": {
+    "status": "degraded",
+    "http_status": 200,
+    "engineReady": false,
+    "storageReady": false,
+    "providersReady": true
+  }
+}

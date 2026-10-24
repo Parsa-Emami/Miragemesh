@@ -1,0 +1,234 @@
+{
+  "commit_id": "C29",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "local-verified",
+  "date": "2026-10-24",
+  "scope": "Local web-shell readiness and diagnostics: liveness-only /healthz, component /readyz for web, loopback engine, enabled authoritative storage and enabled certificate/update providers, and a bounded redacted /api/diagnostics ring. Includes typed failure codes, optional-provider degradation, sentinel redaction, log bounds, restart reset, invalid configuration rejection and no-egress checks. No browser, hosted, release or C30/C40 claim.",
+  "base_commit": "36fdf3d4f7b1f82e7a4d89606ae7cc767d9b3241",
+  "source_identity": "sha256:547031607c0accf52ba9114a8237fcbc6866839e5d36b8439a69ff43cced1054",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation",
+  "implementation_commit": null,
+  "commit_note": "No commit was created for this task. The recorded source identity covers the implementation tree before the progress, handoff and generated-project bookkeeping edits; the real clean-clone smoke recomputed the same identity (sha256:547031607c0accf52ba9114a8237fcbc6866839e5d36b8439a69ff43cced1054) from its temporary commit of that staged tree. Later bookkeeping changes the current working-tree identity without changing verified behavior. No push, hosted Actions or publication occurred.",
+  "dependencies": {
+    "C28": "docs/evidence/C28.json; verified locally on b0d916500ee4a3891b21c7076fbcaa96aaa4279b"
+  },
+  "artifacts": {
+    "contract": "ops/diagnostics.md",
+    "server": "scripts/serve-web.mjs",
+    "supervisor": "scripts/start-local.mjs",
+    "clone_smoke": "scripts/clone-smoke.mjs",
+    "node_regressions": "tests/web/engine-readiness.test.mjs",
+    "launcher_regressions": "tests/web/local-launch.test.mjs",
+    "fixtures": "tests/fixtures/miragemesh/C29/"
+  },
+  "fixtures": {
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C29 readiness metadata and negative cases. No real credentials, tokens, hosts, customer data or key material are present; sentinels are inert literals used solely to prove redaction and bounds.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C29/positive.json": "b10ecce34e35561a6cf31b7a8f8f028fa252c21710d82a5e8ad856f89b28dda6",
+      "tests/fixtures/miragemesh/C29/negative.json": "9dcafc12a52dec3b893ce780245d80ae55af15915b2777bad8b899ad58802056",
+      "tests/fixtures/miragemesh/C29/expected-output.json": "1a00b985f643692a0d35d55bf1b0e44927979b380e1d18ba3164a99cf28ec9eb"
+    }
+  },
+  "environment": {
+    "os": "linux 7.0.0-38-generic",
+    "distribution": "Ubuntu 24.04.5 LTS",
+    "cpu_model": "AMD Ryzen 7 6800H with Radeon Graphics",
+    "cpu_count": 16,
+    "memory_mib": 31341,
+    "free_disk_mib": 119257,
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "npm_lock": "11.9.0",
+    "go": "go version go1.27.2 linux/amd64",
+    "go_toolchain_selection": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct",
+    "container_provider": "podman 4.9.3 rootless=true; not exercised by C29",
+    "engine_version": "0.0.1"
+  },
+  "commands": [
+    {
+      "name": "targeted-readiness-tests",
+      "command": [
+        "node",
+        "--test",
+        "tests/web/engine-readiness.test.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C29/engine-readiness-tests.log",
+      "stored_output_sha256": "e923e6db0d42eeeee24284b96e9f34d022db3f3fb4a1854f5cff9cefb9af811b",
+      "observed": "6 tests passed, 0 failed, 0 skipped."
+    },
+    {
+      "name": "npm-check",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C29/npm-check.log",
+      "stored_output_sha256": "4715ba29345681e2a29b85705655fe452f93b35ea162f50269e51875dfb99210",
+      "observed": "Plan validation, typecheck, web build, engine build and 94 Node tests passed with the documented Go toolchain environment (C29 adds 6 of them)."
+    },
+    {
+      "name": "formatting",
+      "command": [
+        "$(go env GOROOT)/bin/gofmt",
+        "-l",
+        "cmd",
+        "internal",
+        "tests"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C29/formatting.log",
+      "stored_output_sha256": "194ff5bca66278888f0f00be5c7ca523d15098ece958b14952533811089f6106",
+      "observed": "No unformatted files (log contains only EXIT:0)."
+    },
+    {
+      "name": "go-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C29/go-vet.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "No vet findings."
+    },
+    {
+      "name": "engine-full",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C29/engine-tests.stderr.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "No failing events; the JSON stream is retained at the ignored path dist/ci/engine-tests.jsonl and summarized in engine-counts.log."
+    },
+    {
+      "name": "engine-guard",
+      "command": [
+        "node",
+        "scripts/verify-engine-tests.mjs",
+        "dist/ci/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C29/engine-guard.log",
+      "stored_output_sha256": "811a4e2ffc0c3d2e688a384b909701930c19d0814279716fefc05dda3434c94e",
+      "observed": "Verified 8 engine suites and 195 required test anchors."
+    },
+    {
+      "name": "engine-counts",
+      "command": [
+        "node",
+        "-e",
+        "count pass/fail events in dist/ci/engine-tests.jsonl"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C29/engine-counts.log",
+      "stored_output_sha256": "916462bc619ee20c10a21820517a3a2dee5fe62a9467a811fac3eb1a929a94fc",
+      "observed": "top_level_pass 222, subtest_pass 353, fail_events 0, pass events across 6 packages."
+    },
+    {
+      "name": "clone-smoke",
+      "command": [
+        "npm",
+        "run",
+        "test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C29/clone-smoke.log",
+      "stored_output_sha256": "faec39472f89237b7498ec38143b4139092c48b86571d89dbb0d9329621cf540",
+      "observed": "Real git clone of the staged C29 tree, npm setup, Go vet/race tests and 195 anchors, event validation and unified web/engine startup passed; verify_ci_source recomputed the recorded source identity, and the clone reported engineReady:true on /readyz."
+    },
+    {
+      "name": "repository-contracts",
+      "command": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C29/repository-contracts.log",
+      "stored_output_sha256": "986293ffb146234aa59eedfa0b7543aa2d6e319d8f52e39241672708853082e3",
+      "observed": "VALIDATION PASSED; checked 335 JSON files and repository contract invariants."
+    },
+    {
+      "name": "python-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/engineering",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C29/python-tests.log",
+      "stored_output_sha256": "523fe723b726b0b1409cb64c445d4b68d2c0b79a8e36f291dd7708e41f8f9771",
+      "observed": "Ran 6 tests; OK."
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C29/diff-check.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "No whitespace errors."
+    }
+  ],
+  "results": [
+    "GET /healthz is now a web-shell liveness response only ({\"status\":\"ok\",\"scope\":\"web-shell\"}) and no longer signals engine or storage readiness; the supervisor, clone smoke and benchmark wait on /readyz instead.",
+    "GET /readyz probes web index.html, the loopback engine /healthz, the enabled storage surface and every enabled provider on each request and returned 200 ready for a real Go engine with the C05-backed sensor store; repeating launch after a full restart reached ready again.",
+    "Required failures are typed and visible: an unreachable or malformed engine produced engine_unavailable, a failing sensor surface storage_unavailable, and a failing certificate provider provider_certificates_unavailable with HTTP 503 status not_ready.",
+    "Optional provider failure (updates) produced HTTP 200 status degraded with providersReady:false while the engine and storage stayed ready; the optional failure is logged at warn level.",
+    "The diagnostics sample carried the sentinels from the Authorization header, the query string and the upstream credential body through the failing readiness path, and none appeared in the serialized /api/diagnostics response or any log message.",
+    "Logs are transition-based: a repeated probe of an unchanged state added no entries and no drops, while 40 alternating readiness transitions exercised the ring down to 32 entries, dropped at least 8, and the serialized entries stayed within the declared 8192-byte bound.",
+    "A missing dist/web/index.html made the web component itself not ready (HTTP 503, web_assets_unavailable) and added one typed log entry.",
+    "Invalid readiness configuration fails closed at construction: an unknown storage surface and a declared podman provider are rejected with explicit errors rather than placeholder readiness; the server source is restricted to loopback engine URLs and does not follow redirects.",
+    "The full repository checks passed: 6 targeted readiness tests, 94 Node tests through npm check, 195 engine anchors with 0 failing events, 6 Python tests, repository contracts, no diff whitespace errors and the real clean-clone smoke (including npm setup, Go race tests, event validation and unified startup)."
+  ],
+  "negatives_executed": [
+    "unreachable engine port -> 503 not_ready with engine_unavailable",
+    "malformed engine health body containing a credential sentinel -> engine_unavailable without echoing the body",
+    "failing authoritative sensor surface -> storage_unavailable",
+    "failing required certificate provider -> provider_certificates_unavailable, 503",
+    "failing optional update provider -> degraded 200 with warn-level transition",
+    "sentinel Authorization, query string and upstream body values absent from diagnostics and logs",
+    "40 alternating readiness transitions bounded to 32 entries, >=8 drops and <=8192 serialized bytes",
+    "repeated stable probes add no entries and no drops",
+    "missing web index.html -> web_assets_unavailable and 503",
+    "unknown storage readiness surface rejected before serving",
+    "unsupported provider (podman) rejected before serving instead of reporting ready",
+    "malformed fixture version, license or empty provenance rejected",
+    "duplicate negative case names and incomplete expected diagnostics keys rejected",
+    "non-loopback engine address rejected; probe URLs restricted to 127.0.0.1",
+    "restart starts with empty diagnostics logs and probes fresh readiness instead of reusing stale state"
+  ],
+  "rollback_or_recovery_observation": "The change is additive to the local supervisor and serve-web routes plus documentation, fixtures and tests. Reverting the C29 files restores the previous /healthz body and removes /readyz and /api/diagnostics without touching accepted C05/C16/C17/C18 data, schemas, migrations, .env files or Dockerfiles. No persisted diagnostics state exists; a restart or revert simply recreates or removes the in-memory ring.",
+  "observed_limitations": [
+    "Local Linux single-operator profile only; readiness covers the web shell, the loopback Go engine, the enabled storage surface and enabled certificate/update providers.",
+    "Rootless Podman and the isolated decoy are engine CLI surfaces, not web-supervised components; they are not probed, and declaring podman as a readiness provider is rejected.",
+    "Diagnostics are per web-server instance and reset on restart; they are not durable audit records or a substitute for C05/C17 evidence.",
+    "The C29 integration suite exercised the failure paths with local synthetic upstreams for provider status; the ready path used the real engine and authoritative store.",
+    "Browser rendering, hosted GitHub Actions, push, deployment and release were not exercised, and no C30 clean-host workflow or C40 artifact claim is made.",
+    "The recorded source identity precedes the progress, handoff and generated-project bookkeeping edits; no commit was created, so the final working-tree identity is not the recorded implementation identity.",
+    "The machine's go env sets GOSUMDB=off, so engine-spawning Node suites require GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org; all results above used that documented environment."
+  ],
+  "evidence_provenance": "Every command above was executed in this checkout on 2026-10-24 with the pinned Node 24.19.0 and Go 1.27.2 toolchains. The clone smoke was run against a temporary commit of the staged C29 tree that stagedTree 671112d9974ec38cbb966425c5fc416eaa7ea67a; its verify_ci_source output recomputed source identity sha256:547031607c0accf52ba9114a8237fcbc6866839e5d36b8439a69ff43cced1054. Logs are retained under docs/evidence/C29/."
+}

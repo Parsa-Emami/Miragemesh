@@ -1,0 +1,33 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Expected C29 statuses and bounds are derived from the repository-authored readiness contract and the documented probe/log limits; no runtime output is hard-coded.",
+  "negatives_unique": 9,
+  "statuses": {
+    "ready": { "status": "ready", "http_status": 200 },
+    "degraded": { "status": "degraded", "http_status": 200 },
+    "not_ready": { "status": "not_ready", "http_status": 503 }
+  },
+  "diagnostics": {
+    "http_status": 200,
+    "keys": ["components", "generated_at", "limits", "logs", "schema_version", "scope", "status"],
+    "component_keys": ["code", "name", "ready", "required"],
+    "log_keys": ["at", "code", "level", "message"]
+  },
+  "logs": {
+    "max_entries": 32,
+    "max_bytes": 8192,
+    "max_message_chars": 256,
+    "overflow_probes": 40,
+    "min_dropped": 8
+  },
+  "restart": {
+    "logs_cleared": true,
+    "stale_readiness_not_reused": true,
+    "ready_after_restart": true
+  },
+  "no_egress": {
+    "probe_hosts": ["127.0.0.1"],
+    "external_requests": 0
+  }
+}

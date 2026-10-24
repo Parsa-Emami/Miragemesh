@@ -10,6 +10,63 @@ import { validateIncidentSnapshot, validateTriageResult } from '../apps/web/src/
 
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
 const csp = "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'";
+export const readinessLimits = Object.freeze({ probe_timeout_ms: 1500, max_log_entries: 32, max_log_bytes: 8192, max_message_chars: 256 });
+
+export function redactDiagnosticMessage(value, maxChars = readinessLimits.max_message_chars) {
+  return String(value ?? '')
+    .replace(/\bBearer\s+[^\s,;]+/gi, 'Bearer [redacted]')
+    .replace(/(authorization|token|secret|password|api[_-]?key|cookie)\s*[:=]\s*[^\s,;]+/gi, '$1=[redacted]')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, maxChars);
+}
+
+export function createDiagnosticLog(limits = readinessLimits) {
+  const entries = [];
+  const sizes = [];
+  let bytes = 0;
+  let dropped = 0;
+  return {
+    add(level, code, message) {
+      const entry = { at: new Date().toISOString(), level, code, message: redactDiagnosticMessage(message ?? code, limits.max_message_chars) };
+      const size = Buffer.byteLength(JSON.stringify(entry));
+      while (entries.length > 0 && (entries.length >= limits.max_log_entries || bytes + size > limits.max_log_bytes)) {
+        entries.shift();
+        bytes -= sizes.shift();
+        dropped += 1;
+      }
+      if (size > limits.max_log_bytes) return;
+      entries.push(entry);
+      sizes.push(size);
+      bytes += size;
+    },
+    snapshot() {
+      return {
+        entries: entries.map(entry => ({ ...entry })),
+        dropped,
+        max_entries: limits.max_log_entries,
+        max_bytes: limits.max_log_bytes,
+        max_message_chars: limits.max_message_chars,
+      };
+    },
+  };
+}
+
+const storageProbes = {
+  sensors: (address, signal) => readEngineSensors(address, signal),
+  incidents: (address, signal) => readEngineIncidents(address, { signal }),
+  certificates: (address, signal) => readEngineCertificates(address, signal),
+  updates: (address, signal) => readEngineUpdates(address, signal),
+};
+const providerProbes = { certificates: (address, signal) => readEngineCertificates(address, signal), updates: (address, signal) => readEngineUpdates(address, signal) };
+const failureMessages = {
+  web: 'Web shell assets are unavailable.',
+  engine: 'Engine runtime readiness probe failed.',
+  storage: 'Authoritative storage readiness probe failed.',
+  certificates: 'Required certificate provider readiness probe failed.',
+  updates: 'Required update provider readiness probe failed.',
+};
+
 
 export function readEngineHealth(address, signal) {
   if (!/^127\.0\.0\.1:[1-9]\d{0,4}$/.test(address) || Number(address.split(':')[1]) > 65535) return Promise.reject(new Error('Invalid loopback engine address.'));
@@ -98,10 +155,67 @@ export function requestEngineIncidents(address, { id, body, key, signal } = {}) 
   });
 }
 
-export function createWebServer({ root, config, projectId, engineAddress }) {
+export function createWebServer({ root, config, projectId, engineAddress, readiness = {} }) {
   const valid = validateRuntimeConfig(config, projectId);
   const publicRoot = resolve(root);
+  const policy = {
+    engine: Boolean(engineAddress),
+    storage: readiness.storage ?? null,
+    providers: Array.isArray(readiness.providers) ? [...readiness.providers] : [],
+    optionalProviders: Array.isArray(readiness.optionalProviders) ? [...readiness.optionalProviders] : [],
+  };
+  if (policy.storage !== null && !Object.hasOwn(storageProbes, policy.storage)) throw new Error('Invalid storage readiness surface.');
+  if (policy.providers.some(name => !Object.hasOwn(providerProbes, name)) || policy.optionalProviders.some(name => !Object.hasOwn(providerProbes, name))) throw new Error('Invalid readiness provider.');
+  const diagnostics = createDiagnosticLog();
+  const previousReadiness = new Map();
   const within = path => { const diff = relative(publicRoot, path); return diff !== '..' && !diff.startsWith('../') && !isAbsolute(diff); };
+  const probe = async (name, required, read, message) => {
+    if (!engineAddress) return { name, required, ready: false, code: 'not_configured' };
+    try {
+      await read(engineAddress, AbortSignal.timeout(readinessLimits.probe_timeout_ms));
+      return { name, required, ready: true, code: null };
+    } catch {
+      const suffix = name.startsWith('provider:') ? `provider_${name.slice('provider:'.length)}` : name;
+      return { name, required, ready: false, code: `${suffix}_unavailable` };
+    }
+  };
+  const record = components => {
+    for (const component of components) {
+      const prior = previousReadiness.get(component.name);
+      const key = component.name.startsWith('provider:') ? component.name.slice('provider:'.length) : component.name;
+      if (!component.ready && component.code !== 'not_configured' && prior !== false) diagnostics.add(component.required ? 'error' : 'warn', component.code, failureMessages[key]);
+      else if (component.ready && prior === false) diagnostics.add('info', 'component_recovered', `${component.name} readiness recovered.`);
+      previousReadiness.set(component.name, component.ready);
+    }
+  };
+  const readReadiness = async () => {
+    let indexReady = false;
+    try { indexReady = (await stat(resolve(publicRoot, 'index.html'))).isFile(); } catch { indexReady = false; }
+    const checks = [Promise.resolve({ name: 'web', required: true, ready: indexReady, code: indexReady ? null : 'web_assets_unavailable' })];
+    checks.push(probe('engine', policy.engine, readEngineHealth, failureMessages.engine));
+    checks.push(policy.storage
+      ? probe('storage', true, storageProbes[policy.storage], failureMessages.storage)
+      : Promise.resolve({ name: 'storage', required: false, ready: false, code: 'not_configured' }));
+    for (const name of policy.providers) checks.push(probe(`provider:${name}`, true, providerProbes[name], failureMessages[name]));
+    for (const name of policy.optionalProviders) checks.push(probe(`provider:${name}`, false, providerProbes[name], failureMessages[name]));
+    const components = await Promise.all(checks);
+    record(components);
+    const requiredFailed = components.some(component => component.required && !component.ready);
+    const optionalFailed = components.some(component => !component.required && !component.ready);
+    return { status: requiredFailed ? 'not_ready' : optionalFailed ? 'degraded' : 'ready', components };
+  };
+  const readinessBody = result => {
+    const component = name => result.components.find(item => item.name === name)?.ready ?? false;
+    const providers = result.components.filter(item => item.name.startsWith('provider:'));
+    return {
+      status: result.status,
+      scope: 'web-shell',
+      engineReady: component('engine'),
+      storageReady: component('storage'),
+      providersReady: providers.every(item => item.ready),
+      components: result.components,
+    };
+  };
   const server = http.createServer({ requestTimeout: 15000, headersTimeout: 10000, keepAliveTimeout: 5000, maxHeaderSize: 16384 }, async (req, res) => {
     res.setHeader('Content-Security-Policy', csp);
     res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -150,8 +264,22 @@ export function createWebServer({ root, config, projectId, engineAddress }) {
     }
     if (path === '/healthz') { send(200, '{"status":"ok","scope":"web-shell"}'); return; }
     if (path === '/readyz') {
-      try { await stat(resolve(publicRoot, 'index.html')); send(200, '{"status":"ready","scope":"web-shell","engineReady":false}'); }
-      catch { send(503, '{"status":"not_ready","scope":"web-shell"}'); }
+      const result = await readReadiness();
+      send(result.status === 'not_ready' ? 503 : 200, JSON.stringify(readinessBody(result)));
+      return;
+    }
+    if (path === '/api/diagnostics') {
+      const result = await readReadiness();
+      const body = readinessBody(result);
+      send(200, JSON.stringify({
+        schema_version: 1,
+        scope: 'web-shell',
+        generated_at: new Date().toISOString(),
+        status: body.status,
+        components: body.components,
+        logs: diagnostics.snapshot(),
+        limits: { ...readinessLimits },
+      }));
       return;
     }
     if (path === '/api/engine/health' && engineAddress) {

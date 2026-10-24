@@ -1,0 +1,83 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C29 negative cases. All sentinels are inert literals used to prove redaction and bounded logging; no real credential is present.",
+  "cases": [
+    {
+      "name": "engine_unreachable",
+      "kind": "engine",
+      "setup": "engine_address_closed",
+      "expected_code": "engine_unavailable",
+      "expected_status": "not_ready",
+      "expected_http": 503
+    },
+    {
+      "name": "engine_invalid_body",
+      "kind": "engine",
+      "setup": "health_body_with_sentinel",
+      "expected_code": "engine_unavailable",
+      "expected_status": "not_ready",
+      "expected_http": 503,
+      "sentinel": "SENTINEL_C29_SECRET"
+    },
+    {
+      "name": "storage_surface_unavailable",
+      "kind": "storage",
+      "setup": "sensor_surface_503",
+      "expected_code": "storage_unavailable",
+      "expected_status": "not_ready",
+      "expected_http": 503
+    },
+    {
+      "name": "required_provider_failure",
+      "kind": "provider",
+      "setup": "certificate_surface_500",
+      "expected_code": "provider_certificates_unavailable",
+      "expected_status": "not_ready",
+      "expected_http": 503
+    },
+    {
+      "name": "optional_provider_failure",
+      "kind": "provider",
+      "setup": "update_surface_500_optional",
+      "expected_code": "provider_updates_unavailable",
+      "expected_status": "degraded",
+      "expected_http": 200
+    },
+    {
+      "name": "sentinel_in_request_metadata",
+      "kind": "redaction",
+      "setup": "authorization_and_query_sentinels",
+      "expected_code": null,
+      "expected_status": "not_ready",
+      "expected_http": 503,
+      "sentinels": ["SENTINEL_C29_TOKEN", "SENTINEL_C29_QUERY"]
+    },
+    {
+      "name": "log_overflow",
+      "kind": "bounds",
+      "setup": "forty_readiness_transitions",
+      "expected_code": "engine_unavailable",
+      "expected_status": "not_ready",
+      "expected_http": 503,
+      "probes": 40,
+      "expected_min_dropped": 8
+    },
+    {
+      "name": "malformed_fixture_metadata",
+      "kind": "fixture",
+      "setup": "invalid_version_or_license",
+      "expected_code": "invalid_fixture",
+      "expected_status": "rejected",
+      "expected_http": null
+    },
+    {
+      "name": "restart_clears_stale_readiness",
+      "kind": "restart",
+      "setup": "new_server_after_engine_restart",
+      "expected_code": null,
+      "expected_status": "ready",
+      "expected_http": 200
+    }
+  ]
+}

@@ -115,7 +115,12 @@ export async function startLocal({ host = '127.0.0.1', port = 4173, root = resol
     });
     await readEngineHealth(engineAddress, startup);
     if (failed || shutdown) throw failed ?? new Error('Launch cancelled.');
-    server = createWebServer({ root: publicRoot, config, projectId: brand.slug, engineAddress });
+    const storageSurface = sensorStatus ? 'sensors' : incidentView ? 'incidents' : certificateStatus ? 'certificates' : updateStatus ? 'updates' : null;
+    const readiness = {
+      storage: storageSurface,
+      providers: [...(certificateStatus ? ['certificates'] : []), ...(updateStatus ? ['updates'] : [])],
+    };
+    server = createWebServer({ root: publicRoot, config, projectId: brand.slug, engineAddress, readiness });
     server.on('error', error => { failed = error; void close(error); });
     await new Promise((accept, reject) => {
       const abort = () => reject(new Error('Web startup deadline exceeded.'));

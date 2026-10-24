@@ -38,7 +38,9 @@ test('real launcher serves engine health, preserves disabled admission, stops an
     assert.equal(rejectedWrite.headers.get('allow'), 'GET');
     assert.equal((await fetch(base + '/api/engine/health', { method: 'POST' })).status, 405);
     assert.equal((await (await fetch(base + '/runtime-config.json')).json()).engineEnabled, false);
-    assert.equal((await (await fetch(base + '/readyz')).json()).engineReady, false);
+    const ready = await (await fetch(base + '/readyz')).json();
+    assert.equal(ready.engineReady, true);
+    assert.equal(ready.status, 'degraded');
     await running.close();
     assert.equal((await running.closed).exitCode, 0);
     assert.throws(() => process.kill(running.child.pid, 0), /ESRCH/);

@@ -1,25 +1,25 @@
 {
   "project": "MirageMesh",
-  "last_task": "C28",
+  "last_task": "C29",
   "status": "verified",
-  "base_commit": "d53f9f076cdebe0769dad201c9a9e6a9df39e45c",
-  "implementation_commit": "b0d916500ee4a3891b21c7076fbcaa96aaa4279b",
-  "verified_on_commit": "b0d916500ee4a3891b21c7076fbcaa96aaa4279b",
-  "source_identity": "sha256:a5dffe6eb246b9b62d90575e392ffd5d8997505e70829c075c5cce7a6f75a5a7",
-  "evidence": "docs/evidence/C28.json",
-  "summary": "C28 adds a versioned 5-sensor target workload (30 s at 8 events/s plus a 500-event batched backlog) and over-limit probes over the real C05/C11/C16 ingest and C17/C18 segment projection paths. Under an enforced 2 vCPU / 2048 MiB systemd user scope the engine sustained 8.01 events/s (240/240), ingested 740 events with 740 durable acknowledgements, used 37.5 s CPU over 76.0 s wall, 21.13 MiB ingest / 96.02 MiB peak process RSS and 998590 bytes of state, and projected 740 records into 2 segments with the C05 manifest unchanged. Restart preserved counts, revision and manifest bytes, and the second projection appended nothing. Single-event p99 was 86.8 ms; HTTP p99 at concurrency 128 was 43.5 ms with zero errors. The 20 events/s planning target completed only 171/200 events in 10 s, so published capacity and the product/ops documents now report the measured 8 events/s. Typed over-limit batch, storage-quota and cancellation results passed, together with 38 measured assertions, 195 engine anchors, 88 Node tests and 6 Python tests.",
+  "base_commit": "36fdf3d4f7b1f82e7a4d89606ae7cc767d9b3241",
+  "implementation_commit": null,
+  "verified_on_commit": null,
+  "verified_on_tree": "uncommitted working tree on 36fdf3d4f7b1f82e7a4d89606ae7cc767d9b3241",
+  "source_identity": "sha256:547031607c0accf52ba9114a8237fcbc6866839e5d36b8439a69ff43cced1054",
+  "evidence": "docs/evidence/C29.json",
+  "summary": "C29 separates local web liveness from real readiness. GET /healthz is now a liveness-only web-shell response, while GET /readyz probes web assets, the loopback engine /healthz, the configured authoritative storage surface and each enabled provider with fixed typed failure codes, returning 200 ready, 200 degraded for optional-only failure and 503 not_ready for a required failure. GET /api/diagnostics always returns 200 with the component list, the bounded redacted log ring, limits and a timestamp. Logs are written on transitions only (required error, optional warn, recovery info), are capped at 32 entries / 8192 bytes / 256 message characters, redact Authorization, Cookie, token, secret, password, api_key and Bearer values, and reset on restart. The supervisor marks storage and provider surfaces required only when it enables them, and serve-web rejects unknown storage surfaces and unsupported providers instead of faking readiness. /healthz is no longer used as an engine-readiness signal: the launcher, clone smoke and benchmark now wait on /readyz. Verification on the documented toolchain: a real Go engine with the C05-backed sensor store reached ready twice across a restart with empty logs, unreachable and malformed engines and failing required/optional providers produced the declared codes and statuses, sentinel headers/bodies never reached diagnostics, 40 readiness transitions were bounded, missing index.html made web not ready, and 40 malformed workload/fixture mutations were rejected. 6 readiness tests, 94 Node tests, 195 engine anchors (222 top-level / 353 subtest passes), 6 Python tests, repository contracts and the real clean-clone smoke passed. No commit, push, hosted Actions, browser run or C30/C40 claim.",
   "hosted_actions": [],
   "hosted_actions_note": "Not run for this source. No push or publication occurred; remote workflow status is unverified.",
-  "next_task": "C29",
+  "next_task": "C30",
   "next_command": "npm run plan -- next",
   "blockers": [],
   "scope_limits": [
-    "Local Linux single-operator profile only; the 2 vCPU/2048 MiB enforcement is a user-scope cgroup on the measured host, not a capacity guarantee for other hardware.",
-    "The measured workload is a 30-second window plus a bounded backlog, not a multi-day retention, sustained saturation or unbounded-volume claim.",
-    "The 20 events/s probe demonstrated saturation at about 17 events/s; it is not a measured maximum throughput.",
-    "No browser rendering, hosted Actions, deployment, release, C30 clean-host workflow or C40 artifact claim.",
-    "The benchmark used repository-authored synthetic fixtures and an ephemeral in-memory signing key.",
-    "The measurement ran before the commit existed; the source identity covers the implementation commit b0d9165 ignoring docs/evidence/, and the later bookkeeping commit changes the current identity only."
+    "Local Linux single-operator profile only; readiness covers the web shell, the loopback Go engine, the enabled storage surface and the enabled certificate/update providers.",
+    "Rootless Podman and the isolated decoy are engine CLI surfaces, not web-supervised components; declaring podman as a readiness provider is rejected instead of reported ready.",
+    "Diagnostics are per web-server instance and deliberately reset on restart; they are not durable audit records.",
+    "The source identity covers the implementation tree before the progress, handoff and generated-project bookkeeping edits; no commit was created, so the final working tree identity differs from the recorded one.",
+    "No browser run, hosted Actions, deployment, release, C30 clean-host workflow or C40 artifact claim."
   ],
   "local_environment": {
     "node": "v24.19.0",
@@ -28,11 +28,11 @@
     "go": "go1.27.2",
     "podman": "4.9.3 rootless",
     "pinned_image": "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
-    "notes": "The machine's go env sets GOSUMDB=off, so engine-spawning Node tests require the documented GOSUMDB=sum.golang.org GOTOOLCHAIN=go1.27.2 environment. The C28 failing repro is retained in docs/evidence/C28/npm-check-missing-env.log; the same suite passes with the documented environment."
+    "notes": "The machine's go env sets GOSUMDB=off, so engine-spawning Node tests require the documented GOSUMDB=sum.golang.org GOTOOLCHAIN=go1.27.2 environment. Podman was not exercised by C29."
   },
   "delivery": {
-    "commit_created": true,
-    "commit": "b0d916500ee4a3891b21c7076fbcaa96aaa4279b",
+    "commit_created": false,
+    "commit": null,
     "push_performed": false,
     "branch": "main",
     "publication_performed": false

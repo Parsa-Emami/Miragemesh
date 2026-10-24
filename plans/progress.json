@@ -258,10 +258,12 @@
     },
     {
       "id": "C29",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C29.json"
+      ],
+      "source_identity": "sha256:547031607c0accf52ba9114a8237fcbc6866839e5d36b8439a69ff43cced1054",
+      "notes": "C29 verified locally on base 36fdf3d without committing: web /healthz is liveness-only, /readyz separates required web/engine/storage/provider readiness with typed codes and 503/200-degraded outcomes, and /api/diagnostics exposes a 32-entry/8192-byte redacted transition log that ignores frequent scrapes and resets on restart. A real Go engine with the C05-backed sensor store reached ready twice across a restart; unreachable/malformed engines, failed storage and required/optional providers, sentinel request headers/bodies, missing assets, 40 transitions, invalid readiness configuration and 40 malformed fixture metadata mutations were rejected or bounded. 6 readiness tests, 94 Node tests, 195 engine anchors, 6 Python tests, repository contracts and the real clean-clone smoke passed. No commit, push, hosted Actions, browser run or C30/C40 claim."
     },
     {
       "id": "C30",
