@@ -1,0 +1,16 @@
+date_utc=2026-10-24T09:15:51Z
+Linux 7.0.0-38-generic x86_64 GNU/Linux
+nproc=16
+Mem:           31341        8495       13074         203       10394       22845
+/dev/nvme0n1p2    959271 790995    119476  87% /
+v24.19.0
+11.17.0
+go version go1.27.2 linux/amd64
+go1.27.2
+go1.27.2
+sum.golang.org
+podman version 4.9.3
+podman_rootless=true
+sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 amd64/linux
+Version 1.64.1
+env_exit=0

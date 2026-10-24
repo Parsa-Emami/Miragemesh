@@ -1,0 +1,197 @@
+{
+  "commit_id": "C27",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "local-verified",
+  "date": "2026-10-24",
+  "scope": "Negative UAT, XSS/import and object/authorization abuse tests for every enabled surface in the local single-operator profile, with the security matrix and threat model. No certification, public-ingress, multi-tenant or release claim.",
+  "base_commit": "32e1ce08a710de0a0ee8e926283ae9ee1a268d72",
+  "source_identity": "sha256:b6d2557976305cfa185aab7b420662a5053f76c4a3cd4651cbd296d0f7c36e57",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation",
+  "implementation_commit": "aadbb3371b6c8e614ab510babe25ebd9ea8e34c1",
+  "dependencies": {
+    "C26": "docs/evidence/C26.json; verified locally on 3d40a1ca59d9c9bbaa2300918789ed4b9e2cde3a"
+  },
+  "composition": {
+    "audit_sources": "Read cmd/miragemesh HTTP handlers and CLI modes, scripts/serve-web.mjs static/proxy/triage paths and apps/web React rendering before writing tests; tests/release/security-matrix.md maps 16 enabled surfaces to exact executable anchors.",
+    "browser_boundary": "tests/browser/security.spec.ts starts the real local web/engine process pair with scripts/start-local.mjs and sends raw HTTP for Host/Origin, method, media, key, body-size, object-path and replay cases.",
+    "triage_data": "Real C05/C16 incident state seeded by the existing C22 synthetic fixture generator; segment files are byte-compared before and after every rejected request.",
+    "rendering": "Stored triage reason and hostile filename rendered by the real React bundle under the shipped CSP; no innerHTML, eval or external request is used.",
+    "engine_coverage": "Every engine/CLI/storage row points at an exact existing Go, Node or browser anchor that ran in this source's required suites; C27 adds no duplicate engine harness.",
+    "egress": "CSP blocks external fetch in the browser; existing import-boundary and rootless-container anchors remain the engine-side egress proof in the same suite."
+  },
+  "fixtures": {
+    "directory": "tests/fixtures/miragemesh/C27/",
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic security metadata, hostile import payloads and expected statuses. No real traffic, credentials, incident text, customer data or private material.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C27/security.json": "5f5dfac89b88bf6012ea206def5a9ba3509f5a58cbae0238d9e34dfba2e0d246"
+    },
+    "bounds_provenance": "1 MiB preview, 16 KiB triage body, 16-128 rune idempotency key and loopback-only binding are the existing implemented limits, not capacity measurements."
+  },
+  "environment": {
+    "os": "Linux 7.0.0-38-generic x86_64 GNU/Linux",
+    "cpu_count": 16,
+    "memory_mib": 31341,
+    "free_disk_mib": 119476,
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "go": "go1.27.2 linux/amd64",
+    "go_toolchain_selection": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct",
+    "container_provider": "podman 4.9.3 rootless=true",
+    "pinned_image": "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 amd64/linux",
+    "hardware_target_measured": false,
+    "output_path": "docs/evidence/C27/environment.log"
+  },
+  "commands": [
+    {
+      "name": "validate-plan",
+      "command": ["npm", "run", "validate:plan"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/validate-plan.log",
+      "stored_output_sha256": "2eb85efaea0ebbc245a38e63723724d97698519b89926d266d59eb25af8e26eb",
+      "observed": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred."
+    },
+    {
+      "name": "formatting",
+      "command": ["$(go env GOROOT)/bin/gofmt", "-l", "cmd", "internal", "tests"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/formatting.log",
+      "stored_output_sha256": "4d18507cc5d1b4ca479b6b40351105d1bc0478f52650c2df44cc1fd6a46eebf4",
+      "observed": "No unformatted files."
+    },
+    {
+      "name": "go-vet",
+      "command": ["go", "vet", "./..."],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/go-vet.log",
+      "stored_output_sha256": "379657899e7681dedd756dbab8c88d30cc8d3f6cb48b3cf4dacb3a757870b054",
+      "observed": "No vet findings."
+    },
+    {
+      "name": "browser-security-targeted",
+      "command": ["npx", "playwright", "test", "tests/browser/security.spec.ts", "--workers=1"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/browser-security-targeted.log",
+      "stored_output_sha256": "6ca9cd54ac7a23d6e3c3a3988af0a50afd6eb2eccdd723d4a8b2aad5a9d6a7fc",
+      "observed": "2 C27 browser anchors passed: shell hardening/import/disabled surfaces and triage forgery/stored-payload inertness."
+    },
+    {
+      "name": "browser-full",
+      "command": ["npm", "run", "test:browser"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/browser-full.log",
+      "stored_output_sha256": "5512e792fe2f93f15eb55236f577948bbc71a990786e245b388f989e09ef54a6",
+      "observed": "20 browser tests passed with 1 worker and no skip, including the two C27 security anchors and all prior web workflows."
+    },
+    {
+      "name": "engine-full",
+      "command": ["go", "test", "-race", "-count=1", "-json", "./..."],
+      "exit_code": 0,
+      "output_path": "dist/ci/engine-tests.jsonl",
+      "observed": "No failing events; 219 top-level tests and 353 subtests passed across 6 test packages; packages without test files are reported as skipped."
+    },
+    {
+      "name": "engine-guard",
+      "command": ["node", "scripts/verify-engine-tests.mjs", "dist/ci/engine-tests.jsonl"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/engine-guard.log",
+      "stored_output_sha256": "4e517a42a7a8acf30ff1822156f1ab40724850f514ea121068eeb5e39182a2ec",
+      "observed": "Verified 8 engine suites and 192 required test anchors."
+    },
+    {
+      "name": "engine-counts",
+      "command": ["node", "-e", "count -json pass/run events in dist/ci/engine-tests.jsonl"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/engine-counts.log",
+      "stored_output_sha256": "e0306d5b68ec30f0f19269e74e46675918db96a2b514dd7989f4254fb491ba15",
+      "observed": "top_level_pass 219, subtest_pass 353, test_packages 6."
+    },
+    {
+      "name": "npm-check",
+      "command": ["npm", "run", "check"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/npm-check.log",
+      "stored_output_sha256": "fee1ece9002d9c0246989314b0c4911f910873d4cf84667623c3ac323b937818",
+      "observed": "Plan validation, typecheck, web build, engine build and 82 Node tests passed with the documented Go toolchain environment."
+    },
+    {
+      "name": "repository-contracts",
+      "command": ["python3", "scripts/validate_repo.py"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/repository-contracts.log",
+      "stored_output_sha256": "7a872e86a173b0b67e0ab080500e8215343779f0dceabc43ce0634a42280bb2b",
+      "observed": "VALIDATION PASSED; checked 323 JSON files and repository contract invariants."
+    },
+    {
+      "name": "python-tests",
+      "command": ["python3", "-m", "unittest", "discover", "-s", "tests/engineering", "-p", "test_*.py", "-v"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/python-tests.log",
+      "stored_output_sha256": "72cecfe98ffd81b39f2fdff01bd18061c957017cb5e586572dce64a83d6b4abe",
+      "observed": "Ran 6 tests; OK."
+    },
+    {
+      "name": "diff-check",
+      "command": ["git", "diff", "--check"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/diff-check.log",
+      "stored_output_sha256": "468d6859daaad06e416104e11ba1f751fbb03802daa9abaf3aaa7ee59a1cc734",
+      "observed": "No whitespace errors."
+    }
+  ],
+  "results": [
+    "Web shell: every served path returned the shipped CSP (default-src 'none', script-src 'self', connect-src 'self', frame-ancestors 'none'), nosniff, DENY framing, no-referrer, no-store and the four documented runtime-config keys; inline script insertion did not execute and an external fetch was blocked.",
+    "Static confinement: six traversal/encoded/symlink-adjacent paths (/assets/../../etc/passwd, %2e%2e and ..%5c variants, /ops/web/runtime-config.json, /.env, /package.json) returned 400/404 without exposing sentinel content.",
+    "Host and Origin: four forged Host/Origin variants were rejected on /healthz with the expected 403 before any data response; the existing Node and Go anchors cover the same check on every loopback surface.",
+    "Disabled surfaces: /api/v1/incidents, /api/v1/sensors, /api/v1/certificates and /api/v1/updates returned their exact typed 503 bodies; POST to each read API returned 405 with Allow: GET; triage on a disabled engine returned 503.",
+    "Triage authorization: missing/foreign/null Origin, wrong media type, missing or short idempotency key, 16 KiB+1 body, GET, unknown object, malformed object and an extra body field were rejected with their exact status/error; incident history counts and every segment file byte were unchanged.",
+    "Triage acceptance and replay: one same-origin request appended exactly one history entry (202, replayed=false); repeating the same key returned 202 replayed=true with no additional entry, preserving the C22 lost-response behavior.",
+    "Stored XSS: a hostile triage reason, hostile upload filename and hostile JSON keys rendered as inert text at 360px; no img/script/svg node was created, no sentinel global was set, no page error occurred and no non-loopback request was made.",
+    "JSON import: a 1 MiB+1 file was rejected before preview, __proto__ was rejected as an unsafe key, and the hostile filename was displayed as text only.",
+    "Engine and CLI surfaces: the matrix binds mTLS identity, update authority, certificate rotation, decoy isolation/provider ownership, storage/index integrity, retention and CLI file authority, and no-egress rows to exact required Go, Node and browser anchors that passed in this source's suites.",
+    "Findings: no critical or high severity finding remains in the audited local profile; four low observations are documented (inline style allowance, local-user loopback reachability, read APIs without per-request auth, absent COOP/CORP).",
+    "Matrix coverage: 16 enabled surfaces, each with entry points, boundary assumption, exercised threats, control, executable proof and result in tests/release/security-matrix.md; threat model and explicit limits in docs/security/THREAT_MODEL.md."
+  ],
+  "observed_limitations": [
+    "Local Linux single-operator profile only. The matrix is not a penetration-test certification, no-vulnerability statement, or proof against OS compromise, physical access or a malicious local user with the same account.",
+    "No public ingress, hosted multi-tenant authorization or production identity provider was available or tested; ADR-0003 excludes those from this profile.",
+    "Read APIs rely on loopback binding plus Host/Origin checks; they carry no per-request authentication. This is a documented low observation, not a fix.",
+    "The browser suite used Chromium through the repository Playwright configuration only; no Firefox/WebKit claim is made.",
+    "The triage fixture seeds incidents through the existing C22 synthetic generator; no real incident data was used.",
+    "Hosted GitHub Actions were not run for this source; no push, deployment, release or publication occurred.",
+    "Local npm is 11.17.0 while package.json pins packageManager npm@11.9.0; node and Go match their locks.",
+    "The audited identity was computed after the implementation commit aadbb337; the later evidence/progress/handoff bookkeeping commit changes planning metadata only and carries no runtime claim.",
+    "C28 measured hardware, C30 clean-host core workflow/restart/restore and C40 published artifacts remain open."
+  ],
+  "rollback_or_recovery_observation": "The change is additive test, fixture and documentation material; no stored format, API contract or protected file changed. Reverting the two C27 commits restores the prior source without touching accepted C05/C16/C22 data.",
+  "negatives_executed": [
+    "triage missing Origin",
+    "triage foreign Origin",
+    "triage null Origin",
+    "triage wrong media type",
+    "triage missing idempotency key",
+    "triage short idempotency key",
+    "triage body over 16 KiB",
+    "triage read via GET",
+    "triage unknown object id",
+    "triage malformed object id",
+    "triage extra body field",
+    "forged Host attacker.example",
+    "forged Host 127.0.0.1.attacker.example",
+    "forged Origin http://attacker.example",
+    "forged Origin null",
+    "encoded and raw path traversal",
+    "non-public /ops, .env and package.json paths",
+    "POST to each read-only API",
+    "disabled-surface typed 503 for four APIs",
+    "inline script execution under CSP",
+    "external fetch under CSP connect-src",
+    "hostile JSON import filename",
+    "prototype-pollution import key",
+    "oversize import file",
+    "replayed idempotency key without duplicate history"
+  ]
+}

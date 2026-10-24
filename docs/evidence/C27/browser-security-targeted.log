@@ -1,0 +1,8 @@
+
+Running 2 tests using 1 worker
+
+  ✓  1 tests/browser/security.spec.ts:46:1 › shell hardening, import abuse and disabled surfaces fail closed (392ms)
+  ✓  2 tests/browser/security.spec.ts:139:1 › triage rejects forged authorization and stored payloads remain inert (418ms)
+
+  2 passed (1.8s)
+security_exit=0

@@ -1,0 +1,30 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 test:browser
+> playwright test --workers=1
+
+
+Running 20 tests using 1 worker
+
+  ✓   1 apps/web/tests/certificates.spec.ts:15:1 › real certificate state shows cutoff, offline recovery and restart at 360px without private material (675ms)
+  ✓   2 apps/web/tests/certificates.spec.ts:54:1 › certificate status retains a stale snapshot during a failed read and rejects inconsistent coverage (237ms)
+  ✓   3 apps/web/tests/certificates.spec.ts:72:1 › certificate page explains a disabled ledger without suggesting a successful rotation (84ms)
+  ✓   4 apps/web/tests/incidents.spec.ts:23:1 › real incident replay escapes source bytes and keyboard triage survives engine restart (610ms)
+  ✓   5 apps/web/tests/incidents.spec.ts:65:1 › a committed but interrupted triage retries the same key without duplicating history (448ms)
+  ✓   6 apps/web/tests/incidents.spec.ts:89:1 › empty coverage and interrupted reads are explicit and retain a stale snapshot at 360px (225ms)
+  ✓   7 apps/web/tests/incidents.spec.ts:106:1 › incidents explains the disabled engine at 360px without egress (102ms)
+  ✓   8 apps/web/tests/incidents.spec.ts:117:1 › incidents rejects an invalid response without presenting it as empty (116ms)
+  ✓   9 apps/web/tests/retention.spec.ts:9:1 › real retention audit is keyboard accessible, inert and durable at 360px (531ms)
+  ✓  10 apps/web/tests/sensors.spec.ts:7:1 › sensor page displays offline, stale config and durable drops from the engine response (182ms)
+  ✓  11 apps/web/tests/sensors.spec.ts:22:1 › sensor page rejects an invalid versioned response and explains unavailable state (89ms)
+  ✓  12 apps/web/tests/sensors.spec.ts:28:1 › sensor page keeps last snapshot explicitly stale during an outage and recovers (137ms)
+  ✓  13 apps/web/tests/updates.spec.ts:12:1 › real update authority and scoped recovery survive restart with accessible evidence at 360px (589ms)
+  ✓  14 apps/web/tests/updates.spec.ts:32:1 › update read failures retain stale evidence and untrusted strings stay inert (212ms)
+  ✓  15 apps/web/tests/updates.spec.ts:39:1 › update page explains unavailable authority without claiming verification (88ms)
+  ✓  16 tests/browser/security.spec.ts:46:1 › shell hardening, import abuse and disabled surfaces fail closed (301ms)
+  ✓  17 tests/browser/security.spec.ts:139:1 › triage rejects forged authorization and stored payloads remain inert (376ms)
+  ✓  18 tests/browser/workspace.spec.ts:2:1 › workspace, local preview, navigation and roadmap filters work (231ms)
+  ✓  19 tests/browser/workspace.spec.ts:25:1 › runtime failure remains explicit and the workspace is keyboard accessible at 360px (99ms)
+  ✓  20 tests/browser/workspace.spec.ts:37:1 › configuration failure blocks workspace startup (82ms)
+
+  20 passed (6.5s)
+browser_exit=0
