@@ -134,6 +134,14 @@
       "observed": "Ran 6 tests; OK."
     },
     {
+      "name": "source-integrity",
+      "command": ["python3", "scripts/verify_ci_source.py", "--output", "dist/ci/c27-source-integrity.json"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C27/source-integrity.log",
+      "stored_output_sha256": "08c5b980b8f5e24b012c28961340496dfdda3b033e4cf55e8b69491fa928c4be",
+      "observed": "Clean-tree source integrity passed on bookkeeping commit 3d6281afde402a64798cedac195e7f38628e96bf (git tree a2130b5e465ffbd5663847464c5418d5c6aa05d3); historical oss-roadmap evidence still matches its own source. Runtime results remain this commit's CI job scope."
+    },
+    {
       "name": "diff-check",
       "command": ["git", "diff", "--check"],
       "exit_code": 0,
