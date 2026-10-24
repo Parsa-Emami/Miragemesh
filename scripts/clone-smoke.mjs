@@ -73,7 +73,7 @@ try {
   const base = 'http://127.0.0.1:' + port;
   const health = await fetch(base + '/readyz');
   const state = await health.json();
-  if (!health.ok || state.engineReady !== false || (await fetch(base + '/api/v1/unimplemented')).status !== 503) {
+  if (!health.ok || state.engineReady !== true || (await fetch(base + '/api/v1/unimplemented')).status !== 503) {
     throw new Error('Incorrect readiness boundary');
   }
   if (!(await fetch(base)).ok) throw new Error('Workspace unavailable');
