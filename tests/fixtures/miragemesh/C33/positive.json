@@ -1,0 +1,157 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C33 UX, accessibility and platform specification. Contains synthetic reference workflow steps, keyboard sequences, viewport geometries, and N-1 compatible formats. No real customer data, credentials or private keys are present.",
+  "scope": "ux-accessibility-workflow",
+  "viewports": {
+    "mobile": {
+      "name": "mobile-standard",
+      "width": 360,
+      "height": 800,
+      "max_horizontal_overflow": 0
+    },
+    "desktop": {
+      "name": "desktop-standard",
+      "width": 1440,
+      "height": 900
+    }
+  },
+  "keyboard_navigation": {
+    "skip_link_target": "content",
+    "required_landmarks": ["header", "nav", "main", "footer"],
+    "interactive_elements": ["a", "button", "input", "select", "textarea"],
+    "focus_ring_color": "#e9c86c"
+  },
+  "observed_platforms": [
+    {
+      "platform": "linux/amd64",
+      "os": "linux",
+      "arch": "amd64",
+      "distribution": "Ubuntu 24.04 LTS",
+      "engine_runtime": "native-go",
+      "status": "supported-observed"
+    },
+    {
+      "platform": "windows/x64",
+      "os": "windows",
+      "arch": "x64",
+      "engine_runtime": "local-workstation",
+      "status": "supported-observed"
+    }
+  ],
+  "n_minus_1_compatibility": {
+    "sensor_snapshot_v0": {
+      "schema_version": "1",
+      "offline_after_seconds": 300,
+      "sensors": [
+        {
+          "sensor_id": "sensor-n1-01",
+          "last_event_at": "2026-10-24T10:00:00Z",
+          "offline": false,
+          "config_status": "current",
+          "dropped_event_count": 0
+        }
+      ]
+    },
+    "certificate_snapshot_v0": {
+      "schema_version": "1",
+      "observed_at": "2026-10-24T10:00:00Z",
+      "issuer_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sensors": [
+        {
+          "sensor_id": "sensor-n1-01",
+          "revision": 1,
+          "fingerprint": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+          "not_after": "2027-10-24T10:00:00Z",
+          "status": "current",
+          "recovery_available": false
+        }
+      ]
+    },
+    "incident_snapshot_v0": {
+      "schema_version": "1",
+      "coverage": {
+        "complete": true,
+        "incomplete_segments": 0,
+        "missing_ordinals": []
+      },
+      "unprojected_events": 0,
+      "rate_limit": 2,
+      "window_seconds": 60,
+      "incidents": [
+        {
+          "id": "incident-ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+          "finding": {
+            "class": "interaction",
+            "sensor_id": "sensor-n1-01",
+            "explanation": "N-1 synthetic recorded interaction finding.",
+            "sources": [
+              {
+                "sensor_id": "sensor-n1-01",
+                "event_id": "event-n1-01",
+                "sequence": 1,
+                "segment": "segment-00000000000000000001",
+                "record": 1,
+                "digest": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+              }
+            ]
+          },
+          "events": [
+            {
+              "source": {
+                "sensor_id": "sensor-n1-01",
+                "event_id": "event-n1-01",
+                "sequence": 1,
+                "segment": "segment-00000000000000000001",
+                "record": 1,
+                "digest": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+              },
+              "event": {
+                "schema_version": "1",
+                "sensor_id": "sensor-n1-01",
+                "event_id": "event-n1-01",
+                "sequence": 1,
+                "observed_at": "2026-10-24T10:00:00Z",
+                "kind": "http.request",
+                "metadata": {
+                  "path": "/decoy/n1"
+                }
+              }
+            }
+          ],
+          "history": []
+        }
+      ]
+    },
+    "update_snapshot_v0": {
+      "schema_version": "1",
+      "platform": "linux/amd64",
+      "publisher_fingerprint": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "recovery_fingerprint": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+      "observed_at": "2026-10-24T10:00:00Z",
+      "sensors": [
+        {
+          "sensor_id": "sensor-n1-01",
+          "revision": 1,
+          "issued_at": "2026-10-24T10:00:00Z",
+          "expires_at": "2027-10-24T10:00:00Z",
+          "metadata_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "revoked_versions": [],
+          "releases": [
+            {
+              "version": 1,
+              "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+              "length": 1024
+            }
+          ],
+          "version": 1,
+          "high_water_version": 1,
+          "verified_revision": 1,
+          "verified_at": "2026-10-24T10:01:00Z",
+          "recovery": false,
+          "status": "verified"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C33 expected outcomes for UX, accessibility, keyboard navigation, failure cases, and N-1 compatibility.",
+  "scope": "ux-accessibility-workflow",
+  "viewports": {
+    "mobile_360": {
+      "width": 360,
+      "height": 800,
+      "horizontal_scroll_permitted": false
+    },
+    "desktop_1440": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  "keyboard_accessibility": {
+    "skip_link_functional": true,
+    "interactive_landmarks_reachable": true,
+    "table_wrappers_scrollable": true
+  },
+  "failure_modes": {
+    "provider_outage_explicit": true,
+    "empty_state_rendered": true,
+    "interrupted_request_retried": true,
+    "malformed_payload_alert": true
+  },
+  "invariants": {
+    "no_external_egress": true,
+    "no_private_key_leak": true,
+    "n_minus_1_data_accepted": true,
+    "only_observed_platforms_advertised": true
+  }
+}

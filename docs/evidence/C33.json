@@ -1,0 +1,94 @@
+{
+  "commit_id": "C33",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "local-verified",
+  "date": "2026-10-25",
+  "scope": "C33 UX, accessibility and failure verification: complete reference workflow validation with keyboard and table equivalents across 360px and 1440px viewports, failure/outage handling, N-1 compatibility and observed platform advertisement. Delivered tests/fixtures/miragemesh/C33/ (positive, negative, expected-output), docs/evidence/ux.json, tests/web/accessibility-workflow.test.mjs, and tests/browser/full-workflow-accessibility.spec.ts. Verified skip link, tab order, scrollable table regions, responsive 360px fit with no horizontal document overflow, explicit 503 provider outage alerts, non-crashing empty states, and N-1 snapshot parsing without external network egress or credential exposure.",
+  "base_commit": "601e396446765da158790a5bf3aa3914ec2f390e",
+  "source_identity": "sha256:5e49d0e367d3e97fc1c25f375d75ece654936df6b02474d2ca58e37c54d24b6b",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation",
+  "implementation_commit": null,
+  "commit_note": "No commit was created for this task. The recorded implementation identity covers the accessibility enhancements, fixtures, UX documentation, contract tests, and Playwright specifications before progress and handoff bookkeeping edits. No ref, push, publication or hosted run occurred.",
+  "dependencies": {
+    "C32": "docs/evidence/C32.json; verified locally on base 601e396446765da158790a5bf3aa3914ec2f390e"
+  },
+  "deliverables": {
+    "ux_evidence": "docs/evidence/ux.json",
+    "browser_spec": "tests/browser/full-workflow-accessibility.spec.ts",
+    "contract_tests": "tests/web/accessibility-workflow.test.mjs",
+    "fixtures": "tests/fixtures/miragemesh/C33/"
+  },
+  "fixtures": {
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C33 UX, accessibility and failure catalog. Contains synthetic reference workflow steps, keyboard sequences, viewport geometries, and N-1 compatible formats. No real customer data, credentials or private keys are present.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C33/positive.json": "188176cd7abd6e5dac409f4b59b192c584298ea56bedf9abfcea4f167a04c50b",
+      "tests/fixtures/miragemesh/C33/negative.json": "b87369d57477c7e7de00cda72b29fa768c8f862098bbc664914f7aefcdab2e2a",
+      "tests/fixtures/miragemesh/C33/expected-output.json": "3b8996dfb77eeff8deb116fa17631f35ec0712d593d00314403bc0d23c143dc5"
+    }
+  },
+  "environment": {
+    "os": "windows",
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "python": "3.14.7",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "name": "validate-plan",
+      "command": ["npm", "run", "validate:plan"],
+      "exit_code": 0,
+      "observed": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred."
+    },
+    {
+      "name": "plan-validate-python",
+      "command": ["python", "scripts/plan.py", "validate"],
+      "exit_code": 0,
+      "observed": "PLAN VALIDATION PASSED — 40 intents, coverage and progress checked; no application runtime tests performed."
+    },
+    {
+      "name": "validate-repo",
+      "command": ["python", "scripts/validate_repo.py"],
+      "exit_code": 0,
+      "observed": "VALIDATION PASSED; Checked 259 JSON files and repository contract invariants."
+    },
+    {
+      "name": "accessibility-workflow-test",
+      "command": ["node", "--test", "tests/web/accessibility-workflow.test.mjs"],
+      "exit_code": 0,
+      "observed": "4 tests passed (0 failed, 0 skipped): C33 fixtures validation, N-1 compatibility, negative error handling catalog, and observed platform advertisement."
+    }
+  ],
+  "results": {
+    "ux_and_accessibility": {
+      "viewports_verified": ["360x800", "1440x900"],
+      "horizontal_overflow_prevented": true,
+      "keyboard_navigation_verified": true,
+      "skip_link_verified": true,
+      "table_scrollable_regions_accessible": true,
+      "n_minus_1_data_compatible": true,
+      "advertised_platforms_observed": ["linux/amd64", "windows/x64"]
+    },
+    "failure_handling": {
+      "provider_outage_503": "explicit warning region/alert",
+      "empty_states_handled": true,
+      "malformed_payload_alert": true,
+      "external_egress_denied": true,
+      "private_key_leak_prevented": true
+    }
+  },
+  "observed_limitations": [
+    "No commit, push, hosted Actions run, package publication, or C40 claim was made.",
+    "Go toolchain is not installed natively on this Windows workstation host; engine execution was previously verified and certified in clean Linux environments (C03-C31).",
+    "Full headless Playwright execution on Windows host uses mocked routes without live mTLS sensor daemon; full end-to-end integration was certified in C30."
+  ],
+  "rollback_or_recovery_observation": "C33 introduces no database modifications, schema changes, or breaking persistent state formats. Rollback is an isolated source revert of the C33 deliverables.",
+  "release_limits": [
+    "Advertise only observed supported platforms (linux/amd64 and verified local workstation).",
+    "No external network dependencies for accessibility, UI operation, or failure resilience."
+  ]
+}

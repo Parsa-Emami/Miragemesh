@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "scope": "ux-accessibility-workflow",
+  "project": "MirageMesh",
+  "task": "C33",
+  "generated_at": "2026-10-25T15:20:00Z",
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C33 UX and accessibility evidence verifying reference workflow completion, keyboard navigation, mobile 360px and desktop 1440px viewport ergonomics, failure/outage handling, and N-1 data compatibility.",
+  "viewports": {
+    "mobile": {
+      "width": 360,
+      "height": 800,
+      "horizontal_scroll": false,
+      "scrollable_table_wrap": true
+    },
+    "desktop": {
+      "width": 1440,
+      "height": 900,
+      "horizontal_scroll": false
+    }
+  },
+  "keyboard_navigation": {
+    "skip_to_content": true,
+    "tab_focus_indicators": true,
+    "table_scrollable_regions": true,
+    "interactive_landmarks": ["header", "nav", "main", "footer"]
+  },
+  "failure_handling": {
+    "engine_outage_503": "explicit 503 availability warning in region[name='Availability']",
+    "sensor_outage_503": "role='alert' sensor status unavailable warning",
+    "incident_outage_503": "role='alert' incidents unavailable warning",
+    "certificate_outage_503": "role='alert' certificate status unavailable warning",
+    "update_outage_503": "role='alert' update status unavailable warning",
+    "empty_states": "accessible fallback messages across all views without crashing",
+    "malformed_responses": "role='alert' non-crashing syntax/validation error notifications"
+  },
+  "n_minus_1_compatibility": {
+    "sensor_snapshot_v0": "accepted and validated",
+    "certificate_snapshot_v0": "accepted and validated",
+    "incident_snapshot_v0": "accepted and validated",
+    "update_snapshot_v0": "accepted and validated"
+  },
+  "observed_platforms": [
+    "linux/amd64",
+    "windows/x64"
+  ],
+  "verification": {
+    "browser_suite": "tests/browser/full-workflow-accessibility.spec.ts",
+    "contract_suite": "tests/web/accessibility-workflow.test.mjs",
+    "fixtures": "tests/fixtures/miragemesh/C33/"
+  }
+}

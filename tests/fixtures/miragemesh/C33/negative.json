@@ -1,0 +1,124 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C33 negative UX, accessibility and failure catalog. Specifies empty states, malformed responses, provider outages, and network confinement rules.",
+  "cases": [
+    {
+      "name": "empty-sensor-state",
+      "endpoint": "/api/v1/sensors",
+      "payload": {
+        "offline_after_seconds": 300,
+        "sensors": []
+      },
+      "expected_ui": "No sensor records are available in local storage.",
+      "expected_status": 200
+    },
+    {
+      "name": "empty-incident-state",
+      "endpoint": "/api/v1/incidents",
+      "payload": {
+        "coverage": {
+          "complete": true,
+          "incomplete_segments": 0,
+          "missing_ordinals": []
+        },
+        "unprojected_events": 0,
+        "rate_limit": 2,
+        "window_seconds": 60,
+        "incidents": []
+      },
+      "expected_ui": "No incidents in the projected segments.",
+      "expected_status": 200
+    },
+    {
+      "name": "empty-certificate-state",
+      "endpoint": "/api/v1/certificates",
+      "payload": {
+        "observed_at": "2026-10-25T12:00:00Z",
+        "issuer_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sensors": []
+      },
+      "expected_ui": "No sensor certificates have been registered.",
+      "expected_status": 200
+    },
+    {
+      "name": "empty-update-state",
+      "endpoint": "/api/v1/updates",
+      "payload": {
+        "platform": "linux-amd64",
+        "publisher_fingerprint": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+        "recovery_fingerprint": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+        "observed_at": "2026-10-25T12:00:00Z",
+        "sensors": []
+      },
+      "expected_ui": "No signed update metadata has been accepted.",
+      "expected_status": 200
+    },
+    {
+      "name": "engine-health-outage",
+      "endpoint": "/api/engine/health",
+      "status": 503,
+      "payload": { "error": "engine_unavailable" },
+      "expected_ui": "Engine runtime unavailable",
+      "role": "region"
+    },
+    {
+      "name": "sensor-endpoint-503",
+      "endpoint": "/api/v1/sensors",
+      "status": 503,
+      "payload": { "error": "sensor_storage_unavailable" },
+      "expected_ui": "Sensor status is unavailable",
+      "role": "alert"
+    },
+    {
+      "name": "incident-endpoint-503",
+      "endpoint": "/api/v1/incidents",
+      "status": 503,
+      "payload": { "error": "incidents_unavailable" },
+      "expected_ui": "Incidents are unavailable",
+      "role": "alert"
+    },
+    {
+      "name": "certificate-endpoint-503",
+      "endpoint": "/api/v1/certificates",
+      "status": 503,
+      "payload": { "error": "certificates_unavailable" },
+      "expected_ui": "Certificate status is unavailable",
+      "role": "alert"
+    },
+    {
+      "name": "update-endpoint-503",
+      "endpoint": "/api/v1/updates",
+      "status": 503,
+      "payload": { "error": "updates_unavailable" },
+      "expected_ui": "Update status is unavailable",
+      "role": "alert"
+    },
+    {
+      "name": "malformed-json-payload",
+      "endpoint": "/api/v1/sensors",
+      "status": 200,
+      "raw_body": "{\"corrupted_json\": true,",
+      "expected_ui": "Sensor status is unavailable because the engine response is invalid.",
+      "role": "alert"
+    },
+    {
+      "name": "interrupted-timed-out-request",
+      "endpoint": "/api/v1/sensors",
+      "error_type": "AbortError",
+      "expected_ui": "Sensor status is unavailable. The local engine could not be reached; retrying automatically.",
+      "role": "alert"
+    },
+    {
+      "name": "egress-attempt-blocked",
+      "url": "https://telemetry.external.invalid/report",
+      "expected_action": "denied",
+      "rule": "no egress by default"
+    },
+    {
+      "name": "private-key-leak-forbidden",
+      "sentinels": ["-----BEGIN PRIVATE KEY-----", "-----BEGIN EC PRIVATE KEY-----", "-----BEGIN CERTIFICATE REQUEST-----"],
+      "rule": "no sensitive key material rendered in web shell or public DOM"
+    }
+  ]
+}

@@ -57,7 +57,7 @@ export default function Sensors() {
       <article className="panel"><span className="eyebrow">Dropped events</span><strong>{dropped}</strong><p>Durable spool gaps across listed sensors</p></article>
     </div>
     <section className="panel"><div className="eyebrow">Local C05 snapshot</div><h2>Sensor status</h2>
-      {sensors.length === 0 ? <p>No sensor records are available in local storage.</p> : <div className="sensor-table-wrap"><table className="sensor-table"><thead><tr><th scope="col">Sensor</th><th scope="col">Connection</th><th scope="col">Applied config</th><th scope="col">Dropped events</th><th scope="col">Last event</th></tr></thead><tbody>
+      {sensors.length === 0 ? <p>No sensor records are available in local storage.</p> : <div className="sensor-table-wrap" tabIndex={0} role="region" aria-label="Sensor status table"><table className="sensor-table"><thead><tr><th scope="col">Sensor</th><th scope="col">Connection</th><th scope="col">Applied config</th><th scope="col">Dropped events</th><th scope="col">Last event</th></tr></thead><tbody>
         {sensors.map(sensor => <tr key={sensor.sensor_id}><th scope="row"><code>{sensor.sensor_id}</code></th><td><span className={sensor.offline ? 'state offline' : 'state current'}>{sensor.offline ? 'Offline' : 'Online by recent event'}</span></td><td><span className={'state ' + sensor.config_status}>{sensor.config_status}</span></td><td>{sensor.dropped_event_count}</td><td>{sensor.last_event_at ?? 'No events recorded'}</td></tr>)}
       </tbody></table></div>}
       <p className="muted">Offline is based on the last stored event. It does not confirm a live network connection.</p>

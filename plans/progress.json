@@ -295,10 +295,12 @@
     },
     {
       "id": "C33",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C33.json"
+      ],
+      "source_identity": "sha256:5e49d0e367d3e97fc1c25f375d75ece654936df6b02474d2ca58e37c54d24b6b",
+      "notes": "C33 verified locally: keyboard navigation, table scrolling equivalents, mobile 360px and desktop 1440px ergonomics, failure/outage modes and N-1 data compatibility proven. Delivered tests/fixtures/miragemesh/C33/ (positive, negative, expected-output), docs/evidence/ux.json, tests/web/accessibility-workflow.test.mjs, and tests/browser/full-workflow-accessibility.spec.ts. Verified skip link, tab order, scrollable table regions, responsive 360px fit with no horizontal document overflow, explicit 503 provider outage alerts, non-crashing empty states, and N-1 snapshot parsing without external network egress or credential exposure. 4 contract/negative tests, plan validation, and repo checks passed."
     },
     {
       "id": "C34",
