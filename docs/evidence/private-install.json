@@ -54,6 +54,32 @@
     "result": "passed",
     "checks": "Sensors/Incidents/Certificates read the seeded facts at 360px, triage history is durable, no external request or private material appears, and the same facts hold after restart."
   },
+  "results": {
+    "install": {
+      "method": "staged-tree git clone and npm run setup",
+      "setup_passed": true
+    },
+    "workflow": {
+      "steps_passed": 8,
+      "negative_cases_passed": 6,
+      "accepted_sequences": [1, 2, 3, 5],
+      "acknowledged_sequences": [1, 2, 3, 5],
+      "dropped_sequence": 4,
+      "restore_equivalent": true
+    },
+    "readiness": {
+      "status": "ready",
+      "engineReady": true,
+      "storageReady": true,
+      "providersReady": true,
+      "restart_checked": true,
+      "manifest_and_segment_bytes_unchanged": true
+    },
+    "browser": {
+      "spec": "tests/browser/clone-to-value.spec.ts",
+      "result": "passed"
+    }
+  },
   "commands": [
     {
       "name": "clean-clone-smoke",
