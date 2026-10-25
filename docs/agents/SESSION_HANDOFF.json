@@ -6,7 +6,7 @@
   "implementation_commit": null,
   "verified_on_commit": "601e396446765da158790a5bf3aa3914ec2f390e",
   "verified_on_tree": "dirty working tree; no commit created",
-  "source_identity": "sha256:5e49d0e367d3e97fc1c25f375d75ece654936df6b02474d2ca58e37c54d24b6b",
+  "source_identity": "sha256:de8c7abe9d9223b5715a5470e5b32d72358bde86c2abd7c964691c67df61d677",
   "evidence": "docs/evidence/C33.json",
   "summary": "C33 verifies complete reference workflow accessibility, keyboard and table navigation at 360px and 1440px viewports, provider outage resilience and N-1 data compatibility. Delivered tests/fixtures/miragemesh/C33/ (positive, negative, expected-output), docs/evidence/ux.json, tests/web/accessibility-workflow.test.mjs, and tests/browser/full-workflow-accessibility.spec.ts. Verified skip link, tab order, scrollable table regions, responsive 360px fit with no horizontal document overflow, explicit 503 provider outage alerts, non-crashing empty states, and N-1 snapshot parsing without external network egress or credential exposure. Contract tests, plan validation, and repo checks passed.",
   "hosted_actions": [],

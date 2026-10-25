@@ -22,6 +22,16 @@ test.describe('C33: Full Workflow Accessibility and Responsive Ergonomics', () =
     await page.route('**/api/v1/incidents', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(n1.incident_snapshot_v0) }));
     await page.route('**/api/v1/updates', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(n1.update_snapshot_v0) }));
 
+    // 1. Skip link test on initial root navigation
+    await page.setViewportSize({ width: 360, height: 800 });
+    await page.goto('/');
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    await page.keyboard.press('Tab');
+    const skipLink = page.getByRole('link', { name: 'Skip to content' });
+    await expect(skipLink).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('main#content')).toBeFocused();
+
     const viewports = [
       { width: 360, height: 800, name: 'mobile-360' },
       { width: 1440, height: 900, name: 'desktop-1440' },
@@ -30,21 +40,12 @@ test.describe('C33: Full Workflow Accessibility and Responsive Ergonomics', () =
     for (const vp of viewports) {
       await page.setViewportSize({ width: vp.width, height: vp.height });
 
-      // 1. Workspace route
+      // Workspace route
       await page.goto('/#workspace');
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-
-      // Skip link test
-      await page.keyboard.press('Tab');
-      const skipLink = page.getByRole('link', { name: 'Skip to content' });
-      await expect(skipLink).toBeFocused();
-      await page.keyboard.press('Enter');
-      await expect(page.locator('main#content')).toBeFocused();
-
-      // Verify no horizontal overflow in document
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `horizontal overflow on workspace at ${vp.width}px`).toBe(true);
 
-      // 2. Sensors route
+      // Sensors route
       await page.goto('/#sensors');
       await expect(page.getByRole('heading', { name: 'Sensor health and spool pressure.' })).toBeVisible();
       const sensorTableWrap = page.getByRole('region', { name: 'Sensor status table' });
@@ -53,7 +54,7 @@ test.describe('C33: Full Workflow Accessibility and Responsive Ergonomics', () =
       await expect(sensorTableWrap.getByRole('row', { name: /sensor-n1-01/ })).toContainText('current');
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `horizontal overflow on sensors at ${vp.width}px`).toBe(true);
 
-      // 3. Incidents route
+      // Incidents route
       await page.goto('/#incidents');
       await expect(page.getByRole('heading', { name: 'Incident replay and triage.' })).toBeVisible();
       const incidentTableWrap = page.getByRole('region', { name: 'Incident table' });
@@ -68,7 +69,7 @@ test.describe('C33: Full Workflow Accessibility and Responsive Ergonomics', () =
       await expect(page.getByLabel('Triage reason')).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `horizontal overflow on incidents at ${vp.width}px`).toBe(true);
 
-      // 4. Certificates route
+      // Certificates route
       await page.goto('/#certificates');
       await expect(page.getByRole('heading', { name: 'Certificate rotation and recovery.' })).toBeVisible();
       const certRegion = page.getByRole('region', { name: 'Certificate status' });
@@ -76,7 +77,7 @@ test.describe('C33: Full Workflow Accessibility and Responsive Ergonomics', () =
       await expect(certRegion).toContainText('Current certificate');
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `horizontal overflow on certificates at ${vp.width}px`).toBe(true);
 
-      // 5. Updates route
+      // Updates route
       await page.goto('/#updates');
       await expect(page.getByRole('heading', { name: 'Signed sensor updates.' })).toBeVisible();
       const updateRegion = page.getByRole('region', { name: 'Update verification' });
@@ -85,7 +86,7 @@ test.describe('C33: Full Workflow Accessibility and Responsive Ergonomics', () =
       await expect(updateRegion).toContainText('Verified release 1');
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `horizontal overflow on updates at ${vp.width}px`).toBe(true);
 
-      // 6. Roadmap route
+      // Roadmap route
       await page.goto('/#roadmap');
       await expect(page.getByRole('heading', { name: 'A clear path to release.' })).toBeVisible();
       await page.getByLabel('Search tasks').fill('C33');
@@ -110,7 +111,7 @@ test.describe('C33: Full Workflow Accessibility and Responsive Ergonomics', () =
     await expect(page.getByRole('region', { name: 'Availability' })).toContainText('Engine runtime unavailable');
 
     // 2. Empty states on all domain pages
-    await page.route('**/api/v1/sensors', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ offline_after_seconds: 300, sensors: [] }) }));
+    await page.route('**/api/v1/sensors', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ schema_version: '1', offline_after_seconds: 300, sensors: [] }) }));
     await page.route('**/api/v1/certificates', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ schema_version: '1', observed_at: '2026-10-25T12:00:00Z', issuer_fingerprint: 'a'.repeat(64), sensors: [] }) }));
     await page.route('**/api/v1/incidents', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ schema_version: '1', coverage: { complete: true, incomplete_segments: 0, missing_ordinals: [] }, unprojected_events: 0, rate_limit: 2, window_seconds: 60, incidents: [] }) }));
     await page.route('**/api/v1/updates', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ schema_version: '1', platform: 'linux/amd64', publisher_fingerprint: 'a'.repeat(64), recovery_fingerprint: 'b'.repeat(64), observed_at: '2026-10-25T12:00:00Z', sensors: [] }) }));
