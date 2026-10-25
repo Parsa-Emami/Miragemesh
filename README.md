@@ -4,30 +4,49 @@
 
 [CI source integrity and dependency updates](docs/engineering/CI_SOURCE_INTEGRITY.md)
 
+Open-source local-first web application under [Apache-2.0](LICENSE). MirageMesh delivers a supervised Go engine runtime, an accessible web UI, isolated decoy deception via rootless Podman, durable offline event spooling, and cryptographic credential rotation. All core capabilities operate locally with zero mandatory cloud accounts, paid entitlements, or external egress.
 
-Open-source local-first web application under [Apache-2.0](LICENSE). **Current implementation: web workspace, supervised Go runtime, the C30 local reference-workflow acceptance harness and the C31 complete local artifact; direct browser write ingress remains limited to local incident triage. No artifact has been published.**
+---
+
+## Documentation & Guides
+
+- **[User Guide](docs/release/USER_GUIDE.md)**: Complete step-by-step installation, core reference workflow, limits, backups, and operational instructions for fresh readers.
+- **[Clone to Run](docs/engineering/CLONE_TO_RUN.md)**: Deep dive into workstation prerequisites, source build alternatives, provider verification, and troubleshooting.
+- **[Open-Source Contract](OPEN_SOURCE.md)**: Guarantees regarding source code freedom, offline durability, and zero proprietary lock-in.
+- **[Contributing Guide](CONTRIBUTING.md)**: Workflow for contributors, roadmap execution, coding invariants, and testing standards.
+- **[Security Policy](SECURITY.md)**: Confirmed vulnerability reporting routes, supported versions, and responsible disclosure timeline.
+- **[Third-Party Inventory](THIRD_PARTY_NOTICES.md)**: Pinned dependency licenses and attribution notices.
+- **[Definition of Done](docs/release/DEFINITION_OF_DONE.md)**: Release gates and evidence verification criteria.
+
+---
 
 ## Clone and run the current workspace
 
-Prerequisites: Linux amd64, Git, Node 24.19.0, npm CLI 11.9.0, installed Go (1.21+ for toolchain selection) and rootless Podman 4.9.3. Setup selects Go 1.27.2; use the pinned npm CLI shown in the clone guide.
+Prerequisites: Linux amd64 or WSL2, Git, Node 24.19.0, npm CLI 11.9.0, installed Go (1.21+ for automatic toolchain selection), and rootless Podman 4.9.3. Setup automatically selects Go 1.27.2.
 
 ```sh
 git clone https://github.com/Parsa-Emami/Miragemesh.git
 cd Miragemesh
 npm run setup
 npm start
-# or build and verify the complete local artifact:
+# or build and verify the complete reproducible release package:
 npm run package
 npm run verify:artifact
 ```
 
-Open http://127.0.0.1:4173. The workspace includes a roadmap browser, local bounded JSON structure preview, read-only Sensors and Certificates views, and source-backed incident replay and triage over explicit local engine state. `npm run test:clone` proves the C30 reference workflow end to end in a real clone: enrollment, mTLS batch ingest, signed configuration, offline spool and explicit loss, duplicate delivery, triage, non-destructive retention preview, restart and restore, followed by the real browser workflow. No Python, database, paid/cloud account, public domain or sibling clone is needed. The supervised HTTP runtime exposes health/version and the enabled read surfaces. A separate local command validates v1 HTTP-event documents without ingesting or storing them. See [the event contract](contracts/README.md). [Clone guide](docs/engineering/CLONE_TO_RUN.md).
+Open http://127.0.0.1:4173. The workspace includes a roadmap browser, local bounded JSON structure preview, read-only Sensors and Certificates views, and source-backed incident replay and triage over explicit local engine state. `npm run test:clone` proves the reference workflow end-to-end in a real clean clone: enrollment, mTLS batch ingest, signed configuration, offline spool, explicit loss accounting, duplicate delivery, triage, non-destructive retention preview, restart, and restore, followed by the real browser workflow.
+
+No Python, database service, paid/cloud account, public domain, or sibling clone is required. The supervised HTTP runtime exposes health/version and the enabled read surfaces. A separate local command validates v1 HTTP-event documents without ingesting or storing them. See [the event contract](contracts/README.md).
+
+---
 
 ## Full product endpoint
 
 Enroll sensor -> apply signed config -> isolated decoy event -> disconnect -> spool -> reconnect with duplicate ACK test -> triage and retention gap check.
 
 [C30](plans/commits/C30.md) proves the first locally usable supported product from a clean clone, including negative cases, restart and restore. [C31](docs/release/ARTIFACTS.md) packages that product with the real engine, web build, offline resources, source archive, SBOM, notices, checksums and provenance. [C40](plans/commits/C40.md) remains the complete published OSS v1 gate. [Runtime resources](ops/runtime-requirements.json).
+
+---
 
 ## Implement the next commit
 

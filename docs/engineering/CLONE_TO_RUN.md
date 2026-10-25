@@ -1,5 +1,7 @@
 # MirageMesh: clone to run
 
+For end-user workflows, operational quotas, and step-by-step incident triage, see the comprehensive [User Guide](../release/USER_GUIDE.md).
+
 ## Runnable today
 
 Use Linux amd64 with Git, Node 24.19.0, npm CLI 11.9.0, an installed Go command (1.21+ for toolchain selection) and rootless Podman 4.9.3 (Ubuntu 24.04 reference package 4.9.3+ds1-1ubuntu0.2), then:
@@ -14,6 +16,23 @@ npx --yes --package=npm@11.9.0 --call 'npm start'
 Open http://127.0.0.1:4173. Setup checks Go and rootless Podman, installs the committed web lockfile with lifecycle scripts disabled, and builds the web and Go runtime. The official Go toolchain mechanism selects/downloads and verifies Go 1.27.2 without replacing the system Go. No database or cloud account is required. The workspace previews JSON locally and browses the roadmap. The Sensors page can read a durable C05 snapshot when the engine starts with explicit storage quotas and C10 verifier policy; otherwise it reports that local status is unavailable. See `docs/architecture/SENSOR_STATUS.md` for all required `npm start` options and the raw public-key file format. The separate local --validate-event command validates a v1 event without ingesting or storing it (see contracts/README.md). The Incidents page supports source-backed replay and durable local triage when explicit existing-store, segment and rate-policy options are supplied; see `docs/architecture/INCIDENT_REPLAY.md`. The full reference workflow is proved from a clone by `npm run test:clone`; `npm start` alone does not create sensor state, so the domain pages stay unavailable until the engine is launched with explicit local state options.
 
 `npm run setup -- --check` shows preparation without changes. `--skip-install` builds using already installed dependencies. `npm run doctor` reports tool/provider versions, built runtime version and web/core state; Go resolution may require a download if its cache is missing. `npm run release:check` deliberately exits 2 until full evidence is ready. Ctrl+C stops both web and the owned engine process. Ports can be selected with `npm start -- --port 4301` when running multiple projects.
+
+## Source build alternative
+
+A fresh operator can build and verify the complete distribution entirely from source without pre-compiled artifacts:
+
+```sh
+# 1. Clean build of web frontend and Go runtime:
+npm run build
+
+# 2. Package into reproducible distribution archives:
+npm run package
+
+# 3. Verify artifact checksums, SBOM, and provenance:
+npm run verify:artifact
+```
+
+This generates `dist/release/` containing the compiled binary, web assets, source tarball, SBOM, and `SHA256SUMS.txt`. All compilation occurs offline once dependencies are fetched into local caches.
 
 ## Full-product contract to implement
 

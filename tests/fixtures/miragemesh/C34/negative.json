@@ -1,0 +1,84 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C34 negative catalog. Verifies inert script/HTML sentinels, explicit outage/error states at 360px, network egress denial, and security policy boundaries.",
+  "cases": [
+    {
+      "name": "inert-script-sentinel",
+      "category": "input-sanitization",
+      "sentinel": "<script>alert('c34-xss-sentinel')</script>",
+      "expected_handling": "Rendered as plain inert text without script execution or DOM element insertion",
+      "keyboard_action_possible": true,
+      "table_action_possible": true
+    },
+    {
+      "name": "inert-html-img-onerror-sentinel",
+      "category": "input-sanitization",
+      "sentinel": "\"><img src=x onerror=\"console.error('sentinel-executed')\">",
+      "expected_handling": "Escaped or neutralized into text node; no onerror event triggers",
+      "keyboard_action_possible": true,
+      "table_action_possible": true
+    },
+    {
+      "name": "inert-javascript-protocol-sentinel",
+      "category": "input-sanitization",
+      "sentinel": "javascript:window.__c34_pwned=true",
+      "expected_handling": "Disallowed as active link target or sanitized to inert string",
+      "keyboard_action_possible": true,
+      "table_action_possible": true
+    },
+    {
+      "name": "explicit-empty-state-360px",
+      "category": "responsive-failure-handling",
+      "viewport": { "width": 360, "height": 800 },
+      "condition": "Zero sensor records in local state",
+      "expected_ui_presentation": "Explicit message: 'No sensor records are available in local storage.' with zero horizontal overflow",
+      "horizontal_scroll_allowed": false
+    },
+    {
+      "name": "explicit-invalid-configuration-360px",
+      "category": "responsive-failure-handling",
+      "viewport": { "width": 360, "height": 800 },
+      "condition": "Invalid signature or schema on desired configuration",
+      "expected_ui_presentation": "Explicit non-crashing error banner/alert detailing signature verification failure",
+      "horizontal_scroll_allowed": false
+    },
+    {
+      "name": "explicit-interrupted-engine-connection-360px",
+      "category": "responsive-failure-handling",
+      "viewport": { "width": 360, "height": 800 },
+      "condition": "Engine HTTP process unexpectedly terminated",
+      "expected_ui_presentation": "Explicit reconnection warning alert with non-crashing recovery retry",
+      "horizontal_scroll_allowed": false
+    },
+    {
+      "name": "explicit-unavailable-provider-360px",
+      "category": "responsive-failure-handling",
+      "viewport": { "width": 360, "height": 800 },
+      "condition": "Rootless Podman daemon unavailable or cgroup delegation missing",
+      "expected_ui_presentation": "Explicit typed 503 provider outage warning region without misleading success",
+      "horizontal_scroll_allowed": false
+    },
+    {
+      "name": "denied-default-egress",
+      "category": "network-boundary",
+      "condition": "Attempted outbound HTTP/DNS connection during core workflow",
+      "expected_handling": "Denied or disabled by default; engine and web bind strictly to loopback",
+      "external_calls_permitted": false
+    },
+    {
+      "name": "prohibited-public-vulnerability-issue",
+      "category": "security-policy",
+      "condition": "Vulnerability report attempted via public issue",
+      "expected_handling": "Issue template / policy explicitly directs reporter to private advisory route",
+      "rejection_message": "Do not open public issues for security vulnerabilities. Use GitHub Private Vulnerability Reporting or security@miragemesh.local."
+    },
+    {
+      "name": "rejected-mandatory-cloud-requirement",
+      "category": "open-source-contract",
+      "condition": "Feature or workflow requiring proprietary cloud authentication",
+      "expected_handling": "Hard failure / architectural violation; core workflow must operate standalone offline",
+      "cloud_account_required": false
+    }
+  ]
+}

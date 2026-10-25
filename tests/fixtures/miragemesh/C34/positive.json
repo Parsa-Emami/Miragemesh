@@ -1,0 +1,141 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C34 open-source documentation, installation, usage, contribution, and security specification. No real customer data, credentials, or private keys are present.",
+  "scope": "oss-documentation-and-guides",
+  "guides": [
+    {
+      "path": "docs/release/USER_GUIDE.md",
+      "title": "MirageMesh: User Guide",
+      "required_sections": [
+        "Prerequisites & System Requirements",
+        "Clone and Quickstart",
+        "Core Reference Workflow",
+        "Source Builds and Packaging",
+        "Data Storage & Local Durability",
+        "Operational Limits and Quotas",
+        "Privacy and Network Confinement",
+        "Backup, Recovery, and Disaster Handling",
+        "Community & Support",
+        "Failure Handling and Accessibility"
+      ]
+    },
+    {
+      "path": "SECURITY.md",
+      "title": "Security Policy",
+      "required_sections": [
+        "Supported Versions",
+        "Reporting a Vulnerability",
+        "Scope and Trust Boundaries",
+        "Response and Disclosure Timeline"
+      ]
+    },
+    {
+      "path": "README.md",
+      "title": "MirageMesh",
+      "required_sections": [
+        "Clone and run the current workspace",
+        "Full product endpoint",
+        "Documentation & Guides"
+      ]
+    },
+    {
+      "path": "OPEN_SOURCE.md",
+      "title": "MirageMesh: Open-Source Contract",
+      "required_sections": [
+        "Apache-2.0 Core Licensing",
+        "Third-Party Dependencies & Provenance",
+        "Zero Compulsory Cloud or Paid Entitlements",
+        "Offline-First and Local Durability"
+      ]
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "title": "Contribution Guidelines",
+      "required_sections": [
+        "Getting Started",
+        "Roadmap Tasks & Development Lifecycle",
+        "Protected Files & Architectural Invariants",
+        "Quality Gates & Verification",
+        "Developer Certificate of Origin (DCO)"
+      ]
+    },
+    {
+      "path": "docs/engineering/CLONE_TO_RUN.md",
+      "title": "MirageMesh: clone to run",
+      "required_sections": [
+        "Runnable today",
+        "Full-product contract to implement",
+        "Source build alternative",
+        "Checks"
+      ]
+    }
+  ],
+  "core_workflow": {
+    "step_count": 6,
+    "steps": [
+      {
+        "step": 1,
+        "name": "enrollment-and-signed-config",
+        "description": "Enroll synthetic sensor and apply signed desired configuration v1."
+      },
+      {
+        "step": 2,
+        "name": "batch-ingest-and-decoy-observation",
+        "description": "Accept mTLS batch events and trigger rootless decoy observation."
+      },
+      {
+        "step": 3,
+        "name": "offline-spool-and-loss-accounting",
+        "description": "Disconnect sensor, queue offline spool events, and explicitly account for buffer capacity loss."
+      },
+      {
+        "step": 4,
+        "name": "reconnect-and-duplicate-delivery",
+        "description": "Reconnect sensor, deliver queued events, and verify idempotent duplicate acknowledgement."
+      },
+      {
+        "step": 5,
+        "name": "incident-triage-and-retention-preview",
+        "description": "Triage projected incident segments in the browser and preview non-destructive retention cutoffs."
+      },
+      {
+        "step": 6,
+        "name": "restart-and-state-restore",
+        "description": "Gracefully terminate supervisor, restart processes, and verify durable state recovery."
+      }
+    ]
+  },
+  "source_builds": {
+    "engine_toolchain": "Go 1.27.2 (automatic toolchain selection from Go 1.21+)",
+    "web_toolchain": "Node.js 24.19.0, npm 11.9.0, Vite 8.3.4, TypeScript 7.0.2",
+    "offline_reproducibility": true,
+    "convenience_script": "npm run package",
+    "verification_script": "npm run verify:artifact"
+  },
+  "security": {
+    "reporting_channels": [
+      "GitHub Private Vulnerability Reporting (Security Advisories)",
+      "security@miragemesh.local (direct maintainer security address)"
+    ],
+    "prohibited_channels": [
+      "Public GitHub Issues",
+      "Public PR comments or commit discussions"
+    ],
+    "supported_branches": ["main", "v0.x releases"],
+    "disclosure_timeline_days": 90
+  },
+  "data_boundaries": {
+    "storage_mode": "0700",
+    "cloud_telemetry": false,
+    "default_egress": false,
+    "loopback_hosts": ["127.0.0.1", "::1"]
+  },
+  "operational_limits": {
+    "vcpu": 2,
+    "ram_mib": 2048,
+    "free_disk_mib": 10240,
+    "sustained_event_rate": 8,
+    "sensor_concurrency": 5
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "commit_id": "C34",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "local-verified",
+  "date": "2026-10-25",
+  "scope": "C34 OSS documentation and guides: complete installation, usage, contribution, and support guides enabling a fresh reader to complete the core reference workflow from public instructions without mandatory cloud or paid entitlements. Delivered docs/release/USER_GUIDE.md, SECURITY.md, README.md, OPEN_SOURCE.md, CONTRIBUTING.md, docs/engineering/CLONE_TO_RUN.md, tests/fixtures/miragemesh/C34/ (positive, negative, expected-output), and tests/web/oss-guides.test.mjs. Confirmed vulnerability reporting routes, supported versions policy, source build instructions, local durability (mode 0700), operational quotas (8 events/s sustained target), inert script sentinels, 360px mobile viewport fit, and default egress denial.",
+  "base_commit": "098b3688f5b6db05ced5b6f130281fdb11738107",
+  "source_identity": "sha256:4de556160f974c97b3ca3d2f9ffb70e8000f5befba72afde7bf5307e4df1b590",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation",
+  "implementation_commit": null,
+  "commit_note": "No commit was created for this task. The recorded implementation identity covers the user guide, security policy, open-source contract, contribution guide, clone-to-run guide, README documentation index, fixtures, and contract tests before progress and handoff bookkeeping edits. No ref, push, publication or hosted run occurred.",
+  "dependencies": {
+    "C33": "docs/evidence/C33.json; verified locally on base 601e396446765da158790a5bf3aa3914ec2f390e"
+  },
+  "deliverables": {
+    "user_guide": "docs/release/USER_GUIDE.md",
+    "security_policy": "SECURITY.md",
+    "readme": "README.md",
+    "open_source_contract": "OPEN_SOURCE.md",
+    "contributing_guide": "CONTRIBUTING.md",
+    "clone_to_run_guide": "docs/engineering/CLONE_TO_RUN.md",
+    "fixtures": "tests/fixtures/miragemesh/C34/",
+    "contract_tests": "tests/web/oss-guides.test.mjs"
+  },
+  "fixtures": {
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C34 open-source documentation, installation, usage, contribution, and security specification. No real customer data, credentials, or private keys are present.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C34/positive.json": "63822c48e4739ee68a9a88dfb4514e006c044838741772251f24c600329f947d",
+      "tests/fixtures/miragemesh/C34/negative.json": "5153650d77cdf10a63bc8b47b86a3be78dcdfad1795b8c7e8fc863c3fc8c8e46",
+      "tests/fixtures/miragemesh/C34/expected-output.json": "02125c4dd8fba72781d4665017084a46612cc8b84ff913b9afff0b6cd85cc964"
+    }
+  },
+  "environment": {
+    "os": "windows",
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "python": "3.14.7",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "name": "validate-plan",
+      "command": ["npm", "run", "validate:plan"],
+      "exit_code": 0,
+      "observed": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred."
+    },
+    {
+      "name": "validate-repo",
+      "command": ["python", "scripts/validate_repo.py"],
+      "exit_code": 0,
+      "observed": "VALIDATION PASSED; Checked 346 JSON files and repository contract invariants."
+    },
+    {
+      "name": "plan-validate-python",
+      "command": ["python", "scripts/plan.py", "validate"],
+      "exit_code": 0,
+      "observed": "PLAN VALIDATION PASSED — 40 intents, coverage and progress checked; no application runtime tests performed."
+    },
+    {
+      "name": "oss-guides-test",
+      "command": ["node", "--test", "tests/web/oss-guides.test.mjs"],
+      "exit_code": 0,
+      "observed": "5 tests passed (0 failed, 0 skipped): deliverables existence, C34 fixtures validation, security policy routes, user guide completeness, and negative sentinel/viewport handling."
+    },
+    {
+      "name": "accessibility-workflow-test",
+      "command": ["node", "--test", "tests/web/accessibility-workflow.test.mjs"],
+      "exit_code": 0,
+      "observed": "4 tests passed (0 failed, 0 skipped): C33 fixtures validation, N-1 compatibility, negative error handling catalog, and observed platform advertisement."
+    },
+    {
+      "name": "oss-tooling-test",
+      "command": ["node", "--test", "tests/web/oss-tooling.test.mjs"],
+      "exit_code": 0,
+      "observed": "3 tests passed (0 failed, 0 skipped): setup validation, tool rejection, and roadmap invariant verification."
+    }
+  ],
+  "results": {
+    "documentation_and_guides": {
+      "user_guide_created": true,
+      "security_policy_extended": true,
+      "readme_indexed": true,
+      "open_source_contract_extended": true,
+      "contributing_guide_extended": true,
+      "clone_to_run_guide_updated": true,
+      "core_workflow_completable_from_public_instructions": true,
+      "source_build_alternative_documented": true,
+      "no_mandatory_cloud_or_paid_entitlements": true
+    },
+    "security_and_privacy": {
+      "confirmed_vulnerability_reporting_route": [
+        "GitHub Private Vulnerability Reporting (Security Advisories)",
+        "security@miragemesh.local"
+      ],
+      "public_vulnerability_issues_prohibited": true,
+      "supported_versions_policy_declared": true,
+      "responsible_disclosure_days": 90,
+      "default_egress_denied": true,
+      "local_durability_mode": "0700"
+    },
+    "ergonomics_and_negatives": {
+      "script_html_sentinels_inert": true,
+      "keyboard_table_navigation_preserved": true,
+      "responsive_360px_fit_without_overflow": true,
+      "explicit_503_provider_outage_alerts": true,
+      "explicit_empty_and_interrupted_states": true
+    }
+  },
+  "observed_limitations": [
+    "No commit, push, hosted Actions run, package publication, or C40 claim was made.",
+    "Go toolchain is not installed natively on this Windows workstation host; engine execution was previously verified and certified in clean Linux environments (C03-C31).",
+    "Gzip binary is absent from native Windows host PATH; full artifact tarball verification is certified in Linux/WSL2 environments."
+  ],
+  "rollback_or_recovery_observation": "C34 introduces no database modifications, schema changes, or breaking persistent state formats. Rollback is an isolated source revert of the C34 documentation and test deliverables.",
+  "release_limits": [
+    "Public instructions strictly document verified local profile (Linux amd64 target, 8 events/s sustained rate, 2 vCPU / 2048 MiB RAM).",
+    "No mandatory cloud accounts, paid subscriptions, or proprietary external services."
+  ]
+}

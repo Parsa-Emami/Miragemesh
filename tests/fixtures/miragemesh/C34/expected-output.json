@@ -1,0 +1,29 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C34 expected outcome declarations for open-source documentation, guides, security routes, and safety invariants.",
+  "scope": "oss-documentation-and-guides",
+  "documentation_completeness": {
+    "user_guide_present": true,
+    "security_policy_present": true,
+    "readme_updated": true,
+    "open_source_contract_present": true,
+    "contributing_guide_present": true,
+    "clone_to_run_updated": true
+  },
+  "reader_contract": {
+    "fresh_reader_can_complete_core_task": true,
+    "no_mandatory_cloud": true,
+    "no_paid_entitlements": true,
+    "source_build_documented": true,
+    "licenses_inventoried": true,
+    "confirmed_vulnerability_reporting_route": true
+  },
+  "safety_and_ergonomics": {
+    "script_sentinels_inert": true,
+    "keyboard_actions_functional": true,
+    "responsive_360px_fit": true,
+    "explicit_error_and_outage_states": true,
+    "default_egress_denied": true
+  }
+}
