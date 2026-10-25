@@ -2,7 +2,7 @@ import test, { before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { generateKeyPairSync } from 'node:crypto';
-import { cp, lstat, mkdir, mkdtemp, readFile, readdir, rename, rm, stat, writeFile } from 'node:fs/promises';
+import { chmod, cp, lstat, mkdir, mkdtemp, readFile, readdir, rename, rm, stat, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -117,7 +117,27 @@ async function reversion(source, destination, version) {
   provenance.source.archive.path = newArchive;
   provenance.source.archive.prefix = provenance.source.archive.prefix.split(oldVersion).join(version);
   provenance.sbom.sha256 = await sha256File(sbomPath);
-  provenance.notes = `${provenance.notes ?? ''} Synthetic C35 upgrade fixture; not a published release.`.trim();
+  // The engine version is a constant in the reviewed source (0.0.1), so a
+  // synthetic newer release cannot contain a real engine reporting the signed
+  // version. The upgrade fixture therefore carries a fixture engine that
+  // answers --version with exactly the signed release version, keeping the
+  // installer's real engine check exercised. Every v1 install/rollback path
+  // still runs the real engine binary.
+  const engine = join(destination, 'dist/engine/miragemesh');
+  const engineStub = [
+    '#!/bin/sh',
+    '# Synthetic C35 fixture engine; reports only the signed release version.',
+    'if [ "$1" = "--version" ]; then',
+    `  printf '{"status":"ok","scope":"engine-runtime","version":"${version}","toolchain":"fixture","coreReady":false}\n'`,
+    '  exit 0',
+    'fi',
+    'exit 0',
+    '',
+  ].join('\n');
+  await writeFile(engine, engineStub);
+  await chmod(engine, 0o755);
+  provenance.contents.engine_sha256 = await sha256File(engine);
+  provenance.notes = `${provenance.notes ?? ''} Synthetic C35 upgrade fixture with a fixture engine; not a published release.`.trim();
   await writeFile(provenancePath, JSON.stringify(provenance, null, 2) + '\n');
   await writeFile(nestedPath, JSON.stringify(provenance, null, 2) + '\n');
   const files = (await listFiles(destination)).filter(name => name !== 'SHA256SUMS.txt').sort();
@@ -200,6 +220,28 @@ test('C35 fixtures describe licensed positive, negative and expected outcomes', 
   assert.equal(Number(supported.schema_version), positive.data.supported_schema);
   assert.equal(Number(future.schema_version), positive.data.future_schema);
   assert.ok(Number(future.schema_version) > Number(supported.schema_version));
+});
+
+test('C35 binds the real engine to the shipped artifact and a reporting fixture engine to the synthetic upgrade', async () => {
+  const realEngine = join(artifact, 'dist/engine/miragemesh');
+  const realProvenance = JSON.parse(await readFile(join(artifact, 'provenance.json'), 'utf8'));
+  assert.equal(await sha256File(realEngine), realProvenance.contents.engine_sha256);
+  assert.equal((await readFile(realEngine)).subarray(0, 4).toString('latin1'), '\x7fELF', 'the shipped engine is the real Linux binary');
+
+  const fixtureEngine = join(upgradeArtifact, 'dist/engine/miragemesh');
+  const fixtureProvenance = JSON.parse(await readFile(join(upgradeArtifact, 'provenance.json'), 'utf8'));
+  assert.equal(positive.artifact.upgrade_engine, 'fixture');
+  assert.equal(await sha256File(fixtureEngine), fixtureProvenance.contents.engine_sha256);
+  const source = await readFile(fixtureEngine, 'utf8');
+  assert.ok(source.startsWith('#!/bin/sh'), 'the synthetic upgrade engine is a declared fixture script');
+  assert.ok(source.includes(positive.artifact.upgrade_version));
+  const executed = spawnSync('sh', [fixtureEngine, '--version'], { encoding: 'utf8', timeout: 10000 });
+  if (!executed.error) {
+    assert.equal(executed.status, 0, executed.stderr);
+    const report = JSON.parse(executed.stdout);
+    assert.equal(report.status, 'ok');
+    assert.equal(report.version, positive.artifact.upgrade_version);
+  }
 });
 
 test('C35 verifies the real artifact against an independently trusted key', async () => {

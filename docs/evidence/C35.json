@@ -7,10 +7,10 @@
   "date": "2026-10-25",
   "scope": "C35 signed release verification and data-safe upgrades: detached Ed25519 attestations over an already packaged C31 artifact, verification against an independently supplied trusted key, and install/upgrade/rollback that never discard newer accepted data. Delivered scripts/verify-release.mjs, scripts/sign-release.mjs, scripts/install-release.mjs, tests/release/upgrade-recovery.mjs, tests/fixtures/miragemesh/C35/, docs/evidence/release-verification.json and the signed-release documentation in docs/release/ARTIFACTS.md and docs/release/USER_GUIDE.md. Verified on a real packaged artifact with ephemeral test keys: a changed artifact byte, a changed manifest byte, missing evidence, an untrusted or malformed key and an expired manifest all fail closed; a stale revision and a replayed downgrade cannot replace the accepted authority; install, upgrade and rollback leave the data directory byte-identical and refuse a store schema newer than the signed target. The source build remains the documented primary path with no release key.",
   "base_commit": "49e1659a3c557ae3cce7e2a1a2efe16deee2ff20",
-  "source_identity": "sha256:8952c6043ca4dad7e18a2c94911ad22bbda57245a40a356d97e913edefad4174",
+  "source_identity": "sha256:f803dff214204db26183dbf4f17e4fa865831a403c47782f6d76f8b085f062af",
   "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation; reproduced here without Python because the host has no Python interpreter",
   "implementation_commit": null,
-  "commit_note": "No commit was created for this task. The recorded identity covers all C35 source, fixtures, tests, documentation and tooling edits before progress and handoff bookkeeping. The same identity sha256:8952c604... is recorded by the packaged artifact provenance, proving the tested artifact was assembled from exactly this source tree. No ref, push, publication or hosted run occurred.",
+  "commit_note": "No commit was created by the agent. The user pushed the implementation; this identity is recomputed after the CI regression fix and covers all C35 source, fixtures, tests, documentation and tooling edits before progress and handoff bookkeeping. The packaged artifact provenance records this same identity, proving the tested artifact was assembled from exactly this source tree. No ref, push, publication or hosted run was performed by the agent.",
   "dependencies": {
     "C34": "docs/evidence/C34.json; verified locally on base 098b3688f5b6db05ced5b6f130281fdb11738107",
     "C31": "docs/evidence/C31.json; the attestation binds an artifact produced by the existing packaging path without modifying its tree"
@@ -32,7 +32,7 @@
     "license": "Apache-2.0",
     "provenance": "Repository-authored synthetic C35 release-verification contract. No production private key, published signature, customer data or real deployment is present. Ed25519 keys are generated per test run and removed with the temporary directory.",
     "sha256": {
-      "tests/fixtures/miragemesh/C35/positive.json": "36f0dbd45cb3dbbdcf1f8a644d549721cf46aebb6e71679b1f5183089ee6cead",
+      "tests/fixtures/miragemesh/C35/positive.json": "6d3df24c5dd446de0d4b5f5eab5e87002aa5bc9e6e8cc1e568b9655cbaecab4b",
       "tests/fixtures/miragemesh/C35/negative.json": "c99733756cbc9cc4f5e7bacf85474b34ed6adcd8b4f60888c17ed6452089b3eb",
       "tests/fixtures/miragemesh/C35/expected-output.json": "c7ec664b2a19b3e06ecab5fb893478e77ce2c01247e4e04f7c1c5592c91df1d6",
       "tests/fixtures/miragemesh/C35/store-v1/manifest.json": "6ce2857404d998f6ce4a38944406e37a497db1fc99dc50051aee6f53babd7569",
@@ -53,70 +53,123 @@
   "commands": [
     {
       "name": "validate-plan",
-      "command": ["npm", "run", "validate:plan"],
+      "command": [
+        "npm",
+        "run",
+        "validate:plan"
+      ],
       "exit_code": 0,
       "observed": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred."
     },
     {
       "name": "syntax-check",
-      "command": ["node", "--check", "scripts/verify-release.mjs", "scripts/sign-release.mjs", "scripts/install-release.mjs"],
+      "command": [
+        "node",
+        "--check",
+        "scripts/verify-release.mjs",
+        "scripts/sign-release.mjs",
+        "scripts/install-release.mjs"
+      ],
       "exit_code": 0,
       "observed": "All three C35 scripts parse."
     },
     {
       "name": "c35-release-suite",
-      "command": ["node", "--test", "tests/release/upgrade-recovery.mjs"],
+      "command": [
+        "node",
+        "--test",
+        "tests/release/upgrade-recovery.mjs"
+      ],
       "exit_code": 0,
-      "observed": "11 tests, 11 pass, 0 fail, 0 skipped; duration 6.2 s. Covers real artifact signing/verification, modified bytes, modified manifest, untrusted and malformed keys, expired manifest, missing SBOM evidence, stale revision, replay, install/upgrade/rollback, tampered installed tree and foreign-platform refusal."
+      "observed": "12 tests, 12 pass, 0 fail, 0 skipped; duration 6.4 s. Covers the real engine binding, the synthetic upgrade fixture engine, real artifact signing/verification, modified bytes, modified manifest, untrusted and malformed keys, expired manifest, missing SBOM evidence, stale revision, replay, install/upgrade/rollback, tampered installed tree and foreign-platform refusal."
     },
     {
       "name": "typecheck",
-      "command": ["npm", "run", "typecheck"],
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
       "exit_code": 0,
       "observed": "tsc -p tsconfig.json completed without errors."
     },
     {
       "name": "web-build",
-      "command": ["npx", "vite", "build", "--config", "apps/web/vite.config.ts"],
+      "command": [
+        "npx",
+        "vite",
+        "build",
+        "--config",
+        "apps/web/vite.config.ts"
+      ],
       "exit_code": 0,
       "observed": "26 modules transformed; dist/web/index.html and fingerprinted CSS/JS assets emitted."
     },
     {
       "name": "engine-portability",
-      "command": ["go", "vet", "./..."],
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
       "exit_code": 0,
       "observed": "GOOS=linux go vet ./... passed; gofmt -l cmd internal tests produced no output; GOOS=linux GOARCH=amd64 go build -trimpath ./cmd/miragemesh passed. C35 changes no Go source."
     },
     {
       "name": "package",
-      "command": ["node", "scripts/package-web.mjs", "--no-build"],
+      "command": [
+        "node",
+        "scripts/package-web.mjs",
+        "--no-build"
+      ],
       "exit_code": 0,
       "observed": "{\"status\":\"ok\",\"artifact\":\"miragemesh-0.0.1-linux-amd64\",\"version\":\"0.0.1\",\"files\":60,\"source_identity\":\"sha256:8952c6043ca4dad7e18a2c94911ad22bbda57245a40a356d97e913edefad4174\",\"dirty\":true,\"verification\":{\"passed\":true}} — the GNU tar drive-letter portability fix lists the source archive correctly on Windows."
     },
     {
       "name": "verify-artifact",
-      "command": ["node", "scripts/verify-artifact.mjs", "dist/release"],
+      "command": [
+        "node",
+        "scripts/verify-artifact.mjs",
+        "dist/release"
+      ],
       "exit_code": 0,
       "observed": "passed true, 60 files, 59 checksum entries, source_identity sha256:8952c604..., clean_source false (dirty working tree reported truthfully)."
     },
     {
       "name": "checksum-manifest",
-      "command": ["sha256sum", "-c", "SHA256SUMS.txt"],
+      "command": [
+        "sha256sum",
+        "-c",
+        "SHA256SUMS.txt"
+      ],
       "exit_code": 0,
       "observed": "All 59 listed artifact files reported OK from dist/release."
     },
     {
       "name": "signed-end-to-end",
-      "command": ["node", "scripts/sign-release.mjs", "&&", "node", "scripts/verify-release.mjs", "&&", "node", "scripts/install-release.mjs", "install"],
+      "command": [
+        "node",
+        "scripts/sign-release.mjs",
+        "&&",
+        "node",
+        "scripts/verify-release.mjs",
+        "&&",
+        "node",
+        "scripts/install-release.mjs",
+        "install"
+      ],
       "exit_code": 0,
-      "observed": "sign_exit 0 (revision 1, fingerprint sha256:6659bfcc4ef71403d553ce9a33d976d22d17fbb1ca510bcc461f9bd06e71b63b, manifest sha256 1875fa7515b70d99a5dc60fc1376d7e50dfd763a0d4d32dca9ff537409b089bb); verify_exit 0 (60 files, 59 checksums, only the source_dirty warning, store_schema 1); install_exit 0 (status installed, data_unchanged true, engine_check skipped-foreign-platform); the store manifest bytes were identical before and after install."
+      "observed": "sign_exit 0 (revision 1, fingerprint sha256:11e8763d0170432554428d0d54cf31302c4954ac80aa36b2fea5857f4a4e6e7c, manifest sha256 19044d5988b0ea640608a449188630479e05a899027f94096d5d9707642b8784); verify_exit 0 (60 files, 59 checksums, only the source_dirty warning, store_schema 1, source_identity sha256:f803dff214204db26183dbf4f17e4fa865831a403c47782f6d76f8b085f062af); install_exit 0 (status installed, data_unchanged true, engine_check skipped-foreign-platform); the store manifest bytes were identical before and after install."
     }
   ],
   "results": {
     "trust_boundary": {
       "signature": "detached Ed25519 over the exact release.json bytes",
       "trusted_key_source": "supplied independently via --trusted-key; never read from the artifact",
-      "accepted_key_formats": ["raw 32-byte public key", "SPKI PEM Ed25519"],
+      "accepted_key_formats": [
+        "raw 32-byte public key",
+        "SPKI PEM Ed25519"
+      ],
       "fingerprint": "sha256 over the raw 32-byte public key",
       "rejected_before_install": [
         "modified artifact byte (checksum_mismatch)",
@@ -127,7 +180,8 @@
         "expired manifest (manifest_expired)",
         "unknown manifest or signature fields (manifest_invalid, signature_document_invalid)",
         "unsafe checksum path or incomplete coverage (unsafe_checksum_path, checksum_coverage)"
-      ]
+      ],
+      "fixture_engine": "The engine version is a constant in the reviewed source, so the synthetic 0.0.2 upgrade release carries a declared fixture engine that answers --version with the signed 0.0.2 value; its provenance digest is recomputed and the real engine binary stays bound to the 0.0.1 artifact and every install/rollback of it. Declared in tests/fixtures/miragemesh/C35/positive.json artifact.upgrade_engine."
     },
     "authority": {
       "monotonic_revision": true,
@@ -150,14 +204,31 @@
     },
     "source_build_alternative": {
       "release_key_required": false,
-      "documented_commands": ["npm run setup", "npm start", "npm run package", "npm run verify:artifact"],
+      "documented_commands": [
+        "npm run setup",
+        "npm start",
+        "npm run package",
+        "npm run verify:artifact"
+      ],
       "unchanged_packaging_path": true
     },
     "no_network": {
-      "verifier_imports": ["node:crypto", "node:fs/promises", "node:path", "node:url"],
-      "installer_imports": ["node:child_process for the local engine check", "node:crypto", "node:fs/promises", "node:path", "node:url"],
+      "verifier_imports": [
+        "node:crypto",
+        "node:fs/promises",
+        "node:path",
+        "node:url"
+      ],
+      "installer_imports": [
+        "node:child_process for the local engine check",
+        "node:crypto",
+        "node:fs/promises",
+        "node:path",
+        "node:url"
+      ],
       "external_requests_made": false
-    }
+    },
+    "fixture_engine_note": "Fixes the hosted web-foundation failure: on a matching linux-amd64 host the installer runs the real engine check, and the synthetic upgrade artifact previously shipped the real 0.0.1 engine while claiming 0.0.2, so the upgrade path failed with engine_check_failed and the two following rollback tests failed with no_previous_release."
   },
   "observed_limitations": [
     "Host is windows/amd64 while the packaged artifact platform is linux-amd64. Install/upgrade/rollback file and data-safety semantics were exercised end to end, but the installed Linux engine --version check was skipped as foreign-platform. A native Linux run of the same suite remains unrecorded.",

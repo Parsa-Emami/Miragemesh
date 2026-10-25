@@ -11,7 +11,9 @@
     "platform": "linux-amd64",
     "version": "0.0.1",
     "upgrade_name": "miragemesh-0.0.2-linux-amd64",
-    "upgrade_version": "0.0.2"
+    "upgrade_version": "0.0.2",
+    "upgrade_engine": "fixture",
+    "upgrade_engine_note": "The engine version is a constant in the reviewed source, so the synthetic 0.0.2 release carries a declared fixture engine that answers --version with the signed 0.0.2 value. The real engine binary stays bound to the 0.0.1 artifact and every install/rollback of it."
   },
   "revisions": {
     "initial": 1,

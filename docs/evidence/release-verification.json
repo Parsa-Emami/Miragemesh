@@ -9,7 +9,10 @@
     "algorithm": "ed25519",
     "signature_scope": "exact release.json bytes",
     "key_delivery": "out-of-band",
-    "key_formats": ["raw-32-byte-public-key", "spki-pem"],
+    "key_formats": [
+      "raw-32-byte-public-key",
+      "spki-pem"
+    ],
     "fingerprint": "sha256 over the raw 32-byte public key",
     "fingerprint_format": "sha256:<64 lowercase hex>",
     "private_key_in_repository": false,
@@ -33,10 +36,25 @@
       "data",
       "evidence"
     ],
-    "artifact_fields": ["name", "platform"],
-    "source_fields": ["head_commit", "tree", "source_identity"],
-    "data_fields": ["store_schema", "segments_schema"],
-    "evidence_fields": ["checksums", "provenance", "sbom", "source_archive"],
+    "artifact_fields": [
+      "name",
+      "platform"
+    ],
+    "source_fields": [
+      "head_commit",
+      "tree",
+      "source_identity"
+    ],
+    "data_fields": [
+      "store_schema",
+      "segments_schema"
+    ],
+    "evidence_fields": [
+      "checksums",
+      "provenance",
+      "sbom",
+      "source_archive"
+    ],
     "unknown_fields": "rejected",
     "evidence_paths": {
       "checksums": "SHA256SUMS.txt",
@@ -46,7 +64,13 @@
     }
   },
   "signature": {
-    "fields": ["schema_version", "algorithm", "key_fingerprint", "manifest_sha256", "signature"],
+    "fields": [
+      "schema_version",
+      "algorithm",
+      "key_fingerprint",
+      "manifest_sha256",
+      "signature"
+    ],
     "signature_bytes": "64-byte Ed25519 signature encoded as canonical base64",
     "unknown_fields": "rejected"
   },
@@ -56,7 +80,7 @@
     "state": "<prefix>/install-state.json (mode 0600 on POSIX)",
     "data": "<prefix>/data or --data-dir (created mode 0700 only when absent; never written afterwards)",
     "activation": "atomic install-state replacement; installed bytes are re-verified before activation",
-    "engine_check": "installed dist/engine/miragemesh --version must match the signed version when the host platform matches the artifact"
+    "engine_check": "installed dist/engine/miragemesh --version must match the signed version when the host platform matches the artifact; the synthetic C35 upgrade fixture ships a declared fixture engine because the reviewed source pins the engine version to 0.0.1"
   },
   "upgrade_policy": {
     "newer_version_required": true,
@@ -110,16 +134,24 @@
       "unsupported_host"
     ],
     "no_network": {
-      "direct_imports": ["node:crypto", "node:fs/promises", "node:path", "node:url", "node:child_process"],
+      "direct_imports": [
+        "node:crypto",
+        "node:fs/promises",
+        "node:path",
+        "node:url",
+        "node:child_process"
+      ],
       "external_calls_permitted": false
     },
     "observed_run": {
       "suite": "node --test tests/release/upgrade-recovery.mjs",
-      "result": "11 tests, 11 pass, 0 fail",
+      "result": "12 tests, 12 pass, 0 fail",
       "artifact": "miragemesh-0.0.1-linux-amd64 from the current source tree",
-      "artifact_source_identity": "sha256:8952c6043ca4dad7e18a2c94911ad22bbda57245a40a356d97e913edefad4174",
-      "signature_key_fingerprint": "sha256:6659bfcc4ef71403d553ce9a33d976d22d17fbb1ca510bcc461f9bd06e71b63b",
-      "warnings": ["source_dirty"],
+      "artifact_source_identity": "sha256:f803dff214204db26183dbf4f17e4fa865831a403c47782f6d76f8b085f062af",
+      "signature_key_fingerprint": "sha256:11e8763d0170432554428d0d54cf31302c4954ac80aa36b2fea5857f4a4e6e7c",
+      "warnings": [
+        "source_dirty"
+      ],
       "install": "installed",
       "data_bytes_unchanged": true,
       "engine_check": "skipped-foreign-platform (windows host, linux-amd64 artifact)",
@@ -127,8 +159,14 @@
     }
   },
   "source_build": {
-    "commands": ["npm run setup", "npm run package"],
-    "documents": ["docs/release/ARTIFACTS.md", "docs/release/USER_GUIDE.md"],
+    "commands": [
+      "npm run setup",
+      "npm run package"
+    ],
+    "documents": [
+      "docs/release/ARTIFACTS.md",
+      "docs/release/USER_GUIDE.md"
+    ],
     "source_archive": "source/miragemesh-<version>-source.tar.gz",
     "release_key_required": false,
     "cloud_or_paid_account_required": false
