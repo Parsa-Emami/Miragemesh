@@ -1,0 +1,67 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "verify": {
+    "passed": true,
+    "checks": [
+      "trusted-key-fingerprint",
+      "detached-ed25519-signature-over-exact-manifest-bytes",
+      "manifest-digest-and-validity-window",
+      "checksum-coverage-and-integrity",
+      "evidence-digests",
+      "provenance-source-and-artifact-binding",
+      "source-archive-and-sbom-binding"
+    ],
+    "warnings_allowed": ["source_dirty"]
+  },
+  "install": {
+    "status": "installed",
+    "current_version": "0.0.1",
+    "previous": null,
+    "data_unchanged": true,
+    "engine_check": ["passed", "skipped-foreign-platform"]
+  },
+  "upgrade": {
+    "status": "upgraded",
+    "from_version": "0.0.1",
+    "current_version": "0.0.2",
+    "previous_version": "0.0.1",
+    "data_unchanged": true,
+    "highest_revision": 2
+  },
+  "rollback": {
+    "status": "rolled-back",
+    "from_version": "0.0.2",
+    "current_version": "0.0.1",
+    "previous": null,
+    "data_unchanged": true
+  },
+  "refusals": {
+    "current_unchanged": true,
+    "data_unchanged": true,
+    "codes": [
+      "checksum_mismatch",
+      "manifest_digest_mismatch",
+      "untrusted_signer",
+      "manifest_expired",
+      "missing_evidence",
+      "trusted_key_invalid",
+      "stale_revision",
+      "not_an_upgrade",
+      "data_schema_newer",
+      "data_unreadable",
+      "installed_release_modified",
+      "unsupported_host"
+    ]
+  },
+  "no_network": {
+    "direct_imports": ["node:crypto", "node:fs/promises", "node:path", "node:url", "node:child_process"],
+    "external_calls_permitted": false
+  },
+  "source_build": {
+    "source_archive_present": true,
+    "npm_run_setup_documented": true,
+    "npm_run_package_documented": true,
+    "install_does_not_require_a_cloud_or_paid_account": true
+  }
+}

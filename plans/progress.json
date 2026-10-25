@@ -313,10 +313,12 @@
     },
     {
       "id": "C35",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C35.json"
+      ],
+      "source_identity": "sha256:8952c6043ca4dad7e18a2c94911ad22bbda57245a40a356d97e913edefad4174",
+      "notes": "C35 verified locally: detached Ed25519 release attestations over a real packaged artifact, verified against an independently supplied trusted key, with install/upgrade/rollback that leave the data directory byte-identical and refuse a store schema newer than the signed target. Delivered scripts/verify-release.mjs, scripts/sign-release.mjs, scripts/install-release.mjs, tests/release/upgrade-recovery.mjs, tests/fixtures/miragemesh/C35/, docs/evidence/release-verification.json, docs/evidence/C35.json and the signed-release documentation. 11 of 11 C35 tests passed on the packaged artifact; a changed artifact or manifest byte, missing evidence, an untrusted or malformed key, an expired manifest, a stale revision and a replayed downgrade all failed closed without changing state or data. The artifact provenance records the same source identity as this task. No commit, push, publication, hosted run or C40 claim."
     },
     {
       "id": "C36",

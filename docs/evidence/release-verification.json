@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "project": "MirageMesh",
+  "task": "C35",
+  "license": "Apache-2.0",
+  "status": "local-verified",
+  "provenance": "Repository-authored synthetic C35 release-verification contract. It contains no production private key, published signature or customer data. Test keys are generated per run.",
+  "trust": {
+    "algorithm": "ed25519",
+    "signature_scope": "exact release.json bytes",
+    "key_delivery": "out-of-band",
+    "key_formats": ["raw-32-byte-public-key", "spki-pem"],
+    "fingerprint": "sha256 over the raw 32-byte public key",
+    "fingerprint_format": "sha256:<64 lowercase hex>",
+    "private_key_in_repository": false,
+    "production_key": null,
+    "production_key_note": "No production key or published fingerprint is created by C35. Maintainer-authorized publication and key distribution remain C40.",
+    "validity": "issued_at/expires_at are enforced for new installs and upgrades; already accepted attestations are re-verified without an expiry gate during rollback",
+    "revision": "positive monotonic release revision; stale or replayed revisions cannot replace the last accepted authority",
+    "dirty_source": "a dirty provenance tree is reported as a source_dirty warning and is not presented as a releasable publication"
+  },
+  "manifest": {
+    "fields": [
+      "schema_version",
+      "project",
+      "version",
+      "revision",
+      "license",
+      "issued_at",
+      "expires_at",
+      "artifact",
+      "source",
+      "data",
+      "evidence"
+    ],
+    "artifact_fields": ["name", "platform"],
+    "source_fields": ["head_commit", "tree", "source_identity"],
+    "data_fields": ["store_schema", "segments_schema"],
+    "evidence_fields": ["checksums", "provenance", "sbom", "source_archive"],
+    "unknown_fields": "rejected",
+    "evidence_paths": {
+      "checksums": "SHA256SUMS.txt",
+      "provenance": "provenance.json",
+      "sbom": "sbom.cdx.json",
+      "source_archive": "source/miragemesh-<version>-source.tar.gz"
+    }
+  },
+  "signature": {
+    "fields": ["schema_version", "algorithm", "key_fingerprint", "manifest_sha256", "signature"],
+    "signature_bytes": "64-byte Ed25519 signature encoded as canonical base64",
+    "unknown_fields": "rejected"
+  },
+  "install_layout": {
+    "releases": "<prefix>/releases/<artifact-name>/",
+    "attestations": "<prefix>/attestations/<artifact-name>.release.json and .release.sig.json",
+    "state": "<prefix>/install-state.json (mode 0600 on POSIX)",
+    "data": "<prefix>/data or --data-dir (created mode 0700 only when absent; never written afterwards)",
+    "activation": "atomic install-state replacement; installed bytes are re-verified before activation",
+    "engine_check": "installed dist/engine/miragemesh --version must match the signed version when the host platform matches the artifact"
+  },
+  "upgrade_policy": {
+    "newer_version_required": true,
+    "newer_revision_required": true,
+    "already_accepted_release": "may be reactivated after rollback when its signed digest is unchanged",
+    "idempotent": "same current release and signed digest returns idempotent without rewriting state or data",
+    "failed_verification": "no state or data change",
+    "data_directory": "read-only compatibility check; upgrade never copies, rewrites or rolls back accepted data"
+  },
+  "rollback": {
+    "scope": "one recorded previous release only",
+    "previous_cleared_after_use": true,
+    "installed_bytes_reverified": true,
+    "data_directory_written": false,
+    "data_schema_newer": "refused when the store manifest schema exceeds the target release's signed data.store_schema",
+    "refuses": [
+      "no_previous_release",
+      "installed_release_modified",
+      "attestation_invalid",
+      "data_schema_newer",
+      "data_unreadable",
+      "unsupported_host"
+    ]
+  },
+  "verification": {
+    "test_suite": "tests/release/upgrade-recovery.mjs",
+    "fixtures": "tests/fixtures/miragemesh/C35/",
+    "evidence": "docs/evidence/C35.json",
+    "rejection_codes": [
+      "trusted_key_invalid",
+      "signature_document_invalid",
+      "manifest_digest_mismatch",
+      "untrusted_signer",
+      "signature_invalid",
+      "manifest_invalid",
+      "manifest_expired",
+      "manifest_not_yet_valid",
+      "artifact_name_mismatch",
+      "missing_evidence",
+      "evidence_digest_mismatch",
+      "checksum_coverage",
+      "checksum_mismatch",
+      "unsafe_checksum_path",
+      "duplicate_checksum_entry",
+      "unsafe_artifact_entry",
+      "forbidden_material",
+      "invalid_provenance",
+      "stale_revision",
+      "not_an_upgrade",
+      "release_conflict",
+      "unsupported_host"
+    ],
+    "no_network": {
+      "direct_imports": ["node:crypto", "node:fs/promises", "node:path", "node:url", "node:child_process"],
+      "external_calls_permitted": false
+    },
+    "observed_run": {
+      "suite": "node --test tests/release/upgrade-recovery.mjs",
+      "result": "11 tests, 11 pass, 0 fail",
+      "artifact": "miragemesh-0.0.1-linux-amd64 from the current source tree",
+      "artifact_source_identity": "sha256:8952c6043ca4dad7e18a2c94911ad22bbda57245a40a356d97e913edefad4174",
+      "signature_key_fingerprint": "sha256:6659bfcc4ef71403d553ce9a33d976d22d17fbb1ca510bcc461f9bd06e71b63b",
+      "warnings": ["source_dirty"],
+      "install": "installed",
+      "data_bytes_unchanged": true,
+      "engine_check": "skipped-foreign-platform (windows host, linux-amd64 artifact)",
+      "evidence": "docs/evidence/C35.json"
+    }
+  },
+  "source_build": {
+    "commands": ["npm run setup", "npm run package"],
+    "documents": ["docs/release/ARTIFACTS.md", "docs/release/USER_GUIDE.md"],
+    "source_archive": "source/miragemesh-<version>-source.tar.gz",
+    "release_key_required": false,
+    "cloud_or_paid_account_required": false
+  },
+  "limits": [
+    "The repository ships no production release key, published signature or published artifact; C40 remains the authorized publication and installed full-workflow gate.",
+    "The C35 verification host was windows/amd64; the signed artifact contract declares linux-amd64. Install/upgrade/rollback file and data-safety semantics were exercised locally, while the installed linux engine and full Go storage suite require a supported Linux host.",
+    "The data-safety test uses repository-authored C05 manifest fixtures, not customer data. C05/C30 remain the durable-store authorities.",
+    "No hosted Actions run or remote release verification is claimed."
+  ]
+}

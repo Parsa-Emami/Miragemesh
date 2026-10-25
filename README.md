@@ -16,6 +16,7 @@ Open-source local-first web application under [Apache-2.0](LICENSE). MirageMesh 
 - **[Contributing Guide](CONTRIBUTING.md)**: Workflow for contributors, roadmap execution, coding invariants, and testing standards.
 - **[Security Policy](SECURITY.md)**: Confirmed vulnerability reporting routes, supported versions, and responsible disclosure timeline.
 - **[Third-Party Inventory](THIRD_PARTY_NOTICES.md)**: Pinned dependency licenses and attribution notices.
+- **[Artifact Verification](docs/release/ARTIFACTS.md#signed-release-attestation)**: Detached Ed25519 attestation, verified install/upgrade/rollback and the source-build alternative.
 - **[Definition of Done](docs/release/DEFINITION_OF_DONE.md)**: Release gates and evidence verification criteria.
 
 ---

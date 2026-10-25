@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { createWriteStream } from 'node:fs';
 import { chmod, copyFile, mkdir, mkdtemp, readFile, readdir, realpath, rm, stat } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { goEnvironment } from './oss-bootstrap.mjs';
 
@@ -170,7 +170,9 @@ export async function buildSourceArchive({ version, output }) {
 }
 
 export async function listArchive(path) {
-  const result = spawnSync('tar', ['-tzf', path], { encoding: 'utf8', timeout: 120000, maxBuffer: 64 * 1024 * 1024 });
+  // GNU tar reads "D:..." as a remote host on Windows. A relative archive
+  // name with an explicit cwd is portable and adds no network behavior.
+  const result = spawnSync('tar', ['-tzf', basename(path)], { cwd: dirname(path), encoding: 'utf8', timeout: 120000, maxBuffer: 64 * 1024 * 1024 });
   if (result.status !== 0) throw new Error('Source archive is unreadable.');
   return result.stdout.split('\n').filter(Boolean);
 }

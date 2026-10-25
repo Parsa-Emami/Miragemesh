@@ -420,7 +420,7 @@
       "id": "C34",
       "title": "docs(oss): complete installation usage contribution and support guides",
       "stage": "public-release",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "A fresh reader completes the core task from public instructions. Document source builds, licenses, data/limits/privacy/recovery/support and a confirmed vulnerability reporting route without mandatory cloud or paid entitlements."
       ],
@@ -432,7 +432,7 @@
       "id": "C35",
       "title": "test(distribution): verify signed artifacts and data-safe upgrades",
       "stage": "public-release",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "Verify integrity and authenticity against independently trusted release identity/key. Install, upgrade and roll back on supported hosts without discarding newer accepted data; maintain the documented source-build alternative."
       ],

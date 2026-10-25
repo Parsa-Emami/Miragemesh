@@ -216,3 +216,61 @@ MirageMesh is designed to remain fully usable and transparent during failures:
 - **Keyboard Navigation**: All features are accessible via keyboard navigation (`Tab`, `Shift+Tab`, `Enter`, `Space`), with a dedicated "Skip to content" link.
 - **Mobile Ergonomics**: All status pages, data tables, and error alerts are fully responsive at 360px viewports without horizontal document scrolling.
 - **Explicit Error Displays**: If the engine or Podman provider is unavailable, clear HTTP 503 alerts appear in designated region/alert landmarks rather than failing silently.
+
+---
+
+## 11. Verified Release Installation
+
+Published artifacts are accompanied by a detached Ed25519 release attestation, its
+signature, and a public-key fingerprint published out-of-band. Verification checks the
+exact manifest bytes, the artifact checksum coverage, the provenance source identity,
+the SBOM/source-archive digests, the validity window and the trusted key before any file
+is installed:
+
+```sh
+node scripts/verify-release.mjs dist/release \
+  --manifest miragemesh-0.0.1-linux-amd64.release.json \
+  --signature miragemesh-0.0.1-linux-amd64.release.sig.json \
+  --trusted-key release-key.pub
+```
+
+A downloaded artifact is never trusted because it contains a signature, a checksum file
+or a provenance record. Keep the trusted public key outside the artifact. The verifier
+itself should come from the repository or the source archive at the reviewed commit.
+
+`scripts/install-release.mjs` installs verified releases side by side and records the
+active one in a private install state:
+
+```sh
+node scripts/install-release.mjs install \
+  --prefix ~/.local/lib/miragemesh \
+  --artifact dist/release \
+  --manifest miragemesh-0.0.1-linux-amd64.release.json \
+  --signature miragemesh-0.0.1-linux-amd64.release.sig.json \
+  --trusted-key release-key.pub \
+  --data-dir ~/.local/state/miragemesh
+
+node scripts/install-release.mjs upgrade --prefix ~/.local/lib/miragemesh \
+  --artifact <new-artifact> --manifest <new-release.json> \
+  --signature <new-release.sig.json> --trusted-key release-key.pub
+
+node scripts/install-release.mjs rollback --prefix ~/.local/lib/miragemesh \
+  --trusted-key release-key.pub
+```
+
+Install, upgrade and rollback never write to the data directory. Upgrade requires a
+newer version and a new release revision (an already accepted release may be reactivated
+after rollback). Rollback only targets the recorded previous release, re-verifies its
+installed bytes and refuses when the store declares a newer data schema than the target
+release supports. This prevents an older release from replacing newer accepted state.
+A foreign-platform artifact is refused unless `--allow-foreign-platform` is explicitly
+used for staging.
+
+The source-build alternative remains fully supported and needs no release key:
+
+```sh
+npm run setup
+npm start
+npm run package
+npm run verify:artifact
+```

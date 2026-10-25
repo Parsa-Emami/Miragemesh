@@ -1,0 +1,14 @@
+{
+  "schema_version": "2",
+  "generation": 3,
+  "operations": [
+    {
+      "receipt": {
+        "operation_id": "future-sensor-01",
+        "input_digest": "3fdba35f04dc8c462986c992bcf875546257113072a909c162f7e470e581e278",
+        "generation": 3
+      },
+      "size": 512
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C35 negative cases. Each mutation is applied only to a temporary copy or temporary install prefix; no real release, private key or accepted customer data is used.",
+  "cases": [
+    { "name": "modified-artifact-byte", "mutation": "flip one byte of dist/web/index.html", "expected": "checksum_mismatch" },
+    { "name": "modified-manifest-byte", "mutation": "change the signed revision byte without re-signing", "expected": "manifest_digest_mismatch" },
+    { "name": "wrong-trusted-key", "mutation": "verify with an independently generated but untrusted key", "expected": "untrusted_signer" },
+    { "name": "expired-manifest", "mutation": "sign a manifest whose validity window has elapsed", "expected": "manifest_expired" },
+    { "name": "missing-sbom", "mutation": "delete the SBOM from a verified artifact copy", "expected": "missing_evidence" },
+    { "name": "untrusted-key-file", "mutation": "supply a malformed trusted key file", "expected": "trusted_key_invalid" },
+    { "name": "stale-revision-upgrade", "mutation": "attempt a never-accepted revision at or below the durable high-water revision", "expected": "stale_revision" },
+    { "name": "replayed-old-manifest", "mutation": "replay the older accepted release after an upgrade", "expected": "not_an_upgrade" },
+    { "name": "newer-data-rollback", "mutation": "point rollback at a store manifest with a newer schema", "expected": "data_schema_newer" },
+    { "name": "malformed-data-manifest", "mutation": "replace the store manifest with invalid JSON", "expected": "data_unreadable" },
+    { "name": "tampered-installed-release", "mutation": "modify a file in the recorded previous release before rollback", "expected": "installed_release_modified" },
+    { "name": "unsupported-host", "mutation": "install a foreign-platform release without explicit staging permission", "expected": "unsupported_host" },
+    { "name": "network-import", "mutation": "inspect direct imports of the release scripts for network capability", "expected": "network_capability" }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1",
+  "generation": 2,
+  "operations": [
+    {
+      "receipt": {
+        "operation_id": "sensor-01",
+        "input_digest": "5d41402abc4b2a76b9719d911017c592b7d1f6f7c8a9d0e1f2a3b4c5d6e7f809",
+        "generation": 1
+      },
+      "size": 128
+    },
+    {
+      "receipt": {
+        "operation_id": "event-01",
+        "input_digest": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae",
+        "generation": 2
+      },
+      "size": 256
+    }
+  ]
+}

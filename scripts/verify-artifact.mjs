@@ -78,7 +78,7 @@ export async function verifyArtifact(directory, { fixturePath = join(fixtureRoot
   const enginePath = join(root, 'dist/engine/miragemesh');
   try {
     const info = await stat(enginePath);
-    if (!info.isFile() || (info.mode & 0o111) === 0) add(errors, 'missing_required_path', 'Engine binary is not executable.');
+    if (!info.isFile() || (process.platform !== 'win32' && (info.mode & 0o111) === 0)) add(errors, 'missing_required_path', 'Engine binary is not executable.');
   } catch { /* reported by required path check */ }
 
   const checksumPath = join(root, 'SHA256SUMS.txt');

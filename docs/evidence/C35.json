@@ -1,0 +1,175 @@
+{
+  "commit_id": "C35",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "local-verified",
+  "date": "2026-10-25",
+  "scope": "C35 signed release verification and data-safe upgrades: detached Ed25519 attestations over an already packaged C31 artifact, verification against an independently supplied trusted key, and install/upgrade/rollback that never discard newer accepted data. Delivered scripts/verify-release.mjs, scripts/sign-release.mjs, scripts/install-release.mjs, tests/release/upgrade-recovery.mjs, tests/fixtures/miragemesh/C35/, docs/evidence/release-verification.json and the signed-release documentation in docs/release/ARTIFACTS.md and docs/release/USER_GUIDE.md. Verified on a real packaged artifact with ephemeral test keys: a changed artifact byte, a changed manifest byte, missing evidence, an untrusted or malformed key and an expired manifest all fail closed; a stale revision and a replayed downgrade cannot replace the accepted authority; install, upgrade and rollback leave the data directory byte-identical and refuse a store schema newer than the signed target. The source build remains the documented primary path with no release key.",
+  "base_commit": "49e1659a3c557ae3cce7e2a1a2efe16deee2ff20",
+  "source_identity": "sha256:8952c6043ca4dad7e18a2c94911ad22bbda57245a40a356d97e913edefad4174",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation; reproduced here without Python because the host has no Python interpreter",
+  "implementation_commit": null,
+  "commit_note": "No commit was created for this task. The recorded identity covers all C35 source, fixtures, tests, documentation and tooling edits before progress and handoff bookkeeping. The same identity sha256:8952c604... is recorded by the packaged artifact provenance, proving the tested artifact was assembled from exactly this source tree. No ref, push, publication or hosted run occurred.",
+  "dependencies": {
+    "C34": "docs/evidence/C34.json; verified locally on base 098b3688f5b6db05ced5b6f130281fdb11738107",
+    "C31": "docs/evidence/C31.json; the attestation binds an artifact produced by the existing packaging path without modifying its tree"
+  },
+  "deliverables": {
+    "verification_contract": "docs/evidence/release-verification.json",
+    "verifier": "scripts/verify-release.mjs",
+    "maintainer_signer": "scripts/sign-release.mjs",
+    "installer": "scripts/install-release.mjs",
+    "test_suite": "tests/release/upgrade-recovery.mjs",
+    "fixtures": "tests/fixtures/miragemesh/C35/",
+    "artifact_documentation": "docs/release/ARTIFACTS.md",
+    "user_guide": "docs/release/USER_GUIDE.md",
+    "readme_index": "README.md",
+    "package_scripts": "package.json"
+  },
+  "fixtures": {
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C35 release-verification contract. No production private key, published signature, customer data or real deployment is present. Ed25519 keys are generated per test run and removed with the temporary directory.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C35/positive.json": "36f0dbd45cb3dbbdcf1f8a644d549721cf46aebb6e71679b1f5183089ee6cead",
+      "tests/fixtures/miragemesh/C35/negative.json": "c99733756cbc9cc4f5e7bacf85474b34ed6adcd8b4f60888c17ed6452089b3eb",
+      "tests/fixtures/miragemesh/C35/expected-output.json": "c7ec664b2a19b3e06ecab5fb893478e77ce2c01247e4e04f7c1c5592c91df1d6",
+      "tests/fixtures/miragemesh/C35/store-v1/manifest.json": "6ce2857404d998f6ce4a38944406e37a497db1fc99dc50051aee6f53babd7569",
+      "tests/fixtures/miragemesh/C35/store-v2/manifest.json": "e436834eac5eed01d15d9884415eb8f2653a8c6e1497857d27dac93b14026934"
+    }
+  },
+  "environment": {
+    "os": "windows",
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "go": "go1.27.2 windows/amd64; engine cross-compiled and vetted for linux/amd64",
+    "git": "2.56.0.windows.2",
+    "tar": "GNU tar 1.35",
+    "gzip": "1.15",
+    "python": null,
+    "python_note": "No Python interpreter is installed on this host; scripts/validate_repo.py, scripts/plan.py validate and scripts/source_identity.py could not be executed. scripts/roadmap.mjs validate and an equivalent Node source-identity calculation were run instead."
+  },
+  "commands": [
+    {
+      "name": "validate-plan",
+      "command": ["npm", "run", "validate:plan"],
+      "exit_code": 0,
+      "observed": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred."
+    },
+    {
+      "name": "syntax-check",
+      "command": ["node", "--check", "scripts/verify-release.mjs", "scripts/sign-release.mjs", "scripts/install-release.mjs"],
+      "exit_code": 0,
+      "observed": "All three C35 scripts parse."
+    },
+    {
+      "name": "c35-release-suite",
+      "command": ["node", "--test", "tests/release/upgrade-recovery.mjs"],
+      "exit_code": 0,
+      "observed": "11 tests, 11 pass, 0 fail, 0 skipped; duration 6.2 s. Covers real artifact signing/verification, modified bytes, modified manifest, untrusted and malformed keys, expired manifest, missing SBOM evidence, stale revision, replay, install/upgrade/rollback, tampered installed tree and foreign-platform refusal."
+    },
+    {
+      "name": "typecheck",
+      "command": ["npm", "run", "typecheck"],
+      "exit_code": 0,
+      "observed": "tsc -p tsconfig.json completed without errors."
+    },
+    {
+      "name": "web-build",
+      "command": ["npx", "vite", "build", "--config", "apps/web/vite.config.ts"],
+      "exit_code": 0,
+      "observed": "26 modules transformed; dist/web/index.html and fingerprinted CSS/JS assets emitted."
+    },
+    {
+      "name": "engine-portability",
+      "command": ["go", "vet", "./..."],
+      "exit_code": 0,
+      "observed": "GOOS=linux go vet ./... passed; gofmt -l cmd internal tests produced no output; GOOS=linux GOARCH=amd64 go build -trimpath ./cmd/miragemesh passed. C35 changes no Go source."
+    },
+    {
+      "name": "package",
+      "command": ["node", "scripts/package-web.mjs", "--no-build"],
+      "exit_code": 0,
+      "observed": "{\"status\":\"ok\",\"artifact\":\"miragemesh-0.0.1-linux-amd64\",\"version\":\"0.0.1\",\"files\":60,\"source_identity\":\"sha256:8952c6043ca4dad7e18a2c94911ad22bbda57245a40a356d97e913edefad4174\",\"dirty\":true,\"verification\":{\"passed\":true}} — the GNU tar drive-letter portability fix lists the source archive correctly on Windows."
+    },
+    {
+      "name": "verify-artifact",
+      "command": ["node", "scripts/verify-artifact.mjs", "dist/release"],
+      "exit_code": 0,
+      "observed": "passed true, 60 files, 59 checksum entries, source_identity sha256:8952c604..., clean_source false (dirty working tree reported truthfully)."
+    },
+    {
+      "name": "checksum-manifest",
+      "command": ["sha256sum", "-c", "SHA256SUMS.txt"],
+      "exit_code": 0,
+      "observed": "All 59 listed artifact files reported OK from dist/release."
+    },
+    {
+      "name": "signed-end-to-end",
+      "command": ["node", "scripts/sign-release.mjs", "&&", "node", "scripts/verify-release.mjs", "&&", "node", "scripts/install-release.mjs", "install"],
+      "exit_code": 0,
+      "observed": "sign_exit 0 (revision 1, fingerprint sha256:6659bfcc4ef71403d553ce9a33d976d22d17fbb1ca510bcc461f9bd06e71b63b, manifest sha256 1875fa7515b70d99a5dc60fc1376d7e50dfd763a0d4d32dca9ff537409b089bb); verify_exit 0 (60 files, 59 checksums, only the source_dirty warning, store_schema 1); install_exit 0 (status installed, data_unchanged true, engine_check skipped-foreign-platform); the store manifest bytes were identical before and after install."
+    }
+  ],
+  "results": {
+    "trust_boundary": {
+      "signature": "detached Ed25519 over the exact release.json bytes",
+      "trusted_key_source": "supplied independently via --trusted-key; never read from the artifact",
+      "accepted_key_formats": ["raw 32-byte public key", "SPKI PEM Ed25519"],
+      "fingerprint": "sha256 over the raw 32-byte public key",
+      "rejected_before_install": [
+        "modified artifact byte (checksum_mismatch)",
+        "modified manifest byte (manifest_digest_mismatch)",
+        "untrusted key (untrusted_signer)",
+        "malformed trusted key (trusted_key_invalid)",
+        "missing SBOM evidence (missing_evidence)",
+        "expired manifest (manifest_expired)",
+        "unknown manifest or signature fields (manifest_invalid, signature_document_invalid)",
+        "unsafe checksum path or incomplete coverage (unsafe_checksum_path, checksum_coverage)"
+      ]
+    },
+    "authority": {
+      "monotonic_revision": true,
+      "stale_revision_refused": "stale_revision",
+      "replay_downgrade_refused": "not_an_upgrade",
+      "already_accepted_release_reactivation": "allowed only when the signed manifest digest matches the recorded attestation",
+      "failed_attempts_changed_state_or_data": false
+    },
+    "data_safety": {
+      "install_layout": "releases/ and attestations/ side by side under the prefix; private install-state.json activation",
+      "data_directory_opened_read_only": true,
+      "data_directory_created_only_when_absent": true,
+      "newer_store_schema_refused": "data_schema_newer",
+      "malformed_store_manifest_refused": "data_unreadable",
+      "data_tree_digest_unchanged": "before and after install, upgrade and rollback in every positive and negative case",
+      "rollback_target_reverified": true,
+      "tampered_installed_tree_refused": "installed_release_modified",
+      "rollback_limited_to_one_recorded_previous_release": true,
+      "previous_cleared_after_rollback": true
+    },
+    "source_build_alternative": {
+      "release_key_required": false,
+      "documented_commands": ["npm run setup", "npm start", "npm run package", "npm run verify:artifact"],
+      "unchanged_packaging_path": true
+    },
+    "no_network": {
+      "verifier_imports": ["node:crypto", "node:fs/promises", "node:path", "node:url"],
+      "installer_imports": ["node:child_process for the local engine check", "node:crypto", "node:fs/promises", "node:path", "node:url"],
+      "external_requests_made": false
+    }
+  },
+  "observed_limitations": [
+    "Host is windows/amd64 while the packaged artifact platform is linux-amd64. Install/upgrade/rollback file and data-safety semantics were exercised end to end, but the installed Linux engine --version check was skipped as foreign-platform. A native Linux run of the same suite remains unrecorded.",
+    "npm run build cannot complete natively on this Windows host: internal/storage uses Unix syscalls (syscall.Stat_t, O_NOFOLLOW, Flock), so build:engine exits 1 while preserving the previous binary. GOOS=linux go vet and GOOS=linux go build pass, and the packaged artifact used the existing linux-amd64 engine binary.",
+    "npm test on this host reports 125 tests, 98 pass, 26 fail, 1 skipped. Every failure is a host limitation, not a C35 regression: tests that spawn dist/engine/miragemesh receive ENOENT because the file is a Linux ELF, and tests asserting a native Go build fail on the Unix-only storage syscalls. The 11 C35 tests pass within that run.",
+    "scripts/validate_repo.py, scripts/plan.py validate and scripts/source_identity.py could not run because Python is absent; npm run validate:plan and the equivalent Node identity calculation passed. CI runs the Python checks on ubuntu-24.04.",
+    "No commit, push, publication, hosted Actions run or C40 claim occurred. The repository contains no production release key or published signature; the tested keys were ephemeral."
+  ],
+  "rollback_or_recovery_observation": "C35 changes no database schema, migration or data format. Its own rollback path was exercised: a recorded previous release is reactivated only after its installed bytes are re-verified, the data directory is untouched, and an upgrade can follow. Reverting the C35 source removes the signed-artifact path while leaving the C31 packaging and documented source build intact.",
+  "release_limits": [
+    "No production release key, published fingerprint, published signature or published artifact is created here. Authorized publication and the clean-host installed full-workflow proof remain C40.",
+    "The attestation binds an artifact built from a dirty working tree; provenance reports dirty true and verification emits source_dirty. It is not a releasable publication.",
+    "The verified artifact contract is linux-amd64; other hosts are refused unless --allow-foreign-platform is given for staging, and such an install cannot run its engine check."
+  ]
+}

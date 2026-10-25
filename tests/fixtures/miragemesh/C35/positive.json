@@ -1,0 +1,46 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C35 release verification and data-safe upgrade contract. It contains no private keys, credentials, customer data or published release identity.",
+  "scope": "signed-release-verification-and-data-safe-upgrades",
+  "manifest_schema_version": 1,
+  "signature_schema_version": 1,
+  "signature_algorithm": "ed25519",
+  "artifact": {
+    "name": "miragemesh-0.0.1-linux-amd64",
+    "platform": "linux-amd64",
+    "version": "0.0.1",
+    "upgrade_name": "miragemesh-0.0.2-linux-amd64",
+    "upgrade_version": "0.0.2"
+  },
+  "revisions": {
+    "initial": 1,
+    "upgrade": 2,
+    "stale": 1
+  },
+  "validity": {
+    "issued": "now-minus-one-hour",
+    "expires": "now-plus-365-days",
+    "expired_issued_at": "2020-01-01T00:00:00Z",
+    "expired_expires_at": "2020-01-02T00:00:00Z"
+  },
+  "data": {
+    "supported_schema": 1,
+    "future_schema": 2,
+    "store_manifest": "manifest.json",
+    "supported_store_fixture": "store-v1",
+    "future_store_fixture": "store-v2"
+  },
+  "trust": {
+    "key_delivery": "out-of-band",
+    "key_formats": ["raw-32-byte-ed25519-public-key", "spki-pem"],
+    "fingerprint": "sha256:raw-public-key",
+    "repository_contains_private_key": false,
+    "test_keys": "ephemeral-per-run"
+  },
+  "source_build": {
+    "commands": ["npm run setup", "npm run package"],
+    "documents": ["docs/release/ARTIFACTS.md", "docs/release/USER_GUIDE.md"],
+    "source_archive": "source/miragemesh-0.0.1-source.tar.gz"
+  }
+}
