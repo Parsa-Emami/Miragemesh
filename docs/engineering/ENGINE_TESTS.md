@@ -54,6 +54,7 @@ module. Existing files and fixtures remain unchanged by C06.
 | `internal/storage` | `recovery_test.go`: injected filesystem failures, actual SIGKILL, reopen/replay and orphan handling | `TestStorageSIGKILLAtPublicationBoundaries`, `TestStorageSyscallFailuresPreserveRecoverableState` |
 | `internal/events` | `segments_recovery_test.go`: actual child-process SIGKILL at rotation boundaries, incomplete-tail preservation and injected syscall failures | `TestSegmentsSIGKILLAtRotationBoundaries`, `TestSegmentsSyscallFailuresPreserveRecoverableState`, `TestSegmentsRecoverIncompleteFinalRecord`, `TestSegmentsIncompleteTailKeepsRawBytesAndOffset` |
 | `tests` | `storage_test.go`: real adapter, exact bytes, quotas, locking, concurrency, corruption and hostile metadata; `event_test.go`: persistent per-sensor sequence, exact retry and invalid input; `rotation_test.go`: immutable rotation, incomplete tails, projection and no-network checks; `rebuild_test.go`: derived index rebuild, deduplication, conflicts, segment loss and incomplete tails | `TestStorageExactBytesReplayAndReopen`, `TestSensorSequenceReplayAndRestart`, `TestSensorRejectsInvalidAndConflictingEvents`, `TestSegmentRotationAcrossRecordAndByteBounds`, `TestSegmentProjectionSkipsNonEventRecords`, `TestIndexRebuildsFromCommittedSegments` |
+| `tests/acceptance` | `acceptance_test.go`: real C08/C09/C10/C11/C14/C15/C16/C17/C18/C19/C20/C23 composition, fixture-drift rejection, six negative cases, restart/restore equivalence and a loopback/no-private-material boundary; `tests/fixtures/miragemesh/C30/seed`: the supported seed runner | `TestC30ReferenceWorkflowCompletes`, `TestC30RestartRestoreKeepsExactAcceptedState`, `TestC30NegativeCasesAreExplicit`, `TestC30RejectsMalformedFixturesAndMissingPrerequisites`, `TestC30FixtureLicensesAndSyntheticProvenance`, `TestC30HarnessStaysOnLoopbackAndContainsNoPrivateMaterial` |
 
 The guard reads Go's JSON events and requires a `run` followed by `pass` for each
 anchor, completed required packages, and no failure or unfinished package. Empty
@@ -596,5 +597,35 @@ that the composed offline and delivery path has no network capability. The real
 rootless-container proof remains `TestDecoyIsolationDeniesInternetAndPrivateSubnets`,
 which the same required suite runs with the pinned provider and image; the
 existing C14/C16 SIGKILL anchors remain the crash-recovery proof. These are
-local process/filesystem proofs: C26 does not add transport, mTLS, retention,
-C30 usability, C40 release or remote-runner evidence.
+local process/filesystem proofs: C26 does not add transport, mTLS or retention,
+and the composed local usability proof is C30 below.
+
+## C30 local reference-workflow anchors
+
+C30 adds the `tests/acceptance` suite, so the discovery guard requires 201
+anchors across nine suites. `TestC30ReferenceWorkflowCompletes` runs the real
+enrollment, mTLS guard, signed configuration, batch ingest, bounded spool,
+explicit overflow loss, duplicate acknowledgement, incident triage and
+non-destructive retention preview boundaries against temporary C05 state and
+C17/C18 segment files. Every expected sequence, loss gap, count, segment fact,
+triage entry and sensor status comes from
+`tests/fixtures/miragemesh/C30/expected-output.json`; the test rejects drift.
+`TestC30RestartRestoreKeepsExactAcceptedState` checks the manifest digest and an
+independent restored copy, then proves a repeat run cannot overwrite the
+accepted state. `TestC30NegativeCasesAreExplicit` executes token replay,
+untrusted TLS identity, unconfigured ingest, malformed event, spool overflow and
+missing fixture, and repeats the run to prove stable typed outcomes.
+`TestC30RejectsMalformedFixturesAndMissingPrerequisites` mutates licenses,
+fixtures, batches, bounds and expected outcomes and requires explicit fixture
+errors before any state directory exists. The license/provenance anchor rejects
+unknown fixture versions or missing synthetic provenance, and the loopback
+anchor rejects HTTP, command execution and private-key material while requiring
+every harness listener to be literal `127.0.0.1:0`.
+
+The fixture seed is the same path used by `npm run test:clone`. It is a test
+harness, not a new product transport: the length-prefixed batch envelope exists
+only between the test client and the real C09 guard/C16 collector. The supported
+read surfaces remain the existing loopback HTTP `/api/v1/sensors`,
+`/api/v1/incidents` and `/api/v1/certificates`; the browser proof is
+`tests/browser/clone-to-value.spec.ts`. No Podman image or cloud account is
+required by this suite, and it does not certify a hosted run or C40 publication.

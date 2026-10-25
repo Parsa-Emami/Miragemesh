@@ -1,7 +1,7 @@
 {
   "version": "0.0.0",
   "project": "MirageMesh",
-  "readiness": "WEB_FOUNDATION",
+  "readiness": "LOCAL_USABLE",
   "market_validation": "UNVALIDATED",
   "commits": [
     {
@@ -267,10 +267,13 @@
     },
     {
       "id": "C30",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C30.json",
+        "docs/evidence/private-install.json"
+      ],
+      "source_identity": "sha256:d0f0e05f584865b23aa973f3d3142b1b3ebaedab7009027df7b804caca38a066",
+      "notes": "C30 verified locally on base 80e7da6 without committing: one fixture-driven real-workflow acceptance package composes enrollment, mTLS batch ingest, signed applied configuration, bounded offline spool with explicit durable loss, duplicate acknowledgement, incident replay/triage and non-destructive retention preview, then proves restart and an independent restored copy. Six typed negative cases, malformed-fixture rejection, synthetic license/provenance checks and a loopback/no-private-material boundary are required anchors. The same accepted C05/segment/certificate state backs /readyz and the Sensors/Incidents/Certificates browser views at 360px before and after restart. A real staged-tree clone ran npm run setup, 201 required engine anchors across nine suites, the full workflow, readiness and the browser proof. 95 Node tests, 21 Playwright tests, 6 Python tests, 338 checked JSON files and the plan/repository validators passed. No product write ingress beyond existing local triage, no push, hosted Actions, published-artifact install, release or C40 claim."
     },
     {
       "id": "C31",
@@ -351,5 +354,5 @@
     "scope": "Historical web-foundation snapshot at base_commit; current capabilities are in plans/project-state.json and source-bound C-card evidence."
   },
   "roadmap_contract": "clone-to-run-oss-v1",
-  "current_core_ready": false
+  "current_core_ready": true
 }

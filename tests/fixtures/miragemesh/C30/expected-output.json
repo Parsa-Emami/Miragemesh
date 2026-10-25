@@ -1,0 +1,45 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C30 expected outcomes. Random fingerprints, keys and digests are deliberately absent; those are recorded from the actual run in C30 evidence.",
+  "steps": [
+    "enroll",
+    "apply-config",
+    "event-01",
+    "disconnect",
+    "spool",
+    "reconnect",
+    "triage-retention",
+    "restart-restore"
+  ],
+  "accepted_sequences": [1, 2, 3, 5],
+  "acknowledged_sequences": [1, 2, 3, 5],
+  "dropped_sequence": 4,
+  "loss": {
+    "count": 1,
+    "gaps": [{ "from": 4, "through": 4 }]
+  },
+  "counts": {
+    "config": 1,
+    "event": 4,
+    "ack": 4,
+    "gap": 1
+  },
+  "segments": {
+    "count": 2,
+    "records": 4,
+    "ordinals": [1, 2],
+    "sealed_ordinals": [1]
+  },
+  "retention": {
+    "eligible": 0,
+    "coverage_complete": true
+  },
+  "triage_entries": 1,
+  "incidents_min": 1,
+  "sensor": {
+    "config_status": "current",
+    "dropped_event_count": 1,
+    "offline": false
+  }
+}

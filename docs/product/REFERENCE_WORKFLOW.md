@@ -1,8 +1,8 @@
 # MirageMesh: reference workflow
 
-Status: planned domain acceptance contract; the current web JSON preview does not implement or execute this workflow. The C01 validator checks documentation metadata only.
+Status: implemented by the C30 local acceptance harness. `npm run test:clone` executes this workflow against real local storage and the real browser; `npm start` alone does not seed sensor state, so the read surfaces stay unavailable without explicit engine options.
 
-The repository-owned scenario is `tests/scenarios/clone-to-value.json`. Its synthetic fixtures live under `tests/fixtures/miragemesh/C01/`; each records Apache-2.0 licensing and repository-authored provenance. Do not add real secrets, customer identities, sensor traffic, case data or unlicensed corpora.
+The repository-owned scenario is `tests/scenarios/clone-to-value.json`. Its synthetic fixtures live under `tests/fixtures/miragemesh/C30/`; each records Apache-2.0 licensing and repository-authored provenance. The older C01 fixtures document the initial event-contract shape only. Do not add real secrets, customer identities, sensor traffic, case data or unlicensed corpora.
 
 ## Workflow
 
@@ -195,5 +195,17 @@ redelivery is idempotent, and a real store restart preserves the applied
 revision, receipts, acknowledgements and loss accounting before delivery
 continues across the gap. The composed path is checked to import no network
 capability; the real container egress denial and crash recovery remain the
-C13/C14/C16 proofs. C26 adds no product surface and does not execute the whole
-reference workflow; C30 remains the local end-to-end gate.
+C13/C14/C16 proofs.
+
+## Local end-to-end acceptance
+
+C30 executes the whole workflow above from a clean clone. `npm run test:clone`
+runs the acceptance package against real C05 state and C17/C18 segment files,
+checks every declared negative case, restarts the store and segment writer, and
+opens an independent restored copy. The same accepted state then backs the web
+shell: `/readyz` must report engine, storage and certificate-provider readiness,
+the Sensors/Incidents/Certificates pages must show the seeded facts, and the
+same invariants must hold after a restart. The composed browser proof is
+`tests/browser/clone-to-value.spec.ts`. The harness adds no product write
+surface; the only browser write remains the existing same-origin local triage
+boundary. C40 remains the published-artifact gate.

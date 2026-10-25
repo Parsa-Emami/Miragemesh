@@ -1,0 +1,67 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C30 reference-workflow input. No real sensor, customer, certificate or event data is present; all identity material and signing keys are generated ephemerally at run time.",
+  "sensor_id": "sensor-01",
+  "storage_limits": {
+    "max_operations": 128,
+    "max_bytes": 4194304,
+    "max_manifest_bytes": 262144
+  },
+  "segment_limits": {
+    "max_segments": 16,
+    "max_records_per_segment": 2,
+    "max_bytes_per_segment": 32768
+  },
+  "config_max_sensors": 8,
+  "bounds": {
+    "heartbeat_seconds": { "min": 5, "max": 300 },
+    "spool_limit_events": { "min": 1, "max": 4 },
+    "event_batch_limit": { "min": 1, "max": 4 }
+  },
+  "config": {
+    "revision": 1,
+    "issued_offset_seconds": -60,
+    "lifetime_seconds": 86400
+  },
+  "enrollment_ttl_seconds": 120,
+  "settings": {
+    "heartbeat_seconds": 30,
+    "spool_limit_events": 2,
+    "event_batch_limit": 2
+  },
+  "events": [
+    { "event_id": "event-01", "sequence": 1, "offset_seconds": -30, "path": "/collect/1" },
+    { "event_id": "event-02", "sequence": 2, "offset_seconds": -20, "path": "/collect/2" },
+    { "event_id": "event-03", "sequence": 3, "offset_seconds": -15, "path": "/collect/3" },
+    { "event_id": "event-04", "sequence": 4, "offset_seconds": -10, "path": "/dropped/4" },
+    { "event_id": "event-05", "sequence": 5, "offset_seconds": 0, "path": "/collect/5" }
+  ],
+  "batches": {
+    "first": { "id": "batch-01", "event_indexes": [0], "first_sequence": 1, "last_sequence": 1 },
+    "reconnect": { "id": "batch-02", "event_indexes": [1, 2], "first_sequence": 2, "last_sequence": 3 },
+    "duplicate": { "id": "batch-02", "event_indexes": [1, 2], "first_sequence": 2, "last_sequence": 3 },
+    "resumed": { "id": "batch-03", "event_indexes": [4], "first_sequence": 5, "last_sequence": 5 }
+  },
+  "offline_event_indexes": [1, 2],
+  "overflow_event_index": 3,
+  "triage": {
+    "status": "resolved",
+    "reason": "Synthetic C30 review of accepted synthetic events.",
+    "idempotency_key": "c30-reference-workflow-triage-key"
+  },
+  "retention": {
+    "cutoff_offset_seconds": -3600,
+    "reason": "Synthetic C30 non-destructive retention preview."
+  },
+  "incident": {
+    "rate_limit": 2,
+    "window_seconds": 60
+  },
+  "rotation": {
+    "max_sensors": 8,
+    "max_lifetime_seconds": 86400,
+    "max_overlap_seconds": 3600,
+    "max_recovery_ttl_seconds": 900
+  }
+}

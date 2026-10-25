@@ -5,7 +5,7 @@
 [CI source integrity and dependency updates](docs/engineering/CI_SOURCE_INTEGRITY.md)
 
 
-Open-source local-first web application under [Apache-2.0](LICENSE). **Current implementation: web workspace and supervised Go runtime; complete domain workflow pending.**
+Open-source local-first web application under [Apache-2.0](LICENSE). **Current implementation: web workspace, supervised Go runtime and the C30 local reference-workflow acceptance harness; direct browser write ingress remains limited to local incident triage.**
 
 ## Clone and run the current workspace
 
@@ -18,13 +18,13 @@ npm run setup
 npm start
 ```
 
-Open http://127.0.0.1:4173. Current features are a roadmap browser and local bounded JSON structure preview. No Python, database, paid/cloud account, public domain or sibling clone is needed for this shell. The supervised HTTP runtime exposes health/version only. A separate local command validates v1 HTTP-event documents without ingesting or storing them; domain processing remains unavailable. See [the event contract](contracts/README.md). [Clone guide](docs/engineering/CLONE_TO_RUN.md).
+Open http://127.0.0.1:4173. The workspace includes a roadmap browser, local bounded JSON structure preview, read-only Sensors and Certificates views, and source-backed incident replay and triage over explicit local engine state. `npm run test:clone` proves the C30 reference workflow end to end in a real clone: enrollment, mTLS batch ingest, signed configuration, offline spool and explicit loss, duplicate delivery, triage, non-destructive retention preview, restart and restore, followed by the real browser workflow. No Python, database, paid/cloud account, public domain or sibling clone is needed. The supervised HTTP runtime exposes health/version and the enabled read surfaces. A separate local command validates v1 HTTP-event documents without ingesting or storing them. See [the event contract](contracts/README.md). [Clone guide](docs/engineering/CLONE_TO_RUN.md).
 
 ## Full product endpoint
 
 Enroll sensor -> apply signed config -> isolated decoy event -> disconnect -> spool -> reconnect with duplicate ACK test -> triage and retention gap check.
 
-[C30](plans/commits/C30.md) proves the first locally usable supported product from a clean clone, including restart/restore. [C40](plans/commits/C40.md) proves complete published OSS v1. These are future evidence gates, not current shell capability claims. [Runtime resources](ops/runtime-requirements.json).
+[C30](plans/commits/C30.md) proves the first locally usable supported product from a clean clone, including negative cases, restart and restore. [C40](plans/commits/C40.md) remains the complete published OSS v1 gate. [Runtime resources](ops/runtime-requirements.json).
 
 ## Implement the next commit
 

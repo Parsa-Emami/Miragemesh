@@ -1,0 +1,73 @@
+{
+  "commit_id": "C30",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "local-verified",
+  "scope": "Private local installation from a real staged-tree git clone in a temporary directory: npm run setup, the full C30 reference workflow, six typed negative cases, seeded engine/storage/provider readiness, real browser proof and restart/restore. This is not an installation of published artifacts.",
+  "base_commit": "80e7da6a4058b0b5e583576b3f165cf0434fc015",
+  "source_identity": "sha256:d0f0e05f584865b23aa973f3d3142b1b3ebaedab7009027df7b804caca38a066",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation",
+  "temporary_clone_commit": "8073ff6eb73cfdb6c478f2aef18615255e03ebe3",
+  "temporary_clone_tree": "5f270cecac168c64d37a10c03d291b70a38db2a7",
+  "install": {
+    "method": "git clone --no-local of an isolated repository advertising the staged tree; no source ref, tag or remote was changed",
+    "commands": ["git clone --quiet --no-local --branch snapshot <temporary source> <checkout>", "npm run setup"],
+    "setup_steps": ["npm ci --ignore-scripts --no-fund", "npm run build (web assets, TypeScript and Go engine)"],
+    "toolchain": {
+      "node": "v24.19.0",
+      "npm": "11.17.0",
+      "npm_lock": "11.9.0",
+      "go": "go1.27.2 linux/amd64",
+      "podman": "4.9.3 rootless=true",
+      "pinned_image": "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62"
+    }
+  },
+  "workflow": {
+    "seed_command": ["go", "run", "./tests/fixtures/miragemesh/C30/seed", "<temporary state directory>"],
+    "steps_passed": 8,
+    "negative_cases_passed": 6,
+    "accepted_sequences": [1, 2, 3, 5],
+    "acknowledged_sequences": [1, 2, 3, 5],
+    "dropped_sequence": 4,
+    "loss_gap": { "from": 4, "through": 4 },
+    "segments": 2,
+    "sealed_segments": 1,
+    "triage_entries": 1,
+    "retention_preview_eligible": 0,
+    "coverage_complete": true,
+    "restarted": true,
+    "restored": true,
+    "restore_equivalent": true
+  },
+  "readiness": {
+    "probe": "GET /readyz on the web shell supervising the cloned engine and the seeded C05/segment/certificate state",
+    "status": "ready",
+    "engineReady": true,
+    "storageReady": true,
+    "providersReady": true,
+    "restart_checked": true,
+    "manifest_and_segment_bytes_unchanged": true
+  },
+  "browser": {
+    "command": ["node", "node_modules/.bin/playwright", "test", "tests/browser/clone-to-value.spec.ts", "--reporter=line"],
+    "result": "passed",
+    "checks": "Sensors/Incidents/Certificates read the seeded facts at 360px, triage history is durable, no external request or private material appears, and the same facts hold after restart."
+  },
+  "commands": [
+    {
+      "name": "clean-clone-smoke",
+      "command": ["npm", "run", "test:clone"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C30/clone-smoke.log",
+      "stored_output_sha256": "b94b925b133c7b1fcea762cebb1f3ca7f9c3051115b5428cddf176f2ed9d1d48",
+      "observed": "The cloned tree reported source identity sha256:d0f0e05f584865b23aa973f3d3142b1b3ebaedab7009027df7b804caca38a066, 9 engine suites / 201 required anchors, and coreWorkflow.passed true."
+    }
+  ],
+  "limits": [
+    "Private local installation only; no published artifact, package registry, hosted service or public download was used or produced.",
+    "No push, deployment or publication occurred.",
+    "npm start alone reads configured local state; npm run test:clone is the full clean-clone acceptance command.",
+    "C40 remains the authorized published-artifact and installed full-workflow gate."
+  ]
+}

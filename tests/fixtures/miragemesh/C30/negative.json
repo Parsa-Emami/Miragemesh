@@ -1,0 +1,15 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C30 negative cases. The malformed event and identity material are inert test inputs and are never stored as accepted state.",
+  "sensor_id": "sensor-01",
+  "malformed_event": "{\"schema_version\":\"1\"}",
+  "cases": [
+    { "name": "enrollment-token-replay", "expected": "enrollment.ErrReplay" },
+    { "name": "untrusted-client-certificate", "expected": "tls.handshake_rejected" },
+    { "name": "unconfigured-batch-ingest", "expected": "sensor.ErrUnconfigured" },
+    { "name": "malformed-event", "expected": "contracts.INVALID_INPUT" },
+    { "name": "spool-overflow", "expected": "spool.ErrDropped" },
+    { "name": "missing-fixture", "expected": "acceptance.ErrFixture" }
+  ]
+}

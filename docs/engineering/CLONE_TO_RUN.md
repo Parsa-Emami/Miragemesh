@@ -11,7 +11,7 @@ npx --yes --package=npm@11.9.0 --call 'npm run setup'
 npx --yes --package=npm@11.9.0 --call 'npm start'
 ```
 
-Open http://127.0.0.1:4173. Setup checks Go and rootless Podman, installs the committed web lockfile with lifecycle scripts disabled, and builds the web and Go runtime. The official Go toolchain mechanism selects/downloads and verifies Go 1.27.2 without replacing the system Go. No database or cloud account is required. The workspace previews JSON locally and browses the roadmap. The Sensors page can read a durable C05 snapshot when the engine starts with explicit storage quotas and C10 verifier policy; otherwise it reports that local status is unavailable. See `docs/architecture/SENSOR_STATUS.md` for all required `npm start` options and the raw public-key file format. The separate local --validate-event command validates a v1 event without ingesting or storing it (see contracts/README.md). The Incidents page supports source-backed replay and durable local triage when explicit existing-store, segment and rate-policy options are supplied; see `docs/architecture/INCIDENT_REPLAY.md`. The full domain workflow remains pending C30.
+Open http://127.0.0.1:4173. Setup checks Go and rootless Podman, installs the committed web lockfile with lifecycle scripts disabled, and builds the web and Go runtime. The official Go toolchain mechanism selects/downloads and verifies Go 1.27.2 without replacing the system Go. No database or cloud account is required. The workspace previews JSON locally and browses the roadmap. The Sensors page can read a durable C05 snapshot when the engine starts with explicit storage quotas and C10 verifier policy; otherwise it reports that local status is unavailable. See `docs/architecture/SENSOR_STATUS.md` for all required `npm start` options and the raw public-key file format. The separate local --validate-event command validates a v1 event without ingesting or storing it (see contracts/README.md). The Incidents page supports source-backed replay and durable local triage when explicit existing-store, segment and rate-policy options are supplied; see `docs/architecture/INCIDENT_REPLAY.md`. The full reference workflow is proved from a clone by `npm run test:clone`; `npm start` alone does not create sensor state, so the domain pages stay unavailable until the engine is launched with explicit local state options.
 
 `npm run setup -- --check` shows preparation without changes. `--skip-install` builds using already installed dependencies. `npm run doctor` reports tool/provider versions, built runtime version and web/core state; Go resolution may require a download if its cache is missing. `npm run release:check` deliberately exits 2 until full evidence is ready. Ctrl+C stops both web and the owned engine process. Ports can be selected with `npm start -- --port 4301` when running multiple projects.
 
@@ -58,7 +58,17 @@ npm run test:clone
 npm run doctor
 ```
 
-The current test:clone performs a real local Git clone of the staged/committed source, runs setup, Go vet and uncached race tests with required-test discovery, then verifies unified startup, actual Go runtime health and disabled domain admission. C30 must extend it to the full tests/scenarios/clone-to-value.json workflow and real engine readiness. Current lifecycle checks cannot certify domain functionality. See ENGINE_TESTS.md for engine test discovery and ENGINE_LAUNCH.md for lifecycle tests. See each C task for future engine commands and prerequisites. Optional hosting/package operations remain in WEB_RUNBOOK.md.
+`test:clone` performs a real local Git clone of the staged/committed source, runs setup, Go vet and uncached race tests with required-test discovery, executes the C30 reference workflow from `tests/scenarios/clone-to-value.json`, checks engine/storage/provider readiness and restart/restore against the accepted state, then runs `tests/browser/clone-to-value.spec.ts` in Chromium. Install the Playwright Chromium build once before the clone check. The older unified-startup, health and disabled-admission proof remains reported separately as `webOnly` in the command output. See ENGINE_TESTS.md for engine test discovery and ENGINE_LAUNCH.md for lifecycle tests. Optional hosting/package operations remain in WEB_RUNBOOK.md.
+
+## C30 local reference workflow
+
+The versioned fixtures under `tests/fixtures/miragemesh/C30/` drive the real C08 enrollment, C09 mTLS guard, C10/C11 signed configuration, C16 batch ingest, C14/C15 offline spool and explicit loss, C19/C20 incident view and triage, C23 non-destructive retention preview, and C17/C18 segment projection. The seed command writes `outcome.json` and `runtime.json` for the supported read surfaces:
+
+```sh
+go run ./tests/fixtures/miragemesh/C30/seed /path/to/private-state
+```
+
+The seed rejects an existing state directory, validates fixture licenses/provenance, runs the six declared negative cases and restores an independent copy of the accepted store and segments. `npm run test:clone` is the supported clean-clone proof; it also starts the web shell with the seeded C05/segment/certificate options and verifies `/readyz` and the read APIs before and after a restart.
 
 ## C28 local workload measurement
 

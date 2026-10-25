@@ -1,0 +1,7 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 test:clone
+> node scripts/clone-smoke.mjs
+
+{"schema_version": 1, "passed": true, "scope": "Source integrity only; runtime results belong to this commit's CI jobs", "commit": "8073ff6eb73cfdb6c478f2aef18615255e03ebe3", "git_tree": "5f270cecac168c64d37a10c03d291b70a38db2a7", "current_source_identity": "sha256:d0f0e05f584865b23aa973f3d3142b1b3ebaedab7009027df7b804caca38a066", "historical_manifest": {"commit": "09ea1d6f0216e4d2a567e7db256c062094ca3764", "verified_files": 291}, "historical_evidence": {"commit": "7e839b9591db5f5856a77a148aaf4d88b21ba547", "source_identity": "sha256:70cabd1f8cb58f9f1e05da9864196ba98e947dfab6c3eafe91ba4fc0aa021176"}, "runtime_tests_certified": false, "core_tasks_certified": []}
+Verified 9 engine suites and 201 required test anchors.
+{"passed":true,"stagedTree":"5f270cecac168c64d37a10c03d291b70a38db2a7","webOnly":{"proof":"real git clone -> npm run setup -> Go vet/race tests and discovery guard -> local event validation -> unified web and Go runtime startup","coreReady":false},"coreWorkflow":{"scenario":"tests/scenarios/clone-to-value.json","engine":"tests/fixtures/miragemesh/C30/seed -> outcome.json","browser":"tests/browser/clone-to-value.spec.ts","readiness":{"engineReady":true,"storageReady":true,"providersReady":true},"restart":true,"restoreEquivalent":true,"acceptedSequences":[1,2,3,5],"negativeCases":6,"passed":true},"proof":"real git clone -> npm run setup -> full C30 reference workflow -> engine/storage/provider readiness -> restart/restore -> real browser workflow"}

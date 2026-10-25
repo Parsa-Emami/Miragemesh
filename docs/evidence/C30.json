@@ -1,0 +1,196 @@
+{
+  "commit_id": "C30",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "local-verified",
+  "date": "2026-10-25",
+  "scope": "C30 local usability acceptance: the real C08 enrollment, C09 mTLS guard, C10/C11 signed configuration, C14/C15 bounded offline spool with explicit loss, C16 batch acknowledgement, C17/C18 segment projection, C19/C20 incident replay and durable triage, and C23 non-destructive retention preview compose into one fixture-driven workflow. The same accepted C05/segment/certificate state backs the real /readyz, Sensors, Incidents and Certificates read surfaces across a restart, and tests/browser/clone-to-value.spec.ts proves the browser workflow at 360px. A real staged-tree git clone runs setup, the workflow, all six typed negative cases, engine/storage/provider readiness, restart/restore and the browser proof. No product write ingress was added beyond the existing same-origin local triage. No hosted Actions, push, publication, release install or C40 claim.",
+  "base_commit": "80e7da6a4058b0b5e583576b3f165cf0434fc015",
+  "source_identity": "sha256:d0f0e05f584865b23aa973f3d3142b1b3ebaedab7009027df7b804caca38a066",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation",
+  "implementation_commit": null,
+  "commit_note": "No commit was created for this task. The recorded implementation identity covers the code, tests, scenario and documentation tree before the progress and handoff bookkeeping edits. The real clean-clone smoke created a temporary staged-tree commit 8073ff6eb73cfdb6c478f2aef18615255e03ebe3 (tree 5f270cecac168c64d37a10c03d291b70a38db2a7) from that index; its current_source_identity was sha256:d0f0e05f584865b23aa973f3d3142b1b3ebaedab7009027df7b804caca38a066. No ref, push, publication or hosted run occurred.",
+  "dependencies": {
+    "C29": "docs/evidence/C29.json; verified locally on base 36fdf3d4f7b1f82e7a4d89606ae7cc767d9b3241"
+  },
+  "artifacts": {
+    "acceptance_package": "tests/acceptance/",
+    "seed_runner": "tests/fixtures/miragemesh/C30/seed/main.go",
+    "clone_smoke": "scripts/clone-smoke.mjs",
+    "browser_spec": "tests/browser/clone-to-value.spec.ts",
+    "scenario": "tests/scenarios/clone-to-value.json",
+    "engine_guard": "scripts/verify-engine-tests.mjs",
+    "engine_guard_tests": "tests/engineering/engine-tests.test.mjs",
+    "private_install": "docs/evidence/private-install.json",
+    "logs": "docs/evidence/C30/"
+  },
+  "fixtures": {
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C30 reference-workflow input and expected outcomes, plus inert negative inputs. No real sensor, customer, certificate, credential, token or event data is present; all identity material and signing keys are generated ephemerally at run time.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C30/positive.json": "6b114a0deca8d0d4d0451a5f9e62cb2b70509b96e663c86852c5f946e4a340d9",
+      "tests/fixtures/miragemesh/C30/negative.json": "d3de7c9fbe524f02f3a7de199295181f29b4d699d848bcae9a237f135d4d72be",
+      "tests/fixtures/miragemesh/C30/expected-output.json": "c7b077851271fe36e4c07fe190da602d71254c25977e8779ea3d6e84e711567d",
+      "tests/scenarios/clone-to-value.json": "bc274f4afe1fb71422edf50164c4b3686aa2412afd3de05720eb4f16ceea4b91"
+    }
+  },
+  "environment": {
+    "os": "linux 7.0.0-38-generic",
+    "distribution": "Ubuntu 24.04.5 LTS",
+    "cpu_model": "AMD Ryzen 7 6800H with Radeon Graphics",
+    "cpu_count": 16,
+    "memory_mib": 31341,
+    "free_disk_mib": 122546,
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "npm_lock": "11.9.0",
+    "python": "3.12.3",
+    "git": "2.43.0",
+    "go": "go1.27.2 linux/amd64",
+    "go_toolchain_selection": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct",
+    "engine_version": "0.0.1",
+    "container_provider": "podman 4.9.3 rootless=true; the required C13 isolation anchors ran with the pinned Alpine image. The C30 acceptance harness itself opens only loopback test listeners.",
+    "playwright": "1.64.1"
+  },
+  "commands": [
+    {
+      "name": "gofmt",
+      "command": ["$(go env GOROOT)/bin/gofmt", "-l", "cmd", "internal", "tests"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C30/gofmt.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "No files were listed; all Go sources are formatted."
+    },
+    {
+      "name": "go-vet",
+      "command": ["go", "vet", "./..."],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C30/go-vet.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "No diagnostics."
+    },
+    {
+      "name": "go-test-race-all",
+      "command": ["go", "test", "-race", "-count=1", "-json", "./..."],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C30/engine-tests.jsonl",
+      "stored_output_sha256": "2db95bc9cfc4762501729b5ea0c5763dcd4522b573c743e4575da333bfb1f7a8",
+      "observed": "Exit 0 with empty stderr; 2445 JSONL events, 27 packages, 588 executed tests and 587 passes. The single opt-in TestC28TargetWorkloadMeasurement skip and package-only skips for packages without test files are not required anchors."
+    },
+    {
+      "name": "engine-anchor-guard",
+      "command": ["node", "scripts/verify-engine-tests.mjs", "docs/evidence/C30/engine-tests.jsonl"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C30/engine-anchors.log",
+      "stored_output_sha256": "5d21028de7f9fb0645051a6e9271786bdf405eb3eb9f68e7616274ff6e4815f1",
+      "observed": "Verified 9 engine suites and 201 required test anchors, including the six new C30 anchors."
+    },
+    {
+      "name": "npm-check",
+      "command": ["npm", "run", "check"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C30/npm-check.log",
+      "stored_output_sha256": "84e69d2673ef24a7e04a3db2d57c806cb9a8fdbff2f02a2166bcc52715da44a7",
+      "observed": "Plan validation, TypeScript check, web build, engine build and 95 Node tests passed (0 failed, 0 skipped)."
+    },
+    {
+      "name": "browser-tests",
+      "command": ["npm", "run", "test:browser"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C30/browser-tests.log",
+      "stored_output_sha256": "545f1151c13c6c7bc725cbda93192004d05fcddb6957f3b8e98396173326a9f4",
+      "observed": "21 Playwright tests passed, including tests/browser/clone-to-value.spec.ts against the real seeded C05/segment/certificate state and a real restart."
+    },
+    {
+      "name": "python-engineering-tests",
+      "command": ["python3", "-m", "unittest", "discover", "-s", "tests/engineering", "-p", "test_*.py", "-v"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C30/python-tests.log",
+      "stored_output_sha256": "992a714e997ab9583f5ac7f53c53db9756f1262ad380f51a0e3371ade3c26652",
+      "observed": "Ran 6 tests in 0.362s; OK."
+    },
+    {
+      "name": "repository-contracts",
+      "command": ["python3", "scripts/validate_repo.py"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C30/validate-repo.log",
+      "stored_output_sha256": "497467196bb62cbed516a2aa0d230eeadab0f5de0e846273a41952d6ff54dc00",
+      "observed": "VALIDATION PASSED; checked 338 JSON files and repository contract invariants."
+    },
+    {
+      "name": "plan-validation",
+      "command": ["npm", "run", "validate:plan"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C30/validate-plan.log",
+      "stored_output_sha256": "bbe7c0c8988c2df98f4c8d9f5e981c0fdcbc6965252577a3d0eace7e36cd67a5",
+      "observed": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred."
+    },
+    {
+      "name": "clean-clone-smoke",
+      "command": ["npm", "run", "test:clone"],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C30/clone-smoke.log",
+      "stored_output_sha256": "b94b925b133c7b1fcea762cebb1f3ca7f9c3051115b5428cddf176f2ed9d1d48",
+      "observed": "Real git clone of temporary staged commit 8073ff6 (tree 5f270c) -> npm run setup -> Go vet/race and 201 required anchors -> C30 seed with 8 passed steps, 6 passed negative cases and restore_equivalent true -> seeded /readyz with engineReady/storageReady/providersReady true and unchanged manifest/segment bytes across two server restarts -> tests/browser/clone-to-value.spec.ts passed -> existing unified web/Go startup proof passed separately. The clone reported current_source_identity sha256:d0f0e05f584865b23aa973f3d3142b1b3ebaedab7009027df7b804caca38a066."
+    }
+  ],
+  "results": {
+    "workflow": {
+      "steps": ["enroll", "apply-config", "event-01", "disconnect", "spool", "reconnect", "triage-retention", "restart-restore"],
+      "accepted_sequences": [1, 2, 3, 5],
+      "acknowledged_sequences": [1, 2, 3, 5],
+      "dropped_sequence": 4,
+      "loss": { "count": 1, "gaps": [{ "from": 4, "through": 4 }] },
+      "counts": { "config": 1, "event": 4, "ack": 4, "gap": 1, "enrollment": 2, "rotation": 1, "incident": 1 },
+      "segments": [
+        { "ordinal": 1, "records": 2, "sealed": true },
+        { "ordinal": 2, "records": 2, "sealed": false }
+      ],
+      "triage_entries": 1,
+      "retention_eligible": 0,
+      "coverage_complete": true,
+      "sensor": { "config_status": "current", "dropped_event_count": 1, "offline": false },
+      "restarted": true,
+      "restored": true,
+      "restore_equivalent": true,
+      "manifest_digest_observed": "64 lowercase hex characters; exact digest recorded in each run's outcome.json and compared byte-for-byte before and after restart"
+    },
+    "negative_cases": {
+      "enrollment-token-replay": "enrollment.ErrReplay",
+      "untrusted-client-certificate": "tls.handshake_rejected",
+      "unconfigured-batch-ingest": "sensor.ErrUnconfigured",
+      "malformed-event": "contracts.INVALID_INPUT",
+      "spool-overflow": "spool.ErrDropped",
+      "missing-fixture": "acceptance.ErrFixture"
+    },
+    "readiness": {
+      "before_restart": { "status": "ready", "engineReady": true, "storageReady": true, "providersReady": true },
+      "after_restart": { "status": "ready", "engineReady": true, "storageReady": true, "providersReady": true },
+      "manifest_and_segment_bytes_unchanged": true
+    },
+    "browser": {
+      "spec": "tests/browser/clone-to-value.spec.ts",
+      "viewport_width": 360,
+      "assertions": "Sensors shows sensor-01 online with current config and one durable drop; Incidents reports complete coverage and the durable triage reason; Certificates shows revision 1 current; no external request, private key or certificate request was exposed; state and segment bytes were unchanged across restart."
+    },
+    "engine": {
+      "suites": 9,
+      "required_anchors": 201,
+      "executed_tests": 588,
+      "passed_tests": 587,
+      "skipped_opt_in_test": "TestC28TargetWorkloadMeasurement (measurement requires an explicit constrained run)"
+    }
+  },
+  "observed_limitations": [
+    "This is a local Linux single-operator proof on the recorded host, not a second physical clean host, hosted Actions run, public ingress or multi-tenant deployment.",
+    "The full workflow is proved by the seed/acceptance harness and npm run test:clone; npm start alone does not create sensor state and does not add enrollment, signed-config or ingest write endpoints to the browser.",
+    "The browser read surfaces show existing C05/segment/certificate state; the only browser write remains the existing same-origin local incident triage.",
+    "The test-only length-prefixed TLS batch envelope is not a published ingest protocol.",
+    "No commit, push, deployment, publication, release artifact install or C40 claim was made.",
+    "The C13 rootless-container assertions ran in the required full Go suite with the pinned Alpine image; the C30 harness itself uses only loopback sockets and real temporary files."
+  ],
+  "rollback_or_recovery_observation": "The accepted store, segment bytes, manifest, triage history and loss accounting survived a real close/reopen of the C05 store and C17/C18 segment writer and an independent copied restore directory. A second run against the same state directory failed explicitly and left the accepted manifest unchanged, so the harness cannot overwrite newer accepted state with an old backup. The negative cases are repeatable with the same typed outcomes.",
+  "private_install": "docs/evidence/private-install.json"
+}
