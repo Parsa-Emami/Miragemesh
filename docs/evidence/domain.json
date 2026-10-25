@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "scope": "domain-network-boundaries",
+  "project": "MirageMesh",
+  "task": "C32",
+  "generated_at": "2026-10-25T14:35:00Z",
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C32 domain evidence proving loopback, origin and cache boundaries without requiring an owned public domain.",
+  "invariants": {
+    "public_domain_required": false,
+    "loopback_enforced": true,
+    "allowed_loopback_hosts": ["127.0.0.1", "localhost", "[::1]"],
+    "allowed_ingress_modes": ["loopback-direct", "private-reverse-proxy"],
+    "default_egress": "none",
+    "cache_boundaries": {
+      "dynamic_routes": "no-store",
+      "immutable_assets": "public, max-age=31536000, immutable"
+    },
+    "security_headers": {
+      "content_security_policy": "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'",
+      "x_content_type_options": "nosniff",
+      "referrer_policy": "no-referrer",
+      "permissions_policy": "camera=(), microphone=(), geolocation=()",
+      "x_frame_options": "DENY"
+    }
+  },
+  "reverse_proxy_template": {
+    "path": "ops/web/nginx.conf.template",
+    "protocols": ["TLSv1.2", "TLSv1.3"],
+    "default_policy": "deny all",
+    "loopback_upstream": "http://127.0.0.1:4307"
+  },
+  "verification": {
+    "test_suite": "tests/web/network-boundaries.test.mjs",
+    "fixtures": "tests/fixtures/miragemesh/C32/"
+  }
+}

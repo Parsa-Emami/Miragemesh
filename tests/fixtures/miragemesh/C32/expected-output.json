@@ -1,0 +1,23 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C32 expected boundary outcomes.",
+  "scope": "network-boundaries",
+  "loopback_enforced": true,
+  "public_domain_required": false,
+  "origin_enforced": true,
+  "cache_rules_enforced": true,
+  "security_headers_enforced": true,
+  "status_codes": {
+    "foreign_origin": 403,
+    "forbidden_origin_error": "forbidden_origin",
+    "invalid_path": 400,
+    "not_found": 404,
+    "method_not_allowed": 405,
+    "unintegrated_api": 503
+  },
+  "cache_headers": {
+    "dynamic_cache_control": "no-store",
+    "asset_cache_control": "public, max-age=31536000, immutable"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C32 negative network boundary test cases. Each input tests rejection or confinement.",
+  "cases": [
+    {
+      "name": "foreign-host-header",
+      "headers": { "Host": "attacker.example" },
+      "path": "/healthz",
+      "expected_status": 403,
+      "expected_error": "forbidden_origin"
+    },
+    {
+      "name": "subdomain-spoofed-host",
+      "headers": { "Host": "127.0.0.1.attacker.example" },
+      "path": "/healthz",
+      "expected_status": 403,
+      "expected_error": "forbidden_origin"
+    },
+    {
+      "name": "foreign-origin-header",
+      "headers": { "Origin": "http://attacker.example" },
+      "path": "/healthz",
+      "expected_status": 403,
+      "expected_error": "forbidden_origin"
+    },
+    {
+      "name": "null-origin-header",
+      "headers": { "Origin": "null" },
+      "path": "/healthz",
+      "expected_status": 403,
+      "expected_error": "forbidden_origin"
+    },
+    {
+      "name": "port-mismatched-origin",
+      "headers": { "Origin": "http://127.0.0.1:9999" },
+      "path": "/healthz",
+      "expected_status": 403,
+      "expected_error": "forbidden_origin"
+    },
+    {
+      "name": "non-loopback-engine-address",
+      "engine_address": "192.168.1.100:8080",
+      "expected_error": "Invalid loopback engine address."
+    },
+    {
+      "name": "remote-dns-engine-address",
+      "engine_address": "engine.internal:8080",
+      "expected_error": "Invalid loopback engine address."
+    },
+    {
+      "name": "non-loopback-bind-attempt",
+      "bind_host": "0.0.0.0",
+      "expected_error": "Bind to loopback and use the documented TLS proxy."
+    },
+    {
+      "name": "directory-traversal-assets",
+      "path": "/assets/../../package.json",
+      "expected_status": 400,
+      "expected_error": "invalid_path"
+    },
+    {
+      "name": "escaped-traversal-assets",
+      "path": "/assets/%2e%2e/%2e%2e/package.json",
+      "expected_status": 400,
+      "expected_error": "invalid_path"
+    }
+  ]
+}

@@ -155,7 +155,7 @@ export function requestEngineIncidents(address, { id, body, key, signal } = {}) 
   });
 }
 
-export function createWebServer({ root, config, projectId, engineAddress, readiness = {} }) {
+export function createWebServer({ root, config, projectId, engineAddress, readiness = {}, allowedHosts = [] }) {
   const valid = validateRuntimeConfig(config, projectId);
   const publicRoot = resolve(root);
   const policy = {
@@ -216,6 +216,7 @@ export function createWebServer({ root, config, projectId, engineAddress, readin
       components: result.components,
     };
   };
+  const permittedHosts = new Set(['127.0.0.1', 'localhost', '[::1]', ...allowedHosts]);
   const server = http.createServer({ requestTimeout: 15000, headersTimeout: 10000, keepAliveTimeout: 5000, maxHeaderSize: 16384 }, async (req, res) => {
     res.setHeader('Content-Security-Policy', csp);
     res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -229,8 +230,10 @@ export function createWebServer({ root, config, projectId, engineAddress, readin
     };
     const authority = req.headers.host;
     const port = server.address()?.port;
-    const allowed = typeof authority === 'string' && ['127.0.0.1', 'localhost', '[::1]'].some(host => authority === `${host}:${port}` || port === 80 && authority === host);
-    if (!allowed || req.headers.origin !== undefined && req.headers.origin !== `http://${authority}`) {
+    const allowed = typeof authority === 'string' && Array.from(permittedHosts).some(host => authority === `${host}:${port}` || (port === 80 || port === 443) && authority === host);
+    const origin = req.headers.origin;
+    const originMatch = origin === undefined || origin === `http://${authority}` || origin === `https://${authority}`;
+    if (!allowed || !originMatch) {
       send(403, '{"error":"forbidden_origin"}'); return;
     }
     const triagePath = /^\/api\/v1\/incidents\/(incident-[a-f0-9]{64})\/triage$/.exec((req.url ?? '').split('?')[0]);
@@ -249,7 +252,7 @@ export function createWebServer({ root, config, projectId, engineAddress, readin
       try {
         let body;
         if (triagePath) {
-          if (req.headers.origin !== `http://${authority}`) { send(403, '{"error":"forbidden_origin"}'); return; }
+          if (req.headers.origin !== `http://${authority}` && req.headers.origin !== `https://${authority}`) { send(403, '{"error":"forbidden_origin"}'); return; }
           if ((req.headers['content-type'] ?? '').split(';')[0].trim().toLowerCase() !== 'application/json') { send(415, '{"error":"json_required"}'); return; }
           if (typeof req.headers['idempotency-key'] !== 'string' || req.headers['idempotency-key'].length < 16 || req.headers['idempotency-key'].length > 128) { send(422, '{"error":"invalid_triage"}'); return; }
           const chunks = [];

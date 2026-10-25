@@ -1,0 +1,29 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C32 network boundary specification. No real customer data, credentials or private keys are present.",
+  "scope": "network-boundaries",
+  "loopback": {
+    "hosts": ["127.0.0.1", "localhost", "[::1]"],
+    "ports": [4173, 4307],
+    "default_host": "127.0.0.1"
+  },
+  "cache_control": {
+    "dynamic": "no-store",
+    "assets": "public, max-age=31536000, immutable"
+  },
+  "security_headers": {
+    "content_security_policy": "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'",
+    "x_content_type_options": "nosniff",
+    "referrer_policy": "no-referrer",
+    "permissions_policy": "camera=(), microphone=(), geolocation=()",
+    "x_frame_options": "DENY"
+  },
+  "ingress": {
+    "mode": "optional_reverse_proxy",
+    "proxy_type": "nginx",
+    "tls_protocols": ["TLSv1.2", "TLSv1.3"],
+    "default_action": "deny all",
+    "public_domain_required": false
+  }
+}

@@ -58,7 +58,11 @@ npm run test:clone
 npm run doctor
 ```
 
-`test:clone` performs a real local Git clone of the staged/committed source, runs setup, Go vet and uncached race tests with required-test discovery, executes the C30 reference workflow from `tests/scenarios/clone-to-value.json`, checks engine/storage/provider readiness and restart/restore against the accepted state, then runs `tests/browser/clone-to-value.spec.ts` in Chromium. Install the Playwright Chromium build once before the clone check. The older unified-startup, health and disabled-admission proof remains reported separately as `webOnly` in the command output. See ENGINE_TESTS.md for engine test discovery and ENGINE_LAUNCH.md for lifecycle tests. Optional hosting/package operations remain in WEB_RUNBOOK.md.
+`test:clone` performs a real local Git clone of the staged/committed source, runs setup, Go vet and uncached race tests with required-test discovery, executes the C30 reference workflow from `tests/scenarios/clone-to-value.json`, checks engine/storage/provider readiness and restart/restore against the accepted state, then runs `tests/browser/clone-to-value.spec.ts` in Chromium. Install the Playwright Chromium build once before the clone check. The older unified-startup, health and disabled-admission proof remains reported separately as `webOnly` in the command output. See ENGINE_TESTS.md for engine test discovery and ENGINE_LAUNCH.md for lifecycle tests. Optional hosting, network boundaries and package operations remain in WEB_RUNBOOK.md and `infra/deployment.md`.
+
+## C32 network boundaries and optional private hosting
+
+Local operation requires no owned public domain. Loopback bindings (`127.0.0.1` and `::1`), origin checks and cache boundaries are verified by `tests/web/network-boundaries.test.mjs`. For optional private hosting behind a TLS reverse proxy (e.g. Nginx with `ops/web/nginx.conf.template`), see [deployment.md](../../infra/deployment.md). External egress is absent by default, and core engine endpoints remain unexposed to public interfaces.
 
 ## C30 local reference workflow
 

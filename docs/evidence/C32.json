@@ -1,0 +1,102 @@
+{
+  "commit_id": "C32",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "local-verified",
+  "date": "2026-10-25",
+  "scope": "C32 hardened local launch and optional private hosting: proof of loopback-only binding, origin verification, and strict cache-control boundaries without requiring an owned public domain. Delivered infra/deployment.md, docs/evidence/domain.json, scripts/serve-web.mjs with allowedHosts support, tests/fixtures/miragemesh/C32/ and tests/web/network-boundaries.test.mjs. Verified that foreign Host/Origin requests fail with 403 forbidden_origin, dynamic routes carry Cache-Control: no-store, fingerprinted assets carry immutable caching, and engine addresses are strictly confined to local loopback.",
+  "base_commit": "601e396446765da158790a5bf3aa3914ec2f390e",
+  "source_identity": "sha256:04bbfcf4e226fa4350540813b742aef855ff40702c0094d466727ffa92ae379f",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation",
+  "implementation_commit": null,
+  "commit_note": "No commit was created for this task. The recorded implementation identity covers the network hardening code, fixtures, documentation, and tests before progress and handoff bookkeeping edits. No ref, push, publication or hosted run occurred.",
+  "dependencies": {
+    "C31": "docs/evidence/C31.json; verified locally on base 601e396446765da158790a5bf3aa3914ec2f390e"
+  },
+  "deliverables": {
+    "deployment_guide": "infra/deployment.md",
+    "domain_evidence": "docs/evidence/domain.json",
+    "web_server": "scripts/serve-web.mjs",
+    "network_tests": "tests/web/network-boundaries.test.mjs",
+    "runbook": "docs/engineering/CLONE_TO_RUN.md",
+    "fixtures": "tests/fixtures/miragemesh/C32/"
+  },
+  "fixtures": {
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C32 network boundary specification, negative test catalog, and expected boundary outcomes. No real customer data, credentials or private key material are present.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C32/positive.json": "ecd6c02310be7defa2b220a0c64a634ea4b4756c60fe6b524250febb99c480c9",
+      "tests/fixtures/miragemesh/C32/negative.json": "41a54ac1cd758af007c9e691e5e5a1dd0f96b7f0ce759dc15ec275a962b375a0",
+      "tests/fixtures/miragemesh/C32/expected-output.json": "bc732dab58db0b5afe2ec57e853bbcf94373e8a452a770db93b63e53af250b36"
+    }
+  },
+  "environment": {
+    "os": "windows",
+    "node": "v24.19.0",
+    "npm": "11.17.0",
+    "python": "3.14.7",
+    "git": "2.43.0"
+  },
+  "commands": [
+    {
+      "name": "validate-plan",
+      "command": ["npm", "run", "validate:plan"],
+      "exit_code": 0,
+      "observed": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred."
+    },
+    {
+      "name": "plan-validate-python",
+      "command": ["python", "scripts/plan.py", "validate"],
+      "exit_code": 0,
+      "observed": "PLAN VALIDATION PASSED — 40 intents, coverage and progress checked; no application runtime tests performed."
+    },
+    {
+      "name": "validate-repo",
+      "command": ["python", "scripts/validate_repo.py"],
+      "exit_code": 0,
+      "observed": "VALIDATION PASSED; Checked 250 JSON files and repository contract invariants."
+    },
+    {
+      "name": "network-boundaries-test",
+      "command": ["node", "--test", "tests/web/network-boundaries.test.mjs"],
+      "exit_code": 0,
+      "observed": "6 tests passed (0 failed, 0 skipped): fixtures validation, loopback rejection of foreign Host/Origin, cache-control and security headers, path confinement against directory traversal, engine loopback address validation, and optional private reverse proxy allowedHosts ingress."
+    }
+  ],
+  "results": {
+    "network_boundaries": {
+      "public_domain_required": false,
+      "loopback_binding_enforced": true,
+      "origin_verification_enforced": true,
+      "cache_control_dynamic": "no-store",
+      "cache_control_assets": "public, max-age=31536000, immutable",
+      "security_headers": {
+        "content_security_policy": true,
+        "x_content_type_options": "nosniff",
+        "referrer_policy": "no-referrer",
+        "permissions_policy": true,
+        "x_frame_options": "DENY"
+      },
+      "optional_private_ingress_supported": true
+    },
+    "negative_cases": {
+      "foreign_host": 403,
+      "foreign_origin": 403,
+      "null_origin": 403,
+      "non_loopback_engine": "rejected",
+      "path_traversal": 400
+    }
+  },
+  "observed_limitations": [
+    "No commit, push, hosted Actions run, package publication, or C40 claim was made.",
+    "Go toolchain is not installed natively on this Windows workstation host; engine execution was previously verified and certified in clean Linux environments (C03-C31).",
+    "Optional TLS/private ingress requires an operator-managed reverse proxy (e.g. Nginx); no public domain or public certificate is provisioned by the repository."
+  ],
+  "rollback_or_recovery_observation": "C32 introduces no persistent storage format changes or database modifications; rollback would be an isolated source revert of the deliverable files.",
+  "release_limits": [
+    "Local operation requires no public domain or external connectivity.",
+    "Engine remains bound exclusively to internal loopback IPC."
+  ]
+}

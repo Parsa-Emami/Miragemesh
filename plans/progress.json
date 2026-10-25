@@ -286,10 +286,12 @@
     },
     {
       "id": "C32",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C32.json"
+      ],
+      "source_identity": "sha256:04bbfcf4e226fa4350540813b742aef855ff40702c0094d466727ffa92ae379f",
+      "notes": "C32 verified locally: loopback binding, origin verification and cache-control boundaries proven without requiring an owned public domain. Delivered infra/deployment.md, docs/evidence/domain.json, scripts/serve-web.mjs with allowedHosts support, tests/fixtures/miragemesh/C32/ (positive, negative, expected-output) and tests/web/network-boundaries.test.mjs. Foreign host/origin requests reject with 403 forbidden_origin, dynamic routes carry Cache-Control: no-store, immutable fingerprinted assets are preserved, and engine addresses are strictly confined to loopback. Plan validation, repo checks and network boundaries tests passed."
     },
     {
       "id": "C33",
