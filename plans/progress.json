@@ -238,15 +238,15 @@
       "source_identity": "sha256:0b0efc54dcda3be76557383a9893f39fd11727208f87695e795d0a4c629bc9ba",
       "notes": "C26 verified locally on base 6b35c8bd9baa688ab73ba49ee9d93122d4d59fcc and committed as 3d40a1ca59d9c9bbaa2300918789ed4b9e2cde3a without pushing: one integrated scenario proves signed-bounded offline spool with durable gap/loss accounting, duplicate batch replay idempotency, real store restart convergence, continued delivery across the gap, typed negative batches and a no-network import boundary over the composed path. Existing C13 rootless-container egress and C14/C16 SIGKILL anchors ran in the same required suite (192 anchors). Full Go race/219 top-level tests, npm check with 82 Node tests and 6 Python tests passed with the documented Go toolchain environment. No browser run, hosted Actions, commit push, release or C30/C40 claim."
     },
-  {
-    "id": "C27",
-    "status": "verified",
-    "evidence": [
-      "docs/evidence/C27.json"
-    ],
-    "source_identity": "sha256:b6d2557976305cfa185aab7b420662a5053f76c4a3cd4651cbd296d0f7c36e57",
-    "notes": "C27 verified locally on base 32e1ce08a710de0a0ee8e926283ae9ee1a268d72 and committed as aadbb3371b6c8e614ab510babe25ebd9ea8e34c1 without pushing: a 16-surface security matrix and threat model bind every enabled web, HTTP, CLI, engine and storage surface to exact existing anchors, and a real-browser abuse suite proves CSP enforcement, import confinement, forbidden Host/Origin rejection before writes, strict triage key/media/body/object/replay rejection with unchanged segments, disabled read surfaces and inert stored content. No critical or high finding remains in the local single-operator profile; four low observations are documented. 20 browser tests, 82 Node tests, 192 engine anchors, repository contracts and 6 Python tests passed. No hosted Actions, public ingress, multi-tenant authorization, C30 or C40 claim."
-  },
+    {
+      "id": "C27",
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C27.json"
+      ],
+      "source_identity": "sha256:b6d2557976305cfa185aab7b420662a5053f76c4a3cd4651cbd296d0f7c36e57",
+      "notes": "C27 verified locally on base 32e1ce08a710de0a0ee8e926283ae9ee1a268d72 and committed as aadbb3371b6c8e614ab510babe25ebd9ea8e34c1 without pushing: a 16-surface security matrix and threat model bind every enabled web, HTTP, CLI, engine and storage surface to exact existing anchors, and a real-browser abuse suite proves CSP enforcement, import confinement, forbidden Host/Origin rejection before writes, strict triage key/media/body/object/replay rejection with unchanged segments, disabled read surfaces and inert stored content. No critical or high finding remains in the local single-operator profile; four low observations are documented. 20 browser tests, 82 Node tests, 192 engine anchors, repository contracts and 6 Python tests passed. No hosted Actions, public ingress, multi-tenant authorization, C30 or C40 claim."
+    },
     {
       "id": "C28",
       "status": "verified",
@@ -277,10 +277,12 @@
     },
     {
       "id": "C31",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C31.json"
+      ],
+      "source_identity": "sha256:50f670e97bfb65dfbd28473d0bf63b1805106dddcbbfd042d5df0a42de18c043",
+      "notes": "C31 verified locally on base 601e396 without committing: scripts/package.sh now builds the real web workspace and Go engine, then assembles miragemesh-0.0.1-linux-amd64 with the executable engine, built web assets, offline contracts/fixtures and resource inventory, a deterministic 489-file source archive, CycloneDX 1.5 SBOM, Apache-2.0/NOTICE/third-party texts and shipped React/Go license files, SHA-256 checksums and provenance. scripts/verify-artifact.mjs enforces required paths, executable engine, checksum coverage/integrity, unsafe or duplicate checksum paths, forbidden private material, provenance/source/SBOM/offline-resource contracts and clean artifact structure; ten negative mutations fail with their recorded typed codes. Two builds from one source/toolchain are byte-identical, the packaged runtime starts in isolation with /healthz, /readyz and engine health while disabled routes stay 503, and strace observes only loopback connect calls. 99 Node tests, 5 package tests, all Go packages, go vet, gofmt, 362 JSON repository checks, 21 Playwright tests and the staged-index clone smoke passed locally. The artifact was built from a dirty working tree as recorded in provenance; no commit, push, hosted run, publication or C40 claim was made."
     },
     {
       "id": "C32",

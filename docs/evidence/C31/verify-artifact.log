@@ -1,0 +1,14 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 verify:artifact
+> node scripts/verify-artifact.mjs dist/release
+
+{
+  "passed": true,
+  "errors": [],
+  "artifact": "miragemesh-0.0.1-linux-amd64",
+  "version": "0.0.1",
+  "files": 60,
+  "checksum_entries": 59,
+  "source_identity": "sha256:4c802470903ff52c3456ef385ce792c78111dcc8f4888e85d7b250b0371afa11",
+  "clean_source": false
+}

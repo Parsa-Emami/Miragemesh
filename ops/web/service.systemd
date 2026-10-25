@@ -1,5 +1,5 @@
 [Unit]
-Description=MirageMesh web application shell
+Description=MirageMesh complete local runtime
 After=network.target
 
 [Service]
@@ -7,8 +7,10 @@ Type=simple
 User=miragemesh-web
 Group=miragemesh-web
 WorkingDirectory=/srv/miragemesh/current
-ExecStart=/usr/bin/node scripts/serve-web.mjs --root web --port 4307 --config ops/web/runtime-config.json
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node scripts/start-local.mjs --port 4307 --root dist/web --config ops/web/runtime-config.json
 Restart=on-failure
+KillMode=control-group
 RestartSec=3
 TimeoutStopSec=15
 NoNewPrivileges=true

@@ -1,0 +1,15 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C31 expected artifact outcome. Exact hashes are recorded from the actual package run in C31 evidence.",
+  "artifact": "miragemesh-0.0.1-linux-amd64",
+  "version": "0.0.1",
+  "platform": "linux-amd64",
+  "checksum_algorithm": "sha256",
+  "sbom_format": "CycloneDX",
+  "sbom_spec_version": "1.5",
+  "source_archive_prefix": "miragemesh-0.0.1/",
+  "provenance_source_fields": ["head_commit", "tree", "source_identity", "staged_snapshot", "archive"],
+  "engine_version_json": { "status": "ok", "version": "0.0.1", "coreReady": false },
+  "complete_product": true
+}

@@ -1,0 +1,31 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 package
+> bash scripts/package.sh
+
+
+> @parsa-emami/miragemesh-web@0.0.1 build
+> npm run prepare:web && npm run typecheck && vite build --config apps/web/vite.config.ts && npm run build:engine
+
+
+> @parsa-emami/miragemesh-web@0.0.1 prepare:web
+> node scripts/generate-web-data.mjs
+
+
+> @parsa-emami/miragemesh-web@0.0.1 typecheck
+> tsc -p tsconfig.json
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 26 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.78 kB │ gzip:  0.46 kB
+dist/web/assets/index-D0FjDMz9.css    7.23 kB │ gzip:  2.30 kB
+dist/web/assets/index-CdT8mJ-s.js   274.57 kB │ gzip: 83.68 kB
+
+✓ built in 124ms
+
+> @parsa-emami/miragemesh-web@0.0.1 build:engine
+> node scripts/build-engine.mjs
+
+{"status":"ok","output":"/home/amirreza/Desktop/Projects/Miragemesh/dist/release","artifact":"miragemesh-0.0.1-linux-amd64","version":"0.0.1","files":60,"source_identity":"sha256:4c802470903ff52c3456ef385ce792c78111dcc8f4888e85d7b250b0371afa11","dirty":true,"source_archive":"a61803fe2be5f013ee3a8713290b0de303d1ce96349a93d5aaab5084105a6666","sbom":"fb785197f919164bb4f7678b4946055a8eb506e7a96534d231cf0f1c3c22c3a7","checksums":"87d78fbcd197e8cbe1f12db1a746b3f9a21ee534dbc30a2a89d76533f07e9c9c","verification":{"passed":true,"errors":[],"artifact":"miragemesh-0.0.1-linux-amd64","version":"0.0.1","files":60,"checksum_entries":59,"source_identity":"sha256:4c802470903ff52c3456ef385ce792c78111dcc8f4888e85d7b250b0371afa11","clean_source":false}}

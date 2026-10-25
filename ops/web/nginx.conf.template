@@ -1,4 +1,5 @@
 # Replace every __PLACEHOLDER__, run nginx -t, then enable the site.
+# Proxies the supervised local runtime; the engine stays bound to owned loopback.
 # All external traffic is denied until reviewed trusted CIDRs are explicitly added.
 server {
     listen 443 ssl;

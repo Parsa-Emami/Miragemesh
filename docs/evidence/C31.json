@@ -1,0 +1,338 @@
+{
+  "commit_id": "C31",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "local-verified",
+  "date": "2026-10-25",
+  "scope": "C31 complete reproducible local artifact packaging: scripts/package.sh builds the real web workspace and Go engine, then scripts/package-web.mjs assembles dist/release with the executable engine, built web assets, offline contracts/fixtures and resource inventory, a deterministic source archive and build recipe, a CycloneDX 1.5 SBOM, Apache-2.0/NOTICE/third-party texts, SHA-256 checksums and provenance. scripts/verify-artifact.mjs enforces required paths, checksum coverage and integrity, unsafe/duplicate checksum paths, forbidden private material, provenance/source/SBOM/offline-resource contracts and the executable engine. Two builds from one source and toolchain are byte-identical, the packaged runtime starts in isolation, and strace observes no non-loopback connection. No published release, push, hosted Actions run or C40 claim is made.",
+  "base_commit": "601e396446765da158790a5bf3aa3914ec2f390e",
+  "source_identity": "sha256:50f670e97bfb65dfbd28473d0bf63b1805106dddcbbfd042d5df0a42de18c043",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted tracked/untracked non-ignored paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation",
+  "implementation_commit": null,
+  "commit_note": "No commit was created for this task. The recorded implementation identity covers the packaging code, fixtures, licenses, tests, workflow and documentation before the progress, project-state, handoff and generated-project bookkeeping edits. The artifact provenance records the package-time full-tree identity. No ref, push, publication or hosted run occurred.",
+  "dependencies": {
+    "C30": "docs/evidence/C30.json; verified locally on base 80e7da6a4058b0b5e583576b3f165cf0434fc015"
+  },
+  "artifacts": {
+    "packaging_entrypoint": "scripts/package.sh",
+    "source_packager": "scripts/package-source.mjs",
+    "artifact_packager": "scripts/package-web.mjs",
+    "artifact_verifier": "scripts/verify-artifact.mjs",
+    "artifact_contract": "docs/release/ARTIFACTS.md",
+    "notices": "THIRD_PARTY_NOTICES.md",
+    "service": "ops/web/service.systemd",
+    "proxy_template": "ops/web/nginx.conf.template",
+    "diagnostics": "ops/diagnostics.md",
+    "package_tests": "tests/web/package-complete.test.mjs",
+    "logs": "docs/evidence/C31/"
+  },
+  "fixtures": {
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C31 packaging contract, negative mutations and expected artifact outcome. No real sensor, customer, credential, private key or hosted-service data is present.",
+    "sha256": {
+      "tests/fixtures/miragemesh/C31/positive.json": "0d2a46df91d5b3c0489fb1822773c319df829bd5e4e055ae71c10412fda3a243",
+      "tests/fixtures/miragemesh/C31/negative.json": "dc87cb9a4fc392cca4dea74763b50c87a0e6a0f9f643bce30a03fcf926fdc717",
+      "tests/fixtures/miragemesh/C31/expected-output.json": "d3cb3f684fff4d6c237383203b1c0bb9a56a16239fcc91fd7e0868d1d4b131b0"
+    },
+    "shipped_license_sha256": {
+      "licenses/react-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "licenses/react-dom-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "licenses/scheduler-MIT.txt": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "licenses/go-BSD-3-Clause.txt": "911f8f5782931320f5b8d1160a76365b83aea6447ee6c04fa6d5591467db9dad"
+    }
+  },
+  "environment": {
+    "os": "linux 7.0.0-38-generic",
+    "distribution": "Ubuntu 24.04.5 LTS",
+    "machine": "x86_64",
+    "cpu_count": 16,
+    "memory_mib": 31341,
+    "free_disk_mib": 122650,
+    "node": "v24.19.0",
+    "npm": "11.9.0 invoked through the pinned npm CLI package",
+    "npm_lock": "11.9.0",
+    "go": "go1.27.2 linux/amd64",
+    "go_toolchain_selection": "GOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY=https://proxy.golang.org|direct",
+    "python": "3.12.3",
+    "git": "2.43.0",
+    "podman": "4.9.3 rootless",
+    "strace": "6.8",
+    "tar": "GNU tar 1.35",
+    "gzip": "1.12",
+    "playwright": "1.64.1",
+    "engine_version": "0.0.1"
+  },
+  "commands": [
+    {
+      "name": "validate-plan",
+      "command": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run validate:plan"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/validate-plan.log",
+      "stored_output_sha256": "bbe7c0c8988c2df98f4c8d9f5e981c0fdcbc6965252577a3d0eace7e36cd67a5",
+      "observed": "Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred."
+    },
+    {
+      "name": "plan-validate-python",
+      "command": [
+        "python3",
+        "scripts/plan.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/plan-validate.log",
+      "stored_output_sha256": "80db941735ead06893f77b7665ee16dc48e94576f81377fc2591985f0778233d",
+      "observed": "PLAN VALIDATION PASSED \u2014 40 intents, coverage and progress checked; no application runtime tests performed."
+    },
+    {
+      "name": "package-complete-artifact",
+      "command": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run package"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/package.log",
+      "stored_output_sha256": "2282b58497781a5165bb345dbce7456e541e864350cd873fbff0830496b76468",
+      "observed": "Built web workspace and engine, then packaged miragemesh-0.0.1-linux-amd64 with 60 files and 59 checksummed entries; provenance recorded source identity sha256:4c802470903ff52c3456ef385ce792c78111dcc8f4888e85d7b250b0371afa11, dirty=true, source archive sha256 a61803fe2be5f013ee3a8713290b0de303d1ce96349a93d5aaab5084105a6666, SBOM sha256 fb785197f919164bb4f7678b4946055a8eb506e7a96534d231cf0f1c3c22c3a7 and SHA256SUMS.txt sha256 87d78fbcd197e8cbe1f12db1a746b3f9a21ee534dbc30a2a89d76533f07e9c9c."
+    },
+    {
+      "name": "verify-artifact",
+      "command": [
+        "npx",
+        "--yes",
+        "--package=npm@11.9.0",
+        "--call",
+        "npm run verify:artifact"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/verify-artifact.log",
+      "stored_output_sha256": "5e4b4b4b4f920b2a84d00c2c2cee5bbba406a531fd7012b5fcc813abaaf689d8",
+      "observed": "passed=true, errors=[], artifact=miragemesh-0.0.1-linux-amd64, version=0.0.1, files=60, checksum_entries=59, source_identity=sha256:4c802470903ff52c3456ef385ce792c78111dcc8f4888e85d7b250b0371afa11, clean_source=false."
+    },
+    {
+      "name": "checksum-manifest",
+      "command": [
+        "bash",
+        "-lc",
+        "cd dist/release && sha256sum -c SHA256SUMS.txt"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/checksums.log",
+      "stored_output_sha256": "b29b817ce36e889098ef5685632cb07f4086401e027c636f84be49979ff2a268",
+      "observed": "All 59 listed artifact files reported OK."
+    },
+    {
+      "name": "package-tests",
+      "command": [
+        "node",
+        "--test",
+        "tests/web/package-complete.test.mjs"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/package-tests.log",
+      "stored_output_sha256": "bfb06fb7552308d4009f91184e2b2e969fa9bc1e6861186557906332567e0341",
+      "observed": "5 tests passed: complete-artifact verification, two byte-identical builds, isolated runtime startup with health/ready/engine-health and disabled 503 route, strace no-internet assertion, and 10 negative mutations with recorded error semantics."
+    },
+    {
+      "name": "npm-test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/npm-test.log",
+      "stored_output_sha256": "773fc12b69426545436250af2fcb532ff20a935daa74e9a4194b382e51371d73",
+      "observed": "99 tests passed, 0 failed, 0 skipped."
+    },
+    {
+      "name": "go-test-all",
+      "command": [
+        "go",
+        "test",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/go-test.log",
+      "stored_output_sha256": "92d0bdceb566baf577dedbc05300a994697f69dcbd84065764add432d69172ef",
+      "observed": "All Go packages reported ok or no test files; exit 0."
+    },
+    {
+      "name": "go-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/go-vet.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "No diagnostics."
+    },
+    {
+      "name": "gofmt",
+      "command": [
+        "$(go env GOROOT)/bin/gofmt",
+        "-l",
+        "cmd",
+        "internal",
+        "tests"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/gofmt.log",
+      "stored_output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": "No files were listed."
+    },
+    {
+      "name": "repository-contracts",
+      "command": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/validate-repo.log",
+      "stored_output_sha256": "cd7bc5fa45bbee8a5795c407ee4f727743d404a5fcf1c98e2a66092dd62bc387",
+      "observed": "VALIDATION PASSED; checked 362 JSON files and repository contract invariants."
+    },
+    {
+      "name": "browser-tests",
+      "command": [
+        "npm",
+        "run",
+        "test:browser"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/browser-tests.log",
+      "stored_output_sha256": "c565838d31135530e362e33ca57a2d72e70d39d98125d151bc7da83fd22be71d",
+      "observed": "21 Playwright tests passed."
+    },
+    {
+      "name": "clone-smoke",
+      "command": [
+        "npm",
+        "run",
+        "test:clone"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/clone-smoke.log",
+      "stored_output_sha256": "e13640dbe02e9f5a54c1050d9506f536aaea80a5e38b1b442723a617d8bb6ef1",
+      "observed": "Existing C30 staged-index clone smoke passed: setup, 9 engine suites/201 required anchors, full workflow, 6 negative cases, seeded readiness, restart/restore and real browser workflow. Because no changes were staged, this exercises the index equal to HEAD rather than the dirty C31 working tree."
+    },
+    {
+      "name": "npm-check",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "exit_code": 0,
+      "output_path": "docs/evidence/C31/npm-check.log",
+      "stored_output_sha256": "c9266ff1a883c589318263765b3e4f46657a8a5a266eb0959fc669e268f3efa1",
+      "observed": "Plan validation, TypeScript check, web build, engine build and 99 Node tests passed (0 failed, 0 skipped), including the five complete-artifact tests."
+    }
+  ],
+  "results": {
+    "artifact": {
+      "name": "miragemesh-0.0.1-linux-amd64",
+      "platform": "linux-amd64",
+      "version": "0.0.1",
+      "files": 60,
+      "checksum_entries": 59,
+      "engine_sha256": "e238f909b47f9d96de22bb6b088d7ab8f8c1afa91ea6e253fc62521d376a9f2d",
+      "web_index_sha256": "e2a61a2750b9df969ba95d3898901eaf6f1b29439a57e58624c176d450301804",
+      "source_archive_sha256": "a61803fe2be5f013ee3a8713290b0de303d1ce96349a93d5aaab5084105a6666",
+      "source_archive_files": 489,
+      "sbom_sha256": "fb785197f919164bb4f7678b4946055a8eb506e7a96534d231cf0f1c3c22c3a7",
+      "checksums_sha256": "87d78fbcd197e8cbe1f12db1a746b3f9a21ee534dbc30a2a89d76533f07e9c9c",
+      "complete_product": true,
+      "web_only": false,
+      "dirty_tree": true
+    },
+    "verification": {
+      "passed": true,
+      "errors": [],
+      "required_paths_enforced": true,
+      "executable_engine_enforced": true,
+      "checksum_coverage_and_integrity_enforced": true,
+      "unsafe_duplicate_checksum_paths_rejected": true,
+      "forbidden_private_material_rejected": true,
+      "provenance_sbom_offline_contracts_enforced": true
+    },
+    "reproducibility": {
+      "two_builds_byte_identical": true,
+      "comparison": "Two artifacts built from one source and toolchain into separate temporary directories; every file compared byte-for-byte.",
+      "scope": "Same source tree, GNU tar/gzip, Node/Go/npm versions and UTC locale. No cross-toolchain reproducibility claim."
+    },
+    "runtime": {
+      "start_command": [
+        "node",
+        "scripts/start-local.mjs",
+        "--port",
+        "0"
+      ],
+      "healthz": 200,
+      "readyz": 200,
+      "api_engine_health": {
+        "status": 200,
+        "scope": "engine-runtime",
+        "coreReady": false,
+        "version": "0.0.1"
+      },
+      "disabled_route": {
+        "path": "/api/v1/certificates",
+        "status": 503,
+        "error": "certificate_status_unavailable"
+      }
+    },
+    "no_egress": {
+      "method": "strace -f -e trace=connect on packaged runtime startup and health probes",
+      "internet_family_connects": "All observed AF_INET connects were loopback (127.0.0.1 or ::1)",
+      "passed": true
+    },
+    "negative_cases": {
+      "missing-engine": "missing_required_path",
+      "missing-sbom": "missing_required_path",
+      "missing-source-archive": "missing_required_path",
+      "missing-notice": "missing_required_path",
+      "checksum-mismatch": "checksum_mismatch",
+      "web-only-artifact": "missing_required_path",
+      "forbidden-private-material": "forbidden_material",
+      "unsafe-checksum-path": "unsafe_checksum_path",
+      "duplicate-checksum-entry": "duplicate_checksum_entry",
+      "incomplete-checksum-coverage": "checksum_coverage"
+    },
+    "regression": {
+      "node_tests": "99 passed, 0 failed, 0 skipped",
+      "package_tests": "5 passed",
+      "go_test": "all packages ok",
+      "go_vet": "no diagnostics",
+      "gofmt": "no files listed",
+      "repository_json_files_checked": 362,
+      "browser_tests": "21 passed",
+      "clone_smoke": "passed on the staged index equal to HEAD"
+    }
+  },
+  "observed_limitations": [
+    "The artifact was packaged from a dirty working tree and provenance records dirty=true; it is a local build, not a releasable clean-source release.",
+    "No commit, push, hosted Actions run, package publication, public download or C40 claim was made.",
+    "Node.js, npm CLI, Go toolchain, Podman and the pinned Alpine image are host prerequisites recorded in the SBOM with scope=excluded; they are not redistributed in this artifact.",
+    "The reproducibility test proves byte-identical output only for the recorded host and toolchain, not across different Node, Go, tar or gzip versions.",
+    "The clone smoke command exercised the staged index, which equals HEAD because no changes were staged; the C31 dirty working tree itself is covered by the package tests, npm tests and artifact verification instead."
+  ],
+  "rollback_or_recovery_observation": "C31 accepts no stateful product data; rollback would be a source revert. The packager assembles output in a hidden staging directory, verifies it, and only then renames it into place; negative-case tests mutate temporary artifact copies and leave dist/release untouched.",
+  "release_limits": [
+    "The artifact is installed locally and is not signed, published, uploaded to a package registry or hosted by the project.",
+    "It contains no authentication service, telemetry or customer data.",
+    "engineEnabled remains false; unsupported domain routes return 503."
+  ],
+  "artifact_provenance_source_identity": "sha256:4c802470903ff52c3456ef385ce792c78111dcc8f4888e85d7b250b0371afa11"
+}

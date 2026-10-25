@@ -1,0 +1,13 @@
+✔ complete artifact verifies its engine, web, offline resources, source, SBOM, notices and provenance (1382.714526ms)
+✔ two builds from one source and toolchain are byte-identical (31.90696ms)
+✔ packaged runtime starts in isolation and exposes only supported local surfaces (102.083167ms)
+✔ runtime makes no internet connection by default (119.389315ms)
+✔ negative artifact mutations fail with the recorded error semantics (692.120558ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11703.955005

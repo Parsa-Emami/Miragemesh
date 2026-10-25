@@ -1,6 +1,34 @@
 # Third-party inventory
 
-Updated 2026-10-19. Web package facts come from the committed npm lockfile. Toolchain artifact pins and source/license references are in `docs/engineering/toolchain-lock.json`. Complete distributed notices/license texts and SBOM are C31 work; this index is not compliance certification.
+Updated 2026-10-25 for the C31 complete local artifact. This index distinguishes redistributed code from build-only tools and host prerequisites; the CycloneDX SBOM in `dist/release/sbom.cdx.json` is the machine-readable inventory.
+
+## Redistributed in the complete artifact
+
+| Component | Version | License | Notice |
+|---|---|---|---|
+| MirageMesh | 0.0.1 | Apache-2.0 | `LICENSE`, `NOTICE` |
+| React | 19.3.1 | MIT | `licenses/react-MIT.txt` |
+| React DOM | 19.3.1 | MIT | `licenses/react-dom-MIT.txt` |
+| scheduler | 0.28.0 | MIT | `licenses/scheduler-MIT.txt` |
+| Go standard library (compiled into the engine) | 1.27.2 | BSD-3-Clause | `licenses/go-BSD-3-Clause.txt` |
+
+The built JavaScript bundle contains React, React DOM and scheduler. The Go license text covers the runtime and standard library compiled into `dist/engine/miragemesh`. The source archive contains the corresponding source and build recipe.
+
+## Host prerequisites, not redistributed
+
+| Resource | Version | License | Route |
+|---|---|---|---|
+| Node.js | 24.19.0 | MIT | Official archive pinned in `docs/engineering/toolchain-lock.json`; installed by the operator. |
+| npm CLI | 11.9.0 | Artistic-2.0 | Invoked separately; not bundled with the artifact. |
+| Go toolchain | 1.27.2 | BSD-3-Clause | Used to build the engine; not required at runtime. |
+| Podman provider | 4.9.3 (`4.9.3+ds1-1ubuntu0.2`) | Apache-2.0 (main project; package files may vary) | Ubuntu source package; optional decoy workflow. |
+| Alpine decoy image | 3.23.2, digest `sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62` | MIT base plus GPL-2.0-only busybox, Apache-2.0 OpenSSL, MPL-2.0 ca-certificates and zlib | Operator pulls the pinned digest; not redistributed. Per-component licenses are recorded in the toolchain lock and SBOM. |
+
+The local product runs without a paid or cloud account. Only the optional decoy workflow pulls the Alpine image.
+
+## Build/test-only inventory (not redistributed)
+
+The following declared versions come from the committed npm lockfile and are used to build or test the project. They are not part of `dist/release`.
 
 | Resource | Version | Declared license |
 |---|---|---|
@@ -88,15 +116,8 @@ These exact development-only versions come from package-lock.json, including the
 | `json-schema-traverse` | 1.0.0 | MIT |
 | `require-from-string` | 2.0.2 | MIT |
 
-Sources: [Ajv](https://ajv.js.org/), [formats](https://github.com/ajv-validator/ajv-formats). Complete shipped-artifact notices remain C31 work.
+Sources: [Ajv](https://ajv.js.org/), [formats](https://github.com/ajv-validator/ajv-formats).
 
-## Planned engine resources
+## Notice completeness
 
-| Resource | Version | Declared license | Source / notes |
-|---|---|---|---|
-| Node.js runtime | 24.19.0 | MIT | [release source](https://github.com/nodejs/node/tree/v24.19.0); Node archive SHA-256 is in the toolchain lock. |
-| npm CLI (separate invocation) | 11.9.0 | Artistic-2.0 | [release source](https://github.com/npm/cli/tree/v11.9.0); Node 24.19.0 bundles npm 11.17.0, so use the pinned CLI package. |
-| Go toolchain | 1.27.2 | BSD-3-Clause | [source tag](https://go.googlesource.com/go/+/refs/tags/go1.27.2); official source build path and checksum metadata are in the toolchain lock. |
-| Podman Ubuntu provider | 4.9.3 (`4.9.3+ds1-1ubuntu0.2`) | Apache-2.0 (main project; package files may vary) | [Ubuntu source package](https://launchpad.net/ubuntu/+source/libpod/4.9.3+ds1-1ubuntu0.2); reference package is for Ubuntu 24.04 amd64. |
-
-No OCI image, external grammar or rule bundle has been selected; those choices belong to C12/C13. The package inventory above is not a complete redistribution notice or SBOM.
+`dist/release/THIRD_PARTY_NOTICES.md`, `dist/release/licenses/`, `dist/release/sbom.cdx.json` and `dist/release/provenance.json` are generated from the same source and toolchain lock during packaging. A missing or unreferenced required component blocks the artifact verifier. This inventory is not a legal conclusion or a certification of every transitive license.

@@ -5,7 +5,7 @@
 [CI source integrity and dependency updates](docs/engineering/CI_SOURCE_INTEGRITY.md)
 
 
-Open-source local-first web application under [Apache-2.0](LICENSE). **Current implementation: web workspace, supervised Go runtime and the C30 local reference-workflow acceptance harness; direct browser write ingress remains limited to local incident triage.**
+Open-source local-first web application under [Apache-2.0](LICENSE). **Current implementation: web workspace, supervised Go runtime, the C30 local reference-workflow acceptance harness and the C31 complete local artifact; direct browser write ingress remains limited to local incident triage. No artifact has been published.**
 
 ## Clone and run the current workspace
 
@@ -16,6 +16,9 @@ git clone https://github.com/Parsa-Emami/Miragemesh.git
 cd Miragemesh
 npm run setup
 npm start
+# or build and verify the complete local artifact:
+npm run package
+npm run verify:artifact
 ```
 
 Open http://127.0.0.1:4173. The workspace includes a roadmap browser, local bounded JSON structure preview, read-only Sensors and Certificates views, and source-backed incident replay and triage over explicit local engine state. `npm run test:clone` proves the C30 reference workflow end to end in a real clone: enrollment, mTLS batch ingest, signed configuration, offline spool and explicit loss, duplicate delivery, triage, non-destructive retention preview, restart and restore, followed by the real browser workflow. No Python, database, paid/cloud account, public domain or sibling clone is needed. The supervised HTTP runtime exposes health/version and the enabled read surfaces. A separate local command validates v1 HTTP-event documents without ingesting or storing them. See [the event contract](contracts/README.md). [Clone guide](docs/engineering/CLONE_TO_RUN.md).
@@ -24,7 +27,7 @@ Open http://127.0.0.1:4173. The workspace includes a roadmap browser, local boun
 
 Enroll sensor -> apply signed config -> isolated decoy event -> disconnect -> spool -> reconnect with duplicate ACK test -> triage and retention gap check.
 
-[C30](plans/commits/C30.md) proves the first locally usable supported product from a clean clone, including negative cases, restart and restore. [C40](plans/commits/C40.md) remains the complete published OSS v1 gate. [Runtime resources](ops/runtime-requirements.json).
+[C30](plans/commits/C30.md) proves the first locally usable supported product from a clean clone, including negative cases, restart and restore. [C31](docs/release/ARTIFACTS.md) packages that product with the real engine, web build, offline resources, source archive, SBOM, notices, checksums and provenance. [C40](plans/commits/C40.md) remains the complete published OSS v1 gate. [Runtime resources](ops/runtime-requirements.json).
 
 ## Implement the next commit
 

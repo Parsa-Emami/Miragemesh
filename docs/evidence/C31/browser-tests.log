@@ -1,0 +1,30 @@
+
+> @parsa-emami/miragemesh-web@0.0.1 test:browser
+> playwright test
+
+
+Running 21 tests using 8 workers
+
+  ✓   4 apps/web/tests/sensors.spec.ts:7:1 › sensor page displays offline, stale config and durable drops from the engine response (465ms)
+  ✓   6 tests/browser/workspace.spec.ts:2:1 › workspace, local preview, navigation and roadmap filters work (545ms)
+  ✓   5 tests/browser/security.spec.ts:46:1 › shell hardening, import abuse and disabled surfaces fail closed (620ms)
+  ✓   9 apps/web/tests/sensors.spec.ts:22:1 › sensor page rejects an invalid versioned response and explains unavailable state (162ms)
+  ✓  10 tests/browser/workspace.spec.ts:25:1 › runtime failure remains explicit and the workspace is keyboard accessible at 360px (172ms)
+  ✓  13 tests/browser/workspace.spec.ts:37:1 › configuration failure blocks workspace startup (113ms)
+  ✓  12 apps/web/tests/sensors.spec.ts:28:1 › sensor page keeps last snapshot explicitly stale during an outage and recovers (209ms)
+  ✓   2 apps/web/tests/certificates.spec.ts:15:1 › real certificate state shows cutoff, offline recovery and restart at 360px without private material (998ms)
+  ✓   3 apps/web/tests/incidents.spec.ts:23:1 › real incident replay escapes source bytes and keyboard triage survives engine restart (1.0s)
+  ✓   1 apps/web/tests/retention.spec.ts:9:1 › real retention audit is keyboard accessible, inert and durable at 360px (1.1s)
+  ✓   8 apps/web/tests/updates.spec.ts:12:1 › real update authority and scoped recovery survive restart with accessible evidence at 360px (1.0s)
+  ✓  11 tests/browser/security.spec.ts:139:1 › triage rejects forged authorization and stored payloads remain inert (606ms)
+  ✓  14 apps/web/tests/certificates.spec.ts:54:1 › certificate status retains a stale snapshot during a failed read and rejects inconsistent coverage (251ms)
+  ✓  17 apps/web/tests/certificates.spec.ts:72:1 › certificate page explains a disabled ledger without suggesting a successful rotation (99ms)
+  ✓  16 apps/web/tests/updates.spec.ts:32:1 › update read failures retain stale evidence and untrusted strings stay inert (245ms)
+  ✓  18 apps/web/tests/updates.spec.ts:39:1 › update page explains unavailable authority without claiming verification (106ms)
+  ✓  15 apps/web/tests/incidents.spec.ts:65:1 › a committed but interrupted triage retries the same key without duplicating history (568ms)
+  ✓  19 apps/web/tests/incidents.spec.ts:89:1 › empty coverage and interrupted reads are explicit and retain a stale snapshot at 360px (235ms)
+  ✓   7 tests/browser/clone-to-value.spec.ts:96:1 › clone-to-value: real seeded engine state completes the reference workflow and survives restart (1.8s)
+  ✓  20 apps/web/tests/incidents.spec.ts:106:1 › incidents explains the disabled engine at 360px without egress (91ms)
+  ✓  21 apps/web/tests/incidents.spec.ts:117:1 › incidents rejects an invalid response without presenting it as empty (101ms)
+
+  21 passed (3.2s)

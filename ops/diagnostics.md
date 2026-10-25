@@ -70,3 +70,41 @@ npm run check
 ```
 
 The C29 fixtures in `tests/fixtures/miragemesh/C29/` describe the component model, expected statuses, redaction sentinels and log bounds. The tests exercise a real Go engine with a real C05-backed sensor store, unreachable and malformed engines, failing required and optional providers, sentinel strings in request metadata and upstream bodies, log overflow, missing web assets and restart.
+
+## Local artifact diagnostics
+
+Check a packaged artifact before starting it:
+
+```sh
+sha256sum -c SHA256SUMS.txt
+dist/engine/miragemesh --version
+node --version
+```
+
+`sha256sum -c` must cover every regular file except `SHA256SUMS.txt` itself. A failure
+means the tree was modified after packaging; do not run it. `provenance.json` records the
+source identity, toolchain, archive digest and SBOM digest; `source/provenance.json` is
+the same record kept beside the source archive.
+
+Startup failures:
+
+- `Missing or unconfined web index` means `dist/web/index.html` is absent or the root
+  option points outside the artifact. Re-extract the immutable artifact.
+- `Engine exited unexpectedly` means the packaged engine cannot bind owned loopback or
+  the host rejected execution. Check `file dist/engine/miragemesh` and the architecture.
+- `readyz` failing while `healthz` passes means the web process is alive but runtime
+  configuration or built assets are invalid. Compare `ops/web/runtime-config.json` with
+  the copy in `dist/web/runtime-config.json`.
+- A 503 from a domain route is expected in this release. The public engineEnabled flag
+  stays false and unsupported routes must remain unavailable.
+
+The full decoy workflow additionally requires rootless Podman 4.9.3 and the pinned
+`docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62`
+image. Those host prerequisites are inventoried in `sbom.cdx.json` and
+`docs/engineering/toolchain-lock.json`; they are not redistributed in this artifact.
+Pulling that image is the only expected network operation, and only when the operator
+chooses the decoy workflow. The local reference workflow itself performs no egress.
+
+No login, telemetry, hosted database or cloud account is included. Do not expose the
+loopback listener; use the supplied Nginx template only after reviewing its deny-all
+admission rule.

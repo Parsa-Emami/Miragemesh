@@ -1,4 +1,4 @@
-.PHONY: validate next status hashes bootstrap dev build test package
+.PHONY: validate next status hashes bootstrap dev build test package verify-package
 validate:
 	python3 scripts/plan.py validate
 next:
@@ -17,4 +17,6 @@ build:
 test:
 	npm test
 package:
-	npm run package:web
+	npm run package
+verify-package:
+	npm run verify:artifact
