@@ -5,14 +5,15 @@ import { fileURLToPath } from 'node:url';
 export async function validateReference(root, scenario) {
   const errors = [];
   if (scenario?.schema_version !== 1) errors.push('unsupported scenario version');
-  if (scenario?.status !== 'planned') errors.push('scenario must remain planned');
+  if (!['planned', 'implemented'].includes(scenario?.status)) errors.push('unsupported scenario status');
   if (!Array.isArray(scenario?.steps) || !scenario.steps.length) errors.push('scenario requires workflow steps');
   else for (const [index, step] of scenario.steps.entries()) {
     if (!step?.id || !step?.action || !step?.expected_result) errors.push(`step ${index + 1} requires id, action and expected_result`);
   }
   if (!Array.isArray(scenario?.expected_invariants) || !scenario.expected_invariants.length || scenario.expected_invariants.some(value => typeof value !== 'string' || !value.trim())) errors.push('scenario requires expected invariants');
   if (!Array.isArray(scenario?.negative_cases) || !scenario.negative_cases.length || scenario.negative_cases.some(item => !item?.id || !item?.action || !item?.expected_failure)) errors.push('scenario requires negative cases with expected failures');
-  if (scenario?.execution?.engine !== 'not implemented' || scenario?.execution?.passed !== false) errors.push('scenario cannot claim an unimplemented engine passed');
+  if (scenario?.status === 'planned' && (scenario?.execution?.engine !== 'not implemented' || scenario?.execution?.passed !== false)) errors.push('scenario cannot claim an unimplemented engine passed');
+  if (scenario?.status === 'implemented' && (scenario?.execution?.engine !== 'tests/acceptance (go test ./tests/acceptance/)' || scenario?.execution?.browser !== 'tests/browser/clone-to-value.spec.ts' || scenario?.execution?.clean_host !== 'scripts/clone-smoke.mjs' || scenario?.execution?.passed !== true)) errors.push('implemented scenario requires the supported acceptance, browser and clone runners');
   if (!Array.isArray(scenario?.fixtures) || scenario.fixtures.length < 3) errors.push('scenario requires positive, invalid and expected-output fixture references');
 
   let canonicalRoot;

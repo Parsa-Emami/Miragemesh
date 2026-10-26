@@ -19,7 +19,7 @@ MirageMesh runs locally on your workstation or private server. All dependencies 
 - **Node.js**: `v24.19.0` (managed via nvm or package manager).
 - **npm CLI**: `11.9.0` (pinned in `packageManager`).
 - **Go Toolchain**: Installed `go` binary (1.21+); setup automatically selects/downloads Go `1.27.2` into local cache without altering system Go.
-- **Podman**: `4.9.3` or later in rootless mode (e.g., Ubuntu reference package `4.9.3+ds1-1ubuntu0.2`) with user namespace and cgroup delegation enabled.
+- **Podman**: exactly `4.9.3` (the locked provider) in rootless mode (e.g., Ubuntu reference package `4.9.3+ds1-1ubuntu0.2`) with user namespace and cgroup delegation enabled.
 - **Git**: `2.40+`.
 
 ---
@@ -86,6 +86,17 @@ sequenceDiagram
     Operator->>Engine: 6. Restart engine & restore state
     Engine->>Store: Verify hashes, replay manifests & restore state
 ```
+
+### Run the executable reference workflow
+
+`npm start` opens the local workspace but does not enroll a sensor or populate domain pages. After following the [clone-to-run prerequisites and pinned image preparation](../engineering/CLONE_TO_RUN.md), prepare the browser and run the documented acceptance procedure:
+
+```sh
+npx --no-install playwright install chromium
+npm run test:clone
+```
+
+The command installs and builds in a fresh clone, then executes the workflow below twice with synthetic inputs and separate private state. The browser reads the actual accepted state before and after restart. The generated `dist/ci/onboarding.json` records elapsed command times and explicit failures. See [Onboarding Results](../product/ONBOARDING_RESULTS.md). No real sensor or customer data is required. This acceptance harness exercises a local test-only mTLS transport; it does not expose a public ingestion endpoint.
 
 ### Step 1: Enroll Sensor and Apply Signed Configuration
 Enroll a synthetic sensor (e.g., `sensor-01`) and apply a signed configuration payload. The engine verifies the signature, applies settings monotonically, and records configuration version 1 in durable storage.

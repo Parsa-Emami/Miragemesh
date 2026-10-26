@@ -322,10 +322,10 @@
     },
     {
       "id": "C36",
-      "status": "planned",
+      "status": "in_progress",
       "evidence": [],
       "source_identity": null,
-      "notes": ""
+      "notes": "C36 implementation and local acceptance/contract checks complete; full hosted verification required before marking verified. Local namespace, Chromium socket and ptrace restrictions are recorded in docs/evidence/C36.json."
     },
     {
       "id": "C37",

@@ -114,3 +114,15 @@ C24 provides standalone `--rotate-certificates` operator actions and opt-in read
 ## C25 local update verification
 
 Stop the supervisor for `--verify-update` operator actions. Accept signed metadata, verify a local candidate and restart with the complete `--update-*` common options to read the Updates tab. No private signing key, automatic download or installation is involved. [SENSOR_UPDATES.md](../architecture/SENSOR_UPDATES.md) documents exact signed formats, key provisioning, limits, recovery and commands.
+
+## Independent onboarding check (C36)
+
+After the prerequisites, pinned image pull and Chromium preparation above, run:
+
+```sh
+npm run test:clone
+```
+
+For a proposed source change, stage its files first with `git add <changed-paths>`; the runner tests the index. It creates a fresh transport clone with no build or Node dependency directories, runs the public `npm run setup` procedure there and performs two independent fresh-state reference-workflow runs. Runtime and browser probes execute the code, assets and engine inside that clone. Each run verifies real readiness, explicit provider failure, restart/restore and the domain pages; missing prerequisites and malformed fixtures must fail explicitly. Prepared system compiler, Podman image and browser caches remain host prerequisites.
+
+Read `dist/ci/onboarding.json` for source/guide/fixture identities, tool versions, measured command durations, exits and both outcomes; full logs are in `dist/ci/onboarding-logs/`. A failure exits nonzero and leaves a failed report. Fix the stated prerequisite and rerun; the check cleans only its temporary synthetic state. See [Onboarding Results](../product/ONBOARDING_RESULTS.md) for the evidence scope. GitHub Actions retains these observations as an artifact, including failures.

@@ -170,3 +170,49 @@ test('clone-to-value: real seeded engine state completes the reference workflow 
     await rm(directory, { recursive: true, force: true });
   }
 });
+
+test('C36: unavailable local providers remain explicit and recovery reopens the accepted state', async ({ page }) => {
+  const directory = await mkdtemp(join(tmpdir(), 'miragemesh-c36-browser-'));
+  let running: Awaited<ReturnType<typeof startLocal>> | undefined;
+  const external: string[] = [];
+  page.on('request', request => { if (!request.url().startsWith('http://127.0.0.1:')) external.push(request.url()); });
+  try {
+    running = await startLocal({ port: 0 });
+    const unavailableBase = `http://127.0.0.1:${(running.server.address() as { port: number }).port}`;
+    const unavailable = await fetch(unavailableBase + '/api/v1/sensors');
+    expect(unavailable.status).toBe(503);
+    await page.goto(unavailableBase + '/#sensors');
+    await expect(page.getByRole('alert')).toContainText('Sensor status is unavailable');
+    await running.close();
+    running = undefined;
+
+    const outcome = await seed(directory);
+    const options = launchOptions(outcome);
+    const manifest = await readFile(join(directory, 'state/manifest.json'), 'utf8');
+    const acceptedSegments = await segments(join(directory, 'segments'));
+    await expect(startLocal({ ...options, certificateStatus: { ...options.certificateStatus, issuerFile: join(directory, 'missing-required-issuer.pem') } })).rejects.toThrow();
+    expect(await readFile(join(directory, 'state/manifest.json'), 'utf8')).toBe(manifest);
+    for (let restart = 0; restart < 2; restart++) {
+      running = await startLocal(options);
+      const base = `http://127.0.0.1:${(running.server.address() as { port: number }).port}`;
+      const readiness = await fetch(base + '/readyz');
+      expect(readiness.status).toBe(200);
+      expect(await readiness.json()).toMatchObject({ engineReady: true, storageReady: true, providersReady: true });
+      await page.setViewportSize({ width: 360, height: 800 });
+      await page.goto(base + '/#sensors');
+      const summary = page.getByRole('region', { name: 'Sensor summary' });
+      await expect(summary.getByRole('row', { name: /sensor-01/ })).toContainText('current');
+      await expect(page.getByRole('alert')).toHaveCount(0);
+      await page.goto(base + '/#certificates');
+      await expect(page.getByRole('region', { name: 'Certificate status' })).toContainText('Current certificate');
+      expect(await readFile(join(directory, 'state/manifest.json'), 'utf8')).toBe(manifest);
+      expect(await segments(join(directory, 'segments'))).toEqual(acceptedSegments);
+      await running.close();
+      running = undefined;
+    }
+    expect(external).toEqual([]);
+  } finally {
+    if (running) await running.close();
+    await rm(directory, { recursive: true, force: true });
+  }
+});

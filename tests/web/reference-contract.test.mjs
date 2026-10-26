@@ -49,3 +49,9 @@ test('rejects escaping paths, unsupported versions and false engine success clai
     assert.notDeepEqual(await validateReference(root, scenario), []);
   }
 });
+
+test('accepts the implemented scenario used by the actual clean-clone runner', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const scenario = JSON.parse(await readFile(join(root, 'tests/scenarios/clone-to-value.json'), 'utf8'));
+  assert.deepEqual(await validateReference(root, scenario), []);
+});

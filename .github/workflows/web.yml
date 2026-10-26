@@ -37,6 +37,15 @@ jobs:
       - run: ./node_modules/.bin/playwright install --with-deps chromium
       - run: npx --yes --package=npm@11.9.0 --call 'npm run test:browser'
       - run: npx --yes --package=npm@11.9.0 --call 'npm run test:clone'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: onboarding-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            dist/ci/onboarding.json
+            dist/ci/onboarding-logs/
+          retention-days: 14
+          if-no-files-found: error
       - run: npx --yes --package=npm@11.9.0 --call 'npm run package'
       - run: npx --yes --package=npm@11.9.0 --call 'npm run verify:artifact'
       - run: cd dist/release && sha256sum -c SHA256SUMS.txt

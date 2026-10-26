@@ -1,0 +1,102 @@
+{
+  "commit_id": "C36",
+  "project": "MirageMesh",
+  "passed": false,
+  "planning_template": false,
+  "status": "awaiting-hosted-verification",
+  "date": "2026-10-26",
+  "base_commit": "d39a8175a8122f2b330b38e5ee03019f10fea23c",
+  "source_identity": "sha256:6ba2cca732d1fdd3cc5258d3fc6f081d2bb605a1285aba13f9bcb59b523e356b",
+  "scope": "Independent clean-clone onboarding from the public guide, clone-owned runtime/browser probes, two fresh-state reference workflows, measured command journal and explicit failures; no independent-human, publication or C40 claim.",
+  "commands": [
+    {
+      "command": "npm run build",
+      "exit_code": 0
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0
+    },
+    {
+      "command": "go test -race -count=1 ./tests/acceptance",
+      "exit_code": 0,
+      "observed": "ok  \tgithub.com/Parsa-Emami/Miragemesh/tests/acceptance\t3.218s"
+    },
+    {
+      "command": "node --test tests/engineering/onboarding.test.mjs tests/web/reference-contract.test.mjs",
+      "exit_code": 0,
+      "observed": "13 tests passed, 0 failures"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
+      "exit_code": 0,
+      "observed": "6 tests passed"
+    },
+    {
+      "command": "python3 scripts/validate_repo.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 scripts/plan.py validate",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run validate:plan",
+      "exit_code": 0
+    }
+  ],
+  "results": {
+    "local_acceptance": "Real C30/C36 filesystem, mTLS, restart/restore and repeated fresh state pass; full hosted verification pending."
+  },
+  "local_limitations": {
+    "go_test_all": {
+      "exit_code": 1,
+      "failed_tests": [
+        "TestDecoyIsolationDeniesInternetAndPrivateSubnets",
+        "TestDecoyIsolationEnforcesPIDAndMemoryLimits",
+        "TestDecoyIsolationReconcilesAfterRestart",
+        "TestDecoyIsolationProviderFailuresAreExplicit",
+        "TestDecoyIsolationPolicyRejectsUnsafeConfiguration",
+        "TestDecoyIsolationStopsAndRemovesItsContainer",
+        "TestDecoyIsolationRejectsWeakRuntimeControls",
+        "TestDecoyIsolationReportsCleanupFailure",
+        "TestDecoyIsolationPolicyIsImmutable",
+        "TestDecoyIsolationAdapterBoundsRuntimeOutput",
+        "TestDecoyIsolationWorkflowReportsTypedOutcome",
+        "TestDecoyIsolationAdapterRollsBackAnUncertainStart",
+        "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
+        "TestDecoyIsolationPreservesContainersOnOwnershipConflict"
+      ],
+      "reason": "Pre-existing C13 provider tests require real rootless Podman; this host has no Podman and denies user-namespace UID mappings."
+    },
+    "npm_run_check": {
+      "exit_code": 1,
+      "passed": 134,
+      "failed": 1,
+      "skipped": 1,
+      "failed_test": "runtime makes no internet connection by default",
+      "reason": "strace PTRACE_TRACEME denied by the host"
+    },
+    "npm_run_test_browser": {
+      "exit_code": 1,
+      "tests_blocked": 24,
+      "reason": "Chrome process_singleton_posix socket() fails with Operation not permitted before any page opens; default Playwright CDN download also failed, while the matching official Chrome archive was downloaded successfully."
+    }
+  },
+  "official_sources": [
+    "https://nodejs.org/docs/latest-v24.x/api/child_process.html#child_processexecfilefile-args-options-callback",
+    "https://docs.podman.io/en/v4.9.3/markdown/podman-run.1.html",
+    "https://pkg.go.dev/crypto/tls"
+  ],
+  "fixtures": {
+    "version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic sensor events and expected outcomes",
+    "sha256": {
+      "tests/fixtures/miragemesh/C36/expected-output.json": "137ba695cf8773bb5bd7a9117b19a985ae18228af59fbf57a4d94b96f0073aea",
+      "tests/fixtures/miragemesh/C36/negative.json": "fd89b31444343542b8574c1c36dac3c6a94faca8188a5b63cda3d4e71bcf9072",
+      "tests/fixtures/miragemesh/C36/positive.json": "7cdeb86d71e6a4e0485e0391af88ceea7c4b271fec3a0a90b83f9d7b2ad9a620"
+    }
+  },
+  "hosted_actions": []
+}
