@@ -6,7 +6,7 @@
   "planning_template": false,
   "status": "awaiting-hosted-verification",
   "base_commit": "a94b498ec183e5a04624a54b3acc1ce30b9ecff1",
-  "source_identity": "sha256:c5bb748f46cffec9d6f12275358de4b8fbb468446510acd36e2d1b3feded36d5",
+  "source_identity": "sha256:d5fa4e85e838339a9adf2f15425f808277eab3d40bff490041c1bb05dd4c7acb",
   "scope": "Resolve reproduced C35 installation/data-path/API blockers and the recorded C36 cancellation cleanup regression, preserving C30 storage/restart and C33 browser behavior.",
   "dependencies": {
     "C36": "docs/evidence/C36.json; verified with hosted source-bound proof"
@@ -17,7 +17,8 @@
       "typed pre-cancelled/running runtime errors",
       "idempotent installed-release integrity verification",
       "data/prefix/artifact alias and reserved-path overlap refusal before writes",
-      "typed missing release API arguments"
+      "typed missing release API arguments",
+      "production-only permission guard with network/write mutation regressions"
     ],
     "local_regressions": "Real packaged signed releases, CLI/API calls, filesystem symlinks, accepted-data hashes, process cancellation and C05 restart/retry pass; full hosted verification pending."
   },
@@ -61,6 +62,11 @@
     {
       "command": "npm run validate:plan",
       "exit_code": 0
+    },
+    {
+      "command": "go test ./tests -run 'TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime|TestC37PermissionGuard' -count=1",
+      "exit_code": 0,
+      "observed": "Production permission guard and injected-capability refusal regression passed."
     }
   ],
   "fixtures": {
@@ -88,7 +94,6 @@
         "TestDecoyIsolationProviderFailuresAreExplicit",
         "TestDecoyIsolationPolicyRejectsUnsafeConfiguration",
         "TestDecoyIsolationStopsAndRemovesItsContainer",
-        "TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime",
         "TestDecoyIsolationRejectsWeakRuntimeControls",
         "TestDecoyIsolationReportsCleanupFailure",
         "TestDecoyIsolationPolicyIsImmutable",
@@ -98,7 +103,7 @@
         "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
         "TestDecoyIsolationPreservesContainersOnOwnershipConflict"
       ],
-      "reason": "Host has no rootless Podman and denies user namespaces; required real C13 provider tests remain enabled."
+      "reason": "The local full Go attempt also exposed the now-resolved production/test source guard mismatch, recorded in hosted_attempts. Remaining listed cases require rootless Podman/user namespaces unavailable on this host."
     },
     "npm_test": {
       "exit_code": 1,
@@ -124,5 +129,14 @@
   "scope_limits": [
     "No schema, migrations, .env, Dockerfile, dependency or production key changes.",
     "No C38/C40, public release, customer feedback or independent-human claim."
+  ],
+  "hosted_attempts": [
+    {
+      "source_commit": "580a77c4d7d1c09eca33709a52e912af484d6074",
+      "engine_run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40468808543",
+      "web_run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40468808367",
+      "result": "failed",
+      "failure": "TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime included new _test.go files in production import/identifier checks. No other Go test failed. Node/release and browser checks passed. Corrected by production-only guard with mutation regressions."
+    }
   ]
 }

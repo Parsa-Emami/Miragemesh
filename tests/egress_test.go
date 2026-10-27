@@ -598,6 +598,17 @@ func c13Value(t *testing.T, raw json.RawMessage) string {
 // container runtime and nothing else. The decoy package itself keeps the C12
 // rules and never gains that permission.
 func TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime(t *testing.T) {
+	problems, err := podmanPermissionViolations("../internal/podman")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, problem := range problems {
+		t.Error(problem)
+	}
+}
+
+func podmanPermissionViolations(directory string) ([]string, error) {
+	var problems []string
 	allowed := []string{
 		"crypto/rand",
 		"encoding/hex",
@@ -618,52 +629,49 @@ func TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime(t *testing.T) {
 	for _, path := range allowed {
 		permitted[path] = true
 	}
-	// The permission of the adapter is limited to the named identifiers: it
-	// resolves the runtime, runs it and reads the temporary directory. It may
-	// not open, create or remove a file of its own.
 	allowedIdentifiers := map[string]map[string]bool{
 		"os":      {"TempDir": true, "ReadFile": true, "Stat": true},
 		"os/exec": {"Command": true, "LookPath": true, "ExitError": true},
 		"syscall": {"Kill": true, "SIGKILL": true, "SysProcAttr": true},
 	}
-	entries, err := os.ReadDir("../internal/podman")
+	entries, err := os.ReadDir(directory)
 	if err != nil {
-		t.Fatal(err)
+		return nil, err
 	}
 	union := make(map[string]bool)
 	sources := 0
 	for _, entry := range entries {
-		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".go") {
+		if entry.IsDir() || !strings.HasSuffix(entry.Name(), ".go") || strings.HasSuffix(entry.Name(), "_test.go") {
 			continue
 		}
 		sources++
-		path := filepath.Join("../internal/podman", entry.Name())
+		path := filepath.Join(directory, entry.Name())
 		data, err := os.ReadFile(path)
 		if err != nil {
-			t.Fatal(err)
+			return nil, err
 		}
 		for _, forbidden := range []string{"sh -c", "/bin/sh", "bash -c", "/bin/bash", "net/http", "net.Dial", "http.Get", "http.Post"} {
 			if strings.Contains(string(data), forbidden) {
-				t.Errorf("%s uses %s", path, forbidden)
+				problems = append(problems, fmt.Sprintf("%s uses %s", path, forbidden))
 			}
 		}
 		file, err := parser.ParseFile(token.NewFileSet(), path, data, parser.ImportsOnly)
 		if err != nil {
-			t.Fatal(err)
+			return nil, err
 		}
 		for _, spec := range file.Imports {
 			imported, err := strconv.Unquote(spec.Path.Value)
 			if err != nil {
-				t.Fatal(err)
+				return nil, err
 			}
 			if !permitted[imported] {
-				t.Errorf("%s imports %s", path, imported)
+				problems = append(problems, fmt.Sprintf("%s imports %s", path, imported))
 			}
 			union[imported] = true
 		}
 		full, err := parser.ParseFile(token.NewFileSet(), path, data, 0)
 		if err != nil {
-			t.Fatal(err)
+			return nil, err
 		}
 		ast.Inspect(full, func(node ast.Node) bool {
 			selector, ok := node.(*ast.SelectorExpr)
@@ -679,21 +687,53 @@ func TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime(t *testing.T) {
 				return true
 			}
 			if !identifiers[selector.Sel.Name] {
-				t.Errorf("%s names the %s identifier %s, which is not part of the limited permission", path, pkg.Name, selector.Sel.Name)
+				problems = append(problems, fmt.Sprintf("%s names the %s identifier %s, which is not part of the limited permission", path, pkg.Name, selector.Sel.Name))
 			}
 			return true
 		})
 	}
 	if sources == 0 {
-		t.Fatal("the isolation adapter has no source file")
+		return nil, errors.New("the isolation adapter has no source file")
 	}
 	for _, path := range allowed {
 		if !union[path] {
-			t.Errorf("the isolation adapter no longer imports %s", path)
+			problems = append(problems, fmt.Sprintf("the isolation adapter no longer imports %s", path))
 		}
 	}
 	if len(union) != len(allowed) {
-		t.Errorf("the isolation adapter imports %v", union)
+		problems = append(problems, fmt.Sprintf("the isolation adapter imports %v", union))
+	}
+	return problems, nil
+}
+
+func TestC37PermissionGuardRejectsProductionCapabilities(t *testing.T) {
+	directory := t.TempDir()
+	production, err := os.ReadFile("../internal/podman/podman.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(directory, "podman.go"), production, 0600); err != nil {
+		t.Fatal(err)
+	}
+	testOnly := []byte("package podman\nimport \"testing\"\nfunc TestOnly(t *testing.T) {}\n")
+	if err := os.WriteFile(filepath.Join(directory, "helper_test.go"), testOnly, 0600); err != nil {
+		t.Fatal(err)
+	}
+	problems, err := podmanPermissionViolations(directory)
+	if err != nil || len(problems) != 0 {
+		t.Fatalf("valid production plus test-only imports: %v %v", problems, err)
+	}
+	for _, source := range []string{
+		"package podman\nimport \"net/http\"\nvar forbidden = http.Get\n",
+		"package podman\nimport \"os\"\nvar forbidden = os.WriteFile\n",
+	} {
+		if err := os.WriteFile(filepath.Join(directory, "extra.go"), []byte(source), 0600); err != nil {
+			t.Fatal(err)
+		}
+		problems, err := podmanPermissionViolations(directory)
+		if err != nil || len(problems) == 0 {
+			t.Fatalf("production capability escaped guard: %v %v", problems, err)
+		}
 	}
 }
 
