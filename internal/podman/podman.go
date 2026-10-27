@@ -301,6 +301,9 @@ func (p *Provider) run(ctx context.Context, args ...string) (string, int, error)
 	command.Stdout = captured
 	command.Stderr = captured
 	if err := command.Start(); err != nil {
+		if ctx.Err() != nil {
+			return "", 0, ctx.Err()
+		}
 		return "", 0, fmt.Errorf("%w: %v", decoy.ErrProviderUnavailable, err)
 	}
 	done := make(chan error, 1)
@@ -309,6 +312,9 @@ func (p *Provider) run(ctx context.Context, args ...string) (string, int, error)
 	defer timeout.Stop()
 	select {
 	case err := <-done:
+		if ctx.Err() != nil {
+			return "", 0, ctx.Err()
+		}
 		code := 0
 		if err != nil {
 			var exit *exec.ExitError

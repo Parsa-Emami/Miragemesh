@@ -1,0 +1,11 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C37 acceptance-blocker fixtures. No real sensor, credential, customer or incident data.",
+  "accepted_sequence": 1,
+  "recorded_generation": 1,
+  "replay_preserves_receipt": true,
+  "restart_preserves_exact_bytes": true,
+  "invalid_event_changes_state": false,
+  "repair_recovers_idempotent_result": true
+}

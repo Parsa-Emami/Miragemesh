@@ -1,137 +1,14 @@
 {
   "project": "MirageMesh",
-  "last_task": "C36",
-  "status": "verified",
-  "base_commit": "d39a8175a8122f2b330b38e5ee03019f10fea23c",
-  "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d",
-  "verified_on_tree": "0b33a52126aec75ce3c7ec5134f2c0ea068743b7",
-  "ci_checkout_commit": "9a5e60f82105ec6be1bda84cace22eed64c4d736",
-  "source_identity": "sha256:6ba2cca732d1fdd3cc5258d3fc6f081d2bb605a1285aba13f9bcb59b523e356b",
-  "evidence": "docs/evidence/C36.json",
-  "summary": "Independent clean-clone onboarding from the public guide, clone-owned runtime/browser probes, two fresh-state reference workflows, measured command journal and explicit failures; no independent-human, publication or C40 claim.",
-  "verification_results": {
-    "independent_runs": 2,
-    "onboarding_duration_ms": 83171,
-    "guide_setup_duration_ms": 3745,
-    "workflow_durations_ms": [
-      3863,
-      3523
-    ],
-    "go_top_level_tests_passed": 230,
-    "go_subtests_passed": 359,
-    "required_engine_anchors": 203,
-    "browser_tests_passed": 24,
-    "node_tests": {
-      "total": 136,
-      "passed": 135,
-      "failed": 0,
-      "skipped": 1,
-      "skip_reason": "C35 foreign-platform refusal test is inapplicable because the Linux host matches the artifact platform"
-    },
-    "accepted_sequences": [
-      1,
-      2,
-      3,
-      5
-    ],
-    "dropped_sequence": 4,
-    "loss_count": 1,
-    "six_domain_negative_cases_passed_per_run": true,
-    "positive_event_exit": 0,
-    "invalid_event_exit": 1,
-    "invalid_event_code": "INVALID_INPUT",
-    "missing_prerequisite_exit": 1,
-    "missing_fixture_exit": 1,
-    "provider_failure_code": "onboarding.provider_unavailable",
-    "engine_storage_provider_readiness": true,
-    "restart_and_restore_equivalent": true,
-    "independent_manifest_hashes": [
-      "072a9a2888c84dc00b30f9308932540af40ea5812d49e36644d2986c09956c01",
-      "fe78222c88855a0e70794340b2478f43de151dea1938b84509e218beae2eab66"
-    ],
-    "no_egress": "Real required rootless-container egress/resource tests passed; actual browser workflow asserts loopback-only requests. Dependency preparation can download locked resources.",
-    "independent_human_contributor": false,
-    "publication_performed": false
-  },
-  "hosted_actions": [
-    {
-      "name": "plan-consistency",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862567",
-      "conclusion": "success",
-      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
-    },
-    {
-      "name": "contracts",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862700",
-      "conclusion": "success",
-      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
-    },
-    {
-      "name": "engine-runtime",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862752",
-      "conclusion": "success",
-      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
-    },
-    {
-      "name": "web-foundation",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
-      "conclusion": "success",
-      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
-    }
-  ],
-  "source_binding": "This proof certifies implementation commit db386410acfc6a5d92b9d6699ae605a8bbc4e63d and its exact Git tree, also tested as the GitHub PR merge checkout. Progress, handoff and observed-results documentation are recorded afterward; they do not claim these historical tests ran on future source. All runtime/fixture/test code is unchanged by certification bookkeeping.",
+  "last_task": "C37",
+  "status": "in_progress",
+  "base_commit": "a94b498ec183e5a04624a54b3acc1ce30b9ecff1",
+  "summary": "Resolve reproduced C35 installation/data-path/API blockers and the recorded C36 cancellation cleanup regression, preserving C30 storage/restart and C33 browser behavior.",
+  "evidence": "docs/evidence/C37.json",
   "next_task": "C37",
-  "next_command": "npm run plan -- next",
-  "blockers": [],
-  "local_environment_limits": {
-    "go_test_all": {
-      "exit_code": 1,
-      "failed_tests": [
-        "TestDecoyIsolationDeniesInternetAndPrivateSubnets",
-        "TestDecoyIsolationEnforcesPIDAndMemoryLimits",
-        "TestDecoyIsolationReconcilesAfterRestart",
-        "TestDecoyIsolationProviderFailuresAreExplicit",
-        "TestDecoyIsolationPolicyRejectsUnsafeConfiguration",
-        "TestDecoyIsolationStopsAndRemovesItsContainer",
-        "TestDecoyIsolationRejectsWeakRuntimeControls",
-        "TestDecoyIsolationReportsCleanupFailure",
-        "TestDecoyIsolationPolicyIsImmutable",
-        "TestDecoyIsolationAdapterBoundsRuntimeOutput",
-        "TestDecoyIsolationWorkflowReportsTypedOutcome",
-        "TestDecoyIsolationAdapterRollsBackAnUncertainStart",
-        "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
-        "TestDecoyIsolationPreservesContainersOnOwnershipConflict"
-      ],
-      "reason": "Pre-existing C13 provider tests require real rootless Podman; this host has no Podman and denies user-namespace UID mappings."
-    },
-    "npm_run_check": {
-      "exit_code": 1,
-      "passed": 134,
-      "failed": 1,
-      "skipped": 1,
-      "failed_test": "runtime makes no internet connection by default",
-      "reason": "strace PTRACE_TRACEME denied by the host"
-    },
-    "npm_run_test_browser": {
-      "exit_code": 1,
-      "tests_blocked": 24,
-      "reason": "Chrome process_singleton_posix socket() fails with Operation not permitted before any page opens; default Playwright CDN download also failed, while the matching official Chrome archive was downloaded successfully."
-    },
-    "npm_run_test_clone": {
-      "exit_code": 1,
-      "observed": "Fresh clone/source integrity and missing-Go rejection passed; guide setup failed explicitly because Podman 4.9.3 is unavailable. No placeholder success or disabled check was used."
-    }
-  },
-  "scope_limits": [
-    "C36 is automated clean-environment evidence; no independent human participant or customer demand is claimed.",
-    "Prepared toolchain/provider image and browser caches are explicit host prerequisites.",
-    "No release, publication, deployment or C40 certification."
+  "next_command": "npm run test:clone",
+  "blockers": [
+    "Full rootless-provider/browser/ptrace proof requires the supported hosted Linux runner."
   ],
-  "delivery": {
-    "verification_branch": "codex/c36-independent-onboarding",
-    "pull_request": "https://github.com/Parsa-Emami/Miragemesh/pull/4",
-    "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d",
-    "publication_performed": false,
-    "main_delivery": "Final reviewed C36 change is delivered through PR #4; the exact final commit is recorded in Git history."
-  }
+  "publication_performed": false
 }

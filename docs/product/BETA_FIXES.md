@@ -1,0 +1,27 @@
+# C37: observed installation and acceptance fixes
+
+C37 starts from the verified C36 tree at `a94b498ec183e5a04624a54b3acc1ce30b9ecff1`. It fixes reproduced failures in installation and onboarding and retains the existing C30 reference workflow, C33 browser behavior, C35 signed-release guarantees and C36 independent-clone proof.
+
+## Observations and fixes
+
+| ID | Reproduced failure | Cause and resulting behavior | Regression proof |
+| --- | --- | --- | --- |
+| C37-01 | [Hosted clone check 40431278505](https://github.com/Parsa-Emami/Miragemesh/actions/runs/40431278505) failed `TestDecoyIsolationAdapterRollsBackAnUncertainStart`: owned uncertain run survived. | The test published a marker before its ownership JSON was completely written. Cancellation could kill that writer and inspection correctly refused to remove an unverifiable object. The fixture now publishes complete ownership labels by same-directory rename before signalling readiness. Ownership/run-token checks and cleanup assertions remain intact. | The original subprocess/ownership test remains required and is repeated 25 times with the race detector in the engine workflow. The failed Go JSON stream and hosted result are retained as historical observations. |
+| C37-02 | Calling the runtime adapter with an already-cancelled context returned a provider-unavailable wrapper that did not match `context.Canceled`. | Start and Wait completion could lose the caller's typed cancellation. Both boundaries now preserve the cancelled context rather than replacing it with an unrelated exit/provider result. | Real subprocess cancellation tests cover both pre-cancelled and running calls; no fake provider success is used. |
+| C37-03 | Repeating `install` or same-release `upgrade` returned `idempotent` after an installed web asset had been changed. | Only the input artifact and engine version had been checked. Both paths now verify the complete installed release against the supplied trusted signature before reporting idempotent success. They reject modified bytes with `installed_release_modified`, preserve state/data, and do not silently repair accepted files. Restoring the original asset makes an independent retry succeed. | Real packaged artifacts, ephemeral Ed25519 keys, CLI invocations, state-byte comparisons and complete accepted-data hashes. |
+| C37-04 | `--data-dir` equal to `releases`, `attestations`, or an ancestor of the prefix allowed installation to write within accepted data while claiming `data_unchanged`. A metadata symlink into accepted data also reproduced this failure. | Data, prefix, artifact and reserved metadata paths are resolved through existing filesystem ancestors. An overlapping data directory fails with `unsafe_data_dir` before installation writes. Default `prefix/data` and separate compatible stores remain supported. Rollback validates the same boundary. A prefix alias into the signed source artifact is refused as `unsafe_prefix` before copy/staging can mutate the artifact. | Each overlapping case and real data/prefix filesystem symlinks are refused with identical before/after accepted-data hashes and no new install-state file. |
+| C37-05 | Direct release API calls with missing options threw an untyped Node path error. | Required prefix/key arguments are validated before path resolution, and missing release inputs are checked before artifact resolution. They now return the existing typed `usage` refusal. | Direct real release API calls with missing input. |
+
+The tracked web roadmap snapshot is regenerated with the actual progress so it includes the certified prior phase and the current C37 state. No new domain endpoint, database schema, migration, environment file, Dockerfile, dependency or signing key is introduced.
+
+## Fixtures and domain behavior
+
+`tests/fixtures/miragemesh/C37/` contains version 1, repository-authored Apache-2.0 positive and negative sensor events and explicit expected outcomes. The Go regression accepts exact fixture bytes into real C05 storage, rejects the invalid retry, reopens the store twice and requires the original receipt and exact manifest bytes. Node regressions consume the same versioned release-refusal fixtures. These fixtures contain no real sensor, customer or credential data.
+
+## Verification and recovery
+
+`docs/evidence/C37.json` records the exact tested source, fixture hashes, tool/provider versions, command outcomes and hosted checks. `passed` remains false until all affected checks have succeeded. The engine discovery guard requires the C37 cancellation and real-storage restart anchors. The complete Go/race, Node, browser, clean-clone, signed release and artifact checks remain enabled.
+
+When an installed release is reported as modified, stop and verify it with the trusted external attestation; this installer does not overwrite the changed files automatically. A corrected original release can be retried. For `unsafe_data_dir`, choose the default `prefix/data` or a separate private compatible store, preserving the original data. Missing prerequisites/providers remain explicit failures. The private file-store contract still rejects insufficient directory permissions; the fix does not relax it.
+
+The restricted implementation host cannot run rootless Podman, Chromium sockets or ptrace. These are host limitations, not product fixes, and remain documented. Full provider/isolation, browser and runtime-egress checks must pass on the supported Linux runner. No customer feedback, independent human trial, public release, C38 or C40 result is invented.

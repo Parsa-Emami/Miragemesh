@@ -1,0 +1,20 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C37 acceptance-blocker fixtures. No real sensor, credential, customer or incident data.",
+  "event": {
+    "schema_version": "1",
+    "sensor_id": "c37-sensor",
+    "event_id": "c37-event",
+    "sequence": 1,
+    "observed_at": "2026-01-01T00:00:00Z",
+    "kind": "http.request",
+    "metadata": {
+      "path": "/c37/local-reference"
+    }
+  },
+  "retry_commands": [
+    "install",
+    "upgrade"
+  ]
+}

@@ -1,0 +1,5 @@
+--- FAIL: TestC37ProviderHonorsPrecancelledContext (0.00s)
+    acceptance_test.go:22: pre-cancelled runtime error: decoy: the container provider is unavailable: context canceled
+FAIL
+FAIL	github.com/Parsa-Emami/Miragemesh/internal/podman	0.006s
+FAIL

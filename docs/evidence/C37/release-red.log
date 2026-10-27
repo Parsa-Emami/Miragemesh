@@ -1,0 +1,144 @@
+✖ C37 release APIs reject missing options with a typed usage error (3.522318ms)
+▶ C37 repeated install and upgrade reject modified installed bytes without changing accepted data
+  ✖ install (507.096629ms)
+  ✖ upgrade (485.093311ms)
+✖ C37 repeated install and upgrade reject modified installed bytes without changing accepted data (2442.381058ms)
+▶ C37 installer refuses data paths occupied by release metadata or containing the install prefix
+  ✖ releases (294.597294ms)
+  ✖ attestations (303.888162ms)
+  ✖ ancestor (334.252412ms)
+✖ C37 installer refuses data paths occupied by release metadata or containing the install prefix (935.485529ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3523.362933
+
+✖ failing tests:
+
+test at tests/release/acceptance-blockers.mjs:5:1
+✖ C37 release APIs reject missing options with a typed usage error (3.522318ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    Comparison {
+  +   code: 'ERR_INVALID_ARG_TYPE'
+  -   code: 'usage'
+    }
+  
+      at async TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/acceptance-blockers.mjs:7:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError [ERR_INVALID_ARG_TYPE]: The "paths[0]" argument must be of type string. Received undefined
+        at resolve (node:path:1257:7)
+        at baseOptions (file:///workspace/scratch/f57cde8818e9/Miragemesh/scripts/install-release.mjs:276:18)
+        at installRelease (file:///workspace/scratch/f57cde8818e9/Miragemesh/scripts/install-release.mjs:283:19)
+        at TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/acceptance-blockers.mjs:7:26)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1402:25)
+        at Test.start (node:internal/test_runner/test:1262:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    expected: { code: 'usage' },
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/release/upgrade-recovery.mjs:526:13
+✖ install (507.096629ms)
+  AssertionError [ERR_ASSERTION]: {"status":"idempotent","current":"miragemesh-0.0.1-linux-amd64","previous":null,"version":"0.0.1","revision":1,"platform":"linux-amd64","key_fingerprint":"sha256:64718e49e1c80c935baded7d9d2b7b0ec6ef5086cf78611c2b75febff44e6042","data_dir":"/tmp/miragemesh-c35-PiQ7ec/c37-data-install","data_schema":1,"data_unchanged":true,"engine_check":{"status":"passed","version":"0.0.1"},"highest_revision":1}
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/upgrade-recovery.mjs:537:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/upgrade-recovery.mjs:526:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/release/upgrade-recovery.mjs:526:13
+✖ upgrade (485.093311ms)
+  AssertionError [ERR_ASSERTION]: {"status":"idempotent","current":"miragemesh-0.0.1-linux-amd64","previous":null,"version":"0.0.1","revision":1,"platform":"linux-amd64","key_fingerprint":"sha256:64718e49e1c80c935baded7d9d2b7b0ec6ef5086cf78611c2b75febff44e6042","data_dir":"/tmp/miragemesh-c35-PiQ7ec/c37-data-upgrade","data_schema":1,"data_unchanged":true,"engine_check":{"status":"passed","version":"0.0.1"},"highest_revision":1}
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/upgrade-recovery.mjs:537:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/upgrade-recovery.mjs:526:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/release/upgrade-recovery.mjs:554:13
+✖ releases (294.597294ms)
+  AssertionError [ERR_ASSERTION]: {"status":"installed","current":"miragemesh-0.0.1-linux-amd64","previous":null,"version":"0.0.1","revision":1,"platform":"linux-amd64","key_fingerprint":"sha256:64718e49e1c80c935baded7d9d2b7b0ec6ef5086cf78611c2b75febff44e6042","data_dir":"/tmp/miragemesh-c35-PiQ7ec/c37-overlap-releases/installation/releases","data_schema":0,"data_unchanged":true,"engine_check":{"status":"passed","version":"0.0.1"},"highest_revision":1}
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/upgrade-recovery.mjs:562:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/upgrade-recovery.mjs:554:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/release/upgrade-recovery.mjs:554:13
+✖ attestations (303.888162ms)
+  AssertionError [ERR_ASSERTION]: {"status":"installed","current":"miragemesh-0.0.1-linux-amd64","previous":null,"version":"0.0.1","revision":1,"platform":"linux-amd64","key_fingerprint":"sha256:64718e49e1c80c935baded7d9d2b7b0ec6ef5086cf78611c2b75febff44e6042","data_dir":"/tmp/miragemesh-c35-PiQ7ec/c37-overlap-attestations/installation/attestations","data_schema":0,"data_unchanged":true,"engine_check":{"status":"passed","version":"0.0.1"},"highest_revision":1}
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/upgrade-recovery.mjs:562:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/upgrade-recovery.mjs:554:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/release/upgrade-recovery.mjs:554:13
+✖ ancestor (334.252412ms)
+  AssertionError [ERR_ASSERTION]: {"status":"installed","current":"miragemesh-0.0.1-linux-amd64","previous":null,"version":"0.0.1","revision":1,"platform":"linux-amd64","key_fingerprint":"sha256:64718e49e1c80c935baded7d9d2b7b0ec6ef5086cf78611c2b75febff44e6042","data_dir":"/tmp/miragemesh-c35-PiQ7ec/c37-overlap-ancestor","data_schema":0,"data_unchanged":true,"engine_check":{"status":"passed","version":"0.0.1"},"highest_revision":1}
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/upgrade-recovery.mjs:562:14)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async TestContext.<anonymous> (file:///workspace/scratch/f57cde8818e9/Miragemesh/tests/release/upgrade-recovery.mjs:554:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

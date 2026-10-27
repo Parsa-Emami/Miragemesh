@@ -184,3 +184,9 @@ the project in this repository. The product contains no authentication service,
 telemetry or customer data. `engineEnabled` remains false; unsupported domain routes return 503. A
 releasable provenance record requires a clean source tree; a dirty tree is recorded
 truthfully and must not be presented as a release.
+
+## C37 installation refusal and retry behavior
+
+Repeated installation and same-release upgrades verify the entire installed release before returning `idempotent`. A changed installed file returns `installed_release_modified` without rewriting state or accepted data. Verify against the independently trusted attestation and restore only known original release bytes before retrying; an idempotent call is not a repair command.
+
+The data directory must be separate from `releases`, `attestations` and their descendants, and must not contain the install prefix. This boundary resolves filesystem aliases, including reserved metadata symlinks into data. Overlap is refused as `unsafe_data_dir` before writes; the default `prefix/data` remains supported. Rollback applies the same data-path check. A prefix that resolves into the signed source artifact is refused as `unsafe_prefix` before any staging writes. Missing required API arguments return the existing typed `usage` error. Detailed reproductions and checks are in [BETA_FIXES.md](../product/BETA_FIXES.md).

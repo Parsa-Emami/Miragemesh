@@ -1,0 +1,32 @@
+✔ C37 release APIs reject missing options with a typed usage error (2.453117ms)
+✔ C35 fixtures describe licensed positive, negative and expected outcomes (1715.906394ms)
+✔ C35 binds the real engine to the shipped artifact and a reporting fixture engine to the synthetic upgrade (26.572638ms)
+✔ C35 verifies the real artifact against an independently trusted key (255.089456ms)
+✔ C35 rejects modified bytes, expired manifests, missing evidence and untrusted signers (893.641219ms)
+✔ C35 installs the verified release without touching accepted data (517.40943ms)
+✔ C35 refuses stale, expired and replayed authority without changing state or data (661.390489ms)
+✔ C35 rollback refuses newer or malformed accepted data (336.504174ms)
+✔ C35 rolls back to the recorded release and can upgrade again without data loss (531.312586ms)
+✔ C35 refuses rollback when the recorded release was modified (632.733274ms)
+﹣ C35 refuses a foreign-platform install unless staging is explicit (2.116833ms) # host matches the artifact platform
+✔ C35 scripts have no network capability and preserve the source-build path (4.364063ms)
+✔ C35 documents the trust model, refusal codes and safe upgrade contract (2.007971ms)
+▶ C37 repeated install and upgrade reject modified installed bytes without changing accepted data
+  ✔ install (622.392079ms)
+  ✔ upgrade (676.586195ms)
+✔ C37 repeated install and upgrade reject modified installed bytes without changing accepted data (1299.778104ms)
+▶ C37 installer refuses data paths occupied by release metadata or containing the install prefix
+  ✔ releases (143.001856ms)
+  ✔ attestations (127.95329ms)
+  ✔ ancestor (128.976104ms)
+✔ C37 installer refuses data paths occupied by release metadata or containing the install prefix (400.950926ms)
+✔ C37 installer refuses reserved metadata symlinks into accepted data (129.437927ms)
+✔ C37 installer refuses a prefix alias into its signed source artifact (265.008321ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 7810.234749

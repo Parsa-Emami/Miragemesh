@@ -444,7 +444,7 @@
       "id": "C36",
       "title": "test(onboarding): repeat clone-to-value independently",
       "stage": "public-release",
-      "status": "planned",
+      "status": "verified",
       "acceptance": [
         "A separate clean environment or independent contributor follows only the public guide and completes the actual core workflow. Record observed effort and failures; customer demand and five pilots are not prerequisites for OSS usability."
       ],
@@ -456,7 +456,7 @@
       "id": "C37",
       "title": "fix(acceptance): resolve observed installation and workflow blockers",
       "stage": "public-release",
-      "status": "planned",
+      "status": "in_progress",
       "acceptance": [
         "Fix actual C30/C33/C35/C36 failures with targeted regressions and repeat affected checks. Keep unresolved blockers explicit; never invent feedback or weaken an invariant to claim completion."
       ],

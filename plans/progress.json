@@ -331,10 +331,10 @@
     },
     {
       "id": "C37",
-      "status": "planned",
+      "status": "in_progress",
       "evidence": [],
       "source_identity": null,
-      "notes": ""
+      "notes": "C37 installation, data-path, cancellation and acceptance regressions reproduced and fixed locally; full hosted engine/browser/clean-clone verification pending. See docs/product/BETA_FIXES.md and docs/evidence/C37.json."
     },
     {
       "id": "C38",

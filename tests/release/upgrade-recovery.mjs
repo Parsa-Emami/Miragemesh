@@ -520,3 +520,85 @@ test('C35 documents the trust model, refusal codes and safe upgrade contract', a
   }
   assert.ok((await readFile(join(repository, 'docs/release/USER_GUIDE.md'), 'utf8')).includes('## 11. Verified Release Installation'));
 });
+
+const c37Positive = JSON.parse(await readFile(join(repository, 'tests/fixtures/miragemesh/C37/positive.json'), 'utf8'));
+const c37Negative = JSON.parse(await readFile(join(repository, 'tests/fixtures/miragemesh/C37/negative.json'), 'utf8'));
+
+test('C37 repeated install and upgrade reject modified installed bytes without changing accepted data', async t => {
+  for (const command of c37Positive.retry_commands) {
+    await t.test(command, async () => {
+      const prefix = join(work, 'c37-tamper-' + command);
+      const data = join(work, 'c37-data-' + command);
+      await cp(join(fixtureRoot, positive.data.supported_store_fixture), data, { recursive: true });
+      assert.equal(install('install', installArguments({ prefix, data, extra: ['--allow-foreign-platform'] })).status, 0);
+      const stateBefore = await stateBytes(prefix);
+      const dataBefore = await treeDigest(data);
+      const file = join(prefix, 'releases', positive.artifact.name, 'dist/web/index.html');
+      const original = await readFile(file);
+      await writeFile(file, 'C37 modified installed web asset');
+      const rejected = install(command, installArguments({ prefix, data, extra: ['--allow-foreign-platform'] }));
+      assert.equal(rejected.status, 1, JSON.stringify(rejected.result));
+      assert.equal(rejected.result.code, c37Negative.refusals.installed_tampering);
+      assert.deepEqual(await stateBytes(prefix), stateBefore);
+      assert.equal(await treeDigest(data), dataBefore);
+      assert.equal(await readFile(file, 'utf8'), 'C37 modified installed web asset');
+      await writeFile(file, original);
+      const recovered = install(command, installArguments({ prefix, data, extra: ['--allow-foreign-platform'] }));
+      assert.equal(recovered.status, 0, JSON.stringify(recovered.result));
+      assert.equal(recovered.result.status, 'idempotent');
+      assert.deepEqual(await stateBytes(prefix), stateBefore);
+      assert.equal(await treeDigest(data), dataBefore);
+    });
+  }
+});
+
+test('C37 installer refuses data paths occupied by release metadata or containing the install prefix', async t => {
+  for (const kind of c37Negative.overlapping_data_directories) {
+    await t.test(kind, async () => {
+      const base = join(work, 'c37-overlap-' + kind);
+      const prefix = join(base, 'installation');
+      const data = kind === 'ancestor' ? base : join(prefix, kind);
+      await mkdir(data, { recursive: true });
+      await writeFile(join(data, 'accepted.txt'), 'Existing accepted C37 data');
+      const before = await treeDigest(data);
+      const result = install('install', installArguments({ prefix, data, extra: ['--allow-foreign-platform'] }));
+      assert.equal(result.status, 1, JSON.stringify(result.result));
+      assert.equal(result.result.code, c37Negative.refusals.data_overlap);
+      assert.equal(await treeDigest(data), before);
+      assert.equal(existsSync(join(prefix, 'install-state.json')), false);
+    });
+  }
+});
+
+test('C37 installer refuses reserved metadata symlinks into accepted data', async () => {
+  const { symlink } = await import('node:fs/promises');
+  const prefix = join(work, 'c37-link-install');
+  const data = join(work, 'c37-link-data');
+  await mkdir(prefix, { recursive: true });
+  await cp(join(fixtureRoot, positive.data.supported_store_fixture), data, { recursive: true });
+  await symlink(data, join(prefix, 'attestations'), 'dir');
+  const before = await treeDigest(data);
+  const result = install('install', installArguments({ prefix, data, extra: ['--allow-foreign-platform'] }));
+  assert.equal(result.status, 1, JSON.stringify(result.result));
+  assert.equal(result.result.code, c37Negative.refusals.data_overlap);
+  assert.equal(await treeDigest(data), before);
+  assert.equal(existsSync(join(prefix, 'install-state.json')), false);
+});
+
+test('C37 installer refuses a prefix alias into its signed source artifact', async () => {
+  const { symlink } = await import('node:fs/promises');
+  const target = join(work, 'c37-artifact-alias', positive.artifact.name);
+  const prefix = join(work, 'c37-prefix-alias');
+  const data = join(work, 'c37-prefix-alias-data');
+  await cp(artifact, target, { recursive: true });
+  await symlink(target, prefix, 'dir');
+  await cp(join(fixtureRoot, positive.data.supported_store_fixture), data, { recursive: true });
+  const dataBefore = await treeDigest(data);
+  const artifactBefore = await treeDigest(target);
+  const result = install('install', installArguments({ target, prefix, data, extra: ['--allow-foreign-platform'] }));
+  assert.equal(result.status, 1, JSON.stringify(result.result));
+  assert.equal(result.result.code, 'unsafe_prefix');
+  assert.equal(await treeDigest(data), dataBefore);
+  assert.equal(await treeDigest(target), artifactBefore);
+  assert.equal(existsSync(join(target, 'releases')), false);
+});

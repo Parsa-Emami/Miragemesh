@@ -1,0 +1,8 @@
+{
+  "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40431278505",
+  "job_id": 121949291075,
+  "head_commit": "9164fcd80563bb3e90f36e487d97843de5c60e8b",
+  "test": "TestDecoyIsolationAdapterRollsBackAnUncertainStart",
+  "observed_error": "owned uncertain run survived: <nil>",
+  "diagnostic_limit": "The hosted log does not include the failed inspect response; source analysis identifies the fixture publication race and cancellation result race. Ownership checks are retained; the original assertion is repeated 25 times after atomic fixture publication."
+}
