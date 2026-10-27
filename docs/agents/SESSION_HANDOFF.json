@@ -1,44 +1,137 @@
 {
   "project": "MirageMesh",
-  "last_task": "C35",
+  "last_task": "C36",
   "status": "verified",
-  "base_commit": "49e1659a3c557ae3cce7e2a1a2efe16deee2ff20",
-  "implementation_commit": null,
-  "verified_on_commit": "49e1659a3c557ae3cce7e2a1a2efe16deee2ff20",
-  "verified_on_tree": "dirty working tree; no commit created",
-  "source_identity": "sha256:f803dff214204db26183dbf4f17e4fa865831a403c47782f6d76f8b085f062af",
-  "evidence": "docs/evidence/C35.json",
-  "summary": "C35 verified locally: detached Ed25519 release attestations over an already packaged C31 artifact, verified against an independently supplied trusted key, plus install/upgrade/rollback that keep accepted store data byte-identical and refuse a store schema newer than the signed target. Delivered scripts/verify-release.mjs, scripts/sign-release.mjs, scripts/install-release.mjs, tests/release/upgrade-recovery.mjs, tests/fixtures/miragemesh/C35/, docs/evidence/release-verification.json, docs/evidence/C35.json and the signed-release documentation in ARTIFACTS.md and USER_GUIDE.md. A changed artifact byte, a changed manifest byte, missing evidence, an untrusted or malformed key, an expired manifest, a stale revision and a replayed downgrade all failed closed without changing state or data. The packaged artifact's provenance records the same source identity as this task. A hosted web-foundation run failed because the synthetic 0.0.2 upgrade fixture shipped the real 0.0.1 engine; it now carries a declared fixture engine reporting the signed version, which the new binding test asserts.",
-  "hosted_actions": [],
-  "hosted_actions_note": "Not run for this source. No push or publication occurred; remote workflow status is unverified.",
-  "next_task": "C36",
+  "base_commit": "d39a8175a8122f2b330b38e5ee03019f10fea23c",
+  "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d",
+  "verified_on_tree": "0b33a52126aec75ce3c7ec5134f2c0ea068743b7",
+  "ci_checkout_commit": "9a5e60f82105ec6be1bda84cace22eed64c4d736",
+  "source_identity": "sha256:6ba2cca732d1fdd3cc5258d3fc6f081d2bb605a1285aba13f9bcb59b523e356b",
+  "evidence": "docs/evidence/C36.json",
+  "summary": "Independent clean-clone onboarding from the public guide, clone-owned runtime/browser probes, two fresh-state reference workflows, measured command journal and explicit failures; no independent-human, publication or C40 claim.",
+  "verification_results": {
+    "independent_runs": 2,
+    "onboarding_duration_ms": 83171,
+    "guide_setup_duration_ms": 3745,
+    "workflow_durations_ms": [
+      3863,
+      3523
+    ],
+    "go_top_level_tests_passed": 230,
+    "go_subtests_passed": 359,
+    "required_engine_anchors": 203,
+    "browser_tests_passed": 24,
+    "node_tests": {
+      "total": 136,
+      "passed": 135,
+      "failed": 0,
+      "skipped": 1,
+      "skip_reason": "C35 foreign-platform refusal test is inapplicable because the Linux host matches the artifact platform"
+    },
+    "accepted_sequences": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "dropped_sequence": 4,
+    "loss_count": 1,
+    "six_domain_negative_cases_passed_per_run": true,
+    "positive_event_exit": 0,
+    "invalid_event_exit": 1,
+    "invalid_event_code": "INVALID_INPUT",
+    "missing_prerequisite_exit": 1,
+    "missing_fixture_exit": 1,
+    "provider_failure_code": "onboarding.provider_unavailable",
+    "engine_storage_provider_readiness": true,
+    "restart_and_restore_equivalent": true,
+    "independent_manifest_hashes": [
+      "072a9a2888c84dc00b30f9308932540af40ea5812d49e36644d2986c09956c01",
+      "fe78222c88855a0e70794340b2478f43de151dea1938b84509e218beae2eab66"
+    ],
+    "no_egress": "Real required rootless-container egress/resource tests passed; actual browser workflow asserts loopback-only requests. Dependency preparation can download locked resources.",
+    "independent_human_contributor": false,
+    "publication_performed": false
+  },
+  "hosted_actions": [
+    {
+      "name": "plan-consistency",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862567",
+      "conclusion": "success",
+      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+    },
+    {
+      "name": "contracts",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862700",
+      "conclusion": "success",
+      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+    },
+    {
+      "name": "engine-runtime",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862752",
+      "conclusion": "success",
+      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+    },
+    {
+      "name": "web-foundation",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+      "conclusion": "success",
+      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+    }
+  ],
+  "source_binding": "This proof certifies implementation commit db386410acfc6a5d92b9d6699ae605a8bbc4e63d and its exact Git tree, also tested as the GitHub PR merge checkout. Progress, handoff and observed-results documentation are recorded afterward; they do not claim these historical tests ran on future source. All runtime/fixture/test code is unchanged by certification bookkeeping.",
+  "next_task": "C37",
   "next_command": "npm run plan -- next",
   "blockers": [],
-  "scope_limits": [
-    "The C35 verification host is windows/amd64 while the signed artifact platform is linux-amd64. Install/upgrade/rollback file and data-safety semantics were exercised end to end with --allow-foreign-platform, and the installed engine --version check was skipped as foreign-platform; a native Linux run of the same suite remains unrecorded.",
-    "npm run build cannot complete natively on this Windows host: internal/storage uses Unix syscalls (syscall.Stat_t, O_NOFOLLOW, Flock), so build:engine exits 1 and preserves the previous binary. GOOS=linux go vet and GOOS=linux go build pass; no Go source was changed.",
-    "npm test on this host reports 125 tests, 98 pass, 26 fail, 1 skipped. Every failure is a host limitation, not a C35 regression: tests that spawn dist/engine/miragemesh get ENOENT because the file is a Linux ELF, and tests asserting a native Go build fail on the Unix-only storage syscalls. All 11 C35 tests pass inside that run.",
-    "Python is absent on this host, so scripts/validate_repo.py, scripts/plan.py validate and scripts/source_identity.py could not run; npm run validate:plan and an equivalent Node source-identity calculation passed. CI runs the Python checks on ubuntu-24.04.",
-    "No production release key, published fingerprint, published signature or published artifact exists. The tested keys were ephemeral and deleted with their temporary directory.",
-    "The provenance of the tested artifact records a dirty working tree and verification emits a source_dirty warning; it is not a releasable publication.",
-    "No commit, push, publication, deployment or C40 claim occurred."
-  ],
-  "local_environment": {
-    "os": "windows/amd64",
-    "node": "v24.19.0",
-    "npm": "11.17.0",
-    "go": "go1.27.2 (native windows build of internal/storage is unavailable; linux/amd64 vet and build verified)",
-    "git": "2.56.0.windows.2",
-    "tar": "GNU tar 1.35",
-    "gzip": "1.15",
-    "python": null,
-    "notes": "C35 added no dependency. Its scripts import only node:crypto, node:fs/promises, node:path, node:url and node:child_process (local engine check) and make no network call."
+  "local_environment_limits": {
+    "go_test_all": {
+      "exit_code": 1,
+      "failed_tests": [
+        "TestDecoyIsolationDeniesInternetAndPrivateSubnets",
+        "TestDecoyIsolationEnforcesPIDAndMemoryLimits",
+        "TestDecoyIsolationReconcilesAfterRestart",
+        "TestDecoyIsolationProviderFailuresAreExplicit",
+        "TestDecoyIsolationPolicyRejectsUnsafeConfiguration",
+        "TestDecoyIsolationStopsAndRemovesItsContainer",
+        "TestDecoyIsolationRejectsWeakRuntimeControls",
+        "TestDecoyIsolationReportsCleanupFailure",
+        "TestDecoyIsolationPolicyIsImmutable",
+        "TestDecoyIsolationAdapterBoundsRuntimeOutput",
+        "TestDecoyIsolationWorkflowReportsTypedOutcome",
+        "TestDecoyIsolationAdapterRollsBackAnUncertainStart",
+        "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
+        "TestDecoyIsolationPreservesContainersOnOwnershipConflict"
+      ],
+      "reason": "Pre-existing C13 provider tests require real rootless Podman; this host has no Podman and denies user-namespace UID mappings."
+    },
+    "npm_run_check": {
+      "exit_code": 1,
+      "passed": 134,
+      "failed": 1,
+      "skipped": 1,
+      "failed_test": "runtime makes no internet connection by default",
+      "reason": "strace PTRACE_TRACEME denied by the host"
+    },
+    "npm_run_test_browser": {
+      "exit_code": 1,
+      "tests_blocked": 24,
+      "reason": "Chrome process_singleton_posix socket() fails with Operation not permitted before any page opens; default Playwright CDN download also failed, while the matching official Chrome archive was downloaded successfully."
+    },
+    "npm_run_test_clone": {
+      "exit_code": 1,
+      "observed": "Fresh clone/source integrity and missing-Go rejection passed; guide setup failed explicitly because Podman 4.9.3 is unavailable. No placeholder success or disabled check was used."
+    }
   },
+  "scope_limits": [
+    "C36 is automated clean-environment evidence; no independent human participant or customer demand is claimed.",
+    "Prepared toolchain/provider image and browser caches are explicit host prerequisites.",
+    "No release, publication, deployment or C40 certification."
+  ],
   "delivery": {
-    "commit_created": false,
-    "commit": null,
-    "push_performed": false,
-    "branch": "main",
-    "publication_performed": false
+    "verification_branch": "codex/c36-independent-onboarding",
+    "pull_request": "https://github.com/Parsa-Emami/Miragemesh/pull/4",
+    "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d",
+    "publication_performed": false,
+    "main_delivery": "Final reviewed C36 change is delivered through PR #4; the exact final commit is recorded in Git history."
   }
 }

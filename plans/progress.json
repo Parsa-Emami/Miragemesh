@@ -322,10 +322,12 @@
     },
     {
       "id": "C36",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C36.json"
+      ],
+      "source_identity": "sha256:6ba2cca732d1fdd3cc5258d3fc6f081d2bb605a1285aba13f9bcb59b523e356b",
+      "notes": "C36 verified on db386410acfc6a5d92b9d6699ae605a8bbc4e63d: all four hosted workflows passed. A clean transport clone runs guide setup and clone-owned runtime/browser probes; two fresh-state reference workflows preserve accepted identities, explicit loss and triage across restart/restore. Missing prerequisites, malformed fixtures and unavailable providers fail explicitly. 203 engine anchors, 24 browser tests and 135 Node tests passed (one native-platform-inapplicable C35 test skipped). Observed onboarding time 83.171 s. Local namespace/socket/ptrace limitations are retained; no independent-human, release or C40 claim."
     },
     {
       "id": "C37",

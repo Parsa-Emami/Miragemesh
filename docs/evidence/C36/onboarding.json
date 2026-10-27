@@ -1,0 +1,562 @@
+{
+  "schema_version": 1,
+  "task": "C36",
+  "passed": true,
+  "started_at": "2026-10-26T19:15:38.118Z",
+  "environment": {
+    "os": "linux",
+    "architecture": "x64",
+    "logical_cpus": 4,
+    "ram_mib": 15990,
+    "node": "v24.19.0"
+  },
+  "isolation": {
+    "transport_clone": true,
+    "reused_parent_builds": false,
+    "reused_parent_modules": false,
+    "prepared_host_caches": [
+      "Go compiler/toolchain",
+      "rootless Podman and digest-pinned image",
+      "Playwright Chromium"
+    ],
+    "independent_human_contributor": false
+  },
+  "commands": [
+    {
+      "stage": "staged-source",
+      "command": [
+        "git",
+        "write-tree"
+      ],
+      "started_at": "2026-10-26T19:15:38.124Z",
+      "duration_ms": 6,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "d7dce10460eeb8ae4bda5602e62024f04b1f9f424e5eed826a26b222810dd546",
+      "log": "dist/ci/onboarding-logs/01-staged-source.log"
+    },
+    {
+      "stage": "snapshot",
+      "command": [
+        "git",
+        "commit-tree",
+        "0b33a52126aec75ce3c7ec5134f2c0ea068743b7",
+        "-p",
+        "HEAD",
+        "-m",
+        "temporary staged source proof"
+      ],
+      "started_at": "2026-10-26T19:15:38.132Z",
+      "duration_ms": 5,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "d5e1f9f1559b7be14f0f2b9f256828493f5e1d39da91bdbbbf6e358dd1b10e57",
+      "log": "dist/ci/onboarding-logs/02-snapshot.log"
+    },
+    {
+      "stage": "base-source",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "started_at": "2026-10-26T19:15:38.137Z",
+      "duration_ms": 3,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "8a6b36728ff886940bd026c652c384c2b83feadd6855c0f41159714060131539",
+      "log": "dist/ci/onboarding-logs/03-base-source.log"
+    },
+    {
+      "stage": "isolated-source",
+      "command": [
+        "git",
+        "init",
+        "--bare",
+        "--quiet",
+        "/tmp/oss-clone-voaSB4/source.git"
+      ],
+      "started_at": "2026-10-26T19:15:38.140Z",
+      "duration_ms": 4,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "dist/ci/onboarding-logs/04-isolated-source.log"
+    },
+    {
+      "stage": "source-objects",
+      "command": [
+        "git",
+        "rev-parse",
+        "--git-path",
+        "objects"
+      ],
+      "started_at": "2026-10-26T19:15:38.144Z",
+      "duration_ms": 3,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "d47773290b580aae76650999a1e916227528f0075499b9dac795e6fe8b119532",
+      "log": "dist/ci/onboarding-logs/05-source-objects.log"
+    },
+    {
+      "stage": "advertise-snapshot",
+      "command": [
+        "git",
+        "--git-dir=/tmp/oss-clone-voaSB4/source.git",
+        "update-ref",
+        "refs/heads/snapshot",
+        "96cf882e6dabb41bb1e5a6e2892f0b88fa516981"
+      ],
+      "started_at": "2026-10-26T19:15:38.148Z",
+      "duration_ms": 3,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "dist/ci/onboarding-logs/06-advertise-snapshot.log"
+    },
+    {
+      "stage": "transport-clone",
+      "command": [
+        "git",
+        "clone",
+        "--quiet",
+        "--no-local",
+        "--branch",
+        "snapshot",
+        "/tmp/oss-clone-voaSB4/source.git",
+        "/tmp/oss-clone-voaSB4/checkout"
+      ],
+      "started_at": "2026-10-26T19:15:38.151Z",
+      "duration_ms": 226,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "dist/ci/onboarding-logs/07-transport-clone.log"
+    },
+    {
+      "stage": "cloned-source",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "started_at": "2026-10-26T19:15:38.377Z",
+      "duration_ms": 3,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "d7dce10460eeb8ae4bda5602e62024f04b1f9f424e5eed826a26b222810dd546",
+      "log": "dist/ci/onboarding-logs/08-cloned-source.log"
+    },
+    {
+      "stage": "source-integrity",
+      "command": [
+        "python3",
+        "scripts/verify_ci_source.py"
+      ],
+      "started_at": "2026-10-26T19:15:38.381Z",
+      "duration_ms": 208,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "69b38f5a39d729b2d38721fcdb77e09ccbba66b359eceafdc5963576d86b568a",
+      "log": "dist/ci/onboarding-logs/09-source-integrity.log"
+    },
+    {
+      "stage": "missing-prerequisite",
+      "command": [
+        "/opt/hostedtoolcache/node/24.19.0/x64/bin/node",
+        "scripts/oss-bootstrap.mjs",
+        "setup"
+      ],
+      "started_at": "2026-10-26T19:15:38.592Z",
+      "duration_ms": 34,
+      "exit_code": 1,
+      "expected_exit": 1,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "dist/ci/onboarding-logs/10-missing-prerequisite.log"
+    },
+    {
+      "stage": "guide-setup",
+      "command": [
+        "/opt/hostedtoolcache/node/24.19.0/x64/bin/node",
+        "/home/runner/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "run",
+        "setup"
+      ],
+      "started_at": "2026-10-26T19:15:38.626Z",
+      "duration_ms": 3745,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "4645892fc7550d1a76f5ad735ee43cd46a32cfdc3ca5e0ab1d95c32c90b366c5",
+      "log": "dist/ci/onboarding-logs/11-guide-setup.log"
+    },
+    {
+      "stage": "go-version",
+      "command": [
+        "go",
+        "version"
+      ],
+      "started_at": "2026-10-26T19:15:42.371Z",
+      "duration_ms": 8,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "ed4307d760c597256afdc696a61d47d13e832615d7741ead11c64966a440b376",
+      "log": "dist/ci/onboarding-logs/12-go-version.log"
+    },
+    {
+      "stage": "provider-version",
+      "command": [
+        "podman",
+        "--version"
+      ],
+      "started_at": "2026-10-26T19:15:42.380Z",
+      "duration_ms": 17,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "e34137aa324895fc77ca1c6228953db20ddb402433e71426f7e3351a64424257",
+      "log": "dist/ci/onboarding-logs/13-provider-version.log"
+    },
+    {
+      "stage": "rootless-provider",
+      "command": [
+        "podman",
+        "info",
+        "--format",
+        "{{.Host.Security.Rootless}}"
+      ],
+      "started_at": "2026-10-26T19:15:42.397Z",
+      "duration_ms": 632,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74",
+      "log": "dist/ci/onboarding-logs/14-rootless-provider.log"
+    },
+    {
+      "stage": "npm-version",
+      "command": [
+        "/opt/hostedtoolcache/node/24.19.0/x64/bin/node",
+        "/home/runner/.npm/_npx/5ed1df33febb5bb0/node_modules/npm/bin/npm-cli.js",
+        "--version"
+      ],
+      "started_at": "2026-10-26T19:15:43.029Z",
+      "duration_ms": 76,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "d9f29f5aab43c8c1a8d6acc856e258b89735f541aa5e1f07b39a62f28bfa8d06",
+      "log": "dist/ci/onboarding-logs/15-npm-version.log"
+    },
+    {
+      "stage": "engine-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "started_at": "2026-10-26T19:15:43.106Z",
+      "duration_ms": 5955,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "dist/ci/onboarding-logs/16-engine-vet.log"
+    },
+    {
+      "stage": "engine-race-tests",
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "started_at": "2026-10-26T19:15:49.061Z",
+      "duration_ms": 64558,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "530fe98edae79bc24e7199c6f70546ff681a8743ae0e75c262b773cba09f0a32",
+      "log": "dist/ci/onboarding-logs/17-engine-race-tests.log"
+    },
+    {
+      "stage": "required-engine-tests",
+      "command": [
+        "/opt/hostedtoolcache/node/24.19.0/x64/bin/node",
+        "scripts/verify-engine-tests.mjs",
+        "dist/ci/engine-tests.jsonl"
+      ],
+      "started_at": "2026-10-26T19:16:53.621Z",
+      "duration_ms": 35,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "68da31b02fd5e9bc29a6e8a5b1ac76b0b97c4abdd6293457d9e5e67fe1a62161",
+      "log": "dist/ci/onboarding-logs/18-required-engine-tests.log"
+    },
+    {
+      "stage": "malformed-fixture",
+      "command": [
+        "go",
+        "run",
+        "./tests/fixtures/miragemesh/C30/seed",
+        "/tmp/oss-clone-voaSB4/invalid-state"
+      ],
+      "started_at": "2026-10-26T19:16:53.656Z",
+      "duration_ms": 246,
+      "exit_code": 1,
+      "expected_exit": 1,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "dist/ci/onboarding-logs/19-malformed-fixture.log"
+    },
+    {
+      "stage": "reference-workflow-1",
+      "command": [
+        "/opt/hostedtoolcache/node/24.19.0/x64/bin/node",
+        "scripts/onboarding-workflow.mjs",
+        "/tmp/oss-clone-voaSB4/state-1",
+        "/tmp/oss-clone-voaSB4/result-1.json"
+      ],
+      "started_at": "2026-10-26T19:16:53.903Z",
+      "duration_ms": 3863,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "b0eff75ba5543a417ef643c7cf06eb4058c6780b8f7a3400c91b7794e26d3484",
+      "log": "dist/ci/onboarding-logs/20-reference-workflow-1.log"
+    },
+    {
+      "stage": "reference-workflow-2",
+      "command": [
+        "/opt/hostedtoolcache/node/24.19.0/x64/bin/node",
+        "scripts/onboarding-workflow.mjs",
+        "/tmp/oss-clone-voaSB4/state-2",
+        "/tmp/oss-clone-voaSB4/result-2.json"
+      ],
+      "started_at": "2026-10-26T19:16:57.767Z",
+      "duration_ms": 3523,
+      "exit_code": 0,
+      "expected_exit": 0,
+      "signal": null,
+      "timed_out": false,
+      "stdout_sha256": "bf964db87d8f6b6a2956773cbdab83f049353398907de52b7ba7e24a40ce4df5",
+      "log": "dist/ci/onboarding-logs/21-reference-workflow-2.log"
+    }
+  ],
+  "runs": [
+    {
+      "iteration": 1,
+      "passed": true,
+      "provider_failure": "onboarding.provider_unavailable",
+      "event_checks": [
+        {
+          "name": "positive",
+          "exit_code": 0,
+          "result": {
+            "valid": true,
+            "sensor_id": "onboarding-01",
+            "event_id": "onboarding-event-01",
+            "sequence": 1
+          }
+        },
+        {
+          "name": "negative",
+          "exit_code": 1,
+          "result": {
+            "valid": false,
+            "error": {
+              "code": "INVALID_INPUT",
+              "field": "sequence"
+            }
+          }
+        }
+      ],
+      "state_manifest_sha256": "072a9a2888c84dc00b30f9308932540af40ea5812d49e36644d2986c09956c01",
+      "segment_sha256": {
+        "segment-00000000000000000001.sealed.jsonl": "3b0e3c91ecc50d21c4855aa0ef549700961a59aeb506a345e0efad12c609a715",
+        "segment-00000000000000000002.jsonl": "c1e70f068ea464d99417dbec0f6016f805dae233405c1c659b71d25db508dfde"
+      },
+      "engine_sha256": "2937ba48c1bc68a45be43cba0687c725dd79da4535d20802a4c8e1a560b75616",
+      "web_index_sha256": "704df2ce987d42c674d30e93cbbef6c0f3732c50d7d58e2f142e765e4a28a31e",
+      "webOnly": {
+        "proof": "real git clone -> npm run setup -> Go vet/race tests and discovery guard -> local event validation -> unified web and Go runtime startup",
+        "coreReady": false
+      },
+      "coreWorkflow": {
+        "scenario": "tests/scenarios/clone-to-value.json",
+        "engine": "tests/fixtures/miragemesh/C30/seed -> outcome.json",
+        "browser": "tests/browser/clone-to-value.spec.ts",
+        "readiness": {
+          "engineReady": true,
+          "storageReady": true,
+          "providersReady": true
+        },
+        "restart": true,
+        "restoreEquivalent": true,
+        "acceptedSequences": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "negativeCases": 6,
+        "passed": true
+      },
+      "proof": "real git clone -> npm run setup -> full C30 reference workflow -> engine/storage/provider readiness -> restart/restore -> real browser workflow"
+    },
+    {
+      "iteration": 2,
+      "passed": true,
+      "provider_failure": "onboarding.provider_unavailable",
+      "event_checks": [
+        {
+          "name": "positive",
+          "exit_code": 0,
+          "result": {
+            "valid": true,
+            "sensor_id": "onboarding-01",
+            "event_id": "onboarding-event-01",
+            "sequence": 1
+          }
+        },
+        {
+          "name": "negative",
+          "exit_code": 1,
+          "result": {
+            "valid": false,
+            "error": {
+              "code": "INVALID_INPUT",
+              "field": "sequence"
+            }
+          }
+        }
+      ],
+      "state_manifest_sha256": "fe78222c88855a0e70794340b2478f43de151dea1938b84509e218beae2eab66",
+      "segment_sha256": {
+        "segment-00000000000000000001.sealed.jsonl": "8e454de2288174bca7fa737c7c548afdc7d7e9ba729427dd30159bd7403ea5da",
+        "segment-00000000000000000002.jsonl": "b126c7e96522a565c28cd72211a6cdc660c1657e3f404e1669443b6bbebd0823"
+      },
+      "engine_sha256": "2937ba48c1bc68a45be43cba0687c725dd79da4535d20802a4c8e1a560b75616",
+      "web_index_sha256": "704df2ce987d42c674d30e93cbbef6c0f3732c50d7d58e2f142e765e4a28a31e",
+      "webOnly": {
+        "proof": "real git clone -> npm run setup -> Go vet/race tests and discovery guard -> local event validation -> unified web and Go runtime startup",
+        "coreReady": false
+      },
+      "coreWorkflow": {
+        "scenario": "tests/scenarios/clone-to-value.json",
+        "engine": "tests/fixtures/miragemesh/C30/seed -> outcome.json",
+        "browser": "tests/browser/clone-to-value.spec.ts",
+        "readiness": {
+          "engineReady": true,
+          "storageReady": true,
+          "providersReady": true
+        },
+        "restart": true,
+        "restoreEquivalent": true,
+        "acceptedSequences": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "negativeCases": 6,
+        "passed": true
+      },
+      "proof": "real git clone -> npm run setup -> full C30 reference workflow -> engine/storage/provider readiness -> restart/restore -> real browser workflow"
+    }
+  ],
+  "failures": [],
+  "staged_tree": "0b33a52126aec75ce3c7ec5134f2c0ea068743b7",
+  "base_commit": "9a5e60f82105ec6be1bda84cace22eed64c4d736",
+  "source_identity": "sha256:6ba2cca732d1fdd3cc5258d3fc6f081d2bb605a1285aba13f9bcb59b523e356b",
+  "guides": [
+    {
+      "path": "docs/engineering/CLONE_TO_RUN.md",
+      "sha256": "5124ddc019f8c1819a43d2ded2508ec5db892871c6c914f95365c025fb3216c6"
+    },
+    {
+      "path": "docs/release/USER_GUIDE.md",
+      "sha256": "74e0608a5226fe7859e621114d4b227bf5dc56f6e6c339ba71236358a0415915"
+    }
+  ],
+  "fixture_hashes": [
+    {
+      "path": "tests/fixtures/miragemesh/C30/positive.json",
+      "license": "Apache-2.0",
+      "sha256": "6b114a0deca8d0d4d0451a5f9e62cb2b70509b96e663c86852c5f946e4a340d9"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C30/negative.json",
+      "license": "Apache-2.0",
+      "sha256": "d3de7c9fbe524f02f3a7de199295181f29b4d699d848bcae9a237f135d4d72be"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C30/expected-output.json",
+      "license": "Apache-2.0",
+      "sha256": "c7b077851271fe36e4c07fe190da602d71254c25977e8779ea3d6e84e711567d"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C36/positive.json",
+      "license": "Apache-2.0",
+      "sha256": "7cdeb86d71e6a4e0485e0391af88ceea7c4b271fec3a0a90b83f9d7b2ad9a620"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C36/negative.json",
+      "license": "Apache-2.0",
+      "sha256": "fd89b31444343542b8574c1c36dac3c6a94faca8188a5b63cda3d4e71bcf9072"
+    },
+    {
+      "path": "tests/fixtures/miragemesh/C36/expected-output.json",
+      "license": "Apache-2.0",
+      "sha256": "137ba695cf8773bb5bd7a9117b19a985ae18228af59fbf57a4d94b96f0073aea"
+    }
+  ],
+  "negative_prerequisite": {
+    "passed": true,
+    "exit_code": 1,
+    "code": "onboarding.missing_prerequisite"
+  },
+  "tools": {
+    "go": "go version go1.27.2 linux/amd64",
+    "podman": "podman version 4.9.3",
+    "rootless": "true",
+    "npm": "11.9.0"
+  },
+  "proof": "fresh transport clone -> public guide setup -> real Go vet/race/required anchors -> two fresh-state reference workflows -> clone-owned engine/storage/provider readiness -> restart/restore -> Chromium domain views",
+  "completed_at": "2026-10-26T19:17:01.291Z",
+  "duration_ms": 83171
+}

@@ -1,0 +1,39 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C36 onboarding fixture; no real sensor, customer, credential or traffic data.",
+  "event": {
+    "exit_code": 0,
+    "result": {
+      "valid": true,
+      "sensor_id": "onboarding-01",
+      "event_id": "onboarding-event-01",
+      "sequence": 1
+    }
+  },
+  "invalid_event": {
+    "exit_code": 1,
+    "code": "INVALID_INPUT"
+  },
+  "workflow": {
+    "accepted_sequences": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "dropped_sequence": 4,
+    "loss_count": 1,
+    "applied_revision": 1,
+    "triage_entries": 1,
+    "restart": true,
+    "restore_equivalent": true
+  },
+  "readiness": {
+    "status": "ready",
+    "engineReady": true,
+    "storageReady": true,
+    "providersReady": true
+  },
+  "provider_failure": "onboarding.provider_unavailable"
+}

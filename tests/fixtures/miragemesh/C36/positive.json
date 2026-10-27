@@ -1,0 +1,16 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C36 onboarding fixture; no real sensor, customer, credential or traffic data.",
+  "event": {
+    "schema_version": "1",
+    "sensor_id": "onboarding-01",
+    "event_id": "onboarding-event-01",
+    "sequence": 1,
+    "observed_at": "2026-01-01T00:00:00Z",
+    "kind": "http.request",
+    "metadata": {
+      "path": "/onboarding/https://example.invalid/inert"
+    }
+  }
+}

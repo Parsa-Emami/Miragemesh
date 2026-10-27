@@ -1,0 +1,290 @@
+{
+  "commit_id": "C36",
+  "project": "MirageMesh",
+  "passed": true,
+  "planning_template": false,
+  "status": "verified",
+  "date": "2026-10-26",
+  "base_commit": "d39a8175a8122f2b330b38e5ee03019f10fea23c",
+  "source_identity": "sha256:6ba2cca732d1fdd3cc5258d3fc6f081d2bb605a1285aba13f9bcb59b523e356b",
+  "scope": "Independent clean-clone onboarding from the public guide, clone-owned runtime/browser probes, two fresh-state reference workflows, measured command journal and explicit failures; no independent-human, publication or C40 claim.",
+  "results": {
+    "independent_runs": 2,
+    "onboarding_duration_ms": 83171,
+    "guide_setup_duration_ms": 3745,
+    "workflow_durations_ms": [
+      3863,
+      3523
+    ],
+    "go_top_level_tests_passed": 230,
+    "go_subtests_passed": 359,
+    "required_engine_anchors": 203,
+    "browser_tests_passed": 24,
+    "node_tests": {
+      "total": 136,
+      "passed": 135,
+      "failed": 0,
+      "skipped": 1,
+      "skip_reason": "C35 foreign-platform refusal test is inapplicable because the Linux host matches the artifact platform"
+    },
+    "accepted_sequences": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "dropped_sequence": 4,
+    "loss_count": 1,
+    "six_domain_negative_cases_passed_per_run": true,
+    "positive_event_exit": 0,
+    "invalid_event_exit": 1,
+    "invalid_event_code": "INVALID_INPUT",
+    "missing_prerequisite_exit": 1,
+    "missing_fixture_exit": 1,
+    "provider_failure_code": "onboarding.provider_unavailable",
+    "engine_storage_provider_readiness": true,
+    "restart_and_restore_equivalent": true,
+    "independent_manifest_hashes": [
+      "072a9a2888c84dc00b30f9308932540af40ea5812d49e36644d2986c09956c01",
+      "fe78222c88855a0e70794340b2478f43de151dea1938b84509e218beae2eab66"
+    ],
+    "no_egress": "Real required rootless-container egress/resource tests passed; actual browser workflow asserts loopback-only requests. Dependency preparation can download locked resources.",
+    "independent_human_contributor": false,
+    "publication_performed": false
+  },
+  "local_limitations": {
+    "go_test_all": {
+      "exit_code": 1,
+      "failed_tests": [
+        "TestDecoyIsolationDeniesInternetAndPrivateSubnets",
+        "TestDecoyIsolationEnforcesPIDAndMemoryLimits",
+        "TestDecoyIsolationReconcilesAfterRestart",
+        "TestDecoyIsolationProviderFailuresAreExplicit",
+        "TestDecoyIsolationPolicyRejectsUnsafeConfiguration",
+        "TestDecoyIsolationStopsAndRemovesItsContainer",
+        "TestDecoyIsolationRejectsWeakRuntimeControls",
+        "TestDecoyIsolationReportsCleanupFailure",
+        "TestDecoyIsolationPolicyIsImmutable",
+        "TestDecoyIsolationAdapterBoundsRuntimeOutput",
+        "TestDecoyIsolationWorkflowReportsTypedOutcome",
+        "TestDecoyIsolationAdapterRollsBackAnUncertainStart",
+        "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
+        "TestDecoyIsolationPreservesContainersOnOwnershipConflict"
+      ],
+      "reason": "Pre-existing C13 provider tests require real rootless Podman; this host has no Podman and denies user-namespace UID mappings."
+    },
+    "npm_run_check": {
+      "exit_code": 1,
+      "passed": 134,
+      "failed": 1,
+      "skipped": 1,
+      "failed_test": "runtime makes no internet connection by default",
+      "reason": "strace PTRACE_TRACEME denied by the host"
+    },
+    "npm_run_test_browser": {
+      "exit_code": 1,
+      "tests_blocked": 24,
+      "reason": "Chrome process_singleton_posix socket() fails with Operation not permitted before any page opens; default Playwright CDN download also failed, while the matching official Chrome archive was downloaded successfully."
+    },
+    "npm_run_test_clone": {
+      "exit_code": 1,
+      "observed": "Fresh clone/source integrity and missing-Go rejection passed; guide setup failed explicitly because Podman 4.9.3 is unavailable. No placeholder success or disabled check was used."
+    }
+  },
+  "official_sources": [
+    "https://nodejs.org/docs/latest-v24.x/api/child_process.html#child_processexecfilefile-args-options-callback",
+    "https://docs.podman.io/en/v4.9.3/markdown/podman-run.1.html",
+    "https://pkg.go.dev/crypto/tls"
+  ],
+  "fixtures": {
+    "version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic sensor events and expected outcomes",
+    "sha256": {
+      "tests/fixtures/miragemesh/C36/expected-output.json": "137ba695cf8773bb5bd7a9117b19a985ae18228af59fbf57a4d94b96f0073aea",
+      "tests/fixtures/miragemesh/C36/negative.json": "fd89b31444343542b8574c1c36dac3c6a94faca8188a5b63cda3d4e71bcf9072",
+      "tests/fixtures/miragemesh/C36/positive.json": "7cdeb86d71e6a4e0485e0391af88ceea7c4b271fec3a0a90b83f9d7b2ad9a620"
+    }
+  },
+  "hosted_actions": [
+    {
+      "name": "plan-consistency",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862567",
+      "conclusion": "success",
+      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+    },
+    {
+      "name": "contracts",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862700",
+      "conclusion": "success",
+      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+    },
+    {
+      "name": "engine-runtime",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862752",
+      "conclusion": "success",
+      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+    },
+    {
+      "name": "web-foundation",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+      "conclusion": "success",
+      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+    }
+  ],
+  "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d",
+  "verified_git_tree": "0b33a52126aec75ce3c7ec5134f2c0ea068743b7",
+  "ci_checkout_commit": "9a5e60f82105ec6be1bda84cace22eed64c4d736",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted source paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation",
+  "source_binding": "This proof certifies implementation commit db386410acfc6a5d92b9d6699ae605a8bbc4e63d and its exact Git tree, also tested as the GitHub PR merge checkout. Progress, handoff and observed-results documentation are recorded afterward; they do not claim these historical tests ran on future source. All runtime/fixture/test code is unchanged by certification bookkeeping.",
+  "local_commands": [
+    {
+      "command": "npm run build",
+      "exit_code": 0
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0
+    },
+    {
+      "command": "go test -race -count=1 ./tests/acceptance",
+      "exit_code": 0,
+      "observed": "ok  \tgithub.com/Parsa-Emami/Miragemesh/tests/acceptance\t3.218s"
+    },
+    {
+      "command": "node --test tests/engineering/onboarding.test.mjs tests/web/reference-contract.test.mjs",
+      "exit_code": 0,
+      "observed": "13 tests passed, 0 failures"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
+      "exit_code": 0,
+      "observed": "6 tests passed"
+    },
+    {
+      "command": "python3 scripts/validate_repo.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 scripts/plan.py validate",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run validate:plan",
+      "exit_code": 0
+    }
+  ],
+  "commands": [
+    {
+      "command": "npm run validate:plan",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+      "observed": "40 task definitions and progress validate"
+    },
+    {
+      "command": "python3 scripts/plan.py validate",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862567",
+      "observed": "Planning consistency passed"
+    },
+    {
+      "command": "python3 scripts/validate_repo.py",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862700",
+      "observed": "Repository contract validation passed"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862700",
+      "observed": "6 source-integrity regressions passed"
+    },
+    {
+      "command": "python3 scripts/verify_ci_source.py",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862700",
+      "observed": "Historical source records and exact checkout validated"
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862752",
+      "observed": "All Go packages vetted"
+    },
+    {
+      "command": "go test -race -count=1 -json ./...",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862752",
+      "observed": "Real container isolation, egress, resource bounds, engine, contract and filesystem recovery tests passed"
+    },
+    {
+      "command": "node scripts/verify-engine-tests.mjs dist/ci/engine-tests.jsonl",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862752",
+      "observed": "9 engine suites and 203 required executed anchors verified, including both C36 anchors"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+      "observed": "Web and Go engine builds passed"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+      "observed": "136 tests: 135 passed, 0 failures, 1 native-platform-inapplicable C35 test skipped"
+    },
+    {
+      "command": "npm run test:browser",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+      "observed": "24 Playwright tests passed, including real C36 unavailable-provider/recovery/restart coverage"
+    },
+    {
+      "command": "npm run test:clone",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+      "observed": "Fresh transport clone, guide setup, full Go race suite, two real reference workflows, clone-owned runtime/browser readiness and restart/restore passed in 83171 ms"
+    },
+    {
+      "command": "npm run package",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+      "observed": "Distribution build passed; dirty-source provenance retained, no publication claim"
+    },
+    {
+      "command": "npm run verify:artifact",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+      "observed": "Artifact checksums, source, licenses, resources and provenance verified"
+    },
+    {
+      "command": "cd dist/release && sha256sum -c SHA256SUMS.txt",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+      "observed": "Every declared checksum passed"
+    }
+  ],
+  "environment": {
+    "os": "linux",
+    "architecture": "x64",
+    "logical_cpus": 4,
+    "ram_mib": 15990,
+    "node": "v24.19.0",
+    "go": "go version go1.27.2 linux/amd64",
+    "podman": "podman version 4.9.3",
+    "rootless": "true",
+    "npm": "11.9.0",
+    "playwright": "1.64.1 (locked package installed by npm ci)",
+    "resource_constraints": "4 logical CPUs and 15990 MiB RAM observed; C36 does not remeasure or replace the constrained C28 capacity proof."
+  },
+  "observed_report": "docs/evidence/C36/onboarding.json",
+  "artifact": {
+    "id": 12679729220,
+    "run_url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+    "sha256": "9fd7bb107f0a6d83ddd54d87acab7dca1c6f619796804c54b16c3913b6cf6948",
+    "retention_days": 14,
+    "durable_copies": "Raw onboarding report, both workflow outputs, required-anchor output, compressed Go JSON test stream and full engine/web job logs retained under docs/evidence/C36/."
+  }
+}

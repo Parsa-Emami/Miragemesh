@@ -7,14 +7,46 @@
   "browser_workflow": "tests/browser/clone-to-value.spec.ts",
   "clean_host_command": "npm run test:clone",
   "steps": [
-    { "id": "enroll", "action": "Enroll sensor sensor-01 with a one-time token and reject its replay", "expected_result": "sensor-01 has exactly one durable token consumption" },
-    { "id": "apply-config", "action": "Apply signed desired configuration revision 1", "expected_result": "The exact signed payload becomes the applied revision without re-serialization" },
-    { "id": "event-01", "action": "Deliver event-01 with sequence 1 over mutually authenticated TLS", "expected_result": "The authenticated collector durably records the event and its acknowledgement" },
-    { "id": "disconnect", "action": "Disconnect the collector and hand event-02 and event-03 to the bounded spool", "expected_result": "Both exact event payloads are retained locally" },
-    { "id": "spool", "action": "Queue event-04 beyond the signed spool bound", "expected_result": "The event is dropped as explicit durable loss, not silently accepted, and an exact retry publishes no second gap" },
-    { "id": "reconnect", "action": "Reconnect, repeat the event-02/event-03 batch, and deliver event-05 after the gap", "expected_result": "The repeated batch returns the same receipts; event-05 advances the sequence after the explicit gap" },
-    { "id": "triage-retention", "action": "Triage the source-backed incident and inspect the retention preview", "expected_result": "Triage is durable and idempotent; retention is a non-destructive preview with explicit coverage" },
-    { "id": "restart-restore", "action": "Restart the real store and segment writer, then open an independent restored copy", "expected_result": "Manifest, exact segment bytes, index, triage, loss accounting and coverage remain equivalent" }
+    {
+      "id": "enroll",
+      "action": "Enroll sensor sensor-01 with a one-time token and reject its replay",
+      "expected_result": "sensor-01 has exactly one durable token consumption"
+    },
+    {
+      "id": "apply-config",
+      "action": "Apply signed desired configuration revision 1",
+      "expected_result": "The exact signed payload becomes the applied revision without re-serialization"
+    },
+    {
+      "id": "event-01",
+      "action": "Deliver event-01 with sequence 1 over mutually authenticated TLS",
+      "expected_result": "The authenticated collector durably records the event and its acknowledgement"
+    },
+    {
+      "id": "disconnect",
+      "action": "Disconnect the collector and hand event-02 and event-03 to the bounded spool",
+      "expected_result": "Both exact event payloads are retained locally"
+    },
+    {
+      "id": "spool",
+      "action": "Queue event-04 beyond the signed spool bound",
+      "expected_result": "The event is dropped as explicit durable loss, not silently accepted, and an exact retry publishes no second gap"
+    },
+    {
+      "id": "reconnect",
+      "action": "Reconnect, repeat the event-02/event-03 batch, and deliver event-05 after the gap",
+      "expected_result": "The repeated batch returns the same receipts; event-05 advances the sequence after the explicit gap"
+    },
+    {
+      "id": "triage-retention",
+      "action": "Triage the source-backed incident and inspect the retention preview",
+      "expected_result": "Triage is durable and idempotent; retention is a non-destructive preview with explicit coverage"
+    },
+    {
+      "id": "restart-restore",
+      "action": "Restart the real store and segment writer, then open an independent restored copy",
+      "expected_result": "Manifest, exact segment bytes, index, triage, loss accounting and coverage remain equivalent"
+    }
   ],
   "expected_invariants": [
     "No egress by default",
@@ -24,12 +56,36 @@
     "Retention preview never deletes events"
   ],
   "negative_cases": [
-    { "id": "enrollment-token-replay", "expected_failure": "enrollment.ErrReplay" },
-    { "id": "untrusted-client-certificate", "expected_failure": "tls.handshake_rejected" },
-    { "id": "unconfigured-batch-ingest", "expected_failure": "sensor.ErrUnconfigured" },
-    { "id": "malformed-event", "expected_failure": "contracts.INVALID_INPUT" },
-    { "id": "spool-overflow", "expected_failure": "spool.ErrDropped" },
-    { "id": "missing-fixture", "expected_failure": "acceptance.ErrFixture" }
+    {
+      "id": "enrollment-token-replay",
+      "expected_failure": "enrollment.ErrReplay",
+      "action": "Execute enrollment-token-replay against the real local acceptance workflow"
+    },
+    {
+      "id": "untrusted-client-certificate",
+      "expected_failure": "tls.handshake_rejected",
+      "action": "Execute untrusted-client-certificate against the real local acceptance workflow"
+    },
+    {
+      "id": "unconfigured-batch-ingest",
+      "expected_failure": "sensor.ErrUnconfigured",
+      "action": "Execute unconfigured-batch-ingest against the real local acceptance workflow"
+    },
+    {
+      "id": "malformed-event",
+      "expected_failure": "contracts.INVALID_INPUT",
+      "action": "Execute malformed-event against the real local acceptance workflow"
+    },
+    {
+      "id": "spool-overflow",
+      "expected_failure": "spool.ErrDropped",
+      "action": "Execute spool-overflow against the real local acceptance workflow"
+    },
+    {
+      "id": "missing-fixture",
+      "expected_failure": "acceptance.ErrFixture",
+      "action": "Execute missing-fixture against the real local acceptance workflow"
+    }
   ],
   "fixtures": [
     "tests/fixtures/miragemesh/C30/positive.json",
@@ -42,6 +98,32 @@
     "clean_host": "scripts/clone-smoke.mjs",
     "passed": true
   },
-  "clean_host_commands": ["git clone https://github.com/Parsa-Emami/MirageMesh.git", "cd MirageMesh", "npm run setup", "npm start"],
-  "requires_at_C30": ["real engine and required local providers", "the entire reference workflow and negative cases", "restart and restore", "no paid/cloud account or sibling clone"]
+  "clean_host_commands": [
+    "git clone https://github.com/Parsa-Emami/Miragemesh.git",
+    "cd Miragemesh",
+    "npm run setup",
+    "npx --no-install playwright install chromium",
+    "npm run test:clone"
+  ],
+  "requires_at_C30": [
+    "real engine and required local providers",
+    "the entire reference workflow and negative cases",
+    "restart and restore",
+    "no paid/cloud account or sibling clone"
+  ],
+  "onboarding": {
+    "schema_version": 1,
+    "fixture_directory": "tests/fixtures/miragemesh/C36",
+    "guides": [
+      "docs/engineering/CLONE_TO_RUN.md",
+      "docs/release/USER_GUIDE.md"
+    ],
+    "independent_runs": 2,
+    "restart_cycles": 2,
+    "report": "dist/ci/onboarding.json",
+    "browser_workflows": [
+      "tests/browser/clone-to-value.spec.ts"
+    ],
+    "environment": "Fresh transport clone and dependency install; fresh state for each run; prepared compiler, rootless provider image and browser caches are recorded explicitly. No independent human-contributor claim."
+  }
 }
