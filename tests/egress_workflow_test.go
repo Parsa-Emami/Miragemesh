@@ -372,7 +372,9 @@ if args[0]=='info': print('true')
 elif args[0]=='image': pass
 elif args[0]=='run':
  labels=dict(arg[len('--label='):].split('=',1) for arg in args if arg.startswith('--label='))
- marker.write_text(json.dumps(labels))
+ pending=marker.with_suffix('.pending')
+ pending.write_text(json.dumps(labels))
+ pending.replace(marker)
  time.sleep(60)
 elif args[0]=='inspect':
  if not marker.exists(): print('no such container');sys.exit(1)

@@ -1,6 +1,6 @@
 import { spawnSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
-import { cp, lstat, mkdir, open, readFile, rename, rm, stat } from 'node:fs/promises';
+import { cp, lstat, mkdir, open, readFile, realpath, rename, rm, stat } from 'node:fs/promises';
 import { dirname, join, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { hostPlatform, sha256, sha256File, verifyRelease } from './verify-release.mjs';
@@ -136,10 +136,30 @@ async function readDataSchema(dataDir) {
   return { schema, present: true };
 }
 
-function assertDataDirectory(prefix, dataDir, artifact) {
-  const releases = join(prefix, 'releases');
-  if (dataDir === prefix || dataDir.startsWith(releases + sep)) fail('unsafe_data_dir', 'Data directory may not be the install prefix or an installed release.');
-  if (artifact && (dataDir === resolve(artifact) || dataDir.startsWith(resolve(artifact) + sep))) fail('unsafe_data_dir', 'Data directory may not be inside the artifact.');
+async function canonicalPath(path) {
+  try { return await realpath(path); }
+  catch (error) {
+    if (error.code !== 'ENOENT') fail('unsafe_data_dir', `Unable to resolve installation/data paths: ${error.message}`);
+    const parent = dirname(path);
+    if (parent === path) fail('unsafe_data_dir', 'Unable to resolve installation/data paths.');
+    return join(await canonicalPath(parent), path.slice(parent.length));
+  }
+}
+
+function within(path, directory) {
+  return path === directory || path.startsWith(directory.endsWith(sep) ? directory : directory + sep);
+}
+
+async function assertDataDirectory(prefix, dataDir, artifact) {
+  const canonicalPrefix = await canonicalPath(prefix);
+  const canonicalData = await canonicalPath(dataDir);
+  const canonicalArtifact = artifact ? await canonicalPath(resolve(artifact)) : null;
+  if (canonicalArtifact && within(canonicalPrefix, canonicalArtifact)) fail('unsafe_prefix', 'Install prefix may not resolve inside the artifact.');
+  const reserved = await Promise.all(['releases', 'attestations'].map(name => canonicalPath(join(prefix, name))));
+  if (within(canonicalPrefix, canonicalData) || reserved.some(directory => within(canonicalData, directory))) {
+    fail('unsafe_data_dir', 'Data directory overlaps the install prefix or reserved release metadata.');
+  }
+  if (canonicalArtifact && within(canonicalData, canonicalArtifact)) fail('unsafe_data_dir', 'Data directory may not be inside the artifact.');
 }
 
 async function ensureDataDirectory(dataDir) {
@@ -189,6 +209,15 @@ async function verifiedArtifact(options, artifact) {
     throw error;
   }
   return result;
+}
+
+async function verifyInstalledRelease(options, artifactName) {
+  const verified = await verifyRelease({ artifact: join(options.prefix, 'releases', artifactName), manifest: options.manifest, signature: options.signature, trustedKey: options.trustedKey, now: options.now });
+  if (!verified.passed) {
+    const error = new ReleaseError('installed_release_modified', 'The installed release no longer matches its signed attestation.');
+    error.errors = verified.errors;
+    throw error;
+  }
 }
 
 async function copyVerifiedRelease(prefix, options, verified) {
@@ -273,25 +302,27 @@ function recordFor(verified, trusted, attestation, now) {
 }
 
 function baseOptions(options) {
+  if (!plain(options) || typeof options.prefix !== 'string' || !options.prefix || typeof options.trustedKey !== 'string' || !options.trustedKey) fail('usage', '--prefix and --trusted-key are required.');
   const prefix = resolve(options.prefix);
   const dataDir = resolve(options.dataDir ?? join(prefix, 'data'));
   const now = options.now instanceof Date ? options.now : new Date(options.now ?? Date.now());
+  if (!Number.isFinite(now.getTime())) fail('usage', 'A valid release verification time is required.');
   return { ...options, prefix, dataDir, now };
 }
 
 export async function installRelease(input = {}) {
   const options = baseOptions(input);
-  const artifact = resolve(options.artifact);
   if (!options.prefix || !options.trustedKey || !options.artifact || !options.manifest || !options.signature) {
     fail('usage', 'install requires --prefix, --trusted-key, --artifact, --manifest and --signature.');
   }
+  const artifact = resolve(options.artifact);
   if (artifact === options.prefix || options.prefix.startsWith(artifact + sep)) fail('unsafe_prefix', 'Install prefix may not be inside the artifact.');
 
   const verified = await verifiedArtifact(options, artifact);
   assertHost(verified.provenance, options.allowForeignPlatform);
   const existing = await readInstallState(options.prefix);
   const dataDir = existing ? existing.data_dir : options.dataDir;
-  assertDataDirectory(options.prefix, dataDir, artifact);
+  await assertDataDirectory(options.prefix, dataDir, artifact);
   await mkdir(options.prefix, { recursive: true, mode: 0o700 });
   await ensureDataDirectory(dataDir);
   const data = await readDataSchema(dataDir);
@@ -302,6 +333,7 @@ export async function installRelease(input = {}) {
     const record = existing.releases[verified.artifact];
     const manifestDigest = await sha256File(options.manifest);
     if (!record || record.manifest_sha256 !== manifestDigest) fail('release_conflict', 'The current release record does not match the supplied attestation.');
+    await verifyInstalledRelease(options, verified.artifact);
     return {
       status: 'idempotent', current: existing.current, previous: existing.previous, version: verified.version,
       revision: verified.revision, platform: verified.platform, key_fingerprint: existing.trusted_key_fingerprint,
@@ -341,17 +373,17 @@ export async function installRelease(input = {}) {
 
 export async function upgradeRelease(input = {}) {
   const options = baseOptions(input);
-  const artifact = resolve(options.artifact);
   if (!options.trustedKey || !options.artifact || !options.manifest || !options.signature) {
     fail('usage', 'upgrade requires --prefix, --trusted-key, --artifact, --manifest and --signature.');
   }
+  const artifact = resolve(options.artifact);
   if (artifact === options.prefix || options.prefix.startsWith(artifact + sep)) fail('unsafe_prefix', 'Install prefix may not be inside the artifact.');
 
   const verified = await verifiedArtifact(options, artifact);
   assertHost(verified.provenance, options.allowForeignPlatform);
   const state = await readInstallState(options.prefix, { required: true });
   const dataDir = state.data_dir;
-  assertDataDirectory(options.prefix, dataDir, artifact);
+  await assertDataDirectory(options.prefix, dataDir, artifact);
   await mkdir(options.prefix, { recursive: true, mode: 0o700 });
   await ensureDataDirectory(dataDir);
   const data = await readDataSchema(dataDir);
@@ -361,6 +393,7 @@ export async function upgradeRelease(input = {}) {
     const record = state.releases[verified.artifact];
     const manifestDigest = await sha256File(options.manifest);
     if (!record || record.manifest_sha256 !== manifestDigest) fail('release_conflict', 'The current release record does not match the supplied attestation.');
+    await verifyInstalledRelease(options, verified.artifact);
     return {
       status: 'idempotent', current: state.current, previous: state.previous, version: verified.version,
       revision: verified.revision, platform: verified.platform, key_fingerprint: state.trusted_key_fingerprint,
@@ -411,6 +444,7 @@ export async function rollbackRelease(input = {}) {
   const options = baseOptions(input);
   if (!options.trustedKey) fail('usage', 'rollback requires --prefix and --trusted-key.');
   const state = await readInstallState(options.prefix, { required: true });
+  await assertDataDirectory(options.prefix, state.data_dir);
   if (!state.previous) fail('no_previous_release', 'No recorded previous release is available for rollback.');
   const targetName = state.previous;
   const currentName = state.current;

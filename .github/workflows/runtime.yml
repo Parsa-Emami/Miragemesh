@@ -47,6 +47,8 @@ jobs:
         run: node --test tests/engineering/engine-tests.test.mjs
       - name: Run engine, contracts and filesystem recovery tests
         run: go test -race -count=1 -json ./... > dist/ci/engine-tests.jsonl
+      - name: Repeat the observed C37 cancellation cleanup regression
+        run: go test -race -count=25 ./tests -run '^TestDecoyIsolationAdapterRollsBackAnUncertainStart$'
       - name: Require executed engine suites
         run: node scripts/verify-engine-tests.mjs dist/ci/engine-tests.jsonl
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

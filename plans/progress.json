@@ -331,10 +331,12 @@
     },
     {
       "id": "C37",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C37.json"
+      ],
+      "source_identity": "sha256:d5fa4e85e838339a9adf2f15425f808277eab3d40bff490041c1bb05dd4c7acb",
+      "notes": "C37 verified on dcd885675efa9ad8dab9b2d8e6274189d63826fb: signed installed-release rechecks refuse modified bytes, canonical data/prefix/artifact boundaries refuse overlap before writes, missing release API input is typed, runtime cancellation stays typed, and ownership fixtures publish complete labels atomically. Production permission guard still rejects injected network/write capabilities. All four hosted workflows passed: 207 engine anchors, 25 cleanup repetitions, 24 browser tests and 146 Node passes (one inapplicable C35 skip). Two clean-clone workflows preserve restart/restore and accepted data. Failed attempts and local host limits retained; no C38/C40 or publication claim."
     },
     {
       "id": "C38",

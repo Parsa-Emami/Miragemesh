@@ -1,86 +1,86 @@
 {
   "project": "MirageMesh",
-  "last_task": "C36",
+  "last_task": "C37",
   "status": "verified",
-  "base_commit": "d39a8175a8122f2b330b38e5ee03019f10fea23c",
-  "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d",
-  "verified_on_tree": "0b33a52126aec75ce3c7ec5134f2c0ea068743b7",
-  "ci_checkout_commit": "9a5e60f82105ec6be1bda84cace22eed64c4d736",
-  "source_identity": "sha256:6ba2cca732d1fdd3cc5258d3fc6f081d2bb605a1285aba13f9bcb59b523e356b",
-  "evidence": "docs/evidence/C36.json",
-  "summary": "Independent clean-clone onboarding from the public guide, clone-owned runtime/browser probes, two fresh-state reference workflows, measured command journal and explicit failures; no independent-human, publication or C40 claim.",
-  "verification_results": {
-    "independent_runs": 2,
-    "onboarding_duration_ms": 83171,
-    "guide_setup_duration_ms": 3745,
-    "workflow_durations_ms": [
-      3863,
-      3523
+  "base_commit": "a94b498ec183e5a04624a54b3acc1ce30b9ecff1",
+  "implementation_commit": "dcd885675efa9ad8dab9b2d8e6274189d63826fb",
+  "initial_implementation_commit": "580a77c4d7d1c09eca33709a52e912af484d6074",
+  "verified_on_tree": "078a316ee1345bab43c49b9f8e898c1e64f9468b",
+  "ci_checkout_commit": "d6aaeb8a12633fd5670bcf95ee5962dba6845f1f",
+  "source_identity": "sha256:d5fa4e85e838339a9adf2f15425f808277eab3d40bff490041c1bb05dd4c7acb",
+  "evidence": "docs/evidence/C37.json",
+  "summary": "Resolve reproduced C35 installation/data-path/API blockers and the recorded C36 cancellation cleanup regression, preserving C30 storage/restart and C33 browser behavior.",
+  "results": {
+    "fixed_issues": [
+      "fixture ownership-marker publication before cancellation",
+      "typed pre-cancelled/running runtime errors",
+      "idempotent installed-release integrity verification",
+      "data/prefix/artifact alias and reserved-path overlap refusal before writes",
+      "typed missing release API arguments",
+      "production-only permission guard with network/write mutation regressions"
     ],
-    "go_top_level_tests_passed": 230,
-    "go_subtests_passed": 359,
-    "required_engine_anchors": 203,
-    "browser_tests_passed": 24,
+    "local_regressions": "Reproduced failure logs and passing targeted checks are retained; full supported Linux hosted verification passed.",
+    "certified_source": "dcd885675efa9ad8dab9b2d8e6274189d63826fb",
     "node_tests": {
-      "total": 136,
-      "passed": 135,
+      "total": 147,
+      "passed": 146,
       "failed": 0,
       "skipped": 1,
-      "skip_reason": "C35 foreign-platform refusal test is inapplicable because the Linux host matches the artifact platform"
+      "skip_reason": "C35 foreign-platform refusal case is inapplicable on a native matching Linux host"
     },
+    "browser_tests_passed": 24,
+    "go_top_level_tests_passed": 235,
+    "go_subtests_passed": 359,
+    "engine_suites": 10,
+    "required_engine_anchors": 207,
+    "cleanup_cancellation_repetitions": 25,
+    "cleanup_repetition_duration_seconds": 4.89,
+    "clean_clone_duration_ms": 75285,
+    "independent_workflows": 2,
     "accepted_sequences": [
       1,
       2,
       3,
       5
     ],
-    "dropped_sequence": 4,
-    "loss_count": 1,
-    "six_domain_negative_cases_passed_per_run": true,
-    "positive_event_exit": 0,
-    "invalid_event_exit": 1,
-    "invalid_event_code": "INVALID_INPUT",
-    "missing_prerequisite_exit": 1,
-    "missing_fixture_exit": 1,
-    "provider_failure_code": "onboarding.provider_unavailable",
-    "engine_storage_provider_readiness": true,
-    "restart_and_restore_equivalent": true,
-    "independent_manifest_hashes": [
-      "072a9a2888c84dc00b30f9308932540af40ea5812d49e36644d2986c09956c01",
-      "fe78222c88855a0e70794340b2478f43de151dea1938b84509e218beae2eab66"
-    ],
-    "no_egress": "Real required rootless-container egress/resource tests passed; actual browser workflow asserts loopback-only requests. Dependency preparation can download locked resources.",
-    "independent_human_contributor": false,
-    "publication_performed": false
+    "explicit_loss_sequence": 4,
+    "restart_restore_equivalent": true,
+    "installed_modified_retry_refused": true,
+    "accepted_data_hashes_unchanged": true,
+    "data_prefix_symlink_overlap_refused": true,
+    "production_permission_mutations_rejected": true,
+    "artifact_source_clean": true,
+    "no_egress": "Real rootless Podman isolation/egress tests and runtime strace assertion passed; browser requests stay on loopback. Dependency preparation may download pinned resources.",
+    "no_publication_or_C38_C40_claim": true
   },
   "hosted_actions": [
     {
       "name": "plan-consistency",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862567",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571459",
       "conclusion": "success",
-      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+      "implementation_commit": "dcd885675efa9ad8dab9b2d8e6274189d63826fb"
     },
     {
       "name": "contracts",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862700",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571417",
       "conclusion": "success",
-      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+      "implementation_commit": "dcd885675efa9ad8dab9b2d8e6274189d63826fb"
     },
     {
       "name": "engine-runtime",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384862752",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571462",
       "conclusion": "success",
-      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+      "implementation_commit": "dcd885675efa9ad8dab9b2d8e6274189d63826fb"
     },
     {
       "name": "web-foundation",
-      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40384863051",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571432",
       "conclusion": "success",
-      "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d"
+      "implementation_commit": "dcd885675efa9ad8dab9b2d8e6274189d63826fb"
     }
   ],
-  "source_binding": "This proof certifies implementation commit db386410acfc6a5d92b9d6699ae605a8bbc4e63d and its exact Git tree, also tested as the GitHub PR merge checkout. Progress, handoff and observed-results documentation are recorded afterward; they do not claim these historical tests ran on future source. All runtime/fixture/test code is unchanged by certification bookkeeping.",
-  "next_task": "C37",
+  "source_binding": "Proof certifies implementation dcd885675efa9ad8dab9b2d8e6274189d63826fb and exact Git tree 078a316ee1345bab43c49b9f8e898c1e64f9468b, also tested by the PR merge checkout. Subsequent changes record progress, handoff, observed results and the generated roadmap status; runtime, fixture and test code are unchanged by certification.",
+  "next_task": "C38",
   "next_command": "npm run plan -- next",
   "blockers": [],
   "local_environment_limits": {
@@ -102,36 +102,24 @@
         "TestDecoyIsolationWorkflowRemovesItsContainerOnSignal",
         "TestDecoyIsolationPreservesContainersOnOwnershipConflict"
       ],
-      "reason": "Pre-existing C13 provider tests require real rootless Podman; this host has no Podman and denies user-namespace UID mappings."
+      "reason": "The local full Go attempt also exposed the now-resolved production/test source guard mismatch, recorded in hosted_attempts. Remaining listed cases require rootless Podman/user namespaces unavailable on this host."
     },
-    "npm_run_check": {
+    "npm_test": {
       "exit_code": 1,
-      "passed": 134,
-      "failed": 1,
-      "skipped": 1,
-      "failed_test": "runtime makes no internet connection by default",
-      "reason": "strace PTRACE_TRACEME denied by the host"
+      "observed": "146 tests, 144 pass, 1 failure, 1 inapplicable skip before the final prefix-alias regression was added.",
+      "failure": "runtime makes no internet connection by default",
+      "reason": "Host denies strace PTRACE_TRACEME; no check was disabled."
     },
-    "npm_run_test_browser": {
-      "exit_code": 1,
-      "tests_blocked": 24,
-      "reason": "Chrome process_singleton_posix socket() fails with Operation not permitted before any page opens; default Playwright CDN download also failed, while the matching official Chrome archive was downloaded successfully."
-    },
-    "npm_run_test_clone": {
-      "exit_code": 1,
-      "observed": "Fresh clone/source integrity and missing-Go rejection passed; guide setup failed explicitly because Podman 4.9.3 is unavailable. No placeholder success or disabled check was used."
-    }
+    "browser": "Host denies Chromium sockets; full browser verification is required on the supported Linux CI runner."
   },
   "scope_limits": [
-    "C36 is automated clean-environment evidence; no independent human participant or customer demand is claimed.",
-    "Prepared toolchain/provider image and browser caches are explicit host prerequisites.",
-    "No release, publication, deployment or C40 certification."
+    "No schema, migrations, .env, Dockerfile, dependency or production key changes.",
+    "No C38/C40, public release, customer feedback or independent-human claim."
   ],
   "delivery": {
-    "verification_branch": "codex/c36-independent-onboarding",
-    "pull_request": "https://github.com/Parsa-Emami/Miragemesh/pull/4",
-    "implementation_commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d",
+    "verification_branch": "codex/c37-acceptance-blockers",
+    "pull_request": "https://github.com/Parsa-Emami/Miragemesh/pull/5",
     "publication_performed": false,
-    "main_delivery": "Final reviewed C36 change is delivered through PR #4; the exact final commit is recorded in Git history."
+    "main_delivery": "Final C37 change is delivered through PR #5 after its hosted checks; exact final commit is recorded in Git history."
   }
 }
