@@ -2,9 +2,9 @@
   "commit_id": "C37",
   "project": "MirageMesh",
   "date": "2026-10-27",
-  "passed": false,
+  "passed": true,
   "planning_template": false,
-  "status": "awaiting-hosted-verification",
+  "status": "verified",
   "base_commit": "a94b498ec183e5a04624a54b3acc1ce30b9ecff1",
   "source_identity": "sha256:d5fa4e85e838339a9adf2f15425f808277eab3d40bff490041c1bb05dd4c7acb",
   "scope": "Resolve reproduced C35 installation/data-path/API blockers and the recorded C36 cancellation cleanup regression, preserving C30 storage/restart and C33 browser behavior.",
@@ -20,55 +20,40 @@
       "typed missing release API arguments",
       "production-only permission guard with network/write mutation regressions"
     ],
-    "local_regressions": "Real packaged signed releases, CLI/API calls, filesystem symlinks, accepted-data hashes, process cancellation and C05 restart/retry pass; full hosted verification pending."
+    "local_regressions": "Reproduced failure logs and passing targeted checks are retained; full supported Linux hosted verification passed.",
+    "certified_source": "dcd885675efa9ad8dab9b2d8e6274189d63826fb",
+    "node_tests": {
+      "total": 147,
+      "passed": 146,
+      "failed": 0,
+      "skipped": 1,
+      "skip_reason": "C35 foreign-platform refusal case is inapplicable on a native matching Linux host"
+    },
+    "browser_tests_passed": 24,
+    "go_top_level_tests_passed": 235,
+    "go_subtests_passed": 359,
+    "engine_suites": 10,
+    "required_engine_anchors": 207,
+    "cleanup_cancellation_repetitions": 25,
+    "cleanup_repetition_duration_seconds": 4.89,
+    "clean_clone_duration_ms": 75285,
+    "independent_workflows": 2,
+    "accepted_sequences": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "explicit_loss_sequence": 4,
+    "restart_restore_equivalent": true,
+    "installed_modified_retry_refused": true,
+    "accepted_data_hashes_unchanged": true,
+    "data_prefix_symlink_overlap_refused": true,
+    "production_permission_mutations_rejected": true,
+    "artifact_source_clean": true,
+    "no_egress": "Real rootless Podman isolation/egress tests and runtime strace assertion passed; browser requests stay on loopback. Dependency preparation may download pinned resources.",
+    "no_publication_or_C38_C40_claim": true
   },
-  "commands": [
-    {
-      "command": "node --test tests/release/*.mjs",
-      "exit_code": 0,
-      "observed": "22 tests: 21 pass, 0 failures, 1 foreign-platform-only C35 test inapplicable on Linux"
-    },
-    {
-      "command": "go test -race ./internal/podman ./tests/acceptance -count=1",
-      "exit_code": 0,
-      "observed": "ok  \tgithub.com/Parsa-Emami/Miragemesh/internal/podman\t1.029s\nok  \tgithub.com/Parsa-Emami/Miragemesh/tests/acceptance\t3.168s"
-    },
-    {
-      "command": "node --test tests/engineering/engine-tests.test.mjs",
-      "exit_code": 0,
-      "observed": "32 discovery guard regressions passed"
-    },
-    {
-      "command": "npm run build",
-      "exit_code": 0
-    },
-    {
-      "command": "go vet ./...",
-      "exit_code": 0
-    },
-    {
-      "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
-      "exit_code": 0,
-      "observed": "6 source-integrity checks passed"
-    },
-    {
-      "command": "python3 scripts/validate_repo.py",
-      "exit_code": 0
-    },
-    {
-      "command": "python3 scripts/plan.py validate",
-      "exit_code": 0
-    },
-    {
-      "command": "npm run validate:plan",
-      "exit_code": 0
-    },
-    {
-      "command": "go test ./tests -run 'TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime|TestC37PermissionGuard' -count=1",
-      "exit_code": 0,
-      "observed": "Production permission guard and injected-capability refusal regression passed."
-    }
-  ],
   "fixtures": {
     "fixture_version": 1,
     "license": "Apache-2.0",
@@ -125,7 +110,32 @@
     "https://pkg.go.dev/os/exec#Cmd.Wait",
     "https://nodejs.org/docs/latest-v24.x/api/fs.html#fspromisesrealpathpath-options"
   ],
-  "hosted_actions": [],
+  "hosted_actions": [
+    {
+      "name": "plan-consistency",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571459",
+      "conclusion": "success",
+      "implementation_commit": "dcd885675efa9ad8dab9b2d8e6274189d63826fb"
+    },
+    {
+      "name": "contracts",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571417",
+      "conclusion": "success",
+      "implementation_commit": "dcd885675efa9ad8dab9b2d8e6274189d63826fb"
+    },
+    {
+      "name": "engine-runtime",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571462",
+      "conclusion": "success",
+      "implementation_commit": "dcd885675efa9ad8dab9b2d8e6274189d63826fb"
+    },
+    {
+      "name": "web-foundation",
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571432",
+      "conclusion": "success",
+      "implementation_commit": "dcd885675efa9ad8dab9b2d8e6274189d63826fb"
+    }
+  ],
   "scope_limits": [
     "No schema, migrations, .env, Dockerfile, dependency or production key changes.",
     "No C38/C40, public release, customer feedback or independent-human claim."
@@ -138,5 +148,177 @@
       "result": "failed",
       "failure": "TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime included new _test.go files in production import/identifier checks. No other Go test failed. Node/release and browser checks passed. Corrected by production-only guard with mutation regressions."
     }
-  ]
+  ],
+  "implementation_commit": "dcd885675efa9ad8dab9b2d8e6274189d63826fb",
+  "initial_implementation_commit": "580a77c4d7d1c09eca33709a52e912af484d6074",
+  "verified_git_tree": "078a316ee1345bab43c49b9f8e898c1e64f9468b",
+  "ci_checkout_commit": "d6aaeb8a12633fd5670bcf95ee5962dba6845f1f",
+  "source_binding": "Proof certifies implementation dcd885675efa9ad8dab9b2d8e6274189d63826fb and exact Git tree 078a316ee1345bab43c49b9f8e898c1e64f9468b, also tested by the PR merge checkout. Subsequent changes record progress, handoff, observed results and the generated roadmap status; runtime, fixture and test code are unchanged by certification.",
+  "source_identity_algorithm": "scripts/source_identity.py: sorted source paths excluding SHA256SUMS.txt and docs/evidence/, path NUL sha256(bytes), then sha256 of the concatenation",
+  "local_commands": [
+    {
+      "command": "node --test tests/release/*.mjs",
+      "exit_code": 0,
+      "observed": "22 tests: 21 pass, 0 failures, 1 foreign-platform-only C35 test inapplicable on Linux"
+    },
+    {
+      "command": "go test -race ./internal/podman ./tests/acceptance -count=1",
+      "exit_code": 0,
+      "observed": "ok  \tgithub.com/Parsa-Emami/Miragemesh/internal/podman\t1.029s\nok  \tgithub.com/Parsa-Emami/Miragemesh/tests/acceptance\t3.168s"
+    },
+    {
+      "command": "node --test tests/engineering/engine-tests.test.mjs",
+      "exit_code": 0,
+      "observed": "32 discovery guard regressions passed"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
+      "exit_code": 0,
+      "observed": "6 source-integrity checks passed"
+    },
+    {
+      "command": "python3 scripts/validate_repo.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 scripts/plan.py validate",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run validate:plan",
+      "exit_code": 0
+    },
+    {
+      "command": "go test ./tests -run 'TestDecoyIsolationAdapterRunsOnlyTheContainerRuntime|TestC37PermissionGuard' -count=1",
+      "exit_code": 0,
+      "observed": "Production permission guard and injected-capability refusal regression passed."
+    }
+  ],
+  "commands": [
+    {
+      "command": "python3 scripts/plan.py validate",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571459",
+      "observed": "Planning consistency passed"
+    },
+    {
+      "command": "python3 scripts/validate_repo.py",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571417",
+      "observed": "Repository contracts passed"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571417",
+      "observed": "6 source-integrity regressions passed"
+    },
+    {
+      "command": "python3 scripts/verify_ci_source.py",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571417",
+      "observed": "Historical evidence and exact checkout source integrity passed"
+    },
+    {
+      "command": "npm run validate:plan",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571432",
+      "observed": "40 task definitions and progress validate"
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571462",
+      "observed": "All Go packages vetted"
+    },
+    {
+      "command": "go test -race -count=1 -json ./...",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571462",
+      "observed": "All Go packages passed; clone stream contains 235 top-level tests and 359 subtests"
+    },
+    {
+      "command": "go test -race -count=25 ./tests -run '^TestDecoyIsolationAdapterRollsBackAnUncertainStart$'",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571462",
+      "observed": "All 25 repetitions passed in 4.890 s"
+    },
+    {
+      "command": "node scripts/verify-engine-tests.mjs dist/ci/engine-tests.jsonl",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571462",
+      "observed": "10 engine suites, 207 required executed anchors"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571432",
+      "observed": "Web and Go runtime built successfully"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571432",
+      "observed": "147 tests: 146 passed, 0 failures, 1 native-platform-inapplicable C35 skip; all C37 signed-release/path/usage regressions passed"
+    },
+    {
+      "command": "npm run test:browser",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571432",
+      "observed": "24 Playwright tests passed"
+    },
+    {
+      "command": "npm run test:clone",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571432",
+      "observed": "Two independent accepted-state workflows, prerequisite/fixture/provider negatives, real Go race suite, engine/storage/provider readiness, browser, restart/restore passed in 75285 ms"
+    },
+    {
+      "command": "npm run package",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571432",
+      "observed": "Native Linux artifact built with clean_source true and exact tested source identity"
+    },
+    {
+      "command": "npm run verify:artifact",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571432",
+      "observed": "Checksums, source archive, licenses, resources and provenance verified"
+    },
+    {
+      "command": "cd dist/release && sha256sum -c SHA256SUMS.txt",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571432",
+      "observed": "Every declared checksum passed"
+    }
+  ],
+  "environment": {
+    "os": "linux",
+    "architecture": "x64",
+    "logical_cpus": 4,
+    "ram_mib": 15990,
+    "node": "v24.19.0",
+    "go": "go version go1.27.2 linux/amd64",
+    "podman": "podman version 4.9.3",
+    "rootless": "true",
+    "npm": "11.9.0",
+    "playwright": "1.64.1 locked dependency",
+    "capacity_note": "Observed 4 logical CPUs and 15990 MiB RAM; this acceptance check does not replace the constrained C28 capacity measurement."
+  },
+  "observed_report": "docs/evidence/C37/onboarding.json",
+  "artifact": {
+    "id": 12718246740,
+    "sha256": "5d8a5251cbdb8829dcc5eb64b20c9868ba2a61a54d2acce61e126318e86fb262",
+    "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40469571432",
+    "retention_days": 14,
+    "durable_copies": "Raw report, workflow outputs, required-anchor output, compressed full Go JSON stream and engine/web job logs retained under docs/evidence/C37/."
+  }
 }
