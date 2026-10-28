@@ -2,6 +2,12 @@
 
 For end-user workflows, operational quotas, and step-by-step incident triage, see the comprehensive [User Guide](../release/USER_GUIDE.md).
 
+The [service/privacy policy](../release/SERVICE_POLICY.md) records actual data
+locations, export/deletion limits and backup/recovery. The
+[maintenance policy](../release/MAINTENANCE.md) defines the supported reference
+platform and best-effort support; other host examples below need their own full
+workflow evidence before being advertised as supported.
+
 ## Runnable today
 
 Use Linux amd64 with Git, Node 24.19.0, npm CLI 11.9.0, an installed Go command (1.21+ for toolchain selection) and rootless Podman 4.9.3 (Ubuntu 24.04 reference package 4.9.3+ds1-1ubuntu0.2), then:

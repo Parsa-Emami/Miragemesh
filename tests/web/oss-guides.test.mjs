@@ -60,13 +60,14 @@ test('C34 fixtures validate contract schema, provenance, and required sections',
   assert.equal(expected.reader_contract.no_mandatory_cloud, true);
 });
 
-test('SECURITY.md defines confirmed reporting channels, prohibited public issues, and supported versions', async () => {
+test('SECURITY.md defines conditional private reporting, best-effort support and supported source', async () => {
   const securityMd = await readFile(new URL('../../SECURITY.md', import.meta.url), 'utf8');
   assert.ok(securityMd.includes('GitHub Private Vulnerability Reporting'), 'Must declare GitHub Private Reporting');
-  assert.ok(securityMd.includes('security@miragemesh.local'), 'Must declare direct security contact');
+  assert.ok(securityMd.includes('No alternate private mailbox is currently'), 'Must not invent a security mailbox');
+  assert.ok(!securityMd.includes('security@miragemesh.local'), 'Placeholder must not be advertised as a contact');
   assert.ok(securityMd.includes('do not open a public GitHub issue'), 'Must forbid public issues for vulnerabilities');
   assert.ok(securityMd.includes('Supported Versions'), 'Must specify supported versions');
-  assert.ok(securityMd.includes('90-day responsible disclosure'), 'Must specify responsible disclosure timeline');
+  assert.ok(securityMd.includes('Community security work is best effort'), 'Must state the actual support commitment');
 });
 
 test('USER_GUIDE.md covers full core workflow, source builds, limits, privacy, and recovery without cloud dependency', async () => {

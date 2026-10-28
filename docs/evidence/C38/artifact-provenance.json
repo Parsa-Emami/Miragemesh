@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "project": "MirageMesh",
+  "version": "0.0.1",
+  "artifact": {
+    "name": "miragemesh-0.0.1-linux-amd64",
+    "platform": "linux-amd64",
+    "license": "Apache-2.0",
+    "runtime_requirements": "ops/runtime-requirements.json"
+  },
+  "license": "Apache-2.0",
+  "source": {
+    "repository": "https://github.com/Parsa-Emami/Miragemesh",
+    "head_commit": "39a3e5ee344df102270864c4b33f9945baeaaca4",
+    "tree": "af8ec057bb437388b00032fbd456388032650b3a",
+    "dirty": false,
+    "source_identity": "sha256:87bfd2e13e8bb17be6983a21a1f7e7598da762908d2a442f8fbea38a00d06257",
+    "staged_snapshot": {
+      "clean": true,
+      "changed_paths_count": 0,
+      "changed_paths_sample": []
+    },
+    "archive": {
+      "path": "source/miragemesh-0.0.1-source.tar.gz",
+      "sha256": "448a76aa745d9b261805599a7dc264d35f4756493a51a2dbf6ef6835b08adf81",
+      "files": 535,
+      "prefix": "miragemesh-0.0.1/"
+    }
+  },
+  "build": {
+    "generated_by": "scripts/package.sh",
+    "command": [
+      "scripts/package.sh"
+    ],
+    "platform": "linux-amd64",
+    "toolchain": {
+      "node": "v24.19.0",
+      "npm": "11.9.0",
+      "go": "go version go1.27.2 linux/amd64",
+      "podman": "podman version 4.9.3"
+    },
+    "complete_product": true,
+    "web_only": false,
+    "reproducible": true,
+    "reproducibility_scope": "Same source tree, GNU tar/gzip, Node/Go/npm versions and UTC locale produce identical source-archive and manifest bytes; no timestamps are embedded."
+  },
+  "contents": {
+    "complete_product": true,
+    "web_only": false,
+    "engine_sha256": "b66a3013e4edd6307e4526a85de87296be614dcf9ac86e5f431dd9e2e16d8fdc",
+    "web_index_sha256": "cd86c4860d56c25981058a319da1d1b56ace804e09788f2f510cad5602c92903",
+    "checksum_manifest": "SHA256SUMS.txt",
+    "checksum_algorithm": "sha256",
+    "offline_resources": "offline/resources.json",
+    "file_count": 62
+  },
+  "sbom": {
+    "path": "sbom.cdx.json",
+    "format": "CycloneDX",
+    "spec_version": "1.5",
+    "sha256": "07ef53aca681fac1ee5e09b21813f0e5a58b5af5ed0129de8004788ad5056037",
+    "components": [
+      "alpine",
+      "go-stdlib",
+      "go-toolchain",
+      "node-runtime",
+      "npm-cli",
+      "podman-provider",
+      "react",
+      "react-dom",
+      "scheduler"
+    ]
+  },
+  "notes": "Locally built complete product; not a published release. See docs/release/ARTIFACTS.md and C40 for publication gates."
+}

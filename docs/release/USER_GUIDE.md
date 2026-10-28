@@ -2,6 +2,10 @@
 
 Welcome to MirageMesh. This guide provides comprehensive, step-by-step instructions for installing, configuring, running, and managing MirageMesh in a fully open-source, local-first environment without mandatory cloud accounts, paid entitlements, or proprietary vendor locks.
 
+The [service and privacy policy](SERVICE_POLICY.md) and
+[maintenance policy](MAINTENANCE.md) define actual data locations, deletion and
+recovery limits, supported hosts and best-effort support.
+
 ---
 
 ## 1. Prerequisites & System Requirements
@@ -15,7 +19,7 @@ MirageMesh runs locally on your workstation or private server. All dependencies 
 - **Sustained Throughput**: Bounded local profile of 8 events/second with 5 concurrent sensors.
 
 ### Software Requirements
-- **Operating System**: Linux amd64 (e.g. Ubuntu 22.04 / 24.04 LTS) or Linux within WSL2.
+- **Operating System**: Ubuntu 24.04 Linux amd64 is the verified full-workflow reference host. Other Linux hosts and WSL2 require their own evidence.
 - **Node.js**: `v24.19.0` (managed via nvm or package manager).
 - **npm CLI**: `11.9.0` (pinned in `packageManager`).
 - **Go Toolchain**: Installed `go` binary (1.21+); setup automatically selects/downloads Go `1.27.2` into local cache without altering system Go.
@@ -110,7 +114,7 @@ The engine ingests incoming event batches over mTLS, validating timestamps, sequ
 When a sensor disconnects, pending events enter a bounded offline spool. If the queue limit (`spool_limit_events`) is reached, excess events are safely dropped, and the sequence gap is durably recorded so data loss is never hidden.
 
 ### Step 4: Reconnect and Duplicate Delivery
-Upon reconnecting, queued events are delivered. The engine's idempotency check detects repeated sequence numbers, updates the delivery timestamp, and returns an ACK without double-counting or duplicating records.
+Upon reconnecting, queued events are delivered. The engine's idempotency check detects repeated sequence numbers, replays the original durable receipts and returns an ACK without double-counting or duplicating records.
 
 ### Step 5: Incident Triage & Retention Preview
 Open the web workspace (`http://127.0.0.1:4173/#incidents`):
@@ -133,9 +137,9 @@ npm run package
 ```
 This builds:
 1. `miragemesh-web`: Compiled static frontend bundle.
-2. `miragemesh-engine`: Native Go binary compiled with hardened compiler flags.
+2. `miragemesh-engine`: Native Go binary built with the recorded reproducible build flags.
 3. `miragemesh-source.tar.gz`: Complete, reproducible source archive.
-4. `SBOM`: Software Bill of Materials (SPDX format) listing all dependencies and licenses.
+4. `SBOM`: Software Bill of Materials (CycloneDX 1.5 format) listing all dependencies and licenses.
 5. `SHA256SUMS.txt`: Cryptographic checksums of all build outputs.
 
 ### Verifying Built Artifacts
@@ -151,8 +155,8 @@ This confirms that binaries match declared checksums, the SBOM is valid, and the
 
 MirageMesh adheres strictly to local-first architecture (ADR-0003):
 - **Local Private Store**: Persistent state is written exclusively to private directories created with POSIX permissions `0700` (`rwx------`).
-- **Atomic Manifest Publication**: Updates are written to temporary staging files, fsynced to disk, and published via atomic directory renames.
-- **Append-Only Segments**: Event projections use immutable, bounded segments to eliminate database corruption risks.
+- **Atomic Manifest Publication**: Object and manifest files are staged and synced; the manifest is atomically renamed and the directory synced before acknowledgment.
+- **Append-Only Segments**: Event projections use bounded segments with immutable sealed files, explicit incomplete-tail evidence and fail-closed integrity checks; corruption remains possible.
 - **Zero Cloud Storage**: No external database (PostgreSQL, MongoDB), cloud bucket (S3, GCS), or remote key-value store is ever required.
 
 ---
@@ -161,9 +165,9 @@ MirageMesh adheres strictly to local-first architecture (ADR-0003):
 
 MirageMesh enforces explicit operational bounds to protect system resources:
 - **Throughput**: 8 events/s sustained ingestion under 2 vCPU / 2048 MiB RAM constraint.
-- **Batch Size**: Maximum 100 events per ingestion batch; maximum payload size 1 MiB.
-- **Spool Capacity**: Bounded in-memory and on-disk spool queues with configurable drop-and-record semantics.
-- **Segment Retention**: Configurable time and size-based retention policies.
+- **Batch Size**: Explicit signed event-batch policy applies; each v1 event is at most 8192 bytes. The 1 MiB browser JSON-preview bound is not an ingest allowance.
+- **Spool Capacity**: Signed per-sensor event limits and explicit C05 operation/byte/manifest quotas; overflow records a durable loss gap only if the store can commit it.
+- **Segment Retention**: Explicit stopped-writer cutoff preview/apply for complete sealed segments. There is no automatic expiry timer, C05 deletion or secure-erasure guarantee.
 - **Decoy Limits**: Hard memory limit of 64 MiB and PID limit of 32 per decoy container.
 
 ---
@@ -181,30 +185,35 @@ MirageMesh is engineered with a strict "no egress by default" policy:
 ## 8. Backup, Recovery, and Disaster Handling
 
 ### Creating a Backup
-Because MirageMesh uses standard file-based storage, backing up state is simple:
-1. Stop the supervisor (`Ctrl+C`) to ensure no writes are in progress.
-2. Copy the private state directory:
-   ```sh
-   cp -a ~/.local/state/miragemesh /path/to/secure/backup/
-   ```
-3. Restart the supervisor: `npm start`.
+
+Stop the supervisor and every writer sharing the configured ledgers, segments
+and decoy mounts; wait for process exit. Copy complete private directories,
+including manifests, hidden files and `retention.json`, into new separate private
+locations with modes and exact bytes preserved. There is no automatic state
+path: use the actual paths passed at startup, not an assumed home directory.
+Keep key/trust material protected separately and record the compatible reader,
+source, limits and accepted revisions. Check the copied file hashes and test a
+restore in a separate location before relying on it. Never overwrite newer
+accepted state with an older backup. Follow the complete
+[backup and recovery procedure](SERVICE_POLICY.md#backup-and-recovery-procedure).
 
 ### Standalone Retention Expiry
-To preview or expire stale event segments:
-```sh
-# Preview expired segments without deleting:
-miragemesh --expire-segments --retention-cutoff 2026-10-01T00:00:00Z --data-dir ~/.local/state/miragemesh
 
-# Apply retention deletion:
-miragemesh --expire-segments --retention-apply --retention-cutoff 2026-10-01T00:00:00Z --data-dir ~/.local/state/miragemesh
-```
+Stop the supervisor and use the complete `--expire-segments` preview command
+with `--retention-dir`, `--retention-before`, reason, idempotency key and actual
+segment limits from [EVENT_RETENTION.md](../architecture/EVENT_RETENTION.md).
+Only add `--retention-apply` after inspecting the preview. This deletes eligible
+segment copies only; C05 data, quota, audit and backups remain. There is no
+`--data-dir` shortcut for retention or selective C05 purge command.
 
 ### Certificate Rotation
-Rotate sensor and server certificates offline:
-```sh
-miragemesh --rotate-certificates --cert-dir ~/.local/state/miragemesh/certs
-```
-Inspect certificate status in the UI at `#certificates`.
+
+Use `--rotate-certificates` with its required action, `--rotation-state-dir`,
+issuer, policy limits and action-specific inputs from
+[CERTIFICATE_ROTATION.md](../architecture/CERTIFICATE_ROTATION.md). Stop the
+shared C05 writer before mutation. The Certificates tab reads lifecycle state
+only when launched with the complete public status policy; it does not rotate
+keys. There is no `--cert-dir` shortcut.
 
 ---
 

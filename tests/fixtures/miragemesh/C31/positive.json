@@ -47,7 +47,10 @@
     "licenses/scheduler-MIT.txt",
     "licenses/go-BSD-3-Clause.txt",
     "source/miragemesh-0.0.1-source.tar.gz",
-    "source/provenance.json"
+    "source/provenance.json",
+    "docs/release/SERVICE_POLICY.md",
+    "docs/release/MAINTENANCE.md",
+    "SECURITY.md"
   ],
   "forbidden_paths": [
     "node_modules",

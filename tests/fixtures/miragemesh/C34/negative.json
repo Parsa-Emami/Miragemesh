@@ -30,7 +30,10 @@
     {
       "name": "explicit-empty-state-360px",
       "category": "responsive-failure-handling",
-      "viewport": { "width": 360, "height": 800 },
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
       "condition": "Zero sensor records in local state",
       "expected_ui_presentation": "Explicit message: 'No sensor records are available in local storage.' with zero horizontal overflow",
       "horizontal_scroll_allowed": false
@@ -38,7 +41,10 @@
     {
       "name": "explicit-invalid-configuration-360px",
       "category": "responsive-failure-handling",
-      "viewport": { "width": 360, "height": 800 },
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
       "condition": "Invalid signature or schema on desired configuration",
       "expected_ui_presentation": "Explicit non-crashing error banner/alert detailing signature verification failure",
       "horizontal_scroll_allowed": false
@@ -46,7 +52,10 @@
     {
       "name": "explicit-interrupted-engine-connection-360px",
       "category": "responsive-failure-handling",
-      "viewport": { "width": 360, "height": 800 },
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
       "condition": "Engine HTTP process unexpectedly terminated",
       "expected_ui_presentation": "Explicit reconnection warning alert with non-crashing recovery retry",
       "horizontal_scroll_allowed": false
@@ -54,7 +63,10 @@
     {
       "name": "explicit-unavailable-provider-360px",
       "category": "responsive-failure-handling",
-      "viewport": { "width": 360, "height": 800 },
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
       "condition": "Rootless Podman daemon unavailable or cgroup delegation missing",
       "expected_ui_presentation": "Explicit typed 503 provider outage warning region without misleading success",
       "horizontal_scroll_allowed": false
@@ -71,7 +83,7 @@
       "category": "security-policy",
       "condition": "Vulnerability report attempted via public issue",
       "expected_handling": "Issue template / policy explicitly directs reporter to private advisory route",
-      "rejection_message": "Do not open public issues for security vulnerabilities. Use GitHub Private Vulnerability Reporting or security@miragemesh.local."
+      "rejection_message": "Do not open public issues for security vulnerabilities. Use GitHub Private Vulnerability Reporting if offered; no alternate private mailbox is confirmed."
     },
     {
       "name": "rejected-mandatory-cloud-requirement",

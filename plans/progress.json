@@ -340,10 +340,12 @@
     },
     {
       "id": "C38",
-      "status": "planned",
-      "evidence": [],
-      "source_identity": null,
-      "notes": ""
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C38.json"
+      ],
+      "source_identity": "sha256:87bfd2e13e8bb17be6983a21a1f7e7598da762908d2a442f8fbea38a00d06257",
+      "notes": "C38 verified on 2223dee74af748403da443ecb9a890077dec23ff: all four hosted workflows passed. Actual private data locations, stopped backup/export, compatible restore and complete-decommission limits are documented; segment expiry is explicitly not C05 purge or secure erasure. Maintenance is best effort, without invented contacts, blanket tag support or SLA. The artifact ships exact policy copies. Two new real-file Go anchors plus existing crash/ACK/quota/egress proof passed: 209 required anchors, 237 top-level/359 subtests, 151 Node passes (one inapplicable skip), 24 browser tests and two clean-clone workflows with restart/restore. Raw local failures and full hosted evidence retained. No C39/C40 or publication claim."
     },
     {
       "id": "C39",

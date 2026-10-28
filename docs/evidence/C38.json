@@ -1,0 +1,272 @@
+{
+  "commit_id": "C38",
+  "project": "MirageMesh",
+  "date": "2026-10-28",
+  "passed": true,
+  "planning_template": false,
+  "status": "verified",
+  "base_commit": "b149d2a72f53f9be75cca25929c7ff065e8ff51a",
+  "scope": "Freeze actual local privacy/data lifecycle and best-effort maintenance policy, align public/security guides, ship offline policies, and verify real-file stopped copies, quota replay, corrupt-copy refusal and segment-only retention/audit recovery.",
+  "source_identity": "sha256:87bfd2e13e8bb17be6983a21a1f7e7598da762908d2a442f8fbea38a00d06257",
+  "commands": [
+    {
+      "command": "npm run validate:plan",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094612",
+      "observed": "40 detailed tasks and resources passed"
+    },
+    {
+      "command": "python3 scripts/validate_repo.py",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094351",
+      "observed": "Repository JSON contracts passed"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094351",
+      "observed": "6 source-integrity regressions passed"
+    },
+    {
+      "command": "python3 scripts/verify_ci_source.py",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094351",
+      "observed": "Exact hosted tree af8ec057bb437388b00032fbd456388032650b3a matches candidate source identity; historical records verified"
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094263",
+      "observed": "No diagnostics"
+    },
+    {
+      "command": "go test -race -count=1 -json ./...",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094263",
+      "observed": "237 top-level tests and 359 subtests passed; both C38 real-file anchors passed; no failures"
+    },
+    {
+      "command": "go test -race -count=25 ./tests -run '^TestDecoyIsolationAdapterRollsBackAnUncertainStart$'",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094263",
+      "observed": "25 cleanup repetitions passed"
+    },
+    {
+      "command": "node scripts/verify-engine-tests.mjs dist/ci/engine-tests.jsonl",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094263",
+      "observed": "10 suites and 209 required executed anchors"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094612",
+      "observed": "Web and Go engine built"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094612",
+      "observed": "152 tests: 151 passed, 0 failed, 1 native-platform-inapplicable C35 skip; default runtime strace egress check passed"
+    },
+    {
+      "command": "npm run test:browser",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094612",
+      "observed": "24 Playwright tests passed"
+    },
+    {
+      "command": "npm run test:clone",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094612",
+      "observed": "Fresh transport clone, guide setup, Go vet/race/discovery and two independent accepted-state workflows with readiness, typed negatives, browser, restart and restore; 88842 ms"
+    },
+    {
+      "command": "npm run package",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094612",
+      "observed": "63 files, 535-file source archive, clean_source true"
+    },
+    {
+      "command": "npm run verify:artifact",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094612",
+      "observed": "Complete artifact, sources, SBOM, licenses, checksum coverage and provenance passed"
+    },
+    {
+      "command": "cd dist/release && sha256sum -c SHA256SUMS.txt",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094612",
+      "observed": "All declared checksums passed"
+    }
+  ],
+  "dependencies": {
+    "C37": "docs/evidence/C37.json; passed source-bound hosted proof"
+  },
+  "fixtures": {
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic local-policy events and expected typed results",
+    "sha256": {
+      "tests/fixtures/miragemesh/C38/expected-output.json": "88a707269697d71eb469aada1b3a05169e756f715e9c9eff7f314e7ac046c442",
+      "tests/fixtures/miragemesh/C38/negative.json": "edabeb172174256b0aa255c508a929f80e0f59ad0e344dea46ede4f2756e6732",
+      "tests/fixtures/miragemesh/C38/positive.json": "47dac006b5e1e9d7ba68e3dde0e59b596e529a5d5bb5a1812c620fd745fe76cd"
+    }
+  },
+  "local_environment": {
+    "node": "v24.22.1",
+    "npm": "11.9.0",
+    "go": "go1.27.2 linux/amd64",
+    "go_archive_sha256": "ecbadb99091a3f46e31f5f934b068b1864eafa7995211b39eaddf76996045fe5",
+    "provider": "Podman absent",
+    "strace": "installed; PTRACE_TRACEME denied"
+  },
+  "local_commands": [
+    {
+      "command": "npm run check",
+      "exit_code": 1,
+      "observed": "Build and 150 Node tests passed; runtime egress assertion failed because ptrace is denied; 1 native-platform-inapplicable skip. See check.log."
+    },
+    {
+      "command": "go test -race -count=1 -json ./...",
+      "exit_code": 1,
+      "observed": "14 Podman-dependent tests failed because the provider is absent; 582 tests/subtests passed including both C38 cases. See compressed full log."
+    },
+    {
+      "command": "go test -race -count=1 ./internal/storage ./internal/events ./tests/acceptance",
+      "exit_code": 0,
+      "observed": "Real SIGKILL/syscall failure, storage/retention and reference workflow plus C38 stopped-copy/corrupt-copy/quota/retention passed."
+    },
+    {
+      "command": "node --test tests/release/service-policy.mjs tests/web/oss-guides.test.mjs tests/engineering/engine-tests.test.mjs",
+      "exit_code": 0,
+      "observed": "42 passed"
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0,
+      "observed": "No diagnostics"
+    },
+    {
+      "command": "python3 scripts/validate_repo.py",
+      "exit_code": 0,
+      "observed": "371 JSON files and repository invariants passed"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests/engineering -p 'test_*.py' -v",
+      "exit_code": 0,
+      "observed": "6 passed"
+    },
+    {
+      "command": "python3 scripts/plan.py validate",
+      "exit_code": 0,
+      "observed": "40 intents, coverage and progress passed"
+    }
+  ],
+  "local_results_source_note": "Local checks precede this handoff-only bookkeeping update. They do not certify the final tree; all four hosted workflows must test the candidate source before passed becomes true.",
+  "implementation_commit": "2223dee74af748403da443ecb9a890077dec23ff",
+  "git_tree": "af8ec057bb437388b00032fbd456388032650b3a",
+  "hosted_checkout": "39a3e5ee344df102270864c4b33f9945baeaaca4",
+  "hosted_workflows": [
+    {
+      "name": "contracts",
+      "run_id": 40701094351,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094351",
+      "conclusion": "success",
+      "implementation_commit": "2223dee74af748403da443ecb9a890077dec23ff"
+    },
+    {
+      "name": "plan-consistency",
+      "run_id": 40701094472,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094472",
+      "conclusion": "success",
+      "implementation_commit": "2223dee74af748403da443ecb9a890077dec23ff"
+    },
+    {
+      "name": "engine-runtime",
+      "run_id": 40701094263,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094263",
+      "conclusion": "success",
+      "implementation_commit": "2223dee74af748403da443ecb9a890077dec23ff"
+    },
+    {
+      "name": "web-foundation",
+      "run_id": 40701094612,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40701094612",
+      "conclusion": "success",
+      "implementation_commit": "2223dee74af748403da443ecb9a890077dec23ff"
+    }
+  ],
+  "environment": {
+    "os": "linux",
+    "architecture": "x64",
+    "logical_cpus": 4,
+    "ram_mib": 15984,
+    "node": "v24.19.0",
+    "go": "go version go1.27.2 linux/amd64",
+    "podman": "podman version 4.9.3",
+    "rootless": "true",
+    "npm": "11.9.0",
+    "playwright": "1.64.1 locked dependency",
+    "measurement_note": "This runner is not the constrained C28 capacity measurement."
+  },
+  "results": {
+    "policies_present": true,
+    "public_guides_consistent": true,
+    "no_unearned_sla_or_placeholder_contact": true,
+    "explicit_data_locations": true,
+    "no_automatic_expiry_or_selective_c05_purge_claim": true,
+    "stopped_copy_keeps_exact_bytes_and_private_modes": true,
+    "restored_exact_replay_at_quota": true,
+    "invalid_and_corrupt_copy_refused_without_rewriting_original": true,
+    "retention_preserves_c05_bytes_and_quota": true,
+    "retention_audit_survives_copy_and_prevents_resurrection": true,
+    "default_egress": "Real rootless Podman and runtime strace checks passed; setup downloads are explicitly distinct.",
+    "go_top_level_tests_passed": 237,
+    "go_subtests_passed": 359,
+    "required_engine_anchors": 209,
+    "node_tests": {
+      "total": 152,
+      "passed": 151,
+      "failed": 0,
+      "skipped": 1,
+      "skip_reason": "C35 foreign-platform refusal case is inapplicable to the matching native Linux platform"
+    },
+    "browser_tests_passed": 24,
+    "clean_clone_duration_ms": 88842,
+    "independent_workflows": 2,
+    "restart_restore_equivalent": true,
+    "hosted_artifact_policy_bytes_match": true,
+    "artifact_source_clean": true
+  },
+  "policy_sha256": {
+    "docs/release/SERVICE_POLICY.md": "3ad3e7926f73689fc3ca4ed8adee819f9b4b81e83a2d081b042b30aaeb448b44",
+    "docs/release/MAINTENANCE.md": "d9912f0766b927ab38bdf3e3498228719bdcb4b79cb46a79fcf4c03bb062b1e7",
+    "SECURITY.md": "6ed1968a215a72b6ce9d21f885e1a74f4dd30df87147893ef4f7c528d0d4f6b5"
+  },
+  "artifacts": [
+    {
+      "id": 12822585853,
+      "kind": "engine-tests",
+      "sha256": "fa9205d7941762d6a65c6077b31021b6b698cb98c3a2708e8317dc825ba22561"
+    },
+    {
+      "id": 12821477958,
+      "kind": "onboarding",
+      "sha256": "068ae05836f3c7466ce892e8f6c56a813cf2d3ae61f97f6c133218f8c627c63c"
+    },
+    {
+      "id": 12821073865,
+      "kind": "complete-package",
+      "sha256": "287c357354564e39f88496ffc67b673f33151bb640414867d23520d5ae911588"
+    }
+  ],
+  "raw_evidence": "docs/evidence/C38/: compressed full engine stream, full hosted engine/web/contracts job logs, original onboarding report/log archive, package provenance/SBOM/checksums, and local passing and failed attempts.",
+  "source_binding": "All acceptance/negative proof certifies implementation 2223dee74af748403da443ecb9a890077dec23ff and tree af8ec057bb437388b00032fbd456388032650b3a, also tested by the PR merge checkout. Subsequent certification changes only evidence, progress, project state, session handoff and generated roadmap status; runtime, policy, fixture and test code are unchanged. The final certification candidate is rechecked by all four workflows before merge.",
+  "limits": [
+    "No schema, migration, .env, Dockerfile, dependency or production key changes.",
+    "No new runtime route, export/import/purge/restore tool or public ingress added.",
+    "No user data deleted; only synthetic temporary test files were expired.",
+    "No physical power-loss, secure-erasure, legal compliance, independent-human, SLA, published release or C39/C40 claim."
+  ]
+}

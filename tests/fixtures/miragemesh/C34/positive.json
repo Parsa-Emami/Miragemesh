@@ -115,21 +115,25 @@
   },
   "security": {
     "reporting_channels": [
-      "GitHub Private Vulnerability Reporting (Security Advisories)",
-      "security@miragemesh.local (direct maintainer security address)"
+      "GitHub Private Vulnerability Reporting only when the repository offers its private form; no confirmed alternate mailbox"
     ],
     "prohibited_channels": [
       "Public GitHub Issues",
       "Public PR comments or commit discussions"
     ],
-    "supported_branches": ["main", "v0.x releases"],
-    "disclosure_timeline_days": 90
+    "supported_branches": [
+      "main (active maintenance line; no blanket v0.x guarantee)"
+    ],
+    "support_commitment": "Best effort; no fixed acknowledgment, triage or disclosure deadline"
   },
   "data_boundaries": {
     "storage_mode": "0700",
     "cloud_telemetry": false,
     "default_egress": false,
-    "loopback_hosts": ["127.0.0.1", "::1"]
+    "loopback_hosts": [
+      "127.0.0.1",
+      "::1"
+    ]
   },
   "operational_limits": {
     "vcpu": 2,

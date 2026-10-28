@@ -1,0 +1,15 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 verify:artifact
+> node scripts/verify-artifact.mjs dist/release
+
+{
+  "passed": true,
+  "errors": [],
+  "artifact": "miragemesh-0.0.1-linux-amd64",
+  "version": "0.0.1",
+  "files": 63,
+  "checksum_entries": 62,
+  "source_identity": "sha256:87bfd2e13e8bb17be6983a21a1f7e7598da762908d2a442f8fbea38a00d06257",
+  "clean_source": true
+}

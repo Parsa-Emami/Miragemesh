@@ -10,11 +10,14 @@ Open-source local-first web application under [Apache-2.0](LICENSE). MirageMesh 
 
 ## Documentation & Guides
 
+- **[Local Service and Privacy Policy](docs/release/SERVICE_POLICY.md)**: Actual data locations, export/deletion limits, retention and tested backup/recovery.
+- **[Maintenance Policy](docs/release/MAINTENANCE.md)**: Supported source/platforms, dependency review, security support and data-safe upgrades.
+
 - **[User Guide](docs/release/USER_GUIDE.md)**: Complete step-by-step installation, core reference workflow, limits, backups, and operational instructions for fresh readers.
 - **[Clone to Run](docs/engineering/CLONE_TO_RUN.md)**: Deep dive into workstation prerequisites, source build alternatives, provider verification, and troubleshooting.
 - **[Open-Source Contract](OPEN_SOURCE.md)**: Guarantees regarding source code freedom, offline durability, and zero proprietary lock-in.
 - **[Contributing Guide](CONTRIBUTING.md)**: Workflow for contributors, roadmap execution, coding invariants, and testing standards.
-- **[Security Policy](SECURITY.md)**: Confirmed vulnerability reporting routes, supported versions, and responsible disclosure timeline.
+- **[Security Policy](SECURITY.md)**: Conditional private vulnerability reporting, supported source and best-effort disclosure.
 - **[Third-Party Inventory](THIRD_PARTY_NOTICES.md)**: Pinned dependency licenses and attribution notices.
 - **[Artifact Verification](docs/release/ARTIFACTS.md#signed-release-attestation)**: Detached Ed25519 attestation, verified install/upgrade/rollback and the source-build alternative.
 - **[Definition of Done](docs/release/DEFINITION_OF_DONE.md)**: Release gates and evidence verification criteria.
@@ -23,7 +26,7 @@ Open-source local-first web application under [Apache-2.0](LICENSE). MirageMesh 
 
 ## Clone and run the current workspace
 
-Prerequisites: Linux amd64 or WSL2, Git, Node 24.19.0, npm CLI 11.9.0, installed Go (1.21+ for automatic toolchain selection), and rootless Podman 4.9.3. Setup automatically selects Go 1.27.2.
+Verified reference host: Ubuntu 24.04 Linux amd64, Git, Node 24.19.0, npm CLI 11.9.0, installed Go (1.21+ for automatic toolchain selection), and rootless Podman 4.9.3. Setup automatically selects Go 1.27.2. Other hosts, including WSL2, require their own full-workflow evidence.
 
 ```sh
 git clone https://github.com/Parsa-Emami/Miragemesh.git
