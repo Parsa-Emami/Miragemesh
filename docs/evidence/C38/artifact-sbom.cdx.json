@@ -1,0 +1,318 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "bom-ref": "pkg:generic/miragemesh@0.0.1?arch=amd64&os=linux",
+      "type": "application",
+      "name": "MirageMesh",
+      "version": "0.0.1",
+      "description": "Open-source local-first sensor observation, provenance and incident workflow.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "b66a3013e4edd6307e4526a85de87296be614dcf9ac86e5f431dd9e2e16d8fdc"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Parsa-Emami/Miragemesh"
+        },
+        {
+          "type": "website",
+          "url": "https://github.com/Parsa-Emami/Miragemesh"
+        }
+      ],
+      "properties": [
+        {
+          "name": "miragemesh:source-identity",
+          "value": "sha256:87bfd2e13e8bb17be6983a21a1f7e7598da762908d2a442f8fbea38a00d06257"
+        },
+        {
+          "name": "miragemesh:build-node",
+          "value": "v24.19.0"
+        },
+        {
+          "name": "miragemesh:build-go",
+          "value": "go version go1.27.2 linux/amd64"
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "miragemesh:artifact",
+        "value": "miragemesh-0.0.1-linux-amd64"
+      }
+    ]
+  },
+  "components": [
+    {
+      "bom-ref": "host:decoy-image@3.23.2",
+      "type": "container",
+      "name": "alpine",
+      "version": "3.23.2",
+      "scope": "excluded",
+      "licenses": [
+        {
+          "license": {
+            "name": "MIT (Alpine Linux base, musl) with GPL-2.0-only busybox, Apache-2.0 OpenSSL, MPL-2.0 ca-certificates-bundle and zlib"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "miragemesh:host-prerequisite",
+          "value": "true"
+        },
+        {
+          "name": "miragemesh:artifact-url",
+          "value": "docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62"
+        },
+        {
+          "name": "miragemesh:license-url",
+          "value": "https://pkgs.alpinelinux.org/package/v3.23/main/x86_64/busybox"
+        },
+        {
+          "name": "miragemesh:source-url",
+          "value": "https://github.com/alpinelinux/docker-alpine/blob/1c744e2d49059e51b063a11a6e3e18c9ccf04ab8/x86_64/Dockerfile"
+        },
+        {
+          "name": "miragemesh:integrity",
+          "value": "sha256:sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62"
+        }
+      ]
+    },
+    {
+      "bom-ref": "go-stdlib-1.27.2",
+      "type": "library",
+      "name": "go-stdlib",
+      "version": "1.27.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "miragemesh:included-in",
+          "value": "dist/engine/miragemesh"
+        }
+      ]
+    },
+    {
+      "bom-ref": "host:go-toolchain@1.27.2",
+      "type": "platform",
+      "name": "go-toolchain",
+      "version": "1.27.2",
+      "scope": "excluded",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "miragemesh:host-prerequisite",
+          "value": "true"
+        },
+        {
+          "name": "miragemesh:artifact-url",
+          "value": "https://proxy.golang.org/golang.org/toolchain/@v/v0.0.1-go1.27.2.linux-amd64.zip"
+        },
+        {
+          "name": "miragemesh:license-url",
+          "value": "https://go.dev/LICENSE"
+        },
+        {
+          "name": "miragemesh:source-url",
+          "value": "https://go.googlesource.com/go/+/refs/tags/go1.27.2"
+        },
+        {
+          "name": "miragemesh:integrity",
+          "value": "go-module-h1:h1:N6Xv/1OLzI0jVVkUwkrxHRZc/GCTARUo6idcngKwlDE="
+        }
+      ]
+    },
+    {
+      "bom-ref": "host:node-runtime@24.19.0",
+      "type": "platform",
+      "name": "node-runtime",
+      "version": "24.19.0",
+      "scope": "excluded",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "miragemesh:host-prerequisite",
+          "value": "true"
+        },
+        {
+          "name": "miragemesh:artifact-url",
+          "value": "https://nodejs.org/dist/v24.19.0/node-v24.19.0-linux-x64.tar.xz"
+        },
+        {
+          "name": "miragemesh:license-url",
+          "value": "https://github.com/nodejs/node/blob/v24.19.0/LICENSE"
+        },
+        {
+          "name": "miragemesh:source-url",
+          "value": "https://github.com/nodejs/node/tree/v24.19.0"
+        },
+        {
+          "name": "miragemesh:integrity",
+          "value": "sha256:14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647"
+        }
+      ]
+    },
+    {
+      "bom-ref": "host:npm-cli@11.9.0",
+      "type": "platform",
+      "name": "npm-cli",
+      "version": "11.9.0",
+      "scope": "excluded",
+      "licenses": [
+        {
+          "license": {
+            "id": "Artistic-2.0"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "miragemesh:host-prerequisite",
+          "value": "true"
+        },
+        {
+          "name": "miragemesh:artifact-url",
+          "value": "https://registry.npmjs.org/npm/-/npm-11.9.0.tgz"
+        },
+        {
+          "name": "miragemesh:license-url",
+          "value": "https://github.com/npm/cli/blob/v11.9.0/LICENSE"
+        },
+        {
+          "name": "miragemesh:source-url",
+          "value": "https://github.com/npm/cli/tree/v11.9.0"
+        },
+        {
+          "name": "miragemesh:integrity",
+          "value": "sha512:sha512-BBZoU926FCypj4b7V7ElinxsWcy4Kss88UG3ejFYmKyq7Uc5XnT34Me2nEhgCOaL5qY4HvGu5aI92C4OYd7NaA=="
+        }
+      ]
+    },
+    {
+      "bom-ref": "host:podman-provider@4.9.3",
+      "type": "platform",
+      "name": "podman-provider",
+      "version": "4.9.3+ds1-1ubuntu0.2",
+      "scope": "excluded",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "properties": [
+        {
+          "name": "miragemesh:host-prerequisite",
+          "value": "true"
+        },
+        {
+          "name": "miragemesh:artifact-url",
+          "value": "https://archive.ubuntu.com/ubuntu/pool/universe/libp/libpod/podman_4.9.3+ds1-1ubuntu0.2_amd64.deb"
+        },
+        {
+          "name": "miragemesh:license-url",
+          "value": "https://github.com/containers/podman/blob/v4.9.3/LICENSE"
+        },
+        {
+          "name": "miragemesh:source-url",
+          "value": "https://launchpad.net/ubuntu/+source/libpod/4.9.3+ds1-1ubuntu0.2"
+        },
+        {
+          "name": "miragemesh:integrity",
+          "value": "sha256:e5c1c37e387ed14c352a744a75fbb79fb2f82573ca7bf36886e3b7333fc9ef1a"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/react@19.3.1",
+      "type": "library",
+      "name": "react",
+      "version": "19.3.1",
+      "purl": "pkg:npm/react@19.3.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/react-dom@19.3.1",
+      "type": "library",
+      "name": "react-dom",
+      "version": "19.3.1",
+      "purl": "pkg:npm/react-dom@19.3.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:npm/scheduler@0.28.0",
+      "type": "library",
+      "name": "scheduler",
+      "version": "0.28.0",
+      "purl": "pkg:npm/scheduler@0.28.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:generic/miragemesh@0.0.1?arch=amd64&os=linux",
+      "dependsOn": [
+        "pkg:npm/react@19.3.1",
+        "pkg:npm/react-dom@19.3.1",
+        "pkg:npm/scheduler@0.28.0",
+        "go-stdlib-1.27.2"
+      ]
+    },
+    {
+      "ref": "pkg:npm/react-dom@19.3.1",
+      "dependsOn": [
+        "pkg:npm/react@19.3.1",
+        "pkg:npm/scheduler@0.28.0"
+      ]
+    }
+  ]
+}

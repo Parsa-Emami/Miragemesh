@@ -1,0 +1,36 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 package
+> bash scripts/package.sh
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 build
+> npm run prepare:web && npm run typecheck && vite build --config apps/web/vite.config.ts && npm run build:engine
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 prepare:web
+> node scripts/generate-web-data.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 typecheck
+> tsc -p tsconfig.json
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 26 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.78 kB │ gzip:  0.47 kB
+dist/web/assets/index-D0FjDMz9.css    7.23 kB │ gzip:  2.30 kB
+dist/web/assets/index-BoMb5IYO.js   274.64 kB │ gzip: 83.70 kB
+
+✓ built in 351ms
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 build:engine
+> node scripts/build-engine.mjs
+
+{"status":"ok","output":"/workspace/scratch/5d56355fcaaf/Miragemesh/dist/release","artifact":"miragemesh-0.0.1-linux-amd64","version":"0.0.1","files":63,"source_identity":"sha256:87bfd2e13e8bb17be6983a21a1f7e7598da762908d2a442f8fbea38a00d06257","dirty":false,"source_archive":"448a76aa745d9b261805599a7dc264d35f4756493a51a2dbf6ef6835b08adf81","sbom":"5dda882703a0bef68c9be561dfed87486fc0bc5633d92098fdb17de580db4e76","checksums":"64b59b1000354e3beb62a765adad75c1f230583c808bbae3b8000b047e4c97ef","verification":{"passed":true,"errors":[],"artifact":"miragemesh-0.0.1-linux-amd64","version":"0.0.1","files":63,"checksum_entries":62,"source_identity":"sha256:87bfd2e13e8bb17be6983a21a1f7e7598da762908d2a442f8fbea38a00d06257","clean_source":true}}
