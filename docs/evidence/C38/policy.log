@@ -1,0 +1,17 @@
+✔ C38 policies use current locked versions and state actual data lifecycle limits (6.980306ms)
+✔ C38 policy links resolve and operator entry guides expose both policies (6.61064ms)
+✔ C38 support policy rejects placeholder contacts and unearned SLA claims (1.748939ms)
+✔ C38 licensed fixtures bind required crash, ACK, quota and egress proof to real anchors (4.761987ms)
+✔ C34 deliverables and guides exist and are readable (8.256939ms)
+✔ C34 fixtures validate contract schema, provenance, and required sections (4.845702ms)
+✔ SECURITY.md defines conditional private reporting, best-effort support and supported source (1.231711ms)
+✔ USER_GUIDE.md covers full core workflow, source builds, limits, privacy, and recovery without cloud dependency (0.897068ms)
+✔ C34 negative cases properly model inert sentinels, 360px failure states, and egress denial (1.328787ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 115.821325

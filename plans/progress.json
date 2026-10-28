@@ -340,10 +340,12 @@
     },
     {
       "id": "C38",
-      "status": "planned",
-      "evidence": [],
+      "status": "in_progress",
+      "evidence": [
+        "docs/evidence/C38.json"
+      ],
       "source_identity": null,
-      "notes": ""
+      "notes": "Implementation and real-file policy regressions in progress; not certified until all four hosted workflows pass."
     },
     {
       "id": "C39",

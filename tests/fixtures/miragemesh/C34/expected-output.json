@@ -17,7 +17,7 @@
     "no_paid_entitlements": true,
     "source_build_documented": true,
     "licenses_inventoried": true,
-    "confirmed_vulnerability_reporting_route": true
+    "conditional_private_reporting_documented": true
   },
   "safety_and_ergonomics": {
     "script_sentinels_inert": true,

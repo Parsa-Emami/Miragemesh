@@ -1,0 +1,39 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C38 local privacy and maintenance fixtures. No real traffic, identities, credentials or private keys.",
+  "events": [
+    {
+      "schema_version": "1",
+      "sensor_id": "c38-sensor",
+      "event_id": "c38-event-1",
+      "sequence": 1,
+      "observed_at": "2026-01-01T00:00:00Z",
+      "kind": "http.request",
+      "metadata": {
+        "path": "/synthetic/c38/1"
+      }
+    },
+    {
+      "schema_version": "1",
+      "sensor_id": "c38-sensor",
+      "event_id": "c38-event-2",
+      "sequence": 2,
+      "observed_at": "2026-01-03T00:00:00Z",
+      "kind": "http.request",
+      "metadata": {
+        "path": "/synthetic/c38/2"
+      }
+    }
+  ],
+  "retention": {
+    "before": "2026-01-02T00:00:00Z",
+    "reason": "Synthetic C38 stopped-copy and segment-only retention proof",
+    "key": "c38-retention-replay-01"
+  },
+  "policies": [
+    "docs/release/SERVICE_POLICY.md",
+    "docs/release/MAINTENANCE.md",
+    "SECURITY.md"
+  ]
+}

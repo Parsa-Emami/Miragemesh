@@ -87,6 +87,10 @@ test('complete artifact verifies its engine, web, offline resources, source, SBO
   assert.deepEqual(result.errors, []);
   assert.equal(result.passed, true);
   for (const path of fixtures.required_paths) assert.equal(existsSync(join(first, ...path.split('/'))), true, `missing ${path}`);
+  const policy = JSON.parse(await readFile(join(repository, 'tests/fixtures/miragemesh/C38/positive.json'), 'utf8'));
+  for (const path of policy.policies) {
+    assert.deepEqual(await readFile(join(first, path)), await readFile(join(repository, path)), `stale shipped policy: ${path}`);
+  }
   const provenance = JSON.parse(await readFile(join(first, 'provenance.json'), 'utf8'));
   assert.equal(provenance.build.complete_product, true);
   assert.equal(provenance.build.web_only, false);

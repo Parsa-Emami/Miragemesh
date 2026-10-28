@@ -16,6 +16,7 @@ const copyEntries = [
   'scripts/start-local.mjs', 'scripts/serve-web.mjs',
   'apps/web/src/lib', 'ops/web', 'ops/runtime-requirements.json', 'ops/diagnostics.md',
   'docs/engineering/toolchain-lock.json', 'docs/product/REFERENCE_WORKFLOW.md', 'docs/release/ARTIFACTS.md',
+  'docs/release/SERVICE_POLICY.md', 'docs/release/MAINTENANCE.md', 'SECURITY.md',
   'contracts', 'tests/scenarios/clone-to-value.json',
   'tests/fixtures/miragemesh/C04',
   'tests/fixtures/miragemesh/C30/positive.json', 'tests/fixtures/miragemesh/C30/negative.json',

@@ -35,7 +35,7 @@ MirageMesh is firmly committed to architectural self-sovereignty:
 ## 4. Offline-First and Local Durability
 
 In accordance with [ADR-0003](docs/architecture/ADR-0003-open-source-local-first.md):
-- **Commodity Infrastructure**: Runs entirely on a single Linux or WSL2 host (2 vCPU / 2048 MiB RAM target) utilizing local POSIX filesystems and rootless Podman containers.
+- **Commodity Infrastructure**: The verified reference host is Ubuntu 24.04 Linux amd64 (2 vCPU / 2048 MiB RAM target), using a private local POSIX filesystem and rootless Podman. Other hosts, including WSL2, need their own full-workflow evidence; see [the service policy](docs/release/SERVICE_POLICY.md).
 - **No Mandatory Database Service**: Durable state is maintained through atomic file manifests and immutable segments, eliminating the operational overhead of running external database servers.
 - **Air-Gapped Operation**: Once built or installed, MirageMesh functions seamlessly in completely disconnected, air-gapped network perimeters.
 
