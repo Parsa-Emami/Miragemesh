@@ -12,14 +12,19 @@
       "provenance-source-and-artifact-binding",
       "source-archive-and-sbom-binding"
     ],
-    "warnings_allowed": ["source_dirty"]
+    "warnings_allowed": [
+      "source_dirty"
+    ]
   },
   "install": {
     "status": "installed",
     "current_version": "0.0.1",
     "previous": null,
     "data_unchanged": true,
-    "engine_check": ["passed", "skipped-foreign-platform"]
+    "engine_check": [
+      "passed",
+      "skipped-foreign-platform"
+    ]
   },
   "upgrade": {
     "status": "upgraded",
@@ -55,7 +60,13 @@
     ]
   },
   "no_network": {
-    "direct_imports": ["node:crypto", "node:fs/promises", "node:path", "node:url", "node:child_process"],
+    "direct_imports": [
+      "node:crypto",
+      "node:fs/promises",
+      "node:path",
+      "node:url",
+      "node:child_process"
+    ],
     "external_calls_permitted": false
   },
   "source_build": {
@@ -63,5 +74,6 @@
     "npm_run_setup_documented": true,
     "npm_run_package_documented": true,
     "install_does_not_require_a_cloud_or_paid_account": true
-  }
+  },
+  "provenance": "Repository-authored synthetic C35 validation outcomes and failure cases; covered by the project Apache-2.0 license. No real traffic, credentials or third-party dataset."
 }

@@ -1,0 +1,55 @@
+name: release-gate
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: release-gate-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GOTOOLCHAIN: go1.27.2
+      GOSUMDB: sum.golang.org
+      GOPROXY: https://proxy.golang.org|direct
+      C39_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install locked tooling without lifecycle scripts
+        run: npx --yes --package=npm@11.9.0 --call 'npm ci --ignore-scripts'
+      - name: Prepare the supported provider and browser
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --allow-downgrades --no-install-recommends podman=4.9.3+ds1-1ubuntu0.2 strace
+          go version
+          test "$(go env GOVERSION)" = go1.27.2
+          test "$(podman --version | awk '{print $3}')" = 4.9.3
+          test "$(podman info --format '{{.Host.Security.Rootless}}')" = true
+          podman pull docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
+          test "$(podman image inspect docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 --format '{{.Digest}}')" = sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
+          ./node_modules/.bin/playwright install --with-deps chromium
+      - name: Execute and bind the complete C01-C38 readiness proof
+        run: npx --yes --package=npm@11.9.0 --call 'npm run release:check -- --run --output dist/ci/v1-gate.json'
+      - name: Recheck generated proof against this exact candidate
+        run: npx --yes --package=npm@11.9.0 --call 'npm run release:check -- --report dist/ci/v1-gate.json'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: v1-gate-${{ github.sha }}-${{ github.run_id }}
+          path: |
+            dist/ci/v1-gate.json
+            dist/ci/C39/verification/
+          if-no-files-found: error
+          retention-days: 14

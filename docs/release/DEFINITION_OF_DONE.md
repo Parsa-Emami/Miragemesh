@@ -1,6 +1,6 @@
 # MirageMesh: completion endpoint
 
-Current: WEB_FOUNDATION; full core is not ready.
+Current: locally usable supported Linux profile. [C39](V1_GATE.md) requires evidence-bound release readiness; C40 separately proves publication and the installed published version.
 
 ## C30: locally usable
 

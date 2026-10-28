@@ -38,5 +38,7 @@
     "manifest_sync",
     "manifest_rename",
     "manifest_directory_sync"
-  ]
+  ],
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C25 validation outcomes and failure cases; covered by the project Apache-2.0 license. No real traffic, credentials or third-party dataset."
 }

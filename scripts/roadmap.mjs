@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve, isAbsolute } from 'node:path';
+import { releaseGateCommand } from './release-gate.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = async path => JSON.parse(await readFile(resolve(root, path), 'utf8'));
 const safe = path => typeof path === 'string' && path.length > 0 && !isAbsolute(path) && !path.split(/[\\/]/).includes('..');
@@ -64,7 +65,8 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     if (!task) throw new Error('No matching/dependency-ready task; inspect blockers.');
     console.log(JSON.stringify({ task, progress: states.get(task.id) }, null, 2));
   } else if (command === 'release-check') {
-    const missing = progress.commits.slice(0, 38).filter(t => t.status !== 'verified').map(t => t.id);
-    if (missing.length || !gates.core_ready) { console.error('NOT RELEASE READY: actual C01-C38 and complete clone-to-value evidence required. Missing: ' + missing.join(', ')); process.exitCode = 2; }
+    const result = await releaseGateCommand(root, process.argv.slice(3));
+    console.log(JSON.stringify(result, null, 2));
+    if (!result.passed) process.exitCode = 2;
   } else throw new Error('Usage: npm run plan -- [validate|status|next|show C07|release-check]');
 } catch (error) { console.error(error.message); process.exitCode = 1; }

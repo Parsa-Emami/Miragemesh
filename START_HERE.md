@@ -1,6 +1,6 @@
 # Continue MirageMesh
 
-Current: web foundation and supervised Go loopback runtime; full domain workflow pending.
+Current: locally usable supported Linux profile through C38. C39 verifies source-bound local release readiness; C40 publication and installed-release proof remain separate.
 
 Use Linux amd64, Node 24.19.0, npm CLI 11.9.0, installed Go and rootless Podman 4.9.3. Setup selects Go 1.27.2 through the official Go toolchain mechanism.
 

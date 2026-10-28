@@ -1,0 +1,1617 @@
+{
+  "schema_version": 1,
+  "project": "MirageMesh",
+  "kind": "local-oss-v1-readiness",
+  "passed": false,
+  "planning_template": false,
+  "published": false,
+  "steps": [],
+  "attachments": {},
+  "started_at": "2026-10-28T18:51:17.629Z",
+  "source": {
+    "commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c",
+    "tree": "a6a1a064bd7cd87bc25bffe333d2eb956d7ead7f",
+    "identity": "sha256:cecf03a4f9a73715fc2b3ea20578ec9aaa5baa057a4deaaaffba8179482d644b",
+    "release_inputs": "sha256:8cb78ab97debf2e2f9f84931e7053bc95ab379726ae8790415ce298e30546ad9"
+  },
+  "history": [
+    {
+      "id": "C01",
+      "path": "docs/evidence/C01.json",
+      "record_sha256": "16604da1ebd5b59a78eab27b40a4c3f42713e8e9dfe29adae1f89d72e83c3908",
+      "source_identity": "sha256:8077fe323f118c5d62844f3c1d4c744a4e2c4723862c34d14976868b5d7d7ba4",
+      "source_basis": {
+        "kind": "retained_precommit_receipts",
+        "note": "Historical staged-source identities are retained, not relabelled as current proof; this gate freshly reexecutes the supported capabilities."
+      }
+    },
+    {
+      "id": "C02",
+      "path": "docs/evidence/C02.json",
+      "record_sha256": "fba473130381a57222cb6628b918fc875ba30f6504d97d567e8caeec3e4e64d7",
+      "source_identity": "sha256:f1b591aa235bdd11925e3602dc2530118ff7ee3a55d3f4294a84cd8f6e58c485",
+      "source_basis": {
+        "kind": "retained_precommit_receipts",
+        "note": "Historical staged-source identities are retained, not relabelled as current proof; this gate freshly reexecutes the supported capabilities."
+      }
+    },
+    {
+      "id": "C03",
+      "path": "docs/evidence/C03.json",
+      "record_sha256": "36d7b9eed64bc7689d53cd2757ff64e7cf26914d7168e4a83a8cfdf933d3f4ec",
+      "source_identity": "sha256:1ce568d86983ba61d40202d23aea45bd25603b2912c2bae9fd6b5f1b1d369c97",
+      "source_basis": {
+        "kind": "historical_owned_paths",
+        "commit": "70f4c219f3444d1a4c755e5eb9592558fa892049",
+        "files": 29
+      }
+    },
+    {
+      "id": "C04",
+      "path": "docs/evidence/C04.json",
+      "record_sha256": "858066ff45d40de3d84708d6780cb8d820e59f11acc1d095cad19983f4d980b8",
+      "source_identity": "sha256:bf2b00b261595d100bfb5a86b30bba7e6eee26edc202b153473c0ecefe44e3ce",
+      "source_basis": {
+        "kind": "historical_owned_paths",
+        "commit": "9e508467f75b11b56b1f27827e83ee837aae8865",
+        "files": 23
+      }
+    },
+    {
+      "id": "C05",
+      "path": "docs/evidence/C05.json",
+      "record_sha256": "aebb208df90263bbde7f48a989056e0af69b14a00ceed19ddd7d245733acc2f1",
+      "source_identity": "sha256:38e6e45527928c4dd49ae48e79146a5ec23468dae6fbcd001c286b4255cda203",
+      "source_basis": {
+        "kind": "historical_owned_paths",
+        "commit": "063fb2947b0fae956d860fe755fea0363d5bb7b6",
+        "files": 28
+      }
+    },
+    {
+      "id": "C06",
+      "path": "docs/evidence/C06.json",
+      "record_sha256": "57dd177d2a273b31a6e1031462e7b4feaad9ec7184c5903182e76506ed7262f2",
+      "source_identity": "sha256:6d7670b3410d14f186f02b3a1b6535c606e7b9f32be6e3ea3ffd218e2d3fc880",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "19558e818aec76c33bf6f6993c0fd8979823d6b0",
+        "files": 348
+      }
+    },
+    {
+      "id": "C07",
+      "path": "docs/evidence/C07.json",
+      "record_sha256": "b7948649b92912adb551d173e3c7aec34e776bf319e9b9ecb8e1d733d18b9d22",
+      "source_identity": "sha256:cb84d27f0a80e6848857d286cda735790573b75ca9309ad896cbd5d8095d61ce",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "2ff5f42d49a3d904f13f59c09fcce95f622dd513",
+        "files": 353
+      }
+    },
+    {
+      "id": "C08",
+      "path": "docs/evidence/C08.json",
+      "record_sha256": "1e9133f9ecf8c2842a8a9eb6468130da41b120325674ad39671d51b0ffdfde93",
+      "source_identity": "sha256:b8125962f740bae3a98ebcd4cab0a91a4a6be11eef047b703d828e67c553641d",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "a746af65eb4b1796c3e71e19d85d93feb199fc79",
+        "files": 361
+      }
+    },
+    {
+      "id": "C09",
+      "path": "docs/evidence/C09.json",
+      "record_sha256": "ac8ab1fe8ef6b65edfcd2ca8d228ff309cb5fd5f10c550196ca69396151c1ce5",
+      "source_identity": "sha256:d1a815b9e433dea184856c0d61bd241e1441f25cdc37825062e9b7f71696cff1",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "46179f4f821964864bdd3e00fa474df8cb8884f3",
+        "files": 366
+      }
+    },
+    {
+      "id": "C10",
+      "path": "docs/evidence/C10.json",
+      "record_sha256": "befcaaf4efdc6e33e938b6331e6962d50bfc8e8a46bad1455428c348c007a3a7",
+      "source_identity": "sha256:14f8d2477e88f4d54041f890219e6249070523c58ae476309f49780aa8b331b9",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "39e2bf0d9cad29e42b8b6260aae26a6f24ab1969",
+        "files": 372
+      }
+    },
+    {
+      "id": "C11",
+      "path": "docs/evidence/C11.json",
+      "record_sha256": "39bb7ec14709a9ac2fb470a6df10fab45b932349db6f34a65b488f67cf0dfc76",
+      "source_identity": "sha256:fde91a05cba01744d00282395ec34cd0050b03899d712c04511e080c89520559",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "0797ed25339ffd877137ee78d14a8a8f94cea0b0",
+        "files": 383
+      }
+    },
+    {
+      "id": "C12",
+      "path": "docs/evidence/C12.json",
+      "record_sha256": "19f0b887a68eca229d0613a52262b639992955ead680dde8e294cae3bd3447b9",
+      "source_identity": "sha256:c53f1a4fe9499501cae70cd33abbf477dc9151e9728609c24ec89facf0c87368",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "cde5ab68f58a40ba346ddc4fe010597fea8be99d",
+        "files": 389
+      }
+    },
+    {
+      "id": "C13",
+      "path": "docs/evidence/C13.json",
+      "record_sha256": "47adca96c99f6a18c01e139d83979ead997def663bf0078fc6d40d417e400c74",
+      "source_identity": "sha256:2582a704264779e6eba41e37ff7902b46d6b32094c2e2d6322d559ab327fadcc",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "7c0d0bd4453de748f5b76cd5a4dae7fe11487a56",
+        "files": 399
+      }
+    },
+    {
+      "id": "C14",
+      "path": "docs/evidence/C14.json",
+      "record_sha256": "669b38d9a31dfaf16ef11018a4f817a636ca1ba122c8fb40c9980d52f23287c7",
+      "source_identity": "sha256:dbbf2d0b6d706c645e06c4be060de770969f268560569eefcf3122c4334789d5",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "529cfd431c837c406ef4d27b8989964ef0edd994",
+        "files": 405
+      }
+    },
+    {
+      "id": "C15",
+      "path": "docs/evidence/C15.json",
+      "record_sha256": "bd3f0dc375efc55d876ac8d4f3b4be3b16a83b24ab13ec9a5b50f9d53eaa791f",
+      "source_identity": "sha256:1716545e89bf270173ee107f1f1ebd706e5c206a698d70211e27c88d42f9335f",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "62609fb910a374af21c53596bd07b00857a079b6",
+        "files": 412
+      }
+    },
+    {
+      "id": "C16",
+      "path": "docs/evidence/C16.json",
+      "record_sha256": "f0113514babe8844a39025cb6ed37301ff996577d6c1e8c21a7f59cc127079d2",
+      "source_identity": "sha256:267d3f896d3bc72daf003420cf96e5a63bdb2d11aec07a9da492f6723ce53dbb",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "8de8a9daeb1489ec387a31da56757969342c1ed2",
+        "files": 420
+      }
+    },
+    {
+      "id": "C17",
+      "path": "docs/evidence/C17.json",
+      "record_sha256": "178ae60cc9cf386cd7d1405276298ea605e7e71a8dcf046377bfca48ed5c2306",
+      "source_identity": "sha256:283088d00cf00782e31c78e651b97945aaf962262c2fb90bf8efe3d5729be624",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "d2023f5cb8168237e8d8779d892fc0b912e12fe8",
+        "files": 430
+      }
+    },
+    {
+      "id": "C18",
+      "path": "docs/evidence/C18.json",
+      "record_sha256": "7c512bb7befb2454e8300073ccd64b73c3d7aacb3986d7f78e5b0d6262bb9fdd",
+      "source_identity": "sha256:5e27d023224d96e6a0795057ab7da187ebf57eaa81c0367b87d2ecf182838a4b",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "dad01584ce4f54c4fc85b15bee5da5a0daba73a7",
+        "files": 436
+      }
+    },
+    {
+      "id": "C19",
+      "path": "docs/evidence/C19.json",
+      "record_sha256": "4fb97d6ef6c2f6681dcb200e66a983a876c02bcaed4092831ecbbb47807a21d7",
+      "source_identity": "sha256:8fd4cdd1cf739efc8eae2429e318973374a3b5dcaa809f4f5c0b8917994bbdd3",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "ab2591920d3138aa7c552bd171b6c605a1f7a707",
+        "files": 442
+      }
+    },
+    {
+      "id": "C20",
+      "path": "docs/evidence/C20.json",
+      "record_sha256": "45cec92af73fffdf7352140169c4a156b88c013d0ebd3b60cd4e580dc0d4b9d7",
+      "source_identity": "sha256:5d17e0fc696a9797cb1a5f5263c2a1e6854eaa98813b8c5bcf0a139b5133fc4c",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "6e55933608fe65ce475040e61fa888943d39f624",
+        "files": 449
+      }
+    },
+    {
+      "id": "C21",
+      "path": "docs/evidence/C21.json",
+      "record_sha256": "0c719f72543ac90ce3254c2783251ef2da66fb2a047976bf2ceb69cbfd220217",
+      "source_identity": "sha256:8f4a612910cbb69a7263f814430b0a3db07b49ae74cb3e757e1e0468a8a7cf32",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "188439d9456c1ed07f27cb40bd0f9d4f85d7f1e6",
+        "files": 460
+      }
+    },
+    {
+      "id": "C22",
+      "path": "docs/evidence/C22.json",
+      "record_sha256": "68dc9a69cac4a47d10a363f7bf865ee6008585858de9f8a9418b33afc67b8caf",
+      "source_identity": "sha256:f2b7d891628617b987a75d4718891ef48ac602ec5a81e179e6a26edc6140ec97",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "6b24d2bdd5138b52c2a93e22093d01f4c9fc4648",
+        "files": 476
+      }
+    },
+    {
+      "id": "C23",
+      "path": "docs/evidence/C23.json",
+      "record_sha256": "1bf1886051cdee8e7d964b50ca77bc471041b48d175677d69908ad6641ca0253",
+      "source_identity": "sha256:a381357788e6936740e757c6db2a95d03944acaadac57cf1e2f64fb2321bdda1",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "f7176844785e07c03fef6d7558a0ea04de95c584",
+        "files": 487
+      }
+    },
+    {
+      "id": "C24",
+      "path": "docs/evidence/C24.json",
+      "record_sha256": "2a9e2c3da611023c4b8dffd6fcc2a9611f80fe6fae272e6ff46eca0096930897",
+      "source_identity": "sha256:beee7cfedbb535c98c6d751af5ab94579f66a4ca6c0665d01bb48be362ec04f6",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "24f45b4c2be2f7cec5e80a2146d92d9f5ec0761e",
+        "files": 505
+      }
+    },
+    {
+      "id": "C25",
+      "path": "docs/evidence/C25.json",
+      "record_sha256": "c0ba31334a654eda83a6be8023cdc4abd3aee4981bbaa56c4b579a699c6d448d",
+      "source_identity": "sha256:3dd2fc4684cbba26623d2ce144435736690ef367d20ea66883ac52e6817309ce",
+      "source_basis": {
+        "kind": "historical_source_inventory",
+        "commit": "e3dafe27202d7616530305f9bba616b3a2e31ecc",
+        "files": 523
+      }
+    },
+    {
+      "id": "C26",
+      "path": "docs/evidence/C26.json",
+      "record_sha256": "92a0494fa3c7ed728bc61f7b597d5340abbe00479b71738e282978c9d69ad05b",
+      "source_identity": "sha256:0b0efc54dcda3be76557383a9893f39fd11727208f87695e795d0a4c629bc9ba",
+      "source_basis": {
+        "kind": "historical_implementation_commit",
+        "commit": "3d40a1ca59d9c9bbaa2300918789ed4b9e2cde3a",
+        "files": 528
+      }
+    },
+    {
+      "id": "C27",
+      "path": "docs/evidence/C27.json",
+      "record_sha256": "c371d7a3d0b173ff386163a97772b885ecb99afd06ffe38e6fbd091802e8cdcc",
+      "source_identity": "sha256:b6d2557976305cfa185aab7b420662a5053f76c4a3cd4651cbd296d0f7c36e57",
+      "source_basis": {
+        "kind": "historical_implementation_commit",
+        "commit": "aadbb3371b6c8e614ab510babe25ebd9ea8e34c1",
+        "files": 534
+      }
+    },
+    {
+      "id": "C28",
+      "path": "docs/evidence/C28.json",
+      "record_sha256": "c7d1aabe69e923d9b19b985d02b11aa641f9d41e73c35a051c00c1c6a535efdb",
+      "source_identity": "sha256:a5dffe6eb246b9b62d90575e392ffd5d8997505e70829c075c5cce7a6f75a5a7",
+      "source_basis": {
+        "kind": "historical_implementation_commit",
+        "commit": "b0d916500ee4a3891b21c7076fbcaa96aaa4279b",
+        "files": 541
+      }
+    },
+    {
+      "id": "C29",
+      "path": "docs/evidence/C29.json",
+      "record_sha256": "ad2c5ca7285c2faa075f84173615c570e287991a5e7713904099ec752874189b",
+      "source_identity": "sha256:547031607c0accf52ba9114a8237fcbc6866839e5d36b8439a69ff43cced1054",
+      "source_basis": {
+        "kind": "retained_precommit_receipts",
+        "note": "Historical staged-source identities are retained, not relabelled as current proof; this gate freshly reexecutes the supported capabilities."
+      }
+    },
+    {
+      "id": "C30",
+      "path": "docs/evidence/C30.json",
+      "record_sha256": "f2d2e15d1a913ce02886647087dba907dc42f9cb6f5e2ac0220111eb912ab31c",
+      "source_identity": "sha256:d0f0e05f584865b23aa973f3d3142b1b3ebaedab7009027df7b804caca38a066",
+      "source_basis": {
+        "kind": "retained_precommit_receipts",
+        "note": "Historical staged-source identities are retained, not relabelled as current proof; this gate freshly reexecutes the supported capabilities."
+      }
+    },
+    {
+      "id": "C31",
+      "path": "docs/evidence/C31.json",
+      "record_sha256": "cf8462e6a5ba02c44653fde82c7f8a6b1126951f51a81a8b9551450530e97204",
+      "source_identity": "sha256:50f670e97bfb65dfbd28473d0bf63b1805106dddcbbfd042d5df0a42de18c043",
+      "source_basis": {
+        "kind": "retained_precommit_receipts",
+        "note": "Historical staged-source identities are retained, not relabelled as current proof; this gate freshly reexecutes the supported capabilities."
+      }
+    },
+    {
+      "id": "C32",
+      "path": "docs/evidence/C32.json",
+      "record_sha256": "32cb1b888cb2398d35db69a4367b8e592044b1e6aa53ccbaf9bd7c6c44ee2af5",
+      "source_identity": "sha256:04bbfcf4e226fa4350540813b742aef855ff40702c0094d466727ffa92ae379f",
+      "source_basis": {
+        "kind": "retained_precommit_receipts",
+        "note": "Historical staged-source identities are retained, not relabelled as current proof; this gate freshly reexecutes the supported capabilities."
+      }
+    },
+    {
+      "id": "C33",
+      "path": "docs/evidence/C33.json",
+      "record_sha256": "a8150d2dd678f6e4a7ad9ff705fdb40cd217d61c61b09995a5ddda3fa3390b40",
+      "source_identity": "sha256:de8c7abe9d9223b5715a5470e5b32d72358bde86c2abd7c964691c67df61d677",
+      "source_basis": {
+        "kind": "retained_precommit_receipts",
+        "note": "Historical staged-source identities are retained, not relabelled as current proof; this gate freshly reexecutes the supported capabilities."
+      }
+    },
+    {
+      "id": "C34",
+      "path": "docs/evidence/C34.json",
+      "record_sha256": "5356f03a16ee77feabebeff150a3d950f6b88a5af91de2743323fff1cbeb2055",
+      "source_identity": "sha256:4de556160f974c97b3ca3d2f9ffb70e8000f5befba72afde7bf5307e4df1b590",
+      "source_basis": {
+        "kind": "retained_precommit_receipts",
+        "note": "Historical staged-source identities are retained, not relabelled as current proof; this gate freshly reexecutes the supported capabilities."
+      }
+    },
+    {
+      "id": "C35",
+      "path": "docs/evidence/C35.json",
+      "record_sha256": "a76a1faceb92fd45b90f45d0ea35c0fdd7f876cc6e0ec7a1b953c8533bcf3f80",
+      "source_identity": "sha256:f803dff214204db26183dbf4f17e4fa865831a403c47782f6d76f8b085f062af",
+      "source_basis": {
+        "kind": "retained_precommit_receipts",
+        "note": "Historical staged-source identities are retained, not relabelled as current proof; this gate freshly reexecutes the supported capabilities."
+      }
+    },
+    {
+      "id": "C36",
+      "path": "docs/evidence/C36.json",
+      "record_sha256": "00019e87b16786aee7b89a63ade25eafe8d872ba9117d83426f74860ab48ccc2",
+      "source_identity": "sha256:6ba2cca732d1fdd3cc5258d3fc6f081d2bb605a1285aba13f9bcb59b523e356b",
+      "source_basis": {
+        "kind": "historical_implementation_commit",
+        "commit": "db386410acfc6a5d92b9d6699ae605a8bbc4e63d",
+        "files": 599
+      }
+    },
+    {
+      "id": "C37",
+      "path": "docs/evidence/C37.json",
+      "record_sha256": "8f1b4947f2833df313b6175ad39edd83b097ce5ac840b62bf010a2cf054f6f6c",
+      "source_identity": "sha256:d5fa4e85e838339a9adf2f15425f808277eab3d40bff490041c1bb05dd4c7acb",
+      "source_basis": {
+        "kind": "historical_implementation_commit",
+        "commit": "dcd885675efa9ad8dab9b2d8e6274189d63826fb",
+        "files": 606
+      }
+    },
+    {
+      "id": "C38",
+      "path": "docs/evidence/C38.json",
+      "record_sha256": "e4322708d6a980622b45c5cc6e0f27c3f8722af565a1bc35a6f09c6276ed7d03",
+      "source_identity": "sha256:87bfd2e13e8bb17be6983a21a1f7e7598da762908d2a442f8fbea38a00d06257",
+      "source_basis": {
+        "kind": "historical_implementation_commit",
+        "commit": "2223dee74af748403da443ecb9a890077dec23ff",
+        "files": 613
+      }
+    }
+  ],
+  "licenses": {
+    "dependencies": [
+      {
+        "path": "",
+        "version": "0.0.1",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@oxc-project/types",
+        "version": "0.154.0",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@playwright/test",
+        "version": "1.64.1",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-android-arm-eabi",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-android-arm64",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-darwin-arm64",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-darwin-x64",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-freebsd-x64",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-linux-arm-gnueabihf",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-linux-arm64-gnu",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-linux-arm64-musl",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-linux-ppc64-gnu",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-linux-s390x-gnu",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-linux-x64-gnu",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-linux-x64-musl",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-openharmony-arm64",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-win32-arm64-msvc",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/binding-win32-x64-msvc",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@rolldown/pluginutils",
+        "version": "1.0.1",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@types/react",
+        "version": "19.3.0",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@types/react-dom",
+        "version": "19.3.0",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-aix-ppc64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-darwin-arm64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-darwin-x64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-freebsd-arm64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-freebsd-x64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-linux-arm",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-linux-arm64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-linux-loong64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-linux-mips64el",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-linux-ppc64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-linux-riscv64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-linux-s390x",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-linux-x64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-netbsd-arm64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-netbsd-x64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-openbsd-arm64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-openbsd-x64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-sunos-x64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-win32-arm64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@typescript/typescript-win32-x64",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/ajv",
+        "version": "8.20.0",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/ajv-formats",
+        "version": "3.0.1",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/csstype",
+        "version": "3.2.3",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/detect-libc",
+        "version": "2.1.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/fast-deep-equal",
+        "version": "3.1.3",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/fast-uri",
+        "version": "3.1.8",
+        "license": "BSD-3-Clause"
+      },
+      {
+        "path": "node_modules/fdir",
+        "version": "6.5.0",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/fsevents",
+        "version": "2.3.3",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/json-schema-traverse",
+        "version": "1.0.0",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/lightningcss",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/lightningcss-android-arm64",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/lightningcss-darwin-arm64",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/lightningcss-darwin-x64",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/lightningcss-freebsd-x64",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/lightningcss-linux-arm-gnueabihf",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/lightningcss-linux-arm64-gnu",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/lightningcss-linux-arm64-musl",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/lightningcss-linux-x64-gnu",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/lightningcss-linux-x64-musl",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/lightningcss-win32-arm64-msvc",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/lightningcss-win32-x64-msvc",
+        "version": "1.33.0",
+        "license": "MPL-2.0"
+      },
+      {
+        "path": "node_modules/nanoid",
+        "version": "3.3.20",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/picocolors",
+        "version": "1.1.1",
+        "license": "ISC"
+      },
+      {
+        "path": "node_modules/picomatch",
+        "version": "4.0.7",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/playwright",
+        "version": "1.64.1",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/playwright-core",
+        "version": "1.64.1",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/postcss",
+        "version": "8.5.30",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/react",
+        "version": "19.3.1",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/react-dom",
+        "version": "19.3.1",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/require-from-string",
+        "version": "2.0.2",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/rolldown",
+        "version": "1.2.14",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/scheduler",
+        "version": "0.28.0",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/source-map-js",
+        "version": "1.2.2",
+        "license": "BSD-3-Clause"
+      },
+      {
+        "path": "node_modules/tinyglobby",
+        "version": "0.2.17",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/typescript",
+        "version": "7.0.2",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/vite",
+        "version": "8.3.4",
+        "license": "MIT"
+      }
+    ],
+    "fixtures": [
+      {
+        "path": "tests/fixtures/miragemesh/C01/expected-output.json",
+        "sha256": "6563cfe200ae660f1608419cd25ec9caa4224831c66898dd0a691e3cbd36056b",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C01/invalid.json",
+        "sha256": "33eefcf744547e4b9fd2530caef29f0763adfb609d2bc0183b00992636d30876",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C01/positive.json",
+        "sha256": "b91f21e1a45f24f2c43af88b9ffca84c3f42338de02b22ed1fdee6c7b3d79bba",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C02/expected-output.json",
+        "sha256": "a1c8493d7edc7ce45a0868ed71915683eb85f040dabc5d843c26a5a693f45714",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C02/invalid.json",
+        "sha256": "18940f074bc6820e43f5f3c5eb3429ae8d85a8abb059c9b6d6c6d0a3397d1f7e",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C02/positive.json",
+        "sha256": "39fbe47717e0ee5df53c18ac5841d165aa54a977bf72afa06c8a80fc8a3fcfbc",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C03/expected-output.json",
+        "sha256": "57fe284c127971c703ac2e40f987a7d9e4f51499c961a25c301a797d39c37f19",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C03/invalid.json",
+        "sha256": "99c970842df4ae91df4e29c83d8d1e1bc44c465b762485173c21e88e069dd079",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C03/positive.json",
+        "sha256": "e8f4d7818cb2f45033ebedb658f867d4aceeb530afdff023a3fafe73c8eeaa94",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C04/expected-output.json",
+        "sha256": "1217f19c5f1fcaa1836af2965113825bb90ef05f806f5e824be2adb718daeb21",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C04/invalid.json",
+        "sha256": "38c164e5b51f9b17c9de2017ea34e035364331744b0ca8b1a9bb605a8e2ca518",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C04/positive.json",
+        "sha256": "fccd401aa272bc5a8930eeb61d3678922597ba7471d07f07488218b0e388da0a",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C04/valid-event.txt",
+        "sha256": "a391f2daf6fd4283c0e78a795476413fbd525cae0f3b4ec81a83f81c4f9c0444",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C05/expected-output.json",
+        "sha256": "fdea61065303093041ca48253f9229d33afe1fc1b03c7dc817decd524414d6f7",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C05/invalid.json",
+        "sha256": "0d84c081f6f63cfc1e753b8ff5785074ed6e0745855f24d2c1fc7716714b43ab",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C05/positive.json",
+        "sha256": "b0d5a4767079e0b1d732803432ea2a8a517d8a7d185cdddfb6f7f9ae9f62803a",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C07/expected-output.json",
+        "sha256": "1b6f6b829e2b1f50507ee26c91661d479cf9e6cd33c7caba5f7776e8635d51b8",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C07/invalid.json",
+        "sha256": "abce98eb682add4f130051152773f1232a5f6b6ae0ed852a247488a07d111451",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C07/positive.json",
+        "sha256": "5a7796a8285ea7e9bf374da9bcc726e51fbaaef2e07083fd02e587eefaacc528",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C08/expected-output.json",
+        "sha256": "7b9497b5ec55aa8339dea4678a447691d55c0d85e30d4647fe653e2de4ae311f",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C08/invalid.json",
+        "sha256": "882351b2d20b496b447590a7019c4d7913d8c633a537e17a3d101e323aa11688",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C08/positive.json",
+        "sha256": "505207a53309ba4d0c803411d87178e9115ef117d71191451d8386ce0515cb33",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C09/expected-output.json",
+        "sha256": "bd0d9468c5f733aebe6ed45b6e627ccb99fec6c22c5b88d5f4d8d02f3c9a3638",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C09/invalid.json",
+        "sha256": "8d8bcb3d78046fac275785e13d8aadaaa7e6bd0563739573047f01531aeb7b68",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C09/positive.json",
+        "sha256": "1b35be54e5aa4ec35973c488826b7d18845210ab2ed40f5b4632c2ed5b46ef90",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C10/expected-output.json",
+        "sha256": "b17d08e4e40979310848c393704d8c886c8794026b14ec21ff6718013c7c38ca",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C10/invalid.json",
+        "sha256": "26b870e0ed5e846a7cc380edfa2352a3762f7ba309289d9ae5905d99e3ac06ed",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C10/positive.json",
+        "sha256": "5a3eddcb79fde38531583938c350d4e6a38d009666a131fa02ae5e3a89e67e7e",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C11/expected-output.json",
+        "sha256": "f7e8655fa69b89f9dad367845a8288b74bb3c0ff9c879c0bc9c5104485e543bd",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C11/invalid.json",
+        "sha256": "26b870e0ed5e846a7cc380edfa2352a3762f7ba309289d9ae5905d99e3ac06ed",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C11/positive.json",
+        "sha256": "e7d831a32379a8076e19a41efdabb476df949c73429bb05af4879035eaa34516",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C12/expected-output.json",
+        "sha256": "3372548273d5ca4ab0181bff8c61ca0bfdfd14671d52408fe212912cc5ec5ff2",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C12/invalid.json",
+        "sha256": "82ee3bb1938c9266b9eb355a8c6c1baacb7ae484a9848177668071b5f19bc69a",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C12/positive.json",
+        "sha256": "e49fefe5a02df51daf4b60dbb54254ddf5e89b579c2bf4e06908fcf65b2b9205",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C13/expected-output.json",
+        "sha256": "59624921ea0b46f766a821429cb7cbd2314d9fce4256026f9b16bcf4946ac190",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C13/invalid.json",
+        "sha256": "aef721b261af73b2e5a54e19cf4a4de92465cb2e9db6fe9a00dd961b31020a97",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C13/positive.json",
+        "sha256": "00c25b55de6f3333119362e4c5a9447930dea45c2790a211777250cee8045aa0",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C14/expected-output.json",
+        "sha256": "ea6c8d87ee7ed5e64d887880bf33a73a60f8ea8ab637096c3c4c97ed2494dc73",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C14/invalid.json",
+        "sha256": "913e1800c443352aa845e7834cfebb1a7185db381b460499bad6a1e25b8a967f",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C14/positive.json",
+        "sha256": "ebd2e7d095408d9fe4881fb70f0655647797dce5d5fa4806d6c055a5251a41b4",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C15/expected-output.json",
+        "sha256": "9540721e17397f98362c3ab19fd8681885e022b5072c44d6f871f7994e30b03f",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C15/invalid.json",
+        "sha256": "0e6b51a31ec05d6e72a2601278b36c3f6bd991b6a986acff3228848742ece842",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C15/positive.json",
+        "sha256": "4f566c59c2a7d64f33fece5d3d61e5620210d8711574de5a9c5c8f649fd17ca6",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C16/expected-output.json",
+        "sha256": "a0b629fc904d679511e9d81cd0aa9afe497b47f8ab5719c7e2a6a74a629f3f0c",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C16/invalid.json",
+        "sha256": "722956be77657ec175fbc69a0f08e6ef3299d9660b44c687a42b2e4b490a1c05",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C16/positive.json",
+        "sha256": "3aeb60a29224a2858764ce67c6a6b9454fdbb6f532e64ecce45149b8183f7a6c",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C17/crash.json",
+        "sha256": "577a3fd8d09cf1883842a3b074e5f43600937057ef7cc6d49b4bab164459309f",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C17/expected-output.json",
+        "sha256": "d146510d87d804b1e0d0193fc15c1cc6dfbd8928ef4d054923bc547473e71eb8",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C17/invalid.json",
+        "sha256": "7083a9ac5d1af3701b8d232238dae6e33f535f5a206560a30f7c2b04b2bac6b0",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C17/positive.json",
+        "sha256": "6259878eb9415b22c0a91cc68dd807f8dcebea80fbd32269e796ada0b75309db",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C18/expected-output.json",
+        "sha256": "4794c8fecc80c205bcdcb03953079918c745f232977755a3c1c14c018336d8a0",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C18/negative.json",
+        "sha256": "c4546e4f33652f174a5fd1bd36ab0e430371c0e41e2cda68de310668d692968e",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C18/positive.json",
+        "sha256": "eff5df031d544b759ac60d0a75893ed9cee57f5a3036455f3c4c39eafe065199",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C19/expected-output.json",
+        "sha256": "b0d4b940c4c362af0578ee738184b33d427aea6a154fc3e8b38e08a4e54e7f0b",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C19/negative.json",
+        "sha256": "c62d612b2908a063895772e3981f8855a1b3b134531c768efee597eceaa27050",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C19/positive.json",
+        "sha256": "3f27090049e5f28cb692630c87ebf262f0e634d3a9b8cdf99d1ec2493efca5f3",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C20/expected-output.json",
+        "sha256": "38947960180a9d5a6de7a067c67d15f315bcf3c0e3b9ef9284c16fb77de6a836",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C20/negative.json",
+        "sha256": "ca2433a7c709bb64d9c64200332d4d00c161ea7d4e26cf5d4938119a939dfe0f",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C20/positive.json",
+        "sha256": "94f68134ed6ce4897eacb402879dae9b09d59c076c167cfa669916bdd3df3074",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C21/expected-output.json",
+        "sha256": "fd3292ecdfee84890924b9b547dd5607ce92298d2242dcb1c04371fe842c9c10",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C21/invalid.json",
+        "sha256": "1c65613a0dccc04f8b586df66753bd0f7da30e27de50e7b39fa40614766bb9a5",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C21/positive.json",
+        "sha256": "bca2be661c8d0e9c4a0236b4b5b952338c8728b36d804cc243626ef1b1631c65",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C22/expected-output.json",
+        "sha256": "910d4c54e031a1ffed7af6c7570e0a577e719a9cf469ab1305ca7f08a79ad50a",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C22/negative.json",
+        "sha256": "caa28fb2549eb5250fd3216836413224aed14867257496f95f39eda16af8aed1",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C22/positive.json",
+        "sha256": "a7e857e338f35093767921729ae32ff7c7929302001625b8361957f369fcf1e1",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C22/seed.go",
+        "sha256": "5016acb95ded09d5d7ef1333c4bbe63cccf50ad8ff55c33cd3a48bed37bf0b3a",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C23/expected-output.json",
+        "sha256": "f9fb3ae6b8d92b23fce86af2f3948da465c4832274e36eb9c97b5fa4b18e68de",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C23/negative.json",
+        "sha256": "d031ac386e9719e1ad6a982809900faabf521b5f4e64e6317c5196218ebde9c2",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C23/positive.json",
+        "sha256": "e6f778e6a0f5e8e00b3b183a5fb20b4bf194029010427cbaede2d5190f2b9021",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C23/seed.go",
+        "sha256": "166cef3bb0ea03077876f0c0608b045cf23a76c0e59461c3cd35469e19e20073",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C24/expected-output.json",
+        "sha256": "55558a49c930828d0921dd3bc139b513a3d159742d442810ef3f3929fb65922b",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C24/material.go",
+        "sha256": "62b8c5e5ffbbdcb010a01823be91ac4642598ffc7902696e74e1b7eb28bce5d4",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C24/negative.json",
+        "sha256": "1574af3e11b2534381295abd62282cf9eac735f1a6e527933d7ccd71261d3c33",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C24/positive.json",
+        "sha256": "373e847e26f973ea92acf03c31dd121ea48c34de1ea92cd77a67b7640eb38ed4",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C24/seed/main.go",
+        "sha256": "8fbef84f987aa8bd65642d571242b62e343bc625a153e9d26bcf51c810565779",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C25/expected-output.json",
+        "sha256": "d0e1720c850cfb50c0a58d5c8eecbec285841e0d19773faed7f75ba0cf9536ac",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C25/material.go",
+        "sha256": "515830529da890276a9adcefdcb091806bf6db2bfa843cba6787ae4907c53935",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C25/negative.json",
+        "sha256": "97a61ef404a4a32791defcebb176cf18c49e94ae79a9935cdfe8892b377f523f",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C25/positive.json",
+        "sha256": "ac43934ab662b70fcbdc2355e65fd377b2b801230820c128a15ee35c215ea372",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C25/seed/main.go",
+        "sha256": "305ea1756539b6dde9c49f3df4ab2befc7f1797485044d693bc53e30df56d2b2",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C26/expected-output.json",
+        "sha256": "0ae9fadd1fce1526f82e7e5390cebc5490a31a7980c6dbfdf23663b05c67080b",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C26/invalid.json",
+        "sha256": "3e3464c39a1b48ca66e04b09085a6e69365c29f5bb15231dfccd71629e5a2b97",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C26/positive.json",
+        "sha256": "83329ac971b776b03e9892d3b02336e632ba6f47f9457d7f1faa07671e39d7f7",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C27/security.json",
+        "sha256": "5f5dfac89b88bf6012ea206def5a9ba3509f5a58cbae0238d9e34dfba2e0d246",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C28/expected-output.json",
+        "sha256": "14f3e1f76fa88b01c6e87c6309bb2801b8b97328bb70fa4a719140ccd4c288be",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C28/negative.json",
+        "sha256": "eb30743ff95f05c06acf76dcebd5c7d6a3a4586c6a70a7de913b3aa3db679263",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C28/positive.json",
+        "sha256": "106b1865cd93217700f61fa7f9fb62fdf022ad6f16fb5bcdd0954384fe3059fd",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C29/expected-output.json",
+        "sha256": "1a00b985f643692a0d35d55bf1b0e44927979b380e1d18ba3164a99cf28ec9eb",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C29/negative.json",
+        "sha256": "9dcafc12a52dec3b893ce780245d80ae55af15915b2777bad8b899ad58802056",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C29/positive.json",
+        "sha256": "b10ecce34e35561a6cf31b7a8f8f028fa252c21710d82a5e8ad856f89b28dda6",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C30/expected-output.json",
+        "sha256": "c7b077851271fe36e4c07fe190da602d71254c25977e8779ea3d6e84e711567d",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C30/negative.json",
+        "sha256": "d3de7c9fbe524f02f3a7de199295181f29b4d699d848bcae9a237f135d4d72be",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C30/positive.json",
+        "sha256": "6b114a0deca8d0d4d0451a5f9e62cb2b70509b96e663c86852c5f946e4a340d9",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C30/seed/main.go",
+        "sha256": "3819bee3e6933d5ddcebecc95bba8b8080e60ac8608ca7467a5802ff1a2bcc0c",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C31/expected-output.json",
+        "sha256": "d3cb3f684fff4d6c237383203b1c0bb9a56a16239fcc91fd7e0868d1d4b131b0",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C31/negative.json",
+        "sha256": "dc87cb9a4fc392cca4dea74763b50c87a0e6a0f9f643bce30a03fcf926fdc717",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C31/positive.json",
+        "sha256": "42f4f5d71e542fd34d9cfec02e59afb2263789deb9deb6c22b7e93affefac5fe",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C32/expected-output.json",
+        "sha256": "bc732dab58db0b5afe2ec57e853bbcf94373e8a452a770db93b63e53af250b36",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C32/negative.json",
+        "sha256": "41a54ac1cd758af007c9e691e5e5a1dd0f96b7f0ce759dc15ec275a962b375a0",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C32/positive.json",
+        "sha256": "ecd6c02310be7defa2b220a0c64a634ea4b4756c60fe6b524250febb99c480c9",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C33/expected-output.json",
+        "sha256": "3b8996dfb77eeff8deb116fa17631f35ec0712d593d00314403bc0d23c143dc5",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C33/negative.json",
+        "sha256": "61a2c249fea04a4414768526ce7966f70d093896a2c2d5ae1aae857e67a2e27d",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C33/positive.json",
+        "sha256": "188176cd7abd6e5dac409f4b59b192c584298ea56bedf9abfcea4f167a04c50b",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C34/expected-output.json",
+        "sha256": "84e82811e7427ae44c0aeceed5d65c0051911ff80741abc2659e45b54128f4f9",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C34/negative.json",
+        "sha256": "bced348bb4706f473b48fe027af956688668913fd9479d486459fc120abea489",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C34/positive.json",
+        "sha256": "2df3234b81c9252701d782326cb2a2c23a0d2f038651e185cb4847dac0bd0ec0",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C35/expected-output.json",
+        "sha256": "00e55ec26a9308633610d7437a704d8e219e3482bc1dff0ef2f5d6e9a8c19806",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C35/negative.json",
+        "sha256": "c99733756cbc9cc4f5e7bacf85474b34ed6adcd8b4f60888c17ed6452089b3eb",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C35/positive.json",
+        "sha256": "6d3df24c5dd446de0d4b5f5eab5e87002aa5bc9e6e8cc1e568b9655cbaecab4b",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C35/store-v1/manifest.json",
+        "sha256": "6ce2857404d998f6ce4a38944406e37a497db1fc99dc50051aee6f53babd7569",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C35/store-v2/manifest.json",
+        "sha256": "e436834eac5eed01d15d9884415eb8f2653a8c6e1497857d27dac93b14026934",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C36/expected-output.json",
+        "sha256": "137ba695cf8773bb5bd7a9117b19a985ae18228af59fbf57a4d94b96f0073aea",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C36/negative.json",
+        "sha256": "fd89b31444343542b8574c1c36dac3c6a94faca8188a5b63cda3d4e71bcf9072",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C36/positive.json",
+        "sha256": "7cdeb86d71e6a4e0485e0391af88ceea7c4b271fec3a0a90b83f9d7b2ad9a620",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C37/expected-output.json",
+        "sha256": "4429ec18b4d69d0832556672edfa07dca14a7a01bd574d28fed22daf89ee7a7b",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C37/negative.json",
+        "sha256": "fff5ddbaf1b9884f47932ea025188ecce75fc3e1ebf3da853e14a3d10b07de9a",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C37/positive.json",
+        "sha256": "ccbaf7f7bb12c4ee0dcd3bbcea8dbc0551e750e50b5529bdf18133c6202ba571",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C38/expected-output.json",
+        "sha256": "88a707269697d71eb469aada1b3a05169e756f715e9c9eff7f314e7ac046c442",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C38/negative.json",
+        "sha256": "edabeb172174256b0aa255c508a929f80e0f59ad0e344dea46ede4f2756e6732",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C38/positive.json",
+        "sha256": "47dac006b5e1e9d7ba68e3dde0e59b596e529a5d5bb5a1812c620fd745fe76cd",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C39/expected-output.json",
+        "sha256": "f655d31560b13c6e47ed8d8896edcd11408a718a82176bc54c9e67549ff946bc",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C39/negative.json",
+        "sha256": "5a903ac93179ce2f345600410d84ccb7a383aa7a66ed1cd8b2ed9de2d2282618",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C39/positive.json",
+        "sha256": "db4605935a9e548132ef51afd697db42cbc391ebbd709653245bb607215d7ae1",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      }
+    ],
+    "resources": [
+      {
+        "id": "node-runtime",
+        "version": "24.19.0",
+        "license": "MIT",
+        "integrity": {
+          "algorithm": "sha256",
+          "expected": "14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647",
+          "observed": "14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647"
+        }
+      },
+      {
+        "id": "npm-cli",
+        "version": "11.9.0",
+        "license": "Artistic-2.0",
+        "integrity": {
+          "algorithm": "sha512",
+          "expected": "sha512-BBZoU926FCypj4b7V7ElinxsWcy4Kss88UG3ejFYmKyq7Uc5XnT34Me2nEhgCOaL5qY4HvGu5aI92C4OYd7NaA==",
+          "observed": "sha512-BBZoU926FCypj4b7V7ElinxsWcy4Kss88UG3ejFYmKyq7Uc5XnT34Me2nEhgCOaL5qY4HvGu5aI92C4OYd7NaA=="
+        }
+      },
+      {
+        "id": "go-toolchain",
+        "version": "1.27.2",
+        "license": "BSD-3-Clause",
+        "integrity": {
+          "algorithm": "go-module-h1",
+          "expected": "h1:N6Xv/1OLzI0jVVkUwkrxHRZc/GCTARUo6idcngKwlDE=",
+          "observed": "h1:N6Xv/1OLzI0jVVkUwkrxHRZc/GCTARUo6idcngKwlDE=",
+          "verification_source": "https://sum.golang.org/lookup/golang.org/toolchain@v0.0.1-go1.27.2.linux-amd64"
+        }
+      },
+      {
+        "id": "podman-provider",
+        "version": "4.9.3",
+        "license": "Apache-2.0",
+        "integrity": {
+          "algorithm": "sha256",
+          "expected": "e5c1c37e387ed14c352a744a75fbb79fb2f82573ca7bf36886e3b7333fc9ef1a",
+          "observed": "e5c1c37e387ed14c352a744a75fbb79fb2f82573ca7bf36886e3b7333fc9ef1a"
+        }
+      },
+      {
+        "id": "decoy-image",
+        "version": "3.23.2",
+        "license": "MIT (Alpine Linux base, musl) with GPL-2.0-only busybox, Apache-2.0 OpenSSL, MPL-2.0 ca-certificates-bundle and zlib",
+        "integrity": {
+          "algorithm": "sha256",
+          "expected": "sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62",
+          "observed": "sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62"
+        }
+      }
+    ]
+  },
+  "errors": [
+    {
+      "code": "unsupported_profile",
+      "detail": "Required tool/provider is unavailable: podman"
+    }
+  ],
+  "completed_at": "2026-10-28T18:51:19.268Z"
+}

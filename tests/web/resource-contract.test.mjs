@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, rm, writeFile, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
 import { join } from 'node:path';
@@ -21,6 +21,25 @@ const artifact = id => ({
   integrity: { algorithm: 'sha256', expected: 'a'.repeat(64), observed: 'a'.repeat(64) },
   source_build: 'Build from the versioned upstream source tag 1.2.3.',
   probe: { command: `${id} --version`, exit_code: 0, version: '1.2.3' }
+});
+
+test('accepts the locked OCI digest and official Alpine package licenses while rejecting tag or digest substitution', async () => {
+  const c = await context();
+  try {
+    const locked = JSON.parse(await readFile(new URL('../../docs/engineering/toolchain-lock.json', import.meta.url), 'utf8'));
+    const image = locked.resources.find(resource => resource.id === 'decoy-image');
+    c.manifest.resources.push(image);
+    assert.deepEqual(await validateResources(c.root, c.manifest), []);
+    for (const mutate of [
+      value => { value.artifact_url = 'docker.io/library/alpine:latest'; },
+      value => { value.integrity.expected = 'sha256:' + 'a'.repeat(64); value.integrity.observed = value.integrity.expected; },
+      value => { value.license_url = 'https://untrusted.invalid/LICENSE'; },
+    ]) {
+      const manifest = structuredClone(c.manifest);
+      mutate(manifest.resources.at(-1));
+      assert.notDeepEqual(await validateResources(c.root, manifest), []);
+    }
+  } finally { await rm(c.root, { recursive: true, force: true }); }
 });
 
 async function context() {

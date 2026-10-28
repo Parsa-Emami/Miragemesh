@@ -5,5 +5,7 @@
   "recovery_version": 2,
   "revoked_version": 3,
   "restart_preserves_floor": true,
-  "egress_requests": 0
+  "egress_requests": 0,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C25 validation outcomes and failure cases; covered by the project Apache-2.0 license. No real traffic, credentials or third-party dataset."
 }

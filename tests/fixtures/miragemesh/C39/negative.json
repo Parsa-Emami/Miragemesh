@@ -1,0 +1,28 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C39 release-gate validation fixtures. No real sensor traffic, identities, credentials or private keys.",
+  "event": {
+    "schema_version": "1",
+    "sensor_id": "c39-synthetic",
+    "event_id": "c39-event-01",
+    "sequence": -1,
+    "observed_at": "2026-01-01T00:00:00Z",
+    "kind": "http.request",
+    "metadata": {
+      "path": "/synthetic/c39/release"
+    }
+  },
+  "rejections": [
+    "missing_report",
+    "template_evidence",
+    "wrong_source",
+    "missing_proof",
+    "proof_digest_mismatch",
+    "unlicensed_fixture",
+    "incomplete_clone",
+    "web_only_artifact",
+    "failed_required_test",
+    "changed_historical_evidence"
+  ]
+}
