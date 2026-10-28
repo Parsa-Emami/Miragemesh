@@ -3,7 +3,7 @@
   "task": "C39",
   "date": "2026-10-28",
   "base_commit": "33040632a3a079774666d39bf7bfb4d54277b37f",
-  "status": "implemented; supported-host verification pending",
+  "status": "C39 verified; final certification candidate must pass all five hosted workflows before merge",
   "verification_branch": "codex/c39-evidence-release-gate",
   "summary": "Replace status-only release admission with immutable C01-C38 historical source/evidence checks, complete fresh engine/Node/browser/clone/package proof, source archive byte checks and license inventories. Keep publication separate.",
   "local_results": {
@@ -18,13 +18,167 @@
     "web-foundation",
     "release-gate"
   ],
-  "blockers": [
-    "Run and retain the full supported Linux verification capsule; local host has no Podman and denies ptrace."
-  ],
-  "next_task": "C39",
+  "blockers": [],
+  "next_task": "C40",
   "next_command": "npm run plan -- next",
   "scope_limits": [
     "No schemas, migrations, .env, Dockerfiles, dependency pins or production keys changed",
     "No public release, installed published-artifact or C40 claim"
+  ],
+  "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c",
+  "tested_source_identity": "sha256:cecf03a4f9a73715fc2b3ea20578ec9aaa5baa057a4deaaaffba8179482d644b",
+  "tested_git_tree": "a6a1a064bd7cd87bc25bffe333d2eb956d7ead7f",
+  "release_input_identity": "sha256:8cb78ab97debf2e2f9f84931e7053bc95ab379726ae8790415ce298e30546ad9",
+  "hosted_workflows": [
+    {
+      "name": "contracts",
+      "run_id": 40748684039,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748684039",
+      "conclusion": "success",
+      "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c"
+    },
+    {
+      "name": "plan-consistency",
+      "run_id": 40748683191,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683191",
+      "conclusion": "success",
+      "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c"
+    },
+    {
+      "name": "engine-runtime",
+      "run_id": 40748683504,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683504",
+      "conclusion": "success",
+      "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c"
+    },
+    {
+      "name": "web-foundation",
+      "run_id": 40748683271,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683271",
+      "conclusion": "success",
+      "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c"
+    },
+    {
+      "name": "release-gate",
+      "run_id": 40748683412,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "conclusion": "success",
+      "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c"
+    }
+  ],
+  "observed_results": {
+    "schema_version": 1,
+    "passed": true,
+    "release_ready": true,
+    "published": false,
+    "source": {
+      "commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c",
+      "tree": "a6a1a064bd7cd87bc25bffe333d2eb956d7ead7f",
+      "identity": "sha256:cecf03a4f9a73715fc2b3ea20578ec9aaa5baa057a4deaaaffba8179482d644b",
+      "release_inputs": "sha256:8cb78ab97debf2e2f9f84931e7053bc95ab379726ae8790415ce298e30546ad9"
+    },
+    "historical_cards": 38,
+    "engine": {
+      "suites": 10,
+      "required_anchors": 209,
+      "top_level_passed": 237,
+      "subtests_passed": 359
+    },
+    "node": {
+      "total": 167,
+      "passed": 166,
+      "failed": 0,
+      "skipped": 1
+    },
+    "browser": {
+      "passed": 24
+    },
+    "clone": {
+      "independent_runs": 2,
+      "restart_restore": true,
+      "duration_ms": 59183
+    },
+    "errors": []
+  },
+  "source_binding": "All commands certify implementation 0a5622623b9f48b3a82fb890504ffb2c8241b32c and exact tree a6a1a064bd7cd87bc25bffe333d2eb956d7ead7f. Certification adds only evidence, progress, project-state, session handoff and generated task status. The release-input identity independently proves runtime, gate, policy, fixture, build and license bytes remain the tested inputs. The final certification candidate must pass all five workflows before merge.",
+  "delivery": {
+    "verification_branch": "codex/c39-evidence-release-gate",
+    "pull_request": "https://github.com/Parsa-Emami/Miragemesh/pull/8",
+    "publication_performed": false,
+    "main_delivery": "Merge the exact certification candidate after all five workflows pass; final commit is recorded in Git history."
+  },
+  "changed_paths": [
+    ".github/workflows/release-gate.yml",
+    "README.md",
+    "START_HERE.md",
+    "apps/web/src/generated/project.json",
+    "docs/agents/SESSION_HANDOFF.json",
+    "docs/evidence/C39.json",
+    "docs/evidence/C39/capsule-check.log.gz",
+    "docs/evidence/C39/check.log.gz",
+    "docs/evidence/C39/engine-runtime.log.gz",
+    "docs/evidence/C39/engine.log.gz",
+    "docs/evidence/C39/history-green.log.gz",
+    "docs/evidence/C39/local-provider-refusal.json",
+    "docs/evidence/C39/local-run.log.gz",
+    "docs/evidence/C39/proof-red.log.gz",
+    "docs/evidence/C39/red.log.gz",
+    "docs/evidence/C39/release-gate.log",
+    "docs/evidence/C39/release-gate.log.gz",
+    "docs/evidence/C39/resource-red.log.gz",
+    "docs/evidence/C39/targeted-final.log.gz",
+    "docs/evidence/C39/validators.log.gz",
+    "docs/evidence/C39/verification-archive.zip",
+    "docs/evidence/C39/verification/artifact.stderr.log.gz",
+    "docs/evidence/C39/verification/artifact.stdout.log.gz",
+    "docs/evidence/C39/verification/browser.stderr.log.gz",
+    "docs/evidence/C39/verification/browser.stdout.log.gz",
+    "docs/evidence/C39/verification/build.stderr.log.gz",
+    "docs/evidence/C39/verification/build.stdout.log.gz",
+    "docs/evidence/C39/verification/checksums.json.gz",
+    "docs/evidence/C39/verification/clone.stderr.log.gz",
+    "docs/evidence/C39/verification/clone.stdout.log.gz",
+    "docs/evidence/C39/verification/engine.stderr.log.gz",
+    "docs/evidence/C39/verification/engine.stdout.log.gz",
+    "docs/evidence/C39/verification/node.stderr.log.gz",
+    "docs/evidence/C39/verification/node.stdout.log.gz",
+    "docs/evidence/C39/verification/onboarding.json.gz",
+    "docs/evidence/C39/verification/package.stderr.log.gz",
+    "docs/evidence/C39/verification/package.stdout.log.gz",
+    "docs/evidence/C39/verification/plan.stderr.log.gz",
+    "docs/evidence/C39/verification/plan.stdout.log.gz",
+    "docs/evidence/C39/verification/provenance.json.gz",
+    "docs/evidence/C39/verification/reference.stderr.log.gz",
+    "docs/evidence/C39/verification/reference.stdout.log.gz",
+    "docs/evidence/C39/verification/repository.stderr.log.gz",
+    "docs/evidence/C39/verification/repository.stdout.log.gz",
+    "docs/evidence/C39/verification/resources.stderr.log.gz",
+    "docs/evidence/C39/verification/resources.stdout.log.gz",
+    "docs/evidence/C39/verification/sbom.json.gz",
+    "docs/evidence/C39/verification/source-inventory.json.gz",
+    "docs/evidence/C39/verification/source.stderr.log.gz",
+    "docs/evidence/C39/verification/source.stdout.log.gz",
+    "docs/evidence/C39/verification/vet.stderr.log.gz",
+    "docs/evidence/C39/verification/vet.stdout.log.gz",
+    "docs/evidence/C39/web-foundation.log.gz",
+    "docs/evidence/v1-gate.json",
+    "docs/release/DEFINITION_OF_DONE.md",
+    "docs/release/V1_GATE.md",
+    "plans/progress.json",
+    "plans/project-state.json",
+    "plans/release-gates.json",
+    "scripts/release-gate.mjs",
+    "scripts/roadmap.mjs",
+    "scripts/verify-resources.mjs",
+    "tests/contracts/release-event.test.mjs",
+    "tests/fixtures/miragemesh/C25/expected-output.json",
+    "tests/fixtures/miragemesh/C25/negative.json",
+    "tests/fixtures/miragemesh/C35/expected-output.json",
+    "tests/fixtures/miragemesh/C39/expected-output.json",
+    "tests/fixtures/miragemesh/C39/negative.json",
+    "tests/fixtures/miragemesh/C39/positive.json",
+    "tests/release/v1-gate.mjs",
+    "tests/web/package-complete.test.mjs",
+    "tests/web/resource-contract.test.mjs"
   ]
 }

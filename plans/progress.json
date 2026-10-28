@@ -349,12 +349,12 @@
     },
     {
       "id": "C39",
-      "status": "in_progress",
+      "status": "verified",
       "evidence": [
         "docs/evidence/C39.json"
       ],
-      "source_identity": null,
-      "notes": "C39 evidence-backed release gate implemented; supported-host five-workflow execution and retained verification capsule are required before certification."
+      "source_identity": "sha256:cecf03a4f9a73715fc2b3ea20578ec9aaa5baa057a4deaaaffba8179482d644b",
+      "notes": "C39 verified on 0a5622623b9f48b3a82fb890504ffb2c8241b32c by all five hosted workflows. Release admission validates original C01-C38 records and historical source inventories/commits, current-source proof, licenses, executed crash/ACK/quota/egress anchors, 166 Node passes (one inapplicable skip), 24 browser tests, two independent clone/restart/restore workflows, native packaging and exact source-archive bytes. Retained hashed verification capsule makes npm run release:check pass offline and rejects missing, template, stale, changed or incomplete proof. Local failures retained; publication/C40 remain pending."
     },
     {
       "id": "C40",
@@ -372,5 +372,6 @@
     "scope": "Historical web-foundation snapshot at base_commit; current capabilities are in plans/project-state.json and source-bound C-card evidence."
   },
   "roadmap_contract": "clone-to-run-oss-v1",
-  "current_core_ready": true
+  "current_core_ready": true,
+  "release_ready": true
 }

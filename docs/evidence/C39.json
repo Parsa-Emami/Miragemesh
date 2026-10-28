@@ -2,13 +2,285 @@
   "commit_id": "C39",
   "project": "MirageMesh",
   "date": "2026-10-28",
-  "passed": false,
+  "passed": true,
   "planning_template": false,
-  "status": "in_progress",
+  "status": "verified",
   "base_commit": "33040632a3a079774666d39bf7bfb4d54277b37f",
   "source_identity": "sha256:cecf03a4f9a73715fc2b3ea20578ec9aaa5baa057a4deaaaffba8179482d644b",
-  "scope": "Evidence-backed local OSS v1 release admission and fifth CI workflow, with immutable historical proof and fresh real-provider/domain/package verification.",
-  "commands": [],
+  "scope": "Evidence-backed local OSS v1 readiness: immutable original C01-C38 proof/source audits, compatible license/fixture/resource inventory, real current-source engine/race/negative, Node, browser, clean-clone/restart/restore and full package/source-archive checks. Publication remains C40.",
+  "commands": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "validate:plan"
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 205,
+      "stdout": {
+        "path": "C39/verification/plan.stdout.log.gz",
+        "sha256": "2c75357c423aab76e540762ef1747dbb8c9f1ab561ae276be572c8a0f72b0975"
+      },
+      "stderr": {
+        "path": "C39/verification/plan.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/validate_repo.py"
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 209,
+      "stdout": {
+        "path": "C39/verification/repository.stdout.log.gz",
+        "sha256": "610921a48b2bb21c2ea5da93d695c687eb17e7d6d3de79f970ff1a3d7f4cff65"
+      },
+      "stderr": {
+        "path": "C39/verification/repository.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "scripts/verify-resources.mjs"
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 43,
+      "stdout": {
+        "path": "C39/verification/resources.stdout.log.gz",
+        "sha256": "9a7b8c1416f1d28ab932595daf2e75bfdfabaa1279266f3b4c6927224d14db40"
+      },
+      "stderr": {
+        "path": "C39/verification/resources.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "scripts/verify-reference.mjs"
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 34,
+      "stdout": {
+        "path": "C39/verification/reference.stdout.log.gz",
+        "sha256": "0cb1d27dfbf98bc5fbd5b922cea0e932c63fee184350b3a3f88e43ea1e6b8044"
+      },
+      "stderr": {
+        "path": "C39/verification/reference.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/verify_ci_source.py"
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 225,
+      "stdout": {
+        "path": "C39/verification/source.stdout.log.gz",
+        "sha256": "ac4ac8354acc661d8b44bde4bdb8786befd20afeceb5aa1015e390d0b38ffc3a"
+      },
+      "stderr": {
+        "path": "C39/verification/source.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 15884,
+      "stdout": {
+        "path": "C39/verification/build.stdout.log.gz",
+        "sha256": "a83b240ed4a35afc1274fe694063c4806615fbe19c9e164994dc5941935d5aad"
+      },
+      "stderr": {
+        "path": "C39/verification/build.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 17945,
+      "stdout": {
+        "path": "C39/verification/vet.stdout.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      },
+      "stderr": {
+        "path": "C39/verification/vet.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "go",
+        "test",
+        "-race",
+        "-count=1",
+        "-json",
+        "./..."
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 71134,
+      "stdout": {
+        "path": "C39/verification/engine.stdout.log.gz",
+        "sha256": "c8363d7e90bb9de15ca3fe892a94cb5a2075badba32c9cd888c0b0f714831ad0"
+      },
+      "stderr": {
+        "path": "C39/verification/engine.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/web/accessibility-workflow.test.mjs",
+        "tests/web/certificates.test.mjs",
+        "tests/web/engine-readiness.test.mjs",
+        "tests/web/foundation.test.mjs",
+        "tests/web/incidents.test.mjs",
+        "tests/web/local-launch.test.mjs",
+        "tests/web/network-boundaries.test.mjs",
+        "tests/web/oss-guides.test.mjs",
+        "tests/web/oss-tooling.test.mjs",
+        "tests/web/package-complete.test.mjs",
+        "tests/web/reference-contract.test.mjs",
+        "tests/web/resource-contract.test.mjs",
+        "tests/web/sensor-status.test.mjs",
+        "tests/web/updates.test.mjs",
+        "tests/contracts/domain-contracts.test.mjs",
+        "tests/contracts/release-event.test.mjs",
+        "tests/engineering/certificate-cli.test.mjs",
+        "tests/engineering/engine-tests.test.mjs",
+        "tests/engineering/onboarding.test.mjs",
+        "tests/engineering/performance.test.mjs",
+        "tests/engineering/retention-cli.test.mjs",
+        "tests/engineering/update-cli.test.mjs",
+        "tests/release/acceptance-blockers.mjs",
+        "tests/release/service-policy.mjs",
+        "tests/release/upgrade-recovery.mjs",
+        "tests/release/v1-gate.mjs"
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 45536,
+      "stdout": {
+        "path": "C39/verification/node.stdout.log.gz",
+        "sha256": "5a15f04567bfb4df43a93b753cec28fa33ef32bc5405d713051f518cfa6a703a"
+      },
+      "stderr": {
+        "path": "C39/verification/node.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        "--reporter=json"
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 8577,
+      "stdout": {
+        "path": "C39/verification/browser.stdout.log.gz",
+        "sha256": "f3d17fea7bd8f1b0804e390d4e6fa794a82176034c780ecd659b8d9ecbad5d97"
+      },
+      "stderr": {
+        "path": "C39/verification/browser.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "test:clone"
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 59491,
+      "stdout": {
+        "path": "C39/verification/clone.stdout.log.gz",
+        "sha256": "03eccc8ec0b25ea67122041e87e2691904ebbd47cfbfbb2601bde0c784a8b786"
+      },
+      "stderr": {
+        "path": "C39/verification/clone.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "package"
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 2623,
+      "stdout": {
+        "path": "C39/verification/package.stdout.log.gz",
+        "sha256": "a23f80e6018c35cfa37a8a59def4ceb088039534393bc42fd46450a334d6c9d4"
+      },
+      "stderr": {
+        "path": "C39/verification/package.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "verify:artifact"
+      ],
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "duration_ms": 221,
+      "stdout": {
+        "path": "C39/verification/artifact.stdout.log.gz",
+        "sha256": "facb00789682c9914d28b7357006b741db07a5fb3cc72776a64c726adc6c99ee"
+      },
+      "stderr": {
+        "path": "C39/verification/artifact.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "npm run release:check -- --report dist/ci/v1-gate.json",
+      "exit_code": 0,
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "observed": "Fresh generated proof rechecked against the exact candidate."
+    },
+    {
+      "command": "npm run release:check",
+      "exit_code": 0,
+      "observed": "Retained hosted capsule passes offline in the implementation checkout without local Podman or browser."
+    }
+  ],
   "local_commands": [
     {
       "command": "node --test tests/release/v1-gate.mjs tests/web/resource-contract.test.mjs tests/contracts/release-event.test.mjs",
@@ -38,5 +310,112 @@
   },
   "local_limitations": [
     "Podman absent; ptrace denied; complete supported-host release-gate proof not yet claimed."
+  ],
+  "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c",
+  "verified_git_tree": "a6a1a064bd7cd87bc25bffe333d2eb956d7ead7f",
+  "release_input_identity": "sha256:8cb78ab97debf2e2f9f84931e7053bc95ab379726ae8790415ce298e30546ad9",
+  "hosted_workflows": [
+    {
+      "name": "contracts",
+      "run_id": 40748684039,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748684039",
+      "conclusion": "success",
+      "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c"
+    },
+    {
+      "name": "plan-consistency",
+      "run_id": 40748683191,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683191",
+      "conclusion": "success",
+      "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c"
+    },
+    {
+      "name": "engine-runtime",
+      "run_id": 40748683504,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683504",
+      "conclusion": "success",
+      "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c"
+    },
+    {
+      "name": "web-foundation",
+      "run_id": 40748683271,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683271",
+      "conclusion": "success",
+      "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c"
+    },
+    {
+      "name": "release-gate",
+      "run_id": 40748683412,
+      "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+      "conclusion": "success",
+      "implementation_commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c"
+    }
+  ],
+  "results": {
+    "schema_version": 1,
+    "passed": true,
+    "release_ready": true,
+    "published": false,
+    "source": {
+      "commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c",
+      "tree": "a6a1a064bd7cd87bc25bffe333d2eb956d7ead7f",
+      "identity": "sha256:cecf03a4f9a73715fc2b3ea20578ec9aaa5baa057a4deaaaffba8179482d644b",
+      "release_inputs": "sha256:8cb78ab97debf2e2f9f84931e7053bc95ab379726ae8790415ce298e30546ad9"
+    },
+    "historical_cards": 38,
+    "engine": {
+      "suites": 10,
+      "required_anchors": 209,
+      "top_level_passed": 237,
+      "subtests_passed": 359
+    },
+    "node": {
+      "total": 167,
+      "passed": 166,
+      "failed": 0,
+      "skipped": 1
+    },
+    "browser": {
+      "passed": 24
+    },
+    "clone": {
+      "independent_runs": 2,
+      "restart_restore": true,
+      "duration_ms": 59183
+    },
+    "errors": [],
+    "publication_performed": false,
+    "fixture_metadata_repairs": [
+      "C25 negative/expected-outcome license and provenance",
+      "C35 expected-outcome provenance"
+    ],
+    "oci_validator_regression": "Exact OCI digest and official Alpine license URL accepted; floating tag, substituted digest and untrusted license URL refused.",
+    "source_archive_compared_byte_for_byte": true
+  },
+  "environment": {
+    "os": "linux",
+    "architecture": "x64",
+    "node": "v24.19.0",
+    "npm": "11.9.0",
+    "go": "go version go1.27.2 linux/amd64",
+    "podman": "podman version 4.9.3",
+    "rootless": "true",
+    "logical_cpus": 4,
+    "ram_mib": 15984,
+    "capacity_note": "Observed runner resources; not a new C28 capacity measurement."
+  },
+  "artifact": {
+    "id": 12843790070,
+    "sha256": "5a588fe674ad954b69fcf7a9a7283d90c60dde5d05d9347fc2f0ad6d4b975e38",
+    "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
+    "original_archive": "docs/evidence/C39/verification-archive.zip",
+    "retained_report": "docs/evidence/v1-gate.json",
+    "report_sha256": "a16b3a49463f5f0258c2460a6c1b94fba7092b4230aa691219e97bb546eec2cf"
+  },
+  "source_binding": "All commands certify implementation 0a5622623b9f48b3a82fb890504ffb2c8241b32c and exact tree a6a1a064bd7cd87bc25bffe333d2eb956d7ead7f. Certification adds only evidence, progress, project-state, session handoff and generated task status. The release-input identity independently proves runtime, gate, policy, fixture, build and license bytes remain the tested inputs. The final certification candidate must pass all five workflows before merge.",
+  "limits": [
+    "Historical staged/precommit receipts are preserved and classified explicitly; no old command is relabelled as a newer execution.",
+    "No protected schema, migration, .env, Dockerfile, dependency pin or production key change.",
+    "No user data deletion, automatic software installation, public ingress, paid/cloud requirement or C40/publication claim."
   ]
 }
