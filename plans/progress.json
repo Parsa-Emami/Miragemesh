@@ -349,10 +349,12 @@
     },
     {
       "id": "C39",
-      "status": "planned",
-      "evidence": [],
+      "status": "in_progress",
+      "evidence": [
+        "docs/evidence/C39.json"
+      ],
       "source_identity": null,
-      "notes": ""
+      "notes": "C39 evidence-backed release gate implemented; supported-host five-workflow execution and retained verification capsule are required before certification."
     },
     {
       "id": "C40",

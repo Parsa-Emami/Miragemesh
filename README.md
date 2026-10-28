@@ -21,6 +21,7 @@ Open-source local-first web application under [Apache-2.0](LICENSE). MirageMesh 
 - **[Third-Party Inventory](THIRD_PARTY_NOTICES.md)**: Pinned dependency licenses and attribution notices.
 - **[Artifact Verification](docs/release/ARTIFACTS.md#signed-release-attestation)**: Detached Ed25519 attestation, verified install/upgrade/rollback and the source-build alternative.
 - **[Definition of Done](docs/release/DEFINITION_OF_DONE.md)**: Release gates and evidence verification criteria.
+- **[Evidence-backed v1 Gate](docs/release/V1_GATE.md)**: Fresh supported-host verification, immutable historical evidence and offline source-bound release checks.
 
 ---
 

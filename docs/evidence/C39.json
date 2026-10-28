@@ -1,0 +1,42 @@
+{
+  "commit_id": "C39",
+  "project": "MirageMesh",
+  "date": "2026-10-28",
+  "passed": false,
+  "planning_template": false,
+  "status": "in_progress",
+  "base_commit": "33040632a3a079774666d39bf7bfb4d54277b37f",
+  "source_identity": "sha256:cecf03a4f9a73715fc2b3ea20578ec9aaa5baa057a4deaaaffba8179482d644b",
+  "scope": "Evidence-backed local OSS v1 release admission and fifth CI workflow, with immutable historical proof and fresh real-provider/domain/package verification.",
+  "commands": [],
+  "local_commands": [
+    {
+      "command": "node --test tests/release/v1-gate.mjs tests/web/resource-contract.test.mjs tests/contracts/release-event.test.mjs",
+      "exit_code": 0,
+      "observed": "17 passed"
+    },
+    {
+      "command": "npm run check",
+      "exit_code": 1,
+      "observed": "Build and 165 Node passes; runtime egress assertion failed because PTRACE_TRACEME is denied; one inapplicable skip."
+    },
+    {
+      "command": "go test -race -count=1 ./internal/storage ./internal/events ./tests/acceptance",
+      "exit_code": 0,
+      "observed": "Real storage, event retention and acceptance/recovery packages passed."
+    }
+  ],
+  "fixtures": {
+    "fixture_version": 1,
+    "license": "Apache-2.0",
+    "provenance": "Repository-authored synthetic C39 event and gate refusal fixtures",
+    "sha256": {
+      "tests/fixtures/miragemesh/C39/expected-output.json": "f655d31560b13c6e47ed8d8896edcd11408a718a82176bc54c9e67549ff946bc",
+      "tests/fixtures/miragemesh/C39/negative.json": "5a903ac93179ce2f345600410d84ccb7a383aa7a66ed1cd8b2ed9de2d2282618",
+      "tests/fixtures/miragemesh/C39/positive.json": "db4605935a9e548132ef51afd697db42cbc391ebbd709653245bb607215d7ae1"
+    }
+  },
+  "local_limitations": [
+    "Podman absent; ptrace denied; complete supported-host release-gate proof not yet claimed."
+  ]
+}

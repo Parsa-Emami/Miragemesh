@@ -7,6 +7,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { once } from 'node:events';
 import { verifyArtifact } from '../../scripts/verify-artifact.mjs';
+import { verifySourceArchive } from '../../scripts/release-gate.mjs';
 
 const repository = join(import.meta.dirname, '..', '..');
 const fixtureRoot = join(repository, 'tests/fixtures/miragemesh/C31');
@@ -124,6 +125,20 @@ test('two builds from one source and toolchain are byte-identical', async () => 
     const b = await readFile(join(second, ...name.split('/')));
     assert.deepEqual(a, b, `non-reproducible file: ${name}`);
   }
+});
+
+test('C39 refuses a packaged source archive with different bytes even under unchanged provenance', async () => {
+  const inventory = await verifySourceArchive(repository, first);
+  assert.ok(Object.keys(inventory).length > 400);
+  const changed = join(work, 'c39-changed', 'miragemesh-0.0.1-linux-amd64');
+  await cp(first, changed, { recursive: true });
+  const temporary = join(work, 'c39-source');
+  await import('node:fs/promises').then(({ mkdir }) => mkdir(temporary));
+  const archive = join(changed, 'source/miragemesh-0.0.1-source.tar.gz');
+  execFileSync('tar', ['-xzf', archive, '-C', temporary]);
+  await writeFile(join(temporary, 'miragemesh-0.0.1/README.md'), 'C39 altered source archive bytes');
+  execFileSync('tar', ['-czf', archive, '-C', temporary, 'miragemesh-0.0.1']);
+  await assert.rejects(verifySourceArchive(repository, changed), { code: 'wrong_source' });
 });
 
 test('packaged runtime starts in isolation and exposes only supported local surfaces', async () => {

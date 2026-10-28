@@ -1,6 +1,6 @@
 {
   "project": "MirageMesh",
-  "core_ready": false,
+  "core_ready": true,
   "usable_at": "C30",
   "oss_v1_at": "C40",
   "local_usable_requires": [
@@ -86,5 +86,13 @@
     "sibling clone",
     "customer pilot count",
     "app-store launch"
-  ]
+  ],
+  "verification": {
+    "schema_version": 1,
+    "evidence_baseline": "33040632a3a079774666d39bf7bfb4d54277b37f",
+    "report": "docs/evidence/v1-gate.json",
+    "profile": "linux-amd64-local",
+    "publication_authorized": false,
+    "source_binding": "Exact Git source plus an explicit release-input identity that excludes evidence and status-only certification metadata; historical C01-C38 records remain bound to the immutable C38 baseline."
+  }
 }
