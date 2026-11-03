@@ -69,6 +69,11 @@ test('C29 fixtures describe the readiness, redaction and bound contract', async 
   const redacted = redactDiagnosticMessage('Authorization: Bearer SENTINEL_C29_TOKEN token=SENTINEL_C29_QUERY secret=SENTINEL_C29_SECRET');
   for (const sentinel of positive.sentinels) assert.doesNotMatch(redacted, new RegExp(sentinel));
   assert.match(redacted, /\[redacted\]/);
+  const serialized = JSON.stringify({ token: positive.sentinels[0], password: positive.sentinels[1], apiKey: positive.sentinels[2] });
+  const jsonRedacted = redactDiagnosticMessage(serialized);
+  for (const sentinel of positive.sentinels) assert.doesNotMatch(jsonRedacted, new RegExp(sentinel));
+  assert.match(jsonRedacted, /"token":"\[redacted\]"/);
+  assert.match(jsonRedacted, /"password":"\[redacted\]"/);
   assert.equal(redactDiagnosticMessage('x'.repeat(500)).length, positive.limits.max_message_chars);
   assert.deepEqual(readinessLimits, {
     probe_timeout_ms: positive.limits.probe_timeout_ms,
