@@ -14,6 +14,7 @@ export const readinessLimits = Object.freeze({ probe_timeout_ms: 1500, max_log_e
 
 export function redactDiagnosticMessage(value, maxChars = readinessLimits.max_message_chars) {
   return String(value ?? '')
+    .replace(/("(?:authorization|token|secret|password|api[_-]?key|cookie)"\s*:\s*")([^"\\]*(?:\\.[^"\\]*)*)"/gi, '$1[redacted]"')
     .replace(/\bBearer\s+[^\s,;]+/gi, 'Bearer [redacted]')
     .replace(/(authorization|token|secret|password|api[_-]?key|cookie)\s*[:=]\s*[^\s,;]+/gi, '$1=[redacted]')
     .replace(/\s+/g, ' ')
