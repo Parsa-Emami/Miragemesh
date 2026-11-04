@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "repository": "Parsa-Emami/Miragemesh",
+  "version": "0.0.1",
+  "tag": "v0.0.1",
+  "revision": 1,
+  "platform": "linux-amd64",
+  "publication_authorized": true,
+  "authorization": "Owner explicitly requested completion and public GitHub Pages publication in this session on 2026-11-04.",
+  "public_site": "https://parsa-emami.github.io/Miragemesh/",
+  "release_policy": "Publish the exact clean main source only after the five required checks succeed; retain publication and installed-artifact evidence. Never overwrite an existing release or tag.",
+  "trust": "GitHub OIDC build provenance authenticates the archive and per-release Ed25519 public key. Independently verify the repository/workflow identity before trusting the key. No persistent signing private key is created."
+}

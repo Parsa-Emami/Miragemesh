@@ -1,0 +1,18 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C40 publication and installed-artifact verification contract. No real traffic or private keys.",
+  "event": {
+    "schema_version": "1",
+    "sensor_id": "c40-synthetic",
+    "event_id": "c40-event-01",
+    "sequence": 1,
+    "observed_at": "2026-01-01T00:00:00Z",
+    "kind": "http.request",
+    "metadata": {
+      "path": "/synthetic/c40/publication"
+    }
+  },
+  "source": "exact clean authorized main commit",
+  "profile": "linux-amd64"
+}

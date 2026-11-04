@@ -92,7 +92,7 @@
     "evidence_baseline": "33040632a3a079774666d39bf7bfb4d54277b37f",
     "report": "docs/evidence/v1-gate.json",
     "profile": "linux-amd64-local",
-    "publication_authorized": false,
+    "publication_authorized": true,
     "source_binding": "Exact Git source plus an explicit release-input identity that excludes evidence and status-only certification metadata; historical C01-C38 records remain bound to the immutable C38 baseline."
   }
 }

@@ -1,0 +1,44 @@
+import { generateKeyPairSync } from 'node:crypto';
+import { mkdir, mkdtemp, readFile, writeFile, copyFile, readdir, rm } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
+import { tmpdir } from 'node:os';
+import { spawnSync } from 'node:child_process';
+import { getSourceInfo, sha256File } from './package-source.mjs';
+import { signRelease } from './sign-release.mjs';
+import { verifyRelease } from './verify-release.mjs';
+import { validatePublication } from './publication-contract.mjs';
+
+const root = resolve(import.meta.dirname, '..');
+const read = async path => JSON.parse(await readFile(join(root, path), 'utf8'));
+const source = await getSourceInfo();
+const plan = validatePublication(await read('docs/release/RELEASE_MANIFEST.json'), { clean: !source.dirty, repository: process.env.GITHUB_REPOSITORY, commit: source.head_commit, version: (await read('package.json')).version });
+const gate = await read('dist/ci/v1-gate.json');
+if (!gate.passed || gate.source.commit !== source.head_commit) throw new Error('Fresh exact-source readiness evidence is required.');
+const output = join(root, 'dist/publication');
+const name = `miragemesh-${plan.version}-${plan.platform}`;
+await mkdir(output, { recursive: true });
+const temporary = await mkdtemp(join(tmpdir(), 'miragemesh-signing-'));
+try {
+  const { privateKey } = generateKeyPairSync('ed25519');
+  const key = join(temporary, 'release.key');
+  await writeFile(key, privateKey.export({ type: 'pkcs8', format: 'pem' }), { mode: 0o600 });
+  const artifact = join(root, 'dist/release');
+  const signed = await signRelease({ artifact, key, revision: plan.revision, issuedAt: new Date().toISOString(), expiresAt: new Date(Date.now() + 365 * 86400000).toISOString(), output, publicKeyOut: join(output, 'release-ed25519.pub') });
+  if (!signed.passed) throw new Error(JSON.stringify(signed.errors));
+  const verified = await verifyRelease({ artifact, manifest: signed.manifest, signature: signed.signature, trustedKey: join(output, 'release-ed25519.pub') });
+  if (!verified.passed || !verified.source_clean) throw new Error('Signed publication failed verification.');
+  const stage = join(temporary, name);
+  await mkdir(stage);
+  const copied = spawnSync('cp', ['-a', artifact + '/.', stage], { timeout: 120000 });
+  if (copied.status !== 0) throw new Error('Unable to stage the complete artifact.');
+  const archive = join(output, name + '.tar.gz');
+  const tar = spawnSync('tar', ['--sort=name', '--mtime=@0', '--owner=0', '--group=0', '--numeric-owner', '-czf', archive, '-C', temporary, name], { timeout: 120000 });
+  if (tar.status !== 0) throw new Error('Unable to archive the complete artifact.');
+  for (const file of ['sbom.cdx.json', 'provenance.json']) await copyFile(join(artifact, file), join(output, file));
+  await copyFile(join(root, 'dist/ci/v1-gate.json'), join(output, 'v1-gate.json'));
+  const files = (await readdir(output)).sort();
+  const checksums = Object.fromEntries(await Promise.all(files.map(async file => [file, await sha256File(join(output, file))])));
+  await writeFile(join(output, 'SHA256SUMS.txt'), Object.entries(checksums).map(([file, digest]) => `${digest}  ${file}\n`).join(''));
+  await writeFile(join(output, 'candidate.json'), JSON.stringify({ schema_version: 1, project: 'MirageMesh', tag: plan.tag, source, archive: name + '.tar.gz', manifest: name + '.release.json', signature: name + '.release.sig.json', key_fingerprint: signed.key_fingerprint, checksums, readiness: true }, null, 2) + '\n');
+  console.log(JSON.stringify({ passed: true, tag: plan.tag, source_commit: source.head_commit, archive, key_fingerprint: signed.key_fingerprint }));
+} finally { await rm(temporary, { recursive: true, force: true }); }

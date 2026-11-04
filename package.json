@@ -33,7 +33,9 @@
     "release:check": "node scripts/roadmap.mjs release-check",
     "test:clone": "node scripts/clone-smoke.mjs",
     "build:engine": "node scripts/build-engine.mjs",
-    "test:contracts": "node scripts/build-engine.mjs && node --test tests/contracts/*.test.mjs"
+    "test:contracts": "node scripts/build-engine.mjs && node --test tests/contracts/*.test.mjs",
+    "build:pages": "node scripts/build-pages.mjs",
+    "test:pages": "playwright test --config playwright.pages.config.ts"
   },
   "dependencies": {
     "react": "19.3.1",
@@ -46,6 +48,6 @@
     "ajv": "8.20.0",
     "ajv-formats": "3.0.1",
     "typescript": "7.0.2",
-    "vite": "8.3.4"
+    "vite": "8.3.5"
   }
 }

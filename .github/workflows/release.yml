@@ -1,0 +1,151 @@
+name: publish-verified-release
+on:
+  workflow_run:
+    workflows: [release-gate]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: publish-miragemesh
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    outputs:
+      needed: ${{ steps.plan.outputs.needed }}
+      tag: ${{ steps.plan.outputs.tag }}
+      source: ${{ steps.source.outputs.sha }}
+    env:
+      GOTOOLCHAIN: go1.27.2
+      GOSUMDB: sum.golang.org
+      GOPROXY: https://proxy.golang.org|direct
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - id: source
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Check publication state
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG=$(node -p "JSON.parse(require('fs').readFileSync('docs/release/RELEASE_MANIFEST.json')).tag")
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json tagName > /dev/null 2>&1; then
+            echo 'needed=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'needed=true' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        if: steps.plan.outputs.needed == 'true'
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - if: steps.plan.outputs.needed == 'true'
+        run: npx --yes --package=npm@11.9.0 --call 'npm ci --ignore-scripts'
+      - name: Prepare supported clean-host providers
+        if: steps.plan.outputs.needed == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --allow-downgrades --no-install-recommends podman=4.9.3+ds1-1ubuntu0.2 strace
+          go version
+          test "$(go env GOVERSION)" = go1.27.2
+          test "$(podman info --format '{{.Host.Security.Rootless}}')" = true
+          podman pull docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62
+          ./node_modules/.bin/playwright install --with-deps chromium
+      - name: Reverify exact publication source
+        if: steps.plan.outputs.needed == 'true'
+        run: |
+          npx --yes --package=npm@11.9.0 --call 'npm run release:check -- --run --output dist/ci/v1-gate.json'
+          node scripts/prepare-publication.mjs
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: steps.plan.outputs.needed == 'true'
+        with:
+          name: publication-candidate
+          path: dist/publication/
+          if-no-files-found: error
+          retention-days: 30
+  publish:
+    needs: build
+    if: needs.build.outputs.needed == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    env:
+      RELEASE_SOURCE_SHA: ${{ needs.build.outputs.source }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ needs.build.outputs.source }}
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: .nvmrc
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
+        with:
+          name: publication-candidate
+          path: dist/publication
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8
+        with:
+          subject-path: |
+            dist/publication/*.tar.gz
+            dist/publication/release-ed25519.pub
+      - name: Publish immutable candidate as prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/publish-release.mjs
+  installed:
+    needs: [build, publish]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      attestations: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_TAG: ${{ needs.build.outputs.tag }}
+      RELEASE_SOURCE_SHA: ${{ needs.build.outputs.source }}
+    steps:
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: 24.19.0
+      - name: Download and authenticate actual published assets
+        run: |
+          mkdir -p "$RUNNER_TEMP/published"
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --dir "$RUNNER_TEMP/published"
+          cd "$RUNNER_TEMP/published"
+          sha256sum -c SHA256SUMS.txt
+          gh attestation verify ./*.tar.gz --repo "$GITHUB_REPOSITORY" --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/release.yml"
+          gh attestation verify release-ed25519.pub --repo "$GITHUB_REPOSITORY" --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/release.yml"
+          tar -xzf ./*.tar.gz
+      - name: Install and repeat full workflow using only published bytes
+        run: |
+          cd "$RUNNER_TEMP/published"
+          ARTIFACT="$PWD/miragemesh-${RELEASE_TAG#v}-linux-amd64"
+          node "$ARTIFACT/scripts/install-release.mjs" install --artifact "$ARTIFACT" --manifest "$ARTIFACT.release.json" --signature "$ARTIFACT.release.sig.json" --trusted-key "$PWD/release-ed25519.pub" --prefix "$RUNNER_TEMP/installed" --data-dir "$RUNNER_TEMP/operator-data"
+          INSTALLED="$RUNNER_TEMP/installed/releases/miragemesh-${RELEASE_TAG#v}-linux-amd64"
+          node "$INSTALLED/scripts/verify-installed-release.mjs" "$RUNNER_TEMP/launch.json"
+      - name: Retain actual publication proof and promote verified release
+        run: |
+          node --input-type=module <<'JS'
+          import { readFile, writeFile } from 'node:fs/promises';
+          const path = process.env.RUNNER_TEMP + '/launch.json';
+          const proof = JSON.parse(await readFile(path, 'utf8'));
+          if (!proof.passed || !proof.restart || !proof.restore_equivalent || !proof.accepted_state_unchanged) throw new Error('Installed release is not verified.');
+          proof.published = true;
+          proof.source_commit = process.env.RELEASE_SOURCE_SHA;
+          proof.release_tag = process.env.RELEASE_TAG;
+          proof.workflow_run = `https://github.com/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`;
+          await writeFile(path, JSON.stringify(proof, null, 2) + '\n');
+          JS
+          gh release upload "$RELEASE_TAG" "$RUNNER_TEMP/launch.json" --repo "$GITHUB_REPOSITORY"
+          gh release edit "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --prerelease=false --latest

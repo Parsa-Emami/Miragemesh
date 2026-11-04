@@ -358,10 +358,10 @@
     },
     {
       "id": "C40",
-      "status": "planned",
+      "status": "in_progress",
       "evidence": [],
       "source_identity": null,
-      "notes": ""
+      "notes": "Owner authorized public GitHub Pages and release publication on 2026-11-04. Public subpath build, signed full-package publication and installed-artifact verification are being implemented; not yet certified."
     }
   ],
   "web_progress": "plans/web-roadmap.json",
