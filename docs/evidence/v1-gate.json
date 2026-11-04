@@ -16,7 +16,7 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 205,
+      "duration_ms": 194,
       "stdout": {
         "path": "C39/verification/plan.stdout.log.gz",
         "sha256": "2c75357c423aab76e540762ef1747dbb8c9f1ab561ae276be572c8a0f72b0975"
@@ -35,10 +35,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 209,
+      "duration_ms": 205,
       "stdout": {
         "path": "C39/verification/repository.stdout.log.gz",
-        "sha256": "610921a48b2bb21c2ea5da93d695c687eb17e7d6d3de79f970ff1a3d7f4cff65"
+        "sha256": "4d17550b1a6a6dc9d996e05bf64d2d2a54ea7b20b885d1d5df34513b9237d96a"
       },
       "stderr": {
         "path": "C39/verification/repository.stderr.log.gz",
@@ -54,7 +54,7 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 43,
+      "duration_ms": 41,
       "stdout": {
         "path": "C39/verification/resources.stdout.log.gz",
         "sha256": "9a7b8c1416f1d28ab932595daf2e75bfdfabaa1279266f3b4c6927224d14db40"
@@ -73,7 +73,7 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 34,
+      "duration_ms": 32,
       "stdout": {
         "path": "C39/verification/reference.stdout.log.gz",
         "sha256": "0cb1d27dfbf98bc5fbd5b922cea0e932c63fee184350b3a3f88e43ea1e6b8044"
@@ -92,10 +92,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 225,
+      "duration_ms": 226,
       "stdout": {
         "path": "C39/verification/source.stdout.log.gz",
-        "sha256": "ac4ac8354acc661d8b44bde4bdb8786befd20afeceb5aa1015e390d0b38ffc3a"
+        "sha256": "c147d79e95867a8f71b5e268f50c23fa59a3d039c5bdeea368eec5383c4ef311"
       },
       "stderr": {
         "path": "C39/verification/source.stderr.log.gz",
@@ -112,10 +112,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 15884,
+      "duration_ms": 15085,
       "stdout": {
         "path": "C39/verification/build.stdout.log.gz",
-        "sha256": "a83b240ed4a35afc1274fe694063c4806615fbe19c9e164994dc5941935d5aad"
+        "sha256": "271f4e5bf9aae7750c178e51d8b626019a8dd1d8cb94f020d73f519452d4da59"
       },
       "stderr": {
         "path": "C39/verification/build.stderr.log.gz",
@@ -132,7 +132,7 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 17945,
+      "duration_ms": 17461,
       "stdout": {
         "path": "C39/verification/vet.stdout.log.gz",
         "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
@@ -155,10 +155,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 71134,
+      "duration_ms": 67125,
       "stdout": {
         "path": "C39/verification/engine.stdout.log.gz",
-        "sha256": "c8363d7e90bb9de15ca3fe892a94cb5a2075badba32c9cd888c0b0f714831ad0"
+        "sha256": "7caba3077ab0de245c2c1f877a7bac3f519ebe6abdb09fdc7ee623018d4f576a"
       },
       "stderr": {
         "path": "C39/verification/engine.stderr.log.gz",
@@ -181,6 +181,8 @@
         "tests/web/oss-guides.test.mjs",
         "tests/web/oss-tooling.test.mjs",
         "tests/web/package-complete.test.mjs",
+        "tests/web/pages.test.mjs",
+        "tests/web/publication.test.mjs",
         "tests/web/reference-contract.test.mjs",
         "tests/web/resource-contract.test.mjs",
         "tests/web/sensor-status.test.mjs",
@@ -194,6 +196,7 @@
         "tests/engineering/retention-cli.test.mjs",
         "tests/engineering/update-cli.test.mjs",
         "tests/release/acceptance-blockers.mjs",
+        "tests/release/installed-publication.mjs",
         "tests/release/service-policy.mjs",
         "tests/release/upgrade-recovery.mjs",
         "tests/release/v1-gate.mjs"
@@ -201,10 +204,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 45536,
+      "duration_ms": 47896,
       "stdout": {
         "path": "C39/verification/node.stdout.log.gz",
-        "sha256": "5a15f04567bfb4df43a93b753cec28fa33ef32bc5405d713051f518cfa6a703a"
+        "sha256": "4ec81a04064c3812e4d37f9951d245bdd95225ab8e0b186de84572c67db2e42e"
       },
       "stderr": {
         "path": "C39/verification/node.stderr.log.gz",
@@ -222,10 +225,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 8577,
+      "duration_ms": 9095,
       "stdout": {
         "path": "C39/verification/browser.stdout.log.gz",
-        "sha256": "f3d17fea7bd8f1b0804e390d4e6fa794a82176034c780ecd659b8d9ecbad5d97"
+        "sha256": "2bbaa190bbd4cf0863f65bf9310d5df0b729c558c2a6ca3cc59430fbff5a5e65"
       },
       "stderr": {
         "path": "C39/verification/browser.stderr.log.gz",
@@ -242,10 +245,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 59491,
+      "duration_ms": 56484,
       "stdout": {
         "path": "C39/verification/clone.stdout.log.gz",
-        "sha256": "03eccc8ec0b25ea67122041e87e2691904ebbd47cfbfbb2601bde0c784a8b786"
+        "sha256": "921463e77b94e3c7852939a0f0e4dbfe84cd13cb4beae4f62826916c1bfc6ced"
       },
       "stderr": {
         "path": "C39/verification/clone.stderr.log.gz",
@@ -262,10 +265,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 2623,
+      "duration_ms": 2862,
       "stdout": {
         "path": "C39/verification/package.stdout.log.gz",
-        "sha256": "a23f80e6018c35cfa37a8a59def4ceb088039534393bc42fd46450a334d6c9d4"
+        "sha256": "b67e4cea4c93930b4aac76eaf46e1490d3849c024363addb6a611ac1a63da411"
       },
       "stderr": {
         "path": "C39/verification/package.stderr.log.gz",
@@ -282,10 +285,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 221,
+      "duration_ms": 235,
       "stdout": {
         "path": "C39/verification/artifact.stdout.log.gz",
-        "sha256": "facb00789682c9914d28b7357006b741db07a5fb3cc72776a64c726adc6c99ee"
+        "sha256": "cc5c396e1fb29835993a814faa49a4ea9991c7624d3177aee7f42cf32e2c1f85"
       },
       "stderr": {
         "path": "C39/verification/artifact.stderr.log.gz",
@@ -296,31 +299,31 @@
   "attachments": {
     "onboarding": {
       "path": "C39/verification/onboarding.json.gz",
-      "sha256": "4f58d83d4eacc2d429590ef59884501669bbd1aa8fbe9cde0959f492f66a5597"
+      "sha256": "423ecf5437891f94409caaf9e7c049645e7f23337826557757a2f8087af450ad"
     },
     "provenance": {
       "path": "C39/verification/provenance.json.gz",
-      "sha256": "b1b01ed85cf68ab2c2036b61e181f2a114cdc1fd91c7967638d151efcb7a1a5b"
+      "sha256": "3fc9659c09bd4957d4da914a97410142590ffa7dc2b4cf839d185e4c04cca939"
     },
     "sbom": {
       "path": "C39/verification/sbom.json.gz",
-      "sha256": "9498f7a8a65706a22db5fc9ad55aa6b4279023e7d6a9c5bf56bc2dff08eb803f"
+      "sha256": "3f093d866c073bb680dea7a12cef6b4018baaba928f926db738d0ee3b34f1a09"
     },
     "checksums": {
       "path": "C39/verification/checksums.json.gz",
-      "sha256": "ec0f187b1c0b2d11f740936a5690bd015998bf68a9467301bf12c9f271ba537c"
+      "sha256": "0b8dc325dec446d15c9ee83888e848d226907d415fcc21cbe87f8670b6ddd7ca"
     },
     "source_inventory": {
       "path": "C39/verification/source-inventory.json.gz",
-      "sha256": "70a77cace73b3b34966dcc46d0f41db43c829cec4f4dc8d280891b2160b65e30"
+      "sha256": "c1ac251a138aac67bf5ae09a3aafb628fa96451b61031dc529acb57292b8cdba"
     }
   },
-  "started_at": "2026-10-28T18:50:17.765Z",
+  "started_at": "2026-11-04T12:07:55.839Z",
   "source": {
-    "commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c",
-    "tree": "a6a1a064bd7cd87bc25bffe333d2eb956d7ead7f",
-    "identity": "sha256:cecf03a4f9a73715fc2b3ea20578ec9aaa5baa057a4deaaaffba8179482d644b",
-    "release_inputs": "sha256:8cb78ab97debf2e2f9f84931e7053bc95ab379726ae8790415ce298e30546ad9"
+    "commit": "aac475843e2dfb617e1eb0b9561ca7e3c9aca749",
+    "tree": "0f67a128e0a0bf68812f589f4a37df137f78edc0",
+    "identity": "sha256:e0445bdea3ec52fa01731317f3d0eb4de2df04ebf185a498588b1be8856413f4",
+    "release_inputs": "sha256:95c64ef4b7a14bea4746ddc9c9ad3a1622ae82084aa544e05eef2940583b494b"
   },
   "history": [
     {
@@ -1117,7 +1120,7 @@
       },
       {
         "path": "node_modules/vite",
-        "version": "8.3.4",
+        "version": "8.3.5",
         "license": "MIT"
       }
     ],
@@ -1859,6 +1862,24 @@
         "sha256": "db4605935a9e548132ef51afd697db42cbc391ebbd709653245bb607215d7ae1",
         "license": "Apache-2.0",
         "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C40/expected-output.json",
+        "sha256": "c3ebe0dbd83679e2102812959fbd79bd785d31932bb559d4f72265163988ac3c",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C40/negative.json",
+        "sha256": "3b59b583dac7acc0f04fea2e9a8153883ffe79bb68ff42a125f7e41364129185",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
+      },
+      {
+        "path": "tests/fixtures/miragemesh/C40/positive.json",
+        "sha256": "fec63f71e1a78b33d6809430f87a320b627183ec353185fc52d29b4726de7a0a",
+        "license": "Apache-2.0",
+        "provenance": "Repository-authored fixture payload/helper under the parent card and project license; JSON metadata is independently validated."
       }
     ],
     "resources": [
@@ -1924,17 +1945,17 @@
     "podman": "podman version 4.9.3",
     "rootless": "true"
   },
-  "completed_at": "2026-10-28T18:54:16.525Z",
+  "completed_at": "2026-11-04T12:11:49.141Z",
   "results": {
     "schema_version": 1,
     "passed": true,
     "release_ready": true,
     "published": false,
     "source": {
-      "commit": "0a5622623b9f48b3a82fb890504ffb2c8241b32c",
-      "tree": "a6a1a064bd7cd87bc25bffe333d2eb956d7ead7f",
-      "identity": "sha256:cecf03a4f9a73715fc2b3ea20578ec9aaa5baa057a4deaaaffba8179482d644b",
-      "release_inputs": "sha256:8cb78ab97debf2e2f9f84931e7053bc95ab379726ae8790415ce298e30546ad9"
+      "commit": "aac475843e2dfb617e1eb0b9561ca7e3c9aca749",
+      "tree": "0f67a128e0a0bf68812f589f4a37df137f78edc0",
+      "identity": "sha256:e0445bdea3ec52fa01731317f3d0eb4de2df04ebf185a498588b1be8856413f4",
+      "release_inputs": "sha256:95c64ef4b7a14bea4746ddc9c9ad3a1622ae82084aa544e05eef2940583b494b"
     },
     "historical_cards": 38,
     "engine": {
@@ -1944,8 +1965,8 @@
       "subtests_passed": 359
     },
     "node": {
-      "total": 167,
-      "passed": 166,
+      "total": 170,
+      "passed": 169,
       "failed": 0,
       "skipped": 1
     },
@@ -1955,7 +1976,7 @@
     "clone": {
       "independent_runs": 2,
       "restart_restore": true,
-      "duration_ms": 59183
+      "duration_ms": 56184
     },
     "errors": []
   }

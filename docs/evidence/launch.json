@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "project": "MirageMesh",
+  "commit_id": "C40",
+  "passed": true,
+  "kind": "installed-published-artifact",
+  "version": "0.0.1",
+  "platform": "linux-amd64",
+  "installed_root": "/home/runner/work/_temp/installed/releases/miragemesh-0.0.1-linux-amd64/",
+  "engine_sha256": "c67af971ce3e1f1d5634d8f196d716864efdf3d02e798a6f3ba958862ba5444c",
+  "verification_binary_sha256": "dd875d907cfa1d3dc2e9a59307b5f41196ba4f79a6d007a01aef0f4a7f6a009b",
+  "steps": [
+    {
+      "name": "enroll",
+      "status": "passed",
+      "detail": "sensor-01 enrolled with one durable token consumption; the token replay was rejected"
+    },
+    {
+      "name": "apply-config",
+      "status": "passed",
+      "detail": "signed desired-state revision 1 is active with its exact payload bytes"
+    },
+    {
+      "name": "event-01",
+      "status": "passed",
+      "detail": "event-01 was authenticated, batch-ingested and durably acknowledged"
+    },
+    {
+      "name": "disconnect",
+      "status": "passed",
+      "detail": "the bounded offline spool retained event-02 and event-03"
+    },
+    {
+      "name": "spool",
+      "status": "passed",
+      "detail": "event-04 overflowed the signed spool bound and is recorded as explicit durable loss"
+    },
+    {
+      "name": "reconnect",
+      "status": "passed",
+      "detail": "the repeated batch acknowledgement was idempotent and delivery resumed after the explicit gap"
+    },
+    {
+      "name": "triage-retention",
+      "status": "passed",
+      "detail": "triage is durable and idempotent; the non-destructive retention preview is explicit and coverage is complete"
+    },
+    {
+      "name": "restart-restore",
+      "status": "passed",
+      "detail": "the accepted state, exact segment bytes, index, triage and loss accounting survived restart and a restored copy"
+    }
+  ],
+  "negative": [
+    {
+      "name": "enrollment-token-replay",
+      "expected": "enrollment.ErrReplay",
+      "observed": "enrollment.ErrReplay",
+      "passed": true
+    },
+    {
+      "name": "untrusted-client-certificate",
+      "expected": "tls.handshake_rejected",
+      "observed": "tls.handshake_rejected",
+      "passed": true
+    },
+    {
+      "name": "unconfigured-batch-ingest",
+      "expected": "sensor.ErrUnconfigured",
+      "observed": "sensor.ErrUnconfigured",
+      "passed": true
+    },
+    {
+      "name": "malformed-event",
+      "expected": "contracts.INVALID_INPUT",
+      "observed": "contracts.INVALID_INPUT",
+      "passed": true
+    },
+    {
+      "name": "spool-overflow",
+      "expected": "spool.ErrDropped",
+      "observed": "spool.ErrDropped",
+      "passed": true
+    },
+    {
+      "name": "missing-fixture",
+      "expected": "acceptance.ErrFixture",
+      "observed": "acceptance.ErrFixture",
+      "passed": true
+    }
+  ],
+  "restart": true,
+  "restore_equivalent": true,
+  "installed_engine_restart_cycles": 2,
+  "accepted_state_unchanged": true,
+  "exact_fixture_event": true,
+  "malformed_event_rejected": true,
+  "state_manifest_sha256": "d37a6748d1603fb503ca7f08793ae882228314d61a0de3a12efd1b3e20f06e28",
+  "segment_sha256": {
+    "segment-00000000000000000001.sealed.jsonl": "7a13eb90a7a8e1daf0a7933c085b83bd65e0358b4a24157b46a3ed04ec5e2e52",
+    "segment-00000000000000000002.jsonl": "88f6947c719e81e0a603f5f2a093acd6a14d7323c09f3e75ac09f1e961e4a82d"
+  },
+  "rollback": {
+    "observed": "no_previous_release",
+    "install_state_unchanged": true,
+    "scope": "First published release has no previous published version; signed upgrade/rollback regressions are retained in the fresh readiness capsule."
+  },
+  "published": true,
+  "source_commit": "aac475843e2dfb617e1eb0b9561ca7e3c9aca749",
+  "release_tag": "v0.0.1",
+  "workflow_run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41826503740"
+}

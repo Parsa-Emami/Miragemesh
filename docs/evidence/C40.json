@@ -1,0 +1,398 @@
+{
+  "commit_id": "C40",
+  "project": "MirageMesh",
+  "date": "2026-11-04",
+  "passed": true,
+  "planning_template": false,
+  "status": "verified",
+  "source_identity": "sha256:e0445bdea3ec52fa01731317f3d0eb4de2df04ebf185a498588b1be8856413f4",
+  "implementation_commit": "aac475843e2dfb617e1eb0b9561ca7e3c9aca749",
+  "verified_git_tree": "0f67a128e0a0bf68812f589f4a37df137f78edc0",
+  "release_input_identity": "sha256:95c64ef4b7a14bea4746ddc9c9ad3a1622ae82084aa544e05eef2940583b494b",
+  "scope": "Authorized actual public source/tag/full-artifact release, authenticated clean installation, the real reference workflow, restart/restore and first-release rollback refusal; public static Pages has no operational API integration.",
+  "commands": [
+    {
+      "command": "npm run validate:plan",
+      "exit_code": 0,
+      "duration_ms": 194,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/plan.stdout.log.gz",
+        "sha256": "2c75357c423aab76e540762ef1747dbb8c9f1ab561ae276be572c8a0f72b0975"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/plan.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "python3 scripts/validate_repo.py",
+      "exit_code": 0,
+      "duration_ms": 205,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/repository.stdout.log.gz",
+        "sha256": "4d17550b1a6a6dc9d996e05bf64d2d2a54ea7b20b885d1d5df34513b9237d96a"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/repository.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "node scripts/verify-resources.mjs",
+      "exit_code": 0,
+      "duration_ms": 41,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/resources.stdout.log.gz",
+        "sha256": "9a7b8c1416f1d28ab932595daf2e75bfdfabaa1279266f3b4c6927224d14db40"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/resources.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "node scripts/verify-reference.mjs",
+      "exit_code": 0,
+      "duration_ms": 32,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/reference.stdout.log.gz",
+        "sha256": "0cb1d27dfbf98bc5fbd5b922cea0e932c63fee184350b3a3f88e43ea1e6b8044"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/reference.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "python3 scripts/verify_ci_source.py",
+      "exit_code": 0,
+      "duration_ms": 226,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/source.stdout.log.gz",
+        "sha256": "c147d79e95867a8f71b5e268f50c23fa59a3d039c5bdeea368eec5383c4ef311"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/source.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "duration_ms": 15085,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/build.stdout.log.gz",
+        "sha256": "271f4e5bf9aae7750c178e51d8b626019a8dd1d8cb94f020d73f519452d4da59"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/build.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0,
+      "duration_ms": 17461,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/vet.stdout.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/vet.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "go test -race -count=1 -json ./...",
+      "exit_code": 0,
+      "duration_ms": 67125,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/engine.stdout.log.gz",
+        "sha256": "7caba3077ab0de245c2c1f877a7bac3f519ebe6abdb09fdc7ee623018d4f576a"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/engine.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "node --test --test-reporter=tap tests/web/accessibility-workflow.test.mjs tests/web/certificates.test.mjs tests/web/engine-readiness.test.mjs tests/web/foundation.test.mjs tests/web/incidents.test.mjs tests/web/local-launch.test.mjs tests/web/network-boundaries.test.mjs tests/web/oss-guides.test.mjs tests/web/oss-tooling.test.mjs tests/web/package-complete.test.mjs tests/web/pages.test.mjs tests/web/publication.test.mjs tests/web/reference-contract.test.mjs tests/web/resource-contract.test.mjs tests/web/sensor-status.test.mjs tests/web/updates.test.mjs tests/contracts/domain-contracts.test.mjs tests/contracts/release-event.test.mjs tests/engineering/certificate-cli.test.mjs tests/engineering/engine-tests.test.mjs tests/engineering/onboarding.test.mjs tests/engineering/performance.test.mjs tests/engineering/retention-cli.test.mjs tests/engineering/update-cli.test.mjs tests/release/acceptance-blockers.mjs tests/release/installed-publication.mjs tests/release/service-policy.mjs tests/release/upgrade-recovery.mjs tests/release/v1-gate.mjs",
+      "exit_code": 0,
+      "duration_ms": 47896,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/node.stdout.log.gz",
+        "sha256": "4ec81a04064c3812e4d37f9951d245bdd95225ab8e0b186de84572c67db2e42e"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/node.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "node node_modules/@playwright/test/cli.js test --reporter=json",
+      "exit_code": 0,
+      "duration_ms": 9095,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/browser.stdout.log.gz",
+        "sha256": "2bbaa190bbd4cf0863f65bf9310d5df0b729c558c2a6ca3cc59430fbff5a5e65"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/browser.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "npm run test:clone",
+      "exit_code": 0,
+      "duration_ms": 56484,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/clone.stdout.log.gz",
+        "sha256": "921463e77b94e3c7852939a0f0e4dbfe84cd13cb4beae4f62826916c1bfc6ced"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/clone.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "npm run package",
+      "exit_code": 0,
+      "duration_ms": 2862,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/package.stdout.log.gz",
+        "sha256": "b67e4cea4c93930b4aac76eaf46e1490d3849c024363addb6a611ac1a63da411"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/package.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "npm run verify:artifact",
+      "exit_code": 0,
+      "duration_ms": 235,
+      "stdout": {
+        "path": "docs/evidence/C39/verification/artifact.stdout.log.gz",
+        "sha256": "cc5c396e1fb29835993a814faa49a4ea9991c7624d3177aee7f42cf32e2c1f85"
+      },
+      "stderr": {
+        "path": "docs/evidence/C39/verification/artifact.stderr.log.gz",
+        "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
+      }
+    },
+    {
+      "command": "publish-verified-release: download and authenticate published assets; install; verify-installed-release; rollback refusal; promote Latest",
+      "exit_code": 0,
+      "workflow": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41826503740",
+      "jobs": [
+        126562459388,
+        126564838054,
+        126565081162
+      ]
+    }
+  ],
+  "results": {
+    "schema_version": 1,
+    "passed": true,
+    "release_ready": true,
+    "published": false,
+    "source": {
+      "commit": "aac475843e2dfb617e1eb0b9561ca7e3c9aca749",
+      "tree": "0f67a128e0a0bf68812f589f4a37df137f78edc0",
+      "identity": "sha256:e0445bdea3ec52fa01731317f3d0eb4de2df04ebf185a498588b1be8856413f4",
+      "release_inputs": "sha256:95c64ef4b7a14bea4746ddc9c9ad3a1622ae82084aa544e05eef2940583b494b"
+    },
+    "historical_cards": 38,
+    "engine": {
+      "suites": 10,
+      "required_anchors": 209,
+      "top_level_passed": 237,
+      "subtests_passed": 359
+    },
+    "node": {
+      "total": 170,
+      "passed": 169,
+      "failed": 0,
+      "skipped": 1
+    },
+    "browser": {
+      "passed": 24
+    },
+    "clone": {
+      "independent_runs": 2,
+      "restart_restore": true,
+      "duration_ms": 56184
+    },
+    "errors": []
+  },
+  "installed_publication": {
+    "schema_version": 1,
+    "project": "MirageMesh",
+    "commit_id": "C40",
+    "passed": true,
+    "kind": "installed-published-artifact",
+    "version": "0.0.1",
+    "platform": "linux-amd64",
+    "installed_root": "/home/runner/work/_temp/installed/releases/miragemesh-0.0.1-linux-amd64/",
+    "engine_sha256": "c67af971ce3e1f1d5634d8f196d716864efdf3d02e798a6f3ba958862ba5444c",
+    "verification_binary_sha256": "dd875d907cfa1d3dc2e9a59307b5f41196ba4f79a6d007a01aef0f4a7f6a009b",
+    "steps": [
+      {
+        "name": "enroll",
+        "status": "passed",
+        "detail": "sensor-01 enrolled with one durable token consumption; the token replay was rejected"
+      },
+      {
+        "name": "apply-config",
+        "status": "passed",
+        "detail": "signed desired-state revision 1 is active with its exact payload bytes"
+      },
+      {
+        "name": "event-01",
+        "status": "passed",
+        "detail": "event-01 was authenticated, batch-ingested and durably acknowledged"
+      },
+      {
+        "name": "disconnect",
+        "status": "passed",
+        "detail": "the bounded offline spool retained event-02 and event-03"
+      },
+      {
+        "name": "spool",
+        "status": "passed",
+        "detail": "event-04 overflowed the signed spool bound and is recorded as explicit durable loss"
+      },
+      {
+        "name": "reconnect",
+        "status": "passed",
+        "detail": "the repeated batch acknowledgement was idempotent and delivery resumed after the explicit gap"
+      },
+      {
+        "name": "triage-retention",
+        "status": "passed",
+        "detail": "triage is durable and idempotent; the non-destructive retention preview is explicit and coverage is complete"
+      },
+      {
+        "name": "restart-restore",
+        "status": "passed",
+        "detail": "the accepted state, exact segment bytes, index, triage and loss accounting survived restart and a restored copy"
+      }
+    ],
+    "negative": [
+      {
+        "name": "enrollment-token-replay",
+        "expected": "enrollment.ErrReplay",
+        "observed": "enrollment.ErrReplay",
+        "passed": true
+      },
+      {
+        "name": "untrusted-client-certificate",
+        "expected": "tls.handshake_rejected",
+        "observed": "tls.handshake_rejected",
+        "passed": true
+      },
+      {
+        "name": "unconfigured-batch-ingest",
+        "expected": "sensor.ErrUnconfigured",
+        "observed": "sensor.ErrUnconfigured",
+        "passed": true
+      },
+      {
+        "name": "malformed-event",
+        "expected": "contracts.INVALID_INPUT",
+        "observed": "contracts.INVALID_INPUT",
+        "passed": true
+      },
+      {
+        "name": "spool-overflow",
+        "expected": "spool.ErrDropped",
+        "observed": "spool.ErrDropped",
+        "passed": true
+      },
+      {
+        "name": "missing-fixture",
+        "expected": "acceptance.ErrFixture",
+        "observed": "acceptance.ErrFixture",
+        "passed": true
+      }
+    ],
+    "restart": true,
+    "restore_equivalent": true,
+    "installed_engine_restart_cycles": 2,
+    "accepted_state_unchanged": true,
+    "exact_fixture_event": true,
+    "malformed_event_rejected": true,
+    "state_manifest_sha256": "d37a6748d1603fb503ca7f08793ae882228314d61a0de3a12efd1b3e20f06e28",
+    "segment_sha256": {
+      "segment-00000000000000000001.sealed.jsonl": "7a13eb90a7a8e1daf0a7933c085b83bd65e0358b4a24157b46a3ed04ec5e2e52",
+      "segment-00000000000000000002.jsonl": "88f6947c719e81e0a603f5f2a093acd6a14d7323c09f3e75ac09f1e961e4a82d"
+    },
+    "rollback": {
+      "observed": "no_previous_release",
+      "install_state_unchanged": true,
+      "scope": "First published release has no previous published version; signed upgrade/rollback regressions are retained in the fresh readiness capsule."
+    },
+    "published": true,
+    "source_commit": "aac475843e2dfb617e1eb0b9561ca7e3c9aca749",
+    "release_tag": "v0.0.1",
+    "workflow_run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41826503740"
+  },
+  "release": {
+    "url": "https://github.com/Parsa-Emami/Miragemesh/releases/tag/v0.0.1",
+    "id": 433873259,
+    "tag": "v0.0.1",
+    "version": "0.0.1",
+    "draft": false,
+    "prerelease": false,
+    "candidate": "docs/evidence/C40/candidate.json",
+    "key_fingerprint": "sha256:d48f7eae902101a18884af65ee9f0df959e9b9ac4bf13d5ababd3dc6e925fde7",
+    "asset_checksums": {
+      "miragemesh-0.0.1-linux-amd64.release.json": "e2aacb35bacdac22b82028f9a497e8d380ab4e74a28858bee82bd63a2d36c08c",
+      "miragemesh-0.0.1-linux-amd64.release.sig.json": "947c42ce878b4bbee02ce2ce79ee2fc1c9d9f27786b470268465201918c3034f",
+      "miragemesh-0.0.1-linux-amd64.tar.gz": "a416d73d55702142c64d7cea1f1be7eb9245444667048f9d67896c03bd8c2a74",
+      "provenance.json": "14a19f5cf9eb4845d4f023dd352de8bbc37c24be0f975029cf76e447702640f0",
+      "release-ed25519.pub": "d48f7eae902101a18884af65ee9f0df959e9b9ac4bf13d5ababd3dc6e925fde7",
+      "sbom.cdx.json": "773e35297bc343960b40f900863a7eab933dbf8776afa4cd1e68849ad87b4595",
+      "v1-gate.json": "86b9c25b40073a0aa1c98d0501ce38802800ac74030dadda07654064cde40bb8",
+      "verification-capsule.tar.gz": "d4bcfb31a8c6904c4a6dcc9dec6f605b1de842dfb9443eff0de04aa55287fd4a"
+    },
+    "launch_sha256": "153346de4e67f4b8e7f344b89e63764bd1a387d36a7d45235ebb182271d3d881"
+  },
+  "pages": {
+    "url": "https://parsa-emami.github.io/Miragemesh/",
+    "workflow": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41825789475",
+    "browser_tests": 2,
+    "manual_checks": [
+      "Public workspace renders at the repository subpath",
+      "Sensors explains the local-only operational boundary",
+      "Roadmap C40 search filters to one of forty tasks"
+    ],
+    "screenshot": "docs/evidence/C40/public-pages.jpg"
+  },
+  "fixtures": {
+    "directory": "tests/fixtures/miragemesh/C40",
+    "license": "Apache-2.0",
+    "sha256": {
+      "expected-output.json": "c3ebe0dbd83679e2102812959fbd79bd785d31932bb559d4f72265163988ac3c",
+      "negative.json": "3b59b583dac7acc0f04fea2e9a8153883ffe79bb68ff42a125f7e41364129185",
+      "positive.json": "fec63f71e1a78b33d6809430f87a320b627183ec353185fc52d29b4726de7a0a"
+    }
+  },
+  "source_binding": "All execution and published bytes certify exact clean source aac475843e2dfb617e1eb0b9561ca7e3c9aca749 and its immutable source tree. The subsequent certification changes only excluded evidence, progress, project-state, handoff and generated task statuses. Original C01-C38 proof stays immutable; original C39 receipts are preserved verbatim in its existing ZIP and historical-capsule directory.",
+  "limits": [
+    "Linux amd64 local profile; Pages is a static public interface",
+    "No invented previous public version: actual rollback refuses no_previous_release without modifying installation state",
+    "C35 signed upgrade/rollback regressions and real crash/ACK/quota/egress tests are retained in the fresh readiness capsule",
+    "No new market-validation, multi-user hosting, additional platform or long-duration capacity claim"
+  ],
+  "environment": {
+    "os": "linux",
+    "architecture": "x64",
+    "node": "v24.19.0",
+    "npm": "11.9.0",
+    "go": "go version go1.27.2 linux/amd64",
+    "podman": "podman version 4.9.3",
+    "rootless": "true"
+  },
+  "published": true
+}

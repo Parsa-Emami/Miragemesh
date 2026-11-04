@@ -1,7 +1,7 @@
 {
-  "version": "0.0.0",
+  "version": "0.0.1",
   "project": "MirageMesh",
-  "readiness": "LOCAL_USABLE",
+  "readiness": "OSS_V1_PUBLISHED",
   "market_validation": "UNVALIDATED",
   "commits": [
     {
@@ -358,10 +358,12 @@
     },
     {
       "id": "C40",
-      "status": "in_progress",
-      "evidence": [],
-      "source_identity": null,
-      "notes": "Owner authorized public GitHub Pages and release publication on 2026-11-04. Public subpath build, signed full-package publication and installed-artifact verification are being implemented; not yet certified."
+      "status": "verified",
+      "evidence": [
+        "docs/evidence/C40.json"
+      ],
+      "source_identity": "sha256:e0445bdea3ec52fa01731317f3d0eb4de2df04ebf185a498588b1be8856413f4",
+      "notes": "v0.0.1 published from aac475843e2dfb617e1eb0b9561ca7e3c9aca749. All six source/Pages checks passed; a separate clean runner authenticated published assets, installed the complete package and passed eight workflow steps, six typed negatives, exact C40 fixture validation, two installed-engine restarts, equivalent restore and unchanged accepted data. First-release rollback refused no_previous_release without changing installation state. Public Pages is deployed; original evidence is retained."
     }
   ],
   "web_progress": "plans/web-roadmap.json",

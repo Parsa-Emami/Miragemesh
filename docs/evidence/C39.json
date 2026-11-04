@@ -409,10 +409,10 @@
     "sha256": "5a588fe674ad954b69fcf7a9a7283d90c60dde5d05d9347fc2f0ad6d4b975e38",
     "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/40748683412",
     "original_archive": "docs/evidence/C39/verification-archive.zip",
-    "retained_report": "docs/evidence/v1-gate.json",
+    "retained_report": "docs/evidence/C39/historical-capsule/v1-gate.json",
     "report_sha256": "a16b3a49463f5f0258c2460a6c1b94fba7092b4230aa691219e97bb546eec2cf"
   },
-  "source_binding": "All commands certify implementation 0a5622623b9f48b3a82fb890504ffb2c8241b32c and exact tree a6a1a064bd7cd87bc25bffe333d2eb956d7ead7f. Certification adds only evidence, progress, project-state, session handoff and generated task status. The release-input identity independently proves runtime, gate, policy, fixture, build and license bytes remain the tested inputs. The final certification candidate must pass all five workflows before merge.",
+  "source_binding": "All commands certify implementation 0a5622623b9f48b3a82fb890504ffb2c8241b32c and exact tree a6a1a064bd7cd87bc25bffe333d2eb956d7ead7f. Certification adds only evidence, progress, project-state, session handoff and generated task status. The release-input identity independently proves runtime, gate, policy, fixture, build and license bytes remain the tested inputs. The final certification candidate must pass all five workflows before merge. The original report, command payloads and unmodified C39 record are additionally preserved under docs/evidence/C39/historical-capsule/. The canonical readiness report now certifies the C40 publication source; no old test is relabelled as a new execution.",
   "limits": [
     "Historical staged/precommit receipts are preserved and classified explicitly; no old command is relabelled as a newer execution.",
     "No protected schema, migration, .env, Dockerfile, dependency pin or production key change.",

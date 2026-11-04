@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "project": "MirageMesh",
+  "tag": "v0.0.1",
+  "source": {
+    "repository": "https://github.com/Parsa-Emami/Miragemesh",
+    "head_commit": "aac475843e2dfb617e1eb0b9561ca7e3c9aca749",
+    "tree": "0f67a128e0a0bf68812f589f4a37df137f78edc0",
+    "dirty": false,
+    "source_identity": "sha256:e0445bdea3ec52fa01731317f3d0eb4de2df04ebf185a498588b1be8856413f4",
+    "staged_snapshot": {
+      "clean": true,
+      "changed_paths_count": 0,
+      "changed_paths_sample": []
+    }
+  },
+  "archive": "miragemesh-0.0.1-linux-amd64.tar.gz",
+  "manifest": "miragemesh-0.0.1-linux-amd64.release.json",
+  "signature": "miragemesh-0.0.1-linux-amd64.release.sig.json",
+  "key_fingerprint": "sha256:d48f7eae902101a18884af65ee9f0df959e9b9ac4bf13d5ababd3dc6e925fde7",
+  "checksums": {
+    "miragemesh-0.0.1-linux-amd64.release.json": "e2aacb35bacdac22b82028f9a497e8d380ab4e74a28858bee82bd63a2d36c08c",
+    "miragemesh-0.0.1-linux-amd64.release.sig.json": "947c42ce878b4bbee02ce2ce79ee2fc1c9d9f27786b470268465201918c3034f",
+    "miragemesh-0.0.1-linux-amd64.tar.gz": "a416d73d55702142c64d7cea1f1be7eb9245444667048f9d67896c03bd8c2a74",
+    "provenance.json": "14a19f5cf9eb4845d4f023dd352de8bbc37c24be0f975029cf76e447702640f0",
+    "release-ed25519.pub": "d48f7eae902101a18884af65ee9f0df959e9b9ac4bf13d5ababd3dc6e925fde7",
+    "sbom.cdx.json": "773e35297bc343960b40f900863a7eab933dbf8776afa4cd1e68849ad87b4595",
+    "v1-gate.json": "86b9c25b40073a0aa1c98d0501ce38802800ac74030dadda07654064cde40bb8",
+    "verification-capsule.tar.gz": "d4bcfb31a8c6904c4a6dcc9dec6f605b1de842dfb9443eff0de04aa55287fd4a"
+  },
+  "readiness": true
+}
