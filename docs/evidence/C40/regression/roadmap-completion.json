@@ -29,5 +29,41 @@
       "log": "docs/evidence/C40/regression/failed-gate-workflow.log"
     }
   ],
-  "hosted_fix_verification": "pending fresh supported-host checks; no published-artifact execution is relabelled"
+  "hosted_fix_verification": {
+    "passed": true,
+    "source_commit": "23a38b6cda677b4c022f7a8287d489f273594676",
+    "workflows": [
+      {
+        "name": "contracts",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824572",
+        "conclusion": "success"
+      },
+      {
+        "name": "plan-consistency",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824299",
+        "conclusion": "success"
+      },
+      {
+        "name": "engine-runtime",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824511",
+        "conclusion": "success"
+      },
+      {
+        "name": "web-foundation",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824269",
+        "conclusion": "success"
+      },
+      {
+        "name": "release-gate",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824385",
+        "conclusion": "success"
+      },
+      {
+        "name": "public-pages",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824172",
+        "conclusion": "success"
+      }
+    ],
+    "readiness_report": "docs/evidence/v1-gate.json"
+  }
 }

@@ -73,7 +73,87 @@
     "scope": "Observed test-fixture assumption after the legitimate all-forty-complete transition",
     "evidence": "docs/evidence/C40/regression/roadmap-completion.json",
     "local": "3 targeted tests pass; both proof-refusal checks remain enabled",
-    "hosted": "pending fresh supported-host checks",
+    "hosted": "All six checks passed on 23a38b6cda677b4c022f7a8287d489f273594676; full current-source proof retained. Original published execution is unchanged.",
     "published_source_unchanged": true
+  },
+  "reviewed_commit": "23a38b6cda677b4c022f7a8287d489f273594676",
+  "current_source_validation": {
+    "passed": true,
+    "source": {
+      "commit": "23a38b6cda677b4c022f7a8287d489f273594676",
+      "tree": "68a6c020fdf8f9768f0d3ca8c89e6e80b5020254",
+      "identity": "sha256:b5835cbbbcec47bd8ddddcf97f2212018d4ed6a113d4e3769b105c09b3172bf4",
+      "release_inputs": "sha256:7b2f5ed7fd6e8430566fecc7b4b982c6d4428d4ba44d0485c30f3cf28a181730"
+    },
+    "readiness_report": "docs/evidence/v1-gate.json",
+    "artifact_id": 13322907874,
+    "artifact_sha256": "e0f38aeb9a1254156b11fb536e15cf772fe336b95f2d155d4f2a6498bef53fe4",
+    "workflows": [
+      {
+        "name": "contracts",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824572",
+        "conclusion": "success"
+      },
+      {
+        "name": "plan-consistency",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824299",
+        "conclusion": "success"
+      },
+      {
+        "name": "engine-runtime",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824511",
+        "conclusion": "success"
+      },
+      {
+        "name": "web-foundation",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824269",
+        "conclusion": "success"
+      },
+      {
+        "name": "release-gate",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824385",
+        "conclusion": "success"
+      },
+      {
+        "name": "public-pages",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41830824172",
+        "conclusion": "success"
+      }
+    ],
+    "results": {
+      "schema_version": 1,
+      "passed": true,
+      "release_ready": true,
+      "published": false,
+      "source": {
+        "commit": "23a38b6cda677b4c022f7a8287d489f273594676",
+        "tree": "68a6c020fdf8f9768f0d3ca8c89e6e80b5020254",
+        "identity": "sha256:b5835cbbbcec47bd8ddddcf97f2212018d4ed6a113d4e3769b105c09b3172bf4",
+        "release_inputs": "sha256:7b2f5ed7fd6e8430566fecc7b4b982c6d4428d4ba44d0485c30f3cf28a181730"
+      },
+      "historical_cards": 38,
+      "engine": {
+        "suites": 10,
+        "required_anchors": 209,
+        "top_level_passed": 237,
+        "subtests_passed": 359
+      },
+      "node": {
+        "total": 170,
+        "passed": 169,
+        "failed": 0,
+        "skipped": 1
+      },
+      "browser": {
+        "passed": 24
+      },
+      "clone": {
+        "independent_runs": 2,
+        "restart_restore": true,
+        "duration_ms": 45616
+      },
+      "errors": []
+    },
+    "scope": "Fresh current-source validation after correcting an independent test fixture. Published artifacts and their execution receipts still certify aac475843e2dfb617e1eb0b9561ca7e3c9aca749."
   }
 }

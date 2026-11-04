@@ -1,6 +1,6 @@
 {
   "project": "MirageMesh",
-  "reviewed_commit": "aac475843e2dfb617e1eb0b9561ca7e3c9aca749",
+  "reviewed_commit": "23a38b6cda677b4c022f7a8287d489f273594676",
   "readiness": "OSS_V1_PUBLISHED",
   "core_ready": true,
   "implemented": [
@@ -62,5 +62,11 @@
     "tag": "v0.0.1",
     "release_url": "https://github.com/Parsa-Emami/Miragemesh/releases/tag/v0.0.1",
     "public_site": "https://parsa-emami.github.io/Miragemesh/"
+  },
+  "current_source_validation": {
+    "passed": true,
+    "commit": "23a38b6cda677b4c022f7a8287d489f273594676",
+    "report": "docs/evidence/v1-gate.json",
+    "published_source": "aac475843e2dfb617e1eb0b9561ca7e3c9aca749"
   }
 }
