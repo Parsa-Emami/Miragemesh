@@ -134,13 +134,30 @@ jobs:
           node "$ARTIFACT/scripts/install-release.mjs" install --artifact "$ARTIFACT" --manifest "$ARTIFACT.release.json" --signature "$ARTIFACT.release.sig.json" --trusted-key "$PWD/release-ed25519.pub" --prefix "$RUNNER_TEMP/installed" --data-dir "$RUNNER_TEMP/operator-data"
           INSTALLED="$RUNNER_TEMP/installed/releases/miragemesh-${RELEASE_TAG#v}-linux-amd64"
           node "$INSTALLED/scripts/verify-installed-release.mjs" "$RUNNER_TEMP/launch.json"
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          import { readFile, writeFile } from 'node:fs/promises';
+          import { spawnSync } from 'node:child_process';
+          const prefix = process.env.RUNNER_TEMP + '/installed';
+          const state = prefix + '/install-state.json';
+          const before = await readFile(state, 'utf8');
+          const artifact = prefix + '/releases/miragemesh-' + process.env.RELEASE_TAG.slice(1) + '-linux-amd64';
+          const result = spawnSync(process.execPath, [artifact + '/scripts/install-release.mjs', 'rollback', '--prefix', prefix, '--trusted-key', process.env.RUNNER_TEMP + '/published/release-ed25519.pub'], { encoding: 'utf8', timeout: 30000 });
+          assert.equal(result.status, 1);
+          assert.equal(JSON.parse(result.stderr).code, 'no_previous_release');
+          assert.equal(await readFile(state, 'utf8'), before);
+          const path = process.env.RUNNER_TEMP + '/launch.json';
+          const proof = JSON.parse(await readFile(path, 'utf8'));
+          proof.rollback = { observed: 'no_previous_release', install_state_unchanged: true, scope: 'First published release has no previous published version; signed upgrade/rollback regressions are retained in the fresh readiness capsule.' };
+          await writeFile(path, JSON.stringify(proof, null, 2) + '\n');
+          JS
       - name: Retain actual publication proof and promote verified release
         run: |
           node --input-type=module <<'JS'
           import { readFile, writeFile } from 'node:fs/promises';
           const path = process.env.RUNNER_TEMP + '/launch.json';
           const proof = JSON.parse(await readFile(path, 'utf8'));
-          if (!proof.passed || !proof.restart || !proof.restore_equivalent || !proof.accepted_state_unchanged) throw new Error('Installed release is not verified.');
+          if (!proof.passed || !proof.restart || !proof.restore_equivalent || !proof.accepted_state_unchanged || proof.rollback?.install_state_unchanged !== true) throw new Error('Installed release is not verified.');
           proof.published = true;
           proof.source_commit = process.env.RELEASE_SOURCE_SHA;
           proof.release_tag = process.env.RELEASE_TAG;
