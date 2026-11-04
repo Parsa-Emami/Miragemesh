@@ -1,0 +1,11 @@
+✔ setup validates toolchain/options and stops at the first failed install (2.444387ms)
+✔ setup rejects missing tools, wrong pins and a non-rootless provider before building (0.8808ms)
+✔ roadmap rejects absent resources, escaping paths and unproved completion (48.503906ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 201.123199

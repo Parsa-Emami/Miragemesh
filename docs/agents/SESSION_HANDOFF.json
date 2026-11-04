@@ -68,5 +68,12 @@
     7
   ],
   "blockers": [],
-  "preservation": "Protected files are unchanged. C01-C38 historical receipts remain byte-identical; original C39 capsule/record is preserved before the canonical report is refreshed. Only evidence/status certification follows the published source."
+  "preservation": "Protected files are unchanged. C01-C38 historical receipts remain byte-identical; original C39 capsule/record is preserved before the canonical report is refreshed. Only evidence/status certification follows the published source.",
+  "post_certification_validation": {
+    "scope": "Observed test-fixture assumption after the legitimate all-forty-complete transition",
+    "evidence": "docs/evidence/C40/regression/roadmap-completion.json",
+    "local": "3 targeted tests pass; both proof-refusal checks remain enabled",
+    "hosted": "pending fresh supported-host checks",
+    "published_source_unchanged": true
+  }
 }

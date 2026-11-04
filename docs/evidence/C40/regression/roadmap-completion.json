@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "project": "MirageMesh",
+  "date": "2026-11-04",
+  "base_commit": "1572fa221b4eb408229a48bb9788b8a9032cbe52",
+  "problem": "The negative roadmap test incorrectly required a pending task in the real ledger, so all-forty-verified progress failed the test before the actual proof checks ran.",
+  "fix": "Construct an independent planned C40 fixture and retain both missing-identity and missing-evidence rejection assertions. Production validation is unchanged.",
+  "command": "node --test tests/web/oss-tooling.test.mjs",
+  "node_version": "v24.22.1",
+  "red": {
+    "exit_code": 1,
+    "log": "docs/evidence/C40/regression/roadmap-red.log"
+  },
+  "green": {
+    "exit_code": 0,
+    "log": "docs/evidence/C40/regression/roadmap-green.log",
+    "tests": 3
+  },
+  "changed_test_sha256": "136f028486739105c33d7544718501b553305d846f38b1d0a8aa1a78fc380638",
+  "hosted_failures": [
+    {
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41829681641",
+      "job_id": 126573331977,
+      "log": "docs/evidence/C40/regression/failed-web-workflow.log"
+    },
+    {
+      "run": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/41829681595",
+      "job_id": 126573332938,
+      "log": "docs/evidence/C40/regression/failed-gate-workflow.log"
+    }
+  ],
+  "hosted_fix_verification": "pending fresh supported-host checks; no published-artifact execution is relabelled"
+}

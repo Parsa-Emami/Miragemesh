@@ -1,0 +1,530 @@
+﻿2026-11-04T12:29:19.0823449Z Current runner version: '2.338.2'
+2026-11-04T12:29:19.0861169Z ##[group]Runner Image Provisioner
+2026-11-04T12:29:19.0862721Z Hosted Compute Agent
+2026-11-04T12:29:19.0863655Z Version: 20261021.618
+2026-11-04T12:29:19.0864714Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-04T12:29:19.0865967Z Build Date: 2026-10-21T00:45:21Z
+2026-11-04T12:29:19.0867092Z Worker ID: {7d96c153-a086-4468-8766-4f8ce96ac76c}
+2026-11-04T12:29:19.0869104Z Region: northcentralus
+2026-11-04T12:29:19.0870153Z Cloud: Azure
+2026-11-04T12:29:19.0870974Z ##[endgroup]
+2026-11-04T12:29:19.0873450Z ##[group]Operating System
+2026-11-04T12:29:19.0874649Z Ubuntu
+2026-11-04T12:29:19.0875591Z 24.04.5
+2026-11-04T12:29:19.0876398Z LTS
+2026-11-04T12:29:19.0877186Z ##[endgroup]
+2026-11-04T12:29:19.0878223Z ##[group]Runner Image
+2026-11-04T12:29:19.0879441Z Image: ubuntu-24.04
+2026-11-04T12:29:19.0880473Z Version: 20261025.353.1
+2026-11-04T12:29:19.0882566Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261025.353/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-04T12:29:19.0885312Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261025.353
+2026-11-04T12:29:19.0886986Z ##[endgroup]
+2026-11-04T12:29:19.0889207Z ##[group]GITHUB_TOKEN Permissions
+2026-11-04T12:29:19.0892320Z Contents: read
+2026-11-04T12:29:19.0893367Z Metadata: read
+2026-11-04T12:29:19.0894309Z ##[endgroup]
+2026-11-04T12:29:19.0897341Z Secret source: Actions
+2026-11-04T12:29:19.0899180Z Cache mode: write
+2026-11-04T12:29:19.0900857Z Prepare workflow directory
+2026-11-04T12:29:19.1284201Z Prepare all required actions
+2026-11-04T12:29:19.1357431Z Getting action download info
+2026-11-04T12:29:19.4197176Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-11-04T12:29:19.5096881Z Download action repository 'actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+2026-11-04T12:29:19.5970638Z Download action repository 'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+2026-11-04T12:29:19.7964508Z Complete job name: verify
+2026-11-04T12:29:19.8894883Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-11-04T12:29:19.8895928Z with:
+2026-11-04T12:29:19.8896389Z   persist-credentials: false
+2026-11-04T12:29:19.8896924Z   fetch-depth: 0
+2026-11-04T12:29:19.8897413Z   repository: Parsa-Emami/Miragemesh
+2026-11-04T12:29:19.8901441Z   token: ***
+2026-11-04T12:29:19.8901905Z   ssh-strict: true
+2026-11-04T12:29:19.8902366Z   ssh-user: git
+2026-11-04T12:29:19.8902799Z   clean: true
+2026-11-04T12:29:19.8903261Z   sparse-checkout-cone-mode: true
+2026-11-04T12:29:19.8903801Z   fetch-tags: false
+2026-11-04T12:29:19.8904279Z   show-progress: true
+2026-11-04T12:29:19.8904790Z   lfs: false
+2026-11-04T12:29:19.8905228Z   submodules: false
+2026-11-04T12:29:19.8905690Z   set-safe-directory: true
+2026-11-04T12:29:19.8906217Z   allow-unsafe-pr-checkout: false
+2026-11-04T12:29:19.8906986Z ##[endgroup]
+2026-11-04T12:29:20.1385164Z Syncing repository: Parsa-Emami/Miragemesh
+2026-11-04T12:29:20.1388277Z ##[group]Getting Git version info
+2026-11-04T12:29:20.1389620Z Working directory is '/home/runner/work/Miragemesh/Miragemesh'
+2026-11-04T12:29:20.1391078Z [command]/usr/bin/git version
+2026-11-04T12:29:20.1481655Z git version 2.56.0
+2026-11-04T12:29:20.1511235Z ##[endgroup]
+2026-11-04T12:29:20.1524227Z Temporarily overriding HOME='/home/runner/work/_temp/64616b63-be40-4e29-a87f-93636056a176' before making global git config changes
+2026-11-04T12:29:20.1526999Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T12:29:20.1542464Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Miragemesh/Miragemesh
+2026-11-04T12:29:20.1612817Z Deleting the contents of '/home/runner/work/Miragemesh/Miragemesh'
+2026-11-04T12:29:20.1623312Z ##[group]Determining repository object format
+2026-11-04T12:29:20.1625126Z ##[endgroup]
+2026-11-04T12:29:20.1626228Z ##[group]Initializing the repository
+2026-11-04T12:29:20.1630765Z [command]/usr/bin/git init /home/runner/work/Miragemesh/Miragemesh
+2026-11-04T12:29:20.1752412Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-04T12:29:20.1753589Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-04T12:29:20.1754944Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-04T12:29:20.1756006Z hint: call:
+2026-11-04T12:29:20.1756455Z hint:
+2026-11-04T12:29:20.1757322Z hint: 	git config --global init.defaultBranch <name>
+2026-11-04T12:29:20.1758276Z hint:
+2026-11-04T12:29:20.1759468Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-04T12:29:20.1761007Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-04T12:29:20.1762051Z hint:
+2026-11-04T12:29:20.1762507Z hint: 	git branch -m <name>
+2026-11-04T12:29:20.1763074Z hint:
+2026-11-04T12:29:20.1763721Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-04T12:29:20.1777547Z Initialized empty Git repository in /home/runner/work/Miragemesh/Miragemesh/.git/
+2026-11-04T12:29:20.1780559Z [command]/usr/bin/git remote add origin https://github.com/Parsa-Emami/Miragemesh
+2026-11-04T12:29:20.1833817Z ##[endgroup]
+2026-11-04T12:29:20.1834996Z ##[group]Disabling automatic garbage collection
+2026-11-04T12:29:20.1838338Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-04T12:29:20.1879465Z ##[endgroup]
+2026-11-04T12:29:20.1880801Z ##[group]Setting up auth
+2026-11-04T12:29:20.1881674Z Removing SSH command configuration
+2026-11-04T12:29:20.1899437Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T12:29:20.1944201Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T12:29:20.2350827Z Removing HTTP extra header
+2026-11-04T12:29:20.2358387Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T12:29:20.2409777Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T12:29:20.2690175Z Removing includeIf entries pointing to credentials config files
+2026-11-04T12:29:20.2697339Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T12:29:20.2758235Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T12:29:20.3027230Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-779f6eab-3d0e-43a4-8adc-1fbba7cf69ae.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-04T12:29:20.3084766Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path /home/runner/work/_temp/git-credentials-779f6eab-3d0e-43a4-8adc-1fbba7cf69ae.config
+2026-11-04T12:29:20.3133317Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-779f6eab-3d0e-43a4-8adc-1fbba7cf69ae.config
+2026-11-04T12:29:20.3182272Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-779f6eab-3d0e-43a4-8adc-1fbba7cf69ae.config
+2026-11-04T12:29:20.3245487Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-779f6eab-3d0e-43a4-8adc-1fbba7cf69ae.config
+2026-11-04T12:29:20.3305895Z ##[endgroup]
+2026-11-04T12:29:20.3307141Z ##[group]Fetching the repository
+2026-11-04T12:29:20.3309306Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-11-04T12:29:20.9896043Z From https://github.com/Parsa-Emami/Miragemesh
+2026-11-04T12:29:20.9898137Z  * [new branch]      codex/c36-independent-onboarding -> origin/codex/c36-independent-onboarding
+2026-11-04T12:29:20.9900456Z  * [new branch]      codex/c37-acceptance-blockers -> origin/codex/c37-acceptance-blockers
+2026-11-04T12:29:20.9902391Z  * [new branch]      codex/c38-local-service-policy -> origin/codex/c38-local-service-policy
+2026-11-04T12:29:20.9904344Z  * [new branch]      codex/c39-evidence-release-gate -> origin/codex/c39-evidence-release-gate
+2026-11-04T12:29:20.9906028Z  * [new branch]      codex/c40-public-release -> origin/codex/c40-public-release
+2026-11-04T12:29:20.9908148Z  * [new branch]      fix/diagnostic-json-secret-redaction-20261103 -> origin/fix/diagnostic-json-secret-redaction-20261103
+2026-11-04T12:29:20.9910257Z  * [new branch]      main       -> origin/main
+2026-11-04T12:29:20.9911284Z  * [new tag]         v0.0.1     -> v0.0.1
+2026-11-04T12:29:20.9913786Z [command]/usr/bin/git branch --list --remote origin/main
+2026-11-04T12:29:20.9951389Z   origin/main
+2026-11-04T12:29:20.9961901Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-11-04T12:29:21.0002320Z 1572fa221b4eb408229a48bb9788b8a9032cbe52
+2026-11-04T12:29:21.0011655Z ##[endgroup]
+2026-11-04T12:29:21.0012983Z ##[group]Determining the checkout info
+2026-11-04T12:29:21.0014485Z ##[endgroup]
+2026-11-04T12:29:21.0015377Z [command]/usr/bin/git sparse-checkout disable
+2026-11-04T12:29:21.0088870Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-04T12:29:21.0148138Z ##[group]Checking out the ref
+2026-11-04T12:29:21.0150489Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-11-04T12:29:21.1163185Z Switched to a new branch 'main'
+2026-11-04T12:29:21.1169931Z branch 'main' set up to track 'origin/main'.
+2026-11-04T12:29:21.1180985Z ##[endgroup]
+2026-11-04T12:29:21.1244684Z [command]/usr/bin/git log -1 --format=%H
+2026-11-04T12:29:21.1287400Z 1572fa221b4eb408229a48bb9788b8a9032cbe52
+2026-11-04T12:29:21.1302661Z ##[group]Removing auth
+2026-11-04T12:29:21.1303985Z Removing SSH command configuration
+2026-11-04T12:29:21.1305302Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T12:29:21.1355695Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T12:29:21.1629100Z Removing HTTP extra header
+2026-11-04T12:29:21.1630968Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T12:29:21.1679319Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T12:29:21.1947477Z Removing includeIf entries pointing to credentials config files
+2026-11-04T12:29:21.1950923Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T12:29:21.1994373Z includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path
+2026-11-04T12:29:21.1997486Z includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path
+2026-11-04T12:29:21.2000118Z includeif.gitdir:/github/workspace/.git.path
+2026-11-04T12:29:21.2002343Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-04T12:29:21.2007238Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path
+2026-11-04T12:29:21.2051081Z /home/runner/work/_temp/git-credentials-779f6eab-3d0e-43a4-8adc-1fbba7cf69ae.config
+2026-11-04T12:29:21.2063137Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-779f6eab\-3d0e\-43a4\-8adc\-1fbba7cf69ae\.config
+2026-11-04T12:29:21.2115616Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path
+2026-11-04T12:29:21.2153134Z /home/runner/work/_temp/git-credentials-779f6eab-3d0e-43a4-8adc-1fbba7cf69ae.config
+2026-11-04T12:29:21.2165210Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-779f6eab\-3d0e\-43a4\-8adc\-1fbba7cf69ae\.config
+2026-11-04T12:29:21.2217803Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-11-04T12:29:21.2256994Z /github/runner_temp/git-credentials-779f6eab-3d0e-43a4-8adc-1fbba7cf69ae.config
+2026-11-04T12:29:21.2281392Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-779f6eab\-3d0e\-43a4\-8adc\-1fbba7cf69ae\.config
+2026-11-04T12:29:21.2316661Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-04T12:29:21.2355102Z /github/runner_temp/git-credentials-779f6eab-3d0e-43a4-8adc-1fbba7cf69ae.config
+2026-11-04T12:29:21.2364880Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-779f6eab\-3d0e\-43a4\-8adc\-1fbba7cf69ae\.config
+2026-11-04T12:29:21.2413762Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T12:29:21.2676774Z Removing credentials config '/home/runner/work/_temp/git-credentials-779f6eab-3d0e-43a4-8adc-1fbba7cf69ae.config'
+2026-11-04T12:29:21.2685249Z ##[endgroup]
+2026-11-04T12:29:21.3060751Z ##[group]Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+2026-11-04T12:29:21.3062342Z with:
+2026-11-04T12:29:21.3063238Z   node-version-file: .nvmrc
+2026-11-04T12:29:21.3064228Z   cache: npm
+2026-11-04T12:29:21.3065126Z   check-latest: false
+2026-11-04T12:29:21.3082405Z   token: ***
+2026-11-04T12:29:21.3083377Z   package-manager-cache: true
+2026-11-04T12:29:21.3084408Z ##[endgroup]
+2026-11-04T12:29:21.4418061Z Node version file is not JSON file
+2026-11-04T12:29:21.4423513Z Node version file is not TOML file
+2026-11-04T12:29:21.4425296Z Resolved .nvmrc as 24.19.0
+2026-11-04T12:29:21.4441952Z Attempting to download 24.19.0...
+2026-11-04T12:29:22.2421630Z Acquiring 24.19.0 - x64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-linux-x64.tar.gz
+2026-11-04T12:29:22.7040262Z Extracting ...
+2026-11-04T12:29:22.7187132Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/0103e854-ca91-45d8-9292-0b9fae025646 -f /home/runner/work/_temp/a0bd4b6e-364a-4780-97a4-9e87c4579454
+2026-11-04T12:29:24.0628523Z Adding to the cache ...
+2026-11-04T12:29:25.6268807Z ##[group]Environment details
+2026-11-04T12:29:25.8801318Z node: v24.19.0
+2026-11-04T12:29:25.8801828Z npm: 11.17.0
+2026-11-04T12:29:25.8802252Z yarn: 1.22.22
+2026-11-04T12:29:25.8802909Z ##[endgroup]
+2026-11-04T12:29:25.8821226Z [command]/opt/hostedtoolcache/node/24.19.0/x64/bin/npm config get cache
+2026-11-04T12:29:25.9879345Z /home/runner/.npm
+2026-11-04T12:29:26.1175214Z Cache hit for: node-cache-Linux-x64-npm-ee8bd92fc8d75daf6c0249a708cd8121cb8aba32254ebc42783ba42505628caa
+2026-11-04T12:29:26.8110606Z Received 48351299 of 48351299 (100.0%), 80.8 MBs/sec
+2026-11-04T12:29:26.8111415Z Cache Size: ~46 MB (48351299 B)
+2026-11-04T12:29:26.8176522Z [command]/usr/bin/tar -xf /home/runner/work/_temp/3b5f816f-993e-44f7-befe-ec44998ff1cf/cache.tzst -P -C /home/runner/work/Miragemesh/Miragemesh --use-compress-program unzstd
+2026-11-04T12:29:27.0484973Z Cache restored successfully
+2026-11-04T12:29:27.0518357Z Cache restored from key: node-cache-Linux-x64-npm-ee8bd92fc8d75daf6c0249a708cd8121cb8aba32254ebc42783ba42505628caa
+2026-11-04T12:29:27.0786398Z ##[group]Run npx --yes --package=npm@11.9.0 --call 'npm ci --ignore-scripts'
+2026-11-04T12:29:27.0787337Z [36;1mnpx --yes --package=npm@11.9.0 --call 'npm ci --ignore-scripts'[0m
+2026-11-04T12:29:27.0815808Z shell: /usr/bin/bash -e {0}
+2026-11-04T12:29:27.0816113Z ##[endgroup]
+2026-11-04T12:29:29.0719097Z 
+2026-11-04T12:29:29.0726952Z added 34 packages, and audited 35 packages in 1s
+2026-11-04T12:29:29.0727298Z 
+2026-11-04T12:29:29.0727639Z 11 packages are looking for funding
+2026-11-04T12:29:29.0728049Z   run `npm fund` for details
+2026-11-04T12:29:29.0743710Z 
+2026-11-04T12:29:29.0744097Z 1 moderate severity vulnerability
+2026-11-04T12:29:29.0744422Z 
+2026-11-04T12:29:29.0744702Z To address all issues, run:
+2026-11-04T12:29:29.0745067Z   npm audit fix
+2026-11-04T12:29:29.0745227Z 
+2026-11-04T12:29:29.0745377Z Run `npm audit` for details.
+2026-11-04T12:29:29.1784142Z ##[group]Run npx --yes --package=npm@11.9.0 --call 'npm run validate:plan'
+2026-11-04T12:29:29.1784718Z [36;1mnpx --yes --package=npm@11.9.0 --call 'npm run validate:plan'[0m
+2026-11-04T12:29:29.1808022Z shell: /usr/bin/bash -e {0}
+2026-11-04T12:29:29.1808314Z ##[endgroup]
+2026-11-04T12:29:29.6684843Z 
+2026-11-04T12:29:29.6685898Z > @parsa-emami/miragemesh-web@0.0.1 validate:plan
+2026-11-04T12:29:29.6686640Z > node scripts/roadmap.mjs validate
+2026-11-04T12:29:29.6686964Z 
+2026-11-04T12:29:29.7628973Z Validated 40 detailed tasks, resources, references and progress; no runtime capability inferred.
+2026-11-04T12:29:29.7931299Z ##[group]Run sudo apt-get update
+2026-11-04T12:29:29.7931805Z [36;1msudo apt-get update[0m
+2026-11-04T12:29:29.7932553Z [36;1msudo apt-get install --yes --allow-downgrades --no-install-recommends podman=4.9.3+ds1-1ubuntu0.2 strace[0m
+2026-11-04T12:29:29.7933729Z [36;1mGOTOOLCHAIN=go1.27.2 GOSUMDB=sum.golang.org GOPROXY='https://proxy.golang.org|direct' go version[0m
+2026-11-04T12:29:29.7934635Z [36;1mpodman info --format '{{.Host.Security.Rootless}}'[0m
+2026-11-04T12:29:29.7935574Z [36;1mpodman pull docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62[0m
+2026-11-04T12:29:29.7937358Z [36;1mtest "$(podman image inspect docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62 --format '{{.Digest}}')" = "sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62"[0m
+2026-11-04T12:29:29.7966865Z shell: /usr/bin/bash -e {0}
+2026-11-04T12:29:29.7967152Z ##[endgroup]
+2026-11-04T12:29:29.9290081Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-04T12:29:29.9499566Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-11-04T12:29:29.9587601Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-11-04T12:29:29.9610090Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-11-04T12:29:29.9664742Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-11-04T12:29:29.9679068Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-11-04T12:29:30.0408449Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [721 kB]
+2026-11-04T12:29:30.0700986Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [652 kB]
+2026-11-04T12:29:30.1990435Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1408 kB]
+2026-11-04T12:29:30.2100349Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [311 kB]
+2026-11-04T12:29:30.2120076Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1707 kB]
+2026-11-04T12:29:30.2203835Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [343 kB]
+2026-11-04T12:29:30.2261230Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1813 kB]
+2026-11-04T12:29:30.2345383Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [412 kB]
+2026-11-04T12:29:30.2377050Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.3 kB]
+2026-11-04T12:29:30.3222613Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1155 kB]
+2026-11-04T12:29:30.3293035Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [233 kB]
+2026-11-04T12:29:30.3339861Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1224 kB]
+2026-11-04T12:29:30.3841090Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [247 kB]
+2026-11-04T12:29:30.3857518Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1721 kB]
+2026-11-04T12:29:30.3945224Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [394 kB]
+2026-11-04T12:29:30.3973276Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [12.4 kB]
+2026-11-04T12:29:34.2319419Z Fetched 12.7 MB in 1s (8895 kB/s)
+2026-11-04T12:29:35.4507749Z Reading package lists...
+2026-11-04T12:29:35.4924488Z Reading package lists...
+2026-11-04T12:29:35.7683979Z Building dependency tree...
+2026-11-04T12:29:35.7691830Z Reading state information...
+2026-11-04T12:29:36.0037833Z podman is already the newest version (4.9.3+ds1-1ubuntu0.2).
+2026-11-04T12:29:36.0038796Z strace is already the newest version (6.8-0ubuntu2).
+2026-11-04T12:29:36.0039416Z strace set to manually installed.
+2026-11-04T12:29:36.0040488Z 0 upgraded, 0 newly installed, 0 to remove and 16 not upgraded.
+2026-11-04T12:29:37.4347538Z go: downloading go1.27.2 (linux/amd64)
+2026-11-04T12:29:41.9906556Z go version go1.27.2 linux/amd64
+2026-11-04T12:29:46.2608913Z true
+2026-11-04T12:29:46.3152923Z Trying to pull docker.io/library/alpine@sha256:865b95f46d98cf867a156fe4a135ad3fe50d2056aa3f25ed31662dff6da4eb62...
+2026-11-04T12:29:46.9289962Z Getting image source signatures
+2026-11-04T12:29:46.9291100Z Copying blob sha256:1074353eec0db2c1d81d5af2671e56e00cf5738486f5762609ea33d606f88612
+2026-11-04T12:29:47.1407089Z Copying config sha256:e7b39c54cdeca0d2aae83114bb605753a5f5bc511fe8be7590e38f6d9f915dad
+2026-11-04T12:29:47.1423346Z Writing manifest to image destination
+2026-11-04T12:29:47.1496963Z e7b39c54cdeca0d2aae83114bb605753a5f5bc511fe8be7590e38f6d9f915dad
+2026-11-04T12:29:47.2064472Z ##[group]Run npx --yes --package=npm@11.9.0 --call 'npm run build'
+2026-11-04T12:29:47.2064965Z [36;1mnpx --yes --package=npm@11.9.0 --call 'npm run build'[0m
+2026-11-04T12:29:47.2087202Z shell: /usr/bin/bash -e {0}
+2026-11-04T12:29:47.2087466Z ##[endgroup]
+2026-11-04T12:29:47.7073286Z 
+2026-11-04T12:29:47.7074079Z > @parsa-emami/miragemesh-web@0.0.1 build
+2026-11-04T12:29:47.7074946Z > npm run prepare:web && npm run typecheck && vite build --config apps/web/vite.config.ts && npm run build:engine
+2026-11-04T12:29:47.7075369Z 
+2026-11-04T12:29:47.8080035Z 
+2026-11-04T12:29:47.8080747Z > @parsa-emami/miragemesh-web@0.0.1 prepare:web
+2026-11-04T12:29:47.8081231Z > node scripts/generate-web-data.mjs
+2026-11-04T12:29:47.8081447Z 
+2026-11-04T12:29:47.9483155Z 
+2026-11-04T12:29:47.9483959Z > @parsa-emami/miragemesh-web@0.0.1 typecheck
+2026-11-04T12:29:47.9484478Z > tsc -p tsconfig.json
+2026-11-04T12:29:47.9484649Z 
+2026-11-04T12:29:48.4010474Z [36mvite v8.3.5 [32mbuilding client environment for production...[36m[39m
+2026-11-04T12:29:48.4212416Z transforming...
+2026-11-04T12:29:48.5052578Z ✓ 27 modules transformed.
+2026-11-04T12:29:48.5303937Z rendering chunks...
+2026-11-04T12:29:48.5731911Z computing gzip size...
+2026-11-04T12:29:48.5785625Z dist/web/index.html                   0.78 kB │ gzip:  0.47 kB
+2026-11-04T12:29:48.5786408Z dist/web/assets/index-CmuT_Yiz.css    7.92 kB │ gzip:  2.47 kB
+2026-11-04T12:29:48.5786975Z dist/web/assets/index-Ui49zhKo.js   278.39 kB │ gzip: 84.78 kB
+2026-11-04T12:29:48.5787263Z 
+2026-11-04T12:29:48.5791702Z [32m✓ built in 177ms[39m
+2026-11-04T12:29:48.6943934Z 
+2026-11-04T12:29:48.6944722Z > @parsa-emami/miragemesh-web@0.0.1 build:engine
+2026-11-04T12:29:48.6945372Z > node scripts/build-engine.mjs
+2026-11-04T12:29:48.6945892Z 
+2026-11-04T12:30:03.2932923Z ##[group]Run npx --yes --package=npm@11.9.0 --call 'npm test'
+2026-11-04T12:30:03.2933393Z [36;1mnpx --yes --package=npm@11.9.0 --call 'npm test'[0m
+2026-11-04T12:30:03.2955229Z shell: /usr/bin/bash -e {0}
+2026-11-04T12:30:03.2955501Z ##[endgroup]
+2026-11-04T12:30:03.7972668Z 
+2026-11-04T12:30:03.7973357Z > @parsa-emami/miragemesh-web@0.0.1 test
+2026-11-04T12:30:03.7974234Z > node --test tests/web/*.test.mjs tests/contracts/*.test.mjs tests/engineering/*.test.mjs tests/release/*.mjs
+2026-11-04T12:30:03.7974671Z 
+2026-11-04T12:30:03.9866784Z ✔ CLI accepts the exact v1 fixture and reports validation without acceptance authority (19.524028ms)
+2026-11-04T12:30:05.1485509Z ✔ real schemas and Go reject every incompatible structural fixture (1005.108825ms)
+2026-11-04T12:30:05.1487094Z ✔ identifier, exact numeric, timestamp and UTF-8 byte boundaries agree with the Go validator (177.096919ms)
+2026-11-04T12:30:05.1488797Z ✔ invalid CLI combinations fail usage without launching a server (19.014078ms)
+2026-11-04T12:30:05.1490104Z ✔ result schema rejects contradictory authority, errors and incomplete-input digests (7.790733ms)
+2026-11-04T12:30:05.1491384Z ✔ an actual stdin read failure returns only a typed error and no partial digest (7.26601ms)
+2026-11-04T12:30:07.3861826Z ✔ an open stdin expires and either termination signal returns a redacted cancellation (2244.29674ms)
+2026-11-04T12:30:07.4032977Z ✔ C39 licensed positive and negative sensor events produce actual typed engine results (21.391458ms)
+2026-11-04T12:30:20.8466881Z ✔ certificate CLI issues a private scoped token, recovers and replays the same signed certificate (16719.700371ms)
+2026-11-04T12:30:20.8478039Z ✔ certificate CLI rejects unsafe key inputs, missing prerequisites and mixed runtime modes (218.720416ms)
+2026-11-04T12:30:22.9997501Z ✔ requires source-backed C22 replay, durable HTTP triage and fail-closed replay limits (650.047199ms)
+2026-11-04T12:30:23.0006447Z ✔ accepts executed engine, contract and real recovery suites with interleaved output (135.630341ms)
+2026-11-04T12:30:23.0015909Z ✔ rejects empty discovery and package-only success without executed tests (206.718252ms)
+2026-11-04T12:30:23.0016882Z ✔ rejects a missing required suite or anchor (89.335533ms)
+2026-11-04T12:30:23.0017561Z ✔ requires persistent sensor sequence and invalid-event regression anchors (87.603447ms)
+2026-11-04T12:30:23.0026345Z ✔ rejects a skipped anchor or a pass with no run (78.654726ms)
+2026-11-04T12:30:23.0027631Z ✔ rejects failures in any package and unfinished package results (145.751382ms)
+2026-11-04T12:30:23.0029369Z ✔ rejects malformed JSON events and missing input (144.129833ms)
+2026-11-04T12:30:23.0031147Z ✔ requires enrollment validation, durable consumption, scope, clock, concurrency and crash anchors (377.578033ms)
+2026-11-04T12:30:23.0033800Z ✔ requires mTLS acceptance, transport denial, typed verdicts, issuer-bound revocation, revoked replay and configuration anchors (247.580327ms)
+2026-11-04T12:30:23.0036061Z ✔ requires signed desired state, unsigned rejection, stale rejection and exact-byte signature anchors (851.07127ms)
+2026-11-04T12:30:23.0037988Z ✔ requires durable apply, real crash/recovery, shared-writer serialization and rejection anchors (868.745099ms)
+2026-11-04T12:30:23.0040093Z ✔ requires decoy observation, echo, request bound, prerequisite, restart and no-execution anchors (370.753113ms)
+2026-11-04T12:30:23.0042008Z ✔ requires decoy isolation control, cleanup, immutability, runtime bound, cancellation and workflow anchors (1048.736616ms)
+2026-11-04T12:30:23.0043828Z ✔ requires decoy egress, runtime limit, reconciliation, provider and adapter anchors (1377.541507ms)
+2026-11-04T12:30:23.0045903Z ✔ requires bounded spool persistence, rejection, concurrency, configuration and recovery anchors (1733.012396ms)
+2026-11-04T12:30:23.0047688Z ✔ requires durable overflow markers, replay, quota and gap-aware sequence anchors (759.308585ms)
+2026-11-04T12:30:23.0050067Z ✔ requires durable batch acknowledgement, lost-ACK replay, capacity, rejection and real recovery anchors (1628.887558ms)
+2026-11-04T12:30:23.0052306Z ✔ requires immutable segment rotation, explicit incomplete tails, crash recovery and projection anchors (3143.629779ms)
+2026-11-04T12:30:23.0054013Z ✔ requires derived index rebuild, dedup, conflict, loss and incomplete-tail anchors (527.75466ms)
+2026-11-04T12:30:23.0056054Z ✔ requires C19 explainable rules and durable alert projection anchors (303.97948ms)
+2026-11-04T12:30:23.0057846Z ✔ requires C20 append-only triage, strict requests, restart replay and forged-history anchors (510.20806ms)
+2026-11-04T12:30:23.0059990Z ✔ requires C21 snapshot and status boundary anchors even when other suites pass (535.245673ms)
+2026-11-04T12:30:23.0081117Z ✔ requires the review remediation boundaries (370.553304ms)
+2026-11-04T12:30:23.0082419Z ✔ requires C23 expiration, audit, real crash recovery and resurrection prevention (418.322248ms)
+2026-11-04T12:30:23.0084548Z ✔ requires C24 real TLS cutoff, atomic offline recovery and fail-closed certificate boundaries (579.678819ms)
+2026-11-04T12:30:23.0094516Z ✔ requires C30 full reference workflow, fixtures, negative cases, restart/restore and loopback boundaries (285.42599ms)
+2026-11-04T12:30:23.0095968Z ✔ requires C28 fixture, malformed-workload and loopback-only measurement boundaries (140.90225ms)
+2026-11-04T12:30:23.0097879Z ✔ requires C26 integrated offline spool, duplicate batch, restart and no-egress boundaries (148.016374ms)
+2026-11-04T12:30:23.0099654Z ✔ requires C25 signed authority, artifact integrity, anti-rollback and real recovery boundaries (727.392466ms)
+2026-11-04T12:30:23.0101145Z ✔ requires independently repeated C36 onboarding and real event fixture anchors (91.437169ms)
+2026-11-04T12:30:23.0102432Z ✔ requires C37 runtime cancellation and real-store restart/retry anchors (190.518045ms)
+2026-11-04T12:30:23.0103830Z ✔ requires C38 real-file backup, corrupt-copy refusal and segment-only retention anchors (195.976785ms)
+2026-11-04T12:30:23.0219730Z ✔ C36 loads the versioned scenario and licensed sensor-event outcomes (44.282438ms)
+2026-11-04T12:30:23.0220589Z ▶ C36 refuses missing, unlicensed, unsupported and malformed fixtures
+2026-11-04T12:30:23.0221217Z   ✔ missing (291.692768ms)
+2026-11-04T12:30:23.0221660Z   ✔ license (230.155588ms)
+2026-11-04T12:30:23.0222084Z   ✔ version (165.029211ms)
+2026-11-04T12:30:23.0222481Z   ✔ json (283.253271ms)
+2026-11-04T12:30:23.0222899Z   ✔ escape (345.428261ms)
+2026-11-04T12:30:23.0223805Z ✔ C36 refuses missing, unlicensed, unsupported and malformed fixtures (1318.150562ms)
+2026-11-04T12:30:23.0224716Z ✔ C36 command journal records real exits and refuses failed or timed-out commands (384.440568ms)
+2026-11-04T12:30:23.0225415Z ✔ accepts the declared C28 workload and fixture identities (5.53462ms)
+2026-11-04T12:30:23.0226088Z ✔ rejects malformed C28 workload metadata and inconsistent counts (3.707497ms)
+2026-11-04T12:30:23.0226744Z ✔ percentiles and latency summaries use nearest-rank values (3.402377ms)
+2026-11-04T12:30:23.0227458Z ✔ requires a fully enforced 2 vCPU / 2048 MiB scope for the evidence run (0.594386ms)
+2026-11-04T12:30:23.0228180Z ✔ accepts a complete measured observation and rejects unproved claims (8.220106ms)
+2026-11-04T12:30:23.0229415Z ✔ retention CLI previews, applies and replays without rewriting C05 (8188.816714ms)
+2026-11-04T12:30:23.0230525Z ✔ retention CLI rejects missing storage and mixed or incomplete modes (41.883875ms)
+2026-11-04T12:30:23.0231837Z ✔ update CLI persists revocation and exact scoped recovery across independent processes (604.780621ms)
+2026-11-04T12:30:23.0233350Z ✔ update CLI rejects unrelated flags, unsafe files and missing trust prerequisites before mutation (188.771726ms)
+2026-11-04T12:30:23.0234681Z ✔ C37 release APIs reject missing options with a typed usage error (2.466835ms)
+2026-11-04T12:30:23.0235965Z ✔ C40 complete package runs the reference workflow and real installed engine without a compiler (3404.032757ms)
+2026-11-04T12:30:23.0238269Z ✔ C38 policies use current locked versions and state actual data lifecycle limits (10.461569ms)
+2026-11-04T12:30:23.0239962Z ✔ C38 policy links resolve and operator entry guides expose both policies (7.993673ms)
+2026-11-04T12:30:23.0241164Z ✔ C38 support policy rejects placeholder contacts and unearned SLA claims (2.083838ms)
+2026-11-04T12:30:23.0242446Z ✔ C38 licensed fixtures bind required crash, ACK, quota and egress proof to real anchors (3.415448ms)
+2026-11-04T12:30:23.9135135Z ✔ C35 fixtures describe licensed positive, negative and expected outcomes (2897.519673ms)
+2026-11-04T12:30:24.2857827Z ✔ C35 binds the real engine to the shipped artifact and a reporting fixture engine to the synthetic upgrade (47.048592ms)
+2026-11-04T12:30:24.2860686Z ✔ C35 verifies the real artifact against an independently trusted key (324.221826ms)
+2026-11-04T12:30:25.4691495Z ✔ C35 rejects modified bytes, expired manifests, missing evidence and untrusted signers (1183.726504ms)
+2026-11-04T12:30:26.0749713Z ✔ C35 installs the verified release without touching accepted data (605.662152ms)
+2026-11-04T12:30:26.7732215Z ✔ C35 refuses stale, expired and replayed authority without changing state or data (698.047031ms)
+2026-11-04T12:30:27.0526498Z ✔ C35 rollback refuses newer or malformed accepted data (279.356229ms)
+2026-11-04T12:30:27.5998072Z ✔ C35 rolls back to the recorded release and can upgrade again without data loss (545.294736ms)
+2026-11-04T12:30:28.3323077Z ✔ C35 refuses rollback when the recorded release was modified (733.464595ms)
+2026-11-04T12:30:28.3324690Z ﹣ C35 refuses a foreign-platform install unless staging is explicit (0.39036ms) # host matches the artifact platform
+2026-11-04T12:30:28.3356853Z ✔ C35 scripts have no network capability and preserve the source-build path (3.522647ms)
+2026-11-04T12:30:28.3379632Z ✔ C35 documents the trust model, refusal codes and safe upgrade contract (2.005678ms)
+2026-11-04T12:30:29.1033607Z ▶ C37 repeated install and upgrade reject modified installed bytes without changing accepted data
+2026-11-04T12:30:29.1034925Z   ✔ install (764.726887ms)
+2026-11-04T12:30:29.8949020Z   ✔ upgrade (790.486392ms)
+2026-11-04T12:30:29.8950270Z ✔ C37 repeated install and upgrade reject modified installed bytes without changing accepted data (1556.246047ms)
+2026-11-04T12:30:30.0423818Z ▶ C37 installer refuses data paths occupied by release metadata or containing the install prefix
+2026-11-04T12:30:30.0425338Z   ✔ releases (146.485416ms)
+2026-11-04T12:30:30.1911563Z   ✔ attestations (149.85319ms)
+2026-11-04T12:30:30.3385574Z   ✔ ancestor (146.657576ms)
+2026-11-04T12:30:30.3386824Z ✔ C37 installer refuses data paths occupied by release metadata or containing the install prefix (444.164545ms)
+2026-11-04T12:30:30.4881641Z ✔ C37 installer refuses reserved metadata symlinks into accepted data (149.310781ms)
+2026-11-04T12:30:30.7995032Z ✔ C37 installer refuses a prefix alias into its signed source artifact (311.609374ms)
+2026-11-04T12:30:30.9190697Z ✔ C39 release check refuses verified status flags without a real verification report (973.609914ms)
+2026-11-04T12:30:30.9192783Z ✔ C39 historical audit checks all 38 original records and rejects relabelled evidence (4184.696781ms)
+2026-11-04T12:30:30.9194757Z ✔ C39 release input identity detects engine and fixture changes while allowing status certification (1526.643762ms)
+2026-11-04T12:30:30.9196595Z ✔ C39 licenses reject missing fixture provenance and unknown transitive licenses (1024.793217ms)
+2026-11-04T12:30:30.9197654Z ✔ C39 validates actual Go test streams and rejects skipped crash or lost-ACK anchors (816.61603ms)
+2026-11-04T12:30:30.9212396Z ✔ C39 refuses incomplete or wrong-source clone proof rather than trusting passed=true (2.448375ms)
+2026-11-04T12:30:31.6650566Z ✔ C39 release CLI refuses unknown options instead of ignoring a missing proof (743.520815ms)
+2026-11-04T12:30:32.4620765Z ✔ C39 rejects changed historical source inventories as well as changed evidence envelopes (796.885687ms)
+2026-11-04T12:30:33.0264090Z ✔ C39 rejects template reports before any readiness success (564.25879ms)
+2026-11-04T12:30:33.0315611Z ✔ C39 proof reads enforce hashes, missing-file refusal and path confinement (3.481395ms)
+2026-11-04T12:30:33.0317098Z ✔ C39 requires actual Node results including egress and data-safe signed upgrade checks (1.003424ms)
+2026-11-04T12:30:33.0318933Z ✔ C39 browser proof requires completed security, accessibility and workflow cases (0.756311ms)
+2026-11-04T12:30:33.0514376Z ✔ C33 fixtures validate contract, schema bounds and negative catalog (9.165045ms)
+2026-11-04T12:30:33.0515624Z ✔ C33 N-1 snapshot fixtures are cleanly accepted by existing domain validators (5.439912ms)
+2026-11-04T12:30:33.0516897Z ✔ C33 negative cases correctly identify error and failure handling modes (3.480164ms)
+2026-11-04T12:30:33.0518015Z ✔ C33 advertises only observed platforms and prevents sensitive leaks (1.95393ms)
+2026-11-04T12:30:33.0519748Z ✔ certificate boundary rejects inconsistent dates, scope duplication, status and secret fields (3.871645ms)
+2026-11-04T12:30:33.0521994Z ✔ certificate proxy accepts a bounded snapshot and refuses redirects, malformed, oversized and unavailable upstreams (134.617951ms)
+2026-11-04T12:30:33.0523625Z ✔ published certificate schema and nanosecond overlap boundaries agree with engine semantics (108.035845ms)
+2026-11-04T12:30:33.0524886Z ✔ C29 fixtures describe the readiness, redaction and bound contract (17.345944ms)
+2026-11-04T12:30:33.0526163Z ✔ real engine and authoritative store report ready, survive restart and reset diagnostics (130.976004ms)
+2026-11-04T12:30:33.0527709Z ✔ failures are typed and visible, optional providers degrade, and sentinels never reach logs (309.581586ms)
+2026-11-04T12:30:33.0528531Z ✔ optional provider failure degrades while engine recovery returns to ready (26.696199ms)
+2026-11-04T12:30:33.0529731Z ✔ standalone web shell reports web-only readiness and does not call an engine (7.930241ms)
+2026-11-04T12:30:33.0530665Z ✔ missing index makes the web component itself not ready (7.723569ms)
+2026-11-04T12:30:33.0531738Z ✔ public configuration fails closed on engine flags, external endpoints, unknown keys and project mismatch (1.828571ms)
+2026-11-04T12:30:33.0533024Z ✔ preview rejects hostile structure, excessive UTF-8 size and excessive complexity (1.685404ms)
+2026-11-04T12:30:33.0533904Z ✔ HTTP isolation, cache rules, health semantics, methods, traversal and symlink containment (151.282798ms)
+2026-11-04T12:30:33.0534764Z ✔ generated project and runtime identity agree with exactly forty original product tasks (3.463218ms)
+2026-11-04T12:30:33.0535739Z ✔ incident retention metadata is explicit and cannot claim complete coverage (2.375095ms)
+2026-11-04T12:30:33.0536923Z ✔ published incident response schema validates sources and rejects missing trace fields (96.193078ms)
+2026-11-04T12:30:33.0538267Z ✔ incident boundary rejects broken source links and inconsistent coverage before rendering (1.379042ms)
+2026-11-04T12:30:33.0540747Z ✔ incident proxy rejects redirect, malformed, oversized and unavailable upstreams without egress (137.826155ms)
+2026-11-04T12:30:37.8411534Z ✔ real launcher serves engine health, preserves disabled admission, stops and restarts (203.004544ms)
+2026-11-04T12:30:37.8413017Z ✔ local web proxy validates the exact read-only sensor response (28.196854ms)
+2026-11-04T12:30:37.8414317Z ✔ engine serves an empty C05-backed snapshot when explicit local policy is supplied (154.629349ms)
+2026-11-04T12:30:37.8415569Z ✔ engine crash stops the web listener with a failing outcome (18.485034ms)
+2026-11-04T12:30:37.8416726Z ✔ occupied web port remains owned by its server and launch cleans up its engine (19.706648ms)
+2026-11-04T12:30:37.8417983Z ✔ missing engine and invalid configuration fail before a successful launch (10.476324ms)
+2026-11-04T12:30:37.8419584Z ✔ health boundary rejects malformed, oversized, redirected, unavailable and stalled upstreams (2020.954083ms)
+2026-11-04T12:30:37.8420884Z ✔ synthetic C03 fixtures are versioned and cannot claim product readiness (2.199601ms)
+2026-11-04T12:30:37.8422490Z ✔ CLI SIGINT and SIGTERM release both listeners; supervisor death closes engine stdin (413.24517ms)
+2026-11-04T12:30:37.8423658Z ✔ unresponsive startup times out and cancellation terminates only the owned child (10059.380377ms)
+2026-11-04T12:30:37.8951984Z # example.invalid/synthetic/cmd/miragemesh
+2026-11-04T12:30:37.8952642Z cmd/miragemesh/main.go:2:15: undefined: missing
+2026-11-04T12:30:37.9000421Z ✔ failed Go compilation preserves the previous binary and removes staging output (60.920015ms)
+2026-11-04T12:30:37.9409115Z ✔ startup rejects forged non-loopback handshakes and unsafe health destinations (40.737154ms)
+2026-11-04T12:30:37.9570962Z ✔ default engine returns a typed disabled sensor response directly (16.132157ms)
+2026-11-04T12:30:38.0156248Z ✔ web and engine reject foreign Host and Origin before serving local data (25.252492ms)
+2026-11-04T12:30:38.0824622Z ✔ sensor responses conform to the published local API schema (95.511903ms)
+2026-11-04T12:30:38.1008167Z ✔ C32 fixtures validate contract, schema bounds and negative catalog (6.787825ms)
+2026-11-04T12:30:38.1010199Z ✔ local web server rejects foreign Host, spoofed Host, and cross-origin requests (46.031454ms)
+2026-11-04T12:30:38.1011586Z ✔ cache-control and security headers are strictly enforced across static and dynamic routes (45.009862ms)
+2026-11-04T12:30:38.1015547Z ✔ path confinement rejects path traversal and forbidden directory escapes (17.571801ms)
+2026-11-04T12:30:38.1016570Z ✔ engine address validation strictly confines engine calls to valid loopback addresses (2.693154ms)
+2026-11-04T12:30:38.1017544Z ✔ optional private reverse proxy allowedHosts configuration allows documented private ingress (9.629905ms)
+2026-11-04T12:30:38.1019118Z ✔ C34 deliverables and guides exist and are readable (9.815074ms)
+2026-11-04T12:30:38.1019951Z ✔ C34 fixtures validate contract schema, provenance, and required sections (5.852593ms)
+2026-11-04T12:30:38.1020965Z ✔ SECURITY.md defines conditional private reporting, best-effort support and supported source (1.09998ms)
+2026-11-04T12:30:38.1022111Z ✔ USER_GUIDE.md covers full core workflow, source builds, limits, privacy, and recovery without cloud dependency (1.334684ms)
+2026-11-04T12:30:38.1023244Z ✔ C34 negative cases properly model inert sentinels, 360px failure states, and egress denial (1.07996ms)
+2026-11-04T12:30:38.1024096Z ✔ setup validates toolchain/options and stops at the first failed install (1.588157ms)
+2026-11-04T12:30:38.1025046Z ✔ setup rejects missing tools, wrong pins and a non-rootless provider before building (0.532964ms)
+2026-11-04T12:30:38.1025880Z ✖ roadmap rejects absent resources, escaping paths and unproved completion (19.53287ms)
+2026-11-04T12:30:57.9707382Z ✔ complete artifact verifies its engine, web, offline resources, source, SBOM, notices and provenance (3349.377961ms)
+2026-11-04T12:30:57.9709462Z ✔ two builds from one source and toolchain are byte-identical (60.244385ms)
+2026-11-04T12:30:57.9711264Z ✔ C39 refuses a packaged source archive with different bytes even under unchanged provenance (23186.47591ms)
+2026-11-04T12:30:58.1310739Z ✔ packaged runtime starts in isolation and exposes only supported local surfaces (156.326688ms)
+2026-11-04T12:30:58.3158483Z ✔ runtime makes no internet connection by default (194.440115ms)
+2026-11-04T12:30:59.6059716Z ✔ negative artifact mutations fail with the recorded error semantics (1289.951454ms)
+2026-11-04T12:31:08.3177930Z ✔ C40 static publication is explicit and never enables engine integration (1.367094ms)
+2026-11-04T12:31:08.3179592Z ✔ C40 publication refuses a dirty source, wrong repository and an unapproved version (5.550877ms)
+2026-11-04T12:31:08.3180472Z ✔ accepts the repository reference scenario and its licensed fixtures (8.124342ms)
+2026-11-04T12:31:08.3181155Z ✔ rejects missing workflow requirements and fixture provenance (7.953544ms)
+2026-11-04T12:31:08.3181779Z ✔ rejects fixture metadata without provenance or license (7.170933ms)
+2026-11-04T12:31:08.3182472Z ✔ rejects escaping paths, unsupported versions and false engine success claims (7.933103ms)
+2026-11-04T12:31:08.3183792Z ✔ accepts the implemented scenario used by the actual clean-clone runner (2.944074ms)
+2026-11-04T12:31:08.3185310Z ✔ accepts the locked OCI digest and official Alpine package licenses while rejecting tag or digest substitution (27.479825ms)
+2026-11-04T12:31:08.3186288Z ✔ accepts exact versioned resources, an explicitly optional missing tool and synthetic fixtures (6.222962ms)
+2026-11-04T12:31:08.3187130Z ✔ rejects floating resources, missing official metadata and mismatched integrity (16.245929ms)
+2026-11-04T12:31:08.3187932Z ✔ rejects unavailable required resources and fixture escapes or checksum changes (6.29431ms)
+2026-11-04T12:31:08.3188896Z ✔ validates the versioned sensor snapshot and rejects malformed sensor states (6.266228ms)
+2026-11-04T12:31:08.3189829Z ✔ update snapshot rejects misleading authority, duplicate releases, private fields and expiry boundary truncation (2.568216ms)
+2026-11-04T12:31:08.3190854Z ✔ update proxy confines requests, validates actual response bytes and refuses redirects or oversized data (37.640259ms)
+2026-11-04T12:31:08.3191660Z ✔ update read-only API contract matches both published formats (3.153699ms)
+2026-11-04T12:31:08.3192095Z ℹ tests 170
+2026-11-04T12:31:08.3199874Z ℹ suites 0
+2026-11-04T12:31:08.3200263Z ℹ pass 168
+2026-11-04T12:31:08.3200607Z ℹ fail 1
+2026-11-04T12:31:08.3200967Z ℹ cancelled 0
+2026-11-04T12:31:08.3201322Z ℹ skipped 1
+2026-11-04T12:31:08.3201667Z ℹ todo 0
+2026-11-04T12:31:08.3202074Z ℹ duration_ms 64486.888146
+2026-11-04T12:31:08.3202328Z 
+2026-11-04T12:31:08.3202528Z ✖ failing tests:
+2026-11-04T12:31:08.3202730Z 
+2026-11-04T12:31:08.3203029Z test at tests/web/oss-tooling.test.mjs:37:1
+2026-11-04T12:31:08.3204094Z ✖ roadmap rejects absent resources, escaping paths and unproved completion (19.53287ms)
+2026-11-04T12:31:08.3205238Z   AssertionError [ERR_ASSERTION]: a pending unverified task must exist while the roadmap is incomplete
+2026-11-04T12:31:08.3206629Z       at TestContext.<anonymous> (file:///home/runner/work/Miragemesh/Miragemesh/tests/web/oss-tooling.test.mjs:47:10)
+2026-11-04T12:31:08.3207771Z       at async Test.run (node:internal/test_runner/test:1389:7)
+2026-11-04T12:31:08.3208837Z       at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+2026-11-04T12:31:08.3209433Z     generatedMessage: false,
+2026-11-04T12:31:08.3209822Z     code: 'ERR_ASSERTION',
+2026-11-04T12:31:08.3210178Z     actual: false,
+2026-11-04T12:31:08.3210487Z     expected: true,
+2026-11-04T12:31:08.3210817Z     operator: '==',
+2026-11-04T12:31:08.3211124Z     diff: 'simple'
+2026-11-04T12:31:08.3211410Z   }
+2026-11-04T12:31:08.3497266Z ##[error]Process completed with exit code 1.
+2026-11-04T12:31:08.3619461Z ##[group]Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+2026-11-04T12:31:08.3619915Z with:
+2026-11-04T12:31:08.3620263Z   name: onboarding-1572fa221b4eb408229a48bb9788b8a9032cbe52-41829681641
+2026-11-04T12:31:08.3620718Z   path: dist/ci/onboarding.json
+dist/ci/onboarding-logs/
+
+2026-11-04T12:31:08.3621055Z   retention-days: 14
+2026-11-04T12:31:08.3621302Z   if-no-files-found: error
+2026-11-04T12:31:08.3621578Z   compression-level: 6
+2026-11-04T12:31:08.3621825Z   overwrite: false
+2026-11-04T12:31:08.3622067Z   include-hidden-files: false
+2026-11-04T12:31:08.3622321Z   archive: true
+2026-11-04T12:31:08.3622538Z ##[endgroup]
+2026-11-04T12:31:08.5174157Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-04T12:31:08.5177584Z The least common ancestor is /home/runner/work/Miragemesh/Miragemesh/dist/ci. This will be the root directory of the artifact
+2026-11-04T12:31:08.5194852Z ##[error]No files were found with the provided path: dist/ci/onboarding.json
+dist/ci/onboarding-logs/. No artifacts will be uploaded.
+2026-11-04T12:31:08.5513260Z Post job cleanup.
+2026-11-04T12:31:08.6481356Z [command]/usr/bin/git version
+2026-11-04T12:31:08.6544866Z git version 2.56.0
+2026-11-04T12:31:08.6592255Z Temporarily overriding HOME='/home/runner/work/_temp/c880d9a9-6120-4b0a-9250-c349ae40118c' before making global git config changes
+2026-11-04T12:31:08.6595466Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-04T12:31:08.6597840Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Miragemesh/Miragemesh
+2026-11-04T12:31:08.6661486Z Removing SSH command configuration
+2026-11-04T12:31:08.6671043Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-04T12:31:08.6741964Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-04T12:31:08.7052367Z Removing HTTP extra header
+2026-11-04T12:31:08.7058459Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-04T12:31:08.7110477Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-04T12:31:08.7395605Z Removing includeIf entries pointing to credentials config files
+2026-11-04T12:31:08.7403717Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-04T12:31:08.7458249Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-04T12:31:08.7954302Z Cleaning up orphan processes
+2026-11-04T12:31:08.8322287Z Terminate orphan process: pid (2880) (catatonit)

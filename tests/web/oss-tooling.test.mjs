@@ -43,13 +43,16 @@ test('roadmap rejects absent resources, escaping paths and unproved completion',
   const unsafe = structuredClone(values); unsafe[0].commits[6].deliverables.push('../escape'); assert.ok(validate(...unsafe).some(e => e.includes('unsafe')));
   const circular = structuredClone(values); circular[0].commits[0].verification_commands[1].introduced_by = 'C06'; assert.ok(validate(...circular).some(e => e.includes('future task')));
   const unsafeFixture = structuredClone(values); unsafeFixture[0].commits[6].resources.fixture.path = '../escape'; assert.ok(validate(...unsafeFixture).some(e => e.includes('unsafe')));
-  const pending = values[1].commits.findIndex(t => t.status !== 'verified');
-  assert.ok(pending >= 0, 'a pending unverified task must exist while the roadmap is incomplete');
+  const pending = values[1].commits.length - 1;
+  const incomplete = structuredClone(values);
+  incomplete[1].readiness = 'LOCAL_USABLE';
+  Object.assign(incomplete[1].commits[pending], { status: 'planned', source_identity: null, evidence: [] });
+  assert.deepEqual(validate(...incomplete), []);
   for (const proof of [
     { source_identity: null, evidence: ['docs/evidence/synthetic.json'] },
     { source_identity: 'sha256:' + 'a'.repeat(64), evidence: [] },
   ]) {
-    const fake = structuredClone(values);
+    const fake = structuredClone(incomplete);
     Object.assign(fake[1].commits[pending], proof, { status: 'verified' });
     assert.ok(validate(...fake).some(e => e.includes('unproved')));
   }
