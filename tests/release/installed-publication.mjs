@@ -21,5 +21,7 @@ test('C40 complete package runs the reference workflow and real installed engine
   assert.equal(proof.installed_engine_restart_cycles, 2);
   assert.equal(proof.restore_equivalent, true);
   assert.equal(proof.accepted_state_unchanged, true);
+  assert.equal(proof.exact_fixture_event, true);
+  assert.equal(proof.malformed_event_rejected, true);
   assert.equal(proof.installed_root.replace(/\/$/, ''), artifact);
 });

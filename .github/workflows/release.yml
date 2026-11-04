@@ -124,9 +124,9 @@ jobs:
           gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --dir "$RUNNER_TEMP/published"
           cd "$RUNNER_TEMP/published"
           sha256sum -c SHA256SUMS.txt
-          gh attestation verify ./*.tar.gz --repo "$GITHUB_REPOSITORY" --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/release.yml"
+          gh attestation verify ./miragemesh-*-linux-amd64.tar.gz --repo "$GITHUB_REPOSITORY" --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/release.yml"
           gh attestation verify release-ed25519.pub --repo "$GITHUB_REPOSITORY" --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/release.yml"
-          tar -xzf ./*.tar.gz
+          tar -xzf ./miragemesh-*-linux-amd64.tar.gz
       - name: Install and repeat full workflow using only published bytes
         run: |
           cd "$RUNNER_TEMP/published"

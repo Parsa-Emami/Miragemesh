@@ -36,6 +36,8 @@ try {
   if (tar.status !== 0) throw new Error('Unable to archive the complete artifact.');
   for (const file of ['sbom.cdx.json', 'provenance.json']) await copyFile(join(artifact, file), join(output, file));
   await copyFile(join(root, 'dist/ci/v1-gate.json'), join(output, 'v1-gate.json'));
+  const capsule = spawnSync('tar', ['--sort=name', '--mtime=@0', '--owner=0', '--group=0', '--numeric-owner', '-czf', join(output, 'verification-capsule.tar.gz'), '-C', root, 'dist/ci/v1-gate.json', 'dist/ci/C39/verification'], { timeout: 120000 });
+  if (capsule.status !== 0) throw new Error('Unable to retain complete source-bound execution evidence.');
   const files = (await readdir(output)).sort();
   const checksums = Object.fromEntries(await Promise.all(files.map(async file => [file, await sha256File(join(output, file))])));
   await writeFile(join(output, 'SHA256SUMS.txt'), Object.entries(checksums).map(([file, digest]) => `${digest}  ${file}\n`).join(''));

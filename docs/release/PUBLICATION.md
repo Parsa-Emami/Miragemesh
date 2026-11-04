@@ -98,6 +98,8 @@ installer must refuse an absent or incompatible previous release without replaci
 newer accepted data. No claim of a tested upgrade from an invented public version
 is made. Physical power failure and multi-day capacity are separate unmeasured cases.
 
+The verification-capsule.tar.gz asset retains the full fresh readiness report and
+all hashed command logs beyond the temporary Actions artifact retention period.
 The public launch.json asset records installed-source/version, observed steps,
 negative outcomes, recovery and the actual workflow URL. Keep verification state
 private; only the bounded summary belongs in release evidence. Release signing
