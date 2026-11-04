@@ -9,11 +9,11 @@
   },
   "web_lockfile": {
     "path": "package-lock.json",
-    "sha256": "7239d6eafede3b5d3a7571f2948fcf4e57fb7ce9d39cd0a92f821773b9097be4",
+    "sha256": "e04280653678ae61b56f55aa0035b435011bfd9e37688591b683a8c664353948",
     "dependencies": {
       "react": "19.3.1",
       "react-dom": "19.3.1",
-      "vite": "8.3.4",
+      "vite": "8.3.5",
       "typescript": "7.0.2",
       "@types/react": "19.3.0",
       "@types/react-dom": "19.3.0",

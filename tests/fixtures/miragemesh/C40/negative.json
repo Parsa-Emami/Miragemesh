@@ -1,0 +1,16 @@
+{
+  "fixture_version": 1,
+  "license": "Apache-2.0",
+  "provenance": "Repository-authored synthetic C40 publication and installed-artifact verification contract. No real traffic or private keys.",
+  "cases": [
+    "dirty or wrong source",
+    "unapproved version or repository",
+    "changed artifact checksum",
+    "untrusted signing key",
+    "replayed enrollment token",
+    "lost ACK and duplicate delivery",
+    "spool overflow",
+    "writer SIGKILL and quota exhaustion",
+    "default egress denial"
+  ]
+}

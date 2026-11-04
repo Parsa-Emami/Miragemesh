@@ -13,7 +13,10 @@ import { verifyArtifact } from './verify-artifact.mjs';
 const defaultOutput = join(repository, 'dist/release');
 const copyEntries = [
   'LICENSE', 'NOTICE', 'THIRD_PARTY_NOTICES.md', 'OPEN_SOURCE.md', 'package.json',
-  'scripts/start-local.mjs', 'scripts/serve-web.mjs',
+  'scripts/start-local.mjs', 'scripts/serve-web.mjs', 'scripts/verify-installed-release.mjs',
+  'scripts/install-release.mjs', 'scripts/verify-release.mjs', 'scripts/verify-artifact.mjs', 'scripts/package-source.mjs', 'scripts/oss-bootstrap.mjs',
+  'tests/fixtures/miragemesh/C31', 'tests/fixtures/miragemesh/C40',
+  'docs/release/PUBLICATION.md', 'docs/release/RELEASE_MANIFEST.json',
   'apps/web/src/lib', 'ops/web', 'ops/runtime-requirements.json', 'ops/diagnostics.md',
   'docs/engineering/toolchain-lock.json', 'docs/product/REFERENCE_WORKFLOW.md', 'docs/release/ARTIFACTS.md',
   'docs/release/SERVICE_POLICY.md', 'docs/release/MAINTENANCE.md', 'SECURITY.md',
@@ -74,7 +77,7 @@ async function copyEntry(root, name) {
 
 async function normalizeModes(root) {
   const files = await listDirectoryFiles(root);
-  for (const name of files) await chmod(join(root, ...name.split('/')), name === 'dist/engine/miragemesh' ? 0o755 : 0o644);
+  for (const name of files) await chmod(join(root, ...name.split('/')), ['dist/engine/miragemesh', 'dist/verification/reference-workflow'].includes(name) ? 0o755 : 0o644);
   async function directories(directory) {
     const entries = await readdir(directory, { withFileTypes: true });
     for (const entry of entries) {
@@ -191,8 +194,9 @@ The complete source and build recipe are in \`source/miragemesh-${version}-sourc
 with its own provenance at \`source/provenance.json\`. Offline resources and their hashes
 are listed in \`offline/resources.json\`.
 
-This is a locally verified build, not a published release. C40 remains the authorized
-published-artifact and installed full-workflow gate. No hosted service, public domain,
+Publication status belongs to the authenticated GitHub release and its C40 evidence.
+Run \`node scripts/verify-installed-release.mjs <report-path>\` from a verified installation
+to repeat the bundled synthetic reference workflow and actual installed engine views. No hosted service, public domain,
 login service or telemetry is included.
 `;
 }
@@ -253,6 +257,9 @@ export async function packageWeb({ output: destination = defaultOutput, build = 
   await cp(join(repository, 'dist/web'), join(output, 'dist/web'), { recursive: true, force: true });
   await mkdir(join(output, 'dist/engine'), { recursive: true });
   await cp(join(repository, 'dist/engine/miragemesh'), join(output, 'dist/engine/miragemesh'), { force: true });
+
+  await mkdir(join(output, 'dist/verification'), { recursive: true });
+  run('go', ['build', '-trimpath', '-o', join(output, 'dist/verification/reference-workflow'), './tests/fixtures/miragemesh/C30/seed'], { env: { ...process.env, GOTOOLCHAIN: 'go1.27.2' } });
 
   const packageJson = JSON.parse(await readFile(join(repository, 'package.json'), 'utf8'));
   const version = packageJson.version;

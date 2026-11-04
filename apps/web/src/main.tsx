@@ -4,12 +4,13 @@ import project from './generated/project.json';
 import { validateRuntimeConfig, validateHealth } from './lib/runtime-config.mjs';
 import { inspectJson } from './lib/preview.mjs';
 import Sensors from './pages/Sensors';
+import PublicWorkspace from './pages/PublicWorkspace';
 import Certificates from './pages/Certificates';
 import Updates from './pages/Updates';
 import Incidents from './pages/Incidents';
 import './styles.css';
 
-type Runtime = { projectId: string; apiBasePath: string; engineEnabled: false; maxPreviewBytes: number };
+type Runtime = { projectId: string; apiBasePath: string; engineEnabled: false; maxPreviewBytes: number; deployment?: 'local' | 'static-public' };
 type Route = 'workspace' | 'roadmap' | 'sensors' | 'incidents' | 'certificates' | 'updates';
 function route(): Route { return location.hash === '#updates' ? 'updates' : location.hash === '#certificates' ? 'certificates' : location.hash === '#roadmap' ? 'roadmap' : location.hash === '#sensors' ? 'sensors' : location.hash === '#incidents' ? 'incidents' : 'workspace'; }
 
@@ -20,6 +21,7 @@ function App({ config }: { config: Runtime }) {
   const [preview, setPreview] = useState<{ name: string; bytes: number; fields: string[] } | null>(null);
   const [error, setError] = useState('');
   const [engine, setEngine] = useState('Checking engine runtime…');
+  const publicMode = config.deployment === 'static-public';
   const busy = useRef(false);
   const generation = useRef(0);
   useEffect(() => {
@@ -28,6 +30,7 @@ function App({ config }: { config: Runtime }) {
     return () => removeEventListener('hashchange', onRoute);
   }, []);
   useEffect(() => {
+    if (publicMode) return;
     const controller = new AbortController();
     async function check() {
       try {
@@ -57,12 +60,12 @@ function App({ config }: { config: Runtime }) {
   const tasks = project.tasks.filter(task => (stage === 'all' || task.stage === stage) && `${task.id} ${task.title}`.toLowerCase().includes(query.toLowerCase()));
   return <div className="app" style={{ '--accent': project.accent } as React.CSSProperties}>
     <a className="skip" href="#content">Skip to content</a>
-    <header><a className="brand" href="#workspace"><span className="mark" aria-hidden="true">{project.name.slice(0, 1)}</span>{project.name}</a><nav aria-label="Main"><a href="#workspace" aria-current={page === 'workspace' ? 'page' : undefined}>Workspace</a><a href="#sensors" aria-current={page === 'sensors' ? 'page' : undefined}>Sensors</a><a href="#incidents" aria-current={page === 'incidents' ? 'page' : undefined}>Incidents</a><a href="#certificates" aria-current={page === 'certificates' ? 'page' : undefined}>Certificates</a><a href="#updates" aria-current={page === 'updates' ? 'page' : undefined}>Updates</a><a href="#roadmap" aria-current={page === 'roadmap' ? 'page' : undefined}>Roadmap</a></nav><span className="badge">Foundation · 0.0.1</span></header>
+    <header><a className="brand" href="#workspace"><span className="mark" aria-hidden="true">{project.name.slice(0, 1)}</span>{project.name}</a><nav aria-label="Main"><a href="#workspace" aria-current={page === 'workspace' ? 'page' : undefined}>Workspace</a><a href="#sensors" aria-current={page === 'sensors' ? 'page' : undefined}>Sensors</a><a href="#incidents" aria-current={page === 'incidents' ? 'page' : undefined}>Incidents</a><a href="#certificates" aria-current={page === 'certificates' ? 'page' : undefined}>Certificates</a><a href="#updates" aria-current={page === 'updates' ? 'page' : undefined}>Updates</a><a href="#roadmap" aria-current={page === 'roadmap' ? 'page' : undefined}>Roadmap</a></nav><span className="badge">{publicMode ? 'Public workspace · 0.0.1' : 'Local workspace · 0.0.1'}</span></header>
     <main id="content" tabIndex={-1}>
       <div className="eyebrow">{project.mode.replaceAll('-', ' ')} · browser workspace</div>
       <h1>{page === 'workspace' ? project.title : page === 'sensors' ? 'Sensor health and spool pressure.' : page === 'incidents' ? 'Incident replay and triage.' : page === 'updates' ? 'Signed sensor updates.' : page === 'certificates' ? 'Certificate rotation and recovery.' : 'A clear path to release.'}</h1>
       <p className="intro">{page === 'workspace' ? project.description : page === 'sensors' ? 'Review recent sensor activity, applied configuration freshness and durable spool losses from local engine state.' : page === 'incidents' ? 'Trace local findings to their exact event segments and append a review status with a reason.' : page === 'updates' ? 'Review signed release authority, local file verification and recovery decisions.' : page === 'certificates' ? 'Review sensor certificates, overlap deadlines and operator recovery options.' : 'Track the product plan separately from the web foundation. Each task includes an acceptance target.'}</p>
-      {page === 'workspace' ? <>
+      {publicMode && page !== 'roadmap' ? <PublicWorkspace section={page}/> : page === 'workspace' ? <>
         <section className="notice" aria-label="Availability" aria-live="polite"><span className="dot"/>{engine} Domain processing is unavailable; this release does not produce security results.</section>
         <div className="grid"><section className="panel"><div className="eyebrow">Local file preview</div><h2>Inspect a document</h2><p>Choose a JSON file to inspect its top-level fields. The file stays in memory in this tab and is not uploaded or saved.</p><label className="file-button">Choose JSON file<input aria-label="Choose JSON file" type="file" accept=".json,application/json" onChange={event => { void importFile(event.target.files?.[0]); event.target.value = ''; }}/></label><p className="muted">Maximum {Math.round(config.maxPreviewBytes / 1024)} KiB · JSON structure only</p>
           {error && <p role="alert" className="error">{error}</p>}
@@ -75,7 +78,7 @@ function App({ config }: { config: Runtime }) {
 }
 
 const root = createRoot(document.getElementById('root')!);
-fetch('/runtime-config.json', { cache: 'no-store', credentials: 'omit' }).then(async response => {
+fetch(new URL('runtime-config.json', document.baseURI), { cache: 'no-store', credentials: 'omit' }).then(async response => {
   if (!response.ok) throw new Error('Workspace configuration is unavailable.');
   return validateRuntimeConfig(await response.json(), project.slug) as Runtime;
 }).then(config => root.render(<StrictMode><App config={config}/></StrictMode>)).catch(() => {

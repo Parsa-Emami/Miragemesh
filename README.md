@@ -1,5 +1,7 @@
 # MirageMesh
 
+[Public browser workspace](https://parsa-emami.github.io/Miragemesh/) · [Release downloads](https://github.com/Parsa-Emami/Miragemesh/releases) · [Verify and install](docs/release/PUBLICATION.md)
+
 [![Source](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/contracts.yml/badge.svg?branch=main)](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/contracts.yml?query=branch%3Amain) [![Plan](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/plan.yml/badge.svg?branch=main)](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/plan.yml?query=branch%3Amain) [![Web](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/web.yml/badge.svg?branch=main)](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/web.yml?query=branch%3Amain)
 
 [CI source integrity and dependency updates](docs/engineering/CI_SOURCE_INTEGRITY.md)

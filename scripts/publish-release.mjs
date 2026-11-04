@@ -1,0 +1,32 @@
+import { readFile, readdir } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+import { join, resolve } from 'node:path';
+import { sha256File } from './package-source.mjs';
+import { validatePublication } from './publication-contract.mjs';
+
+if (process.env.GITHUB_ACTIONS !== 'true' || process.env.GITHUB_REPOSITORY !== 'Parsa-Emami/Miragemesh') throw new Error('Use the authorized repository publication workflow.');
+const root = resolve(import.meta.dirname, '..');
+const read = async path => JSON.parse(await readFile(join(root, path), 'utf8'));
+const candidate = await read('dist/publication/candidate.json');
+const plan = validatePublication(await read('docs/release/RELEASE_MANIFEST.json'), { clean: !candidate.source.dirty, repository: process.env.GITHUB_REPOSITORY, commit: candidate.source.head_commit, version: (await read('package.json')).version });
+if (candidate.source.head_commit !== process.env.RELEASE_SOURCE_SHA || candidate.tag !== plan.tag || candidate.readiness !== true) throw new Error('Publication source differs from the verified candidate.');
+const run = args => {
+  const result = spawnSync('gh', args, { encoding: 'utf8', timeout: 120000, maxBuffer: 4 * 1024 * 1024 });
+  if (result.status !== 0) throw new Error(result.stderr || 'GitHub publication failed.');
+  return result.stdout;
+};
+const api = path => JSON.parse(run(['api', path]));
+const repository = process.env.GITHUB_REPOSITORY;
+if (api(`repos/${repository}/branches/main`).commit.sha !== candidate.source.head_commit) throw new Error('Main advanced; wait for the newer candidate checks.');
+const required = ['contracts', 'plan-consistency', 'engine-runtime', 'web-foundation', 'release-gate'];
+const runs = api(`repos/${repository}/actions/runs?head_sha=${candidate.source.head_commit}&event=push&per_page=100`).workflow_runs;
+for (const name of required) if (!runs.some(run => run.name === name && run.status === 'completed' && run.conclusion === 'success')) throw new Error(`Required workflow is not successful: ${name}`);
+const releases = api(`repos/${repository}/releases?per_page=100`);
+if (releases.some(release => release.tag_name === plan.tag)) throw new Error('Release already exists; refusing to overwrite publication.');
+for (const [file, digest] of Object.entries(candidate.checksums)) if (!/^[a-zA-Z0-9._-]+$/.test(file) || await sha256File(join(root, 'dist/publication', file)) !== digest) throw new Error('Publication asset checksum mismatch.');
+const tagProbe = spawnSync('gh', ['api', `repos/${repository}/git/ref/tags/${plan.tag}`], { encoding: 'utf8', timeout: 30000 });
+if (tagProbe.status === 0) throw new Error('Tag already exists; refusing to reuse or move a publication tag.');
+const files = (await readdir(join(root, 'dist/publication'))).sort().map(file => join(root, 'dist/publication', file));
+const notes = `MirageMesh ${plan.version}: complete Linux amd64 local-first release.\n\nExact source: ${candidate.source.head_commit}. All five source-bound checks passed. Published-artifact installation verification is running; this release remains a prerelease until that separate host passes.\n\nArchive and release-ed25519.pub have GitHub OIDC build attestations. Authenticate both with gh attestation verify --repo ${repository}, then use the detached Ed25519 manifest and installer. Key fingerprint: ${candidate.key_fingerprint}.\n\nPublic interface: ${plan.public_site}. Engine and sensors run locally. Installation and actual limits: docs/release/PUBLICATION.md. Apache-2.0.`;
+run(['release', 'create', plan.tag, ...files, '--repo', repository, '--target', candidate.source.head_commit, '--title', `MirageMesh ${plan.version}`, '--notes', notes, '--prerelease']);
+console.log(JSON.stringify({ passed: true, tag: plan.tag, source: candidate.source.head_commit, prerelease: true }));
