@@ -9,6 +9,9 @@ test('page search works with keyboard, filtering, escape and focus return', asyn
   await expect(input).toBeFocused();
   await input.fill('not-a-page');
   await expect(dialog).toContainText('No pages match');
+  await page.keyboard.press('Escape');
+  await expect(opener).toBeFocused();
+  await opener.click();
   await input.fill('incident');
   await input.press('Tab');
   await expect(dialog.getByRole('link', { name: /Incidents/ })).toBeFocused();
@@ -77,3 +80,13 @@ test('unavailable preference storage does not prevent the public workspace', asy
   await page.getByRole('button', { name: 'Toggle color theme' }).click();
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
+
+ test('skip link preserves the selected route', async ({ page }) => {
+  await page.goto('./#incidents');
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('#content')).toBeFocused();
+  await expect(page).toHaveURL(/#incidents$/);
+  await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Incidents', exact: true })).toHaveAttribute('aria-current', 'page');
+ });

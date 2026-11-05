@@ -35,7 +35,7 @@ export default function AppShell({ page, publicMode, children }: { page: Route; 
   }, []);
   const matches = navigation.filter(item => `${item.title} ${item.description}`.toLowerCase().includes(search.toLowerCase()));
   return <div className="app">
-    <a className="skip" href="#content">Skip to content</a>
+    <a className="skip" href="#content" onClick={event => { event.preventDefault(); document.getElementById('content')?.focus(); }}>Skip to content</a>
     <aside className="sidebar">
       <a className="brand" href="#workspace"><span className="brand-mark"><Icon name="shield-check"/></span><span>MirageMesh<small>Security workspace</small></span></a>
       <div className="workspace-switch"><span className="workspace-avatar"><Icon name={publicMode ? 'book-open' : 'terminal'}/></span><div><strong>{publicMode ? 'Public workspace' : 'Local workspace'}</strong><small>{publicMode ? 'Explore the product' : 'On your own host'}</small></div><span className="version">0.0.1</span></div>
