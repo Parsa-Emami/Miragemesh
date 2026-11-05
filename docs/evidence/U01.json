@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "task": "U01",
+  "date": "2026-11-05",
+  "base_commit": "d4dc9c829a1364a45d1202a50489be753cc5d46e",
+  "scope": "21st-listed shadcn source adaptation, all existing UI routes, truthful sample tour, validated local overview and strict product review. No new engine readiness claim.",
+  "status": "candidate; full supported-host CI pending",
+  "commands": [
+    {
+      "command": "npm run validate:plan",
+      "exit_code": 0,
+      "observed": "40 detailed tasks valid; no dependency-ready C task"
+    },
+    {
+      "command": "npm run build:pages",
+      "exit_code": 0,
+      "log": "docs/evidence/U01/local-pages-build.log"
+    },
+    {
+      "command": "node --test tests/web/foundation.test.mjs tests/web/pages.test.mjs tests/web/ui-provenance.test.mjs",
+      "exit_code": 0,
+      "passed": 6,
+      "log": "docs/evidence/U01/local-focused-tests.log"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 1,
+      "passed": 120,
+      "failed": 44,
+      "skipped": 1,
+      "limitation": "This executor has neither Go nor the built engine/provider prerequisites. Runtime/package cases fail for missing engine/build; this is not a passing full-suite result. Supported-host CI must pass before merge.",
+      "log": "docs/evidence/U01/local-node-prerequisite-failure.log"
+    }
+  ],
+  "manual_review": {
+    "before_screenshots": "docs/design/audit-2026-11-05/",
+    "local_preview": "Browser rejected terminal.local:4187 with ERR_BLOCKED_BY_CLIENT. No local visual verification claim. Verify hosted UI after passing CI/deployment."
+  },
+  "product_gaps": "docs/product/GLOBAL_READINESS_REVIEW.md",
+  "historical_release_unchanged": "v0.0.1",
+  "protected_paths_modified": false
+}

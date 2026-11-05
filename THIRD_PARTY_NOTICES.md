@@ -14,6 +14,15 @@ Updated 2026-10-25 for the C31 complete local artifact. This index distinguishes
 
 The built JavaScript bundle contains React, React DOM and scheduler. The Go license text covers the runtime and standard library compiled into `dist/engine/miragemesh`. The source archive contains the corresponding source and build recipe.
 
+## U01 redistributed UI source and assets
+
+| Component | Exact source revision | License | Notice |
+|---|---|---|---|
+| shadcn/ui primitives, adapted from the family listed on 21st.dev | `8a3536678a528cc012b9e62484290e79d0be410f` | MIT | `licenses/shadcn-MIT.txt` |
+| Lucide icons, including Feather-derived icons | `91a1359b5ea235f620ba3a9682015ab8d6ada3af` | ISC AND MIT | `licenses/lucide-ISC-MIT.txt` |
+
+Immutable upstream URLs and per-icon SHA-256 values are in `docs/design/UI_PROVENANCE.json`. The corresponding source and notices are included in the source archive. No 21st code-serving or telemetry service is required at runtime.
+
 ## Host prerequisites, not redistributed
 
 | Resource | Version | License | Route |

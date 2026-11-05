@@ -155,5 +155,13 @@
       "errors": []
     },
     "scope": "Fresh current-source validation after correcting an independent test fixture. Published artifacts and their execution receipts still certify aac475843e2dfb617e1eb0b9561ca7e3c9aca749."
+  },
+  "follow_up_u01": {
+    "date": "2026-11-05",
+    "base_commit": "d4dc9c829a1364a45d1202a50489be753cc5d46e",
+    "status": "UI and strict review implemented; supported-host checks and Pages deployment pending",
+    "plan": "plans/UI_UPGRADE.md",
+    "evidence": "docs/evidence/U01.json",
+    "next": "Run candidate CI, fix observed failures, publish UI and verify the public view; do not change historical C01-C40 evidence or v0.0.1 artifacts."
   }
 }

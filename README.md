@@ -12,6 +12,9 @@ Open-source local-first web application under [Apache-2.0](LICENSE). MirageMesh 
 
 ## Documentation & Guides
 
+- **[Strict product-readiness review](docs/product/GLOBAL_READINESS_REVIEW.md)**: Current limits, mature-product comparisons and prioritized acceptance gates. [فارسی](docs/product/GLOBAL_READINESS_REVIEW_FA.md).
+- **[21st-based design system](docs/design/DESIGN_SYSTEM.md)**: Component provenance, tokens and interaction boundaries.
+
 - **[Local Service and Privacy Policy](docs/release/SERVICE_POLICY.md)**: Actual data locations, export/deletion limits, retention and tested backup/recovery.
 - **[Maintenance Policy](docs/release/MAINTENANCE.md)**: Supported source/platforms, dependency review, security support and data-safe upgrades.
 
@@ -51,7 +54,7 @@ No Python, database service, paid/cloud account, public domain, or sibling clone
 
 Enroll sensor -> apply signed config -> isolated decoy event -> disconnect -> spool -> reconnect with duplicate ACK test -> triage and retention gap check.
 
-[C30](plans/commits/C30.md) proves the first locally usable supported product from a clean clone, including negative cases, restart and restore. [C31](docs/release/ARTIFACTS.md) packages that product with the real engine, web build, offline resources, source archive, SBOM, notices, checksums and provenance. [C40](plans/commits/C40.md) remains the complete published OSS v1 gate. [Runtime resources](ops/runtime-requirements.json).
+[C30](plans/commits/C30.md) proves the first locally usable supported product from a clean clone, including negative cases, restart and restore. [C31](docs/release/ARTIFACTS.md) packages that product with the real engine, web build, offline resources, source archive, SBOM, notices, checksums and provenance. [C40](plans/commits/C40.md) records the completed bounded publication and installed-workflow gate. [Runtime resources](ops/runtime-requirements.json).
 
 ---
 

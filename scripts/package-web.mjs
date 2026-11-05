@@ -118,6 +118,8 @@ function createSbom({ version, source, engineSha256, toolchain, lock }) {
     { 'bom-ref': 'pkg:npm/react@19.3.1', type: 'library', name: 'react', version: '19.3.1', purl: 'pkg:npm/react@19.3.1', licenses: [{ license: { id: 'MIT' } }] },
     { 'bom-ref': 'pkg:npm/react-dom@19.3.1', type: 'library', name: 'react-dom', version: '19.3.1', purl: 'pkg:npm/react-dom@19.3.1', licenses: [{ license: { id: 'MIT' } }] },
     { 'bom-ref': 'pkg:npm/scheduler@0.28.0', type: 'library', name: 'scheduler', version: '0.28.0', purl: 'pkg:npm/scheduler@0.28.0', licenses: [{ license: { id: 'MIT' } }] },
+    { 'bom-ref': 'ui:shadcn@8a3536678a528cc012b9e62484290e79d0be410f', type: 'library', name: 'shadcn-ui-adapted', version: '8a3536678a528cc012b9e62484290e79d0be410f', licenses: [{ license: { id: 'MIT' } }], externalReferences: [{ type: 'vcs', url: 'https://github.com/shadcn-ui/ui/tree/8a3536678a528cc012b9e62484290e79d0be410f' }] },
+    { 'bom-ref': 'ui:lucide@91a1359b5ea235f620ba3a9682015ab8d6ada3af', type: 'library', name: 'lucide-icons', version: '91a1359b5ea235f620ba3a9682015ab8d6ada3af', licenses: [{ expression: 'ISC AND MIT' }], externalReferences: [{ type: 'vcs', url: 'https://github.com/lucide-icons/lucide/tree/91a1359b5ea235f620ba3a9682015ab8d6ada3af' }] },
     { 'bom-ref': 'go-stdlib-1.27.2', type: 'library', name: 'go-stdlib', version: '1.27.2', licenses: [{ license: { id: 'BSD-3-Clause' } }], properties: [{ name: 'miragemesh:included-in', value: 'dist/engine/miragemesh' }] },
   ];
   const host = lock.resources.map(resource => {
@@ -146,7 +148,7 @@ function createSbom({ version, source, engineSha256, toolchain, lock }) {
     metadata: { component: rootComponent, properties: [{ name: 'miragemesh:artifact', value: `miragemesh-${version}-linux-amd64` }] },
     components,
     dependencies: [
-      { ref: rootRef, dependsOn: bundled.filter(item => ['react', 'react-dom', 'scheduler', 'go-stdlib'].includes(item.name)).map(item => item['bom-ref']) },
+      { ref: rootRef, dependsOn: bundled.map(item => item['bom-ref']) },
       { ref: 'pkg:npm/react-dom@19.3.1', dependsOn: ['pkg:npm/react@19.3.1', 'pkg:npm/scheduler@0.28.0'] },
     ],
   };

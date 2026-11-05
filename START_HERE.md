@@ -1,6 +1,6 @@
 # Continue MirageMesh
 
-Current: locally usable supported Linux profile through C38. C39 verifies source-bound local release readiness; C40 publication and installed-release proof remain separate.
+Current: the bounded Linux local profile is published as v0.0.1 with C01-C40 verified against their recorded sources. Public Pages is a static interface. Read docs/product/GLOBAL_READINESS_REVIEW.md for the separate product-readiness gaps and plans/UI_UPGRADE.md for the authorized UI follow-up.
 
 Use Linux amd64, Node 24.19.0, npm CLI 11.9.0, installed Go and rootless Podman 4.9.3. Setup selects Go 1.27.2 through the official Go toolchain mechanism.
 

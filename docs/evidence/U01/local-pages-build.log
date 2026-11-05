@@ -1,0 +1,16 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 build:pages
+> node scripts/build-pages.mjs
+
+vite v8.3.5 building client environment for pages...
+transforming...
+✓ 31 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/pages/index.html                   0.82 kB │ gzip:  0.47 kB
+dist/pages/assets/index-uXMS0lTD.css   21.79 kB │ gzip:  5.15 kB
+dist/pages/assets/index-BmEwB0k-.js   295.86 kB │ gzip: 88.95 kB
+
+✓ built in 334ms
+Built public static workspace at /Miragemesh/; engine integration remains disabled.
