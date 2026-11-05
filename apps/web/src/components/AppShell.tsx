@@ -51,7 +51,7 @@ export default function AppShell({ page, publicMode, children }: { page: Route; 
       <main id="content" tabIndex={-1}>{children}</main>
       <footer><span>MirageMesh <span className="footer-separator">/</span> Evidence before conclusions.</span><span>No telemetry · No automatic file uploads</span></footer>
     </div>
-    <dialog ref={dialog} className="command-dialog" aria-labelledby="search-title" onCancel={event => { event.preventDefault(); closeSearch(); }} onClick={event => { if (event.target === event.currentTarget) closeSearch(); }}>
+    <dialog ref={dialog} className="command-dialog" aria-labelledby="search-title" onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); closeSearch(); } }} onCancel={event => { event.preventDefault(); closeSearch(); }} onClick={event => { if (event.target === event.currentTarget) closeSearch(); }}>
       <div className="command-heading"><h2 id="search-title">Go to a workspace page</h2><Button variant="ghost" className="icon-button" aria-label="Close workspace search" onClick={closeSearch}><Icon name="x"/></Button></div>
       <label className="command-input"><Icon name="search"/><input ref={searchInput} type="search" aria-label="Find a workspace page" placeholder="Search pages…" value={search} onChange={event => setSearch(event.target.value)}/></label>
       <nav aria-label="Search results">{matches.map(item => <a key={item.id} href={`#${item.id}`} onClick={() => dialog.current?.close()}><Icon name={item.icon}/><div><strong>{item.title}</strong><small>{item.description}</small></div><Icon name="arrow-right"/></a>)}</nav>

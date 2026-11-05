@@ -10,6 +10,7 @@ test('page search works with keyboard, filtering, escape and focus return', asyn
   await input.fill('not-a-page');
   await expect(dialog).toContainText('No pages match');
   await page.keyboard.press('Escape');
+  await expect(dialog).not.toBeVisible();
   await expect(opener).toBeFocused();
   await opener.click();
   await input.fill('incident');

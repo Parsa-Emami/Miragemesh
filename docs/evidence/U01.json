@@ -73,6 +73,16 @@
         "Wait for the workspace heading before testing keyboard order."
       ],
       "status": "fixes implemented; fresh hosted verification pending"
+    },
+    {
+      "source_commit": "af86c8f2cb31aa41a621fefa870cbcc603e852ec",
+      "workflow_run": 41971407990,
+      "passed": 7,
+      "failed": 1,
+      "log": "docs/evidence/U01/third-public-browser-failure.log",
+      "finding": "Escape while the search field had a query did not close the dialog on the first keypress; native search-field clearing took precedence.",
+      "fix": "Handle Escape keydown explicitly, prevent the native search clear, close the dialog and restore the trigger. Assert both dismissal and focus without removing any check.",
+      "status": "fix implemented; fresh hosted verification pending"
     }
   ]
 }
