@@ -38,5 +38,25 @@
   },
   "product_gaps": "docs/product/GLOBAL_READINESS_REVIEW.md",
   "historical_release_unchanged": "v0.0.1",
-  "protected_paths_modified": false
+  "protected_paths_modified": false,
+  "hosted_regressions": [
+    {
+      "source_commit": "806c1d8e6495a1c5e9e630d54c33f380756beeb2",
+      "workflow_run": 41970776757,
+      "passed": 4,
+      "failed": 3,
+      "log": "docs/evidence/U01/first-public-browser-failure.log",
+      "findings": [
+        "Roadmap count badge changed the accessible link name.",
+        "React mount-time autofocus did not focus a field in the closed native dialog.",
+        "A renamed upstream icon was requested through a missing code-2 asset."
+      ],
+      "fixes": [
+        "Hide the decorative count from the accessibility name.",
+        "Focus the search input explicitly after showModal.",
+        "Use an actually vendored external-link icon."
+      ],
+      "status": "fixes implemented; fresh hosted verification pending"
+    }
+  ]
 }

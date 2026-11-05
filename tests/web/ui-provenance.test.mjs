@@ -22,3 +22,22 @@ test('shipped UI assets match pinned provenance and retain upstream notices', as
   assert.ok(notice.includes(provenance.icons.revision));
   assert.ok(notice.includes(provenance.components.revision));
 });
+
+test('all literal UI icons and navigation icons resolve to shipped local assets', async () => {
+  const { readdir, access } = await import('node:fs/promises');
+  async function inspect(directory) {
+    const names = new Set();
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      const path = new URL(entry.name + (entry.isDirectory() ? '/' : ''), directory);
+      if (entry.isDirectory()) for (const name of await inspect(path)) names.add(name);
+      else if (entry.name.endsWith('.tsx')) {
+        const source = await readFile(path, 'utf8');
+        for (const match of source.matchAll(/<Icon\s+name="([a-z0-9-]+)"|icon:\s*'([a-z0-9-]+)'/g)) names.add(match[1] ?? match[2]);
+      }
+    }
+    return names;
+  }
+  for (const name of await inspect(new URL('apps/web/src/', root))) {
+    await assert.doesNotReject(access(new URL(`apps/web/public/assets/icons/${name}.svg`, root)), name);
+  }
+});
