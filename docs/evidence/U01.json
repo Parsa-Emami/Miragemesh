@@ -57,6 +57,22 @@
         "Use an actually vendored external-link icon."
       ],
       "status": "fixes implemented; fresh hosted verification pending"
+    },
+    {
+      "source_commit": "42c937eb91c23fc6bb14b3acaa0d3e23f5d109d1",
+      "workflow_run": 41971108231,
+      "passed": 6,
+      "failed": 2,
+      "log": "docs/evidence/U01/second-public-browser-failure.log",
+      "findings": [
+        "Focus restoration after native dialog Escape needed an explicit trigger reference.",
+        "The new skip-link test sent Tab before the asynchronously loaded workspace was ready."
+      ],
+      "fixes": [
+        "Explicit trigger focus on cancel, close button and backdrop; keep route selection separate.",
+        "Wait for the workspace heading before testing keyboard order."
+      ],
+      "status": "fixes implemented; fresh hosted verification pending"
     }
   ]
 }

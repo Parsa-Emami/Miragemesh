@@ -81,12 +81,13 @@ test('unavailable preference storage does not prevent the public workspace', asy
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 });
 
- test('skip link preserves the selected route', async ({ page }) => {
+test('skip link preserves the selected route', async ({ page }) => {
   await page.goto('./#incidents');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.locator('#content')).toBeFocused();
   await expect(page).toHaveURL(/#incidents$/);
   await expect(page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Incidents', exact: true })).toHaveAttribute('aria-current', 'page');
- });
+});
