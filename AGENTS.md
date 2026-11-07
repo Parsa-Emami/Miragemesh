@@ -1,6 +1,6 @@
 # MirageMesh: agent entry point
 
-Read START_HERE.md, docs/agents/EXECUTION_CONTRACT.md, docs/architecture/ADR-0003-open-source-local-first.md, plans/project-state.json, plans/progress.json and plans/release-gates.json. Actual code/tests and source-bound evidence determine capability. legacy/v7 and *_V7.md are historical; do not run their bootstrap or revive compulsory services.
+Read START_HERE.md, docs/agents/EXECUTION_CONTRACT.md, docs/architecture/ADR-0003-open-source-local-first.md, plans/project-state.json, plans/progress.json and plans/release-gates.json. Actual code/tests and source-bound evidence determine capability. ADR-0001 links to the superseded V7 scaffold in Git history.
 
 1. Inspect Git status, current source/manifests/locks/tests/CI and preserve other work.
 2. Run npm run validate:plan and npm run plan -- next; read the returned plans/commits/Cxx.md in full. Complete only unmet dependency-ready criteria.

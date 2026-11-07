@@ -2,7 +2,7 @@
 
 # ADR-0001 — MirageMesh lean release architecture
 
-Status: accepted planning decision, 2026-10-01. Supersedes all runtime/storage/bootstrap decisions in `legacy/v7`; business invariants remain applicable where the selected scope implements them. No released external clients exist in the supplied scaffold, so this is a planning reset, not a live DB migration.
+Status: accepted planning decision, 2026-10-01. Supersedes the runtime, storage and bootstrap decisions in the [V7 scaffold](https://github.com/Parsa-Emami/Miragemesh/tree/db03d0bfc0d57a6dc3c698fe5055c7fcf3ebd02b/legacy/v7). Business invariants remain applicable where the selected scope implements them. The scaffold had no released external clients, so the decision applied to the project plan.
 
 ## Why change
 

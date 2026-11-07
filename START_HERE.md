@@ -1,6 +1,6 @@
 # Continue MirageMesh
 
-Current: locally usable supported Linux profile through C38. C39 verifies source-bound local release readiness; C40 publication and installed-release proof remain separate.
+Use the [public demo](https://parsa-emami.github.io/Miragemesh/) to explore the interface with sample data. For the published local Linux profile, follow the [release installation guide](docs/release/PUBLICATION.md). Build from source for [private team monitoring](docs/engineering/TEAM_MONITORING.md).
 
 Use Linux amd64, Node 24.19.0, npm CLI 11.9.0, installed Go and rootless Podman 4.9.3. Setup selects Go 1.27.2 through the official Go toolchain mechanism.
 
@@ -9,12 +9,12 @@ npm run setup
 npm start
 ```
 
-Open http://127.0.0.1:4173. Read docs/engineering/CLONE_TO_RUN.md for actual prerequisites/capability. For implementation read AGENTS.md, docs/agents/EXECUTION_CONTRACT.md and ROADMAP.md, then use:
+Open http://127.0.0.1:4173. See the [clone guide](docs/engineering/CLONE_TO_RUN.md) for prerequisites and supported workflows. For development, read the [agent entry point](AGENTS.md), [execution contract](docs/agents/EXECUTION_CONTRACT.md) and [roadmap](ROADMAP.md).
 
 ```sh
 npm run validate:plan
 npm run plan -- status
-npm run plan -- next
+npm run check
 ```
 
-Each task links exact work/resources/tests. C30 is first actual local usability and C40 full OSS v1; both require evidence. Do not run historical bootstrap or modify protected files.
+The [release gate](docs/release/V1_GATE.md) explains how to verify a release candidate against its exact source.
