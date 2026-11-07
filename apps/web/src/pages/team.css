@@ -1,0 +1,55 @@
+.team-workspace {
+  --accent: #80e6c4;
+}
+
+.team-workspace main {
+  padding-top: 44px;
+}
+
+.team-identity {
+  color: var(--accent);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.team-sensors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.team-sensors li {
+  display: grid;
+  gap: 3px;
+  padding: 14px;
+  border: 1px solid #304053;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+.team-signal {
+  color: #ffcf90;
+  font-weight: 650;
+}
+
+.team-table th,
+.team-table td {
+  overflow-wrap: anywhere;
+}
+
+.team-table button {
+  padding: 7px 12px;
+}
+
+@media (max-width: 760px) {
+  .team-workspace main {
+    padding-top: 32px;
+  }
+
+  .team-workspace .team-table {
+    min-width: 570px;
+  }
+}

@@ -21,6 +21,7 @@ import (
 	"github.com/Parsa-Emami/Miragemesh/internal/contracts"
 	"github.com/Parsa-Emami/Miragemesh/internal/events"
 	"github.com/Parsa-Emami/Miragemesh/internal/incidentview"
+	"github.com/Parsa-Emami/Miragemesh/internal/monitor"
 	"github.com/Parsa-Emami/Miragemesh/internal/sensor"
 	"github.com/Parsa-Emami/Miragemesh/internal/sensorview"
 	"github.com/Parsa-Emami/Miragemesh/internal/storage"
@@ -238,7 +239,30 @@ func main() {
 	sensorConfigMaxSpool := flag.Int("sensor-config-max-spool-limit-events", 0, "explicit C10 maximum spool limit")
 	sensorConfigMinBatch := flag.Int("sensor-config-min-event-batch-limit", 0, "explicit C10 minimum event batch limit")
 	sensorConfigMaxBatch := flag.Int("sensor-config-max-event-batch-limit", 0, "explicit C10 maximum event batch limit")
+	monitorConfig := flag.String("monitor-config", "", "run the private team monitoring listeners using this JSON configuration")
+	monitorSensorConfig := flag.String("monitor-sensor-config", "", "run the continuous HTTP decoy sensor using this JSON configuration")
 	flag.Parse()
+	monitorRequested := false
+	flag.Visit(func(f *flag.Flag) {
+		monitorRequested = monitorRequested || f.Name == "monitor-config" || f.Name == "monitor-sensor-config"
+	})
+	if monitorRequested {
+		if flag.NFlag() != 1 || flag.NArg() != 0 || *monitorConfig == "" && *monitorSensorConfig == "" {
+			fmt.Fprintln(os.Stderr, "use one monitoring mode with its configuration path")
+			os.Exit(2)
+		}
+		ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+		defer stop()
+		run, path := monitor.Run, *monitorConfig
+		if *monitorSensorConfig != "" {
+			run, path = monitor.RunSensor, *monitorSensorConfig
+		}
+		if err := run(ctx, path); err != nil {
+			fmt.Fprintln(os.Stderr, "Monitoring service:", err)
+			os.Exit(1)
+		}
+		return
+	}
 	if updateConfigured() && !updates.HTTPStatus {
 		os.Exit(runUpdateAction(*updates))
 	}

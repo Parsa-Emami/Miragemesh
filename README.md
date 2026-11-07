@@ -2,6 +2,8 @@
 
 [Public browser workspace](https://parsa-emami.github.io/Miragemesh/) · [Release downloads](https://github.com/Parsa-Emami/Miragemesh/releases) · [Verify and install](docs/release/PUBLICATION.md)
 
+**Record interactions with your own HTTP decoys and trace each finding back to its source event.** The team monitoring profile in the source build includes a durable sensor spool, mutual TLS, scoped analyst access and a paged incident timeline. [Start the loopback lab](docs/engineering/TEAM_MONITORING.md#run-the-loopback-lab) · [Deploy on a private network](docs/engineering/TEAM_MONITORING.md#deploy-on-a-private-network)
+
 [![Source](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/contracts.yml/badge.svg?branch=main)](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/contracts.yml?query=branch%3Amain) [![Plan](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/plan.yml/badge.svg?branch=main)](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/plan.yml?query=branch%3Amain) [![Web](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/web.yml/badge.svg?branch=main)](https://github.com/Parsa-Emami/Miragemesh/actions/workflows/web.yml?query=branch%3Amain)
 
 [CI source integrity and dependency updates](docs/engineering/CI_SOURCE_INTEGRITY.md)
@@ -12,6 +14,7 @@ Open-source local-first web application under [Apache-2.0](LICENSE). MirageMesh 
 
 ## Documentation & Guides
 
+- **[Team monitoring](docs/engineering/TEAM_MONITORING.md)** covers the lab, certificate setup, Linux services, event ingestion, incident review and retention.
 - **[Local Service and Privacy Policy](docs/release/SERVICE_POLICY.md)**: Actual data locations, export/deletion limits, retention and tested backup/recovery.
 - **[Maintenance Policy](docs/release/MAINTENANCE.md)**: Supported source/platforms, dependency review, security support and data-safe upgrades.
 

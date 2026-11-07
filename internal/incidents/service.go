@@ -32,6 +32,7 @@ type Entry struct {
 	Status     string
 	Reason     string
 	TriagedAt  time.Time
+	Actor      string
 }
 
 // Result is the typed outcome of a triage request. Replayed reports that an
@@ -74,6 +75,17 @@ func New(ctx context.Context, store *storage.Store) (*Service, error) {
 // points each. Unknown or duplicate members are rejected, so event content
 // cannot be smuggled into a triage request.
 func (s *Service) Triage(ctx context.Context, incidentID, idempotencyKey string, body []byte) (Result, error) {
+	return s.triage(ctx, incidentID, "", idempotencyKey, body)
+}
+
+func (s *Service) TriageAs(ctx context.Context, incidentID, actor, idempotencyKey string, body []byte) (Result, error) {
+	if !contracts.ValidIncidentActor(actor) {
+		return Result{}, ErrInvalidInput
+	}
+	return s.triage(ctx, incidentID, actor, idempotencyKey, body)
+}
+
+func (s *Service) triage(ctx context.Context, incidentID, actor, idempotencyKey string, body []byte) (Result, error) {
 	if s == nil || s.store == nil || ctx == nil {
 		return Result{}, ErrInvalidInput
 	}
@@ -88,6 +100,12 @@ func (s *Service) Triage(ctx context.Context, incidentID, idempotencyKey string,
 		return Result{}, err
 	}
 	keyHash := keyDigest(idempotencyKey)
+	if actor != "" {
+		if len(reason) > 1024 || (status != "investigating" && status != "resolved" && status != "dismissed") {
+			return Result{}, ErrInvalidInput
+		}
+		keyHash = keyDigest(actor + "\x00" + idempotencyKey)
+	}
 	operation := operationID(incidentID, keyHash)
 	var committed []byte
 	replayed := false
@@ -99,7 +117,7 @@ func (s *Service) Triage(ctx context.Context, incidentID, idempotencyKey string,
 			if err := validateStored(record); err != nil {
 				return "", nil, err
 			}
-			if record.Incident.IncidentID != incidentID || record.Incident.Status != status || record.Incident.Reason != reason {
+			if record.Incident.IncidentID != incidentID || record.Incident.Status != status || record.Incident.Reason != reason || record.Incident.Actor != actor {
 				return "", nil, ErrConflict
 			}
 			replayed = true
@@ -114,6 +132,7 @@ func (s *Service) Triage(ctx context.Context, incidentID, idempotencyKey string,
 			Reason:        reason,
 			KeyDigest:     keyHash,
 			TriagedAt:     s.now().UTC().Format(time.RFC3339Nano),
+			Actor:         actor,
 		}
 		raw, err := json.Marshal(record)
 		if err != nil || len(raw) > contracts.MaxStoredInputBytes {
@@ -139,6 +158,7 @@ func (s *Service) Triage(ctx context.Context, incidentID, idempotencyKey string,
 			Status:     record.Status,
 			Reason:     record.Reason,
 			TriagedAt:  at,
+			Actor:      record.Actor,
 		},
 		Receipt:  receipt,
 		Replayed: replayed,
@@ -178,6 +198,7 @@ func (s *Service) History(ctx context.Context, incidentID string) ([]Entry, erro
 			Status:     record.Incident.Status,
 			Reason:     record.Incident.Reason,
 			TriagedAt:  at,
+			Actor:      record.Incident.Actor,
 		})
 	}
 	return entries, nil

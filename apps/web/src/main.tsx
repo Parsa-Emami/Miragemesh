@@ -8,9 +8,10 @@ import PublicWorkspace from './pages/PublicWorkspace';
 import Certificates from './pages/Certificates';
 import Updates from './pages/Updates';
 import Incidents from './pages/Incidents';
+import Team from './pages/Team';
 import './styles.css';
 
-type Runtime = { projectId: string; apiBasePath: string; engineEnabled: false; maxPreviewBytes: number; deployment?: 'local' | 'static-public' };
+type Runtime = { projectId: string; apiBasePath: string; engineEnabled: false; maxPreviewBytes: number; deployment?: 'local' | 'static-public' | 'team-monitoring' };
 type Route = 'workspace' | 'roadmap' | 'sensors' | 'incidents' | 'certificates' | 'updates';
 function route(): Route { return location.hash === '#updates' ? 'updates' : location.hash === '#certificates' ? 'certificates' : location.hash === '#roadmap' ? 'roadmap' : location.hash === '#sensors' ? 'sensors' : location.hash === '#incidents' ? 'incidents' : 'workspace'; }
 
@@ -81,6 +82,6 @@ const root = createRoot(document.getElementById('root')!);
 fetch(new URL('runtime-config.json', document.baseURI), { cache: 'no-store', credentials: 'omit' }).then(async response => {
   if (!response.ok) throw new Error('Workspace configuration is unavailable.');
   return validateRuntimeConfig(await response.json(), project.slug) as Runtime;
-}).then(config => root.render(<StrictMode><App config={config}/></StrictMode>)).catch(() => {
+}).then(config => root.render(<StrictMode>{config.deployment === 'team-monitoring' ? <Team/> : <App config={config}/>}</StrictMode>)).catch(() => {
   root.render(<main className="startup-error"><h1>Workspace unavailable</h1><p>The workspace configuration could not be loaded. Reload the page or contact the operator.</p></main>);
 });
