@@ -1,0 +1,14 @@
+✔ public configuration fails closed on engine flags, external endpoints, unknown keys and project mismatch (1.046938ms)
+✔ preview rejects hostile structure, excessive UTF-8 size and excessive complexity (1.359298ms)
+✔ HTTP isolation, cache rules, health semantics, methods, traversal and symlink containment (69.130756ms)
+✔ generated project and runtime identity agree with exactly forty original product tasks (1.30044ms)
+✔ C40 static publication is explicit and never enables engine integration (1.172257ms)
+✔ shipped UI assets match pinned provenance and retain upstream notices (16.297401ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 156.118632

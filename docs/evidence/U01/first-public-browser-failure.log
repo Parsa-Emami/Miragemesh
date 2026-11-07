@@ -1,0 +1,555 @@
+﻿2026-11-05T04:55:37.1332644Z Current runner version: '2.338.2'
+2026-11-05T04:55:37.1363048Z ##[group]Runner Image Provisioner
+2026-11-05T04:55:37.1363989Z Hosted Compute Agent
+2026-11-05T04:55:37.1364565Z Version: 20261021.618
+2026-11-05T04:55:37.1365320Z Commit: 21505ad2541d5be6135ed84fc33697146cf75b8e
+2026-11-05T04:55:37.1366044Z Build Date: 2026-10-21T00:45:21Z
+2026-11-05T04:55:37.1366766Z Worker ID: {b3712291-a952-441b-a6b0-6c76d0541f9f}
+2026-11-05T04:55:37.1367577Z Region: eastus
+2026-11-05T04:55:37.1368113Z Cloud: Azure
+2026-11-05T04:55:37.1368720Z ##[endgroup]
+2026-11-05T04:55:37.1371190Z ##[group]Operating System
+2026-11-05T04:55:37.1372041Z Ubuntu
+2026-11-05T04:55:37.1372577Z 24.04.5
+2026-11-05T04:55:37.1373070Z LTS
+2026-11-05T04:55:37.1373691Z ##[endgroup]
+2026-11-05T04:55:37.1374249Z ##[group]Runner Image
+2026-11-05T04:55:37.1374897Z Image: ubuntu-24.04
+2026-11-05T04:55:37.1375479Z Version: 20261025.353.1
+2026-11-05T04:55:37.1376803Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261025.353/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-05T04:55:37.1378453Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261025.353
+2026-11-05T04:55:37.1379471Z ##[endgroup]
+2026-11-05T04:55:37.1380617Z ##[group]GITHUB_TOKEN Permissions
+2026-11-05T04:55:37.1383489Z Contents: read
+2026-11-05T04:55:37.1384173Z Metadata: read
+2026-11-05T04:55:37.1384720Z ##[endgroup]
+2026-11-05T04:55:37.1387415Z Secret source: Actions
+2026-11-05T04:55:37.1388375Z Cache mode: write
+2026-11-05T04:55:37.1389238Z Prepare workflow directory
+2026-11-05T04:55:37.1739996Z Prepare all required actions
+2026-11-05T04:55:37.1790301Z Getting action download info
+2026-11-05T04:55:37.3944047Z Download action repository 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+2026-11-05T04:55:37.5016957Z Download action repository 'actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+2026-11-05T04:55:37.5876944Z Download action repository 'actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9' (SHA:fc324d3547104276b827a68afc52ff2a11cc49c9)
+2026-11-05T04:55:37.7957723Z Getting action download info
+2026-11-05T04:55:37.8738463Z Download action repository 'actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f' (SHA:bbbca2ddaa5d8feaa63e36b76fdaad77386f024f)
+2026-11-05T04:55:38.0496763Z Complete job name: build
+2026-11-05T04:55:38.1603379Z ##[group]Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+2026-11-05T04:55:38.1604881Z with:
+2026-11-05T04:55:38.1605411Z   persist-credentials: false
+2026-11-05T04:55:38.1606144Z   repository: Parsa-Emami/Miragemesh
+2026-11-05T04:55:38.1614155Z   token: ***
+2026-11-05T04:55:38.1614692Z   ssh-strict: true
+2026-11-05T04:55:38.1615230Z   ssh-user: git
+2026-11-05T04:55:38.1615735Z   clean: true
+2026-11-05T04:55:38.1616285Z   sparse-checkout-cone-mode: true
+2026-11-05T04:55:38.1616994Z   fetch-depth: 1
+2026-11-05T04:55:38.1617525Z   fetch-tags: false
+2026-11-05T04:55:38.1618105Z   show-progress: true
+2026-11-05T04:55:38.1618659Z   lfs: false
+2026-11-05T04:55:38.1619154Z   submodules: false
+2026-11-05T04:55:38.1619732Z   set-safe-directory: true
+2026-11-05T04:55:38.1620401Z   allow-unsafe-pr-checkout: false
+2026-11-05T04:55:38.1621542Z ##[endgroup]
+2026-11-05T04:55:38.5045897Z Syncing repository: Parsa-Emami/Miragemesh
+2026-11-05T04:55:38.5049759Z ##[group]Getting Git version info
+2026-11-05T04:55:38.5052170Z Working directory is '/home/runner/work/Miragemesh/Miragemesh'
+2026-11-05T04:55:38.5055361Z [command]/usr/bin/git version
+2026-11-05T04:55:38.5158397Z git version 2.56.0
+2026-11-05T04:55:38.5185443Z ##[endgroup]
+2026-11-05T04:55:38.5199092Z Temporarily overriding HOME='/home/runner/work/_temp/9349bb33-ef2a-4170-a4b6-04a34ee6ca7c' before making global git config changes
+2026-11-05T04:55:38.5203953Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-05T04:55:38.5208347Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Miragemesh/Miragemesh
+2026-11-05T04:55:38.5292978Z Deleting the contents of '/home/runner/work/Miragemesh/Miragemesh'
+2026-11-05T04:55:38.5298592Z ##[group]Determining repository object format
+2026-11-05T04:55:38.5308227Z ##[endgroup]
+2026-11-05T04:55:38.5310761Z ##[group]Initializing the repository
+2026-11-05T04:55:38.5313484Z [command]/usr/bin/git init /home/runner/work/Miragemesh/Miragemesh
+2026-11-05T04:55:38.5481094Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-05T04:55:38.5484990Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-05T04:55:38.5488620Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-05T04:55:38.5491800Z hint: call:
+2026-11-05T04:55:38.5493348Z hint:
+2026-11-05T04:55:38.5495235Z hint: 	git config --global init.defaultBranch <name>
+2026-11-05T04:55:38.5497622Z hint:
+2026-11-05T04:55:38.5499824Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-05T04:55:38.5503774Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-05T04:55:38.5506600Z hint:
+2026-11-05T04:55:38.5508302Z hint: 	git branch -m <name>
+2026-11-05T04:55:38.5510106Z hint:
+2026-11-05T04:55:38.5512778Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-05T04:55:38.5526278Z Initialized empty Git repository in /home/runner/work/Miragemesh/Miragemesh/.git/
+2026-11-05T04:55:38.5539845Z [command]/usr/bin/git remote add origin https://github.com/Parsa-Emami/Miragemesh
+2026-11-05T04:55:38.5617750Z ##[endgroup]
+2026-11-05T04:55:38.5620745Z ##[group]Disabling automatic garbage collection
+2026-11-05T04:55:38.5623876Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-05T04:55:38.5683000Z ##[endgroup]
+2026-11-05T04:55:38.5686195Z ##[group]Setting up auth
+2026-11-05T04:55:38.5794208Z Removing SSH command configuration
+2026-11-05T04:55:38.5798844Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T04:55:38.5806017Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T04:55:38.6257424Z Removing HTTP extra header
+2026-11-05T04:55:38.6264555Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T04:55:38.6324315Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T04:55:38.6569284Z Removing includeIf entries pointing to credentials config files
+2026-11-05T04:55:38.6575135Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T04:55:38.6627616Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T04:55:38.6888808Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-1467ab81-6b37-4940-ad1c-c15dd6e8891c.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-05T04:55:38.6945254Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path /home/runner/work/_temp/git-credentials-1467ab81-6b37-4940-ad1c-c15dd6e8891c.config
+2026-11-05T04:55:38.6994523Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-1467ab81-6b37-4940-ad1c-c15dd6e8891c.config
+2026-11-05T04:55:38.7048552Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-1467ab81-6b37-4940-ad1c-c15dd6e8891c.config
+2026-11-05T04:55:38.7098255Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-1467ab81-6b37-4940-ad1c-c15dd6e8891c.config
+2026-11-05T04:55:38.7143523Z ##[endgroup]
+2026-11-05T04:55:38.7146002Z ##[group]Fetching the repository
+2026-11-05T04:55:38.7154139Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +65ca0f79f408129ce8ad6d8abce8201af10e4cda:refs/remotes/pull/11/merge
+2026-11-05T04:55:39.2979437Z From https://github.com/Parsa-Emami/Miragemesh
+2026-11-05T04:55:39.2981059Z  * [new ref]         65ca0f79f408129ce8ad6d8abce8201af10e4cda -> pull/11/merge
+2026-11-05T04:55:39.2986457Z ##[endgroup]
+2026-11-05T04:55:39.2988567Z ##[group]Determining the checkout info
+2026-11-05T04:55:39.2990644Z ##[endgroup]
+2026-11-05T04:55:39.2993348Z [command]/usr/bin/git sparse-checkout disable
+2026-11-05T04:55:39.3083803Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-05T04:55:39.3132435Z ##[group]Checking out the ref
+2026-11-05T04:55:39.3136166Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/11/merge
+2026-11-05T04:55:39.4201724Z Note: switching to 'refs/remotes/pull/11/merge'.
+2026-11-05T04:55:39.4202935Z 
+2026-11-05T04:55:39.4203857Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-11-05T04:55:39.4205920Z changes and commit them, and you can discard any commits you make in this
+2026-11-05T04:55:39.4207932Z state without impacting any branches by switching back to a branch.
+2026-11-05T04:55:39.4209087Z 
+2026-11-05T04:55:39.4209980Z If you want to create a new branch to retain commits you create, you may
+2026-11-05T04:55:39.4212202Z do so (now or later) by using -c with the switch command. Example:
+2026-11-05T04:55:39.4213272Z 
+2026-11-05T04:55:39.4213963Z   git switch -c <new-branch-name>
+2026-11-05T04:55:39.4214804Z 
+2026-11-05T04:55:39.4215428Z Or undo this operation with:
+2026-11-05T04:55:39.4216094Z 
+2026-11-05T04:55:39.4216549Z   git switch -
+2026-11-05T04:55:39.4217070Z 
+2026-11-05T04:55:39.4217729Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-11-05T04:55:39.4218539Z 
+2026-11-05T04:55:39.4219662Z HEAD is now at 65ca0f7 Merge 806c1d8e6495a1c5e9e630d54c33f380756beeb2 into d4dc9c829a1364a45d1202a50489be753cc5d46e
+2026-11-05T04:55:39.4223480Z ##[endgroup]
+2026-11-05T04:55:39.4297515Z [command]/usr/bin/git log -1 --format=%H
+2026-11-05T04:55:39.4338413Z 65ca0f79f408129ce8ad6d8abce8201af10e4cda
+2026-11-05T04:55:39.4350205Z ##[group]Removing auth
+2026-11-05T04:55:39.4352139Z Removing SSH command configuration
+2026-11-05T04:55:39.4354660Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T04:55:39.4403928Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T04:55:39.4662004Z Removing HTTP extra header
+2026-11-05T04:55:39.4665419Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T04:55:39.4713699Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T04:55:39.4971981Z Removing includeIf entries pointing to credentials config files
+2026-11-05T04:55:39.4975333Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T04:55:39.5018893Z includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path
+2026-11-05T04:55:39.5020470Z includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path
+2026-11-05T04:55:39.5022371Z includeif.gitdir:/github/workspace/.git.path
+2026-11-05T04:55:39.5023747Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-05T04:55:39.5029174Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path
+2026-11-05T04:55:39.5067122Z /home/runner/work/_temp/git-credentials-1467ab81-6b37-4940-ad1c-c15dd6e8891c.config
+2026-11-05T04:55:39.5080019Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-1467ab81\-6b37\-4940\-ad1c\-c15dd6e8891c\.config
+2026-11-05T04:55:39.5140679Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path
+2026-11-05T04:55:39.5186183Z /home/runner/work/_temp/git-credentials-1467ab81-6b37-4940-ad1c-c15dd6e8891c.config
+2026-11-05T04:55:39.5196781Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/Miragemesh/Miragemesh/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-1467ab81\-6b37\-4940\-ad1c\-c15dd6e8891c\.config
+2026-11-05T04:55:39.5244921Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-11-05T04:55:39.5282363Z /github/runner_temp/git-credentials-1467ab81-6b37-4940-ad1c-c15dd6e8891c.config
+2026-11-05T04:55:39.5290610Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-1467ab81\-6b37\-4940\-ad1c\-c15dd6e8891c\.config
+2026-11-05T04:55:39.5343348Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-11-05T04:55:39.5382046Z /github/runner_temp/git-credentials-1467ab81-6b37-4940-ad1c-c15dd6e8891c.config
+2026-11-05T04:55:39.5391672Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-1467ab81\-6b37\-4940\-ad1c\-c15dd6e8891c\.config
+2026-11-05T04:55:39.5439036Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T04:55:39.5693537Z Removing credentials config '/home/runner/work/_temp/git-credentials-1467ab81-6b37-4940-ad1c-c15dd6e8891c.config'
+2026-11-05T04:55:39.5704845Z ##[endgroup]
+2026-11-05T04:55:39.6041551Z ##[group]Run actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+2026-11-05T04:55:39.6042694Z with:
+2026-11-05T04:55:39.6043523Z   node-version-file: .nvmrc
+2026-11-05T04:55:39.6044406Z   cache: npm
+2026-11-05T04:55:39.6045224Z   check-latest: false
+2026-11-05T04:55:39.6048560Z   token: ***
+2026-11-05T04:55:39.6049410Z   package-manager-cache: true
+2026-11-05T04:55:39.6050302Z ##[endgroup]
+2026-11-05T04:55:39.7381839Z Node version file is not JSON file
+2026-11-05T04:55:39.7388105Z Node version file is not TOML file
+2026-11-05T04:55:39.7389859Z Resolved .nvmrc as 24.19.0
+2026-11-05T04:55:39.7415543Z Attempting to download 24.19.0...
+2026-11-05T04:55:40.3161752Z Acquiring 24.19.0 - x64 from https://github.com/actions/node-versions/releases/download/24.19.0-30872449280/node-24.19.0-linux-x64.tar.gz
+2026-11-05T04:55:40.8244028Z Extracting ...
+2026-11-05T04:55:40.8402272Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/b05f345c-fafe-43a2-8cad-793394b99977 -f /home/runner/work/_temp/142f3e3f-21dc-4e32-9b57-8378674266e2
+2026-11-05T04:55:42.0897519Z Adding to the cache ...
+2026-11-05T04:55:43.9322685Z ##[group]Environment details
+2026-11-05T04:55:44.1992250Z node: v24.19.0
+2026-11-05T04:55:44.1992958Z npm: 11.17.0
+2026-11-05T04:55:44.1993523Z yarn: 1.22.22
+2026-11-05T04:55:44.1994351Z ##[endgroup]
+2026-11-05T04:55:44.2013181Z [command]/opt/hostedtoolcache/node/24.19.0/x64/bin/npm config get cache
+2026-11-05T04:55:44.3057705Z /home/runner/.npm
+2026-11-05T04:55:44.3825010Z Cache hit for: node-cache-Linux-x64-npm-ee8bd92fc8d75daf6c0249a708cd8121cb8aba32254ebc42783ba42505628caa
+2026-11-05T04:55:44.8015831Z Received 48351299 of 48351299 (100.0%), 131.0 MBs/sec
+2026-11-05T04:55:44.8016689Z Cache Size: ~46 MB (48351299 B)
+2026-11-05T04:55:44.8130320Z [command]/usr/bin/tar -xf /home/runner/work/_temp/34024063-0f82-47ab-a531-d77aedc04b64/cache.tzst -P -C /home/runner/work/Miragemesh/Miragemesh --use-compress-program unzstd
+2026-11-05T04:55:45.0615697Z Cache restored successfully
+2026-11-05T04:55:45.0648521Z Cache restored from key: node-cache-Linux-x64-npm-ee8bd92fc8d75daf6c0249a708cd8121cb8aba32254ebc42783ba42505628caa
+2026-11-05T04:55:45.0875661Z ##[group]Run npx --yes --package=npm@11.9.0 --call 'npm ci --ignore-scripts'
+2026-11-05T04:55:45.0876348Z [36;1mnpx --yes --package=npm@11.9.0 --call 'npm ci --ignore-scripts'[0m
+2026-11-05T04:55:45.0904528Z shell: /usr/bin/bash -e {0}
+2026-11-05T04:55:45.0904834Z ##[endgroup]
+2026-11-05T04:55:47.0439712Z 
+2026-11-05T04:55:47.0448635Z added 34 packages, and audited 35 packages in 1s
+2026-11-05T04:55:47.0449190Z 
+2026-11-05T04:55:47.0449497Z 11 packages are looking for funding
+2026-11-05T04:55:47.0450171Z   run `npm fund` for details
+2026-11-05T04:55:47.0467328Z 
+2026-11-05T04:55:47.0467706Z 1 moderate severity vulnerability
+2026-11-05T04:55:47.0468052Z 
+2026-11-05T04:55:47.0468321Z To address all issues, run:
+2026-11-05T04:55:47.0468715Z   npm audit fix
+2026-11-05T04:55:47.0468875Z 
+2026-11-05T04:55:47.0469012Z Run `npm audit` for details.
+2026-11-05T04:55:47.1515570Z ##[group]Run npx --yes --package=npm@11.9.0 --call 'npm run build:pages'
+2026-11-05T04:55:47.1516140Z [36;1mnpx --yes --package=npm@11.9.0 --call 'npm run build:pages'[0m
+2026-11-05T04:55:47.1536960Z shell: /usr/bin/bash -e {0}
+2026-11-05T04:55:47.1537290Z ##[endgroup]
+2026-11-05T04:55:47.6486500Z 
+2026-11-05T04:55:47.6487224Z > @parsa-emami/miragemesh-web@0.0.1 build:pages
+2026-11-05T04:55:47.6487779Z > node scripts/build-pages.mjs
+2026-11-05T04:55:47.6488014Z 
+2026-11-05T04:55:48.1863050Z [36mvite v8.3.5 [32mbuilding client environment for pages...[36m[39m
+2026-11-05T04:55:48.1968678Z transforming...
+2026-11-05T04:55:48.2865826Z ✓ 31 modules transformed.
+2026-11-05T04:55:48.3145578Z rendering chunks...
+2026-11-05T04:55:48.3544521Z computing gzip size...
+2026-11-05T04:55:48.3596257Z dist/pages/index.html                   0.82 kB │ gzip:  0.47 kB
+2026-11-05T04:55:48.3596933Z dist/pages/assets/index-uXMS0lTD.css   21.79 kB │ gzip:  5.15 kB
+2026-11-05T04:55:48.3597682Z dist/pages/assets/index-BmEwB0k-.js   295.86 kB │ gzip: 88.95 kB
+2026-11-05T04:55:48.3597968Z 
+2026-11-05T04:55:48.3600518Z [32m✓ built in 172ms[39m
+2026-11-05T04:55:48.3838552Z Built public static workspace at /Miragemesh/; engine integration remains disabled.
+2026-11-05T04:55:48.4062092Z ##[group]Run ./node_modules/.bin/playwright install --with-deps chromium
+2026-11-05T04:55:48.4062688Z [36;1m./node_modules/.bin/playwright install --with-deps chromium[0m
+2026-11-05T04:55:48.4082619Z shell: /usr/bin/bash -e {0}
+2026-11-05T04:55:48.4082887Z ##[endgroup]
+2026-11-05T04:55:48.9487963Z Installing dependencies...
+2026-11-05T04:55:48.9581967Z Switching to root user to install dependencies...
+2026-11-05T04:55:49.0555149Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-05T04:55:49.0904476Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-11-05T04:55:49.1004400Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-11-05T04:55:49.1034121Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-11-05T04:55:49.1102611Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-11-05T04:55:49.1132892Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-11-05T04:55:49.1796318Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [731 kB]
+2026-11-05T04:55:49.2049441Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [663 kB]
+2026-11-05T04:55:49.3023291Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1408 kB]
+2026-11-05T04:55:49.3105904Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [311 kB]
+2026-11-05T04:55:49.3132659Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1707 kB]
+2026-11-05T04:55:49.3217759Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [343 kB]
+2026-11-05T04:55:49.3243029Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1813 kB]
+2026-11-05T04:55:49.3355313Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [412 kB]
+2026-11-05T04:55:49.3362764Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.3 kB]
+2026-11-05T04:55:49.4358293Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1157 kB]
+2026-11-05T04:55:49.4423174Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [233 kB]
+2026-11-05T04:55:49.4446806Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1225 kB]
+2026-11-05T04:55:49.4948923Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [247 kB]
+2026-11-05T04:55:49.4978238Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1721 kB]
+2026-11-05T04:55:49.5054866Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [394 kB]
+2026-11-05T04:55:49.5079028Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [12.4 kB]
+2026-11-05T04:55:53.0985691Z Fetched 12.8 MB in 1s (9630 kB/s)
+2026-11-05T04:55:54.3015703Z Reading package lists...
+2026-11-05T04:55:54.3337431Z Reading package lists...
+2026-11-05T04:55:54.5858191Z Building dependency tree...
+2026-11-05T04:55:54.5865664Z Reading state information...
+2026-11-05T04:55:54.7673943Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+2026-11-05T04:55:54.7674808Z libasound2t64 set to manually installed.
+2026-11-05T04:55:54.7675677Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-11-05T04:55:54.7676490Z libatk-bridge2.0-0t64 set to manually installed.
+2026-11-05T04:55:54.7677235Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+2026-11-05T04:55:54.7678074Z libatk1.0-0t64 set to manually installed.
+2026-11-05T04:55:54.7678796Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-11-05T04:55:54.7679390Z libatspi2.0-0t64 set to manually installed.
+2026-11-05T04:55:54.7680096Z libcairo2 is already the newest version (1.18.0-3build1).
+2026-11-05T04:55:54.7681670Z libcairo2 set to manually installed.
+2026-11-05T04:55:54.7682294Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+2026-11-05T04:55:54.7682873Z libcups2t64 set to manually installed.
+2026-11-05T04:55:54.7683434Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+2026-11-05T04:55:54.7684196Z libdbus-1-3 set to manually installed.
+2026-11-05T04:55:54.7684785Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+2026-11-05T04:55:54.7685335Z libdrm2 set to manually installed.
+2026-11-05T04:55:54.7685881Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.4).
+2026-11-05T04:55:54.7686403Z libgbm1 set to manually installed.
+2026-11-05T04:55:54.7687354Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.10).
+2026-11-05T04:55:54.7688608Z libglib2.0-0t64 set to manually installed.
+2026-11-05T04:55:54.7689495Z libnspr4 is already the newest version (2:4.35-1.1build1).
+2026-11-05T04:55:54.7690395Z libnspr4 set to manually installed.
+2026-11-05T04:55:54.7691705Z libnss3 is already the newest version (2:3.98-1ubuntu0.3).
+2026-11-05T04:55:54.7692460Z libnss3 set to manually installed.
+2026-11-05T04:55:54.7693288Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+2026-11-05T04:55:54.7694093Z libpango-1.0-0 set to manually installed.
+2026-11-05T04:55:54.7694900Z libx11-6 is already the newest version (2:1.8.7-1ubuntu0.1).
+2026-11-05T04:55:54.7695620Z libx11-6 set to manually installed.
+2026-11-05T04:55:54.7696311Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2026-11-05T04:55:54.7696972Z libxcb1 set to manually installed.
+2026-11-05T04:55:54.7697962Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2026-11-05T04:55:54.7698755Z libxcomposite1 set to manually installed.
+2026-11-05T04:55:54.7699898Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+2026-11-05T04:55:54.7700623Z libxdamage1 set to manually installed.
+2026-11-05T04:55:54.7701893Z libxext6 is already the newest version (2:1.3.4-1build2).
+2026-11-05T04:55:54.7702631Z libxext6 set to manually installed.
+2026-11-05T04:55:54.7703358Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+2026-11-05T04:55:54.7704084Z libxfixes3 set to manually installed.
+2026-11-05T04:55:54.7704870Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2026-11-05T04:55:54.7705599Z libxkbcommon0 set to manually installed.
+2026-11-05T04:55:54.7706349Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2026-11-05T04:55:54.7707056Z libxrandr2 set to manually installed.
+2026-11-05T04:55:54.7707825Z xvfb is already the newest version (2:21.1.12-1ubuntu1.9).
+2026-11-05T04:55:54.7708886Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+2026-11-05T04:55:54.7710010Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2026-11-05T04:55:54.7711163Z libfontconfig1 set to manually installed.
+2026-11-05T04:55:54.7711759Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.2).
+2026-11-05T04:55:54.7712246Z libfreetype6 set to manually installed.
+2026-11-05T04:55:54.7712700Z fonts-liberation is already the newest version (1:2.1.5-3).
+2026-11-05T04:55:54.7713147Z fonts-liberation set to manually installed.
+2026-11-05T04:55:54.7713602Z The following additional packages will be installed:
+2026-11-05T04:55:54.7713986Z   xfonts-encodings xfonts-utils
+2026-11-05T04:55:54.7714303Z Recommended packages:
+2026-11-05T04:55:54.7714606Z   fonts-ipafont-mincho fonts-tlwg-loma
+2026-11-05T04:55:54.7926513Z The following NEW packages will be installed:
+2026-11-05T04:55:54.7927263Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-11-05T04:55:54.7935990Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-11-05T04:55:54.7936749Z   xfonts-utils
+2026-11-05T04:55:54.8152373Z 0 upgraded, 9 newly installed, 0 to remove and 27 not upgraded.
+2026-11-05T04:55:54.8153066Z Need to get 21.1 MB of archives.
+2026-11-05T04:55:54.8153527Z After this operation, 79.5 MB of additional disk space will be used.
+2026-11-05T04:55:54.8154341Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-11-05T04:55:54.8562247Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+2026-11-05T04:55:54.8953050Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+2026-11-05T04:55:54.9443578Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+2026-11-05T04:55:54.9596719Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+2026-11-05T04:55:54.9907139Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+2026-11-05T04:55:55.0450544Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2026-11-05T04:55:55.0629421Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2026-11-05T04:55:55.0785714Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+2026-11-05T04:55:55.0955071Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+2026-11-05T04:55:55.3931142Z Fetched 21.1 MB in 0s (71.5 MB/s)
+2026-11-05T04:55:55.4203146Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-11-05T04:55:55.4543887Z (Reading database ... 
+2026-11-05T04:55:55.4544382Z (Reading database ... 5%
+2026-11-05T04:55:55.4544705Z (Reading database ... 10%
+2026-11-05T04:55:55.4545157Z (Reading database ... 15%
+2026-11-05T04:55:55.4545615Z (Reading database ... 20%
+2026-11-05T04:55:55.4546108Z (Reading database ... 25%
+2026-11-05T04:55:55.4547023Z (Reading database ... 30%
+2026-11-05T04:55:55.4547487Z (Reading database ... 35%
+2026-11-05T04:55:55.4548406Z (Reading database ... 40%
+2026-11-05T04:55:55.4548926Z (Reading database ... 45%
+2026-11-05T04:55:55.4549398Z (Reading database ... 50%
+2026-11-05T04:55:55.4605236Z (Reading database ... 55%
+2026-11-05T04:55:55.6105504Z (Reading database ... 60%
+2026-11-05T04:55:55.7176974Z (Reading database ... 65%
+2026-11-05T04:55:55.9572139Z (Reading database ... 70%
+2026-11-05T04:55:56.1625549Z (Reading database ... 75%
+2026-11-05T04:55:56.3039127Z (Reading database ... 80%
+2026-11-05T04:55:56.4233624Z (Reading database ... 85%
+2026-11-05T04:55:56.5625616Z (Reading database ... 90%
+2026-11-05T04:55:56.7245456Z (Reading database ... 95%
+2026-11-05T04:55:56.7245907Z (Reading database ... 100%
+2026-11-05T04:55:56.7246490Z (Reading database ... 215504 files and directories currently installed.)
+2026-11-05T04:55:56.7293294Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+2026-11-05T04:55:56.7402439Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-11-05T04:55:56.9834202Z Selecting previously unselected package fonts-freefont-ttf.
+2026-11-05T04:55:56.9979265Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+2026-11-05T04:55:56.9988061Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-11-05T04:55:57.0944651Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-11-05T04:55:57.1088011Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+2026-11-05T04:55:57.1096022Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-11-05T04:55:57.1358703Z Selecting previously unselected package fonts-unifont.
+2026-11-05T04:55:57.1503818Z Preparing to unpack .../3-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+2026-11-05T04:55:57.1512124Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+2026-11-05T04:55:57.2656160Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-11-05T04:55:57.2799635Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+2026-11-05T04:55:57.2916988Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+2026-11-05T04:55:57.8013699Z Selecting previously unselected package xfonts-encodings.
+2026-11-05T04:55:57.8166914Z Preparing to unpack .../5-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2026-11-05T04:55:57.8176786Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-11-05T04:55:57.8512564Z Selecting previously unselected package xfonts-utils.
+2026-11-05T04:55:57.8661581Z Preparing to unpack .../6-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2026-11-05T04:55:57.8669190Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2026-11-05T04:55:57.9134648Z Selecting previously unselected package xfonts-cyrillic.
+2026-11-05T04:55:57.9282982Z Preparing to unpack .../7-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+2026-11-05T04:55:57.9291951Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-11-05T04:55:57.9672044Z Selecting previously unselected package xfonts-scalable.
+2026-11-05T04:55:57.9816675Z Preparing to unpack .../8-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+2026-11-05T04:55:57.9826081Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+2026-11-05T04:55:58.0330132Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+2026-11-05T04:55:58.0461328Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-11-05T04:55:58.0482876Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-11-05T04:55:58.0507520Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-11-05T04:55:58.0530671Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-11-05T04:55:58.0605402Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-11-05T04:55:58.0625616Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+2026-11-05T04:55:58.0652458Z Setting up xfonts-utils (1:7.7+6build3) ...
+2026-11-05T04:55:58.0703405Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-11-05T04:55:58.1056460Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+2026-11-05T04:55:58.1369529Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-11-05T04:55:58.1395211Z Not building database; man-db/auto-update is not 'true'.
+2026-11-05T04:55:58.1411621Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2026-11-05T04:55:58.9626027Z 
+2026-11-05T04:55:58.9626789Z Running kernel seems to be up-to-date.
+2026-11-05T04:55:58.9627211Z 
+2026-11-05T04:55:58.9627488Z No services need to be restarted.
+2026-11-05T04:55:58.9627858Z 
+2026-11-05T04:55:58.9642321Z No containers need to be restarted.
+2026-11-05T04:55:58.9642798Z 
+2026-11-05T04:55:58.9643120Z No user sessions are running outdated binaries.
+2026-11-05T04:55:58.9643579Z 
+2026-11-05T04:55:58.9644248Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-11-05T04:56:00.1912572Z Downloading Chrome for Testing 156.0.8078.4 (playwright chromium v1248) from https://cdn.playwright.dev/builds/cft/156.0.8078.4/linux64/chrome-linux64.zip
+2026-11-05T04:56:00.5931270Z |                                                                                |   0% of 191.1 MiB
+2026-11-05T04:56:00.7779891Z |■■■■■■■■                                                                        |  10% of 191.1 MiB
+2026-11-05T04:56:00.8752612Z |■■■■■■■■■■■■■■■■                                                                |  20% of 191.1 MiB
+2026-11-05T04:56:00.9776951Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 191.1 MiB
+2026-11-05T04:56:01.0556622Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 191.1 MiB
+2026-11-05T04:56:01.1490170Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 191.1 MiB
+2026-11-05T04:56:01.2422899Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 191.1 MiB
+2026-11-05T04:56:01.3210081Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 191.1 MiB
+2026-11-05T04:56:01.4393655Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 191.1 MiB
+2026-11-05T04:56:01.5090055Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 191.1 MiB
+2026-11-05T04:56:01.6023239Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 191.1 MiB
+2026-11-05T04:56:05.0600283Z Chrome for Testing 156.0.8078.4 (playwright chromium v1248) downloaded to /home/runner/.cache/ms-playwright/chromium-1248
+2026-11-05T04:56:05.0604831Z Downloading FFmpeg (playwright ffmpeg v1013) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1013/ffmpeg-linux.zip
+2026-11-05T04:56:05.4900145Z |                                                                                |   0% of 2.2 MiB
+2026-11-05T04:56:05.5242439Z |■■■■■■■■                                                                        |  10% of 2.2 MiB
+2026-11-05T04:56:05.5407551Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.2 MiB
+2026-11-05T04:56:05.5464977Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.2 MiB
+2026-11-05T04:56:05.5545676Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.2 MiB
+2026-11-05T04:56:05.5581819Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.2 MiB
+2026-11-05T04:56:05.5650428Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.2 MiB
+2026-11-05T04:56:05.5692339Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.2 MiB
+2026-11-05T04:56:05.5707866Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.2 MiB
+2026-11-05T04:56:05.5752067Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.2 MiB
+2026-11-05T04:56:05.5763629Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.2 MiB
+2026-11-05T04:56:05.6443858Z FFmpeg (playwright ffmpeg v1013) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1013
+2026-11-05T04:56:05.6447361Z Downloading Chrome Headless Shell 156.0.8078.4 (playwright chromium-headless-shell v1248) from https://cdn.playwright.dev/builds/cft/156.0.8078.4/linux64/chrome-headless-shell-linux64.zip
+2026-11-05T04:56:06.0612482Z |                                                                                |   0% of 120 MiB
+2026-11-05T04:56:06.2129228Z |■■■■■■■■                                                                        |  10% of 120 MiB
+2026-11-05T04:56:06.2963686Z |■■■■■■■■■■■■■■■■                                                                |  20% of 120 MiB
+2026-11-05T04:56:06.3583206Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 120 MiB
+2026-11-05T04:56:06.4493667Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 120 MiB
+2026-11-05T04:56:06.4981021Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 120 MiB
+2026-11-05T04:56:06.5417400Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 120 MiB
+2026-11-05T04:56:06.6166370Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 120 MiB
+2026-11-05T04:56:06.6603974Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 120 MiB
+2026-11-05T04:56:06.7038843Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 120 MiB
+2026-11-05T04:56:06.7730410Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 120 MiB
+2026-11-05T04:56:09.0631733Z Chrome Headless Shell 156.0.8078.4 (playwright chromium-headless-shell v1248) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1248
+2026-11-05T04:56:09.0892864Z ##[group]Run npx --yes --package=npm@11.9.0 --call 'npm run test:pages'
+2026-11-05T04:56:09.0894053Z [36;1mnpx --yes --package=npm@11.9.0 --call 'npm run test:pages'[0m
+2026-11-05T04:56:09.0924151Z shell: /usr/bin/bash -e {0}
+2026-11-05T04:56:09.0924666Z ##[endgroup]
+2026-11-05T04:56:09.6096153Z 
+2026-11-05T04:56:09.6097227Z > @parsa-emami/miragemesh-web@0.0.1 test:pages
+2026-11-05T04:56:09.6097842Z > playwright test --config playwright.pages.config.ts
+2026-11-05T04:56:09.6098146Z 
+2026-11-05T04:56:10.6132701Z 
+2026-11-05T04:56:10.6133507Z Running 7 tests using 2 workers
+2026-11-05T04:56:10.6134068Z 
+2026-11-05T04:56:16.9541156Z   ✘  1 tests/pages/workspace-design.spec.ts:3:1 › page search works with keyboard, filtering, escape and focus return (5.4s)
+2026-11-05T04:56:17.9090503Z   ✓  3 tests/pages/workspace-design.spec.ts:24:1 › theme persists across reload without persisting operational data (414ms)
+2026-11-05T04:56:18.2864691Z   ✓  4 tests/pages/workspace-design.spec.ts:35:1 › synthetic tour filters and replays without any operational read or write (358ms)
+2026-11-05T04:56:19.3621588Z   ✘  5 tests/pages/workspace-design.spec.ts:57:1 › all routes fit at 360px in both themes and all local icon assets load (1.0s)
+2026-11-05T04:56:20.2544835Z   ✓  6 tests/pages/workspace-design.spec.ts:73:1 › unavailable preference storage does not prevent the public workspace (337ms)
+2026-11-05T04:56:41.5331264Z   ✘  2 tests/pages/public.spec.ts:3:1 › public subpath works without operational API calls and keeps navigation and local preview usable (30.0s)
+2026-11-05T04:56:42.3699335Z   ✓  7 tests/pages/public.spec.ts:21:1 › public workspace fits a narrow screen and supports keyboard navigation (283ms)
+2026-11-05T04:56:42.4181761Z 
+2026-11-05T04:56:42.4188553Z 
+2026-11-05T04:56:42.4199172Z   1) tests/pages/public.spec.ts:3:1 › public subpath works without operational API calls and keeps navigation and local preview usable 
+2026-11-05T04:56:42.4200297Z 
+2026-11-05T04:56:42.4200634Z     Test timeout of 30000ms exceeded.
+2026-11-05T04:56:42.4201476Z 
+2026-11-05T04:56:42.4201890Z     Error: locator.click: Test timeout of 30000ms exceeded.
+2026-11-05T04:56:42.4202548Z     Call log:
+2026-11-05T04:56:42.4203231Z       - waiting for getByRole('link', { name: 'Roadmap', exact: true })
+2026-11-05T04:56:42.4203807Z 
+2026-11-05T04:56:42.4203816Z 
+2026-11-05T04:56:42.4204669Z       12 |     await expect(page.getByRole('heading', { name: `Use ${name.toLowerCase()} in your local workspace` })).toBeVisible();
+2026-11-05T04:56:42.4205674Z       13 |   }
+2026-11-05T04:56:42.4206368Z     > 14 |   await page.getByRole('link', { name: 'Roadmap', exact: true }).click();
+2026-11-05T04:56:42.4207332Z          |                                                                  ^
+2026-11-05T04:56:42.4208248Z       15 |   await page.getByRole('searchbox', { name: 'Search tasks' }).fill('C40');
+2026-11-05T04:56:42.4209249Z       16 |   await expect(page.getByText('1 of 40 product tasks')).toBeVisible();
+2026-11-05T04:56:42.4209931Z       17 |   expect(api).toEqual([]);
+2026-11-05T04:56:42.4210790Z         at /home/runner/work/Miragemesh/Miragemesh/tests/pages/public.spec.ts:14:66
+2026-11-05T04:56:42.4211671Z 
+2026-11-05T04:56:42.4212473Z     Error Context: test-results/public-public-subpath-work-44a07-on-and-local-preview-usable/error-context.md
+2026-11-05T04:56:42.4213337Z 
+2026-11-05T04:56:42.4214470Z   2) tests/pages/workspace-design.spec.ts:3:1 › page search works with keyboard, filtering, escape and focus return 
+2026-11-05T04:56:42.4215325Z 
+2026-11-05T04:56:42.4215643Z     Error: expect(locator).toBeFocused() failed
+2026-11-05T04:56:42.4216047Z 
+2026-11-05T04:56:42.4216848Z     Locator:  getByRole('dialog', { name: 'Go to a workspace page' }).getByRole('searchbox', { name: 'Find a workspace page' })
+2026-11-05T04:56:42.4217856Z     Expected: focused
+2026-11-05T04:56:42.4218298Z     Received: inactive
+2026-11-05T04:56:42.4218723Z     Timeout:  5000ms
+2026-11-05T04:56:42.4218971Z 
+2026-11-05T04:56:42.4219138Z     Call log:
+2026-11-05T04:56:42.4220776Z       - Expect "toBeFocused" getByRole('dialog', { name: 'Go to a workspace page' }).getByRole('searchbox', { name: 'Find a workspace page' }) with timeout 5000ms
+2026-11-05T04:56:42.4223402Z       - waiting for getByRole('dialog', { name: 'Go to a workspace page' }).getByRole('searchbox', { name: 'Find a workspace page' })
+2026-11-05T04:56:42.4225464Z         14 × locator resolved to <input value="" type="search" placeholder="Search pages…" aria-label="Find a workspace page"/>
+2026-11-05T04:56:42.4226454Z            - unexpected value "inactive"
+2026-11-05T04:56:42.4226769Z 
+2026-11-05T04:56:42.4226778Z 
+2026-11-05T04:56:42.4227238Z        7 |   const dialog = page.getByRole('dialog', { name: 'Go to a workspace page' });
+2026-11-05T04:56:42.4228242Z        8 |   const input = dialog.getByRole('searchbox', { name: 'Find a workspace page' });
+2026-11-05T04:56:42.4229033Z     >  9 |   await expect(input).toBeFocused();
+2026-11-05T04:56:42.4229537Z          |                       ^
+2026-11-05T04:56:42.4230042Z       10 |   await input.fill('not-a-page');
+2026-11-05T04:56:42.4230698Z       11 |   await expect(dialog).toContainText('No pages match');
+2026-11-05T04:56:42.4231539Z       12 |   await input.fill('incident');
+2026-11-05T04:56:42.4232373Z         at /home/runner/work/Miragemesh/Miragemesh/tests/pages/workspace-design.spec.ts:9:23
+2026-11-05T04:56:42.4232975Z 
+2026-11-05T04:56:42.4233685Z     Error Context: test-results/workspace-design-page-sear-45977-ing-escape-and-focus-return/error-context.md
+2026-11-05T04:56:42.4234457Z 
+2026-11-05T04:56:42.4235316Z   3) tests/pages/workspace-design.spec.ts:57:1 › all routes fit at 360px in both themes and all local icon assets load 
+2026-11-05T04:56:42.4236105Z 
+2026-11-05T04:56:42.4236449Z     Error: expect(received).toEqual(expected) // deep equality
+2026-11-05T04:56:42.4236852Z 
+2026-11-05T04:56:42.4237006Z     - Expected  - 1
+2026-11-05T04:56:42.4237352Z     + Received  + 3
+2026-11-05T04:56:42.4237550Z 
+2026-11-05T04:56:42.4237702Z     - Array []
+2026-11-05T04:56:42.4238009Z     + Array [
+2026-11-05T04:56:42.4238613Z     +   "http://127.0.0.1:4187/Miragemesh/assets/icons/code-2.svg",
+2026-11-05T04:56:42.4239174Z     + ]
+2026-11-05T04:56:42.4239348Z 
+2026-11-05T04:56:42.4239484Z       68 |     }
+2026-11-05T04:56:42.4239795Z       69 |   }
+2026-11-05T04:56:42.4240176Z     > 70 |   expect(missing).toEqual([]);
+2026-11-05T04:56:42.4240665Z          |                   ^
+2026-11-05T04:56:42.4241271Z       71 | });
+2026-11-05T04:56:42.4241580Z       72 |
+2026-11-05T04:56:42.4242423Z       73 | test('unavailable preference storage does not prevent the public workspace', async ({ page }) => {
+2026-11-05T04:56:42.4243568Z         at /home/runner/work/Miragemesh/Miragemesh/tests/pages/workspace-design.spec.ts:70:19
+2026-11-05T04:56:42.4244180Z 
+2026-11-05T04:56:42.4244856Z     Error Context: test-results/workspace-design-all-route-fb252--all-local-icon-assets-load/error-context.md
+2026-11-05T04:56:42.4245574Z 
+2026-11-05T04:56:42.4245704Z   3 failed
+2026-11-05T04:56:42.4246960Z     tests/pages/public.spec.ts:3:1 › public subpath works without operational API calls and keeps navigation and local preview usable 
+2026-11-05T04:56:42.4248596Z     tests/pages/workspace-design.spec.ts:3:1 › page search works with keyboard, filtering, escape and focus return 
+2026-11-05T04:56:42.4250240Z     tests/pages/workspace-design.spec.ts:57:1 › all routes fit at 360px in both themes and all local icon assets load 
+2026-11-05T04:56:42.4251447Z   4 passed (32.2s)
+2026-11-05T04:56:42.4610356Z ##[error]Process completed with exit code 1.
+2026-11-05T04:56:42.4741907Z Post job cleanup.
+2026-11-05T04:56:42.5642856Z [command]/usr/bin/git version
+2026-11-05T04:56:42.5728795Z git version 2.56.0
+2026-11-05T04:56:42.5787966Z Temporarily overriding HOME='/home/runner/work/_temp/206733f3-4fc4-4eba-9be8-c5b1672bda34' before making global git config changes
+2026-11-05T04:56:42.5789654Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-05T04:56:42.5796197Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/Miragemesh/Miragemesh
+2026-11-05T04:56:42.5891847Z Removing SSH command configuration
+2026-11-05T04:56:42.5902116Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-05T04:56:42.5947076Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-05T04:56:42.6285428Z Removing HTTP extra header
+2026-11-05T04:56:42.6292484Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-05T04:56:42.6352212Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-05T04:56:42.6640014Z Removing includeIf entries pointing to credentials config files
+2026-11-05T04:56:42.6648901Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-05T04:56:42.6699304Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-05T04:56:42.7105784Z Cleaning up orphan processes
+

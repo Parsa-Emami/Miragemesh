@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "task": "U01",
+  "date": "2026-11-05",
+  "base_commit": "d4dc9c829a1364a45d1202a50489be753cc5d46e",
+  "scope": "21st-listed shadcn source adaptation, all existing UI routes, truthful sample tour, validated local overview and strict product review. No new engine readiness claim.",
+  "status": "candidate; full supported-host CI pending",
+  "commands": [
+    {
+      "command": "npm run validate:plan",
+      "exit_code": 0,
+      "observed": "40 detailed tasks valid; no dependency-ready C task"
+    },
+    {
+      "command": "npm run build:pages",
+      "exit_code": 0,
+      "log": "docs/evidence/U01/local-pages-build.log"
+    },
+    {
+      "command": "node --test tests/web/foundation.test.mjs tests/web/pages.test.mjs tests/web/ui-provenance.test.mjs",
+      "exit_code": 0,
+      "passed": 6,
+      "log": "docs/evidence/U01/local-focused-tests.log"
+    },
+    {
+      "command": "npm test",
+      "exit_code": 1,
+      "passed": 120,
+      "failed": 44,
+      "skipped": 1,
+      "limitation": "This executor has neither Go nor the built engine/provider prerequisites. Runtime/package cases fail for missing engine/build; this is not a passing full-suite result. Supported-host CI must pass before merge.",
+      "log": "docs/evidence/U01/local-node-prerequisite-failure.log"
+    }
+  ],
+  "manual_review": {
+    "before_screenshots": "docs/design/audit-2026-11-05/",
+    "local_preview": "Browser rejected terminal.local:4187 with ERR_BLOCKED_BY_CLIENT. No local visual verification claim. Verify hosted UI after passing CI/deployment."
+  },
+  "product_gaps": "docs/product/GLOBAL_READINESS_REVIEW.md",
+  "historical_release_unchanged": "v0.0.1",
+  "protected_paths_modified": false,
+  "hosted_regressions": [
+    {
+      "source_commit": "806c1d8e6495a1c5e9e630d54c33f380756beeb2",
+      "workflow_run": 41970776757,
+      "passed": 4,
+      "failed": 3,
+      "log": "docs/evidence/U01/first-public-browser-failure.log",
+      "findings": [
+        "Roadmap count badge changed the accessible link name.",
+        "React mount-time autofocus did not focus a field in the closed native dialog.",
+        "A renamed upstream icon was requested through a missing code-2 asset."
+      ],
+      "fixes": [
+        "Hide the decorative count from the accessibility name.",
+        "Focus the search input explicitly after showModal.",
+        "Use an actually vendored external-link icon."
+      ],
+      "status": "fixes implemented; fresh hosted verification pending"
+    },
+    {
+      "source_commit": "42c937eb91c23fc6bb14b3acaa0d3e23f5d109d1",
+      "workflow_run": 41971108231,
+      "passed": 6,
+      "failed": 2,
+      "log": "docs/evidence/U01/second-public-browser-failure.log",
+      "findings": [
+        "Focus restoration after native dialog Escape needed an explicit trigger reference.",
+        "The new skip-link test sent Tab before the asynchronously loaded workspace was ready."
+      ],
+      "fixes": [
+        "Explicit trigger focus on cancel, close button and backdrop; keep route selection separate.",
+        "Wait for the workspace heading before testing keyboard order."
+      ],
+      "status": "fixes implemented; fresh hosted verification pending"
+    },
+    {
+      "source_commit": "af86c8f2cb31aa41a621fefa870cbcc603e852ec",
+      "workflow_run": 41971407990,
+      "passed": 7,
+      "failed": 1,
+      "log": "docs/evidence/U01/third-public-browser-failure.log",
+      "finding": "Escape while the search field had a query did not close the dialog on the first keypress; native search-field clearing took precedence.",
+      "fix": "Handle Escape keydown explicitly, prevent the native search clear, close the dialog and restore the trigger. Assert both dismissal and focus without removing any check.",
+      "status": "fix implemented; fresh hosted verification pending"
+    }
+  ]
+}

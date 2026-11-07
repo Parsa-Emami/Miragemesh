@@ -1,0 +1,1004 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 test
+> node --test tests/web/*.test.mjs tests/contracts/*.test.mjs tests/engineering/*.test.mjs tests/release/*.mjs
+
+✖ CLI accepts the exact v1 fixture and reports validation without acceptance authority (3.16054ms)
+✖ real schemas and Go reject every incompatible structural fixture (118.867729ms)
+✖ identifier, exact numeric, timestamp and UTF-8 byte boundaries agree with the Go validator (3.784409ms)
+✖ invalid CLI combinations fail usage without launching a server (1.760221ms)
+✖ result schema rejects contradictory authority, errors and incomplete-input digests (1.649234ms)
+✖ an actual stdin read failure returns only a typed error and no partial digest (1.62035ms)
+✖ an open stdin expires and either termination signal returns a redacted cancellation (4.673989ms)
+✖ C39 licensed positive and negative sensor events produce actual typed engine results (8.664698ms)
+✖ certificate CLI issues a private scoped token, recovers and replays the same signed certificate (6.09644ms)
+✖ certificate CLI rejects unsafe key inputs, missing prerequisites and mixed runtime modes (2.374926ms)
+✔ requires source-backed C22 replay, durable HTTP triage and fail-closed replay limits (573.143449ms)
+✔ accepts executed engine, contract and real recovery suites with interleaved output (100.763709ms)
+✔ rejects empty discovery and package-only success without executed tests (176.104787ms)
+✔ rejects a missing required suite or anchor (161.870974ms)
+✔ requires persistent sensor sequence and invalid-event regression anchors (163.610633ms)
+✔ rejects a skipped anchor or a pass with no run (223.362186ms)
+✔ rejects failures in any package and unfinished package results (355.641278ms)
+✔ rejects malformed JSON events and missing input (368.071291ms)
+✔ requires enrollment validation, durable consumption, scope, clock, concurrency and crash anchors (628.309435ms)
+✔ requires mTLS acceptance, transport denial, typed verdicts, issuer-bound revocation, revoked replay and configuration anchors (368.215783ms)
+✔ requires signed desired state, unsigned rejection, stale rejection and exact-byte signature anchors (834.546968ms)
+✔ requires durable apply, real crash/recovery, shared-writer serialization and rejection anchors (750.657418ms)
+✔ requires decoy observation, echo, request bound, prerequisite, restart and no-execution anchors (490.997124ms)
+✔ requires decoy isolation control, cleanup, immutability, runtime bound, cancellation and workflow anchors (675.955442ms)
+✔ requires decoy egress, runtime limit, reconciliation, provider and adapter anchors (538.718102ms)
+✔ requires bounded spool persistence, rejection, concurrency, configuration and recovery anchors (546.260428ms)
+✔ requires durable overflow markers, replay, quota and gap-aware sequence anchors (319.982185ms)
+✔ requires durable batch acknowledgement, lost-ACK replay, capacity, rejection and real recovery anchors (794.766577ms)
+✔ requires immutable segment rotation, explicit incomplete tails, crash recovery and projection anchors (1668.971678ms)
+✔ requires derived index rebuild, dedup, conflict, loss and incomplete-tail anchors (496.504094ms)
+✔ requires C19 explainable rules and durable alert projection anchors (369.616447ms)
+✔ requires C20 append-only triage, strict requests, restart replay and forged-history anchors (534.497829ms)
+✔ requires C21 snapshot and status boundary anchors even when other suites pass (352.390735ms)
+✔ requires the review remediation boundaries (413.336946ms)
+✔ requires C23 expiration, audit, real crash recovery and resurrection prevention (513.640128ms)
+✔ requires C24 real TLS cutoff, atomic offline recovery and fail-closed certificate boundaries (717.911237ms)
+✔ requires C30 full reference workflow, fixtures, negative cases, restart/restore and loopback boundaries (369.430329ms)
+✔ requires C28 fixture, malformed-workload and loopback-only measurement boundaries (160.780793ms)
+✔ requires C26 integrated offline spool, duplicate batch, restart and no-egress boundaries (182.159444ms)
+✔ requires C25 signed authority, artifact integrity, anti-rollback and real recovery boundaries (876.033784ms)
+✔ requires independently repeated C36 onboarding and real event fixture anchors (124.580535ms)
+✔ requires C37 runtime cancellation and real-store restart/retry anchors (250.712208ms)
+✔ requires C38 real-file backup, corrupt-copy refusal and segment-only retention anchors (245.671997ms)
+✔ C36 loads the versioned scenario and licensed sensor-event outcomes (14.299943ms)
+▶ C36 refuses missing, unlicensed, unsupported and malformed fixtures
+  ✔ missing (246.977598ms)
+  ✔ license (263.992238ms)
+  ✔ version (257.786954ms)
+  ✔ json (236.544426ms)
+  ✔ escape (211.555381ms)
+✔ C36 refuses missing, unlicensed, unsupported and malformed fixtures (1219.778867ms)
+✔ C36 command journal records real exits and refuses failed or timed-out commands (325.231445ms)
+✔ accepts the declared C28 workload and fixture identities (1.808604ms)
+✔ rejects malformed C28 workload metadata and inconsistent counts (2.377209ms)
+✔ percentiles and latency summaries use nearest-rank values (0.266211ms)
+✔ requires a fully enforced 2 vCPU / 2048 MiB scope for the evidence run (0.356747ms)
+✔ accepts a complete measured observation and rejects unproved claims (0.806304ms)
+✖ retention CLI previews, applies and replays without rewriting C05 (3.818711ms)
+✖ retention CLI rejects missing storage and mixed or incomplete modes (1.617075ms)
+✖ update CLI persists revocation and exact scoped recovery across independent processes (4.461419ms)
+✖ update CLI rejects unrelated flags, unsafe files and missing trust prerequisites before mutation (1.586129ms)
+✔ C37 release APIs reject missing options with a typed usage error (2.490751ms)
+✖ C40 complete package runs the reference workflow and real installed engine without a compiler (8.425909ms)
+✔ C38 policies use current locked versions and state actual data lifecycle limits (10.312139ms)
+✔ C38 policy links resolve and operator entry guides expose both policies (16.174778ms)
+✔ C38 support policy rejects placeholder contacts and unearned SLA claims (2.171369ms)
+✔ C38 licensed fixtures bind required crash, ACK, quota and egress proof to real anchors (4.149118ms)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 build
+> npm run prepare:web && npm run typecheck && vite build --config apps/web/vite.config.ts && npm run build:engine
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 prepare:web
+> node scripts/generate-web-data.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 typecheck
+> tsc -p tsconfig.json
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 31 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.78 kB │ gzip:  0.47 kB
+dist/web/assets/index-DN4Bm5JE.css   21.56 kB │ gzip:  5.11 kB
+dist/web/assets/index-DMcw7vK0.js   295.87 kB │ gzip: 88.94 kB
+
+✓ built in 390ms
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 build:engine
+> node scripts/build-engine.mjs
+
+Engine build failed; previous binary preserved.
+✖ C35 fixtures describe licensed positive, negative and expected outcomes (1931.724519ms)
+✖ C35 binds the real engine to the shipped artifact and a reporting fixture engine to the synthetic upgrade (1.16207ms)
+✖ C35 verifies the real artifact against an independently trusted key (0.206581ms)
+✖ C35 rejects modified bytes, expired manifests, missing evidence and untrusted signers (0.071608ms)
+✖ C35 installs the verified release without touching accepted data (0.144358ms)
+✖ C35 refuses stale, expired and replayed authority without changing state or data (0.078418ms)
+✖ C35 rollback refuses newer or malformed accepted data (0.085879ms)
+✖ C35 rolls back to the recorded release and can upgrade again without data loss (0.196285ms)
+✖ C35 refuses rollback when the recorded release was modified (0.159811ms)
+﹣ C35 refuses a foreign-platform install unless staging is explicit (0.115764ms) # host matches the artifact platform
+✖ C35 scripts have no network capability and preserve the source-build path (0.105058ms)
+✖ C35 documents the trust model, refusal codes and safe upgrade contract (0.047922ms)
+✖ C37 repeated install and upgrade reject modified installed bytes without changing accepted data (0.296967ms)
+✖ C37 installer refuses data paths occupied by release metadata or containing the install prefix (0.241513ms)
+✖ C37 installer refuses reserved metadata symlinks into accepted data (0.045028ms)
+✖ C37 installer refuses a prefix alias into its signed source artifact (0.029985ms)
+✔ C39 release check refuses verified status flags without a real verification report (1199.207032ms)
+✔ C39 historical audit checks all 38 original records and rejects relabelled evidence (2709.365521ms)
+✔ C39 release input identity detects engine and fixture changes while allowing status certification (1227.313074ms)
+✔ C39 licenses reject missing fixture provenance and unknown transitive licenses (1000.757557ms)
+✔ C39 validates actual Go test streams and rejects skipped crash or lost-ACK anchors (849.362347ms)
+✔ C39 refuses incomplete or wrong-source clone proof rather than trusting passed=true (1.629644ms)
+✔ C39 release CLI refuses unknown options instead of ignoring a missing proof (698.146681ms)
+✔ C39 rejects changed historical source inventories as well as changed evidence envelopes (691.776653ms)
+✔ C39 rejects template reports before any readiness success (553.811252ms)
+✔ C39 proof reads enforce hashes, missing-file refusal and path confinement (2.90225ms)
+✔ C39 requires actual Node results including egress and data-safe signed upgrade checks (0.663129ms)
+✔ C39 browser proof requires completed security, accessibility and workflow cases (0.464099ms)
+✔ C33 fixtures validate contract, schema bounds and negative catalog (10.692692ms)
+✔ C33 N-1 snapshot fixtures are cleanly accepted by existing domain validators (5.353121ms)
+✔ C33 negative cases correctly identify error and failure handling modes (3.831119ms)
+✔ C33 advertises only observed platforms and prevents sensitive leaks (2.139707ms)
+✔ certificate boundary rejects inconsistent dates, scope duplication, status and secret fields (3.016933ms)
+✔ certificate proxy accepts a bounded snapshot and refuses redirects, malformed, oversized and unavailable upstreams (70.592718ms)
+✔ published certificate schema and nanosecond overlap boundaries agree with engine semantics (71.248098ms)
+✔ C29 fixtures describe the readiness, redaction and bound contract (11.35581ms)
+✖ real engine and authoritative store report ready, survive restart and reset diagnostics (19.230398ms)
+✔ failures are typed and visible, optional providers degrade, and sentinels never reach logs (294.335736ms)
+✔ optional provider failure degrades while engine recovery returns to ready (32.123213ms)
+✔ standalone web shell reports web-only readiness and does not call an engine (10.705931ms)
+✔ missing index makes the web component itself not ready (8.598909ms)
+✔ public configuration fails closed on engine flags, external endpoints, unknown keys and project mismatch (1.297715ms)
+✔ preview rejects hostile structure, excessive UTF-8 size and excessive complexity (1.655793ms)
+✔ HTTP isolation, cache rules, health semantics, methods, traversal and symlink containment (105.58848ms)
+✔ generated project and runtime identity agree with exactly forty original product tasks (2.099582ms)
+✔ incident retention metadata is explicit and cannot claim complete coverage (5.451139ms)
+✔ published incident response schema validates sources and rejects missing trace fields (87.247361ms)
+✔ incident boundary rejects broken source links and inconsistent coverage before rendering (1.24216ms)
+✔ incident proxy rejects redirect, malformed, oversized and unavailable upstreams without egress (105.61497ms)
+✖ real launcher serves engine health, preserves disabled admission, stops and restarts (26.989543ms)
+✔ local web proxy validates the exact read-only sensor response (61.411101ms)
+✖ engine serves an empty C05-backed snapshot when explicit local policy is supplied (134.198579ms)
+✖ engine crash stops the web listener with a failing outcome (11.330902ms)
+✖ occupied web port remains owned by its server and launch cleans up its engine (9.93474ms)
+✔ missing engine and invalid configuration fail before a successful launch (8.247069ms)
+✔ health boundary rejects malformed, oversized, redirected, unavailable and stalled upstreams (2029.116041ms)
+✔ synthetic C03 fixtures are versioned and cannot claim product readiness (1.686019ms)
+✖ CLI SIGINT and SIGTERM release both listeners; supervisor death closes engine stdin (80.166154ms)
+✔ unresponsive startup times out and cancellation terminates only the owned child (10073.450922ms)
+✔ failed Go compilation preserves the previous binary and removes staging output (8.856404ms)
+✔ startup rejects forged non-loopback handshakes and unsafe health destinations (67.811237ms)
+✖ default engine returns a typed disabled sensor response directly (4.99125ms)
+✖ web and engine reject foreign Host and Origin before serving local data (3.336988ms)
+✔ sensor responses conform to the published local API schema (76.113375ms)
+✔ C32 fixtures validate contract, schema bounds and negative catalog (15.053528ms)
+✔ local web server rejects foreign Host, spoofed Host, and cross-origin requests (59.230051ms)
+✔ cache-control and security headers are strictly enforced across static and dynamic routes (26.283649ms)
+✔ path confinement rejects path traversal and forbidden directory escapes (10.886394ms)
+✔ engine address validation strictly confines engine calls to valid loopback addresses (2.341636ms)
+✔ optional private reverse proxy allowedHosts configuration allows documented private ingress (15.701975ms)
+✔ C34 deliverables and guides exist and are readable (19.952686ms)
+✔ C34 fixtures validate contract schema, provenance, and required sections (12.754781ms)
+✔ SECURITY.md defines conditional private reporting, best-effort support and supported source (1.647221ms)
+✔ USER_GUIDE.md covers full core workflow, source builds, limits, privacy, and recovery without cloud dependency (1.069897ms)
+✔ C34 negative cases properly model inert sentinels, 360px failure states, and egress denial (2.143518ms)
+✔ setup validates toolchain/options and stops at the first failed install (2.128365ms)
+✔ setup rejects missing tools, wrong pins and a non-rootless provider before building (0.76377ms)
+✔ roadmap rejects absent resources, escaping paths and unproved completion (46.891332ms)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 build
+> npm run prepare:web && npm run typecheck && vite build --config apps/web/vite.config.ts && npm run build:engine
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 prepare:web
+> node scripts/generate-web-data.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 typecheck
+> tsc -p tsconfig.json
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 31 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/web/index.html                   0.78 kB │ gzip:  0.47 kB
+dist/web/assets/index-DN4Bm5JE.css   21.56 kB │ gzip:  5.11 kB
+dist/web/assets/index-DMcw7vK0.js   295.87 kB │ gzip: 88.94 kB
+
+✓ built in 325ms
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> @parsa-emami/miragemesh-web@0.0.1 build:engine
+> node scripts/build-engine.mjs
+
+Engine build failed; previous binary preserved.
+✖ complete artifact verifies its engine, web, offline resources, source, SBOM, notices and provenance (0.550289ms)
+✖ two builds from one source and toolchain are byte-identical (0.067351ms)
+✖ C39 refuses a packaged source archive with different bytes even under unchanged provenance (0.03987ms)
+✖ packaged runtime starts in isolation and exposes only supported local surfaces (0.03295ms)
+✖ runtime makes no internet connection by default (0.070466ms)
+✖ negative artifact mutations fail with the recorded error semantics (0.04707ms)
+✔ C40 static publication is explicit and never enables engine integration (1.601652ms)
+✔ C40 publication refuses a dirty source, wrong repository and an unapproved version (11.934983ms)
+✔ accepts the repository reference scenario and its licensed fixtures (9.493006ms)
+✔ rejects missing workflow requirements and fixture provenance (19.103988ms)
+✔ rejects fixture metadata without provenance or license (49.144183ms)
+✔ rejects escaping paths, unsupported versions and false engine success claims (13.934093ms)
+✔ accepts the implemented scenario used by the actual clean-clone runner (3.077249ms)
+✔ accepts the locked OCI digest and official Alpine package licenses while rejecting tag or digest substitution (20.464806ms)
+✔ accepts exact versioned resources, an explicitly optional missing tool and synthetic fixtures (5.737279ms)
+✔ rejects floating resources, missing official metadata and mismatched integrity (17.291979ms)
+✔ rejects unavailable required resources and fixture escapes or checksum changes (9.899698ms)
+✔ validates the versioned sensor snapshot and rejects malformed sensor states (5.017806ms)
+✔ update snapshot rejects misleading authority, duplicate releases, private fields and expiry boundary truncation (9.683092ms)
+✔ update proxy confines requests, validates actual response bytes and refuses redirects or oversized data (39.060135ms)
+✔ update read-only API contract matches both published formats (5.954877ms)
+ℹ tests 165
+ℹ suites 0
+ℹ pass 120
+ℹ fail 44
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 15482.452954
+
+✖ failing tests:
+
+test at tests/contracts/domain-contracts.test.mjs:29:1
+✖ CLI accepts the exact v1 fixture and reports validation without acceptance authority (3.16054ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/contracts/domain-contracts.test.mjs:31:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/contracts/domain-contracts.test.mjs:37:1
+✖ real schemas and Go reject every incompatible structural fixture (118.867729ms)
+  AssertionError [ERR_ASSERTION]: v0: undefined
+  
+  null !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/contracts/domain-contracts.test.mjs:45:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/contracts/domain-contracts.test.mjs:56:1
+✖ identifier, exact numeric, timestamp and UTF-8 byte boundaries agree with the Go validator (3.784409ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/contracts/domain-contracts.test.mjs:62:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/contracts/domain-contracts.test.mjs:93:1
+✖ invalid CLI combinations fail usage without launching a server (1.760221ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 2
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/contracts/domain-contracts.test.mjs:96:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/contracts/domain-contracts.test.mjs:100:1
+✖ result schema rejects contradictory authority, errors and incomplete-input digests (1.649234ms)
+  SyntaxError [Error]: "undefined" is not valid JSON
+      at JSON.parse (<anonymous>)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/contracts/domain-contracts.test.mjs:105:24)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at tests/contracts/domain-contracts.test.mjs:110:1
+✖ an actual stdin read failure returns only a typed error and no partial digest (1.62035ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/contracts/domain-contracts.test.mjs:115:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/contracts/domain-contracts.test.mjs:124:1
+✖ an open stdin expires and either termination signal returns a redacted cancellation (4.673989ms)
+  Error: spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:316:19)
+      at onErrorNT (node:internal/child_process:554:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    path: '/workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    spawnargs: [ '--validate-event' ]
+  }
+
+test at tests/contracts/release-event.test.mjs:9:1
+✖ C39 licensed positive and negative sensor events produce actual typed engine results (8.664698ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/contracts/release-event.test.mjs:18:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/engineering/certificate-cli.test.mjs:18:1
+✖ certificate CLI issues a private scoped token, recovers and replays the same signed certificate (6.09644ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at seed (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/engineering/certificate-cli.test.mjs:15:9)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/engineering/certificate-cli.test.mjs:19:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/engineering/certificate-cli.test.mjs:34:1
+✖ certificate CLI rejects unsafe key inputs, missing prerequisites and mixed runtime modes (2.374926ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at seed (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/engineering/certificate-cli.test.mjs:15:9)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/engineering/certificate-cli.test.mjs:35:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/engineering/retention-cli.test.mjs:13:1
+✖ retention CLI previews, applies and replays without rewriting C05 (3.818711ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/engineering/retention-cli.test.mjs:17:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/engineering/retention-cli.test.mjs:33:1
+✖ retention CLI rejects missing storage and mixed or incomplete modes (1.617075ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 2
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/engineering/retention-cli.test.mjs:38:58)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/engineering/update-cli.test.mjs:13:1
+✖ update CLI persists revocation and exact scoped recovery across independent processes (4.461419ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at seed (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/engineering/update-cli.test.mjs:11:245)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/engineering/update-cli.test.mjs:14:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/engineering/update-cli.test.mjs:27:1
+✖ update CLI rejects unrelated flags, unsafe files and missing trust prerequisites before mutation (1.586129ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  null !== 0
+  
+      at seed (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/engineering/update-cli.test.mjs:11:245)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/engineering/update-cli.test.mjs:28:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/release/installed-publication.mjs:9:1
+✖ C40 complete package runs the reference workflow and real installed engine without a compiler (8.425909ms)
+  Error: Missing build output: dist/web/index.html. Run npm run build or omit --no-build.
+      at packageWeb (file:///workspace/scratch/b5d67dd2760f/Miragemesh/scripts/package-web.mjs:248:19)
+      at async TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/installed-publication.mjs:13:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/release/upgrade-recovery.mjs:206:1
+✖ C35 fixtures describe licensed positive, negative and expected outcomes (1931.724519ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:225:1
+✖ C35 binds the real engine to the shipped artifact and a reporting fixture engine to the synthetic upgrade (1.16207ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:247:1
+✖ C35 verifies the real artifact against an independently trusted key (0.206581ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:266:1
+✖ C35 rejects modified bytes, expired manifests, missing evidence and untrusted signers (0.071608ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:306:1
+✖ C35 installs the verified release without touching accepted data (0.144358ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:342:1
+✖ C35 refuses stale, expired and replayed authority without changing state or data (0.078418ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:387:1
+✖ C35 rollback refuses newer or malformed accepted data (0.085879ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:413:1
+✖ C35 rolls back to the recorded release and can upgrade again without data loss (0.196285ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:444:1
+✖ C35 refuses rollback when the recorded release was modified (0.159811ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:463:1
+﹣ C35 refuses a foreign-platform install unless staging is explicit (0.115764ms) # host matches the artifact platform
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:475:1
+✖ C35 scripts have no network capability and preserve the source-build path (0.105058ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:507:1
+✖ C35 documents the trust model, refusal codes and safe upgrade contract (0.047922ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:527:1
+✖ C37 repeated install and upgrade reject modified installed bytes without changing accepted data (0.296967ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:555:1
+✖ C37 installer refuses data paths occupied by release metadata or containing the install prefix (0.241513ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:573:1
+✖ C37 installer refuses reserved metadata symlinks into accepted data (0.045028ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/release/upgrade-recovery.mjs:588:1
+✖ C37 installer refuses a prefix alias into its signed source artifact (0.029985ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/release/upgrade-recovery.mjs:168:5)
+      at async TestHook.run (node:internal/test_runner/test:1409:7) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 209,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/web/engine-readiness.test.mjs:93:1
+✖ real engine and authoritative store report ready, survive restart and reset diagnostics (19.230398ms)
+  Error: spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:316:19)
+      at onErrorNT (node:internal/child_process:554:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    path: '/workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    spawnargs: [ '--listen', '127.0.0.1:0', '--sensor-status-dir=/tmp/miragemesh-readiness-kGrhDN/sensor-state', '--sensor-status-max-operations=32', '--sensor-status-max-bytes=524288', '--sensor-status-max-manifest-bytes=32768', '--sensor-config-public-key=/tmp/miragemesh-readiness-kGrhDN/operator-public.key', '--sensor-config-max-sensors=5', '--sensor-config-min-heartbeat-seconds=5', '--sensor-config-max-heartbeat-seconds=3600', '--sensor-config-min-spool-limit-events=1', '--sensor-config-max-spool-limit-events=12800', '--sensor-config-min-event-batch-limit=1', '--sensor-config-max-event-batch-limit=12800' ]
+  }
+
+test at tests/web/local-launch.test.mjs:22:1
+✖ real launcher serves engine health, preserves disabled admission, stops and restarts (26.989543ms)
+  Error: spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:316:19)
+      at onErrorNT (node:internal/child_process:554:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    path: '/workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    spawnargs: [ '--listen', '127.0.0.1:0' ]
+  }
+
+test at tests/web/local-launch.test.mjs:77:1
+✖ engine serves an empty C05-backed snapshot when explicit local policy is supplied (134.198579ms)
+  Error: CLI exited before startup
+      at file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/local-launch.test.mjs:172:54
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+test at tests/web/local-launch.test.mjs:97:1
+✖ engine crash stops the web listener with a failing outcome (11.330902ms)
+  Error: spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:316:19)
+      at onErrorNT (node:internal/child_process:554:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    path: '/workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    spawnargs: [ '--listen', '127.0.0.1:0' ]
+  }
+
+test at tests/web/local-launch.test.mjs:107:1
+✖ occupied web port remains owned by its server and launch cleans up its engine (9.93474ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /EADDRINUSE/. Input:
+  
+  'Error: spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh ENOENT'
+  
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/local-launch.test.mjs:112:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh ENOENT
+        at ChildProcess._handle.onexit (node:internal/child_process:316:19)
+        at onErrorNT (node:internal/child_process:554:16)
+        at process.processTicksAndRejections (node:internal/process/task_queues:90:21),
+    expected: /EADDRINUSE/,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/web/local-launch.test.mjs:177:1
+✖ CLI SIGINT and SIGTERM release both listeners; supervisor death closes engine stdin (80.166154ms)
+  Error: CLI exited before startup
+      at file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/local-launch.test.mjs:172:54
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+test at tests/web/local-launch.test.mjs:246:1
+✖ default engine returns a typed disabled sensor response directly (4.99125ms)
+  Error: spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:316:19)
+      at onErrorNT (node:internal/child_process:554:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    path: '/workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    spawnargs: [ '--listen', '127.0.0.1:0' ]
+  }
+
+test at tests/web/local-launch.test.mjs:255:1
+✖ web and engine reject foreign Host and Origin before serving local data (3.336988ms)
+  Error: spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:316:19)
+      at onErrorNT (node:internal/child_process:554:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    path: '/workspace/scratch/b5d67dd2760f/Miragemesh/dist/engine/miragemesh',
+    spawnargs: [ '--listen', '127.0.0.1:0' ]
+  }
+
+test at tests/web/package-complete.test.mjs:85:1
+✖ complete artifact verifies its engine, web, offline resources, source, SBOM, notices and provenance (0.550289ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at ensureBuild (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:20:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:77:9)
+      at TestHook.runInAsyncScope (node:async_hooks:227:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at TestHook.run (node:internal/util:581:20) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 477,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/web/package-complete.test.mjs:119:1
+✖ two builds from one source and toolchain are byte-identical (0.067351ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at ensureBuild (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:20:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:77:9)
+      at TestHook.runInAsyncScope (node:async_hooks:227:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at TestHook.run (node:internal/util:581:20) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 477,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/web/package-complete.test.mjs:130:1
+✖ C39 refuses a packaged source archive with different bytes even under unchanged provenance (0.03987ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at ensureBuild (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:20:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:77:9)
+      at TestHook.runInAsyncScope (node:async_hooks:227:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at TestHook.run (node:internal/util:581:20) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 477,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/web/package-complete.test.mjs:144:1
+✖ packaged runtime starts in isolation and exposes only supported local surfaces (0.03295ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at ensureBuild (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:20:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:77:9)
+      at TestHook.runInAsyncScope (node:async_hooks:227:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at TestHook.run (node:internal/util:581:20) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 477,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/web/package-complete.test.mjs:165:1
+✖ runtime makes no internet connection by default (0.070466ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at ensureBuild (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:20:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:77:9)
+      at TestHook.runInAsyncScope (node:async_hooks:227:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at TestHook.run (node:internal/util:581:20) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 477,
+    stdout: null,
+    stderr: null
+  }
+
+test at tests/web/package-complete.test.mjs:182:1
+✖ negative artifact mutations fail with the recorded error semantics (0.04707ms)
+  Error: Command failed: npm run build
+      at genericNodeError (node:internal/errors:986:15)
+      at wrappedFn (node:internal/errors:540:14)
+      at checkExecSyncError (node:child_process:943:11)
+      at execFileSync (node:child_process:979:15)
+      at ensureBuild (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:20:3)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5d67dd2760f/Miragemesh/tests/web/package-complete.test.mjs:77:9)
+      at TestHook.runInAsyncScope (node:async_hooks:227:14)
+      at TestHook.run (node:internal/test_runner/test:1402:25)
+      at TestHook.run (node:internal/test_runner/test:1757:18)
+      at TestHook.run (node:internal/util:581:20) {
+    status: 1,
+    signal: null,
+    output: [ null, null, null ],
+    pid: 477,
+    stdout: null,
+    stderr: null
+  }
