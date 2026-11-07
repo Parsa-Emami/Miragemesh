@@ -1,6 +1,6 @@
 # MirageMesh
 
-[Public browser workspace](https://parsa-emami.github.io/Miragemesh/) · [Release downloads](https://github.com/Parsa-Emami/Miragemesh/releases) · [Verify and install](docs/release/PUBLICATION.md)
+[Start here](START_HERE.md) · [Public browser demo](https://parsa-emami.github.io/Miragemesh/) · [Release downloads](https://github.com/Parsa-Emami/Miragemesh/releases) · [Verify and install](docs/release/PUBLICATION.md)
 
 **Record interactions with your own HTTP decoys and trace each finding back to its source event.** The team monitoring profile in the source build includes a durable sensor spool, mutual TLS, scoped analyst access and a paged incident timeline. [Start the loopback lab](docs/engineering/TEAM_MONITORING.md#run-the-loopback-lab) · [Deploy on a private network](docs/engineering/TEAM_MONITORING.md#deploy-on-a-private-network)
 
@@ -58,7 +58,7 @@ Enroll sensor -> apply signed config -> isolated decoy event -> disconnect -> sp
 
 ---
 
-## Implement the next commit
+## Development checks
 
 ```sh
 npm run plan -- status

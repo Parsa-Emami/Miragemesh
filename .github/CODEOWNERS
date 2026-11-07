@@ -1,5 +1,5 @@
 # Repository ownership baseline. Update if the repository moves to an organization.
 * @Parsa-Emami
 /contracts/ @Parsa-Emami
-/security/ @Parsa-Emami
+/docs/security/ @Parsa-Emami
 /.github/ @Parsa-Emami

@@ -35,7 +35,7 @@
 - **SQLite sensor**: durable bounded offline spool and applied version
 - **JSONL segments**: append-only event bytes with rotation; indexes rebuildable
 
-سرویس‌های اجباری حذف‌شده نسبت به v7: Laravel, PostgreSQL, Valkey, S3, mandatory separate OpenBao service for MVP PKI. این تغییر معماری در ADR ثبت شده؛ invariants دامنه باید حفظ شوند. بستهٔ v7 در legacy است و مسیر فعلی را تعیین نمی‌کند.
+سرویس‌های اجباری حذف‌شده نسبت به v7: Laravel, PostgreSQL, Valkey, S3, mandatory separate OpenBao service for MVP PKI. [تصمیم معماری](../docs/architecture/ADR-0001-lean-v0.md) به نسخهٔ تاریخی V7 در گیت پیوند دارد و مشخص می‌کند کدام قواعد دامنه همچنان معتبرند.
 
 ## چه چیزی لازم است تا بالا بیاید؟
 

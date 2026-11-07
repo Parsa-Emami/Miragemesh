@@ -154,6 +154,85 @@
       },
       "errors": []
     },
-    "scope": "Fresh current-source validation after correcting an independent test fixture. Published artifacts and their execution receipts still certify aac475843e2dfb617e1eb0b9561ca7e3c9aca749."
+    "scope": "Fresh current-source validation after correcting an independent test fixture. Published artifacts and their execution receipts still certify aac475843e2dfb617e1eb0b9561ca7e3c9aca749.",
+    "readiness_report_revision": "d4dc9c829a1364a45d1202a50489be753cc5d46e"
+  },
+  "latest_maintenance": {
+    "date": "2026-11-07",
+    "summary": "Removed 127 retired V7 scaffold files, obsolete planning documents and empty placeholders. Updated onboarding links for the supported Linux release and private team monitoring.",
+    "base_commit": "db03d0bfc0d57a6dc3c698fe5055c7fcf3ebd02b",
+    "implementation_commit": "ef2aff7505f5abc36b6c873031034ba1082f86b4",
+    "tested_git_tree": "2248e25e1bd3c44c2c27c5ad604438e32380a8c9",
+    "readiness_report": "docs/evidence/v1-gate.json",
+    "artifact_id": 13562274302,
+    "artifact_digest": "sha256:2c66decd09a5daa325303951692425d7765525a84c8876e358480e4da913a363",
+    "workflows": [
+      {
+        "name": "public-pages",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/42343630490",
+        "conclusion": "success"
+      },
+      {
+        "name": "plan-consistency",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/42343630528",
+        "conclusion": "success"
+      },
+      {
+        "name": "contracts",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/42343630456",
+        "conclusion": "success"
+      },
+      {
+        "name": "engine-runtime",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/42343630473",
+        "conclusion": "success"
+      },
+      {
+        "name": "web-foundation",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/42343630463",
+        "conclusion": "success"
+      },
+      {
+        "name": "release-gate",
+        "url": "https://github.com/Parsa-Emami/Miragemesh/actions/runs/42343630554",
+        "conclusion": "success"
+      }
+    ],
+    "results": {
+      "schema_version": 1,
+      "passed": true,
+      "release_ready": true,
+      "published": false,
+      "source": {
+        "commit": "ef2aff7505f5abc36b6c873031034ba1082f86b4",
+        "tree": "2248e25e1bd3c44c2c27c5ad604438e32380a8c9",
+        "identity": "sha256:b18ba0ec5a84d1c9eb87a91cc5593c92ae86bcbd07e948cfe7539479f4e08a8a",
+        "release_inputs": "sha256:48a44a6ed808fb46c1ec8cda65c9667c3a1b16ed52bdca5c0bd24ab5c2734c17"
+      },
+      "historical_cards": 38,
+      "engine": {
+        "suites": 10,
+        "required_anchors": 209,
+        "top_level_passed": 240,
+        "subtests_passed": 359
+      },
+      "node": {
+        "total": 170,
+        "passed": 169,
+        "failed": 0,
+        "skipped": 1
+      },
+      "browser": {
+        "passed": 25
+      },
+      "clone": {
+        "independent_runs": 2,
+        "restart_restore": true,
+        "duration_ms": 51197
+      },
+      "errors": []
+    },
+    "next_command": "npm run release:check",
+    "blockers": []
   }
 }
