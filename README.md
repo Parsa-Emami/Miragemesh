@@ -67,3 +67,9 @@ npm run check
 Each [work card](plans/COMMIT_ROADMAP.md) specifies paths, actions, resources, fixtures, acceptance, negative tests, command availability and rollback. [AGENTS.md](AGENTS.md) and [execution contract](docs/agents/EXECUTION_CONTRACT.md) let an agent resume from this repository alone. [فارسی](docs/ROADMAP_FA.md).
 
 [Open-source contract](OPEN_SOURCE.md) · [Contributing](CONTRIBUTING.md) · [Third-party inventory](THIRD_PARTY_NOTICES.md) · [Definition of done](docs/release/DEFINITION_OF_DONE.md) · [Security](SECURITY.md). No DB schema, migration, .env or Dockerfile changes are authorized.
+
+## Maintainer and engineering case study
+
+Built and maintained by **[Parsa Emami](https://parsaaemm.dev/)**, a software engineer and security architect. [Read the MirageMesh case study](https://parsaaemm.dev/projects/miragemesh/) for the design rationale, implementation scope, and technical trade-offs behind this repository. A case study of local-first deception, offline sensor event spooling, duplicate delivery handling, and incident triage.
+
+[Professional portfolio](https://parsaaemm.dev/) · [LinkedIn profile](https://www.linkedin.com/in/parsaaemm/) · [GitHub profile](https://github.com/Parsa-Emami)
