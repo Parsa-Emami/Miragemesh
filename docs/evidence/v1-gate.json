@@ -16,7 +16,7 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 173,
+      "duration_ms": 158,
       "stdout": {
         "path": "C39/verification/plan.stdout.log.gz",
         "sha256": "2c75357c423aab76e540762ef1747dbb8c9f1ab561ae276be572c8a0f72b0975"
@@ -35,10 +35,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 124,
+      "duration_ms": 148,
       "stdout": {
         "path": "C39/verification/repository.stdout.log.gz",
-        "sha256": "3ba71f66071e44324f2686dd2c715a0c43440af74f182a3f5ab2ba9d966a12a9"
+        "sha256": "503d081f2c5d70ca56953c8fca04576b90ab72be9b163d389985e2796118c55d"
       },
       "stderr": {
         "path": "C39/verification/repository.stderr.log.gz",
@@ -54,7 +54,7 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 33,
+      "duration_ms": 34,
       "stdout": {
         "path": "C39/verification/resources.stdout.log.gz",
         "sha256": "9a7b8c1416f1d28ab932595daf2e75bfdfabaa1279266f3b4c6927224d14db40"
@@ -73,7 +73,7 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 26,
+      "duration_ms": 28,
       "stdout": {
         "path": "C39/verification/reference.stdout.log.gz",
         "sha256": "0cb1d27dfbf98bc5fbd5b922cea0e932c63fee184350b3a3f88e43ea1e6b8044"
@@ -92,10 +92,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 162,
+      "duration_ms": 187,
       "stdout": {
         "path": "C39/verification/source.stdout.log.gz",
-        "sha256": "fb98307dbf4add661ecbda487332bd09a522c0278be30023e10af01f57baba77"
+        "sha256": "1972fd7becac63e3a74db7854d519f8babeff71837ff78a9d7f23e1a93a020fe"
       },
       "stderr": {
         "path": "C39/verification/source.stderr.log.gz",
@@ -112,10 +112,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 10463,
+      "duration_ms": 11874,
       "stdout": {
         "path": "C39/verification/build.stdout.log.gz",
-        "sha256": "ce43dd3daac14a3494d4a1c863977209f4dfa82107fe91b1fd67289b5ec7cf8b"
+        "sha256": "10703bb591b1f1f62c887df67fead8661392fc34ba45e7e158a1f6ef86b6b2fb"
       },
       "stderr": {
         "path": "C39/verification/build.stderr.log.gz",
@@ -132,7 +132,7 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 11645,
+      "duration_ms": 13630,
       "stdout": {
         "path": "C39/verification/vet.stdout.log.gz",
         "sha256": "59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2"
@@ -155,10 +155,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 53895,
+      "duration_ms": 60575,
       "stdout": {
         "path": "C39/verification/engine.stdout.log.gz",
-        "sha256": "8e1fc9f58b282651bbf4247095e5efd6f77fc3c8504265e1e8cbd9f3196a488a"
+        "sha256": "be8c4a7ab1a6c50e6edab7671dd6a317fb93692194f98cb6c7ec89870f1c6cf5"
       },
       "stderr": {
         "path": "C39/verification/engine.stderr.log.gz",
@@ -204,10 +204,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 40883,
+      "duration_ms": 41354,
       "stdout": {
         "path": "C39/verification/node.stdout.log.gz",
-        "sha256": "4a7f604b7119fcb19d80aca2c4abdd25e027e05bd3d40a8841880fdab8b0f983"
+        "sha256": "897458ac8a1066e3fefd161b7d99bf784f733bfbda5e19bad145e3e8acdac35c"
       },
       "stderr": {
         "path": "C39/verification/node.stderr.log.gz",
@@ -225,10 +225,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 6233,
+      "duration_ms": 7918,
       "stdout": {
         "path": "C39/verification/browser.stdout.log.gz",
-        "sha256": "0c9bd2658d346a69dc8e7d2a0b26d171f9503fac1e73b7f8acd6d4be43a0c0c6"
+        "sha256": "79ebcdc115b6c91ca9be3859afc8cc597727294b15375ca343ad8e129025cea4"
       },
       "stderr": {
         "path": "C39/verification/browser.stderr.log.gz",
@@ -245,10 +245,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 45981,
+      "duration_ms": 51567,
       "stdout": {
         "path": "C39/verification/clone.stdout.log.gz",
-        "sha256": "44e25933368a3e50b73d1a59dc5fbce0726bb5b5bed0a997653466f8802acbe2"
+        "sha256": "13fe7fb3f8a505ca7655e3e73453d9a0fa7cdf626c3c0dacda440a1cec74c7ab"
       },
       "stderr": {
         "path": "C39/verification/clone.stderr.log.gz",
@@ -265,10 +265,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 2286,
+      "duration_ms": 2383,
       "stdout": {
         "path": "C39/verification/package.stdout.log.gz",
-        "sha256": "afb6a6fed7eb8eafc486dffbca8f97cf90530efe390a0bf8d5fc9a4cc1e2d466"
+        "sha256": "89abec087a9daad61117753b524331fd4b41e3af7080fb91e9959eb69c9e8337"
       },
       "stderr": {
         "path": "C39/verification/package.stderr.log.gz",
@@ -285,10 +285,10 @@
       "exit_code": 0,
       "signal": null,
       "timed_out": false,
-      "duration_ms": 183,
+      "duration_ms": 192,
       "stdout": {
         "path": "C39/verification/artifact.stdout.log.gz",
-        "sha256": "aff8f7524e2cf1ce366a5f7ba725a98cff57bedd338b15da69865f416a159398"
+        "sha256": "4c3084015f44deda7dbd6d4475799658148b3c3361f7a6e9a10a50b844975646"
       },
       "stderr": {
         "path": "C39/verification/artifact.stderr.log.gz",
@@ -299,31 +299,31 @@
   "attachments": {
     "onboarding": {
       "path": "C39/verification/onboarding.json.gz",
-      "sha256": "5a8518e50adea07cd4dae99853656ff3d395c2b9f561fc65acb36e09596491f2"
+      "sha256": "ed441e625cc50c1dc5bb83c222ba52fca1c523dc0a4d6dbe27b641810eb0d0ab"
     },
     "provenance": {
       "path": "C39/verification/provenance.json.gz",
-      "sha256": "35972504a26414dc7bb4dcd2bc272f36efbed39d57d7261121338119f8e11029"
+      "sha256": "ee9aa3bcfb3666577955d30477f63924ed4112047d954d407e3a77a39348aa43"
     },
     "sbom": {
       "path": "C39/verification/sbom.json.gz",
-      "sha256": "21514d50d0c9a257d5f78021beeea8a77625d9dc4604f98f8320ca3d8f2ba3e5"
+      "sha256": "b7ffd3ab8f71dff9e37eaa57c95546eca017cfba21949019de1f11cbe856f5ea"
     },
     "checksums": {
       "path": "C39/verification/checksums.json.gz",
-      "sha256": "79241ff67057dd2da2281a41a4755e4255eda2f821c22431c8578516851cef42"
+      "sha256": "6b2a05f73637e641c3899fdf2a9878e7817c75dbcfbb1bb64218f0309dfe2089"
     },
     "source_inventory": {
       "path": "C39/verification/source-inventory.json.gz",
-      "sha256": "dd1a3f06f52666376aeaab6dd467561f8b819d8a8f4fc5e3690ce689b1fe3ca3"
+      "sha256": "0a8cdcfb756a1bb21c82dac8569495874173cd1e0310b141bab2a3ecdddccd1b"
     }
   },
-  "started_at": "2026-11-04T12:37:54.376Z",
+  "started_at": "2026-11-07T05:39:57.069Z",
   "source": {
-    "commit": "23a38b6cda677b4c022f7a8287d489f273594676",
-    "tree": "68a6c020fdf8f9768f0d3ca8c89e6e80b5020254",
-    "identity": "sha256:b5835cbbbcec47bd8ddddcf97f2212018d4ed6a113d4e3769b105c09b3172bf4",
-    "release_inputs": "sha256:7b2f5ed7fd6e8430566fecc7b4b982c6d4428d4ba44d0485c30f3cf28a181730"
+    "commit": "ef2aff7505f5abc36b6c873031034ba1082f86b4",
+    "tree": "2248e25e1bd3c44c2c27c5ad604438e32380a8c9",
+    "identity": "sha256:b18ba0ec5a84d1c9eb87a91cc5593c92ae86bcbd07e948cfe7539479f4e08a8a",
+    "release_inputs": "sha256:48a44a6ed808fb46c1ec8cda65c9667c3a1b16ed52bdca5c0bd24ab5c2734c17"
   },
   "history": [
     {
@@ -1945,23 +1945,23 @@
     "podman": "podman version 4.9.3",
     "rootless": "true"
   },
-  "completed_at": "2026-11-04T12:41:00.106Z",
+  "completed_at": "2026-11-07T05:43:21.116Z",
   "results": {
     "schema_version": 1,
     "passed": true,
     "release_ready": true,
     "published": false,
     "source": {
-      "commit": "23a38b6cda677b4c022f7a8287d489f273594676",
-      "tree": "68a6c020fdf8f9768f0d3ca8c89e6e80b5020254",
-      "identity": "sha256:b5835cbbbcec47bd8ddddcf97f2212018d4ed6a113d4e3769b105c09b3172bf4",
-      "release_inputs": "sha256:7b2f5ed7fd6e8430566fecc7b4b982c6d4428d4ba44d0485c30f3cf28a181730"
+      "commit": "ef2aff7505f5abc36b6c873031034ba1082f86b4",
+      "tree": "2248e25e1bd3c44c2c27c5ad604438e32380a8c9",
+      "identity": "sha256:b18ba0ec5a84d1c9eb87a91cc5593c92ae86bcbd07e948cfe7539479f4e08a8a",
+      "release_inputs": "sha256:48a44a6ed808fb46c1ec8cda65c9667c3a1b16ed52bdca5c0bd24ab5c2734c17"
     },
     "historical_cards": 38,
     "engine": {
       "suites": 10,
       "required_anchors": 209,
-      "top_level_passed": 237,
+      "top_level_passed": 240,
       "subtests_passed": 359
     },
     "node": {
@@ -1971,12 +1971,12 @@
       "skipped": 1
     },
     "browser": {
-      "passed": 24
+      "passed": 25
     },
     "clone": {
       "independent_runs": 2,
       "restart_restore": true,
-      "duration_ms": 45616
+      "duration_ms": 51197
     },
     "errors": []
   }
