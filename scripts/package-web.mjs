@@ -14,6 +14,7 @@ const defaultOutput = join(repository, 'dist/release');
 const copyEntries = [
   'LICENSE', 'NOTICE', 'THIRD_PARTY_NOTICES.md', 'OPEN_SOURCE.md', 'package.json',
   'scripts/start-local.mjs', 'scripts/serve-web.mjs', 'scripts/verify-installed-release.mjs',
+  'scripts/monitor-lab.sh', 'ops/monitor', 'docs/engineering/TEAM_MONITORING.md',
   'scripts/install-release.mjs', 'scripts/verify-release.mjs', 'scripts/verify-artifact.mjs', 'scripts/package-source.mjs', 'scripts/oss-bootstrap.mjs',
   'tests/fixtures/miragemesh/C31', 'tests/fixtures/miragemesh/C40',
   'docs/release/PUBLICATION.md', 'docs/release/RELEASE_MANIFEST.json',

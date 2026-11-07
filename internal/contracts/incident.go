@@ -30,6 +30,7 @@ type IncidentTriageRecord struct {
 	Reason        string `json:"reason"`
 	KeyDigest     string `json:"key_digest"`
 	TriagedAt     string `json:"triaged_at"`
+	Actor         string `json:"actor,omitempty"`
 }
 
 // DecodeIncidentTriage validates the canonical internal triage record.
@@ -53,11 +54,24 @@ func DecodeIncidentTriage(ctx context.Context, raw []byte) (IncidentTriageRecord
 	if !bytes.Equal(raw, canonical) || record.SchemaVersion != SchemaVersion || record.Kind != IncidentTriage ||
 		!ValidIncidentID(record.IncidentID) || !validText(record.Status, MaxIncidentStatusRunes) ||
 		!validText(record.Reason, MaxIncidentReasonRunes) || !validDigest(record.KeyDigest) ||
+		(record.Actor != "" && !ValidIncidentActor(record.Actor)) ||
 		err != nil || at.IsZero() || at.Year() < 1 || at.Year() > 9999 ||
 		at.UTC().Format(time.RFC3339Nano) != record.TriagedAt {
 		return IncidentTriageRecord{}, invalid
 	}
 	return record, nil
+}
+
+func ValidIncidentActor(value string) bool {
+	if len(value) < 1 || len(value) > 64 {
+		return false
+	}
+	for _, r := range value {
+		if !(r >= 'a' && r <= 'z' || r >= '0' && r <= '9' || r == '-' || r == '_' || r == '.') {
+			return false
+		}
+	}
+	return true
 }
 
 // ValidIncidentID applies the opaque path-identifier bound from the private

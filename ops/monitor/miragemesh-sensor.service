@@ -1,0 +1,33 @@
+[Unit]
+Description=MirageMesh HTTP observation sensor and durable spool
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=120
+StartLimitBurst=5
+
+[Service]
+User=miragemesh-sensor
+Group=miragemesh-sensor
+StateDirectory=miragemesh-sensor
+StateDirectoryMode=0700
+WorkingDirectory=/opt/miragemesh
+ExecStart=/opt/miragemesh/dist/engine/miragemesh --monitor-sensor-config /etc/miragemesh-sensor/sensor.json
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=25s
+UMask=0077
+LimitNOFILE=1024
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+PrivateTmp=yes
+PrivateDevices=yes
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+
+[Install]
+WantedBy=multi-user.target
