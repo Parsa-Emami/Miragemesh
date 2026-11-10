@@ -1,0 +1,64 @@
+name: Bug report
+description: Report a reproducible MirageMesh problem without disclosing sensitive evidence.
+title: "bug: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use synthetic or completely redacted examples. Do not post sensor credentials,
+        live event streams, IP addresses from private networks, private certificates,
+        or exploit details. Follow SECURITY.md for vulnerability reporting.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected component
+      options:
+        - Sensor ingestion and spool
+        - mTLS identity and authorization
+        - Event timeline and analyst workspace
+        - Local storage and recovery
+        - Installation, release, or documentation
+    validations:
+      required: true
+  - type: input
+    id: revision
+    attributes:
+      label: Source revision or release
+      description: Specify the exact commit SHA or tagged release used.
+      placeholder: v1.0.0 or commit SHA
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide numbered steps and synthetic inputs only.
+      placeholder: "1. Prepare a disposable local lab\n2. Run ...\n3. Observe ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and diagnostics
+      description: Include OS, architecture, Node/Go/Podman versions and redacted exit codes.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: This public report contains no secrets or vulnerability disclosure.
+          required: true
