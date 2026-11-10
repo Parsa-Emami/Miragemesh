@@ -22,6 +22,7 @@ Open-source local-first web application under [Apache-2.0](LICENSE). MirageMesh 
 - **[Clone to Run](docs/engineering/CLONE_TO_RUN.md)**: Deep dive into workstation prerequisites, source build alternatives, provider verification, and troubleshooting.
 - **[Open-Source Contract](OPEN_SOURCE.md)**: Guarantees regarding source code freedom, offline durability, and zero proprietary lock-in.
 - **[Contributing Guide](CONTRIBUTING.md)**: Workflow for contributors, roadmap execution, coding invariants, and testing standards.
+- **[Report a bug](https://github.com/Parsa-Emami/Miragemesh/issues/new?template=bug_report.yml)** / **[suggest an improvement](https://github.com/Parsa-Emami/Miragemesh/issues/new?template=improvement.yml)**: Structured community feedback with synthetic, redacted evidence.
 - **[Security Policy](SECURITY.md)**: Conditional private vulnerability reporting, supported source and best-effort disclosure.
 - **[Third-Party Inventory](THIRD_PARTY_NOTICES.md)**: Pinned dependency licenses and attribution notices.
 - **[Artifact Verification](docs/release/ARTIFACTS.md#signed-release-attestation)**: Detached Ed25519 attestation, verified install/upgrade/rollback and the source-build alternative.

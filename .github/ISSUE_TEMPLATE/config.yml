@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Private security reporting policy
+    url: https://github.com/Parsa-Emami/Miragemesh/security/policy
+    about: Do not publish vulnerability details. Check the availability of a private reporting route first.

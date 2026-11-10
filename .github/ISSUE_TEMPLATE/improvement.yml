@@ -1,0 +1,50 @@
+name: Focused improvement
+description: Propose a testable enhancement for the local MirageMesh profile.
+title: "enhancement: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Explain the real operator problem, smallest useful change, and an objective
+        acceptance test. Keep proposed work within supported local trust boundaries
+        unless you explicitly describe the security and compatibility impact.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Component
+      options:
+        - Sensor transport and evidence integrity
+        - Identity, access, or trust boundaries
+        - Event investigation and accessible UI
+        - Setup, packaging, and recovery
+        - Documentation and onboarding
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Operator problem
+      description: Describe who is affected and how the current workflow falls short.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Proposed minimum scope
+      description: State observable behavior and what is out of scope.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance and negative cases
+      description: Include a reproducible success case and at least one relevant failure case.
+    validations:
+      required: true
+  - type: textarea
+    id: safety
+    attributes:
+      label: Security, data, and compatibility effects
+      description: Address local storage, private evidence, rootless isolation, and existing contracts as applicable.
+    validations:
+      required: true
