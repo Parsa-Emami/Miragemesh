@@ -106,5 +106,6 @@ Use [Conventional Commits](https://www.conventionalcommits.org/) syntax for comm
 
 ## 6. Reporting Issues & Security
 
-- **Bug Reports & Feedback**: Please open an issue on GitHub detailing the steps to reproduce, observed behavior, and system environment.
+- **Bug Reports**: Use the [structured bug report form](https://github.com/Parsa-Emami/Miragemesh/issues/new?template=bug_report.yml) with a reproducible synthetic case, exact source revision, expected/actual results and a redacted environment.
+- **Enhancements**: Use the [improvement form](https://github.com/Parsa-Emami/Miragemesh/issues/new?template=improvement.yml) to define a bounded scope, acceptance tests and security impact.
 - **Security Vulnerabilities**: Do **not** open public GitHub issues for security issues. Follow our private disclosure process in [SECURITY.md](SECURITY.md).
